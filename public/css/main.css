@@ -1,0 +1,39 @@
+/* making a sidebar layout with 20% sidebar */
+body {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: calc(100vh - 16px);
+    background-color: #fafafa;
+    padding: 0;
+}
+
+.sidebar {
+    background-color: rgb(162, 201, 255);
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid #191919;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.title:visited {
+    color: #000;
+}
+
+.title > h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.alert {
+    background-color: rgb(255, 202, 162);
+    padding: 20px;
+    border: 1px solid #191919;
+}

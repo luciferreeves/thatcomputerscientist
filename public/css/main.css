@@ -82,6 +82,10 @@ nav > ul > li {
     color: red;
 }
 
+.success {
+    color: green;
+}
+
 .account {
     display: flex;
     flex-direction: row;

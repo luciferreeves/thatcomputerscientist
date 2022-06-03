@@ -17,14 +17,20 @@
                 <legend>Avatar</legend>
                 <img src="https://www.gravatar.com/avatar/<%= user.avatar %>?s=200" alt="<%= user.username %>'s avatar" />
             </fieldset>
-            <form method="post" onsubmit="event.preventDefault();">
+            <form method="post" action="/auth/changePassword">
                 <fieldset>
                     <legend>Change Password</legend>
-                    <label for="password">New Password</label>
-                    <input type="password" name="password" id="password" placeholder="New Password" />
-                    <label for="password_confirm">Confirm Password</label>
-                    <input type="password" name="password_confirm" id="password_confirm" placeholder="Confirm Password" />
+                    <label for="password">Current Password</label>
+                    <input type="password" name="password" id="password" placeholder="Current Password" />
+                    <label for="new_password">New Password</label>
+                    <input type="password" name="new_password" id="new_password" placeholder="New Password" />
                     <input type="submit" value="Change Password" />
+                    <% if (locals.messages.passchangesuccess) { %>
+                        <p class="success"><%= messages.passchangesuccess %></p>
+                    <% } %>
+                    <% if (locals.messages.passchangeerror) { %>
+                        <p class="error"><%= messages.passchangeerror %></p>
+                    <% } %>
                 </fieldset>
             </form>
             <form method="post" onsubmit="event.preventDefault();">
@@ -61,8 +67,6 @@
     </div>
 </div>
 <script>
-    var user = '<%- JSON.stringify(user) %>';
-    console.log(JSON.parse(user));
     document.getElementById('accountURL').innerHTML = window.location.origin + '/profile/<%= user.username %>';
 </script>
 

@@ -6,6 +6,7 @@ body {
     min-height: calc(100vh - 16px);
     background-color: #fafafa;
     padding: 0;
+    min-width: calc(100vw - 16px);
 }
 
 .sidebar {
@@ -30,10 +31,35 @@ body {
 .title > h1 {
     font-size: 1.2rem;
     font-weight: bold;
+    margin-top: 0;
 }
 
 .alert {
     background-color: rgb(255, 202, 162);
     padding: 20px;
     border: 1px solid #191919;
+}
+
+lebel, input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+fieldset {
+    border: 1px solid #191919;
+    padding: 10px 20px;
+}
+
+nav > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav > ul > li {
+    margin: 5px 0;
+}
+
+.center {
+    text-align: center;
 }

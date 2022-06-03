@@ -18,9 +18,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname + "/views");
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.use("/", require("./routes"));
 
 // Start server
 app.listen(port, () => {

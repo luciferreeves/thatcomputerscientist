@@ -3,21 +3,23 @@
     <h1>That Computer Scientist</h1>
     <!-- Login Box -->
     </a>
-    <% if (username) { %>
+    <% if (locals.username) { %>
         <div class="login-box">
             <p>Welcome, <%= username %>!</p>
-            <a href="/logout">Logout</a>
+            <a href="/auth/logout">Logout</a>
         </div>
     <% } else { %>
-        <form method="post" onsubmit="event.preventDefault();">
+        <form method="post" action="/auth/login">
             <fieldset>
                 <legend>Login Area</legend>
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password">
+                <% if (locals.messages) { %>
+                    <p class="error"><%= messages.error %></p>
+                <% } %>
                 <input type="submit" value="Login">
-                <a href="/register">Register</a>
             </fieldset>
         </form>
     <% } %>  

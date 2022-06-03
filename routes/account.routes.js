@@ -3,6 +3,7 @@ const { renderRoute } = require("../functions/render");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const connectionString = process.env.DATABASE_URL;
+const md5 = require("md5");
 
 router.get('/', (req, res) => {
     const username = jwt.decode(req.cookies.token).username;
@@ -18,7 +19,10 @@ router.get('/', (req, res) => {
             if (results.length > 0) {
                 const user = results[0];
                 renderRoute(req, res, 'account', 'My Account', true, {
-                    user: user
+                    user: {
+                        ...user,
+                        avatar: md5(user.email || '')
+                    }
                 });
             } else {
                 renderRoute(req, res, 'account', 'My Account', true, {
@@ -28,6 +32,41 @@ router.get('/', (req, res) => {
         }
     });
     connection.end();
+});
+
+router.post('/updateAccount', (req, res) => {
+    jwt.verify(req.cookies.token, process.env.AUTHORIZATION_STRING, (err, decoded) => {
+        if (err) {
+            renderRoute(req, res, 'error', 'Error', false)
+        } else {
+            const username = decoded.username;
+            const firstname = req.body.firstname;
+            const lastname = req.body.lastname;
+            const email = req.body.email;
+            const location = req.body.location;
+            const bio = req.body.bio;
+            const public = req.body.isPublic;
+            const connection = mysql.createPool(connectionString);
+            connection.getConnection((err, connection) => {
+                if (err) {
+                    renderRoute(req, res, 'error', 'Error', false, {
+                        error: err.message
+                    });
+                } else {
+                    const sql = "UPDATE Profiles SET firstname = ?, lastname = ?, email = ?, location = ?, bio = ?, public = ? WHERE username = ?";
+                    connection.query(sql, [firstname, lastname, email, location, bio, public, username], (err, results, fields) => {
+                        if (err) {
+                            req.flash('updateaccerror', err.message);
+                            res.redirect(req.get('referer'));
+                        } else {
+                            req.flash('updateaccsuccess', 'Account updated successfully');
+                            res.redirect(req.get('referer'));
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 

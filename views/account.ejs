@@ -41,8 +41,10 @@
             </form>
         </div>
         <div class="ac-main">
-            <p>Account URL: <a href="/profile/<%= user.username %>"><span id="accountURL"></span></a></p>
-            <form method="post" onsubmit="event.preventDefault();">
+            <% if (user.public == 1) { %>
+                <p>Account URL: <a href="/profile/<%= user.username %>"><span id="accountURL"></span></a></p>
+            <% } %>
+            <form method="post" action="/account/updateAccount">
                 <fieldset>
                     <legend>Account Details</legend>
                     <label for="firstname">First Name</label>
@@ -57,10 +59,16 @@
                     <textarea name="bio" id="bio" placeholder="Bio"><%= user.bio %></textarea>
                     <label for="isPublic">Account Visibility</label>
                     <select name="isPublic" id="isPublic">
-                        <option value="0" <% if (user.isPublic == 0) { %>selected="selected"<% } %>>Private</option>
-                        <option value="1" <% if (user.isPublic == 1) { %>selected="selected"<% } %>>Public</option>
+                        <option value="0" <% if (user.public == 0) { %>selected="selected"<% } %>>Private</option>
+                        <option value="1" <% if (user.public == 1) { %>selected="selected"<% } %>>Public</option>
                     </select>
                     <input type="submit" value="Update Account" />
+                    <% if (locals.messages.updateaccsuccess) { %>
+                        <p class="success"><%= messages.updateaccsuccess %></p>
+                    <% } %>
+                    <% if (locals.messages.updateaccerror) { %>
+                        <p class="error"><%= messages.updateaccerror %></p>
+                    <% } %>
                 </fieldset>
             </form>
         </div>

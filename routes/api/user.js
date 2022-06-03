@@ -48,5 +48,30 @@ router.post('/login', (req, res) => {
     connection.end();
 });
 
+router.post('/create', (req, res) => {
+    // Creates a regular user
+    const username = req.body.username;
+    const password = req.body.password;
+    const connection = mysql.createConnection(connectionURL);
+    connection.connect();
+    const sql = "INSERT INTO Users (username, password, admin) VALUES (?, ?, ?)";
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const admin = 0;
+    connection.query(sql, [username, hashedPassword, admin], (err, results, fields) => {
+        if (err) {
+            res.status(500).json({
+                message: "Error creating user",
+                error: err
+            });
+        } else {
+            res.status(201).json({
+                message: "User created"
+            });
+        }
+    });
+    connection.end();
+});
+
+
 
 module.exports = router;

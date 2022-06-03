@@ -1,0 +1,69 @@
+<%- include('partials/header.ejs') %> <%- include('partials/sidebar.ejs') %>
+<div class="main">
+    <h1>My Account</h1>
+    <p>You can change account settings for <strong><%= user.username %></strong> here. If you wish to have additional support, please contact me at <a href="mailto:bobbyskhs@gmail.com?subject=[URGENT]%20Support%20Request%20for%20<%= user.username %>">bobbyskhs@gmail.com</a>. Please take care of the following points before you submit your support request:</p>
+    <ul>
+        <li>Please do not edit the subject line.</li>
+        <li>This is a personal email address. Please refrain yourself from spamming.</li>
+        <li>Please do not include any sensitive information (like credit card numbers, passwords, etc.) in the email.</li>
+        <li>Allow me upto 48 hours to respond to your support request.</li>
+        <li>Do not send multiple support requests.</li>
+        <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
+    </ul>
+    <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>.</p>
+    <div class="account">
+        <div class="ac-sidebar">
+            <fieldset>
+                <legend>Avatar</legend>
+                <img src="https://www.gravatar.com/avatar/<%= user.avatar %>?s=200" alt="<%= user.username %>'s avatar" />
+            </fieldset>
+            <form method="post" onsubmit="event.preventDefault();">
+                <fieldset>
+                    <legend>Change Password</legend>
+                    <label for="password">New Password</label>
+                    <input type="password" name="password" id="password" placeholder="New Password" />
+                    <label for="password_confirm">Confirm Password</label>
+                    <input type="password" name="password_confirm" id="password_confirm" placeholder="Confirm Password" />
+                    <input type="submit" value="Change Password" />
+                </fieldset>
+            </form>
+            <form method="post" onsubmit="event.preventDefault();">
+                <fieldset>
+                    <legend class="error">Delete Account</legend>
+                    <input type="submit" value="Delete Account" />
+                </fieldset>
+            </form>
+        </div>
+        <div class="ac-main">
+            <p>Account URL: <a href="/profile/<%= user.username %>"><span id="accountURL"></span></a></p>
+            <form method="post" onsubmit="event.preventDefault();">
+                <fieldset>
+                    <legend>Account Details</legend>
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="firstname" id="firstname" value="<%= user.firstname %>" placeholder="First Name" />
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastname" id="lastname" value="<%= user.lastname %>" placeholder="Last Name" />
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value="<%= user.email %>" placeholder="Email" />
+                    <label for="location">Location</label>
+                    <input type="text" name="location" id="location" value="<%= user.location %>" placeholder="Location" />
+                    <label for="bio">Bio</label>
+                    <textarea name="bio" id="bio" placeholder="Bio"><%= user.bio %></textarea>
+                    <label for="isPublic">Account Visibility</label>
+                    <select name="isPublic" id="isPublic">
+                        <option value="0" <% if (user.isPublic == 0) { %>selected="selected"<% } %>>Private</option>
+                        <option value="1" <% if (user.isPublic == 1) { %>selected="selected"<% } %>>Public</option>
+                    </select>
+                    <input type="submit" value="Update Account" />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var user = '<%- JSON.stringify(user) %>';
+    console.log(JSON.parse(user));
+    document.getElementById('accountURL').innerHTML = window.location.origin + '/profile/<%= user.username %>';
+</script>
+
+<%- include('partials/footer.ejs') %>

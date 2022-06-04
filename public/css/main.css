@@ -7,10 +7,11 @@ body {
     background-color: #fafafa;
     padding: 0;
     min-width: calc(100vw - 16px);
+    font-family: 'TimesPixelated';
 }
 
 .sidebar {
-    background-color: rgb(162, 201, 255);
+    background-color: #bad9ff;
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -34,8 +35,19 @@ body {
     margin-top: 0;
 }
 
+.title {
+    display: block;
+}
+
+.title > img {
+    width: 10rem;
+    display: block;
+    margin: 0px auto 10px auto;
+    pointer-events: none;
+}
+
 .alert {
-    background-color: rgb(255, 202, 162);
+    background-color: #ffd4bd;
     padding: 20px;
     border: 1px solid #191919;
 }
@@ -43,6 +55,7 @@ body {
 lebel, input, textarea, select {
     display: block;
     margin: 5px 0px;
+    font-family: 'TimesPixelated';
 }
 
 input[type = 'submit'] {

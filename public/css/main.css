@@ -104,3 +104,14 @@ nav > ul > li {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+/* Optimize for phones */
+@media only screen and (max-width: 480px) {
+    body {
+        flex-direction: column;
+    }
+
+    .account {
+        flex-direction: column;
+    }
+}

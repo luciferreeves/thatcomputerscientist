@@ -41,6 +41,7 @@ body {
 
 .title > img {
     width: 10rem;
+    height: 3.23rem;
     display: block;
     margin: 0px auto 10px auto;
     pointer-events: none;

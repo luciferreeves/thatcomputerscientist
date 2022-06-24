@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const connectionString = process.env.DATABASE_URL;
 const md5 = require("md5");
 const { isEmailValid } = require("../functions/validate");
+const nodemailer = require("nodemailer");
 
 router.get("/", (req, res) => {
   const username = jwt.decode(req.cookies.token).username;
@@ -54,8 +55,11 @@ router.post("/sendVerificationEmail", (req, res) => {
         const username = decoded.username;
         const newEmail = req.body.email;
         if (!newEmail || !isEmailValid(newEmail)) {
-            req.flash("mailsenderror", "Error sending verification email. Provided email is invalid.",);
-            res.redirect(req.get("referer"));
+          req.flash(
+            "mailsenderror",
+            "Error sending verification email. Provided email is invalid."
+          );
+          res.redirect(req.get("referer"));
         } else {
           const connection = mysql.createConnection(connectionString);
           connection.connect();
@@ -68,53 +72,65 @@ router.post("/sendVerificationEmail", (req, res) => {
             } else {
               if (results.length > 0) {
                 const user = results[0];
-                // const transporter = require("nodemailer").createTransport({
-                //   service: "gmail",
-                //   auth: {
-                //     user: process.env.EMAIL_USER,
-                //     pass: process.env.EMAIL_PASSWORD,
-                //   },
-                // });
-                // // Generate a verification URL and send it to the user
-                const verificationUrl = `${req.get(
-                  "origin"
-                )}/verifyemail?token=${jwt.sign(
-                  {
-                    username: user.username,
-                    email: newEmail,
-                  },
-                  process.env.AUTHORIZATION_STRING,
-                  {
-                    expiresIn: "1h",
-                  }
-                )}`;
-                // const mailOptions = {
-                //   from: process.env.EMAIL_USER,
-                //   to: newEmail,
-                //   priority: "high",
-                //   subject:
-                //     "[That Computer Scientist] Request to change your email address",
-                //   html: `<p>Hi ${user.firstname || user.username},</p>
-                //                     <p>We received a request to change your email address to <em><u>${newEmail}</u></em>.</p>
-                //                     <p>If you made this request, please click the link below to verify your new email address:</p>
-                //                     <p><a href="${verificationUrl}">${verificationUrl}</a></p>
-                //                     <p>If you did not make this request, you can ignore this email.</p>
-                //                     <p>Thanks,</p>
-                //                     <p>Kumar Priyansh</p>
-                //                     <p>That Computer Scientist</p>`,
-                // };
-                // transporter.sendMail(mailOptions, (err, info) => {
-                //   if (err) {
-                //     req.flash("mailsenderror", "Error sending verification email. Please try again later.",);
-                //     req.redirect(req.get("referer"));
-                //   } else {
-                req.flash(
-                  "mailsendsuccess",
-                  `Verification email sent! The link expires in 1 hour. Please check your email. Also, make sure to check your spam folder. Verification URL: ${verificationUrl}`
-                );
-                res.redirect(req.get("referer"));
-                //   }
-                // });
+                if (user.email == newEmail) {
+                  req.flash(
+                    "mailsenderror",
+                    "Error sending verification email. Provided email is already in use."
+                  );
+                  res.redirect(req.get("referer"));
+                } else {
+                  const transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                      user: process.env.EMAIL_USER,
+                      pass: process.env.EMAIL_PASSWORD,
+                    },
+                  });
+                  // // Generate a verification URL and send it to the user
+                  const verificationUrl = `${req.get(
+                    "origin"
+                  )}/verifyemail?token=${jwt.sign(
+                    {
+                      username: user.username,
+                      email: newEmail,
+                    },
+                    process.env.AUTHORIZATION_STRING,
+                    {
+                      expiresIn: "1h",
+                    }
+                  )}`;
+                  const mailOptions = {
+                    from: process.env.EMAIL_USER,
+                    to: newEmail,
+                    priority: "high",
+                    subject:
+                      "[That Computer Scientist] Request to change your email address",
+                    html: `<p>Hi ${user.firstname || user.username},</p>
+                                      <p>We received a request to change your email address to <em><u>${newEmail}</u></em>.</p>
+                                      <p>If you made this request, please click the link below to verify your new email address:</p>
+                                      <p><a href="${verificationUrl}">${verificationUrl}</a>.</p>
+                                      <p>Please note that this link expires in 1 hour. You might need to make another request if you do not verify the email in the requested time frame. If you did not make this request, you can ignore this email.</p>
+                                      <hr>
+                                      <p>Thanks,</p>
+                                      <p>Kumar Priyansh</p>
+                                      <p>That Computer Scientist</p>`,
+                  };
+                  transporter.sendMail(mailOptions, (err, info) => {
+                    if (err) {
+                      req.flash(
+                        "mailsenderror",
+                        "Error sending verification email. Please try again later."
+                      );
+                      res.redirect(req.get("referer"));
+                    } else {
+                      req.flash(
+                        "mailsendsuccess",
+                        `Verification email sent! The link expires in 1 hour. Please check your email. Also, make sure to check your spam folder.`
+                      );
+                      res.redirect(req.get("referer"));
+                    }
+                  });
+                }
               } else {
                 res.status(500).render("error", {
                   error: "User not found",

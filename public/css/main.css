@@ -57,6 +57,7 @@ lebel, input, textarea, select {
     display: block;
     margin: 5px 0px;
     font-family: 'TimesPixelated';
+    font-size: 16px;
 }
 
 input[type = 'submit'] {

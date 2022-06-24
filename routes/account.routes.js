@@ -42,10 +42,10 @@ router.post('/updateAccount', (req, res) => {
             const username = decoded.username;
             const firstname = req.body.firstname;
             const lastname = req.body.lastname;
-            const email = req.body.email;
             const location = req.body.location;
             const bio = req.body.bio;
             const public = req.body.isPublic;
+            const emailPublic = req.body.emailPublic;
             const connection = mysql.createPool(connectionString);
             connection.getConnection((err, connection) => {
                 if (err) {
@@ -53,8 +53,8 @@ router.post('/updateAccount', (req, res) => {
                         error: err.message
                     });
                 } else {
-                    const sql = "UPDATE Profiles SET firstname = ?, lastname = ?, email = ?, location = ?, bio = ?, public = ? WHERE username = ?";
-                    connection.query(sql, [firstname, lastname, email, location, bio, public, username], (err, results, fields) => {
+                    const sql = "UPDATE Profiles SET firstname = ?, lastname = ?, location = ?, bio = ?, public = ?, emailPublic = ? WHERE username = ?";
+                    connection.query(sql, [firstname, lastname, location, bio, public, emailPublic, username], (err, results, fields) => {
                         if (err) {
                             req.flash('updateaccerror', err.message);
                             res.redirect(req.get('referer'));

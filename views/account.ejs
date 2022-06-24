@@ -11,6 +11,9 @@
         <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
     </ul>
     <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>.</p>
+    <% if (user.public == 1) { %>
+        <p>Your account is publicly accessible at: <a href="/profile/<%= user.username %>"><span id="accountURL"></span></a>.</p>
+    <% } %>
     <div class="account">
         <div class="ac-sidebar">
             <fieldset>
@@ -41,9 +44,6 @@
             </form>
         </div>
         <div class="ac-main">
-            <% if (user.public == 1) { %>
-                <p>Account URL: <a href="/profile/<%= user.username %>"><span id="accountURL"></span></a></p>
-            <% } %>
             <form method="post" action="/account/updateAccount">
                 <fieldset>
                     <legend>Account Details</legend>
@@ -51,8 +51,6 @@
                     <input type="text" name="firstname" id="firstname" value="<%= user.firstname %>" placeholder="First Name" />
                     <label for="lastname">Last Name</label>
                     <input type="text" name="lastname" id="lastname" value="<%= user.lastname %>" placeholder="Last Name" />
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="<%= user.email %>" placeholder="Email" />
                     <label for="location">Location</label>
                     <input type="text" name="location" id="location" value="<%= user.location %>" placeholder="Location" />
                     <label for="bio">Bio</label>
@@ -62,6 +60,13 @@
                         <option value="0" <% if (user.public == 0) { %>selected="selected"<% } %>>Private</option>
                         <option value="1" <% if (user.public == 1) { %>selected="selected"<% } %>>Public</option>
                     </select>
+                    <% if (user.public == 1) { %>
+                        <label for="emailPublic">Email Visibility</label>
+                     <select name="emailPublic" id="emailPublic">
+                        <option value="0" <% if (user.emailPublic == 0) { %>selected="selected"<% } %>>Private</option>
+                        <option value="1" <% if (user.emailPublic == 1) { %>selected="selected"<% } %>>Public</option>
+                     </select>
+                    <% } %>
                     <input type="submit" value="Update Account" />
                     <% if (locals.messages.updateaccsuccess) { %>
                         <p class="success"><%= messages.updateaccsuccess %></p>
@@ -69,6 +74,14 @@
                     <% if (locals.messages.updateaccerror) { %>
                         <p class="error"><%= messages.updateaccerror %></p>
                     <% } %>
+                </fieldset>
+            </form>
+            <form method="post" action="">
+                <fieldset>
+                    <legend>Change Email</legend>
+                    <label for="email">Your current registered email is <em><u><%= user.email %></u></em>. Please note that a verification email will be sent to the new email address in order to update the current email address. Please provide the new email address in the box below:</label>
+                    <input type="email" name="email" id="email" placeholder="New Email" />
+                    <input type="submit" value="Change Email" />
                 </fieldset>
             </form>
         </div>

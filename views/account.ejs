@@ -10,9 +10,9 @@
         <li>Do not send multiple support requests.</li>
         <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
     </ul>
-    <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>.</p>
-    <% if (user.public == 1) { %>
-        <p>Your account is publicly accessible at: <a href="/profile/<%= user.username %>"><span id="accountURL"></span></a>.</p>
+    <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>. If you haven't set up your gravatar email, we would try to fetch your profile picture from your account email, by default. If your account email and gravatar email are the same, you do not need to set a gravatar email.</p>
+    <% if (user.url !== "") { %>
+        <p>Your account is publicly accessible at: <a href="<%= user.url %>" target="_blank"><%= user.url %></a></p>
     <% } %>
     <div class="account">
         <div class="ac-sidebar">
@@ -51,6 +51,8 @@
                     <input type="text" name="firstname" id="firstname" value="<%= user.firstname %>" placeholder="First Name" />
                     <label for="lastname">Last Name</label>
                     <input type="text" name="lastname" id="lastname" value="<%= user.lastname %>" placeholder="Last Name" />
+                    <label for="gravatarEmail">Gravatar Email</label>
+                    <input type="text" name="gravatarEmail" id="gravatarEmail" value="<%= user.gravatarEmail %>" placeholder="Gravatar Email" />
                     <label for="location">Location</label>
                     <input type="text" name="location" id="location" value="<%= user.location %>" placeholder="Location" />
                     <label for="bio">Bio</label>
@@ -76,12 +78,21 @@
                     <% } %>
                 </fieldset>
             </form>
-            <form method="post" action="">
+            <form method="post" action="/account/sendVerificationEmail">
                 <fieldset>
                     <legend>Change Email</legend>
                     <label for="email">Your current registered email is <em><u><%= user.email %></u></em>. Please note that a verification email will be sent to the new email address in order to update the current email address. Please provide the new email address in the box below:</label>
                     <input type="email" name="email" id="email" placeholder="New Email" />
                     <input type="submit" value="Change Email" />
+                    <% if (locals.messages.mailsenderror) { %>
+                        <p class="error"><%= messages.mailsenderror %></p>
+                    <% } %>
+                    <% if (locals.messages.mailsendsuccess) { %>
+                        <p class="success"><%= messages.mailsendsuccess %></p>
+                        <script>
+                            console.log("<%= messages.mailsendsuccess %>");
+                        </script>
+                    <% } %>
                 </fieldset>
             </form>
         </div>

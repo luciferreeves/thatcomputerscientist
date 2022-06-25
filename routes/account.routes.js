@@ -8,38 +8,48 @@ const { isEmailValid } = require("../functions/validate");
 const nodemailer = require("nodemailer");
 
 router.get("/", (req, res) => {
-  const username = jwt.decode(req.cookies.token).username;
-  const connection = mysql.createConnection(connectionString);
-  connection.connect();
-  const sql = "SELECT * FROM Profiles WHERE username = ?";
-  connection.query(sql, [username], (err, results, fields) => {
-    if (err) {
-      res.status(500).render("error", {
-        error: err,
-      });
-    } else {
-      if (results.length > 0) {
-        const user = results[0];
-        renderRoute(req, res, "account", "My Account", true, {
-          user: {
-            ...user,
-            avatar: md5(user.gravatarEmail || user.email || ""),
-            url:
-              user.public == 1
-                ? `${req.protocol + "://" + req.get("host")}/profile/${
-                    user.username
-                  }`
-                : "",
-          },
-        });
+  jwt.verify(
+    req.cookies.token,
+    process.env.AUTHORIZATION_STRING,
+    (err, decoded) => {
+      if (err) {
+        res.redirect("/");
       } else {
-        renderRoute(req, res, "account", "My Account", true, {
-          user: null,
+        const username = jwt.decode(req.cookies.token).username;
+        const connection = mysql.createConnection(connectionString);
+        connection.connect();
+        const sql = "SELECT * FROM Profiles WHERE username = ?";
+        connection.query(sql, [username], (err, results, fields) => {
+          if (err) {
+            res.status(500).render("error", {
+              error: err,
+            });
+          } else {
+            if (results.length > 0) {
+              const user = results[0];
+              renderRoute(req, res, "account", "My Account", true, {
+                user: {
+                  ...user,
+                  avatar: md5(user.gravatarEmail || user.email || ""),
+                  url:
+                    user.public == 1
+                      ? `${req.protocol + "://" + req.get("host")}/profile/${
+                          user.username
+                        }`
+                      : "",
+                },
+              });
+            } else {
+              renderRoute(req, res, "account", "My Account", true, {
+                user: null,
+              });
+            }
+          }
         });
+        connection.end();
       }
     }
-  });
-  connection.end();
+  );
 });
 
 router.post("/sendVerificationEmail", (req, res) => {

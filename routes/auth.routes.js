@@ -22,7 +22,7 @@ router.post("/login", (req, res) => {
   const sql = "SELECT * FROM Users WHERE username = ?";
   connection.query(sql, [username], (err, results, fields) => {
     if (err) {
-      renderRoute(req, res, "error", "Error", false, {
+      renderRoute(req, res, "errors/page_error", "Error", false, {
         error: err.message,
       });
     } else {
@@ -72,14 +72,14 @@ router.post("/changePassword", (req, res) => {
       const connection = mysql.createPool(connectionURL);
       connection.getConnection((err, connection) => {
         if (err) {
-          renderRoute(req, res, "error", "Error", false, {
+          renderRoute(req, res, "errors/page_error", "Error", false, {
             error: err.message,
           });
         } else {
           const sql = "SELECT * FROM Users WHERE username = ?";
           connection.query(sql, [username], (err, results, fields) => {
             if (err) {
-              renderRoute(req, res, "error", "Error", false, {
+              renderRoute(req, res, "errors/page_error", "Error", false, {
                 error: err.message,
               });
             } else {

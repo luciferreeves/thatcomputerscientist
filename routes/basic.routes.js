@@ -20,11 +20,11 @@ router.get("/verifyEmail", (req, res) => {
       jwt.verify(token, validationString, (err, decoded) => {
         if (err) {
           if (err.expiredAt) {
-            renderRoute(req, res, "error", "Token Expired Error", false, {
+            renderRoute(req, res, "errors/page_error", "Token Expired Error", false, {
               error: `Your token has expired at ${err.expiredAt}. Please request an email verification again from the account page.`,
             });
           } else {
-            renderRoute(req, res, "error", "Token Error", false, {
+            renderRoute(req, res, "errors/page_error", "Token Error", false, {
               error: err,
             });
           }
@@ -36,7 +36,7 @@ router.get("/verifyEmail", (req, res) => {
           const sql = "UPDATE Profiles SET email = ? WHERE username = ?";
           connection.query(sql, [email, username], (err, results, fields) => {
             if (err) {
-              renderRoute(req, res, "error", "Error", false, {
+              renderRoute(req, res, "errors/page_error", "Error", false, {
                 error: err,
               });
             } else {

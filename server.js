@@ -7,8 +7,8 @@ const mysql = require("mysql2");
 const app = express();
 const port = process.env.PORT || 3000;
 const connectionURL = process.env.DATABASE_URL;
-const validationString = process.env.AUTHORIZATION_STRING;
 const cron = require("node-cron");
+const subdomains = require('wildcard-subdomains');
 
 require("dotenv").config();
 
@@ -24,6 +24,11 @@ app.use(
   })
 );
 app.use(flash());
+
+app.use(subdomains({
+  namespace: 'profile',
+  whitelist: ['www'],
+}))
 
 // Set Template Engine
 app.set("view engine", "ejs");

@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
         const sql = "SELECT * FROM Profiles WHERE username = ?";
         connection.query(sql, [username], (err, results, fields) => {
           if (err) {
-            res.status(500).render("error", {
+            renderRoute(req, res, "errors/page_error", "Error", false, {
               error: err,
             });
           } else {
@@ -58,7 +58,7 @@ router.post("/sendVerificationEmail", (req, res) => {
     process.env.AUTHORIZATION_STRING,
     (err, decoded) => {
       if (err) {
-        renderRoute(req, res, "error", "Error", false, {
+        renderRoute(req, res,  "errors/page_error", "Error", false, {
           error: err,
         });
       } else {
@@ -76,7 +76,7 @@ router.post("/sendVerificationEmail", (req, res) => {
           const sql = "SELECT * FROM Profiles WHERE username = ?";
           connection.query(sql, [username], (err, results, fields) => {
             if (err) {
-              renderRoute(req, res, "error", "Error", false, {
+              renderRoute(req, res, "errors/page_error", "Error", false, {
                 error: err.message,
               });
             } else {
@@ -142,7 +142,7 @@ router.post("/sendVerificationEmail", (req, res) => {
                   });
                 }
               } else {
-                res.status(500).render("error", {
+                renderRoute(req, res, "errors/page_error", "Error", false, {
                   error: "User not found",
                 });
               }
@@ -161,7 +161,7 @@ router.post("/updateAccount", (req, res) => {
     process.env.AUTHORIZATION_STRING,
     (err, decoded) => {
       if (err) {
-        renderRoute(req, res, "error", "Error", false);
+        renderRoute(req, res, "errors/page_error", "Error", false);
       } else {
         const username = decoded.username;
         const firstname = req.body.firstname;
@@ -174,7 +174,7 @@ router.post("/updateAccount", (req, res) => {
         const connection = mysql.createPool(connectionString);
         connection.getConnection((err, connection) => {
           if (err) {
-            renderRoute(req, res, "error", "Error", false, {
+            renderRoute(req, res, "errors/page_error", "Error", false, {
               error: err.message,
             });
           } else {

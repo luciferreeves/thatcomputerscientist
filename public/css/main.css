@@ -120,6 +120,16 @@ nav > ul > li {
     overflow-y: auto;
 }
 
+.errorbox {
+    background-color: #ffd4bd;
+    padding: 20px;
+    border: 1px solid #191919;
+}
+
+.errorbox > h1 {
+    margin-top: 0;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

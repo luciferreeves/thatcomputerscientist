@@ -22,8 +22,8 @@ router.post("/login", (req, res) => {
   const sql = "SELECT * FROM Users WHERE username = ?";
   connection.query(sql, [username], (err, results, fields) => {
     if (err) {
-      res.status(500).render("error", {
-        error: err,
+      renderRoute(req, res, "error", "Error", false, {
+        error: err.message,
       });
     } else {
       if (results.length > 0) {

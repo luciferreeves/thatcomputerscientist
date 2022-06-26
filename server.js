@@ -20,7 +20,7 @@ app.use(
   expressSession({
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      domain: require("yaml").parse(require("fs").readFileSync("config.yml", "utf8")).domain,
+      domain: require("yaml").parse(require("fs").readFileSync("site.config.yml", "utf8")).domain,
     },
     secret: process.env.AUTHORIZATION_STRING,
     resave: true,

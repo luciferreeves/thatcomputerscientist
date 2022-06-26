@@ -9,8 +9,9 @@ const validationString = process.env.AUTHORIZATION_STRING;
 const connectionURL = process.env.DATABASE_URL;
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  req.session.destroy();
+  res.clearCookie("token", {
+    domain: require("yaml").parse(require("fs").readFileSync("site.config.yml", "utf8")).domain,
+  });
   res.redirect(req.get("referer"));
 });
 

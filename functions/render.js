@@ -4,7 +4,10 @@ const validationString = process.env.AUTHORIZATION_STRING;
 function renderRoute(req, res, page, title, protected = false, data = {}) {
   res.locals.messages = req.flash();
   let currentDomain = req.get("host").split(".");
-  currentDomain = req.protocol + "://" + currentDomain.at(-2) + "." + currentDomain.at(-1);
+
+  // get the ':scheme' from the request header
+  let scheme = req.headers['X-Forwarded-Proto'] || req.protocol;
+  currentDomain = scheme + "://" + currentDomain.at(-2) + "." + currentDomain.at(-1);
   jwt.verify(req.cookies.token, validationString, (err, decoded) => {
     if (err) {
       res.clearCookie("token");

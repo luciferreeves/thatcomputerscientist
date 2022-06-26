@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const connectionURL = process.env.DATABASE_URL;
 const cron = require("node-cron");
-const subdomains = require('wildcard-subdomains');
+const subdomains = require("wildcard-subdomains");
 
 require("dotenv").config();
 
@@ -19,16 +19,21 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   expressSession({
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      domain: ".thatcomputerscientist.com",
+    },
     secret: process.env.AUTHORIZATION_STRING,
   })
 );
 app.use(flash());
 
-app.use(subdomains({
-  namespace: '_profile',
-  whitelist: ['www'],
-}))
+app.use(
+  subdomains({
+    namespace: "_profile",
+    whitelist: ["www"],
+  })
+);
 
 // Set Template Engine
 app.set("view engine", "ejs");

@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
           // set cookie
           res.cookie("token", token, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
+            domain: '.thatcomputerscientist.com'
           });
           res.redirect(req.get("referer"));
         } else {

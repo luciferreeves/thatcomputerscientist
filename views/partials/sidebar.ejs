@@ -1,15 +1,15 @@
 <div class="sidebar">
     <a href="/" class="title">
-        <img src="images/logo.png" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
+        <img src="<%= domain %>/images/logo.png" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
     <!-- Login Box -->
     </a>
     <% if (locals.username) { %>
         <div class="login-box">
             <p>Welcome, <%= username %>!</p>
-            <a href="/auth/logout">Logout</a>
+            <a href="<%= domain %>/auth/logout">Logout</a>
         </div>
     <% } else { %>
-        <form method="post" action="/auth/login">
+        <form method="post" action="<%= domain %>/auth/login">
             <fieldset>
                 <legend>Login Area</legend>
                 <label for="username">Username</label>
@@ -35,7 +35,7 @@
                 <% if (locals.username) { %>
                     <li><a href="/account">My Account</a></li>
                 <% } else { %>
-                    <li><a href="/auth/register">Register</a></li>
+                    <li><a href="/register">Register</a></li>
                 <% } %>
             </ul>
         </nav>

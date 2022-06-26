@@ -27,15 +27,7 @@ app.use(
   })
 );
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-  // Removing some custom headers
-  res.removeHeader('X-Powered-By');
-  res.removeHeader('fly-request-id');
-  res.removeHeader('server');
-  res.removeHeader('via');
+  res.removeHeader('X-Powered-By')
   next();
 });
 app.use(flash());

@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
                   avatar: md5(user.gravatarEmail || user.email || ""),
                   url:
                     user.public == 1
-                      ? `${req.protocol + "://" + user.username + '.' + req.get("host")}`
+                      ? `${req.protocol + "://" + user.username + '.' + req.get("host")}`.replace('www.', '')
                       : "",
                 },
               });

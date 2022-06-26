@@ -10,6 +10,7 @@ const connectionURL = process.env.DATABASE_URL;
 
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
+  req.session.destroy();
   res.redirect(req.get("referer"));
 });
 
@@ -43,7 +44,6 @@ router.post("/login", (req, res) => {
           // set cookie
           res.cookie("token", token, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
-            domain: require("yaml").parse(require("fs").readFileSync("site.config.yml", "utf8")).domain
           });
           res.redirect(req.get("referer"));
         } else {

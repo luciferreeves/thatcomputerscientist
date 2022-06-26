@@ -18,18 +18,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   expressSession({
-    cookie: {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    },
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
     secret: process.env.AUTHORIZATION_STRING,
-    resave: true,
-    saveUninitialized: false
   })
 );
-app.use(function(req, res, next) {
-  res.removeHeader('X-Powered-By')
-  next();
-});
 app.use(flash());
 
 app.use(

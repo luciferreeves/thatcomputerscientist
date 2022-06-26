@@ -6,7 +6,7 @@ function renderRoute(req, res, page, title, protected = false, data = {}) {
   let currentDomain = req.get("host").split(".");
 
   // get the ':scheme' from the request header
-  let scheme = req.headers['X-Forwarded-Proto'] || req.protocol;
+  let scheme = req.headers[':scheme'] || req.headers['x-forwarded-proto'] || req.protocol;
   currentDomain = scheme + "://" + currentDomain.at(-2) + "." + currentDomain.at(-1);
   jwt.verify(req.cookies.token, validationString, (err, decoded) => {
     if (err) {

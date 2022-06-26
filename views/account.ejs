@@ -12,7 +12,7 @@
     </ul>
     <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>. If you haven't set up your gravatar email, we would try to fetch your profile picture from your account email, by default. If your account email and gravatar email are the same, you do not need to set a gravatar email.</p>
     <% if (user.url !== "") { %>
-        <p>Your account is publicly accessible at: <a href="<%= user.url %>" target="_blank"><%= user.url %></a></p>
+        <p>Your account is publicly accessible at: <a href="<%= user.url %>" target="_blank"><%= user.url %></a>.</p>
     <% } %>
     <div class="account">
         <div class="ac-sidebar">

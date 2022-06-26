@@ -26,7 +26,7 @@ app.use(
 app.use(flash());
 
 app.use(subdomains({
-  namespace: 'profile',
+  namespace: '_profile',
   whitelist: ['www'],
 }))
 

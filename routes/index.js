@@ -10,7 +10,7 @@ router.use('/', home);
 router.use('/auth', auth);
 router.use('/api', api);
 router.use('/account', account);
-router.use('/profile', profile);
+router.use('/_profile', profile);
 router.get('*', (req, res) => {
     renderRoute(req, res, "404", "Page Not Found");
 });

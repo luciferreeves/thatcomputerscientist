@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000;
 const connectionURL = process.env.DATABASE_URL;
 const cron = require("node-cron");
 const subdomains = require("wildcard-subdomains");
-
 require("dotenv").config();
 
 // Middleware
@@ -21,9 +20,11 @@ app.use(
   expressSession({
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      domain: ".thatcomputerscientist.com",
+      domain: require("yaml").parse(require("fs").readFileSync("config.yml", "utf8")).domain,
     },
     secret: process.env.AUTHORIZATION_STRING,
+    resave: true,
+    saveUninitialized: true
   })
 );
 app.use(flash());

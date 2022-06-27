@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
     await browser.close();
     // Send the image as a response
     res.setHeader("Content-Type", "image/png");
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     res.send(image);
 });
 

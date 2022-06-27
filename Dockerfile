@@ -1,11 +1,18 @@
-FROM zenika/alpine-chrome:89-with-node-14
+FROM zenika/alpine-chrome:latest-with-node
+
+USER root
+
+RUN apk add --no-cache msttcorefonts-installer fontconfig
+RUN update-ms-fonts
+RUN fc-cache -f && rm -rf /var/cache/*
+
+USER chrome
 
 COPY package*.json ./
 
 RUN npm install
 
 COPY . .
-
 ENV PUPPETEER_EXECUTABLE_PATH='/usr/bin/chromium-browser'
 
 EXPOSE 8080

@@ -16,4 +16,4 @@ fs.writeFileSync("README.md", newReadme);
 
 // Add the readme file to the git commit
 shell.exec("git add README.md");
-shell.exec("git commit -m 'Auto Update Readme'");
+// shell.exec("git commit -m 'Auto Update Readme'");

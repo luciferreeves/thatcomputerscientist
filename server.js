@@ -8,7 +8,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const connectionURL = process.env.DATABASE_URL;
 const cron = require("node-cron");
-const subdomains = require("wildcard-subdomains");
+const wildcardSubdomains = require("wildcard-subdomains");
+const subdomain = require("express-subdomain");
 require("dotenv").config();
 
 // Middleware
@@ -25,10 +26,15 @@ app.use(
 app.use(flash());
 
 app.use(
-  subdomains({
+  wildcardSubdomains({
     namespace: "_profile",
-    whitelist: ["www"],
+    whitelist: ["www", "api"],
   })
+);
+
+// Setup API subdomain
+app.use(
+  subdomain("api", require("./routes/api"))
 );
 
 // Set Template Engine

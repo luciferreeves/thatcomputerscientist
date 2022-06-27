@@ -1,4 +1,5 @@
 const fs = require("fs");
+const shell = require("shelljs");
 
 // Open the readme file
 const readme = fs.readFileSync("README.md", "utf8");
@@ -13,4 +14,6 @@ const newReadme = readme.replace(screenshotLine, newScreenshotLine);
 // Write the new readme file
 fs.writeFileSync("README.md", newReadme);
 
-
+// Add the readme file to the git commit
+shell.exec("git add README.md");
+shell.exec("git commit -m 'Auto Update Readme'");

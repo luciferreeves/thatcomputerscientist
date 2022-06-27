@@ -5,7 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "hooks:pre-commit": "node ./hooks/pre-commit.js",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "pre-commit": "npm run hooks:pre-commit"
   },
   "repository": {
     "type": "git",
@@ -41,6 +46,7 @@
     "yaml": "^2.1.1"
   },
   "devDependencies": {
+    "husky": "^8.0.1",
     "nodemon": "^2.0.16"
   }
 }

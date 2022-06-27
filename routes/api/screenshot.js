@@ -1,13 +1,15 @@
 const router = require("express").Router();
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+const yaml = require("yaml");
+const config = yaml.parse(fs.readFileSync("site.config.yml", "utf8"));
 
 router.get("/", async (req, res) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     page.setViewport({ width: 1920, height: 1080 });
     // Go to the url
-    await page.goto("https://www.thatcomputerscientist.com/", {
+    await page.goto(config.url, {
         waitUntil: "networkidle2",
     });
     // Take a screenshot

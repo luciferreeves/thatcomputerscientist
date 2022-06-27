@@ -15,9 +15,8 @@ If you would like to contribute to the website, please see the [contributing gui
 
 Below is the screenshot of how the website looks like right now. This screenshot is being updated programatically by [That Computer Scientist's Screenshot API](https://api.thatcomputerscientist.com/screenshot), and will update as I push more changes to the repository.
 
-> Please note that this screenshot is a general overview and the fonts might look different than the actual site as the required fonts might not be installed on the server.
-
 ![Screenshot](https://api.thatcomputerscientist.com/screenshot)
+![image](https://user-images.githubusercontent.com/30593201/176039934-1f334cd9-5697-487e-b643-5eb43725b921.png)
 
 ## Cloning, Installing, and Running
 

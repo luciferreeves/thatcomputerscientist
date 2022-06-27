@@ -1,4 +1,4 @@
-FROM zenika/alpine-chrome:latest-with-node
+FROM zenika/alpine-chrome:100-with-node
 
 USER root
 

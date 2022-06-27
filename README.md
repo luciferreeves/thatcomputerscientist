@@ -13,7 +13,9 @@ If you would like to contribute to the website, please see the [contributing gui
 
 ## Screenshot
 
-Below is the screenshot of how the website looks like right now. This screenshot is being updated programatically by [ScreenshotAPI](https://www.screenshotapi.net), and will update as I push more changes to the repository.
+Below is the screenshot of how the website looks like right now. This screenshot is being updated programatically by [That Computer Scientist's Screenshot API](https://api.thatcomputerscientist.com/screenshot), and will update as I push more changes to the repository.
+
+> Please note that this screenshot is a general overview and the fonts might look different than the actual site as the required fonts might not be installed on the server.
 
 ![Screenshot](https://api.thatcomputerscientist.com/screenshot)
 

@@ -1,9 +1,9 @@
 # [ThatComputerScientist](https://thatcomputerscientist.com)
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/luciferreeves/thatcomputerscientist/Fly%20Deploy?color=%232088FF&label=deployment&logo=github%20actions&logoColor=white&style=for-the-badge)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/luciferreeves?color=%23EA4AAA&logo=GitHub%20Sponsors&logoColor=white&style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/luciferreeves/thatcomputerscientist?color=%233DA639&logo=Open%20Source%20Initiative&logoColor=white&style=for-the-badge)
-![Lines of code](https://img.shields.io/tokei/lines/github/luciferreeves/thatcomputerscientist?color=%23007ACC&label=lines%20of%20code&logo=Visual%20Studio%20Code&style=for-the-badge)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/luciferreeves/thatcomputerscientist/Fly%20Deploy?color=%232088FF&label=deployment&logo=github%20actions&logoColor=white&style=for-the-badge)](https://github.com/luciferreeves/thatcomputerscientist/actions/workflows/main.yml)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/luciferreeves?color=%23EA4AAA&logo=GitHub%20Sponsors&logoColor=white&style=for-the-badge)](https://github.com/sponsors/luciferreeves)
+[![GitHub](https://img.shields.io/github/license/luciferreeves/thatcomputerscientist?color=%233DA639&logo=Open%20Source%20Initiative&logoColor=white&style=for-the-badge)](LICENSE)
+[![Lines of code](https://img.shields.io/tokei/lines/github/luciferreeves/thatcomputerscientist?color=%23007ACC&label=lines%20of%20code&logo=Visual%20Studio%20Code&style=for-the-badge)](https://github.com/luciferreeves/thatcomputerscientist/graphs/contributors)
 
 This repository contains the source code for my personal website which is available at [thatcomputerscientist.com](https://thatcomputerscientist.com) — a retro-looking open-collaboration blog about computer science, statistics, mathematics, programming, and more.
 

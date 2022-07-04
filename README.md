@@ -15,7 +15,7 @@ If you would like to contribute to the website, please see the [contributing gui
 
 Below is the screenshot of how the website looks like right now. This screenshot is being updated programatically by [That Computer Scientist's Screenshot API](https://api.thatcomputerscientist.com/screenshot), and will update as I push more changes to the repository.
 
-![Screenshot](https://api.thatcomputerscientist.com/screenshot?random=0.2128385904744179)
+![Screenshot](https://api.thatcomputerscientist.com/screenshot?random=0.4984434256068826)
 
 ## Cloning, Installing, and Running
 

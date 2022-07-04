@@ -32,10 +32,8 @@ app.use(
   })
 );
 
-// Setup API subdomain
-app.use(
-  subdomain("api", require("./routes/api"))
-);
+app.use(subdomain("screenshot.api", require("./routes/api/public/screenshot.js")));
+app.use(subdomain("api", require("./routes/api")));
 
 // Set Template Engine
 app.set("view engine", "ejs");

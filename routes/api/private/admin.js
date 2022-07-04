@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const mysql = require("mysql2");
 const bcrypt = require("bcryptjs");
-const validateAuthorization = require("../../functions/validate");
+const validateAuthorization = require("../../../functions/validate");
 
 require("dotenv").config();
 const connectionURL = process.env.DATABASE_URL;

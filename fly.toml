@@ -12,9 +12,10 @@ processes = []
 
 [env]
   PORT = "8080"
+  url = "https://thatcomputerscientist.com"
 
 [mounts]
-source = "thatcomputerscientist_data"
+source = "data"
 destination = "/var/lib/ghost/content"
 
 [experimental]

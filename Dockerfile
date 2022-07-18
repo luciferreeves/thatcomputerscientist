@@ -24,5 +24,5 @@ EXPOSE 8080
 
 # replace APP_NAME with module name
 # CMD ["gunicorn", "--bind", ":8080", "--workers", "2", "thatcomputerscientist.wsgi"]
-CMD ["python3", "manage.py", "runserver", ":8080"]
+CMD ["python3", "manage.py", "runserver", "8080"]
 

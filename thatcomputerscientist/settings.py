@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure--8^hnd!ymuui4c2hu0$x9_j@eylb2tpr1xiq@xr2a(2vfwc=2_
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
 
 # Application definition
 

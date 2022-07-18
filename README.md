@@ -1,4 +1,4 @@
-# ThatComputerScientist
+# That Computer Scientist
 Source Code for my Personal Website
 
 I am updating this website to Django. The Documentation will be updated soon.

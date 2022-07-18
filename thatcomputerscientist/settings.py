@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
+SESSION_COOKIE_DOMAIN = ".thatcomputerscientist.com"
+DOMAIN_NAME = "thatcomputerscientist.com"
 
 # Application definition
 

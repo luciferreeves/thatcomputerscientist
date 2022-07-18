@@ -7,16 +7,11 @@ kill_timeout = 5
 processes = []
 
 [build]
-  image = "ghost:5-alpine"
-  # dockerfile = "Dockerfile"
+  # builder = "heroku/buildpacks:20"
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "8080"
-  url = "https://thatcomputerscientist.com"
-
-[mounts]
-source = "data"
-destination = "/var/lib/ghost/content"
 
 [experimental]
   allowed_public_ports = []
@@ -24,7 +19,7 @@ destination = "/var/lib/ghost/content"
 
 [[services]]
   http_checks = []
-  internal_port = 2368
+  internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
   script_checks = []

@@ -1,0 +1,36 @@
+{% load static %}
+<div class="sidebar">
+    <a href="/" class="title">
+        <img src="{% static 'images/logo.png' %}" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
+    <!-- Login Box -->
+    </a>
+        <div class="login-box">
+            <p>Welcome, username!</p>
+            <a href="/logout">Logout</a>
+        </div>
+        <form method="post" onsubmit="event.preventDefault();">
+            <fieldset>
+                <legend>Login Area</legend>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password">
+                <p class="error">Demo Error</p>
+                <input type="submit" value="Login">
+            </fieldset>
+        </form>
+    <br>
+    <fieldset>
+        <legend>Navigation</legend>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/account">My Account</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </nav>
+    </fieldset>
+</div>

@@ -31,8 +31,8 @@ DEBUG = os.getenv('ENVIRONMENT') == 'development' or False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
-SESSION_COOKIE_DOMAIN = ".thatcomputerscientist.com"
-DOMAIN_NAME = "thatcomputerscientist.com"
+SESSION_COOKIE_DOMAIN = "127.0.0.1" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
+DOMAIN_NAME = "127.0.0.1:8000" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'users',
 ]
 
 MIDDLEWARE = [

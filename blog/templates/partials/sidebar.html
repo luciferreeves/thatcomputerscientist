@@ -4,21 +4,28 @@
         <img src="{% static 'images/logo.png' %}" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
     <!-- Login Box -->
     </a>
+        {% if user.is_authenticated %}
         <div class="login-box">
-            <p>Welcome, username!</p>
-            <a href="/logout">Logout</a>
+            <p>Welcome, {{ user.username }}!</p>
+            <p><a href="{% url 'users:logout' %}">Log Out</a></p>
         </div>
-        <form method="post" onsubmit="event.preventDefault();">
+        {% else %}
+        <form method="post" action="{% url 'users:login' %} ">
+            {% csrf_token %}
             <fieldset>
                 <legend>Login Area</legend>
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password">
-                <p class="error">Demo Error</p>
+                {% for message in messages %}
+                    <p class="{{message.tags}}">{{ message }}</p>
+                {% endfor %}
+                <input type="hidden" name="next" value="{{ request.path }}">
                 <input type="submit" value="Login">
             </fieldset>
         </form>
+        {% endif %}
     <br>
     <fieldset>
         <legend>Navigation</legend>
@@ -34,3 +41,12 @@
         </nav>
     </fieldset>
 </div>
+
+<script>
+    // get the username parameter from the url
+    var username = new URLSearchParams(window.location.search).get('username');
+    // if the username parameter is not empty, set the username input to the value of the username parameter
+    if (username) {
+        document.getElementById('username').value = username;
+    }
+</script>

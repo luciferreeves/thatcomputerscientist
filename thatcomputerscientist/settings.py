@@ -84,17 +84,8 @@ WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_psdb_engine',
-        'NAME': os.getenv('DB_DATABASE'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-        'OPTIONS': {
-            'ssl': {
-                'ca': os.getenv('MYSQL_ATTR_SSL_CA'),
-            }
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3') if os.getenv('ENVIRONMENT') == 'development' else ('/data/db.sqlite3'),
     }
 }
 

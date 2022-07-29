@@ -13,10 +13,8 @@ def login_user(request):
     print (username, password)
     if username == '' or password == '':
         messages.error(request, 'Please fill in all fields')
-        print('here1')
         return HttpResponseRedirect(next + '?username=' + username)
     else: 
-        print('here2')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             print('here3')

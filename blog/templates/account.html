@@ -45,7 +45,7 @@
                     <label for="gravatarEmail">Gravatar Email</label>
                     <input type="text" name="gravatarEmail" id="gravatarEmail" value="{{ user_profile.gravatar_email }}" placeholder="Gravatar Email" />
                     <label for="location">Location</label>
-                    <input type="text" name="location" id="location" value="{{ user_profile.location }}" placeholder="Location" />
+                    <input type="text" name="location" id="location" value="{{ user_profile.location }}" placeholder="Location" maxlength="50"/>
                     <label for="bio">Bio</label>
                     <textarea name="bio" id="bio" placeholder="Bio">{{ user_profile.bio }}</textarea>
                     <label for="isPublic">Account Visibility</label>

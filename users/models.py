@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     gravatar_email = models.EmailField(blank=True)
     is_public = models.BooleanField(default=False)
     email_public = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

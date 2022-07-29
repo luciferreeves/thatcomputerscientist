@@ -8,6 +8,8 @@ body {
     padding: 0;
     min-width: calc(100vw - 16px);
     font-family: serif;
+    margin: 0;
+    padding: 0;
 }
 
 .sidebar {
@@ -100,6 +102,20 @@ nav > ul > li {
 
 .success {
     color: green;
+}
+
+.alert.success {
+    background-color: #d4ffbd;
+    padding: 10px;
+    color: rgb(5, 74, 5);
+    font-weight: bold;
+}
+
+.alert.error {
+    background-color: #ffbdbd;
+    padding: 10px;
+    color: rgb(74, 5, 5);
+    font-weight: bold;
 }
 
 .account {

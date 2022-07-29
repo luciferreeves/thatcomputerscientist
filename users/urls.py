@@ -7,6 +7,7 @@ app_name = 'users'
 urlpatterns = [
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),
+    path('update', views.update_user, name='update'),
 ]
 
 # Configure Admin Site

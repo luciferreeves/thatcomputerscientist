@@ -4,7 +4,15 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib import messages
 from .models import UserProfile
 from django.contrib.auth.models import User
-
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.sites.shortcuts import get_current_site
+from .tokens import account_activation_token
+from django.utils.http import urlsafe_base64_decode
 
 # Create your views here.
 def login_user(request):
@@ -14,17 +22,21 @@ def login_user(request):
     password = request.POST['password']
     print (username, password)
     if username == '' or password == '':
-        messages.error(request, 'Please fill in all fields')
+        messages.error(request, 'Please fill in all fields.')
         return HttpResponseRedirect(next + '?username=' + username)
     else: 
+        # check if email is verified
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            print('here3')
-            login(request, user)
-            return HttpResponseRedirect(next)
+            email_verified = UserProfile.objects.get(user=user.pk).email_verified
+            if email_verified:
+                login(request, user)
+                return HttpResponseRedirect(next)
+            else:
+                messages.error(request, 'EVERR')
+                return HttpResponseRedirect(next + '?username=' + username)
         else:
-            messages.error(request, 'Invalid username or password')
-            print('here4')
+            messages.error(request, 'Invalid username or password.')
             return HttpResponseRedirect(next + '?username=' + username)
 
 def logout_user(request):
@@ -90,3 +102,38 @@ def change_password(request):
         messages.error(request, 'Unable to change password! Please try again later.')
         return redirect('/')
 
+
+def send_verification_email(request):
+    username = request.POST['username']
+    user = User.objects.get(username=username)
+    
+
+    subject = 'Verify your email address'
+    message = render_to_string('verification_email.html', {
+        'user': user.username if user.first_name is None else user.first_name,
+        'site_name': 'That Computer Scientist',
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https://' if request.is_secure() else 'http://',
+        'domain': get_current_site(request).domain,
+    })
+    message = strip_tags(message)
+    send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email])
+    messages.success(request, 'Verification email was sent! Please check your email.')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def verify_email(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+        user_profile = UserProfile.objects.get(user=user.pk)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user_profile.email_verified = True
+        user_profile.save()
+        messages.success(request, 'Your email has been verified! You can now login.')
+        return redirect('/')
+    else:
+        messages.error(request, 'The verification link is invalid!')
+        return redirect('/')

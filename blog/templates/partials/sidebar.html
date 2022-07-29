@@ -10,21 +10,29 @@
             <button type="submit" onclick="location.href='{% url 'users:logout' %}'">Logout</button>
         </div>
         {% else %}
-        <form method="post" action="{% url 'users:login' %} ">
-            {% csrf_token %}
-            <fieldset>
-                <legend>Login Area</legend>
+        <fieldset>
+            <legend>Login Area</legend>
+            <form method="post" action="{% url 'users:login' %} ">
+                {% csrf_token %}
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password">
-                {% for message in messages %}
-                    <p class="{{message.tags}}">{{ message }}</p>
-                {% endfor %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 <input type="submit" value="Login">
-            </fieldset>
-        </form>
+            </form>
+            {% for message in messages %}
+                {% if message.message == "EVERR" %}
+                <form method="post" action="{% url 'users:sendverificationemail' %}" >
+                    <p class="{{message.tags}}">
+                        Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
+                    </p>
+                    </form>
+                {% else %}
+                <p class="{{message.tags}}">{{message.message}}</p>
+                {% endif %}
+            {% endfor %}
+        </fieldset>
         {% endif %}
     <br>
     <fieldset>
@@ -53,6 +61,8 @@
     var username = new URLSearchParams(window.location.search).get('username');
     // if the username parameter is not empty, set the username input to the value of the username parameter
     if (username) {
-        document.getElementById('username').value = username;
+        document.getElementsByName("username").forEach(function(input) {
+            input.value = username;
+        });
     }
 </script>

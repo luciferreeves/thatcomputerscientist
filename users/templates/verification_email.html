@@ -1,0 +1,10 @@
+{% autoescape off %}
+Hi {{ user }},
+
+Thanks for registering an account on {{ site_name }}. To verify your email address, please click the link below.</p>
+{{ protocol }}{{ domain }}{% url 'users:verifyemail' uidb64=uid token=token %}
+
+Thanks,
+{{ site_name }} Team
+{% endautoescape %}
+

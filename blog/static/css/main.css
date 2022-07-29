@@ -20,6 +20,7 @@ body {
     overflow-y: auto;
     border: 1px solid #191919;
     min-width: 15rem;
+    max-width: 15rem;
 }
 
 .main {

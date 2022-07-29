@@ -22,13 +22,16 @@
                 <legend>Avatar</legend>
                 <img src="https://www.gravatar.com/avatar/{{avatar}}?s=200" alt="{{ user.username }}'s avatar" width="200" height="200"/>
             </fieldset>
-            <form method="post" onsubmit="event.preventDefault();">
+            <form method="post" action="{% url 'users:changepassword' %}">
+                {% csrf_token %}
                 <fieldset>
                     <legend>Change Password</legend>
-                    <label for="password">Current Password</label>
-                    <input type="password" name="password" id="password" placeholder="Current Password" />
-                    <label for="new_password">New Password</label>
-                    <input type="password" name="new_password" id="new_password" placeholder="New Password" />
+                    <label for="oldPassword">Current Password</label>
+                    <input type="password" name="oldPassword" id="oldPassword" placeholder="Current Password" />
+                    <label for="newPassword">New Password</label>
+                    <input type="password" name="newPassword" id="newPassword" placeholder="New Password" />
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm New Password" />
                     <input type="submit" value="Change Password" />
                 </fieldset>
             </form>
@@ -40,7 +43,7 @@
             </form>
         </div>
         <div class="ac-main">
-            <form method="post"action="{% url 'users:update' %} ">
+            <form method="post" action="{% url 'users:update' %} ">
                 {% csrf_token %}
                 <fieldset>
                     <legend>Account Details</legend>

@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from .models import UserProfile
 from django.contrib.auth.models import User
@@ -63,5 +63,30 @@ def update_user(request):
         return redirect('/account')
     else:
         messages.error(request, 'Unable to update profile! Please try again later.')
+        return redirect('/')
+
+    
+def change_password(request):
+    username = request.user
+    old_password = request.POST['oldPassword']
+    new_password = request.POST['newPassword']
+    confirm_password = request.POST['confirmPassword']
+    if username is not None:
+        user = User.objects.get(username=username)
+        if user.check_password(old_password):
+            if new_password == confirm_password:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Password was successfully changed!')
+                return redirect('/account')
+            else:
+                messages.error(request, 'The new password and confirmation password do not match!')
+                return redirect('/account')
+        else:
+            messages.error(request, 'Old password is incorrect!')
+            return redirect('/account')
+    else:
+        messages.error(request, 'Unable to change password! Please try again later.')
         return redirect('/')
 

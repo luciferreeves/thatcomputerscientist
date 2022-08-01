@@ -72,7 +72,8 @@
                     <input type="submit" value="Update Account" />
                 </fieldset>
             </form>
-            <form method="post" onsubmit="event.preventDefault();">
+            <form method="post" action = "{% url 'users:sendchangeuseremail' %}">
+                {% csrf_token %}
                 <fieldset>
                     <legend>Change Email</legend>
                     <label for="email">Your current registered email is <em><u>{{ user.email }}</u></em>. Please note that a verification email will be sent to the new email address in order to update the current email address. Please provide the new email address in the box below:</label>

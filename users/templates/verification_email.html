@@ -1,7 +1,7 @@
 {% autoescape off %}
 Hi {{ user }},
 
-Thanks for registering an account on {{ site_name }}. To verify your email address, please click the link below.</p>
+Thanks for registering an account on {{ site_name }}. To verify and change your email address, please click the link below.
 {{ protocol }}{{ domain }}{% url 'users:verifyemail' uidb64=uid token=token %}
 
 Thanks,

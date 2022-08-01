@@ -16,7 +16,7 @@ def account(request):
             avatar = hashlib.md5(str(user_profile.gravatar_email).lower().encode('utf-8')).hexdigest() if user_profile.gravatar_email else hashlib.md5(str(user.email).lower().encode()).hexdigest()
             user_subdomain_url = None
             if user_profile.is_public:
-                scheme = urlparse(request.build_absolute_uri()).scheme
+                scheme = request.scheme if request.scheme else 'http'
                 domain = urlparse(request.build_absolute_uri()).netloc
                 user_subdomain_url = '{}://{}.{}'.format(scheme, user.username, domain)
         except UserProfile.DoesNotExist:

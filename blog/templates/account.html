@@ -11,6 +11,11 @@
         <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
     </ul>
     <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>. If you haven't set up your gravatar email, we would try to fetch your profile picture from your account email, by default. If your account email and gravatar email are the same, you do not need to set a gravatar email.</p>
+    {% if user_subdomain_url %}
+    <div class="alert" style="padding: 0 10px">
+        <p>Your account is publicly accessible at <a href="{{ user_subdomain_url }}">{{ user_subdomain_url }}</a>. If you wish to change your account to private, you can do so below.</p>
+    </div>
+    {% endif %}
     {% for message in messages %}
         <div class="alert {{message.tags}}">
             <p>{{ message }}</p>

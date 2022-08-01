@@ -17,7 +17,7 @@ def account(request):
             user_subdomain_url = None
             if user_profile.is_public:
                 print(request.scheme)
-                scheme = request[':scheme'] or request.scheme or 'http'
+                scheme = request.is_secure() and "https" or "http"
                 domain = urlparse(request.build_absolute_uri()).netloc
                 user_subdomain_url = '{}://{}.{}'.format(scheme, user.username, domain)
         except UserProfile.DoesNotExist:

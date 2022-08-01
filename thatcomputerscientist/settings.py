@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'users',
+    'userpages',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'thatcomputerscientist.urls'
+
 
 TEMPLATES = [
     {

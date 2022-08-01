@@ -53,7 +53,7 @@ def update_user(request):
     is_public = True if request.POST['isPublic'] == '1' else False
     email_public = False
     if 'emailPublic' in request.POST:
-        email_public = True if request.POST['emailPublic'] == '1' else False
+        email_public = True if request.POST['emailPublic'] == '1' and is_public else False
 
     if username is not None:
         user = User.objects.get(username=username)

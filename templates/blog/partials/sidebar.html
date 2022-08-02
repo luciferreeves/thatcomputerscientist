@@ -1,0 +1,69 @@
+{% load static %}
+<div class="sidebar">
+    <a href="/" class="title">
+        <img src="{% static 'images/logo.png' %}" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
+    <!-- Login Box -->
+    </a>
+        {% if user.is_authenticated %}
+        <div class="login-box">
+            <p>Welcome, {{ user.username }}!</p>
+            <button type="submit" onclick="location.href='{% url 'users:logout' %}'">Logout</button>
+        </div>
+        {% else %}
+        <fieldset>
+            <legend>Login Area</legend>
+            <form method="post" action="{% url 'users:login' %} ">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="submit" value="Login">
+            </form>
+            {% for message in messages %}
+                {% if message.message == "EVERR" %}
+                <form method="post" action="{% url 'users:sendverificationemail' %}" >
+                    <p class="{{message.tags}}">
+                        Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
+                    </p>
+                    </form>
+                {% else %}
+                <p class="{{message.tags}}">{{message.message}}</p>
+                {% endif %}
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+    <br>
+    <fieldset>
+        <legend>Navigation</legend>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/blog">Blog</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'account' %}">My Account</a></li>
+                    <li><a href="{% url 'homepage' %}">My Homepage<a></li>
+                {% else %}
+                    <li><a href="/register">Register</a></li>
+                {% endif %}
+                {% if user.is_superuser %}
+                <li><a href="/admin">Administration</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </fieldset>
+</div>
+
+<script>
+    // get the username parameter from the url
+    var username = new URLSearchParams(window.location.search).get('username');
+    // if the username parameter is not empty, set the username input to the value of the username parameter
+    if (username) {
+        document.getElementsByName("username").forEach(function(input) {
+            input.value = username;
+        });
+    }
+</script>

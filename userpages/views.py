@@ -12,7 +12,7 @@ def home(request):
             user_profile = UserProfile.objects.get(user=user)
             is_public = user_profile.is_public
             if is_public:
-                return HttpResponse('Welcome to {}\'s homepage!'.format(subdomain))
+                return render(request, 'userpages/home.html', {'title': 'Homepage', 'username': str(user.username).capitalize()})
             else:
                 raise Http404('{} is not public.'.format(subdomain))
         except UserProfile.DoesNotExist:

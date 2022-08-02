@@ -27,3 +27,6 @@ def account(request):
     else:
         # Redirect to login page
         return redirect('/')
+
+def homepage(request):
+    return render(request, 'homepage.html', {'title': 'Homepage'})

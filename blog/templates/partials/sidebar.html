@@ -44,7 +44,8 @@
                 <li><a href="/contact">Contact</a></li>
                 <li><a href="/blog">Blog</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="/account">My Account</a></li>
+                    <li><a href="{% url 'account' %}">My Account</a></li>
+                    <li><a href="{% url 'homepage' %}">My Homepage<a></li>
                 {% else %}
                     <li><a href="/register">Register</a></li>
                 {% endif %}

@@ -149,6 +149,10 @@ nav > ul > li {
     margin-top: 0;
 }
 
+.hamburger {
+    display: none;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {
@@ -158,4 +162,28 @@ nav > ul > li {
     .account {
         flex-direction: column;
     }
+
+    .sidebar {
+        min-width: calc(100vw - 42px)
+    }
+
+    .hamburger {
+        display: block;
+        position: absolute;
+        right: 20px;
+    }
+    .title > img {
+        position: relative;
+        left: -5.9rem;
+        top: -3px;
+    }
+
+    .lgn-area {
+        display: none;
+    }
+
+    .lgn-area-open {
+        display: block;
+    }
+
 }

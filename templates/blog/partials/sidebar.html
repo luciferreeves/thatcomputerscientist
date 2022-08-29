@@ -1,9 +1,13 @@
 {% load static %}
 <div class="sidebar">
+    {% comment %} Hamburger Icon {% endcomment %}
+    <img class="hamburger" src="{% static 'images/icons/notepad_file-2.png' %}" alt="Hamburger Icon" class="hamburger-icon">
+
     <a href="/" class="title">
         <img src="{% static 'images/logo.png' %}" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
     <!-- Login Box -->
     </a>
+    <div class="lgn-area">
         {% if user.is_authenticated %}
         <div class="login-box">
             <p>Welcome, {{ user.username }}!</p>
@@ -36,27 +40,28 @@
             {% endfor %}
         </fieldset>
         {% endif %}
-    <br>
-    <fieldset>
-        <legend>Navigation</legend>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="/blog">Blog</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'account' %}">My Account</a></li>
-                    {% comment %} <li><a href="{% url 'homepage' %}">My Homepage<a></li> {% endcomment %}
-                {% else %}
-                    <li><a href="/register">Register</a></li>
-                {% endif %}
-                {% if user.is_superuser %}
-                <li><a href="/admin">Administration</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </fieldset>
+        <br>
+        <fieldset>
+            <legend>Navigation</legend>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'account' %}">My Account</a></li>
+                        {% comment %} <li><a href="{% url 'homepage' %}">My Homepage<a></li> {% endcomment %}
+                    {% else %}
+                        <li><a href="/register">Register</a></li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                    <li><a href="/admin">Administration</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </fieldset>
+    </div>
 </div>
 
 <script>
@@ -68,4 +73,10 @@
             input.value = username;
         });
     }
+
+    const hamburger = document.querySelector('.hamburger');
+    hamburger.addEventListener('click', function() {
+        const lgn_area = document.querySelector('.lgn-area');
+        lgn_area.classList.toggle('lgn-area-open');
+    });
 </script>

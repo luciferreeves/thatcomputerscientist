@@ -50,10 +50,13 @@ def update_user(request):
     location = request.POST['location']
     gravatar_email = request.POST['gravatarEmail']
     bio = request.POST['bio']
-    is_public = True if request.POST['isPublic'] == '1' else False
+    is_public = False
     email_public = False
     if 'emailPublic' in request.POST:
         email_public = True if request.POST['emailPublic'] == '1' and is_public else False
+
+    if 'isPublic' in request.POST:
+        is_public = True if request.POST['isPublic'] == '1' and is_public else False
 
     if username is not None:
         user = User.objects.get(username=username)

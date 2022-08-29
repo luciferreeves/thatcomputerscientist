@@ -63,7 +63,7 @@
                     <input type="text" name="location" id="location" value="{{ user_profile.location }}" placeholder="Location" maxlength="50"/>
                     <label for="bio">Bio</label>
                     <textarea name="bio" id="bio" placeholder="Bio">{{ user_profile.bio }}</textarea>
-                    <label for="isPublic">Account Visibility</label>
+                    {% comment %} <label for="isPublic">Account Visibility</label>
                     <select name="isPublic" id="isPublic">
                         <option value="1"{% if user_profile.is_public %} selected{% endif %}>Public</option>
                         <option value="0"{% if not user_profile.is_public %} selected{% endif %}>Private</option>
@@ -74,7 +74,7 @@
                             <option value="1"{% if user_profile.email_public %} selected{% endif %}>Public</option>
                             <option value="0"{% if not user_profile.email_public %} selected{% endif %}>Private</option>
                         </select>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                     <input type="submit" value="Update Account" />
                 </fieldset>
             </form>

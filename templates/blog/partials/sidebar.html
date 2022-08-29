@@ -22,14 +22,16 @@
                 <input type="submit" value="Login">
             </form>
             {% for message in messages %}
-                {% if message.message == "EVERR" %}
-                <form method="post" action="{% url 'users:sendverificationemail' %}" >
-                    <p class="{{message.tags}}">
-                        Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
-                    </p>
-                    </form>
-                {% else %}
-                <p class="{{message.tags}}">{{message.message}}</p>
+                {% if 'loginError' in message.tags %}
+                    {% if message.message == "EVERR" %}
+                    <form method="post" action="{% url 'users:sendverificationemail' %}" >
+                        <p class="{{message.tags}}">
+                            Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
+                        </p>
+                        </form>
+                    {% else %}
+                    <p class="{{message.tags}}">{{message.message}}</p>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </fieldset>

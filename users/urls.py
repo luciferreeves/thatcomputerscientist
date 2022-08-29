@@ -13,6 +13,7 @@ urlpatterns = [
     path('verifyemail/<uidb64>/<token>', views.verify_email, name='verifyemail'),
     path('sendchangeuseremail', views.send_change_user_email, name='sendchangeuseremail'),
     path('changeemail/<uidb64>/<token>', views.change_email, name='changeemail'),
+    path('register', views.register, name='register'),
 ]
 
 # Configure Admin Site

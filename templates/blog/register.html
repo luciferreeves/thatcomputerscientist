@@ -1,0 +1,49 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<div class="main">
+  <section>
+    <h1>Register for an account</h1>
+    <p>Register for an account to post your thoughts and get feedback from other users.</p>
+    <form action="{% url 'users:register' %}" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+            {% for message in messages %}
+               {% if 'usernameError' in message.tags %}
+                    <small class="error" style="display:block;">{{ message.message }}</small>
+               {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+            {% for message in messages %}
+               {% if 'emailError' in message.tags %}
+                    <small class="error" style="display:block;">{{ message.message }}</small>
+               {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+            {% for message in messages %}
+               {% if 'passwordError' in message.tags %}
+                    <small class="error" style="display:block;">{{ message.message }}</small>
+               {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <label for="password2">Confirm Password</label>
+            <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm Password" required>
+            {% for message in messages %}
+               {% if 'password2Error' in message.tags %}
+                    <small class="error" style="display:block;">{{ message.message }}</small>
+               {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" style="margin-top:10px">Register</button>
+        </div>
+  </section>
+</div>
+{% endblock %}

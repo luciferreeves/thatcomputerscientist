@@ -30,3 +30,7 @@ def account(request):
 
 def homepage(request):
     return render(request, 'blog/homepage.html', {'title': 'Homepage'})
+
+
+def register(request):
+    return render(request, 'blog/register.html', {'title': 'Register New User'})

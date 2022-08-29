@@ -33,10 +33,10 @@ def login_user(request):
                 login(request, user)
                 return HttpResponseRedirect(next)
             else:
-                messages.error(request, 'EVERR')
+                messages.error(request, 'EVERR', extra_tags='loginError')
                 return HttpResponseRedirect(next + '?username=' + username)
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, 'Invalid username or password.', extra_tags='loginError')
             return HttpResponseRedirect(next + '?username=' + username)
 
 def logout_user(request):
@@ -187,3 +187,8 @@ def change_email(request, uidb64, token):
     else:
         messages.error(request, 'The verification link is invalid!')
         return redirect('/')
+
+
+def register(request):
+    messages.error(request, 'Registration is currently disabled!', extra_tags='password2Error')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

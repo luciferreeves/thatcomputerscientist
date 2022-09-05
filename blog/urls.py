@@ -8,5 +8,6 @@ urlpatterns = [
     path('account/', RedirectView.as_view(pattern_name='account', permanent=False)),
     path('my/account', views.account, name='account'),
     path('register/', views.register, name='register'),
+    path('register/refresh_captcha/', name='refresh_captcha', view=views.refresh_captcha),
     # path('my/homepage', views.homepage, name='homepage'),
 ]

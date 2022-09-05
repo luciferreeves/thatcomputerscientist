@@ -1,7 +1,14 @@
+from http.client import HTTPResponse
 from django.shortcuts import render, redirect
-from users.models import UserProfile
+from django.http import HttpResponse
+from users.models import UserProfile, CaptchaStore
 from urllib.parse import urlparse
 import hashlib
+from captcha.image import ImageCaptcha
+from random import choice
+from string import ascii_letters, digits
+import base64
+import json
 
 # Create your views here.
 
@@ -32,5 +39,37 @@ def homepage(request):
     return render(request, 'blog/homepage.html', {'title': 'Homepage'})
 
 
+def get_base64_captcha():
+    image = ImageCaptcha()
+    random_string = ''.join([choice(ascii_letters + digits) for n in range(6)])
+    data = image.generate(random_string)
+    base64_data = "data:image/png;base64," + base64.b64encode(data.getvalue()).decode()
+    return base64_data, random_string
+
 def register(request):
-    return render(request, 'blog/register.html', {'title': 'Register New User'})
+    csrf_token = request.META.get('CSRF_COOKIE')
+    base64_data, random_string = get_base64_captcha()
+    try:
+        # Delete old captcha
+        CaptchaStore.objects.get(csrf_token=csrf_token).delete()
+    except CaptchaStore.DoesNotExist:
+        pass
+    # Create new captcha
+    CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
+    return render(request, 'blog/register.html', {'title': 'Register New User', 'captcha': base64_data})
+
+
+def refresh_captcha(request):
+    csrf_token = request.META.get('CSRF_COOKIE')
+    if not csrf_token or not request.META.get('HTTP_REFERER') or request.META.get('HTTP_REFERER').split('/')[-2] != 'register':
+        response_data = {'status': 'error', 'message': 'Unauthorized!'}
+        return HttpResponse(json.dumps(response_data), content_type="application/json", status=401)
+    base64_data, random_string = get_base64_captcha()
+    try:
+        CaptchaStore.objects.get(csrf_token=csrf_token).delete()
+    except CaptchaStore.DoesNotExist:
+        pass
+
+    CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
+    response_data = {'captcha': base64_data}
+    return HttpResponse(json.dumps(response_data), content_type="application/json")

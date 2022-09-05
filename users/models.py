@@ -17,3 +17,10 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
         
+class CaptchaStore(models.Model):
+    captcha_string = models.CharField(max_length=6)
+    csrf_token = models.CharField(max_length=100, primary_key=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.captcha_string

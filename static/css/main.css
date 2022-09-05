@@ -153,6 +153,22 @@ nav > ul > li {
     display: none;
 }
 
+#captcha {
+    display: flex;
+    flex-direction: row;
+}
+
+#captcha > img:nth-child(1) {
+    height: 60px;
+    margin-right: 10px;
+}
+
+#captcha > img:nth-child(2) {
+    height: 30px;
+    transform: translateY(15px);
+    cursor: pointer;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

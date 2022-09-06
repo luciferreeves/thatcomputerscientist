@@ -17,11 +17,11 @@ def home(request):
 
 def account(request):
     user = request.user
+    user_subdomain_url = None
     if user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=user)
             avatar = hashlib.md5(str(user_profile.gravatar_email).lower().encode('utf-8')).hexdigest() if user_profile.gravatar_email else hashlib.md5(str(user.email).lower().encode()).hexdigest()
-            user_subdomain_url = None
             if user_profile.is_public:
                 print(request.scheme)
                 scheme = request.is_secure() and "https" or "http"
@@ -47,21 +47,33 @@ def get_base64_captcha():
     return base64_data, random_string
 
 def register(request):
+    user = request.user
     csrf_token = request.META.get('CSRF_COOKIE')
-    base64_data, random_string = get_base64_captcha()
     try:
-        # Delete old captcha
-        CaptchaStore.objects.get(csrf_token=csrf_token).delete()
+            # Delete old captcha
+            CaptchaStore.objects.get(csrf_token=csrf_token).delete()
     except CaptchaStore.DoesNotExist:
         pass
-    # Create new captcha
-    CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
-    return render(request, 'blog/register.html', {'title': 'Register New User', 'captcha': base64_data})
+    if user.is_authenticated:
+        return redirect('/my/account')
+    else:
+        if not csrf_token:
+            # Create a new CSRF token
+            csrf_token = ''.join([choice(ascii_letters + digits) for n in range(100)])
+        base64_data, random_string = get_base64_captcha()
+        try:
+            # Delete old captcha
+            CaptchaStore.objects.get(csrf_token=csrf_token).delete()
+        except CaptchaStore.DoesNotExist:
+            pass
+        # Create new captcha
+        CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
+        return  render(request, 'blog/register.html', {'title': 'Register', 'captcha': base64_data})
 
 
 def refresh_captcha(request):
     csrf_token = request.META.get('CSRF_COOKIE')
-    if not csrf_token or not request.META.get('HTTP_REFERER') or request.META.get('HTTP_REFERER').split('/')[-2] != 'register':
+    if not request.META.get('HTTP_REFERER') or request.META.get('HTTP_REFERER').split('/')[-2] != 'register':
         response_data = {'status': 'error', 'message': 'Unauthorized!'}
         return HttpResponse(json.dumps(response_data), content_type="application/json", status=401)
     base64_data, random_string = get_base64_captcha()
@@ -69,7 +81,6 @@ def refresh_captcha(request):
         CaptchaStore.objects.get(csrf_token=csrf_token).delete()
     except CaptchaStore.DoesNotExist:
         pass
-
     CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
     response_data = {'captcha': base64_data}
     return HttpResponse(json.dumps(response_data), content_type="application/json")

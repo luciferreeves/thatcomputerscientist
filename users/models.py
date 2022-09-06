@@ -19,7 +19,7 @@ class UserProfile(models.Model):
         
 class CaptchaStore(models.Model):
     captcha_string = models.CharField(max_length=6)
-    csrf_token = models.CharField(max_length=100, primary_key=True)
+    csrf_token = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -122,7 +122,7 @@ def send_verification_email(request):
     })
     message = strip_tags(message)
     send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email])
-    messages.success(request, 'Verification email was sent! Please check your email.')
+    messages.success(request, 'Verification email was sent! Please check your email.', extra_tags='loginError')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def verify_email(request, uidb64, token):
@@ -135,7 +135,7 @@ def verify_email(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user_profile.email_verified = True
         user_profile.save()
-        messages.success(request, 'Your email has been verified! You can now login.')
+        messages.success(request, 'Your email has been verified! You can now login.', extra_tags='loginError')
         return redirect('/')
     else:
         messages.error(request, 'The verification link is invalid!')

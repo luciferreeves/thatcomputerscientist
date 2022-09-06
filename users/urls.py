@@ -1,4 +1,3 @@
-from multiprocessing.dummy import Namespace
 from django.urls import path
 from . import views
 from django.contrib import admin

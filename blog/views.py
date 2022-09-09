@@ -33,7 +33,7 @@ def account(request):
         return render(request, 'blog/account.html', {'title': 'Account', 'user_profile': user_profile, 'avatar': avatar, 'user_subdomain_url': user_subdomain_url})
     else:
         # Redirect to login page
-        return redirect('/')
+        return redirect('blog:home')
 
 def homepage(request):
     return render(request, 'blog/homepage.html', {'title': 'Homepage'})
@@ -55,7 +55,7 @@ def register(request):
     except CaptchaStore.DoesNotExist:
         pass
     if user.is_authenticated:
-        return redirect('/my/account')
+        return redirect('blog:account')
     else:
         if not csrf_token:
             # Create a new CSRF token

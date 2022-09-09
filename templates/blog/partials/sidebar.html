@@ -50,7 +50,7 @@
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="/blog">Blog</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'account' %}">My Account</a></li>
+                        <li><a href="{% url 'blog:account' %}">My Account</a></li>
                         <li><a href="{% url 'users:logout' %}">Logout</a></li>
                     {% else %}
                         <li><a href="/register">Register</a></li>

@@ -1,0 +1,89 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<div class="main">
+  <section>
+    <h1 style="font-size: 2em;">{{ title }}</h1>
+    <div class="float-right">
+        <a href="#" >Create New User</a>
+        {% comment %} Search Users Box {% endcomment %}
+        <form style="display: inline-block; margin-left: 10px;" action="{% url 'blog-admin:search' %}" method="get">
+            <input style="display: inline-block" type="text" name="q" placeholder="Search Users" autocomplete="off"/>
+            <input style="display: inline-block" type="submit" value="Search" />
+        </form>
+    </div>
+    <hr>
+    {% comment %} Collapsible Section for super-users {% endcomment %}
+    <details>
+      <summary>Super Users</summary>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role(s)</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in super_users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              {% if user.is_superuser %}Super user, {% endif %}
+              {% if user.is_staff %}Staff, {% endif %}
+              {% if user.is_active %}Active{% endif %}
+            </td>
+            <td>
+              <a href="#" class="btn btn-primary btn-sm">Edit</a>
+              <a href="#" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </details>
+    {% comment %} Collapsible Section for normal users {% endcomment %}
+    <details open>
+      <summary>Normal Users</summary>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role(s)</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in normal_users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              {% if user.is_superuser %}Super user, {% endif %}
+              {% if user.is_staff %}Staff, {% endif %}
+              {% if user.is_active %}Active{% endif %}
+            </td>
+            <td>
+              <a href="#" class="btn btn-primary btn-sm">Edit</a>
+              <a href="#" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </section>
+</div>
+{% endblock %}

@@ -169,6 +169,35 @@ nav > ul > li {
     cursor: pointer;
 }
 
+.float-right {
+    /* Float to the top right corner */
+    position: absolute;
+    top: 2.5em;
+    right: 3em;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Add borders to all cells */
+.table, .table th, .table td {
+    border: 1px solid #191919;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+summary {
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

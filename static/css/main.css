@@ -198,6 +198,11 @@ summary {
     margin-top: 1em;
 }
 
+.disabled {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

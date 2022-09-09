@@ -2,31 +2,23 @@
 <div class="main">
   <section>
     {% include 'blog_admin/partials/main_section.html' %}
-    <form action="{% url 'blog-admin:new-user' %}" method="post">
+    <form action="{% url 'blog-admin:edit-user' edit_user.id %}" method="post">
       {% csrf_token %}
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ edit_user.username }}">
       </div>
       <div class="form-group">
         <label for="email">First Name</label>
-        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{ edit_user.first_name }}">
       </div>
       <div class="form-group">
         <label for="email">Last Name</label>
-        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{ edit_user.last_name }}">
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <label for="password">Confirm Password</label>
-        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ edit_user.email }}">
       </div>
       {% if user.is_superuser %}
         <div class="form-group">
@@ -44,15 +36,15 @@
       </div>
       <div class="form-group">
         <label for="bio">Bio</label>
-        <textarea class="form-control" id="bio" name="bio" placeholder="Bio"></textarea>
+        <textarea class="form-control" id="bio" name="bio" placeholder="Bio"></textarea value="{{ edit_user_profile.bio }}">
       </div>
       <div class="form-group">
         <label for="location">Location</label>
-        <input type="text" class="form-control" id="location" name="location" placeholder="Location">
+        <input type="text" class="form-control" id="location" name="location" placeholder="Location" value="{{ edit_user_profile.location }}">
       </div>
       <div class="form-group">
         <label for="gravatar_email">Gravatar Email</label>
-        <input type="email" class="form-control" id="gravatar_email" name="gravatar_email" placeholder="Gravatar Email">
+        <input type="email" class="form-control" id="gravatar_email" name="gravatar_email" placeholder="Gravatar Email" value="{{ edit_user_profile.gravatar_email }}">
       </div>
       <div class="form-group">
         <input style="display:inline-block" type="checkbox" class="form-control" id="is_public" name="is_public" disabled>
@@ -63,11 +55,11 @@
         <label style="display:inline-block" for="email_public">Email Public</label>
       </div>
       <div class="form-group">
-        <input style="display:inline-block" type="checkbox" class="form-control" id="email_verified" name="email_verified">
+        <input style="display:inline-block" type="checkbox" class="form-control" id="email_verified" name="email_verified" {% if edit_user_profile.email_verified %}checked{% endif %}>
         <label style="display:inline-block" for="email_verified">Email Verified</label>
       </div>
       <div class="form-group">
-        <input type="submit" name="submit" value="Create User" id="submit">
+        <input type="submit" name="submit" value="Save User Details" id="submit">
       </div>
   </section>
 </div>

@@ -59,12 +59,14 @@
             </nav>
         </fieldset>
         <br>
-        {% if user.is_superuser %}
+        {% if user.is_staff %}
         <fieldset>
             <legend>Admin</legend>
             <nav>
                 <ul>
-                    <li><a href="{% url 'admin:index' %}">Admin Area</a></li>
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'admin:index' %}">Admin Area</a></li>
+                    {% endif %}
                     <li><a href="{% url 'blog-admin:users' %}">Manage Users</a></li>
                     <li><a href="{% url 'blog-admin:posts' %}">Manage Posts</a></li>
                     <li><a href="{% url 'blog-admin:comments' %}">Manage Comments</a></li>

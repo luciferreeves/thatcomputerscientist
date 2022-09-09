@@ -100,8 +100,8 @@ def edit_user(request, user_id):
             user.email = request.POST.get('email')
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
-            user.is_superuser = True if request_user.is_superuser and request.POST.get('is_superuser') == 'on' else False
-            user.is_staff = True if request_user.is_superuser and request.POST.get('is_staff') == 'on' else False
+            user.is_superuser = request.POST.get('is_superuser') == 'on' if request_user.is_superuser else user.is_superuser
+            user.is_staff = request.POST.get('is_staff') == 'on' if request_user.is_superuser else user.is_staff
             user.is_active = True if request.POST.get('is_active') == 'on' else False
 
             # User Profile Data

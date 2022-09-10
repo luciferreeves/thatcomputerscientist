@@ -46,7 +46,7 @@
             <div id="captcha">
                 {% load static %}
                 <img src="{{ captcha }}" alt="captcha" class="captcha" id="captcha_image" style="display: block;">
-                <img src="{% static 'images/icons/button_refresh.jpeg' %}" alt="Refresh Captcha" id="refresh_captcha" data-refresh-captcha-url="{% url 'refresh_captcha' %}">
+                <img src="{% static 'images/icons/button_refresh.jpeg' %}" alt="Refresh Captcha" id="refresh_captcha" data-refresh-captcha-url="{% url 'blog:refresh_captcha' %}">
             </div>
             <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Type Captcha" required>
             {% for message in messages %}

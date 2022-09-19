@@ -12,6 +12,9 @@ urlpatterns = [
     path('posts/search', views.posts_search, name='posts-search'),
     path('comments', views.comments, name='comments'),
     path('categories', views.categories, name='categories'),
+    path('categories/new', views.new_category, name='new-category'),
+    path('categories/<int:category_id>/edit', views.edit_category, name='edit-category'),
+    path('categories/<int:category_id>/delete', views.edit_category, name='delete-category'),
     path('tags', views.tags, name='tags'),
     path('new', views.new, name='new'),
 ]

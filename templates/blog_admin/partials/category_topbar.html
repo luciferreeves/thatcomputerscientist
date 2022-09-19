@@ -1,0 +1,22 @@
+<h1 style="font-size: 2em">{{ title }}</h1>
+<div class="float-right">
+  <a href="{% url 'blog-admin:new-category' %}">Create New Category</a>
+  <form
+    style="display: inline-block; margin-left: 10px"
+    action="{% url 'blog-admin:users-search' %}"
+    method="get"
+  >
+    <input
+      style="display: inline-block"
+      type="text"
+      name="q"
+      placeholder="Search Categories"
+      autocomplete="off"
+    />
+    <input style="display: inline-block" type="submit" value="Search" />
+  </form>
+</div>
+<hr />
+{% for message in messages %}
+<p class="{{message.tags}}" style="text-align: center">{{ message }}</p>
+{% endfor %}

@@ -63,7 +63,8 @@ def new_post(request):
             #     messages.error(request, 'Error: All fields are required!', extra_tags='new_post_create_error', data = { 'title': title, 'body': body, 'category': category, 'tags': tags, 'slug': slug })
             #     return redirect('blog-admin:new-post')
         else:
-            return render(request, 'blog_admin/new_post.html', { 'title': 'New Post' })
+            categories = Category.objects.all()
+            return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories })
     else:
         return redirect('blog:home')
 
@@ -71,6 +72,45 @@ def comments(request):
     pass
 
 def categories(request):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        page = request.GET.get('page') if request.GET.get('page') else 1
+        try:
+            page = int(page)
+        except:
+            page = 1
+        categories = Category.objects.all()[(page-1)*50:page*50]
+        num_pages = Category.objects.all().count() // 50 + 1
+        url_to_render = 'blog_admin/categories.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/categories.html'
+        return render(request, url_to_render, { 'title': 'Manage Categories', 'categories': categories, 'num_pages': num_pages, 'page': page })
+    else:
+        return redirect('blog:home')
+
+def new_category(request):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            slug = request.POST.get('slug')
+            description = request.POST.get('description') if request.POST.get('description') else ''
+            if name and slug:
+                try:
+                    category = Category.objects.create(name = name, slug = slug, description = description)
+                    messages.success(request, 'Category created successfully!')
+                    return redirect('blog-admin:categories')
+                except Exception as e:
+                    messages.error(request, 'Error: {}'.format(e), extra_tags='new_category_create_error', data = { 'name': name, 'slug': slug, 'description': description })
+                    return redirect('blog-admin:new-category')
+            else:
+                messages.error(request, 'Error: All fields are required!', extra_tags='new_category_create_error', data = { 'name': name, 'slug': slug, 'description': description })
+                return redirect('blog-admin:new-category')
+        else:
+            return render(request, 'blog_admin/new_category.html', { 'title': 'New Category' })
+    else:
+        return redirect('blog:home')
+
+def edit_category(request, slug):
+    pass
+
+def delete_category(request, slug):
     pass
 
 def tags(request):

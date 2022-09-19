@@ -2,25 +2,70 @@ from django.shortcuts import render, redirect
 from users.models import UserProfile
 from django.contrib.auth.models import User
 from django.contrib import messages
+from blog.models import Post, Category, Tag
 
 # Create your views here.
-def users(request):
+
+def posts(request):
     if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
         page = request.GET.get('page') if request.GET.get('page') else 1
         try:
             page = int(page)
         except:
             page = 1
-        users = User.objects.filter(is_superuser=False)[(page-1)*50:page*50]
-        num_pages = User.objects.filter(is_superuser=False).count() // 50 + 1
-        print(num_pages)
-        url_to_render = 'blog_admin/users.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/users.html'
-        return render(request, url_to_render, { 'title': 'Manage Users', 'normal_users': users, 'num_pages': num_pages, 'page': page })
+        posts = Post.objects.all()[(page-1)*50:page*50]
+        num_pages = Post.objects.all().count() // 50 + 1
+        url_to_render = 'blog_admin/posts.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/posts.html'
+        return render(request, url_to_render, { 'title': 'Manage Posts', 'posts': posts, 'num_pages': num_pages, 'page': page })
     else:
         return redirect('blog:home')
 
-def posts(request):
-    pass
+def posts_search(request):
+    q = request.GET.get('q')
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        if q:
+            try:
+                # Get the posts where title or body or author or category or tags or slug contains q or the post id is int(q)
+                posts = Post.objects.filter(title__icontains=q) | Post.objects.filter(body__icontains=q) | Post.objects.filter(author__username__icontains=q) | Post.objects.filter(category__name__icontains=q) | Post.objects.filter(tags__name__icontains=q) | Post.objects.filter(slug__icontains=q) | Post.objects.filter(id = int(q))
+            except:
+                # Get the posts where title or body or author or category or tags or slug contains q
+                posts = Post.objects.filter(title__icontains=q) | Post.objects.filter(body__icontains=q) | Post.objects.filter(author__username__icontains=q) | Post.objects.filter(category__name__icontains=q) | Post.objects.filter(tags__name__icontains=q) | Post.objects.filter(slug__icontains=q)
+
+            return render(request, 'blog_admin/posts.html', { 'title': 'Search Results for "{}"'.format(q), 'posts': posts })
+        else:
+            return redirect('blog-admin:posts')
+    else:
+        return redirect('blog:home')
+
+def new_post(request):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        if request.method == 'POST':
+            print(request.POST)
+            # title = request.POST.get('title')
+            # body = request.POST.get('body')
+            # category = request.POST.get('category')
+            # tags = request.POST.get('tags')
+            # slug = request.POST.get('slug')
+            # if title and body and category and tags and slug:
+            #     try:
+            #         category = Category.objects.get(slug = category)
+            #         tags = tags.split(',')
+            #         tags = [Tag.objects.get(slug = tag) for tag in tags]
+            #         post = Post.objects.create(title = title, body = body, category = category, slug = slug, author = request.user)
+            #         post.tags.set(tags)
+            #         post.save()
+            #         messages.success(request, 'Post created successfully!')
+            #         return redirect('blog-admin:posts')
+            #     except Exception as e:
+            #         messages.error(request, 'Error: {}'.format(e), extra_tags='new_post_create_error', data = { 'title': title, 'body': body, 'category': category, 'tags': tags, 'slug': slug })
+            #         return redirect('blog-admin:new-post')
+            # else:
+            #     messages.error(request, 'Error: All fields are required!', extra_tags='new_post_create_error', data = { 'title': title, 'body': body, 'category': category, 'tags': tags, 'slug': slug })
+            #     return redirect('blog-admin:new-post')
+        else:
+            return render(request, 'blog_admin/new_post.html', { 'title': 'New Post' })
+    else:
+        return redirect('blog:home')
 
 def comments(request):
     pass
@@ -34,7 +79,21 @@ def tags(request):
 def new(request):
     pass
 
-def search(request):
+def users(request):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        page = request.GET.get('page') if request.GET.get('page') else 1
+        try:
+            page = int(page)
+        except:
+            page = 1
+        users = User.objects.filter(is_superuser=False)[(page-1)*50:page*50]
+        num_pages = User.objects.filter(is_superuser=False).count() // 50 + 1
+        url_to_render = 'blog_admin/users.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/users.html'
+        return render(request, url_to_render, { 'title': 'Manage Users', 'normal_users': users, 'num_pages': num_pages, 'page': page })
+    else:
+        return redirect('blog:home')
+
+def users_search(request):
     q = request.GET.get('q')
     if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
         if q:

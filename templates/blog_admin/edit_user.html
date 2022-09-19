@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
   <section>
-    {% include 'blog_admin/partials/main_section.html' %}
+    {% include 'blog_admin/partials/users_topbar.html' %}
     <form action="{% url 'blog-admin:edit-user' edit_user.id %}" method="post">
       {% csrf_token %}
       <div class="form-group">

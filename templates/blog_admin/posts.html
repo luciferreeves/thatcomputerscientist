@@ -25,7 +25,7 @@
             <td><a href="#">{{ post.category }}</a></td>
             <td style="position: relative;"> {% if post.is_public %} <span class="label label-success">Published</span> {% else %} <span class="label label-warning">Draft</span> {% endif %} </td>
             <td>
-              <a href="#">Edit</a>
+              <a href="{% url 'blog-admin:edit-post' post.slug %}">Edit</a>
               <a href="#" class="error">Delete</a>
               {% if post.is_public %}
               <a href="#" class="error">UnPublish</a>

@@ -10,6 +10,7 @@ urlpatterns = [
     path('posts', views.posts, name='posts'),
     path('posts/new', views.new_post, name='new-post'),
     path('posts/search', views.posts_search, name='posts-search'),
+    path('posts/<str:slug>/edit', views.edit_post, name='edit-post'),
     path('comments', views.comments, name='comments'),
     path('categories', views.categories, name='categories'),
     path('categories/new', views.new_category, name='new-category'),

@@ -1,6 +1,6 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
-  <section>
+  <article>
     <h1 style="margin-bottom: 12px">{{ post.title }}</h1>
     <p style="line-height: 1.6em;">
         Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
@@ -12,7 +12,7 @@
     </p>
     
     <hr>
-    <div>{{ post.body | safe }}</div>
+    <div class="article-body">{{ post.body | safe }}</div>
     <div id="comments" style="margin-top: 3rem;">
         <h3>Comments</h3>
         {% for comment in comments %}
@@ -48,6 +48,7 @@
             <p><em>You must be logged in to comment.</em></p>
         {% endif %}
     </div>
-  </section>
+</article>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </div>
 {% endblock %}

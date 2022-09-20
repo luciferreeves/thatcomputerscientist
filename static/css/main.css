@@ -253,6 +253,13 @@ summary {
     margin-top: 0px;
 }
 
+.article-body > p > img {
+    display: block;
+    margin: 0px auto 10px auto;
+    max-height: 50vh;
+    max-width: 100%;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

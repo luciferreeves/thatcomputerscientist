@@ -12,103 +12,106 @@
 <div class="main">
   <section>
     {% include 'blog_admin/partials/posts_topbar.html' %}
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        style="display: inline-block"
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        placeholder="Enter an Amazing Title"
-        value="{{ data.title }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="slug">Slug</label>
+    <form action="{% url 'blog-admin:new-post' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Title</label>
         <input
-            style="display: inline-block"
-            type="text"
-            class="form-control"
-            id="slug"
-            name="slug"
-            placeholder="Enter an Amazing Slug"
-            value="{{ data.slug }}"
+          style="display: inline-block"
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          placeholder="Enter an Amazing Title"
+          value="{{ blog_title }}"
         />
-    </div>
-    <div class="form-group">
-      <div id="toolbar-container">
-        <span class="ql-formats">
-          <button class="ql-header" value="1"></button>
-          <button class="ql-header" value="2"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-bold"></button>
-          <button class="ql-italic"></button>
-          <button class="ql-underline"></button>
-          <button class="ql-strike"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-blockquote"></button>
-          <button class="ql-code-block"></button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-script" value="sub"></button>
-          <button class="ql-script" value="super"></button>
-        </span>
-
-        <span class="ql-formats">
-          <button class="ql-list" value="ordered"></button>
-          <button class="ql-list" value="bullet"></button>
-        </span>
-        <span class="ql-formats">
-          <select class="ql-align"></select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-link"></button>
-          <button class="ql-image"></button>
-          <button class="ql-formula"></button>
-          {% load static %}
-          <button class="ql-formula-block">
-            <img
-              style="height: 32px; position: relative; top: -6px; left: 4px"
-              src="{% static 'images/icons/formula.png' %}"
-              alt="Block Formula"
-            />
-          </button>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-clean"></button>
-        </span>
       </div>
-      <div id="editor-container" style="height: 60vh"></div>
-    </div>
-    <div class="form-group">
-      <label for="tags">Tags</label>
-      <input
-        style="display: inline-block"
-        type="text"
-        class="form-control"
-        id="tags"
-        name="tags"
-        placeholder="Enter Tags"
-        value="{{ data.tags }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="category">Category</label>
-        <select class="form-control" id="category" name="category" style = "display: inline-block">
-            {% for category in categories %}
-            <option value="{{ category.slug }}" {% if category.slug == data.category %} selected {% endif %}>{{ category.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="form-group" style="display: none;">
-        <textarea name="body" id="body" value="{{ data.body }}"></textarea>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+      <div class="form-group">
+        <label for="slug">Slug</label>
+          <input
+              style="display: inline-block"
+              type="text"
+              class="form-control"
+              id="slug"
+              name="slug"
+              placeholder="Enter an Amazing Slug"
+              value="{{ blog_slug }}"
+          />
+      </div>
+      <div class="form-group">
+        <div id="toolbar-container">
+          <span class="ql-formats">
+            <button class="ql-header" value="1"></button>
+            <button class="ql-header" value="2"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+            <button class="ql-strike"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-blockquote"></button>
+            <button class="ql-code-block"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-script" value="sub"></button>
+            <button class="ql-script" value="super"></button>
+          </span>
+
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-align"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link"></button>
+            <button class="ql-image"></button>
+            <button class="ql-formula"></button>
+            {% load static %}
+            <button class="ql-formula-block">
+              <img
+                style="height: 32px; position: relative; top: -6px; left: 4px"
+                src="{% static 'images/icons/formula.png' %}"
+                alt="Block Formula"
+              />
+            </button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-clean"></button>
+          </span>
+        </div>
+        <div id="editor-container" style="height: 60vh"></div>
+      </div>
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <input
+          style="display: inline-block"
+          type="text"
+          class="form-control"
+          id="tags"
+          name="tags"
+          placeholder="Enter Tags"
+          value="{{ blog_tags }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+          <select class="form-control" id="category" name="category" style = "display: inline-block">
+              {% for category in categories %}
+              <option value="{{ category.slug }}" {% if category.slug == blog_category %} selected {% endif %}>{{ category.name }}</option>
+              {% endfor %}
+          </select>
+      </div>
+      <div class="form-group" style="display: none;">
+          <textarea name="body" id="body">{{ blog_body }}</textarea>
+      </div>
+      <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
   </section>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
@@ -239,5 +242,12 @@
     document.getElementById("title").addEventListener("input", function () {
         document.getElementById("slug").value = slugify(this.value);
     });
+
+    try {
+        const delta = quill.clipboard.convert(document.getElementById("body").value);
+        quill.setContents(delta, "silent");
+    } catch (e) {
+        console.log(e);
+    }
 </script>
 {% endblock %}

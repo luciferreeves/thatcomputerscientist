@@ -1,7 +1,41 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+{% load remove_tags %}
 <div class="main">
     <section>
       {% include 'blog_admin/partials/posts_topbar.html' %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Author</th>
+            <th>Created</th>
+            <th>Category</th>
+            <th>Visibility</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <td><a href="#">{{ post.title }}</a></td>
+            <td>{{ post.body|truncatechars:50|remove_tags }}</td>
+            <td>{{ post.author }}</td>
+            <td>{{ post.date }}</td>
+            <td><a href="#">{{ post.category }}</a></td>
+            <td style="position: relative;"> {% if post.is_public %} <span class="label label-success">Published</span> {% else %} <span class="label label-warning">Draft</span> {% endif %} </td>
+            <td>
+              <a href="#">Edit</a>
+              <a href="#" class="error">Delete</a>
+              {% if post.is_public %}
+              <a href="#" class="error">UnPublish</a>
+              {% else %}
+              <a href="#" class="success">Publish</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
     </section>
 </div>
 {% endblock %}

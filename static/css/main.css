@@ -203,6 +203,30 @@ summary {
     cursor: not-allowed;
 }
 
+.label {
+    width: 100%;
+    display: inline-block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.label-success {
+    background-color: #d4ffbd;
+    color: rgb(5, 74, 5);
+}
+
+.label-error {
+    background-color: #ffbdbd;
+    color: rgb(74, 5, 5);
+}
+
+.label-warning {
+    background-color: #ffd4bd;
+    color: rgb(74, 5, 5);
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

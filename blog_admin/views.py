@@ -39,31 +39,32 @@ def posts_search(request):
 
 def new_post(request):
     if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        categories = Category.objects.all()
         if request.method == 'POST':
-            print(request.POST)
-            # title = request.POST.get('title')
-            # body = request.POST.get('body')
-            # category = request.POST.get('category')
-            # tags = request.POST.get('tags')
-            # slug = request.POST.get('slug')
-            # if title and body and category and tags and slug:
-            #     try:
-            #         category = Category.objects.get(slug = category)
-            #         tags = tags.split(',')
-            #         tags = [Tag.objects.get(slug = tag) for tag in tags]
-            #         post = Post.objects.create(title = title, body = body, category = category, slug = slug, author = request.user)
-            #         post.tags.set(tags)
-            #         post.save()
-            #         messages.success(request, 'Post created successfully!')
-            #         return redirect('blog-admin:posts')
-            #     except Exception as e:
-            #         messages.error(request, 'Error: {}'.format(e), extra_tags='new_post_create_error', data = { 'title': title, 'body': body, 'category': category, 'tags': tags, 'slug': slug })
-            #         return redirect('blog-admin:new-post')
-            # else:
-            #     messages.error(request, 'Error: All fields are required!', extra_tags='new_post_create_error', data = { 'title': title, 'body': body, 'category': category, 'tags': tags, 'slug': slug })
-            #     return redirect('blog-admin:new-post')
+            title = request.POST.get('title')
+            body = request.POST.get('body')
+            print(body)
+            category = request.POST.get('category')
+            tags = request.POST.get('tags')
+            slug = request.POST.get('slug')
+            if title and body and category and tags and slug:
+                try:
+                    category = Category.objects.get(slug = category)
+                    tags = tags.split(',')
+                    tags = [tag.strip() for tag in tags]
+                    tags = [Tag.objects.get_or_create(slug = tag, name = tag)[0] for tag in tags]
+                    post = Post.objects.create(title = title, body = body, category = category, slug = slug, author = request.user)
+                    post.tags.set(tags)
+                    post.save()
+                    messages.success(request, 'Post created successfully!')
+                    return redirect('blog-admin:posts')
+                except Exception as e:
+                    messages.error(request, 'Error: {}'.format(e), extra_tags='new_post_create_error')
+                    return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug })
+            else:
+                messages.error(request, 'Error: All fields are required!', extra_tags='new_post_create_error')
+                return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug })
         else:
-            categories = Category.objects.all()
             return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories })
     else:
         return redirect('blog:home')

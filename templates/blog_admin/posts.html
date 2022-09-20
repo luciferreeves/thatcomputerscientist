@@ -28,9 +28,9 @@
               <a href="{% url 'blog-admin:edit-post' post.slug %}">Edit</a>
               <a href="#" class="error">Delete</a>
               {% if post.is_public %}
-              <a href="{% url 'blog-admin:unpublish-post' post.slug %}" class="error">Unpublish</a>
+              <a href="{% url 'blog-admin:unpublish-post' post.slug %}" class="error" onclick="return confirm('This post will immediately be hidden from users. Proceed?')">Unpublish</a>
               {% else %}
-              <a href="{% url 'blog-admin:publish-post' post.slug %}" class="success">Publish</a>
+              <a href="{% url 'blog-admin:publish-post' post.slug %}" class="success" onclick="return confirm('This post will immediately be shown to users. Proceed?')">Publish</a>
               {% endif %}
             </td>
           </tr>

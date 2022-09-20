@@ -23,6 +23,14 @@
   </div>
   <section>
     <h2>Recent Posts</h2>
+    <ul>
+      {% for post in recent_posts %}
+      <li>
+        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+        by <em><a href="#">{{ post.author.username }}</a></em>  on {{ post.date|date:"F j, Y" }}.
+      </li>
+      {% endfor %}
+    </ul>
   </section>
 </div>
 {% endblock %}

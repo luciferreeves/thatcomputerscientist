@@ -13,7 +13,8 @@ from .models import Post, Comment
 # Create your views here.
 
 def home(request):
-    return render(request, 'blog/home.html', {'title': 'Home'})
+    recent_posts = Post.objects.filter(is_public=True).order_by('-date')[:5]
+    return render(request, 'blog/home.html', {'title': 'Home', 'recent_posts': recent_posts})
 
 def account(request):
     user = request.user

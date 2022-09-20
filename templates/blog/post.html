@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
   <article>
-    <h1 style="margin-bottom: 12px">{{ post.title }}</h1>
+    <h1 style="margin-bottom: 12px; font-size: 2rem;">{{ post.title }}</h1>
     <p style="line-height: 1.6em;">
         Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
         <br>

@@ -104,6 +104,26 @@ def edit_post(request, slug):
     else:
         return redirect('blog:home')
 
+def publish_post(request, slug):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        post = Post.objects.get(slug = slug)
+        post.is_public = True
+        post.save()
+        messages.success(request, 'Post published successfully!')
+        return redirect('blog-admin:posts')
+    else:
+        return redirect('blog:home')
+
+def unpublish_post(request, slug):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        post = Post.objects.get(slug = slug)
+        post.is_public = False
+        post.save()
+        messages.success(request, 'Post unpublished successfully!')
+        return redirect('blog-admin:posts')
+    else:
+        return redirect('blog:home')
+
 def comments(request):
     pass
 

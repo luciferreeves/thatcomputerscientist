@@ -28,9 +28,9 @@
               <a href="{% url 'blog-admin:edit-post' post.slug %}">Edit</a>
               <a href="#" class="error">Delete</a>
               {% if post.is_public %}
-              <a href="#" class="error">UnPublish</a>
+              <a href="{% url 'blog-admin:unpublish-post' post.slug %}" class="error">Unpublish</a>
               {% else %}
-              <a href="#" class="success">Publish</a>
+              <a href="{% url 'blog-admin:publish-post' post.slug %}" class="success">Publish</a>
               {% endif %}
             </td>
           </tr>

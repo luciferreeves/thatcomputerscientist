@@ -18,6 +18,12 @@
   </head>
   <body>
     {% include 'blog/partials/sidebar.html' %}
-    {% block content %} {% endblock %}
+    <div class="content">
+      {% block content %}
+      {% endblock %}
+      <footer>
+        &copy; {% now "Y" %} That Computer Scientist. Source code avaiable on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
+      </footer>
+    </div>
   </body>
 </html>

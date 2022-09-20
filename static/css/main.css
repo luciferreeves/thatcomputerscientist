@@ -23,11 +23,20 @@ body {
     max-width: 15rem;
 }
 
-.main {
+.content {
     flex: 1;
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto;
+    min-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.content > footer {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 40px;
 }
 
 .title:visited {

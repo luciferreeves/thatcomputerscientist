@@ -115,7 +115,23 @@ def delete_category(request, slug):
     pass
 
 def tags(request):
-    pass
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        page = request.GET.get('page') if request.GET.get('page') else 1
+        try:
+            page = int(page)
+        except:
+            page = 1
+        tags = Tag.objects.all()[(page-1)*50:page*50]
+        num_pages = Tag.objects.all().count() // 50 + 1
+        # add post count to each tag
+        for tag in tags:
+            # post_count which contain this tag slug
+            post_count = Post.objects.filter(tags__slug = tag.slug).count()
+            tag.post_count = post_count
+        url_to_render = 'blog_admin/tags.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/tags.html'
+        return render(request, url_to_render, { 'title': 'Manage Tags', 'tags': tags, 'num_pages': num_pages, 'page': page })
+    else:
+        return redirect('blog:home')
 
 def new(request):
     pass

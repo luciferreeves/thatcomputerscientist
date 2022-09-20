@@ -36,6 +36,28 @@
           </tr>
           {% endfor %}
         </tbody>
+      </table>
+      {% if num_pages and page %}
+        <div class="pagination">
+            {% if page == 1 %}
+                <a href="#" class="disabled">&laquo;</a>
+                <a href="#" class="disabled">&lsaquo;</a>
+            {% else %}
+                <a href="{% url 'blog-admin:posts'%}?page=1">&laquo;</a>
+                <a href="{% url 'blog-admin:posts'%}?page={{ page|add:-1 }}">&lsaquo;</a>
+            {% endif %}
+            {% for i in num_pages|make_list  %}
+                <a href="{% url 'blog-admin:posts'%}?page={{ i }}">{{ i }}</a>
+            {% endfor %}
+            {% if page == num_pages %}
+                <a href="#" class="disabled">&rsaquo;</a>
+                <a href="#" class="disabled">&raquo;</a>
+            {% else %}
+                <a href="{% url 'blog-admin:posts'%}?page={{ page|add:1 }}">&rsaquo;</a>
+                <a href="{% url 'blog-admin:posts'%}?page={{ num_pages }}">&raquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
     </section>
 </div>
 {% endblock %}

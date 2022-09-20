@@ -18,7 +18,7 @@
         <tbody>
           {% for post in posts %}
           <tr>
-            <td><a href="#">{{ post.title }}</a></td>
+            <td><a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a></td>
             <td>{{ post.body|truncatechars:50|remove_tags }}</td>
             <td>{{ post.author }}</td>
             <td>{{ post.date }}</td>

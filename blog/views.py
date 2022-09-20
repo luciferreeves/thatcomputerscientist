@@ -1,4 +1,3 @@
-from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from users.models import UserProfile, CaptchaStore
@@ -9,6 +8,7 @@ from random import choice
 from string import ascii_letters, digits
 import base64
 import json
+from .models import Post, Comment
 
 # Create your views here.
 
@@ -84,3 +84,35 @@ def refresh_captcha(request):
     CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
     response_data = {'captcha': base64_data}
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+def post(request, slug):
+    try:
+        post = Post.objects.get(slug=slug)
+        tags = post.tags.all()
+        comments = Comment.objects.filter(post=post)
+        if post.is_public:
+            return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
+        else:
+            if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
+                return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
+            else:
+                return HttpResponse('Post not found!', status=404)
+    except Post.DoesNotExist:
+        return HttpResponse('Post not found!', status=404)
+
+def comment(request, slug):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            try:
+                post = Post.objects.get(slug=slug)
+                if post.is_public:
+                    Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
+                    return redirect('blog:post', slug=slug)
+                else:
+                    if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
+                        Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
+                        return redirect('blog:post', slug=slug)
+                    else:
+                        return HttpResponse('Post not found!', status=404)
+            except Post.DoesNotExist:
+                return HttpResponse('Post not found!', status=404)

@@ -1,0 +1,53 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<div class="main">
+  <section>
+    <h1 style="margin-bottom: 12px">{{ post.title }}</h1>
+    <p style="line-height: 1.6em;">
+        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
+        <br>
+        <b>Tags:</b>
+        {% for tag in tags %}
+            <a href="#" class="tag">{{ tag.name }}</a>
+        {% endfor %}
+    </p>
+    
+    <hr>
+    <div>{{ post.body | safe }}</div>
+    <div id="comments" style="margin-top: 3rem;">
+        <h3>Comments</h3>
+        {% for comment in comments %}
+            <div class="comment">
+                {% load md5 %}
+                <div class="profile-picture">
+                    {% if comment.user.gravatar_email %}
+                        <img src="https://www.gravatar.com/avatar/{{ comment.user.gravatar_email | md5 }}?s=100" alt="Profile Picture">
+                    {% else %}
+                        <img src="https://www.gravatar.com/avatar/{{ comment.user.email | md5 }}?s=100" alt="Profile Picture">
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="comment-header">
+                        <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
+                    </p>
+                    <p class="comment-body">{{ comment.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <form action="{% url 'blog:comment' post.slug %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="comment">Add Comment:</label>
+                <textarea name="comment" id="comment" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {% else %}
+            <p><em>You must be logged in to comment.</em></p>
+        {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

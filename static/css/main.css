@@ -227,6 +227,32 @@ summary {
     color: rgb(74, 5, 5);
 }
 
+.comment {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.profile-picture > img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.comment-header {
+    font-size: 0.8em;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.comment-body {
+    flex: 1;
+    margin-top: 0px;
+}
+
 /* Optimize for phones */
 @media only screen and (max-width: 480px) {
     body {

@@ -41,7 +41,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def update_user(request):
     username = request.user

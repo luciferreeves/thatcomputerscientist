@@ -1,0 +1,37 @@
+<div class="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+  {% if not request.path.includes('blog-admin') %}
+  <div class="sidebar sidebar-bg-light-red sidebar-lg">
+    <h3>Recent Posts</h3>
+    <hr>
+    <ul>
+      {% for post in recent_posts %}
+      <li>
+        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+        by <em><a href="#">{{ post.author.username }}</a></em>  on {{ post.date|date:"F j, Y" }}.
+      </li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h3>Archives</h3>
+    <hr>
+    <ul>
+      {% for archive in archives %}
+      <li>
+        <a href="#">{{ archive | date:"F Y" }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h3>Categories</h3>
+    <hr>
+    <ul>
+      {% for category in categories %}
+      <li>
+        <a href="#">{{ category.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>

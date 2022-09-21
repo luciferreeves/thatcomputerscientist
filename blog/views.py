@@ -92,6 +92,12 @@ def post(request, slug):
         post = Post.objects.get(slug=slug)
         tags = post.tags.all()
         comments = Comment.objects.filter(post=post)
+        for comment in comments:
+            try:
+                user_profile = UserProfile.objects.get(user=comment.user)
+                comment.avatar = hashlib.md5(str(user_profile.gravatar_email).lower().encode('utf-8')).hexdigest() if user_profile.gravatar_email else hashlib.md5(str(comment.user.email).lower().encode()).hexdigest()
+            except UserProfile.DoesNotExist:
+                comment.avatar = hashlib.md5(str(comment.user.email).lower().encode()).hexdigest()
         if post.is_public:
             return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
         else:

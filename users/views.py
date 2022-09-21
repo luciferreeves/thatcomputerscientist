@@ -18,7 +18,7 @@ import django.contrib.auth.password_validation as validators
 # Create your views here.
 def login_user(request):
     # pass
-    next = request.POST.get('next', '/')
+    next = request.POST.get('next', 'blog:home')
     username = request.POST['username']
     password = request.POST['password']
     print (username, password)
@@ -76,10 +76,10 @@ def update_user(request):
             user_profile = UserProfile(user=username, location=location, gravatar_email=gravatar_email, bio=bio, is_public=is_public, email_public=email_public)
             user_profile.save()
         messages.success(request, 'Profile was successfully updated!')
-        return redirect('/account')
+        return redirect('blog:account')
     else:
         messages.error(request, 'Unable to update profile! Please try again later.')
-        return redirect('/')
+        return redirect('blog:home')
 
     
 def change_password(request):
@@ -95,16 +95,16 @@ def change_password(request):
                 user.save()
                 update_session_auth_hash(request, user)
                 messages.success(request, 'Password was successfully changed!')
-                return redirect('/account')
+                return redirect('blog:account')
             else:
                 messages.error(request, 'The new password and confirmation password do not match!')
-                return redirect('/account')
+                return redirect('blog:account')
         else:
             messages.error(request, 'Old password is incorrect!')
-            return redirect('/account')
+            return redirect('blog:account')
     else:
         messages.error(request, 'Unable to change password! Please try again later.')
-        return redirect('/')
+        return redirect('blog:home')
 
 
 def send_verification_email(request):
@@ -137,10 +137,10 @@ def verify_email(request, uidb64, token):
         user_profile.email_verified = True
         user_profile.save()
         messages.success(request, 'Your email has been verified! You can now login.', extra_tags='loginError')
-        return redirect('/')
+        return redirect('blog:home')
     else:
         messages.error(request, 'The verification link is invalid!')
-        return redirect('/')
+        return redirect('blog:home')
 
 def send_change_user_email(request):
     user = request.user
@@ -184,10 +184,10 @@ def change_email(request, uidb64, token):
         user.email = new_email
         user.save()
         messages.success(request, 'Email was successfully changed!')
-        return redirect('/account')
+        return redirect('blog:account')
     else:
         messages.error(request, 'The verification link is invalid!')
-        return redirect('/')
+        return redirect('blog:home')
 
 
 def register(request):

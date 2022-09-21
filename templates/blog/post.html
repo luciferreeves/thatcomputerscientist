@@ -17,13 +17,8 @@
         <h3>Comments</h3>
         {% for comment in comments %}
             <div class="comment">
-                {% load md5 %}
                 <div class="profile-picture">
-                    {% if comment.user.gravatar_email %}
-                        <img src="https://www.gravatar.com/avatar/{{ comment.user.gravatar_email | md5 }}?s=100" alt="Profile Picture">
-                    {% else %}
-                        <img src="https://www.gravatar.com/avatar/{{ comment.user.email | md5 }}?s=100" alt="Profile Picture">
-                    {% endif %}
+                    <img src="https://www.gravatar.com/avatar/{{ comment.avatar }}?s=100" alt="Profile Picture">
                 </div>
                 <div>
                     <p class="comment-header">

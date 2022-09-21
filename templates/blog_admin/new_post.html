@@ -125,7 +125,7 @@
     static create(value) {
       const node = super.create(value);
       if (typeof value === "string") {
-        node.innerHTML = "&#65279;" + this.tex2svg(value) + "&#65279;";
+        node.innerHTML = "" + this.tex2svg(value) + "";
         node.contentEditable = "false";
         node.setAttribute("data-value", value);
       }
@@ -152,7 +152,7 @@
     static create(value) {
       const node = super.create(value);
       if (typeof value === "string") {
-        node.innerHTML = "&#65279;" + this.tex2svg(value) + "&#65279;";
+        node.innerHTML = "" + this.tex2svg(value) + "";
         node.contentEditable = "false";
         node.setAttribute("data-value", value);
       }
@@ -244,7 +244,9 @@
     });
 
     try {
-        const delta = quill.clipboard.convert(document.getElementById("body").value);
+      const value = document.getElementById("body").value;
+      const newValue = value.replace(/<p><br><\/p>/g, "");
+      const delta = quill.clipboard.convert(value);
         quill.setContents(delta, "silent");
     } catch (e) {
         console.log(e);

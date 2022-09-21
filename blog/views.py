@@ -143,3 +143,17 @@ def edit_comment(request, slug):
             return redirect('blog:home')
     else:
         return redirect('blog:home')
+
+def delete_comment(request, slug, comment_id):
+    if request.user.is_authenticated:
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            if comment.user == request.user:
+                comment.delete()
+                return redirect('blog:post', slug=slug)
+            else:
+                return HttpResponse('Unauthorized!', status=401)
+        except Comment.DoesNotExist:
+            return HttpResponse('Comment not found!', status=404)
+    else:
+        return redirect('blog:home')

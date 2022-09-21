@@ -35,7 +35,7 @@
                             &nbsp;&nbsp;•&nbsp;&nbsp;
                             <a href="javascript:;" onclick="editComment({{ comment.id }})">Edit</a>
                             &nbsp;&nbsp;•&nbsp;&nbsp;
-                            <a href="javascript:;">Delete</a>
+                            <a href="{% url 'blog:delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
                         {% endif %}
                     </p>
                     <p class="comment-body">

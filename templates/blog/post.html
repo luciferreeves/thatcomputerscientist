@@ -20,7 +20,7 @@
                 <div class="profile-picture">
                     <img src="https://www.gravatar.com/avatar/{{ comment.avatar }}?s=100" alt="Profile Picture">
                 </div>
-                <div>
+                <div style="max-width: calc(100% - 63px);">
                     <p class="comment-header">
                         <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
                         {% if comment.edited %}

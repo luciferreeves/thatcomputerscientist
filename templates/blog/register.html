@@ -28,7 +28,8 @@
             <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
             {% for message in messages %}
                {% if 'passwordError' in message.tags %}
-                    <small class="error" style="display:block;">{{ message.message }}</small>
+                    {% load replace %}
+                    <small class="error" style="display:block;">{{ message.message|replace:"[']" }}</small>
                {% endif %}
             {% endfor %}
         </div>
@@ -58,8 +59,28 @@
         <div>
             <button type="submit" class="btn btn-primary" style="margin-top:10px">Register</button>
         </div>
+        <br>
+        {% for message in messages %}
+              {% if 'accountCreated' in message.tags %}
+                   <small class="success" style="display:block;">{{ message.message }}</small>
+              {% endif %}
+        {% endfor %}
   </section>
 </div>
 <script src={% static 'js/captcha.js' %}></script>
+<script>
+    var username = new URLSearchParams(window.location.search).get('u');
+    var email = new URLSearchParams(window.location.search).get('e');
+    if (username) {
+        document.getElementsByName("username").forEach(function(input) {
+            input.value = username;
+        });
+    }
+    if (email) {
+        document.getElementsByName("email").forEach(function(input) {
+            input.value = email.split('?u=')[0];
+        });
+    }
+</script>
 {% endblock %}
 

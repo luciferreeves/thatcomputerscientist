@@ -70,7 +70,7 @@ def register(request):
             pass
         # Create new captcha
         CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
-        return  render(request, 'blog/register.html', {'title': 'Register', 'captcha': base64_data})
+        return render(request, 'blog/register.html', {'title': 'Register', 'captcha': base64_data})
 
 
 def refresh_captcha(request):

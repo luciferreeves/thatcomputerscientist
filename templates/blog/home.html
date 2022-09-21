@@ -21,15 +21,17 @@
       articles or edit existing ones.
     </p>
   </div>
-    <article>
-      
-      <p style="line-height: 1.6em;">
-          Latest post on <em><u>{{ last_post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ last_post.author }}</a> in <a href="#">{{ last_post.category }}</a></em>
-      </p>
-      <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' last_post.slug %}">{{ last_post.title }}</a></h1>
-      <hr>
-      <div class="article-body">{{ last_post.body | safe }}</div>
-      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  </article>
+    {% if last_post %}
+      <article>
+        <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' last_post.slug %}">{{ last_post.title }}</a></h1>
+        <p style="line-height: 1.6em;">
+            Latest post on <em><u>{{ last_post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ last_post.author }}</a> in <a href="#">{{ last_post.category }}</a></em>
+        </p>
+        <hr>
+        <div class="article-body">{{ last_post.body | safe }}</div>
+        <p><em><a href="{% url 'blog:post' last_post.slug %}#comments">Click here</a></em> to read comments.</p>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      </article>
+    {% endif %}
 </div>
 {% endblock %}

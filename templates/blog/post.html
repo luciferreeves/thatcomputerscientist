@@ -28,8 +28,26 @@
                 <div>
                     <p class="comment-header">
                         <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
+                        {% if comment.edited %}
+                            <em>(Edited)</em>
+                        {% endif %}
+                        {% if comment.user == user %}
+                            &nbsp;&nbsp;•&nbsp;&nbsp;
+                            <a href="javascript:;" onclick="editComment({{ comment.id }})">Edit</a>
+                            &nbsp;&nbsp;•&nbsp;&nbsp;
+                            <a href="javascript:;">Delete</a>
+                        {% endif %}
                     </p>
-                    <p class="comment-body">{{ comment.body }}</p>
+                    <p class="comment-body">
+                        <span id="comment-body-{{ comment.id }}">{{ comment.body }}</span>
+                        <form action="{% url 'blog:edit_comment' post.slug %}" method="POST" id="edit-form-{{ comment.id }}" style="display: none;">
+                            {% csrf_token %}
+                            <input type = "hidden" name="comment_id" value="{{ comment.id }}">
+                            <textarea name="body" id="body" cols="30" rows="10">{{ comment.body }}</textarea>
+                            <input type="submit" value="Update" style="display:inline-block;">
+                            <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" style="display:inline-block;">
+                        </form>
+                    </p>
                 </div>
             </div>
         {% endfor %}
@@ -50,5 +68,16 @@
     </div>
 </article>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function editComment(id) {
+        document.getElementById('comment-body-' + id).style.display = 'none';
+        document.getElementById('edit-form-' + id).style.display = 'block';
+    }
+
+    function cancelEdit(id) {
+        document.getElementById('comment-body-' + id).style.display = 'block';
+        document.getElementById('edit-form-' + id).style.display = 'none';
+    }
+    </script>
 </div>
 {% endblock %}

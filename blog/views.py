@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from users.models import UserProfile, CaptchaStore
@@ -117,3 +118,28 @@ def comment(request, slug):
                         return HttpResponse('Post not found!', status=404)
             except Post.DoesNotExist:
                 return HttpResponse('Post not found!', status=404)
+
+        else:
+            return redirect('blog:home')
+    else:
+        return redirect('blog:home')
+
+def edit_comment(request, slug):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            try:
+                comment = Comment.objects.get(id=request.POST.get('comment_id'))
+                if comment.user == request.user:
+                    comment.body = request.POST.get('body')
+                    comment.edited = True
+                    comment.edited_at = datetime.now()
+                    comment.save()
+                    return redirect('blog:post', slug=slug)
+                else:
+                    return HttpResponse('Unauthorized!', status=401)
+            except Comment.DoesNotExist:
+                return HttpResponse('Comment not found!', status=404)
+        else:
+            return redirect('blog:home')
+    else:
+        return redirect('blog:home')

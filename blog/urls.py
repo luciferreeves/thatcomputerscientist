@@ -12,5 +12,6 @@ urlpatterns = [
     path('register/refresh_captcha/', name='refresh_captcha', view=views.refresh_captcha),
     path('post/<str:slug>', views.post, name='post'),
     path('post/<str:slug>/comment', views.comment, name='comment'),
+    path('post/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
     # path('my/homepage', views.homepage, name='homepage'),
 ]

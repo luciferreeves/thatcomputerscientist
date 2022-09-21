@@ -21,9 +21,17 @@
     <div class="content">
       {% block content %}
       {% endblock %}
-      <footer>
-        &copy; {% now "Y" %} That Computer Scientist. Source code avaiable on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
-      </footer>
+    </div>
+    <div class="sidebar sidebar-bg-light-red sidebar-lg">
+      <h2>Recent Posts</h2>
+      <ul>
+        {% for post in recent_posts %}
+        <li>
+          <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+          by <em><a href="#">{{ post.author.username }}</a></em>  on {{ post.date|date:"F j, Y" }}.
+        </li>
+        {% endfor %}
+      </ul>
     </div>
   </body>
 </html>

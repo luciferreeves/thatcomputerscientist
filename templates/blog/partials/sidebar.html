@@ -1,5 +1,5 @@
 {% load static %}
-<div class="sidebar">
+<div class="sidebar sidebar-bg-blue sidebar-border">
     {% comment %} Hamburger Icon {% endcomment %}
     <img class="hamburger" src="{% static 'images/icons/notepad_file-2.png' %}" alt="Hamburger Icon" class="hamburger-icon">
 
@@ -8,6 +8,7 @@
     <!-- Login Box -->
     </a>
     <div class="lgn-area">
+    <div>
         {% if user.is_authenticated %}
         {% else %}
         <fieldset>
@@ -77,6 +78,11 @@
             </nav>
         {% endif %}
     </div>
+    <hr style="margin: 2rem 0;">
+    <footer>
+        &copy; {% now "Y" %} That Computer Scientist. Source code available on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
+    </footer>
+</div>
 </div>
 
 <script>

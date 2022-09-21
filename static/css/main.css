@@ -14,14 +14,30 @@ body {
 }
 
 .sidebar {
-    background-color: #bad9ff;
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto;
-    border: 1px solid #191919;
     min-width: 15rem;
     max-width: 15rem;
 }
+
+.sidebar-lg {
+    min-width: 20rem;
+    max-width: 20rem;
+}
+
+.sidebar-bg-blue {
+    background-color: #bad9ff;
+}
+
+.sidebar-bg-light-red {
+    background-color: #fff6f6;
+}
+
+.sidebar-border {
+    border: 1px solid #191919;
+}
+
 
 .content {
     flex: 1;
@@ -29,14 +45,6 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     min-height: calc(100vh - 40px);
-    display: flex;
-    flex-direction: column;
-}
-
-.content > footer {
-    margin-top: auto;
-    text-align: center;
-    padding-top: 40px;
 }
 
 .title:visited {
@@ -279,7 +287,7 @@ summary {
         flex-direction: column;
     }
 
-    .sidebar {
+    .sidebar, .sidebar-lg {
         min-width: calc(100vw - 42px)
     }
 

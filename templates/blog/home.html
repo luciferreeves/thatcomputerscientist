@@ -21,16 +21,15 @@
       articles or edit existing ones.
     </p>
   </div>
-  <section>
-    <h2>Recent Posts</h2>
-    <ul>
-      {% for post in recent_posts %}
-      <li>
-        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
-        by <em><a href="#">{{ post.author.username }}</a></em>  on {{ post.date|date:"F j, Y" }}.
-      </li>
-      {% endfor %}
-    </ul>
-  </section>
+    <article>
+      
+      <p style="line-height: 1.6em;">
+          Latest post on <em><u>{{ last_post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ last_post.author }}</a> in <a href="#">{{ last_post.category }}</a></em>
+      </p>
+      <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' last_post.slug %}">{{ last_post.title }}</a></h1>
+      <hr>
+      <div class="article-body">{{ last_post.body | safe }}</div>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </article>
 </div>
 {% endblock %}

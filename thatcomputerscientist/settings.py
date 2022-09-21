@@ -88,6 +88,8 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATES[0]['OPTIONS']['context_processors'].append('blog.context_processors.recent_posts')
+
 WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
 
 

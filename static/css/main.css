@@ -306,4 +306,17 @@ summary {
         display: block;
     }
 
+    .table {
+        width: 100%;
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+    .float-right {
+        position: initial;
+    }
+
+    .content {
+        min-height: auto;
+    }
 }

@@ -11,48 +11,45 @@
     />
     <title>That Computer Scientist - {{ title }}</title>
     <link preload rel="stylesheet" href="{% static 'css/main.css' %}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'images/favicons/site.webmanifest' %}">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'images/favicons/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'images/favicons/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'images/favicons/favicon-16x16.png' %}"
+    />
+    <link
+      rel="manifest"
+      href="{% static 'images/favicons/site.webmanifest' %}"
+    />
   </head>
   <body>
-    {% include 'blog/partials/sidebar.html' %}
-    <div class="content">
-      {% block content %}
-      {% endblock %}
+    <div class="header"></div>
+    <div style="width: 1000px; margin: 20px auto;">
+      <hr>
     </div>
-    <div class="sidebar sidebar-lg" style="border-left: dotted 1px black;">
-      <h3 style="margin-bottom: 0px;"><em>Recent Posts</em></h3>
-      <hr>
-      <ul>
-        {% for post in recent_posts %}
-        <li>
-          <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
-          by <em><a href="#">{{ post.author.username }}</a></em>  on {{ post.date|date:"F j, Y" }}.
-        </li>
-        {% endfor %}
-      </ul>
-      <br>
-      <h3 style="margin-bottom: 0px;"><em>Archives</em></h3>
-      <hr>
-      <ul>
-        {% for archive in archives %}
-        <li>
-          <a href="#">{{ archive | date:"F Y" }}</a>
-        </li>
-        {% endfor %}
-      </ul>
-      <br>
-      <h3 style="margin-bottom: 0px;"><em>Categories</em></h3>
-      <hr>
-      <ul>
-        {% for category in categories %}
-        <li>
-          <a href="#">{{ category.name }}</a>
-        </li>
-        {% endfor %}
-      </ul>
+    <div class="mc">
+      {% include 'blog/partials/sidebar.html' %}
+      <div class="content">{% block content %} {% endblock %}</div>
+      {% comment %} <div class="sidebar sidebar-lg" style="border-left: dotted 1px black">
+        
+      </div> {% endcomment %}
+    </div>
+    <div style="width: 1000px; margin: 20px auto;">
+      <hr style="margin: 2rem 0;">
+      <footer>
+          &copy; {% now "Y" %} That Computer Scientist. Source code available on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
+      </footer>
     </div>
   </body>
 </html>

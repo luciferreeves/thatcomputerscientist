@@ -1,13 +1,13 @@
 from .models import Post, Category
 
-def recent_posts(request):
-    recent_posts = Post.objects.filter(is_public=True).order_by('-date')[:5]
-    return {'recent_posts': recent_posts}
+def recent_posts():
+    recent_posts = Post.objects.filter(is_public=True).order_by('-date')[1:6]
+    return recent_posts
 
-def categories(request):
+def categories():
     categories = Category.objects.all()
-    return {'categories': categories}
+    return categories
 
-def archives(request):
+def archives():
     archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')
-    return {'archives': archives}
+    return archives

@@ -10,12 +10,14 @@ from string import ascii_letters, digits
 import base64
 import json
 from .models import Post, Comment
+from .context_processors import recent_posts, categories, archives
 
 # Create your views here.
 
 def home(request):
     last_post = Post.objects.filter(is_public=True).order_by('-date')[0]
-    return render(request, 'blog/home.html', {'title': 'Home', 'last_post': last_post})
+    first_paragraph = last_post.body.split('<p>')[1].split('</p>')[0]
+    return render(request, 'blog/home.html', {'title': 'Home', 'last_post': last_post, 'first_paragraph': first_paragraph, 'recent_posts': recent_posts(), 'categories': categories(), 'archives': archives()})
 
 def account(request):
     user = request.user

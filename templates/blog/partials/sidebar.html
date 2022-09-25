@@ -1,12 +1,10 @@
 {% load static %}
-<div class="sidebar sidebar-bg-blue sidebar-border">
-    {% comment %} Hamburger Icon {% endcomment %}
-    <img class="hamburger" src="{% static 'images/icons/notepad_file-2.png' %}" alt="Hamburger Icon" class="hamburger-icon">
+<div class="sidebar">
 
-    <a href="/" class="title">
+    {% comment %} <a href="/" class="title">
         <img src="{% static 'images/logo.png' %}" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
     <!-- Login Box -->
-    </a>
+    </a> {% endcomment %}
     <div class="lgn-area">
     <div>
         {% if user.is_authenticated %}
@@ -37,7 +35,6 @@
             {% endfor %}
         </fieldset>
         {% endif %}
-        <br>
         <fieldset>
             {% if user.is_authenticated %}
                 <legend>Hello, {{ user.username }}!</legend>
@@ -78,10 +75,6 @@
             </nav>
         {% endif %}
     </div>
-    <hr style="margin: 2rem 0;">
-    <footer>
-        &copy; {% now "Y" %} That Computer Scientist. Source code available on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
-    </footer>
 </div>
 </div>
 
@@ -94,10 +87,4 @@
             input.value = username;
         });
     }
-
-    const hamburger = document.querySelector('.hamburger');
-    hamburger.addEventListener('click', function() {
-        const lgn_area = document.querySelector('.lgn-area');
-        lgn_area.classList.toggle('lgn-area-open');
-    });
 </script>

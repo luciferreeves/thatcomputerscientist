@@ -1,25 +1,66 @@
-/* making a sidebar layout with 20% sidebar */
 body {
+    background-image: url("../images/bg.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: serif;
+    padding: 0;
+    margin: 0;
+    min-height: calc(100vh);
+    text-align: center;
+}
+
+.header {
+    background-image: url("../images/banner.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1000px;
+    height: 300px;
+    margin: auto;
+}
+
+.mc {
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
-    min-height: calc(100vh);
-    background-color: #fafafa;
-    padding: 0;
-    min-width: calc(100vw - 16px);
-    width: 100%;
-    font-family: serif;
-    margin: 0;
-    padding: 0;
+    width: 1000px;
+    border: solid 1px cecece;
+    padding: 2px;
+    text-align: initial;
 }
 
 .sidebar {
-    padding: 20px;
+    /* padding: 20px; */
     overflow-x: hidden;
     overflow-y: auto;
     min-width: 15rem;
     max-width: 15rem;
 }
+
+/* COLORS SECTION ACCORIDING TO DARK MODE */
+
+h1, h2, h3, h4, h5, h6, p, a, li, span, label, footer, .table {
+    color: #cecece;
+}
+
+a {
+    color: #8278ed;
+}
+/* 
+a:visited {
+    color: #b894dc;
+} */
+
+svg {
+    filter: invert(1);
+}
+
+fieldset, legend {
+    color: #cecece;
+}
+
 
 .sidebar-lg {
     min-width: 20rem;
@@ -31,20 +72,20 @@ body {
 }
 
 .sidebar-border {
-    border: 1px solid #191919;
+    border: 1px solid #e6e6e6;
 }
 
 
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 9px 20px 20px 20px;
     overflow-x: hidden;
     overflow-y: auto;
     min-height: calc(100vh - 40px);
 }
 
 .title:visited {
-    color: #000;
+    color: #cecece;
 }
 
 .title > h1 {
@@ -66,9 +107,9 @@ body {
 }
 
 .alert {
-    background-color: #ffd4bd;
+    background-color: #0c1221;
     padding: 20px;
-    border: 1px solid #191919;
+    border: 1px solid #cecece;
 }
 
 lebel, input, textarea, select {
@@ -78,12 +119,17 @@ lebel, input, textarea, select {
     font-size: 16px;
 }
 
+input, textarea {
+    background-color: rgb(17, 17, 17);
+    color: #cecece;
+}
+
 input[type = 'submit'] {
     margin-top: 10px;
 }
 
 fieldset {
-    border: 1px solid #191919;
+    border: 1px solid #cecece;
     padding: 10px 20px;
 }
 
@@ -103,7 +149,7 @@ nav > ul > li {
 
 .login-box {
     padding: 20px;
-    border: 1px solid #191919;
+    border: 1px solid #cecece;
 }
 
 .login-box > p {
@@ -112,7 +158,7 @@ nav > ul > li {
 }
 
 .error {
-    color: red;
+    color: rgb(255, 81, 81);
 }
 
 .success {
@@ -120,16 +166,16 @@ nav > ul > li {
 }
 
 .alert.success {
-    background-color: #d4ffbd;
+    color: #d4ffbd;
     padding: 10px;
-    color: rgb(5, 74, 5);
+    background-color: rgb(5, 74, 5);
     font-weight: bold;
 }
 
 .alert.error {
-    background-color: #ffbdbd;
+    color: #ffbdbd;
     padding: 10px;
-    color: rgb(74, 5, 5);
+    background-color: rgb(74, 5, 5);
     font-weight: bold;
 }
 
@@ -153,17 +199,13 @@ nav > ul > li {
 }
 
 .errorbox {
-    background-color: #ffd4bd;
+    background-color: #191919;
     padding: 20px;
-    border: 1px solid #191919;
+    border: 1px solid #ffd4bd;
 }
 
 .errorbox > h1 {
     margin-top: 0;
-}
-
-.hamburger {
-    display: none;
 }
 
 #captcha {
@@ -197,11 +239,11 @@ nav > ul > li {
 
 /* Add borders to all cells */
 .table, .table th, .table td {
-    border: 1px solid #191919;
+    border: 1px solid #cecece;
 }
 
 .table-striped > tbody > tr:nth-child(odd) {
-    background-color: #f2f2f2;
+    background-color: #0000007a;
 }
 
 summary {
@@ -226,18 +268,18 @@ summary {
 }
 
 .label-success {
-    background-color: #d4ffbd;
-    color: rgb(5, 74, 5);
+    color: #d4ffbd;
+    background-color: rgb(5, 74, 5);
 }
 
 .label-error {
-    background-color: #ffbdbd;
-    color: rgb(74, 5, 5);
+    color: #ffbdbd;
+    background-color: rgb(74, 5, 5);
 }
 
 .label-warning {
-    background-color: #ffd4bd;
-    color: rgb(74, 5, 5);
+    color: #ffd4bd;
+    background-color: rgb(74, 5, 5);
 }
 
 .comment {
@@ -271,52 +313,4 @@ summary {
     margin: 0px auto 10px auto;
     max-height: 50vh;
     max-width: 100%;
-}
-
-/* Optimize for phones */
-@media only screen and (max-width: 480px) {
-    body {
-        flex-direction: column;
-    }
-
-    .account {
-        flex-direction: column;
-    }
-
-    .sidebar, .sidebar-lg {
-        min-width: calc(100vw - 42px)
-    }
-
-    .hamburger {
-        display: block;
-        position: absolute;
-        right: 20px;
-    }
-    .title > img {
-        position: relative;
-        left: -5.9rem;
-        top: -3px;
-    }
-
-    .lgn-area {
-        display: none;
-    }
-
-    .lgn-area-open {
-        display: block;
-    }
-
-    .table {
-        width: 100%;
-        table-layout: fixed;
-        word-wrap: break-word;
-    }
-
-    .float-right {
-        position: initial;
-    }
-
-    .content {
-        min-height: auto;
-    }
 }

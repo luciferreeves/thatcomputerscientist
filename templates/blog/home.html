@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
   <div class="alert">
-    <h1 class="center">That Computer Scientist</h1>
+    {% comment %} <h1 class="center">That Computer Scientist</h1> {% endcomment %}
     <p>
       Welcome to the home of That Computer Scientist. This is my personal
       website where I share all of my thoughts, ideas, and experiences. To know
@@ -12,7 +12,7 @@
     </p>
   </div>
   <br />
-  <div class="alert" style="background-color: rgb(223, 255, 243)">
+  <div class="alert" style="background-color: rgb(13 44 33)">
     <p>
       This website is a work in progress. I am currently working on adding more
       features to this website. I aim to build a retro looking personal website,
@@ -22,16 +22,51 @@
     </p>
   </div>
     {% if last_post %}
-      <article>
+      <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
+      <hr />
+      <ul>
+      <li>
         <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' last_post.slug %}">{{ last_post.title }}</a></h1>
         <p style="line-height: 1.6em;">
             Latest post on <em><u>{{ last_post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ last_post.author }}</a> in <a href="#">{{ last_post.category }}</a></em>
         </p>
         <hr>
-        <div class="article-body">{{ last_post.body | safe }}</div>
-        <p><em><a href="{% url 'blog:post' last_post.slug %}#comments">Click here</a></em> to read comments.</p>
+        <div class="article-body">
+          <p>
+            {{ first_paragraph | safe }}
+          </p>
+        </div>
+        <p><em><a href="{% url 'blog:post' last_post.slug %}">Click here</a></em> to read more.</p>
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-      </article>
+      </li>
     {% endif %}
+      {% for post in recent_posts %}
+      <li>
+        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+        by <em><a href="#">{{ post.author.username }}</a></em> on {{
+        post.date|date:"M d, Y" }}.
+      </li>
+      {% endfor %}
+    </ul>
+    <br />
+    <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
+    <hr />
+    <ul>
+      {% for archive in archives %}
+      <li>
+        <a href="#">{{ archive | date:"F Y" }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <br />
+    <h3 style="margin-bottom: 0px"><em>Categories</em></h3>
+    <hr />
+    <ul>
+      {% for category in categories %}
+      <li>
+        <a href="#">{{ category.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
 </div>
 {% endblock %}

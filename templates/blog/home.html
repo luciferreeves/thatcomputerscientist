@@ -44,7 +44,7 @@
       <li>
         <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
         by <em><a href="#">{{ post.author.username }}</a></em> on {{
-        post.date|date:"M d, Y" }}.
+        post.date | date:"M d, Y" }}.
       </li>
       {% endfor %}
     </ul>

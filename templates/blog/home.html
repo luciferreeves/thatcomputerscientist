@@ -1,7 +1,9 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
   <div class="alert">
-    {% comment %} <h1 class="center">That Computer Scientist</h1> {% endcomment %}
+    {% comment %}
+    <h1 class="center">That Computer Scientist</h1>
+    {% endcomment %}
     <p>
       Welcome to the home of That Computer Scientist. This is my personal
       website where I share all of my thoughts, ideas, and experiences. To know
@@ -21,46 +23,60 @@
       articles or edit existing ones.
     </p>
   </div>
-    {% if recent_posts %}
-      <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
-      <hr />
-      <ul>
-        {% for post in recent_posts %}
-        <li>
-          <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a></h1>
-          <p style="line-height: 1.6em;">
-              Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
-          </p>
-          <hr>
-          <div class="article-body">
-            <p>
-              {{ post.excerpt | safe }}
-            </p>
-          </div>
-          <p><em><a href="{% url 'blog:post' post.slug %}">Click here</a></em> to read more.</p>
-        </li>
-        {% endfor %}
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    {% endif %}
-    <br />
-    <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
-    <hr />
-    <ul>
-      {% for archive in archives %}
-      <li>
-        <a href="#">{{ archive | date:"F Y" }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-    <br />
-    <h3 style="margin-bottom: 0px"><em>Categories</em></h3>
-    <hr />
-    <ul>
-      {% for category in categories %}
-      <li>
-        <a href="#">{{ category.name }}</a>
-      </li>
-      {% endfor %}
-    </ul>
+  {% if recent_posts %}
+  <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
+  <hr />
+  <ul>
+    {% for post in recent_posts %}
+    <li>
+      <h2 style="margin-bottom: 12px">
+        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+      </h2>
+      <p style="line-height: 1.6em">
+        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
+        <em
+          ><a href="#">{{ post.author }}</a> in
+          <a href="#">{{ post.category }}</a></em
+        >
+      </p>
+      <div class="article-body">
+        <p>{{ post.excerpt | safe }}</p>
+      </div>
+      <p>
+        <em
+          ><a href="{% url 'blog:post' post.slug %}">Click here</a> to continue
+          reading...</em
+        >
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/mml-chtml.min.js"
+    integrity="sha512-4JUXEJCjFmGygcGTR/doRQ1Kw7uEYn+kBpiGWyVBzUQHtFSPQNm08E/lqo2/XJqiWKKV0nTpv1q8bHPPDL4n4Q=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  {% endif %}
+  <br />
+  <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
+  <hr />
+  <ul>
+    {% for archive in archives %}
+    <li>
+      <a href="#">{{ archive | date:"F Y" }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <br />
+  <h3 style="margin-bottom: 0px"><em>Categories</em></h3>
+  <hr />
+  <ul>
+    {% for category in categories %}
+    <li>
+      <a href="#">{{ category.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
 </div>
 {% endblock %}

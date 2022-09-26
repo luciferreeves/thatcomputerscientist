@@ -225,10 +225,7 @@ nav > ul > li {
 }
 
 .float-right {
-    /* Float to the top right corner */
-    position: absolute;
-    top: 2.5em;
-    right: 23.85rem;
+    float: right;
 }
 
 .table {

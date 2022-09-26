@@ -21,33 +21,27 @@
       articles or edit existing ones.
     </p>
   </div>
-    {% if last_post %}
+    {% if recent_posts %}
       <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
       <hr />
       <ul>
-      <li>
-        <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' last_post.slug %}">{{ last_post.title }}</a></h1>
-        <p style="line-height: 1.6em;">
-            Latest post on <em><u>{{ last_post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ last_post.author }}</a> in <a href="#">{{ last_post.category }}</a></em>
-        </p>
-        <hr>
-        <div class="article-body">
-          <p>
-            {{ first_paragraph | safe }}
+        {% for post in recent_posts %}
+        <li>
+          <h1 style="margin-bottom: 12px; font-size: 2rem;"><a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a></h1>
+          <p style="line-height: 1.6em;">
+              Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
           </p>
-        </div>
-        <p><em><a href="{% url 'blog:post' last_post.slug %}">Click here</a></em> to read more.</p>
+          <hr>
+          <div class="article-body">
+            <p>
+              {{ post.excerpt | safe }}
+            </p>
+          </div>
+          <p><em><a href="{% url 'blog:post' post.slug %}">Click here</a></em> to read more.</p>
+        </li>
+        {% endfor %}
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-      </li>
     {% endif %}
-      {% for post in recent_posts %}
-      <li>
-        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
-        by <em><a href="#">{{ post.author.username }}</a></em> on {{
-        post.date | date:"M d, Y" }}.
-      </li>
-      {% endfor %}
-    </ul>
     <br />
     <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
     <hr />

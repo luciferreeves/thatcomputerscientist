@@ -14,18 +14,14 @@
     </p>
   </div>
   <br />
-  <div class="alert" style="background-color: rgb(13 44 33)">
-    <p>
-      This website is a work in progress. I am currently working on adding more
-      features to this website. I aim to build a retro looking personal website,
-      where I will share my articles and Ideas, which will be built entirely
-      around the idea of "collaborative writing" — where anyone can write new
-      articles or edit existing ones.
-    </p>
+  <div style="text-align:center;">
+    <img src="https://exo.pet/images/wip/webweaving.gif" style="" height="60px">
+    <img src="https://anlucas.neocities.org/happynewyear.gif" style="" height="60px">
   </div>
   {% if recent_posts %}
   <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
   <hr />
+  {% load ad %}
   <ul>
     {% for post in recent_posts %}
     <li>
@@ -49,6 +45,9 @@
         >
       </p>
     </li>
+    <div class="ad">
+      <img src="{{'banner'|ad }}" alt="Ad" width="100%" height="auto" />
+    </div>
     {% endfor %}
   </ul>
   <script

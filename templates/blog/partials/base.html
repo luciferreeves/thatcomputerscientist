@@ -10,6 +10,7 @@
       content="Welcome to the home of That Computer Scientist. I am Kumar Priyansh. This is my personal website where I share all of my thoughts, ideas, and experiences."
     />
     <title>That Computer Scientist - {{ title }}</title>
+    <link preload rel="stylesheet" href="{% static 'css/fonts.css' %}" />
     <link preload rel="stylesheet" href="{% static 'css/main.css' %}" />
     <link
       rel="apple-touch-icon"
@@ -37,9 +38,13 @@
     <div class="header"></div>
     <div style="width: 1000px; margin: 20px auto;">
       <ul class="topnav">
-        <li><a href="#">
-          Dev Status<img src="{% static 'images/gifs/new.gif' %}" alt="new" style="margin-left: 5px;">
+        {% comment %} <img src="{% static 'images/gifs/new.gif' %}" alt="new" style="margin-left: 5px;"> {% endcomment %}
+        <li class="new"><a href="#">
+          Dev Status
         </a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'users:logout' %}">Logout</a></li>
+        {% endif %}
       <hr>
     </div>
     <div class="mc">
@@ -52,7 +57,17 @@
     <div style="width: 1000px; margin: 0px auto 40px auto;">
       <hr style="margin: 2rem 0;">
       <footer>
-          &copy; {% now "Y" %} That Computer Scientist. Source code available on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
+        {% load ad %}
+        {% for i in '12345789'|make_list %}
+          <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px">
+        {% endfor %}
+        <br>
+        {% for i in '12345'|make_list %}
+          <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px">
+        {% endfor %}
+        <br>
+        <br>
+        &copy; {% now "Y" %} That Computer Scientist. Source code available on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
       </footer>
     </div>
   </body>

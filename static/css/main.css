@@ -322,17 +322,47 @@ summary {
 .topnav > li {
     display: inline-block;
     margin-left: 10px;
-    font-size: 14px;
-    padding: 0px 10px;
-    border-right: solid 1px #cecece;
+    background: #0000FF;
+    border-top: 2px solid #6666FF;
+    border-left: 2px solid #6666FF;
+    border-right: 2px solid #00007C;
+    border-bottom: 2px solid #00007C;
+    font-family: 'TopNavbar', sans-serif;
+    position: relative;
+}
+
+li.new::before{
+    /* Add a "new" image gif to top right corner. */
+    content: url('../images/gifs/new.gif');
+    position: absolute;
+    top: -9px;
+    right: -10px;
 }
 
 .topnav > li > a {
     color: #feffcf;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 4px 8px;
 }
 
-.topnav > li > a > img {
-    height: 14px;
+.ad {
+    border: solid 1px #cecece78;
+    padding: 10px;
     position: relative;
-    top: 2px;
+}
+
+.ad::before {
+    content: 'Advertisement';
+    display: block;
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ffffffc4;
+    padding: 2px 5px;
+    border-radius: 0 0 0 5px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }

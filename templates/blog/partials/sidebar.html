@@ -49,7 +49,6 @@
                     <li><a href="/blog">Blog</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'blog:account' %}">My Account</a></li>
-                        <li><a href="{% url 'users:logout' %}">Logout</a></li>
                     {% else %}
                         <li><a href="/register">Register</a></li>
                     {% endif %}
@@ -57,6 +56,10 @@
             </nav>
         </fieldset>
         <br>
+        <div class="ad">
+            {% load ad %}
+            <img src="{{ "big" | ad }}" alt="Advertisement" width="100%">
+        </div>
         {% if user.is_staff %}
         <fieldset>
             <legend>Admin</legend>
@@ -74,7 +77,9 @@
                 </ul>
             </nav>
         {% endif %}
+        </fieldset>
     </div>
+    <br>
 </div>
 </div>
 

@@ -53,9 +53,9 @@ a:visited {
     color: #b894dc;
 } */
 
-svg {
+/* svg {
     filter: invert(1);
-}
+} */
 
 fieldset, legend {
     color: #cecece;
@@ -413,4 +413,12 @@ li.new::before{
 
 .hljs-style-github-dark-dimmed .hljs {
     background: rgb(34 39 46 / 0%) !important;
+}
+
+pre {
+    color: white;
+    background-color: rgba(40, 48, 59, 0.317);
+    border: 1px solid #cecece;
+    padding: 10px;
+    border-radius: 5px;
 }

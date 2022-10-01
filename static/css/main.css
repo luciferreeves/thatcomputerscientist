@@ -366,3 +366,51 @@ li.new::before{
     border-radius: 0 0 0 5px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
+.file {
+    padding: 4px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.file > div {
+    color: #cecece;
+}
+
+.file > a {
+    color: #cecece;
+    text-decoration: none;
+}
+
+.ft-file {
+    width: 32px;
+    background-image: url('../images/icons/file.ico');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+    background-size: contain;
+}
+
+.ft-dir {
+    width: 32px;
+    background-image: url('../images/icons/folder.ico');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-right: 10px;
+}
+
+.file-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.file-meta.file-meta-dark {
+    display: none;
+}
+
+.hljs-style-github-dark-dimmed .hljs {
+    background: rgb(34 39 46 / 0%) !important;
+}

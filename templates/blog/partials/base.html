@@ -39,12 +39,13 @@
     <div style="width: 1000px; margin: 20px auto;">
       <ul class="topnav">
         {% comment %} <img src="{% static 'images/gifs/new.gif' %}" alt="new" style="margin-left: 5px;"> {% endcomment %}
-        <li class="new"><a href="#">
-          Dev Status
+        <li class="new"><a href="{% url 'dev_status:home' %}">
+          Source Code
         </a></li>
         {% if user.is_authenticated %}
           <li><a href="{% url 'users:logout' %}">Logout</a></li>
         {% endif %}
+      </ul>
       <hr>
     </div>
     <div class="mc">

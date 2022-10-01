@@ -311,3 +311,28 @@ summary {
     max-height: 50vh;
     max-width: 100%;
 }
+
+.topnav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+.topnav > li {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    padding: 0px 10px;
+    border-right: solid 1px #cecece;
+}
+
+.topnav > li > a {
+    color: #feffcf;
+}
+
+.topnav > li > a > img {
+    height: 14px;
+    position: relative;
+    top: 2px;
+}

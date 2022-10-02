@@ -1,5 +1,11 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+{% load static %}
 <div class="main">
+  <div style="text-align:center;">
+    <img src="{% static 'images/gifs/underconstruction.gif' %}" style="" height="120px">
+    {% comment %} <img src="https://anlucas.neocities.org/happynewyear.gif" style="" height="60px"> {% endcomment %}
+  </div>
+  <br />
   <div class="alert">
     {% comment %}
     <h1 class="center">That Computer Scientist</h1>
@@ -12,12 +18,31 @@
       <a href="/contact">Contact</a> page. Please use the sidebar to navigate
       the site.
     </p>
+    <p>
+      This website is a work in progress. I am currently working on adding more
+      features to this website. I aim to build a retro looking personal website,
+      where I will share my articles and Ideas, which will be built entirely
+      around the idea of "collaborative writing" — where anyone can write new
+      articles or edit existing ones.
+    </p>
   </div>
   <br />
-  <div style="text-align:center;">
-    <img src="https://exo.pet/images/wip/webweaving.gif" style="" height="60px">
-    <img src="https://anlucas.neocities.org/happynewyear.gif" style="" height="60px">
-  </div>
+  <fieldset>
+    <legend>
+      <img src = "{% static 'images/gifs/update.gif' %}" height="16px">
+    </legend>
+    <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
+      <p>
+        <b>2021-01-01</b> - Happy New Year! I hope you all had a great holiday
+        season. I am excited to announce that I have started a new blog series
+        called <a href="/blog/series/programming-projects">Programming
+        Projects</a>. This series will be a collection of posts that will
+        document my journey as I learn new programming languages and frameworks.
+        I will be using these projects to learn new skills and to build my
+        portfolio. I hope you enjoy this new series!
+      </p>
+    </marquee>
+  </fieldset>
   {% if recent_posts %}
   <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
   <hr />

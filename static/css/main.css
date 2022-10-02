@@ -1,5 +1,5 @@
 body {
-    background-image: url("../images/bg.jpeg");
+    background-image: url("../images/site/bg.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -12,7 +12,7 @@ body {
 }
 
 .header {
-    background-image: url("../images/banner.png");
+    background-image: url("../images/site/banner.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

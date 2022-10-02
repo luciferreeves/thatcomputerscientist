@@ -11,11 +11,14 @@ import base64
 import json
 from .models import Post, Comment
 from .context_processors import recent_posts, categories, archives
+from announcements.models import Announcement
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'blog/home.html', {'title': 'Home', 'recent_posts': recent_posts(), 'categories': categories(), 'archives': archives()})
+    announcements = Announcement.objects.filter(is_public=True).order_by('-created_at')
+    announcements = announcements if len(announcements) > 0 else None
+    return render(request, 'blog/home.html', {'title': 'Home', 'recent_posts': recent_posts(), 'categories': categories(), 'archives': archives(), 'announcements': announcements})
 
 def account(request):
     user = request.user

@@ -422,3 +422,21 @@ pre {
     padding: 10px;
     border-radius: 5px;
 }
+
+.announcements {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.announcements > li::before {
+    content: '📢';
+    margin-right: 5px;
+    height: 16px;
+}
+
+.announcements > li.newac::before {
+    content: url('../images/gifs/new_announcement.gif');
+    margin-right: 5px;
+    height: 16px;
+}

@@ -27,22 +27,23 @@
     </p>
   </div>
   <br />
+  {% if announcements is not None %}
   <fieldset>
     <legend>
       <img src = "{% static 'images/gifs/update.gif' %}" height="16px">
     </legend>
     <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
-      <p>
-        <b>2021-01-01</b> - Happy New Year! I hope you all had a great holiday
-        season. I am excited to announce that I have started a new blog series
-        called <a href="/blog/series/programming-projects">Programming
-        Projects</a>. This series will be a collection of posts that will
-        document my journey as I learn new programming languages and frameworks.
-        I will be using these projects to learn new skills and to build my
-        portfolio. I hope you enjoy this new series!
-      </p>
+      <ul class="announcements">
+        {% for announcement in announcements %}
+        <li {% if announcement.is_new %}class="newac"{% endif %}>
+          <b>{{ announcement.created_at | date:"M d, Y" }}</b> {{ announcement.content }}
+        </li>
+        {% endfor %}
+      </ul>
     </marquee>
   </fieldset>
+  <br />
+  {% endif %}
   {% if recent_posts %}
   <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
   <hr />

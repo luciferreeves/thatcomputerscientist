@@ -81,7 +81,7 @@ fieldset, legend {
     padding: 9px 20px 20px 20px;
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: calc(100vh - 40px);
+    /* min-height: calc(100vh - 40px); */
 }
 
 .title:visited {

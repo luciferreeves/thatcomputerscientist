@@ -13,31 +13,28 @@
   <br>
   <div class="files">
     {% if parent %}
-    <div class="file">
-      <div class="ft-dir"></div>
-      <a class="file-name" href="{% url 'dev_status:tree' parent %}">..</a>
-    </div>
+      <div class="file">
+        <div class="ft-dir"></div>
+        <a class="file-name" href="{% url 'dev_status:repo-path' repo parent %}">..</a>
+      </div>
     {% endif %}
     {% if parent == '' %}
-    <div class="file">
-      <div class="ft-dir"></div>
-      <a class="file-name" href="{% url 'dev_status:home' %}">..</a>
-    </div>
-    {% endif %}
-  {% if files %}
-      {% for file in files %}
       <div class="file">
-        <div class="ft-{{ file.type }}"></div>
-        {% if file.type == 'dir' %}
-        <a class="file-name" href="{% url 'dev_status:tree' file.path %}">{{ file.name }}</a>
-        {% else %}
-        <a class="file-name" href="{% url 'dev_status:raw' file.path %}">{{ file.name }}</a>
-        {% endif %}
+        <div class="ft-dir"></div>
+        <a class="file-name" href="{% url 'dev_status:repo' repo %}">..</a>
       </div>
-      {% endfor %}
-  {% endif %}
-  {% if file %}
-    <script src = "https://emgithub.com/embed-v2.js?target={{ file }}&style=github-dark-dimmed&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
-  {% endif %}
+    {% endif %}
+    {% if files %}
+        {% for file in files %}
+        <div class="file">
+          <div class="ft-{{ file.type }}"></div>
+          <a class="file-name" href="{% url 'dev_status:repo-path' repo file.path %}">{{ file.name }}</a>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% if file %}
+      <script src = "https://emgithub.com/embed-v2.js?target={{ file }}&style=github-dark-dimmed&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

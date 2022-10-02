@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from cgitb import handler
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -27,8 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('ENVIRONMENT') == 'development' or False
-DEBUG = True
+DEBUG = os.getenv('ENVIRONMENT') == 'development' or False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']

@@ -8,8 +8,10 @@ class SubdomainMiddleware:
         request.subdomain = None
         host = request.get_host()
         host = host.replace('www.', '').split('.')
-        if len(host) > 2:
+        if len(host) > 2 and '127.0.0.1' not in request.get_host():
             request.subdomain = '.'.join(host[:-2])
+        if len(host) == 2 and 'localhost' in request.get_host():
+            request.subdomain = host[0]
         return self.get_response(request)
 
 # Use different urlpatterns for each subdomain

@@ -6,12 +6,13 @@
     <!-- Login Box -->
     </a> {% endcomment %}
     <div class="lgn-area">
+        {% load subdomainurls %}
     <div>
         {% if user.is_authenticated %}
         {% else %}
         <fieldset>
             <legend>Login Area</legend>
-            <form method="post" action="{% url 'users:login' %} ">
+            <form method="post" action="{% subdomain_url 'users:login' 'accounts' request.build_absolute_uri %}">
                 {% csrf_token %}
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">

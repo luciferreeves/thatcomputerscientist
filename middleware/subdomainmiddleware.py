@@ -24,6 +24,9 @@ class SubdomainURLRouting:
         configured_subdomains = getattr(settings, 'CONFIGURED_SUBDOMAINS', {})
         if request.subdomain:
             if request.subdomain in configured_subdomains:
+                if request.META.get('HTTP_REFERER') is None:
+                    request.META['HTTP_REFERER'] = 'https://{}{}'.format(request.subdomain, settings.HOSTS[0])
+
                 request.urlconf = configured_subdomains[request.subdomain] + '.urls'
             else:
                 if '*' in configured_subdomains:

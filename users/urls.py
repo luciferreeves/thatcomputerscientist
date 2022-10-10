@@ -4,6 +4,7 @@ from django.contrib import admin
 
 app_name = 'users'
 urlpatterns = [
+    path('', views.home, name='home'),
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),
     path('update', views.update_user, name='update'),

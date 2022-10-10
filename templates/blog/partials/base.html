@@ -9,6 +9,7 @@
       name="description"
       content="Welcome to the home of That Computer Scientist. I am Kumar Priyansh. This is my personal website where I share all of my thoughts, ideas, and experiences."
     />
+    <meta name="referrer" content="{{ request.get_host }}" />
     <title>That Computer Scientist - {{ title }}</title>
     <link preload rel="stylesheet" href="{% static 'css/fonts.css' %}" />
     <link preload rel="stylesheet" href="{% static 'css/main.css' %}" />
@@ -43,7 +44,8 @@
           Source Code
         </a></li>
         {% if user.is_authenticated %}
-          <li><a href="{% url 'users:logout' %}">Logout</a></li>
+          {% load subdomainurls %}
+          <li><a href="{% subdomain_url 'users:logout' 'accounts' request.build_absolute_uri %}">Logout</a></li>
         {% endif %}
       </ul>
       <hr>

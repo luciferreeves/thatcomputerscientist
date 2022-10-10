@@ -20,16 +20,14 @@ def get_ref(request):
     try:
         referrer = request.META.get('QUERY_STRING').split('referrer=')[1]
     except:
-        referrer = None
-    if referrer and '?' in referrer:
+        # Raise a unauthorized error if the referrer is not set
+        return HttpResponse('Unauthorized', status=401)
+    if '?' in referrer:
         referrer = referrer.split('?')[0]
     return referrer
 
-def red_(referrer):
-    if referrer is None:
-        return HttpResponse('Unauthorized', status=401)
-    else:
-        return redirect(referrer)
+def home(request):
+    return redirect('blog:home')
 
 @csrf_exempt
 # Create your views here.
@@ -40,7 +38,7 @@ def login_user(request):
     print (username, password)
     if username == '' or password == '':
         messages.error(request, 'Please fill in all fields.', extra_tags='loginError')
-        return red_(referrer)
+        return HttpResponseRedirect(referrer)
     else: 
         # check if email is verified
         user = authenticate(request, username=username, password=password)
@@ -48,18 +46,18 @@ def login_user(request):
             email_verified = UserProfile.objects.get(user=user.pk).email_verified
             if email_verified:
                 login(request, user)
-                return red_(referrer)
+                return HttpResponseRedirect(referrer)
             else:
                 messages.error(request, 'EVERR', extra_tags='loginError')
-                return red_(referrer + '?username=' + username)
+                return HttpResponseRedirect(referrer + '?username=' + username)
         else:
             messages.error(request, 'Invalid username or password.', extra_tags='loginError')
-            return red_(referrer + '?username=' + username)
+            return HttpResponseRedirect(referrer + '?username=' + username)
 
 def logout_user(request):
     referrer = get_ref(request)
     logout(request)
-    return red_(referrer)
+    return HttpResponseRedirect(referrer)
 
 def update_user(request):
     username = request.user

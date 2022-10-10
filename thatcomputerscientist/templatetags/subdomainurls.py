@@ -13,16 +13,14 @@ def subdomain_url(view_name, subdomain = None, referrer = None, *args, **kwargs)
         return reverse(view_name, args=args, kwargs=kwargs)
 
     if referrer:
-        return '{}://{}{}{}?referrer={}'.format(
-        'https' if settings.SECURE_SSL_REDIRECT else 'http',
+        return '//{}{}{}?referrer={}'.format(
         subdomain,
         settings.HOSTS[0],
         reverse(view_name, args=args, kwargs=kwargs),
         referrer
     )
 
-    return '{}://{}{}{}'.format(
-        'https' if settings.SECURE_SSL_REDIRECT else 'http',
+    return '//{}{}{}'.format(
         subdomain,
         settings.HOSTS[0],
         reverse(view_name, args=args, kwargs=kwargs)

@@ -20,7 +20,8 @@ def get_ref(request):
     try:
         referrer = request.META.get('QUERY_STRING').split('referrer=')[1]
     except:
-        referrer = request.META.get('HTTP_REFERER')
+        # Raise a unauthorized error if the referrer is not set
+        return HttpResponse('Unauthorized', status=401)
     if '?' in referrer:
         referrer = referrer.split('?')[0]
     return referrer

@@ -35,6 +35,7 @@ HOSTS = [".vcap.me"] if os.getenv('ENVIRONMENT') == 'development' else [".thatco
 CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/', 'http://*.vcap.me']
 SESSION_COOKIE_DOMAIN = ".vcap.me" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
 DOMAIN_NAME = "vcap.me" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
+SECURE_SSL_REDIRECT = False if os.getenv('ENVIRONMENT') == 'development' else True
 
 # Application definition
 

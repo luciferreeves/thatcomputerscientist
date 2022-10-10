@@ -17,14 +17,16 @@ import django.contrib.auth.password_validation as validators
 from django.views.decorators.csrf import csrf_exempt
 
 def get_ref(request):
-    referrer = request.META.get('QUERY_STRING').split('referrer=')[1].split('?')[0]
-    return referrer or request.META.get('HTTP_REFERER')
+    try:
+        referrer = request.META.get('QUERY_STRING').split('referrer=')[1]
+    except:
+        referrer = request.META.get('HTTP_REFERER')
+    if '?' in referrer:
+        referrer = referrer.split('?')[0]
+    return referrer
 
 def home(request):
-    if request.user.is_authenticated:
-        return HttpResponse('Hello, {}! You are logged in!'.format(request.user))
-    else:
-        return HttpResponse('Hello, World! You are not logged in!')
+    return redirect('blog:home')
 
 @csrf_exempt
 # Create your views here.

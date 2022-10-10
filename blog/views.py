@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from users.models import UserProfile, CaptchaStore
 from urllib.parse import urlparse
@@ -117,12 +117,12 @@ def comment(request, slug):
             try:
                 post = Post.objects.get(slug=slug)
                 if post.is_public:
-                    comment = Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
-                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+                    Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
+                    return redirect('blog:post', slug=slug)
                 else:
                     if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
                         Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
-                        return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+                        return redirect('blog:post', slug=slug)
                     else:
                         return HttpResponse('Post not found!', status=404)
             except Post.DoesNotExist:
@@ -143,7 +143,7 @@ def edit_comment(request, slug):
                     comment.edited = True
                     comment.edited_at = datetime.now()
                     comment.save()
-                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+                    return redirect('blog:post', slug=slug)
                 else:
                     return HttpResponse('Unauthorized!', status=401)
             except Comment.DoesNotExist:
@@ -159,7 +159,7 @@ def delete_comment(request, slug, comment_id):
             comment = Comment.objects.get(id=comment_id)
             if comment.user == request.user:
                 comment.delete()
-                return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comments')
+                return redirect('blog:post', slug=slug)
             else:
                 return HttpResponse('Unauthorized!', status=401)
         except Comment.DoesNotExist:

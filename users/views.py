@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
@@ -14,28 +14,17 @@ from django.contrib.sites.shortcuts import get_current_site
 from .tokens import account_activation_token, EmailChangeTokenGenerator
 from django.utils.http import urlsafe_base64_decode
 import django.contrib.auth.password_validation as validators
-from django.views.decorators.csrf import csrf_exempt
 
-def get_ref(request):
-    referrer = request.META.get('QUERY_STRING').split('referrer=')[1].split('?')[0]
-    return referrer or request.META.get('HTTP_REFERER')
-
-def home(request):
-    if request.user.is_authenticated:
-        return HttpResponse('Hello, {}! You are logged in!'.format(request.user))
-    else:
-        return HttpResponse('Hello, World! You are not logged in!')
-
-@csrf_exempt
 # Create your views here.
 def login_user(request):
-    referrer = get_ref(request)
+    # pass
+    next = request.POST.get('next', 'blog:home')
     username = request.POST['username']
     password = request.POST['password']
     print (username, password)
     if username == '' or password == '':
-        messages.error(request, 'Please fill in all fields.', extra_tags='loginError')
-        return HttpResponseRedirect(referrer)
+        messages.error(request, 'Please fill in all fields.')
+        return HttpResponseRedirect(next + '?username=' + username)
     else: 
         # check if email is verified
         user = authenticate(request, username=username, password=password)
@@ -43,18 +32,17 @@ def login_user(request):
             email_verified = UserProfile.objects.get(user=user.pk).email_verified
             if email_verified:
                 login(request, user)
-                return HttpResponseRedirect(referrer)
+                return HttpResponseRedirect(next)
             else:
                 messages.error(request, 'EVERR', extra_tags='loginError')
-                return HttpResponseRedirect(referrer + '?username=' + username)
+                return HttpResponseRedirect(next + '?username=' + username)
         else:
             messages.error(request, 'Invalid username or password.', extra_tags='loginError')
-            return HttpResponseRedirect(referrer + '?username=' + username)
+            return HttpResponseRedirect(next + '?username=' + username)
 
 def logout_user(request):
-    referrer = get_ref(request)
     logout(request)
-    return HttpResponseRedirect(referrer)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def update_user(request):
     username = request.user

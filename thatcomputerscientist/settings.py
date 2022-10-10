@@ -31,10 +31,9 @@ SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 DEBUG = os.getenv('ENVIRONMENT') == 'development' or False
 
 ALLOWED_HOSTS = ["*"]
-HOSTS = [".vcap.me"] if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
-CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/', 'http://*.vcap.me']
-SESSION_COOKIE_DOMAIN = ".vcap.me" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
-DOMAIN_NAME = "vcap.me" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
+SESSION_COOKIE_DOMAIN = "localhost" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
+DOMAIN_NAME = "localhost" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
 
 # Application definition
 
@@ -69,7 +68,6 @@ MIDDLEWARE = [
 
 CONFIGURED_SUBDOMAINS = {
     '': 'thatcomputerscientist',
-    'accounts': 'users',
     '*': 'userpages',
 }
 

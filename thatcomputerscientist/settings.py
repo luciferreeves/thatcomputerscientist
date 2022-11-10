@@ -62,8 +62,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'middleware.subdomainmiddleware.SubdomainMiddleware',
-    'middleware.subdomainmiddleware.SubdomainURLRouting',
 ]
 
 CONFIGURED_SUBDOMAINS = {

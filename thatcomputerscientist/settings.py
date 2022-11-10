@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 DEBUG = os.getenv('ENVIRONMENT') == 'development' or False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
 SESSION_COOKIE_DOMAIN = "localhost" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
 DOMAIN_NAME = "localhost" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
 

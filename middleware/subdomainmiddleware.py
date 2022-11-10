@@ -1,5 +1,5 @@
 from django.conf import settings
-
+from django.shortcuts import redirect
 class SubdomainMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -12,6 +12,12 @@ class SubdomainMiddleware:
             request.subdomain = '.'.join(host[:-2])
         if len(host) == 2 and 'localhost' in request.get_host():
             request.subdomain = host[0]
+        # check if ip address
+        if len(host) == 4 and all([x.isdigit() for x in host]):
+            # redirect to thatcomputerscientist.com
+            is_ssl = request.is_secure()
+            protocol = 'https' if is_ssl else 'http'
+            return redirect(f'{protocol}://thatcomputerscientist.com')
         return self.get_response(request)
 
 # Use different urlpatterns for each subdomain

@@ -16,3 +16,6 @@ jobs:
   deploy:
     name: Deploy App
     runs-on: thatcomputerscientist
+    steps:
+      - uses: actions/checkout@v2
+      - run: sh /home/ubuntu/deploy.sh

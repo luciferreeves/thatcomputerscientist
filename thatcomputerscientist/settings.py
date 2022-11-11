@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']
 SESSION_COOKIE_DOMAIN = "localhost" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
 DOMAIN_NAME = "localhost" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
 
@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3') if os.getenv('ENVIRONMENT') == 'development' else '/home/ubuntu/database/db.sqlite3',
     }
 }
 

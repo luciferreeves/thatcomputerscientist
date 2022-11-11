@@ -4,7 +4,12 @@ jobs:
   deploy:
     runs-on: "self-hosted"
     steps:
+      - name: Run Deployment Script
       - run: |
           chmod +x /home/ubuntu/deploy.sh
           /home/ubuntu/deploy.sh
+        shell: bash
+      - name: Start Gunicorn
+      - run: |
+          cd /home/ubuntu/thatcomputerscientist && gunicorn --bind :8000 --workers 2 thatcomputerscientist.wsgi --daemon
         shell: bash

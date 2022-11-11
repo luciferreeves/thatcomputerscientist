@@ -5,4 +5,4 @@ jobs:
     name: Deploy App
     runs-on: "self-hosted"
     steps:
-      - run: sh /home/ubuntu/deploy.sh
+      - run: echo "Deploying"

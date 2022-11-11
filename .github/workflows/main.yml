@@ -5,4 +5,11 @@ jobs:
     name: Deploy App
     runs-on: "self-hosted"
     steps:
-      - run: echo "Deploying"
+      # cd thatcomputerscientist
+      # gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
+      - name: Deploy
+        run: |
+          cd thatcomputerscientist
+          gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
+          exit 0
+          

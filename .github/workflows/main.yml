@@ -9,7 +9,7 @@ jobs:
       # gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
       - name: Deploy
         run: |
-          cd thatcomputerscientist
+          cd /home/ubuntu/thatcomputerscientist
           gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
           exit 0
-          
+

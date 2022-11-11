@@ -18,4 +18,4 @@ jobs:
       - name: Run Django Collectstatic
         run: python3 manage.py collectstatic --noinput
       - name: Start Gunicorn
-        run: gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
+        run: python3 manage.py runserver 8080 --noreload

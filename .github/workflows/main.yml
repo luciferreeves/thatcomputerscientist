@@ -17,7 +17,5 @@ jobs:
         run: python3 manage.py makemigrations
       - name: Run Django Collectstatic
         run: python3 manage.py collectstatic --noinput
-      - name: Kill Gunicorn
-        run: pkill gunicorn
       - name: Start Gunicorn
         run: gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon

@@ -5,5 +5,4 @@ jobs:
     name: Deploy App
     runs-on: "self-hosted"
     steps:
-      - uses: actions/checkout@v2
-      - run: echo "Deploying..."
+      - run: sh /home/ubuntu/deploy.sh

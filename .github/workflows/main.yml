@@ -5,11 +5,6 @@ jobs:
     name: Deploy App
     runs-on: "self-hosted"
     steps:
-      # cd thatcomputerscientist
-      # gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
-      - name: Deploy
-        run: |
-          cd /home/ubuntu/thatcomputerscientist
-          gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon
-          exit 0
+      - name: Checkout
+        uses: actions/checkout@v2
 

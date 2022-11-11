@@ -24,7 +24,7 @@ BASE_DIR = settings.BASE_DIR
 def ci_view(request):
     # Run the deploy script in the base directory
     os.system(f"cd {BASE_DIR} && chmod +x deploy.sh && ./deploy.sh")
-    return HttpResponse("Deployed!")
+    return HttpResponse("Deployed! Test it out!")
 
 
 urlpatterns = [

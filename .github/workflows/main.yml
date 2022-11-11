@@ -7,4 +7,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
+      - name: Switch to thatcomputerscientist/thatcomputerscientist/thatcomputerscientist folder
+        run: cd thatcomputerscientist/thatcomputerscientist/thatcomputerscientist
+      - name: Install Requirements
+        run: pip3 install -r requirements.txt
+      - name: Run Django Migrations
+        run: python3 manage.py migrate
+      - name: Run Django Makemigrations
+        run: python3 manage.py makemigrations
+      - name: Run Django Collectstatic
+        run: python3 manage.py collectstatic --noinput
+      - name: Kill Gunicorn
+        run: pkill gunicorn
+      - name: Start Gunicorn
+        run: gunicorn --bind :8000 --workers 3 thatcomputerscientist.wsgi --daemon

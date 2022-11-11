@@ -4,4 +4,7 @@ jobs:
   deploy:
     runs-on: "self-hosted"
     steps:
-      - run: /home/ubuntu/deploy.sh
+      - run: |
+          chmod +x /home/ubuntu/deploy.sh
+          /home/ubuntu/deploy.sh
+        shell: bash

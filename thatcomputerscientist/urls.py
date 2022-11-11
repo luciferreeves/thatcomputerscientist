@@ -18,13 +18,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
-import os
-BASE_DIR = settings.BASE_DIR
-
-def ci_view(request):
-    # Run the deploy script in the base directory
-    os.system(f"cd {BASE_DIR} && chmod +x deploy.sh && ./deploy.sh")
-    return HttpResponse("Deployed! Test it out!")
 
 
 urlpatterns = [
@@ -33,7 +26,6 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),
     path('blog-admin/', include('blog_admin.urls', namespace='blog-admin')),
     path('source/', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
-    path('ci/', ci_view),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

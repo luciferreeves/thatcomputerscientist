@@ -11,11 +11,11 @@ body {
 }
 
 .header {
-    background-image: url("../images/site/banner.png");
+    background-image: url("../images/site/banner.gif");
     background-repeat: no-repeat;
     background-position: center;
     width: 1000px;
-    height: 300px;
+    height: 333px;
     margin: auto;
 }
 
@@ -288,19 +288,24 @@ summary {
     border-left: 2px solid #6666FF;
     border-right: 2px solid #00007C;
     border-bottom: 2px solid #00007C;
-    font-family: 'TopNavbar', serif;
-    font-size: 12px;
     position: relative;
-    padding: 5px 10px;
+    padding: 2px 10px 5px 10px;
+    text-align: center;
+}
+
+.navitem a {
+    color: #FFFFFF;
     text-decoration: none;
+    font-size: 12px;
+    font-family: 'TopNavbar', serif;
 }
 
 .new{
-    /* Add a "new" image gif to top right corner. */
-    /* content: url('../images/gifs/new.gif'); */
     position: absolute;
     top: -9px;
     right: -10px;
+    width: 30px !important;
+    height: 15px !important;
 }
 
 .topnav > li > a {

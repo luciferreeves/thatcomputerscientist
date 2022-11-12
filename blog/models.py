@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 # Create your models here.
 class Category(models.Model):
@@ -24,7 +25,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
     body = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -35,6 +36,11 @@ class Post(models.Model):
     )
     tags = models.ManyToManyField('Tag', blank=True)
     is_public = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date = timezone.now()
+        return super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title

@@ -1,7 +1,6 @@
 body {
-    background-image: url("../images/site/bg.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("../images/site/bg.gif");
+    background-repeat: repeat;
     background-attachment: fixed;
     background-position: center;
     font-family: serif;
@@ -13,7 +12,6 @@ body {
 
 .header {
     background-image: url("../images/site/banner.png");
-    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     width: 1000px;
@@ -21,22 +19,8 @@ body {
     margin: auto;
 }
 
-.mc {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 1000px;
-    border: solid 1px cecece;
-    padding: 2px;
-    text-align: initial;
-}
-
 .sidebar {
-    /* padding: 20px; */
-    overflow-x: hidden;
     overflow-y: auto;
-    min-width: 15rem;
-    max-width: 15rem;
 }
 
 /* COLORS SECTION ACCORIDING TO DARK MODE */
@@ -61,27 +45,10 @@ fieldset, legend {
     color: #cecece;
 }
 
-
-.sidebar-lg {
-    min-width: 20rem;
-    max-width: 20rem;
-}
-
-.sidebar-bg-blue {
-    background-color: #bad9ff;
-}
-
-.sidebar-border {
-    border: 1px solid #e6e6e6;
-}
-
-
 .content {
-    flex: 1;
     padding: 9px 20px 20px 20px;
     overflow-x: hidden;
     overflow-y: auto;
-    /* min-height: calc(100vh - 40px); */
 }
 
 .title:visited {
@@ -133,13 +100,13 @@ fieldset {
     padding: 10px 20px;
 }
 
-nav > ul {
+.sidenav {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-nav > ul > li {
+.sidenavitem {
     margin: 5px 0;
 }
 
@@ -312,28 +279,25 @@ summary {
     max-width: 100%;
 }
 
-.topnav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: right;
-}
-
-.topnav > li {
+.navitem {
     display: inline-block;
     margin-left: 10px;
     background: #0000FF;
+    color: #FFFFFF;
     border-top: 2px solid #6666FF;
     border-left: 2px solid #6666FF;
     border-right: 2px solid #00007C;
     border-bottom: 2px solid #00007C;
-    font-family: 'TopNavbar', sans-serif;
+    font-family: 'TopNavbar', serif;
+    font-size: 12px;
     position: relative;
+    padding: 5px 10px;
+    text-decoration: none;
 }
 
-li.new::before{
+.new{
     /* Add a "new" image gif to top right corner. */
-    content: url('../images/gifs/new.gif');
+    /* content: url('../images/gifs/new.gif'); */
     position: absolute;
     top: -9px;
     right: -10px;

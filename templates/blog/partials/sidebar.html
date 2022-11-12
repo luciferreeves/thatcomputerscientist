@@ -1,10 +1,5 @@
 {% load static %}
 <div class="sidebar">
-
-    {% comment %} <a href="/" class="title">
-        <img src="{% static 'images/logo.png' %}" alt="That Computer Scientist Logo" width="10rem" height="3.23rem">
-    <!-- Login Box -->
-    </a> {% endcomment %}
     <div class="lgn-area">
     <div>
         {% if user.is_authenticated %}
@@ -14,9 +9,9 @@
             <form method="post" action="{% url 'users:login' %} ">
                 {% csrf_token %}
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Username" autocomplete="off">
+                <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required>
                 <input type="hidden" name="next" value="{{ request.path }}">
                 <input type="submit" value="Login">
             </form>
@@ -41,19 +36,19 @@
             {% else %}
                 <legend>Navigation</legend>
             {% endif %}
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/blog">Blog</a></li>
+            <div>
+                <ul class="sidenav">
+                    <li class="sidenavitem"><a href="/">Home</a></li>
+                    <li class="sidenavitem"><a href="/about">About</a></li>
+                    <li class="sidenavitem"><a href="/contact">Contact</a></li>
+                    <li class="sidenavitem"><a href="/blog">Blog</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'blog:account' %}">My Account</a></li>
+                        <li class="sidenavitem"><a href="{% url 'blog:account' %}">My Account</a></li>
                     {% else %}
-                        <li><a href="/register">Register</a></li>
+                        <li class="sidenavitem"><a href="/register">Register</a></li>
                     {% endif %}
                 </ul>
-            </nav>
+            </div>
         </fieldset>
         <br>
         <div class="ad">
@@ -64,16 +59,16 @@
         <fieldset>
             <legend>Admin</legend>
             <nav>
-                <ul>
+                <ul class="sidenav">
                     {% if user.is_superuser %}
-                        <li><a href="{% url 'admin:index' %}">Admin Area</a></li>
+                        <li class="sidenavitem"><a href="{% url 'admin:index' %}">Admin Area</a></li>
                     {% endif %}
-                    <li><a href="{% url 'blog-admin:users' %}">Manage Users</a></li>
-                    <li><a href="{% url 'blog-admin:posts' %}">Manage Posts</a></li>
-                    <li><a href="{% url 'blog-admin:comments' %}">Manage Comments</a></li>
-                    <li><a href="{% url 'blog-admin:categories' %}">Manage Categories</a></li>
-                    <li><a href="{% url 'blog-admin:tags' %}">Manage Tags</a></li>
-                    <li><a href="{% url 'blog-admin:new' %}">Create New Post</a></li>
+                    <li class="sidenavitem"><a href="{% url 'blog-admin:users' %}">Manage Users</a></li>
+                    <li class="sidenavitem"><a href="{% url 'blog-admin:posts' %}">Manage Posts</a></li>
+                    <li class="sidenavitem"><a href="{% url 'blog-admin:comments' %}">Manage Comments</a></li>
+                    <li class="sidenavitem"><a href="{% url 'blog-admin:categories' %}">Manage Categories</a></li>
+                    <li class="sidenavitem"><a href="{% url 'blog-admin:tags' %}">Manage Tags</a></li>
+                    <li class="sidenavitem"><a href="{% url 'blog-admin:new' %}">Create New Post</a></li>
                 </ul>
             </nav>
         {% endif %}
@@ -82,14 +77,3 @@
     <br>
 </div>
 </div>
-
-<script>
-    // get the username parameter from the url
-    var username = new URLSearchParams(window.location.search).get('username');
-    // if the username parameter is not empty, set the username input to the value of the username parameter
-    if (username) {
-        document.getElementsByName("username").forEach(function(input) {
-            input.value = username;
-        });
-    }
-</script>

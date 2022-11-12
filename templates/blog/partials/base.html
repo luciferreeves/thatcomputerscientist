@@ -36,39 +36,38 @@
   </head>
   <body>
     <div class="header"></div>
-    <div style="width: 1000px; margin: 20px auto;">
-      <ul class="topnav">
-        {% comment %} <img src="{% static 'images/gifs/new.gif' %}" alt="new" style="margin-left: 5px;"> {% endcomment %}
-        <li class="new"><a href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">
-          Source Code
-        </a></li>
-        {% if user.is_authenticated %}
-          <li><a href="{% url 'users:logout' %}">Logout</a></li>
-        {% endif %}
-      </ul>
-      <hr>
+    <div style="width: 1000px; margin: 20px auto; text-align: right;">
+      <a href="{% url 'dev_status:repo' 'thatcomputerscientist' %}" class="navitem">
+        Source Code
+        <img class="new" src="{% static 'images/gifs/new.gif' %}" border="0"/>
+      </a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'users:logout' %}" class="navitem">Logout</a>
+      {% endif %}
+      <hr />
     </div>
-    <div class="mc">
-      {% include 'blog/partials/sidebar.html' %}
-      <div class="content">{% block content %} {% endblock %}</div>
-      {% comment %} <div class="sidebar sidebar-lg" style="border-left: dotted 1px black">
-        
-      </div> {% endcomment %}
-    </div>
-    <div style="width: 1000px; margin: 0px auto 40px auto;">
-      <hr style="margin: 2rem 0;">
-      <footer style="text-align: center;">
-        {% load ad %}
-        {% for i in '12345789'|make_list %}
-          <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px">
+    <center>
+      <table style="table-layout: fixed; width: 1000px;">
+        <td width="25%" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
+        <td><div class="content" style="vertical-align:top;">{% block content %} {% endblock %}</div></td>
+      </table>
+    </center>
+    <div style="width: 1000px; margin: 0px auto 40px auto">
+      <hr style="margin: 2rem 0" />
+      <footer style="text-align: center">
+        {% load ad %} {% for i in '12345789'|make_list %}
+        <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px" />
         {% endfor %}
-        <br>
+        <br />
         {% for i in '12345'|make_list %}
-          <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px">
+        <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px" />
         {% endfor %}
-        <br>
-        <br>
-        &copy; {% now "Y" %} That Computer Scientist. Source code available on <a href="https://github.com/luciferreeves/thatcomputerscientist">GitHub</a>.
+        <br />
+        <br />
+        &copy; {% now "Y" %} That Computer Scientist. Source code available on
+        <a href="https://github.com/luciferreeves/thatcomputerscientist"
+          >GitHub</a
+        >.
       </footer>
     </div>
   </body>

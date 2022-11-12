@@ -30,13 +30,26 @@
   {% if announcements is not None %}
   <fieldset>
     <legend>
-      <img src = "{% static 'images/gifs/update.gif' %}" height="16px">
+      <img src = "{% static 'images/gifs/update.gif' %}" height="16px" width="80px" class="updates">
     </legend>
     <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
       <ul class="announcements">
         {% for announcement in announcements %}
-        <li {% if announcement.is_new %}class="newac"{% endif %}>
-          <b>{{ announcement.created_at | date:"M d, Y" }}</b> {{ announcement.content }}
+        <li style="margin-bottom: 20px;">
+          <table>
+            <tr>
+              <td width="30px">
+                {% if announcement.is_new %}
+                  <img class="ac" src="{% static 'images/gifs/new_announcement.gif' %}"/>
+                {% else %}
+                  <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
+                {% endif %}
+              </td>
+              <td style="color: white;">
+                <b>{{ announcement.created_at | date:"M d, Y" }}</b> {{ announcement.content }}
+              </td>
+            </tr>
+          </table>
         </li>
         {% endfor %}
       </ul>

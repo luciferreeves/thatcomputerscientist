@@ -32,14 +32,6 @@ h1, h2, h3, h4, h5, h6, p, a, li, span, label, footer, .table {
 a {
     color: #8278ed;
 }
-/* 
-a:visited {
-    color: #b894dc;
-} */
-
-/* svg {
-    filter: invert(1);
-} */
 
 fieldset, legend {
     color: #cecece;
@@ -126,6 +118,11 @@ fieldset {
 
 .error {
     color: rgb(255, 81, 81);
+}
+
+.updates {
+    width: 80px;
+    height: 16px;
 }
 
 .success {
@@ -398,14 +395,15 @@ pre {
     margin: 0;
 }
 
-.announcements > li::before {
-    content: '📢';
+.ac {
     margin-right: 5px;
-    height: 16px;
+    height: 12px;
+    width: 30px;
 }
 
-.announcements > li.newac::before {
-    content: url('../images/gifs/new_announcement.gif');
+.ac2 {
     margin-right: 5px;
-    height: 16px;
+    width: 30px;
+    height: 14px;
 }
+

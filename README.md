@@ -4,14 +4,14 @@ Source Code for my Personal Website.
 ## Current Screenshots
 
 <p align="center">
-  <kbd>
-    <img src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/old.png" alt="Old Browser">
-    <br><br><em><a href="http://thatcomputerscientist.com">View on Old Browser</a></em>
-    </kbd>
-    <kbd>
-    <img src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/new.png" alt="New Browser">
-    <br><br><em><a href="http://thatcomputerscientist.com">View on New Browser</a></em>
-    </kbd>
+    <img align="top" width="45%" src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/old.png" alt="Old Browser">
+    &emsp;&emsp;
+    <img align="top" width="45%"  src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/new.png" alt="New Browser">
+</p>
+<p align="center">
+    Old Browser (Mac OS 9, Classilla 9.3.4)
+    &emsp;&emsp;
+    New Browser (Mac OS 13.0.1, Safari 16.1)
 </p>
 
 ## Specifications

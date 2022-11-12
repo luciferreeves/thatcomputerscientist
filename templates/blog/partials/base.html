@@ -39,12 +39,13 @@
     <div style="width: 1000px; margin: 20px auto;">
       <ul class="topnav">
         {% comment %} <img src="{% static 'images/gifs/new.gif' %}" alt="new" style="margin-left: 5px;"> {% endcomment %}
-        <li class="new"><a href="#">
-          Dev Status
+        <li class="new"><a href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">
+          Source Code
         </a></li>
         {% if user.is_authenticated %}
           <li><a href="{% url 'users:logout' %}">Logout</a></li>
         {% endif %}
+      </ul>
       <hr>
     </div>
     <div class="mc">
@@ -56,7 +57,7 @@
     </div>
     <div style="width: 1000px; margin: 0px auto 40px auto;">
       <hr style="margin: 2rem 0;">
-      <footer>
+      <footer style="text-align: center;">
         {% load ad %}
         {% for i in '12345789'|make_list %}
           <img src="{{'buttons'|ad }}" alt="Ad" width="88px" height="31px">

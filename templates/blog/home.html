@@ -1,5 +1,11 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+{% load static %}
 <div class="main">
+  <div style="text-align:center;">
+    <img src="{% static 'images/gifs/underconstruction.gif' %}" style="" height="120px">
+    {% comment %} <img src="https://anlucas.neocities.org/happynewyear.gif" style="" height="60px"> {% endcomment %}
+  </div>
+  <br />
   <div class="alert">
     {% comment %}
     <h1 class="center">That Computer Scientist</h1>
@@ -12,12 +18,32 @@
       <a href="/contact">Contact</a> page. Please use the sidebar to navigate
       the site.
     </p>
+    <p>
+      This website is a work in progress. I am currently working on adding more
+      features to this website. I aim to build a retro looking personal website,
+      where I will share my articles and Ideas, which will be built entirely
+      around the idea of "collaborative writing" — where anyone can write new
+      articles or edit existing ones.
+    </p>
   </div>
   <br />
-  <div style="text-align:center;">
-    <img src="https://exo.pet/images/wip/webweaving.gif" style="" height="60px">
-    <img src="https://anlucas.neocities.org/happynewyear.gif" style="" height="60px">
-  </div>
+  {% if announcements is not None %}
+  <fieldset>
+    <legend>
+      <img src = "{% static 'images/gifs/update.gif' %}" height="16px">
+    </legend>
+    <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
+      <ul class="announcements">
+        {% for announcement in announcements %}
+        <li {% if announcement.is_new %}class="newac"{% endif %}>
+          <b>{{ announcement.created_at | date:"M d, Y" }}</b> {{ announcement.content }}
+        </li>
+        {% endfor %}
+      </ul>
+    </marquee>
+  </fieldset>
+  <br />
+  {% endif %}
   {% if recent_posts %}
   <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
   <hr />

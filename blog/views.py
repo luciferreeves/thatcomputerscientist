@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from users.models import UserProfile, CaptchaStore
 from urllib.parse import urlparse
@@ -11,11 +11,14 @@ import base64
 import json
 from .models import Post, Comment
 from .context_processors import recent_posts, categories, archives
+from announcements.models import Announcement
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'blog/home.html', {'title': 'Home', 'recent_posts': recent_posts(), 'categories': categories(), 'archives': archives()})
+    announcements = Announcement.objects.filter(is_public=True).order_by('-created_at')
+    announcements = announcements if len(announcements) > 0 else None
+    return render(request, 'blog/home.html', {'title': 'Home', 'recent_posts': recent_posts(), 'categories': categories(), 'archives': archives(), 'announcements': announcements})
 
 def account(request):
     user = request.user
@@ -114,12 +117,12 @@ def comment(request, slug):
             try:
                 post = Post.objects.get(slug=slug)
                 if post.is_public:
-                    Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
-                    return redirect('blog:post', slug=slug)
+                    comment = Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
+                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
                 else:
                     if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
                         Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
-                        return redirect('blog:post', slug=slug)
+                        return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
                     else:
                         return HttpResponse('Post not found!', status=404)
             except Post.DoesNotExist:
@@ -140,7 +143,7 @@ def edit_comment(request, slug):
                     comment.edited = True
                     comment.edited_at = datetime.now()
                     comment.save()
-                    return redirect('blog:post', slug=slug)
+                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
                 else:
                     return HttpResponse('Unauthorized!', status=401)
             except Comment.DoesNotExist:
@@ -156,7 +159,7 @@ def delete_comment(request, slug, comment_id):
             comment = Comment.objects.get(id=comment_id)
             if comment.user == request.user:
                 comment.delete()
-                return redirect('blog:post', slug=slug)
+                return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comments')
             else:
                 return HttpResponse('Unauthorized!', status=401)
         except Comment.DoesNotExist:

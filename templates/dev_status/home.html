@@ -1,0 +1,40 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<div class="main">
+  <h3 style="margin-bottom: 0px">
+    <em>Source Code</em>
+    <ul class="topnav" style="float:right;">
+      <li><a href="#">Commit History</a></li>
+      <li><a href="#">Build History</a></li>
+      <li><a href="#">Issues</a></li>
+      <li><a href="#">Pull Requests</a></li>
+    </ul>
+  </h3>
+  <hr>
+  <br>
+  <div class="files">
+    {% if parent %}
+      <div class="file">
+        <div class="ft-dir"></div>
+        <a class="file-name" href="{% url 'dev_status:repo-path' repo parent %}">..</a>
+      </div>
+    {% endif %}
+    {% if parent == '' %}
+      <div class="file">
+        <div class="ft-dir"></div>
+        <a class="file-name" href="{% url 'dev_status:repo' repo %}">..</a>
+      </div>
+    {% endif %}
+    {% if files %}
+        {% for file in files %}
+        <div class="file">
+          <div class="ft-{{ file.type }}"></div>
+          <a class="file-name" href="{% url 'dev_status:repo-path' repo file.path %}">{{ file.name }}</a>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% if file %}
+      <script src = "https://emgithub.com/embed-v2.js?target={{ file }}&style=github-dark-dimmed&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

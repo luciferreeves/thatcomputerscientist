@@ -29,7 +29,11 @@ def login_user(request):
         # check if email is verified
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            email_verified = UserProfile.objects.get(user=user.pk).email_verified
+            try:
+                email_verified = UserProfile.objects.get(user=user.pk).email_verified
+            except:
+                # user has no profile
+                email_verified = False
             if email_verified:
                 login(request, user)
                 return HttpResponseRedirect(next)
@@ -130,7 +134,11 @@ def verify_email(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
-        user_profile = UserProfile.objects.get(user=user.pk)
+        try:
+            user_profile = UserProfile.objects.get(user=user.pk)
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile(user=user)
+            user_profile.save()
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):

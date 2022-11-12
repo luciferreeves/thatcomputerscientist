@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from cgitb import handler
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -27,11 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('ENVIRONMENT') == 'development' or False
-DEBUG = True
+DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'https://*.thatcomputerscientist.fly.dev/']
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']
 SESSION_COOKIE_DOMAIN = "localhost" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
 DOMAIN_NAME = "localhost" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
 
@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'users',
     'userpages',
     'blog_admin',
+    'dev_status',
+    'announcements',
 ]
 
 MIDDLEWARE = [
@@ -60,8 +62,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'middleware.subdomainmiddleware.SubdomainMiddleware',
-    'middleware.subdomainmiddleware.SubdomainURLRouting',
 ]
 
 CONFIGURED_SUBDOMAINS = {
@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3') if os.getenv('ENVIRONMENT') == 'development' else ('/data/db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3') if os.getenv('ENVIRONMENT') == 'development' else '/home/ubuntu/database/db.sqlite3',
     }
 }
 

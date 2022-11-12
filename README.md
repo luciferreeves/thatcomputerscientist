@@ -10,7 +10,7 @@ Source Code for my Personal Website.
 </p>
 <p align="center">
     Old Browser (Mac OS 9, Classilla 9.3.4)
-    &emsp;&emsp;
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
     New Browser (Mac OS 13.0.1, Safari 16.1)
 </p>
 

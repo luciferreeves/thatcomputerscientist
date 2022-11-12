@@ -10,6 +10,12 @@ Source Code for my Personal Website.
     Old Browser (Mac OS 9, Classilla 9.3.4)
 </p>
 <p align="center">
+    <img src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/old_98.png" alt="Old Browser">
+</p>
+<p align="center">
+    Old Browser (Windows 98, Internet Explorer 5) - Visible Issues
+</p>
+<p align="center">
     <img  src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/new.png" alt="New Browser">
 </p>
 <p align="center">

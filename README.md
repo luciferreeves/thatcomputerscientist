@@ -4,19 +4,15 @@ Source Code for my Personal Website.
 ## Current Screenshots
 
 ![Old Mac OS 9 Browser](static/images/current/old.png)
-<p align="center">
-    Old Browser (Mac OS 9, Classilla 9.3.4) - Visible `position: absolute` on `position: relative` elements rendered incorrectly.
-</p>
+**Old Browser (Mac OS 9, Classilla 9.3.4)** 
+- Visible `position: absolute` on `position: relative` elements rendered incorrectly.
 
 ![Old Windows 98 Browser](static/images/current/old_98.png)
-<p align="center">
-    Old Browser (Windows 98, Internet Explorer 5) - Visible `a` tag color rendered incorrectly.
-</p>
+**Old Browser (Windows 98, Internet Explorer 5)**
+- Visible `a` tag color rendered incorrectly.
 
 ![New Browser](static/images/current/new.png)
-<p align="center">
-    New Browser (Mac OS 13.0.1, Chrome 107.0.5304.110) - Properly rendered.
-</p>
+**New Browser (Mac OS 13.0.1, Chrome 107.0.5304.110) _- Properly rendered._**
 
 ## Specifications
 - Server: [Nginx](https://www.nginx.com/)

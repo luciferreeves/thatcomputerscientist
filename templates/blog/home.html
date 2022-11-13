@@ -30,15 +30,17 @@
         <li style="margin-bottom: 20px;">
           <table>
             <tr>
-              <td width="30px">
+              <td width="30px" style="vertical-align: top;">
                 {% if announcement.is_new %}
                   <img class="ac" src="{% static 'images/gifs/new_announcement.gif' %}"/>
                 {% else %}
                   <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
                 {% endif %}
               </td>
-              <td style="color: white;">
-                <b>{{ announcement.created_at | date:"M d, Y" }}</b> {{ announcement.content }}
+              <td style="color: white; vertical-align: top;">
+                <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
+                <hr>
+                {{ announcement.content }}
               </td>
             </tr>
           </table>

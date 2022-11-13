@@ -55,6 +55,26 @@
             {% load ad %}
             <img src="{{ "big" | ad }}" alt="Advertisement" style="width: 100%; height: auto;">
         </div>
+        <div>
+            <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
+            <hr />
+            <ul>
+                {% for archive in archives %}
+                <li>
+                <a href="#">{{ archive | date:"F Y" }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <h3 style="margin-bottom: 0px"><em>Categories</em></h3>
+            <hr />
+            <ul>
+                {% for category in categories %}
+                <li>
+                <a href="#">{{ category.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         {% if user.is_staff %}
         <fieldset>
             <legend>Admin</legend>

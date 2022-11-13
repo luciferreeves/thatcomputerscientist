@@ -1,15 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
 <div class="main">
-  <div style="text-align:center;">
-    <img src="{% static 'images/gifs/underconstruction.gif' %}" style="height:120px; width: 406.85px">
-    {% comment %} <img src="https://anlucas.neocities.org/happynewyear.gif" style="" height="60px"> {% endcomment %}
-  </div>
-  <br />
   <div class="alert">
-    {% comment %}
-    <h1 class="center">That Computer Scientist</h1>
-    {% endcomment %}
     <p>
       Welcome to the home of That Computer Scientist. This is my personal
       website where I share all of my thoughts, ideas, and experiences. To know
@@ -57,10 +49,17 @@
   </fieldset>
   <br />
   {% endif %}
+  <div style="text-align:center;">
+    <img src="{% static 'images/gifs/construction.gif' %}" style="height:28px; width: 702px;">
+  </div>
+  <br />
+  {% load ad %}
+  <div class="ad">
+    <img src="{{'banner'|ad }}" alt="Ad" width="100%" height="auto" />
+  </div>
   {% if recent_posts %}
   <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
   <hr />
-  {% load ad %}
   <ul>
     {% for post in recent_posts %}
     <li>
@@ -84,9 +83,6 @@
         >
       </p>
     </li>
-    <div class="ad">
-      <img src="{{'banner'|ad }}" alt="Ad" width="100%" height="auto" />
-    </div>
     {% endfor %}
   </ul>
   <script
@@ -96,25 +92,5 @@
     referrerpolicy="no-referrer"
   ></script>
   {% endif %}
-  <br />
-  <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
-  <hr />
-  <ul>
-    {% for archive in archives %}
-    <li>
-      <a href="#">{{ archive | date:"F Y" }}</a>
-    </li>
-    {% endfor %}
-  </ul>
-  <br />
-  <h3 style="margin-bottom: 0px"><em>Categories</em></h3>
-  <hr />
-  <ul>
-    {% for category in categories %}
-    <li>
-      <a href="#">{{ category.name }}</a>
-    </li>
-    {% endfor %}
-  </ul>
 </div>
 {% endblock %}

@@ -3,23 +3,19 @@ Source Code for my Personal Website.
 
 ## Current Screenshots
 
+![Old Mac OS 9 Browser](static/images/current/old.png)
 <p align="center">
-    <img src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/old.png" alt="Old Browser">
+    Old Browser (Mac OS 9, Classilla 9.3.4) - Visible `position: absolute` on `position: relative` elements rendered incorrectly.
 </p>
+
+![Old Windows 98 Browser](static/images/current/old_98.png)
 <p align="center">
-    Old Browser (Mac OS 9, Classilla 9.3.4)
+    Old Browser (Windows 98, Internet Explorer 5) - Visible `a` tag color rendered incorrectly.
 </p>
+
+![New Browser](static/images/current/new.png)
 <p align="center">
-    <img src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/old_98.png" alt="Old Browser">
-</p>
-<p align="center">
-    Old Browser (Windows 98, Internet Explorer 5) - Some Issues
-</p>
-<p align="center">
-    <img  src="https://github.com/luciferreeves/thatcomputerscientist/raw/main/static/images/current/new.png" alt="New Browser">
-</p>
-<p align="center">
-    New Browser (Mac OS 13.0.1, Safari 16.1)
+    New Browser (Mac OS 13.0.1, Chrome 107.0.5304.110) - Properly rendered.
 </p>
 
 ## Specifications

@@ -36,27 +36,28 @@
   </head>
   <body>
     <div class="header"></div>
-    <center>
-      <div style="width: 1000px;" align="right">
-        <table>
-        <tr>
-          <td class="navitem">
-            <a href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">Source Code</a>
-            <img class="new" src="{% static 'images/gifs/new.gif' %}" border="0"/>
-          </td>
-          <td></td>
-          {% if user.is_authenticated %}
-          <td class="navitem"><a href="{% url 'users:logout' %}">Logout</a></td>
-          {% endif %}
-        </tr>
-        </table>
-          <hr />
-      </div>
+    <div style="width: 1000px; margin-left: auto; margin-right: auto;" align="right">
+      {% if not request.onclick or not request.old_browser %}
+        <a class="navitem {% if not request.old_browser %}new{% endif %}" href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">
+          Source Code
+        </a>
+      {% else %}
+        <button class="navitem {% if not request.old_browser %}new{% endif %}" onclick="window.location.href='{% url 'dev_status:repo' 'thatcomputerscientist' %}'">
+          Source Code
+        </button>
+      {% endif %}
+      {% if user.is_authenticated %}
+        {% if not request.onclick or not request.old_browser %}
+          <a class="navitem" href="{% url 'users:logout' %}">Logout</a>
+        {% else %}
+        <button class="navitem" onclick="window.location.href='{% url 'users:logout' %}'">Logout</button>
+        {% endif %}
+      {% endif %}
       <table style="table-layout: fixed; width: 1000px;">
-        <td width="25%" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
-        <td style="vertical-align:top;"><div class="content">{% block content %} {% endblock %}</div></td>
+        <td width="250px" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
+        <td width="750px" style="vertical-align:top;"><div class="content">{% block content %} {% endblock %}</div></td>
       </table>
-    </center>
+    </div>
     <div style="width: 1000px; margin: 0px auto 40px auto">
       <hr style="margin: 2rem 0" />
       <footer style="text-align: center">
@@ -79,12 +80,18 @@
               {% endfor %}
             </tr>
           </table>
-          <br />
-          <br />
-          &copy; {% now "Y" %} That Computer Scientist. Source code available on
-          <a href="https://github.com/luciferreeves/thatcomputerscientist"
-            >GitHub</a
-          >.
+          <div style="width: 600px; margin-left: auto; margin-right: auto; !important">
+            <hr>
+            <p>&copy; {% now "Y" %} That Computer Scientist. Source code available on
+            <a href="https://github.com/luciferreeves/thatcomputerscientist"
+              >GitHub</a
+            >.</p>
+            <p>
+              <b>PS:</b> The ads shown on this website are fake and purely for
+              aesthetic purposes. I do not earn any money from them, neither clicking
+              them will redirect you to any other website.
+            </p>
+          </div>
         </center>
         </footer>
       </div>

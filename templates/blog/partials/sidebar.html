@@ -38,14 +38,14 @@
             {% endif %}
             <div>
                 <ul class="sidenav">
-                    <li class="sidenavitem"><a href="/">Home</a></li>
-                    <li class="sidenavitem"><a href="/about">About</a></li>
-                    <li class="sidenavitem"><a href="/contact">Contact</a></li>
-                    <li class="sidenavitem"><a href="/blog">Blog</a></li>
+                    <li class="sidenavitem"><a class="anavdef" href="{% url 'blog:home' %}">Home</a></li>
+                    <li class="sidenavitem"><a class="anavdef" href="#">About</a></li>
+                    <li class="sidenavitem"><a class="anavdef" href="#">Contact</a></li>
+                    <li class="sidenavitem"><a class="anavdef" href="#">Blog</a></li>
                     {% if user.is_authenticated %}
-                        <li class="sidenavitem"><a href="{% url 'blog:account' %}">My Account</a></li>
+                        <li class="sidenavitem"><a class="anavdef" href="{% url 'blog:account' %}">My Account</a></li>
                     {% else %}
-                        <li class="sidenavitem"><a href="/register">Register</a></li>
+                        <li class="sidenavitem"><a class="anavdef" href="{% url 'blog:register' %}">Register</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -61,7 +61,7 @@
             <ul>
                 {% for archive in archives %}
                 <li>
-                <a href="#">{{ archive | date:"F Y" }}</a>
+                <a class="anavdef" href="#">{{ archive | date:"F Y" }}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -70,7 +70,7 @@
             <ul>
                 {% for category in categories %}
                 <li>
-                <a href="#">{{ category.name }}</a>
+                <a class="anavdef" href="#">{{ category.name }}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -81,14 +81,14 @@
             <nav>
                 <ul class="sidenav">
                     {% if user.is_superuser %}
-                        <li class="sidenavitem"><a href="{% url 'admin:index' %}">Admin Area</a></li>
+                        <li class="sidenavitem"><a class = "anavdef" href="{% url 'admin:index' %}">Admin Area</a></li>
                     {% endif %}
-                    <li class="sidenavitem"><a href="{% url 'blog-admin:users' %}">Manage Users</a></li>
-                    <li class="sidenavitem"><a href="{% url 'blog-admin:posts' %}">Manage Posts</a></li>
-                    <li class="sidenavitem"><a href="{% url 'blog-admin:comments' %}">Manage Comments</a></li>
-                    <li class="sidenavitem"><a href="{% url 'blog-admin:categories' %}">Manage Categories</a></li>
-                    <li class="sidenavitem"><a href="{% url 'blog-admin:tags' %}">Manage Tags</a></li>
-                    <li class="sidenavitem"><a href="{% url 'blog-admin:new' %}">Create New Post</a></li>
+                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:users' %}">Manage Users</a></li>
+                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:posts' %}">Manage Posts</a></li>
+                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:comments' %}">Manage Comments</a></li>
+                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:categories' %}">Manage Categories</a></li>
+                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:tags' %}">Manage Tags</a></li>
+                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:new' %}">Create New Post</a></li>
                 </ul>
             </nav>
         {% endif %}

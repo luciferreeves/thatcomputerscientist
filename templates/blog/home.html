@@ -5,9 +5,9 @@
     <p>
       Welcome to the home of That Computer Scientist. This is my personal
       website where I share all of my thoughts, ideas, and experiences. To know
-      more about me, please visit my <a href="/about">About</a> page. If you
+      more about me, please visit my <a class="anavdef" href="#">About</a> page. If you
       would like to connect with me, please visit my
-      <a href="/contact">Contact</a> page. Please use the sidebar to navigate
+      <a class="anavdef" href="#">Contact</a> page. Please use the sidebar to navigate
       the site.
     </p>
     <p>
@@ -37,7 +37,7 @@
                   <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
                 {% endif %}
               </td>
-              <td style="color: white; vertical-align: top;">
+              <td style="color: white; vertical-align: top; font-size: 16px;">
                 <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
                 <hr>
                 {{ announcement.content }}
@@ -57,7 +57,7 @@
   <br />
   {% load ad %}
   <div class="ad">
-    <img src="{{'banner'|ad }}" alt="Ad" width="100%" height="auto" />
+    <img src="{{'banner'|ad }}" alt="Ad" style="width: 680px; height: 83px;" border="0"/>
   </div>
   {% if recent_posts %}
   <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
@@ -65,14 +65,14 @@
   <ul>
     {% for post in recent_posts %}
     <li>
-      <h2 style="margin-bottom: 12px">
-        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+      <h2 style="margin-bottom: 12px;">
+        <a style="font-size: 24px;" class="anavdef" href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
       </h2>
-      <p style="line-height: 1.6em">
+      <p style="margin-bottom: 16px; margin-top: 16px;">
         Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
         <em
-          ><a href="#">{{ post.author }}</a> in
-          <a href="#">{{ post.category }}</a></em
+          ><a class="anavdef" href="#">{{ post.author }}</a> in
+          <a class="anavdef" href="#">{{ post.category }}</a></em
         >
       </p>
       <div class="article-body">
@@ -80,10 +80,11 @@
       </div>
       <p>
         <em
-          ><a href="{% url 'blog:post' post.slug %}">Click here</a> to continue
+          ><a class="anavdef" href="{% url 'blog:post' post.slug %}">Click here</a> to continue
           reading...</em
         >
       </p>
+      <br>
     </li>
     {% endfor %}
   </ul>

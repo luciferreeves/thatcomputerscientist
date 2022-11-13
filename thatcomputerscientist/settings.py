@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {

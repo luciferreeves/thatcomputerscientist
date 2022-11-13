@@ -3,7 +3,7 @@ body {
     background-repeat: repeat;
     background-attachment: fixed;
     background-position: center;
-    font-family: serif;
+    font-family: 'Times New Roman', Times, serif;
     padding: 0;
     margin: 0;
     min-height: calc(100vh);
@@ -29,8 +29,24 @@ h1, h2, h3, h4, h5, h6, p, a, li, span, label, footer, .table {
     color: #cecece;
 }
 
+p {
+    font-size: 16px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
 a {
     color: #8278ed;
+    font-size: inherit;
+}
+
+.anavdef {
+    color: #8278ed;
+    font-size: 16px;
+    font-family: serif;
+    text-decoration: underline;
 }
 
 fieldset, legend {
@@ -38,36 +54,16 @@ fieldset, legend {
 }
 
 .content {
-    padding: 9px 20px 20px 20px;
+    padding: 9px 10px 20px 20px;
     overflow-x: hidden;
     overflow-y: auto;
-}
-
-.title:visited {
-    color: #cecece;
-}
-
-.title > h1 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 0;
-}
-
-.title {
-    display: block;
-}
-
-.title > img {
-    width: 10rem;
-    height: 3.23rem;
-    display: block;
-    margin: 0px auto 10px auto;
-    pointer-events: none;
 }
 
 .alert {
     background-color: #0c1221;
     padding: 20px;
+    *padding: 20px;
+    _padding: 20px;
     border: 1px solid #cecece;
 }
 
@@ -160,16 +156,6 @@ fieldset {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto;
-}
-
-.errorbox {
-    background-color: #191919;
-    padding: 20px;
-    border: 1px solid #ffd4bd;
-}
-
-.errorbox > h1 {
-    margin-top: 0;
 }
 
 #captcha {
@@ -286,18 +272,16 @@ summary {
     border-right: 2px solid #00007C;
     border-bottom: 2px solid #00007C;
     position: relative;
-    padding: 2px 10px 5px 10px;
+    padding: 5px 10px 5px 10px;
     text-align: center;
-}
-
-.navitem a {
-    color: #FFFFFF;
-    text-decoration: none;
     font-size: 12px;
     font-family: 'TopNavbar', serif;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.new{
+.new::before {
+    content: url('../images/gifs/new.gif');
     position: absolute;
     top: -9px;
     right: -10px;
@@ -315,22 +299,34 @@ summary {
 }
 
 .ad {
-    border: solid 1px #cecece78;
+    border: solid 1px #cecece;
     padding: 10px;
+    _padding: 10px;
+    *padding: 10px;
     position: relative;
 }
 
-.ad::before {
-    content: 'Advertisement';
+.ad-label {
+    color: black;
     display: block;
     font-size: 10px;
     position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #ffffffc4;
+    top: 0px;
+    background-color: #ffffff;
     padding: 2px 5px;
+    _padding: 2px 5px;
+    *padding: 2px 5px;
     border-radius: 0 0 0 5px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.ad-banner {
+    right: 0px;
+    transform: translateX(22px);
+}
+
+.ad-big {
+    right: 0px;
 }
 
 .file {

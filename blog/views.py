@@ -12,10 +12,6 @@ import json
 from .models import Post, Comment
 from .context_processors import recent_posts
 from announcements.models import Announcement
-import sympy
-from django.conf import settings
-from django.http import HttpResponse
-import os
 
 # Create your views here.
 

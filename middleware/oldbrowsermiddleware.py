@@ -31,7 +31,5 @@ class OldBrowserMiddleware:
         request.old_browser = old_browser
         request.onclick = onclick
         response = self.get_response(request)
-        print("old_browser: ", request.old_browser)
-        print("onclick: ", request.onclick)
         return response
         

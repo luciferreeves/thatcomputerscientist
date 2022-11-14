@@ -124,7 +124,7 @@
     static create(value) {
       const node = super.create(value);
       if (typeof value === "string") {
-        node.innerHTML = "" + this.tex2svg(value) + "";
+        node.innerHTML = this.gettex(value);
         node.contentEditable = "false";
         node.setAttribute("data-value", value);
       }
@@ -135,15 +135,12 @@
       return domNode.getAttribute("data-value");
     }
 
-    static tex2svg(latex) {
-      let MathJaxNode = document.createElement("DIV");
-      MathJaxNode.style.visibility = "hidden";
-      MathJaxNode.innerHTML = "\\(" + latex + "\\)";
-      document.body.appendChild(MathJaxNode);
-      MathJax.typeset();
-      let svg = MathJaxNode.innerHTML;
-      document.body.removeChild(MathJaxNode);
-      return svg;
+    static gettex(latex) {
+      // make a GET request to /tex, returns a png response. render this to image tag
+      const url = `/tex/?expr="${latex}"`;
+      const img = `<img src='${url}' style="display: inline-block; margin: 0 auto; height: 16px; width: auto;" />`;
+      return img;
+
     }
   }
 
@@ -151,7 +148,7 @@
     static create(value) {
       const node = super.create(value);
       if (typeof value === "string") {
-        node.innerHTML = "" + this.tex2svg(value) + "";
+        node.innerHTML = "" + this.gettex(value);
         node.contentEditable = "false";
         node.setAttribute("data-value", value);
       }
@@ -162,15 +159,11 @@
       return domNode.getAttribute("data-value");
     }
 
-    static tex2svg(latex) {
-      let MathJaxNode = document.createElement("DIV");
-      MathJaxNode.style.visibility = "hidden";
-      MathJaxNode.innerHTML = "\\[" + latex + "\\]";
-      document.body.appendChild(MathJaxNode);
-      MathJax.typeset();
-      let svg = MathJaxNode.innerHTML;
-      document.body.removeChild(MathJaxNode);
-      return svg;
+    static gettex(latex) {
+      // make a POST request to /tex, returns a png response. render this to image tag
+      const url = `/tex/?expr="${latex}"`;
+      const img = `<img src='${url}' style="display: block; margin: 0 auto; height: 24px; width: auto;" />`;
+      return img;
     }
   }
 
@@ -243,9 +236,9 @@
     });
 
     try {
-        const value = document.getElementById("body").value;
-        const newValue = value.replace(/<p><br><\/p>/g, "");
-        const delta = quill.clipboard.convert(value);
+      const value = document.getElementById("body").value;
+      const newValue = value.replace(/<p><br><\/p>/g, "");
+      const delta = quill.clipboard.convert(value);
         quill.setContents(delta, "silent");
     } catch (e) {
         console.log(e);

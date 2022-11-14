@@ -6,3 +6,4 @@ six==1.16.0
 cryptocode==0.1
 captcha==0.4
 PyGithub==1.55
+sympy==1.11.1

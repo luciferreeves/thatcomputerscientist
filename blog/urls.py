@@ -14,5 +14,6 @@ urlpatterns = [
     path('post/<str:slug>/comment', views.comment, name='comment'),
     path('post/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
     path('post/<str:slug>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
+    path('tex/', views.tex, name='tex'),
     # path('my/homepage', views.homepage, name='homepage'),
 ]

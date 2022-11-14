@@ -10,8 +10,12 @@ from string import ascii_letters, digits
 import base64
 import json
 from .models import Post, Comment
-from .context_processors import recent_posts, categories, archives
+from .context_processors import recent_posts
 from announcements.models import Announcement
+import sympy
+from django.conf import settings
+from django.http import HttpResponse
+import os
 
 # Create your views here.
 
@@ -166,3 +170,18 @@ def delete_comment(request, slug, comment_id):
             return HttpResponse('Comment not found!', status=404)
     else:
         return redirect('blog:home')
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def tex(request):
+    # get expression from request query
+    expression = request.GET.get('expr').replace('"', '').strip()
+    if not expression:
+        return HttpResponse('No expression provided!', status=400)
+
+    import requests
+
+    image = requests.get('https://latex.codecogs.com/png.image?%5Cinline%20%5Clarge%20%5Cdpi%7B300%7D%5Cbg%7Bblack%7D' + expression).content
+
+    return HttpResponse(image, content_type='image/png')

@@ -6,10 +6,10 @@ def recent_posts():
         post.excerpt = post.body.split('>')[1].split('<')[0]
     return recent_posts
 
-def categories():
+def categories(request):
     categories = Category.objects.all()
-    return categories
+    return {'categories': categories}
 
-def archives():
+def archives(request):
     archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')
-    return archives
+    return {'archives': archives}

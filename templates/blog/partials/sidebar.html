@@ -1,11 +1,10 @@
 {% load static %}
 <div class="sidebar">
-    <div class="lgn-area">
-    <div>
-        {% if user.is_authenticated %}
-        {% else %}
-        <fieldset>
-            <legend>Login Area</legend>
+    {% comment %} Login Area {% endcomment %}
+    {% if not user.is_authenticated %}
+    <div class="area">
+        <p class="titlebar">Login</p>
+        <div class="area-content">
             <form method="post" action="{% url 'users:login' %} ">
                 {% csrf_token %}
                 <label for="username">Username</label>
@@ -28,72 +27,166 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        </fieldset>
-        {% endif %}
-        <fieldset>
-            {% if user.is_authenticated %}
-                <legend>Hello, {{ user.username }}!</legend>
-            {% else %}
-                <legend>Navigation</legend>
-            {% endif %}
-            <div>
-                <ul class="sidenav">
-                    <li class="sidenavitem"><a class="anavdef" href="{% url 'blog:home' %}">Home</a></li>
-                    <li class="sidenavitem"><a class="anavdef" href="#">About</a></li>
-                    <li class="sidenavitem"><a class="anavdef" href="#">Contact</a></li>
-                    <li class="sidenavitem"><a class="anavdef" href="#">Blog</a></li>
-                    {% if user.is_authenticated %}
-                        <li class="sidenavitem"><a class="anavdef" href="{% url 'blog:account' %}">My Account</a></li>
-                    {% else %}
-                        <li class="sidenavitem"><a class="anavdef" href="{% url 'blog:register' %}">Register</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </fieldset>
-        <br>
-        <div class="ad">
-            {% load ad %}
-            <img src="{{ "big" | ad }}" alt="Advertisement" style="width: 100%; height: auto;">
         </div>
-        <div>
-            <h3 style="margin-bottom: 0px"><em>Archives</em></h3>
-            <hr />
-            <ul>
-                {% for archive in archives %}
-                <li>
-                <a class="anavdef" href="#">{{ archive | date:"F Y" }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-            <h3 style="margin-bottom: 0px"><em>Categories</em></h3>
-            <hr />
-            <ul>
-                {% for category in categories %}
-                <li>
-                <a class="anavdef" href="#">{{ category.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% if user.is_staff %}
-        <fieldset>
-            <legend>Admin</legend>
-            <nav>
-                <ul class="sidenav">
-                    {% if user.is_superuser %}
-                        <li class="sidenavitem"><a class = "anavdef" href="{% url 'admin:index' %}">Admin Area</a></li>
-                    {% endif %}
-                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:users' %}">Manage Users</a></li>
-                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:posts' %}">Manage Posts</a></li>
-                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:comments' %}">Manage Comments</a></li>
-                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:categories' %}">Manage Categories</a></li>
-                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:tags' %}">Manage Tags</a></li>
-                    <li class="sidenavitem"><a class = "anavdef" href="{% url 'blog-admin:new-post' %}">Create New Post</a></li>
-                </ul>
-            </nav>
-        {% endif %}
-        </fieldset>
     </div>
+    {% endif %}
+
     <br>
+
+    {% comment %} Navigation Area {% endcomment %}
+    <div class="area">
+        {% if user.is_authenticated %}
+            <p class="titlebar">Hello, {{ user.username }}!</p>
+        {% else %}
+            <p class="titlebar">Navigation</p>
+        {% endif %}
+        <div class="area-content">
+            <table style="table-layout: fixed; width: 230px;">
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/news.gif' %}" alt="Home" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'blog:home' %}">Home</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/book.gif' %}" alt="About" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">About</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/email.gif' %}" alt="Contact" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">Contact</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/pencil.gif' %}" alt="Blog" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">Blog</a></td>
+                </tr>
+                <tr>
+                    {% if user.is_authenticated %}
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/setup.gif' %}" alt="My Account" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'blog:account' %}">My Account</a></td>
+                    {% else %}
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/mouse.gif' %}" alt="My Account" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'blog:register' %}">Register</a></td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <br>
+
+    {% comment %} Load Fake Ad {% endcomment %}
+
+    <div class="ad">
+        {% load ad %}
+        <img src="{{ "big" | ad }}" alt="Advertisement" style="width: 100%; height: auto;">
+    </div>
+
+    <br>
+
+    {% comment %} Archives {% endcomment %}
+
+    <div class="area">
+        <p class="titlebar">Archives</p>
+        <div class="area-content">
+            <table style="table-layout: fixed; width: 230px;">
+                {% for archive in archives %}
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archive" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">{{ archive | date:"F Y" }}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <br>
+
+    {% comment %} Categories {% endcomment %}
+
+    <div class="area">
+        <p class="titlebar">Categories</p>
+        <div class="area-content">
+            <table style="table-layout: fixed; width: 230px;">
+                {% for category in categories %}
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/books.gif' %}" alt="Archive" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">{{ category }}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    {% comment %} Admin Section {% endcomment %}
+
+    {% if user.is_staff %}
+    <br>
+    <div class="area">
+        <p class="titlebar">Admin</p>
+        <div class="area-content">
+            <table style="table-layout: fixed; width: 230px;">
+                {% if user.is_superuser %}
+                    <tr>
+                        <td width="24px">
+                            <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                        </td>
+                        <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'admin:index' %}">Admin Area</a></td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:users' %}">Manage Users</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:posts' %}">Manage Posts</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:comments' %}">Manage Comments</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:categories' %}">Manage Categories</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:tags' %}">Manage Tags</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:new-post' %}">Create New Post</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% endif %}
 </div>
 </div>

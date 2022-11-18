@@ -4,7 +4,7 @@ body {
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-    font-family: 'Times New Roman', Times, serif;
+    /* font-family: 'Times New Roman', Times, serif; */
     padding: 0;
     margin: 0;
     min-height: calc(100vh);
@@ -39,10 +39,14 @@ h2 {
     font-size: 24px;
 }
 
+a {
+    color: #636eb0;
+}
+
 .anavdef {
-    font-size: 16px;
     text-decoration: none;
-    color: #8278ed;
+    font-size: 14px;
+    font-family: 'TopNavbar', serif; 
 }
 
 .anavdef:hover {
@@ -62,21 +66,23 @@ fieldset {
 }
 
 .titlebar {
-    background: #160e32;
     padding: 8px 0px;
     padding-left: 10px;
     margin-bottom: 0px;
     margin-top: 0px;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: #cecece;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #fff;
+    background: #06022c;
+    background-image: linear-gradient(to right, #06022c 0%, black 100%);
+    text-transform: capitalize;
 }
 
 .area-content {
     padding: 10px;
-    background: #06080d;
+}
+
+.area-bg {
+    background: #0c0c18;
 }
 
 .content {
@@ -86,7 +92,7 @@ fieldset {
 }
 
 .alert {
-    background-color: #0c1221;
+    background-color: #06080d;
     padding: 20px;
     *padding: 20px;
     _padding: 20px;
@@ -285,13 +291,12 @@ summary {
 
 .navitem {
     display: inline-block;
-    margin-left: 10px;
-    background: #0000FF;
+    background: #016dfe;
     color: #FFFFFF;
-    border-top: 2px solid #6666FF;
-    border-left: 2px solid #6666FF;
-    border-right: 2px solid #00007C;
-    border-bottom: 2px solid #00007C;
+    border-top: 2px solid #4d99ff;
+    border-left: 2px solid #4d99ff;
+    border-right: 2px solid #004eb6;
+    border-bottom: 2px solid #004eb6;
     position: relative;
     padding: 5px 10px 5px 10px;
     text-align: center;
@@ -317,6 +322,45 @@ summary {
     font-weight: bold;
     font-size: 12px;
     padding: 4px 8px;
+}
+
+.sbox {
+    display: inline-block;
+    background: #050b0f; 
+    padding: 5px 10px; 
+    font-size: 12px; 
+    font-family: 'TopNavbar', serif; 
+    border-bottom: 3px solid #848484;
+    border-right: 3px solid #848484;
+    border-left: 3px solid #424242;
+    border-top: 3px solid #424242;
+    margin: 0px;
+}
+
+.sbox:focus {
+    outline: none;
+}
+
+.sbtn { 
+    outline: 0; 
+    background: #016dfe;
+    cursor: pointer;
+    background-image: url('../images/gifs/search_static.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 27px;
+    width: 48px;
+    display: inline-block;
+    vertical-align: middle;
+    border-top: 2px solid #4d99ff;
+    border-left: 2px solid #4d99ff;
+    border-right: 2px solid #004eb6;
+    border-bottom: 2px solid #004eb6;
+}
+
+.sbtn:hover {
+    background-image: url('../images/gifs/search.gif');
 }
 
 .ad {

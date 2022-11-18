@@ -1,92 +1,101 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
 <div class="main">
-  <div class="alert">
-    <p>
-      Welcome to the home of That Computer Scientist. This is my personal
-      website where I share all of my thoughts, ideas, and experiences. To know
-      more about me, please visit my <a class="anavdef" href="#">About</a> page. If you
-      would like to connect with me, please visit my
-      <a class="anavdef" href="#">Contact</a> page. Please use the sidebar to navigate
-      the site.
-    </p>
-    <p>
-      This website is a work in progress. I am currently working on adding more
-      features to this website. I aim to build a retro looking personal website,
-      where I will share my articles and Ideas, which will be built entirely
-      around the idea of "collaborative writing" — where anyone can write new
-      articles or edit existing ones.
-    </p>
+
+  <div class="area">
+    <p class="titlebar">Welcome</p>
+    <div class="area-content">
+      <p>
+        Welcome to the home of That Computer Scientist. This is my personal
+        website where I share all of my thoughts, ideas, and experiences. To know
+        more about me, please visit my <a href="#">About</a> page. If you
+        would like to connect with me, please visit my
+        <a href="#">Contact</a> page. Please use the sidebar to navigate
+        the site.
+      </p>
+      <p>
+        This website is a work in progress. I am currently working on adding more
+        features to this website. I aim to build a retro looking personal website,
+        where I will share my articles and Ideas, which will be built entirely
+        around the idea of "collaborative writing" — where anyone can write new
+        articles or edit existing ones.
+      </p>
+    </div>
   </div>
+  
   <br />
-  {% if announcements is not None %}
-  <fieldset>
-    <legend>
-      <img src = "{% static 'images/gifs/update.gif' %}" height="16px" width="80px" class="updates">
-    </legend>
-    <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
-      <ul class="announcements">
-        {% for announcement in announcements %}
-        <li style="margin-bottom: 20px;">
-          <table>
-            <tr>
-              <td width="30px" style="vertical-align: top;">
-                {% if announcement.is_new %}
-                  <img class="ac" src="{% static 'images/gifs/new_announcement.gif' %}"/>
-                {% else %}
-                  <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
-                {% endif %}
-              </td>
-              <td style="color: white; vertical-align: top; font-size: 16px;">
-                <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
-                <hr>
-                {{ announcement.content }}
-              </td>
-            </tr>
-          </table>
-        </li>
-        {% endfor %}
-      </ul>
-    </marquee>
-  </fieldset>
-  <br />
-  {% endif %}
-  <div style="text-align:center;">
-    <img src="{% static 'images/gifs/construction.gif' %}" style="height:28px; width: 702px;">
-  </div>
-  <br />
+
   {% load ad %}
   <div class="ad">
     <img src="{{'banner'|ad }}" alt="Ad" style="width: 698px; height: 90px;" border="0"/>
   </div>
-  {% if recent_posts %}
-  <h3 style="margin-bottom: 0px"><em>Recent Posts</em></h3>
-  <hr />
-  <ul>
-    {% for post in recent_posts %}
-    <li>
-      <h2 style="margin-bottom: 12px;">
-        <a style="font-size: 24px;" class="anavdef" href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
-      </h2>
-      <p style="margin-bottom: 16px; margin-top: 16px;">
-        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
-        <em
-          ><a class="anavdef" href="#">{{ post.author }}</a> in
-          <a class="anavdef" href="#">{{ post.category }}</a></em
-        >
-      </p>
-      <div class="article-body">
-        <p>{{ post.excerpt | safe }}</p>
+
+  <br />
+
+  <div style="text-align:center;">
+    <img src="{% static 'images/gifs/construction.gif' %}" style="height:28px; width: 702px;">
+  </div>
+  
+  <br />
+
+
+  {% if announcements is not None %}
+    <div class="area">
+      <p class="titlebar"> <img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px; width: auto;" class="updates"></p>
+      <div class="area-content">
+        <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
+          <ul class="announcements">
+            {% for announcement in announcements %}
+            <li style="margin-bottom: 20px;">
+              <table>
+                <tr>
+                  <td width="30px" style="vertical-align: top;">
+                    {% if announcement.is_new %}
+                      <img class="ac" src="{% static 'images/gifs/new_announcement.gif' %}"/>
+                    {% else %}
+                      <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
+                    {% endif %}
+                  </td>
+                  <td style="color: white; vertical-align: top; font-size: 16px;">
+                    <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
+                    <hr>
+                    {{ announcement.content }}
+                  </td>
+                </tr>
+              </table>
+            </li>
+            {% endfor %}
+          </ul>
+        </marquee>
       </div>
-      <p>
-        <em
-          ><a class="anavdef" href="{% url 'blog:post' post.slug %}">Click here</a> to continue
-          reading...</em
-        >
-      </p>
-    </li>
-    {% endfor %}
-  </ul>
+    </div>
+    <br />
   {% endif %}
+
+  
+  {% if recent_posts %}
+  <div class="area">
+    <p class="titlebar">Recent Posts</p>
+    <div class="area-content">
+      {% for post in recent_posts %}
+        <h2 style="margin-bottom: 12px;">
+          <a style="font-size: 24px;" href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+        </h2>
+        <p style="margin-bottom: 16px; margin-top: 16px;">
+          Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
+          <em><a href="#">{{ post.author }}</a> in</em>
+          <em><a href="#">{{ post.category }}</a></em>
+        </p>
+        <div class="article-body">
+          <p>{{ post.excerpt | safe }}</p>
+        </div>
+        <p>
+          <em><a href="{% url 'blog:post' post.slug %}">Click here</a> to continue reading...</em>
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}

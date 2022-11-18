@@ -1,0 +1,10 @@
+.sbtn {
+    background-image: url('../images/gifs/search_static_32px.jpg');
+}
+.sbtn:hover {
+    background-image: url('../images/gifs/search_32px.gif');
+}
+.searchtable {
+    position: relative;
+    top: 8px;
+}

@@ -154,7 +154,7 @@
 
     static gettex(latex) {
       // make a GET request to /tex, returns a png response. render this to image tag
-      const url = `/iss/tex/?expr="${latex}"`;
+      const url = `/ignis/tex/?expr="${latex}"`;
       const img = `<img src='${url}' style="display: inline-block; margin: 0 auto; height: 16px; width: auto;" />`;
       return img;
 
@@ -178,7 +178,7 @@
 
     static gettex(latex) {
       // make a POST request to /tex, returns a png response. render this to image tag
-      const url = `/iss/tex/?expr="${latex}"`;
+      const url = `/ignis/tex/?expr="${latex}"`;
       const img = `<img src='${url}' style="display: block; margin-left: auto; margin-right: auto; height: 24px; width: auto;" />`;
       return img;
     }

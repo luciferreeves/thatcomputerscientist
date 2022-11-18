@@ -13,7 +13,7 @@
   <section>
     {% include 'blog_admin/partials/posts_topbar.html' %}
     <div class="article-cover">
-      <img src="{% url 'iss:post_image' post.id %}" alt="Cover Image" style="width: 720px; margin: 0 auto; display: block;">
+      <img src="{% url 'ignis:post_image' post.id %}" alt="Cover Image" style="width: 720px; margin: 0 auto; display: block;">
     </div>
     <br>
     <form action="{% url 'blog-admin:edit-post' blog_slug %}" method="post" enctype="multipart/form-data">
@@ -158,7 +158,7 @@
 
     static gettex(latex) {
       // make a GET request to /tex, returns a png response. render this to image tag
-      const url = `/iss/tex/?expr="${latex}"`;
+      const url = `/ignis/tex/?expr="${latex}"`;
       const img = `<img src='${url}' style="display: inline-block; margin: 0 auto; height: 16px; width: auto;" />`;
       return img;
 
@@ -182,7 +182,7 @@
 
     static gettex(latex) {
       // make a POST request to /tex, returns a png response. render this to image tag
-      const url = `/iss/tex/?expr="${latex}"`;
+      const url = `/ignis/tex/?expr="${latex}"`;
       const img = `<img src='${url}' style="display: block; margin-left: auto; margin-right: auto; height: 24px; width: auto;" />`;
       return img;
     }

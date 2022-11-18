@@ -9,5 +9,6 @@ def subdomain(url, subdomain):
         return url
     else:
         url = url.replace(subdomain, '')
+        url = url.replace('//', '/')
         url = "http://" + subdomain + "." + settings.DOMAIN_NAME + url
         return url

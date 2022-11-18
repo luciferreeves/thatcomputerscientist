@@ -1,9 +1,12 @@
+import base64
 from django.shortcuts import render, redirect
 from users.models import UserProfile
 from django.contrib.auth.models import User
 from django.contrib import messages
 from blog.models import Post, Category, Tag
 import re
+from io import BytesIO
+from PIL import Image
 
 # Create your views here.
 
@@ -48,7 +51,8 @@ def new_post(request):
             category = request.POST.get('category')
             tags = request.POST.get('tags')
             slug = request.POST.get('slug')
-            if title and body and category and tags and slug:
+            post_image = request.FILES['post_image'] if 'post_image' in request.FILES else None
+            if title and body and category and tags and slug and post_image:
                 try:
                     category = Category.objects.get(slug = category)
                     tags = tags.split(',')
@@ -56,6 +60,10 @@ def new_post(request):
                     tags = [Tag.objects.get_or_create(slug = tag, name = tag)[0] for tag in tags]
                     post = Post.objects.create(title = title, body = body, category = category, slug = slug, author = request.user)
                     post.tags.set(tags)
+                    # convert post_image to base64 and save it in post.post_image
+                    post_image = post_image.read()
+                    post_image = base64.b64encode(post_image)
+                    post.post_image = "data:image/png;base64," + post_image.decode('utf-8')
                     post.save()
                     messages.success(request, 'Post created successfully!')
                     return redirect('blog-admin:posts')
@@ -81,6 +89,7 @@ def edit_post(request, slug):
             category = request.POST.get('category')
             tags = request.POST.get('tags')
             slug = request.POST.get('slug')
+            post_image = request.FILES['post_image'] if 'post_image' in request.FILES else None
             if title and body and category and tags and slug:
                 try:
                     category = Category.objects.get(slug = category)
@@ -93,6 +102,11 @@ def edit_post(request, slug):
                     post.slug = slug
                     post.author = request.user
                     post.tags.set(tags)
+                    if post_image:
+                        # convert to data string src and save it in post.post_image
+                        post_image = post_image.read()
+                        post_image = base64.b64encode(post_image)
+                        post.post_image = "data:image/png;base64," + post_image.decode('utf-8')
                     post.save()
                     messages.success(request, 'Post edited successfully!')
                     return redirect('blog-admin:posts')

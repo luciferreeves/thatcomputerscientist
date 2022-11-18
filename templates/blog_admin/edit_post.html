@@ -12,7 +12,11 @@
 <div class="main">
   <section>
     {% include 'blog_admin/partials/posts_topbar.html' %}
-    <form action="{% url 'blog-admin:edit-post' blog_slug %}" method="post">
+    <div class="article-cover">
+      <img src="{% url 'iss:post_image' post.id %}" alt="Cover Image" style="width: 720px; margin: 0 auto; display: block;">
+    </div>
+    <br>
+    <form action="{% url 'blog-admin:edit-post' blog_slug %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-group">
         <label for="title">Title</label>
@@ -26,6 +30,7 @@
           value="{{ blog_title }}"
         />
       </div>
+      <br>
       <div class="form-group">
         <label for="slug">Slug</label>
           <input
@@ -38,6 +43,19 @@
               value="{{ blog_slug }}"
           />
       </div>
+      <br>
+      <div class="form-group">
+        <label for="content">Post Image</label>
+        <input
+          style="display: inline-block"
+          type="file"
+          class="form-control"
+          id="post_image"
+          name="post_image"
+        />
+      </div>
+      <br>
+
       <div class="form-group">
         <div id="toolbar-container">
           <span class="ql-formats">
@@ -85,6 +103,7 @@
         </div>
         <div id="editor-container" style="height: 60vh"></div>
       </div>
+      <br>
       <div class="form-group">
         <label for="tags">Tags</label>
         <input
@@ -97,6 +116,7 @@
           value="{{ blog_tags }}"
         />
       </div>
+      <br>
       <div class="form-group">
         <label for="category">Category</label>
           <select class="form-control" id="category" name="category" style = "display: inline-block">
@@ -108,6 +128,7 @@
       <div class="form-group" style="display: none;">
           <textarea name="body" id="body">{{ blog_body }}</textarea>
       </div>
+      <br>
       <div class="form-group">
           <button type="submit" class="btn btn-primary">Submit</button>
       </div>
@@ -137,7 +158,7 @@
 
     static gettex(latex) {
       // make a GET request to /tex, returns a png response. render this to image tag
-      const url = `/tex/?expr="${latex}"`;
+      const url = `/iss/tex/?expr="${latex}"`;
       const img = `<img src='${url}' style="display: inline-block; margin: 0 auto; height: 16px; width: auto;" />`;
       return img;
 
@@ -161,7 +182,7 @@
 
     static gettex(latex) {
       // make a POST request to /tex, returns a png response. render this to image tag
-      const url = `/tex/?expr="${latex}"`;
+      const url = `/iss/tex/?expr="${latex}"`;
       const img = `<img src='${url}' style="display: block; margin-left: auto; margin-right: auto; height: 24px; width: auto;" />`;
       return img;
     }

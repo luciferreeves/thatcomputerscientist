@@ -12,8 +12,7 @@ import json
 from .models import Post, Comment
 from .context_processors import recent_posts
 from announcements.models import Announcement
-from PIL import Image
-from io import BytesIO
+
 
 # Create your views here.
 
@@ -168,27 +167,3 @@ def delete_comment(request, slug, comment_id):
             return HttpResponse('Comment not found!', status=404)
     else:
         return redirect('blog:home')
-
-from django.views.decorators.csrf import csrf_exempt
-
-@csrf_exempt
-def tex(request):
-    # get expression from request query
-    expression = request.GET.get('expr').replace('"', '').strip()
-    if not expression:
-        return HttpResponse('No expression provided!', status=400)
-
-    import requests
-
-    image = requests.get('https://latex.codecogs.com/png.image?%5Cinline%20%5Clarge%20%5Cdpi%7B300%7D%5Cbg%7Btransparent%7D' + expression).content
-
-    # Image is a transparent GIF with black text. Invert the colors.
-    image = Image.open(BytesIO(image))
-    image = image.convert('RGB')
-    image = Image.eval(image, lambda x: 255 - x)
-    image = image.convert('RGBA')
-
-    # Convert back to gif and return
-    output = BytesIO()
-    image.save(output, format='GIF')
-    return HttpResponse(output.getvalue(), content_type='image/gif')

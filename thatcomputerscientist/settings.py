@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'blog_admin',
     'dev_status',
     'announcements',
+    'iss',
 ]
 
 MIDDLEWARE = [

@@ -24,6 +24,7 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),
     path('blog-admin/', include('blog_admin.urls', namespace='blog-admin')),
     path('source/', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
+    path('iss/', include(('iss.urls', 'iss'), namespace='iss')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -9,8 +9,22 @@
     <title>That Computer Scientist - {{ title }}</title>
     <link preload rel="stylesheet" href="{% static 'css/fonts.css' %}" />
     <link preload rel="stylesheet" href="{% static 'css/main.css' %}" />
-    {% if request.old_browser %}
-      <link preload rel="stylesheet" href="{% static 'css/old_ports.css' %}" />
+    {% if not request.old_browser %}
+      <style>
+        .sbtn {
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+          height: 28px;
+          width: 48px;
+          background-image: url('/static/images/gifs/search_static.jpg');
+          position: relative;
+          top: -2px;
+        }
+        .sbtn:hover {
+            background-image: url('/static/images/gifs/search.gif');
+        }
+      </style>
     {% endif %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}"/>
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}"/>
@@ -20,7 +34,8 @@
   <body>
     <div class="header"></div>
     <div style="width: 1000px; margin-left: auto; margin-right: auto;" align="right">
-      <table style="vertical-align: middle; border-spacing: 12px; border-collapse: separate; margin-bottom: -8px;">
+      <td style="text-align: right">
+      <table style="vertical-align: middle; border-spacing: 12px; border-collapse: separate;{% if not request.old_browser %} margin-bottom: -8px;{% endif %} width: auto; display: inline-table;">
         <tr>
           <td>
           {% if not request.onclick or not request.old_browser %}
@@ -36,19 +51,26 @@
           {% if user.is_authenticated %}
           <td>
             {% if not request.onclick or not request.old_browser %}
-              <a class="navitem" href="{% url 'users:logout' %}">Logout</a>
+              <a class="navitem" href="{% url 'users:logout' %}">
+                Logout
+              </a>
             {% else %}
-            <button class="navitem" onclick="window.location.href='{% url 'users:logout' %}'">Logout</button>
+              <button class="navitem" onclick="window.location.href='{% url 'users:logout' %}'">Logout</button>
             {% endif %}
           </td>
           {% endif %}
         </tr>
       </table>
+      </td>
       <hr>
-      <table style="table-layout: fixed; width: 1000px;">
-        <td width="250px" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
-        <td width="750px" style="vertical-align:top;"><div class="content">{% block content %} {% endblock %}</div></td>
-      </table>
+    </div>
+    <div class="content">
+      <center>
+        <table style="table-layout: fixed; width: 1000px;">
+          <td width="250px" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
+          <td width="750px" style="vertical-align:top;"><div class="content">{% block content %} {% endblock %}</div></td>
+        </table>
+      </center>
     </div>
     <div style="width: 1000px; margin: 0px auto 40px auto">
       <hr style="margin: 2rem 0" />

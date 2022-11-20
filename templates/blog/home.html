@@ -43,7 +43,7 @@
     <div class="area">
       <p class="titlebar"> <img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px; width: auto;" class="updates"></p>
       <div class="area-content">
-        <marquee behavior="scroll" direction="up" height="250" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
+        <marquee behavior="scroll" direction="up" height="250" width="720" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
           <ul class="announcements">
             {% for announcement in announcements %}
             <li style="margin-bottom: 20px;">
@@ -59,7 +59,7 @@
                   <td style="color: white; vertical-align: top; font-size: 16px;">
                     <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
                     <hr>
-                    <p>{{ announcement.content }}</p>
+                    <div style="width: 675px;">{{ announcement.content }}</div>
                   </td>
                 </tr>
               </table>

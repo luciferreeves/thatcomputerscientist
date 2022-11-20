@@ -16,6 +16,7 @@ class OldBrowserMiddleware:
             'classilla'
         ]
         onclick_patterns = [
+            'msie [1-8]',
             'classilla'
         ]
         for pattern in browser_patterns:

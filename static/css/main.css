@@ -345,24 +345,12 @@ summary {
     outline: 0; 
     background: #016dfe;
     cursor: pointer;
-    background-image: url('../images/gifs/search_static.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    height: 27px;
-    width: 48px;
     display: inline-block;
     vertical-align: middle;
     border-top: 2px solid #4d99ff;
     border-left: 2px solid #4d99ff;
     border-right: 2px solid #004eb6;
     border-bottom: 2px solid #004eb6;
-    position: relative;
-    top: -2px;
-}
-
-.sbtn:hover {
-    background-image: url('../images/gifs/search.gif');
 }
 
 .ad {

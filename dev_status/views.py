@@ -1,4 +1,3 @@
-from multiprocessing import context
 from django.shortcuts import render
 from github import Github
 from dotenv import load_dotenv

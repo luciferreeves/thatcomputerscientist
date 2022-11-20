@@ -17,6 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import PostSitemap, CategorySitemap, TagSitemap, StaticViewSitemap, GithubSitemap
+
+sitemaps = {
+    'posts': PostSitemap,
+    'categories': CategorySitemap,
+    'tags': TagSitemap,
+    'static': StaticViewSitemap,
+    'github': GithubSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +35,7 @@ urlpatterns = [
     path('blog-admin/', include('blog_admin.urls', namespace='blog-admin')),
     path('source/', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
     path('ignis/', include(('ignis.urls', 'ignis'), namespace='ignis')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

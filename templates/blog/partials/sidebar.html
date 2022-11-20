@@ -1,5 +1,19 @@
 {% load static %}
 <div class="sidebar">
+    {% comment %} Search Area {% endcomment %}
+
+    <div class="area">
+        <div class="area-content area-bg" style="padding-top: 20px;">
+            <form action="#" method="GET">
+                <input type="text" name="q" placeholder="Search..." class="sbox" autocomplete="off">
+                <input type="submit" align="center" class="sbtn" value="">
+            </form>
+            <p><small><a style="color: #e6e670; border-bottom: 1px dashed #f7b885; padding-bottom: 2px; text-decoration: none;" href="#">Advanced Search &gt;</a></small></p>
+        </div>
+    </div>
+
+    <br>
+
     {% comment %} Login Area {% endcomment %}
     {% if not user.is_authenticated %}
     <div class="area">
@@ -29,9 +43,9 @@
             {% endfor %}
         </div>
     </div>
+    <br>
     {% endif %}
 
-    <br>
     {% comment %} Navigation Area {% endcomment %}
     <div class="area">
         {% if user.is_authenticated %}

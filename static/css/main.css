@@ -357,6 +357,8 @@ summary {
     border-left: 2px solid #4d99ff;
     border-right: 2px solid #004eb6;
     border-bottom: 2px solid #004eb6;
+    position: relative;
+    top: -2px;
 }
 
 .sbtn:hover {

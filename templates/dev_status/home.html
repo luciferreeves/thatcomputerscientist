@@ -1,40 +1,144 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
-  <h3 style="margin-bottom: 0px">
-    <em>Source Code</em>
-    <ul class="topnav" style="float:right;">
-      <li><a href="#">Commit History</a></li>
-      <li><a href="#">Build History</a></li>
-      <li><a href="#">Issues</a></li>
-      <li><a href="#">Pull Requests</a></li>
-    </ul>
-  </h3>
-  <hr>
-  <br>
-  <div class="files">
-    {% if parent %}
-      <div class="file">
-        <div class="ft-dir"></div>
-        <a class="file-name" href="{% url 'dev_status:repo-path' repo parent %}">..</a>
-      </div>
-    {% endif %}
-    {% if parent == '' %}
-      <div class="file">
-        <div class="ft-dir"></div>
-        <a class="file-name" href="{% url 'dev_status:repo' repo %}">..</a>
-      </div>
-    {% endif %}
-    {% if files %}
-        {% for file in files %}
-        <div class="file">
-          <div class="ft-{{ file.type }}"></div>
-          <a class="file-name" href="{% url 'dev_status:repo-path' repo file.path %}">{{ file.name }}</a>
-        </div>
-        {% endfor %}
-    {% endif %}
-    {% if file %}
-      <script src = "https://emgithub.com/embed-v2.js?target={{ file }}&style=github-dark-dimmed&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
-    {% endif %}
+  <div class="area">
+    <p class="titlebar">Repositories (<em>Showing {{ repo_length }} repositories</em>) </p>
+    <div class="area-content area-bg">
+      {% if not user.is_authenticated %}
+      <p style="margin: 0 auto 10px auto;">
+        You are not logged in. You can only view public repositories. Please login or register
+        using the sidebar on the left to view both public and private repositories.
+      </p>
+      {% endif %}
+
+      {% comment %} Search and Filter {% endcomment %}
+      <table>
+        <form action="" method="get">
+          <tr>
+            <td>
+              <p> Search &amp; Filter: &emsp;</p>
+            </td>
+            <td>
+              <input type="text" name="search" placeholder="Search Term" value="{{ search }}" autocomplete="off">
+            </td>
+            <td>
+              <select name="items">
+                <option value="10" {% if items == 10 %}selected{% endif %}>10</option>
+                <option value="25" {% if items == 25 %}selected{% endif %}>25</option>
+                <option value="50" {% if items == 50 %}selected{% endif %}>50</option>
+                <option value="100" {% if items == 100 %}selected{% endif %}>100</option>
+              </select>
+            </td>
+            <td>
+              <select name="filter">
+                {% if user.is_authenticated %}
+                  <option value="all" {% if filter == 'all' %}selected{% endif %}>All</option>
+                {% endif %}
+                <option value="public" {% if filter == 'public' %}selected{% endif %}>Public</option>
+                {% if user.is_authenticated %}
+                  <option value="private" {% if filter == 'private' %}selected{% endif %}>Private</option>
+                {% endif %}
+              </select>
+            </td>
+            <td>
+              <select name="sort">
+                <option value="full_name" {% if sort == 'full_name' %}selected{% endif %}>Name</option>
+                <option value="created" {% if sort == 'created' %}selected{% endif %}>Created</option>
+                <option value="updated" {% if sort == 'updated' %}selected{% endif %}>Updated</option>
+                <option value="pushed" {% if sort == 'pushed' %}selected{% endif %}>Pushed</option>
+              </select>
+            </td>
+            <td>
+              <select name="direction">
+                <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Ascending</option>
+                <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Descending</option>
+              </select>
+            </td>
+            <td>
+              <input type="submit" value="Go" style="position: relative; top: -2px;">
+            </td>
+          </tr>
+        </form>
+      </table>
+    </div>
   </div>
+  <hr>
+  <div class='repositories'>
+    {% load static %}
+    {% load times %}
+    <table style="width: 720px; table-layout: fixed; border-spacing: 12px; border-collapse: separate;">
+      {% for repo in repos %}
+          <tr style="vertical-align: middle;">
+            <td width="48px">
+              {% if repo.private %}
+                <img src="{% static 'images/site/icons/key.gif' %}" alt="Private" title="Private" style="width: 32px; display: block; margin: 0px auto 0 auto; height: auto;">
+              {% else %}
+                <img src="{% static 'images/site/icons/globe.gif' %}" alt="Public" title="Public" style="width: 32px; display: block; margin: 0px auto 0 auto; height: auto;">
+              {% endif %}
+            </td>
+            <td width="500px">
+              <p style="margin: 10px auto;"><a class="anavdef" href="{% url 'dev_status:repo' repo.name %}" style="font-size: 18px;">
+                {{ repo.name }}
+              </a></p>
+              {% if repo.description %}
+                <p style="margin-top: 0px;"><small>{{ repo.description }}</small></p>
+              {% else %}
+                <p style="color: grey; margin-top: 0px;"><small>No description provided.</small></p>
+              {% endif %}
+              <table style="display: inline-table; border-spacing: 12px; border-collapse: separate; position: relative; top: -18px; left: -14px;">
+                <tr>
+                  <td width="20px">
+                    <img src="{% static 'images/site/icons/star.png' %}" alt="Public" title="Stargazers" style="width: 16px; display: block; margin: 0 auto; height: auto;">
+                  </td>
+                  <td>
+                    <p style="text-align: center; margin: 0 auto;" title="Stargazers"><small>{{ repo.stargazers_count }}</small></p>
+                  </td>
+                  <td width="20px">
+                    <img src="{% static 'images/site/icons/fork.png' %}" alt="Public" title="Forks" style="width: 16px; display: block; margin: 0 auto; height: auto;">
+                  </td>
+                  <td>
+                    <p style="text-align: center; margin: 0 auto;" title="Forks"><small>{{ repo.forks_count }}</small></p>
+                  </td>
+                  <td width="20px">
+                    <img src="{% static 'images/site/icons/issue.png' %}" alt="Public" title="Open Issues" style="width: 16px; display: block; margin: 0 auto; height: auto;">
+                  </td>
+                  <td>
+                    <p style="text-align: center; margin: 0 auto;" title="Open Issues"><small>{{ repo.open_issues_count }}</small></p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="136px">
+              <table>
+                <tr><td><a href="{% url 'dev_status:repo' repo.name %}">View Source</a></td></tr>
+                <tr><td><a href="{{ repo.html_url }}" target="_blank">View on GitHub</a></td></tr>
+              </table>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+  </div>
+  <div class="pagination">
+    {% if num_pages and page %}
+        <div class="pagination">
+            {% if page == 1 %}
+                <a href="#" class="disabled">&laquo;</a>
+                <a href="#" class="disabled">&lsaquo;</a>
+            {% else %}
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a>
+            {% endif %}
+            {% for i in num_pages|times  %}
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}" {% if i == page %}style="color:white;"{% endif %}>{{ i }}</a>
+            {% endfor %}
+            {% if page == num_pages %}
+                <a href="#" class="disabled">&rsaquo;</a>
+                <a href="#" class="disabled">&raquo;</a>
+            {% else %}
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    </div>
 </div>
 {% endblock %}

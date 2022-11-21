@@ -106,7 +106,7 @@ lebel, input, textarea, select {
     font-size: 16px;
 }
 
-input, textarea {
+input, textarea, select {
     background-color: rgb(17, 17, 17);
     color: #cecece;
 }

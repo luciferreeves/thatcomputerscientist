@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+APPEND_SLASH = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

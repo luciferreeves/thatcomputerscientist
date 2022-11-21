@@ -29,12 +29,12 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
     path('', include('blog.urls', namespace='blog')),
-    path('users/', include('users.urls', namespace='users')),
-    path('blog-admin/', include('blog_admin.urls', namespace='blog-admin')),
-    path('source/', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
-    path('ignis/', include(('ignis.urls', 'ignis'), namespace='ignis')),
+    path('users', include('users.urls', namespace='users')),
+    path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),
+    path('repositories', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
+    path('ignis', include(('ignis.urls', 'ignis'), namespace='ignis')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 

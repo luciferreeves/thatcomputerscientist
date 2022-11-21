@@ -3,7 +3,7 @@
     {% comment %} Search Area {% endcomment %}
 
     <div class="area">
-        <div class="area-content area-bg" style="padding-top: 20px;">
+        <div class="area-content area-bg" style="padding-top: 20px; margin-top: 20px;">
             <form action="#" method="GET">
                 <input type="text" name="q" placeholder="Search..." class="sbox" autocomplete="off">
                 <input type="submit" align="center" class="sbtn" value="{% if request.old_browser %}Search{% else %}{% endif %}">
@@ -78,6 +78,12 @@
                         <img src="{% static 'images/site/icons/pencil.gif' %}" alt="Blog" border="0" class="icon">
                     </td>
                     <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">Blog</a></td>
+                </tr>
+                <tr>
+                    <td width="24px">
+                        <img src="{% static 'images/site/icons/windows.gif' %}" alt="Repositories" border="0" class="icon">
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'dev_status:home' %}">Repositories</a></td>
                 </tr>
                 <tr>
                     {% if user.is_authenticated %}

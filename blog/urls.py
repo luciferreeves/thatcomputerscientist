@@ -10,9 +10,8 @@ urlpatterns = [
     path('my/account', views.account, name='account'),
     path('register/', views.register, name='register'),
     path('register/refresh_captcha/', name='refresh_captcha', view=views.refresh_captcha),
-    path('post/<str:slug>', views.post, name='post'),
-    path('post/<str:slug>/comment', views.comment, name='comment'),
-    path('post/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
-    path('post/<str:slug>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
-    # path('my/homepage', views.homepage, name='homepage'),
+    path('articles/post/<str:slug>', views.post, name='post'),
+    path('articles/post/<str:slug>/comment', views.comment, name='comment'),
+    path('articles/post/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
+    path('articles/post/<str:slug>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
 ]

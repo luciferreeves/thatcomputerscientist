@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'dev_status'
 urlpatterns = [
-    path('<str:r>', views.home, name='repo'),
-    path('<str:r>/<path:p>', views.home, name='repo-path'),
-    path('', RedirectView.as_view(url='thatcomputerscientist'))
+    path('', views.home, name='home'),
+    path('/<str:r>', views.get_repo, name='repo'),
+    path('/<str:r>/<path:p>', views.get_repo, name='repo-path'),
 ]

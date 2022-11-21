@@ -70,10 +70,11 @@ class GithubSitemap(Sitemap):
     public_repos = g.get_user().get_repos(type='public')
     repo_names = []
     for repo in public_repos:
-        repo_names.append(repo.name)
+        if 'luciferreeves' in repo.full_name:
+            repo_names.append(repo.name)
 
     def items(self):
         return self.repo_names
 
     def location(self, item):
-        return '/source/{}'.format(item)
+        return '/repositories/{}'.format(item)

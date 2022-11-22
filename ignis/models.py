@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-UPLOAD_ROOT = 'images/' if os.getenv('ENVIRONMENT') == 'development' else '/home/ubuntu/database/images/'
+UPLOAD_ROOT = 'images/' if os.getenv('ENVIRONMENT') == 'development' else '~/database/images/'
 
 # Only For Storing Images
 

@@ -17,7 +17,8 @@ class ObjectStorage:
     def create_object(self, md5, metadata, data, name):
         if not ObjectDirectory.objects.filter(name=name).exists():
             ObjectDirectory.objects.create(name=name)
-        Object.objects.create(md5=md5, metadata=metadata, data=data, location=ObjectDirectory.objects.get(name=name))
+        if not Object.objects.filter(md5=md5).exists():
+            Object.objects.create(md5=md5, metadata=metadata, data=data, location=ObjectDirectory.objects.get(name=name))
 
     def delete_object(self, slug, md5):
         Object.objects.filter(location=ObjectDirectory.objects.get(name=slug), md5=md5).delete()

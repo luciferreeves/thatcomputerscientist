@@ -8,6 +8,7 @@ from .objectstorage import ObjectStorage
 import base64
 import _md5
 import json
+from .github import get_cover
 
 # Create your views here.
 @csrf_exempt
@@ -46,6 +47,18 @@ def get_image(request, slug, md5):
     object_storage = ObjectStorage()
     image = object_storage.get_object(slug, md5)
     return HttpResponse(base64.b64decode(image.data), content_type=image.metadata)
+
+@csrf_exempt
+def cover_image(request, repository):
+    url = 'https://socialify.git.ci/luciferreeves/{}/image?font=KoHo&language=1&name=1&pattern=Floating%20Cogs&theme=Dark'.format(repository)
+    cover_store = ObjectStorage()
+    image_hash = _md5.md5(url.encode()).hexdigest()
+    if not cover_store.object_exists('github_covers', image_hash):
+        image = get_cover(url)
+        data = base64.b64encode(image).decode('utf-8')
+        cover_store.create_object(md5=image_hash, metadata='image/png', data=data, name='github_covers')
+    return HttpResponse(base64.b64decode(cover_store.get_object('github_covers', image_hash).data), content_type='image/png')
+        # cover_store.create_object(md5=image_hash, metadata='image/png', data=data, name='github_covers'))
 
 def upload_image(request):
     if request.method == 'POST':

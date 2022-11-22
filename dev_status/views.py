@@ -11,22 +11,18 @@ g = Github(os.getenv('GH_TOKEN'))
 def home(request):
     page = request.GET.get('page') or 1
     items = request.GET.get('items') or 10
-    filter = request.GET.get('filter') or 'public'
     sort = request.GET.get('sort') or 'updated'
     direction = request.GET.get('direction') or 'desc'
     search = request.GET.get('search') or ''
-    if not request.user.is_authenticated:
-        filter = 'public'
     context = {}
-    repo_rl = g.get_user().get_repos(type=filter, sort=sort, direction=direction)
+    repo_rl = g.get_user('luciferreeves').get_repos(sort=sort, direction=direction)
     repos = [repo for repo in repo_rl if (search.lower() in str(repo.name).lower() or search in str(repo.description).lower()) and 'luciferreeves' in str(repo.full_name).lower()] if search != '' else [repo for repo in repo_rl if 'luciferreeves' in str(repo.full_name).lower()]
     context['repo_length'] = len(repos)
     context['repos'] = repos[(int(page) - 1) * int(items):int(page) * int(items)]
-    context['title'] = '{} Repositories'.format(str(filter).capitalize())
+    context['title'] = 'Repositories'
     context['page'] = int(page)
     context['items'] = int(items)
     context['num_pages'] = math.ceil(context['repo_length'] / int(items))
-    context['filter'] = filter
     context['sort'] = sort
     context['direction'] = direction
     context['search'] = search

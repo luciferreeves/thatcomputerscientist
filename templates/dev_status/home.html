@@ -3,15 +3,9 @@
   <div class="area">
     {% load static %}
     {% load times %}
-    {% if not user.is_authenticated %}
-    <p style="padding: 15px 10px;" class="alert">
-      You are not logged in. You can only view public repositories. Please login or register
-      using the sidebar on the left to view both public and private repositories.
-    </p>
-  {% endif %}
     <div style="background-image: url({% static 'images/site/repositories.png' %}); width: 720px; height: 173px; background-repeat: no-repeat; background-position: center;">
       {% comment %} Search and Filter {% endcomment %}
-      <table style="margin: 0 auto; position: relative; top: 125px;">
+      <table style="margin: 0 auto; position: relative; top: 120px;">
         <form action="" method="get">
           <tr>
             <td>
@@ -26,17 +20,6 @@
                 <option value="25" {% if items == 25 %}selected{% endif %}>25</option>
                 <option value="50" {% if items == 50 %}selected{% endif %}>50</option>
                 <option value="100" {% if items == 100 %}selected{% endif %}>100</option>
-              </select>
-            </td>
-            <td>
-              <select name="filter">
-                {% if user.is_authenticated %}
-                  <option value="all" {% if filter == 'all' %}selected{% endif %}>All</option>
-                {% endif %}
-                <option value="public" {% if filter == 'public' %}selected{% endif %}>Public</option>
-                {% if user.is_authenticated %}
-                  <option value="private" {% if filter == 'private' %}selected{% endif %}>Private</option>
-                {% endif %}
               </select>
             </td>
             <td>
@@ -62,58 +45,22 @@
     </div>
   </div>
   <hr>
-  <div class='repositories'>
-    
-    <table style="width: 720px; table-layout: fixed; border-spacing: 12px; border-collapse: separate;">
+  <div class='repositories' style="width: 720px;">
+    <table style="width=720px; margin: 0 auto; table-layout: fixed;">
       {% for repo in repos %}
-          <tr style="vertical-align: middle;">
-            <td width="48px">
-              {% if repo.private %}
-                <img src="{% static 'images/site/icons/key.gif' %}" alt="Private" title="Private" style="width: 32px; display: block; margin: 0px auto 0 auto; height: auto;">
-              {% else %}
-                <img src="{% static 'images/site/icons/globe.gif' %}" alt="Public" title="Public" style="width: 32px; display: block; margin: 0px auto 0 auto; height: auto;">
-              {% endif %}
-            </td>
-            <td width="500px">
-              <h3 style="margin: 0px auto 8px auto;"><a href="{% url 'dev_status:repo' repo.name %}" style="font-size: 18px;">
-                {{ repo.name }}
-              </a></h3>
-              {% if repo.description %}
-                <p style="margin-top: 0px;"><small>{{ repo.description }}</small></p>
-              {% else %}
-                <p style="color: grey; margin-top: 0px;"><small>No description provided.</small></p>
-              {% endif %}
-              <table style="display: inline-table; border-spacing: 12px; border-collapse: separate; position: relative; top: -18px; left: -14px;">
-                <tr>
-                  <td width="20px">
-                    <img src="{% static 'images/site/icons/star.png' %}" alt="Public" title="Stargazers" style="width: 16px; display: block; margin: 0 auto; height: auto;">
-                  </td>
-                  <td>
-                    <p style="text-align: center; margin: 0 auto;" title="Stargazers"><small>{{ repo.stargazers_count }}</small></p>
-                  </td>
-                  <td width="20px">
-                    <img src="{% static 'images/site/icons/fork.png' %}" alt="Public" title="Forks" style="width: 16px; display: block; margin: 0 auto; height: auto;">
-                  </td>
-                  <td>
-                    <p style="text-align: center; margin: 0 auto;" title="Forks"><small>{{ repo.forks_count }}</small></p>
-                  </td>
-                  <td width="20px">
-                    <img src="{% static 'images/site/icons/issue.png' %}" alt="Public" title="Open Issues" style="width: 16px; display: block; margin: 0 auto; height: auto;">
-                  </td>
-                  <td>
-                    <p style="text-align: center; margin: 0 auto;" title="Open Issues"><small>{{ repo.open_issues_count }}</small></p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td width="136px">
-              <table>
-                <tr><td style="color: #c9d1d9; background-color: #21262d; border-color: #f0f6fc; padding: 5px 10px; border-radius: 4px;"><a style="color: #c9d1d9; text-decoration: none; font-family: sans-serif; font-size: 14px;" href="{{ repo.html_url }}" target="_blank">View on GitHub</a></td></tr>
-              </table>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
+        <tr>
+          <td>
+            <a href="{% url 'dev_status:repo' repo.name %}" style="display: inline-block; margin-right: 10px; background-image: url('{% url 'ignis:cover_image' repo.name %}');" class="zoom"></a>
+            </a>
+          </td>
+          <td>
+        <p style="font-size: 20px; font-weight: bold;">{{ repo.name }}</p>
+        <p style="font-size: 15px;">{{ repo.description }}</p>
+        
+        </td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
   <div class="pagination">
     {% if num_pages and page %}

@@ -11,6 +11,15 @@ body {
     text-align: center;
 }
 
+.zoom {
+    width: 320px;
+    height: 160px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 338px 169px;
+}
+
 .header {
     background-image: url("../images/site/Banner.gif");
     background-repeat: no-repeat;
@@ -87,8 +96,8 @@ fieldset {
 
 .content {
     padding: 9px 10px 20px 20px;
-    overflow-x: hidden;
     overflow-y: auto;
+    overflow-x: visible;
 }
 
 .alert {

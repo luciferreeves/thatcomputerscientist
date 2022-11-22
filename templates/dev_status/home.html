@@ -1,17 +1,17 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
   <div class="area">
-    <p class="titlebar">Repositories (<em>Showing {{ repo_length }} repositories</em>) </p>
-    <div class="area-content area-bg">
-      {% if not user.is_authenticated %}
-      <p style="margin: 0 auto 10px auto;">
-        You are not logged in. You can only view public repositories. Please login or register
-        using the sidebar on the left to view both public and private repositories.
-      </p>
-      {% endif %}
-
+    {% load static %}
+    {% load times %}
+    {% if not user.is_authenticated %}
+    <p style="padding: 15px 10px;" class="alert">
+      You are not logged in. You can only view public repositories. Please login or register
+      using the sidebar on the left to view both public and private repositories.
+    </p>
+  {% endif %}
+    <div style="background-image: url({% static 'images/site/repositories.png' %}); width: 720px; height: 173px; background-repeat: no-repeat; background-position: center;">
       {% comment %} Search and Filter {% endcomment %}
-      <table style="margin: 0 auto;">
+      <table style="margin: 0 auto; position: relative; top: 125px;">
         <form action="" method="get">
           <tr>
             <td>
@@ -63,8 +63,7 @@
   </div>
   <hr>
   <div class='repositories'>
-    {% load static %}
-    {% load times %}
+    
     <table style="width: 720px; table-layout: fixed; border-spacing: 12px; border-collapse: separate;">
       {% for repo in repos %}
           <tr style="vertical-align: middle;">

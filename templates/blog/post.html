@@ -1,9 +1,9 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-<link
+ <link
   rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css"
 />
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+{% comment %}<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" /> {% endcomment %}
 <div class="main">
   <article>
     {% load subdomain %}
@@ -72,7 +72,7 @@
         {% endif %}
     </div>
 </article>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> {% endcomment %}
   <script>
     function editComment(id) {
         document.getElementById('comment-body-' + id).style.display = 'none';

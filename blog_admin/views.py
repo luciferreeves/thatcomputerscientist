@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from blog.models import Post, Category, Tag
 import re
-from io import BytesIO
-from PIL import Image
 
 # Create your views here.
 
@@ -48,6 +46,8 @@ def new_post(request):
             title = request.POST.get('title')
             body = request.POST.get('body')
             body = re.sub(r'<p><br></p>', '', body)
+            body = re.sub(r'<p class="ql-align-justify"><br></p>', '', body)
+            body = re.sub(r'<p class="ql-align-center"><br></p>', '', body)
             category = request.POST.get('category')
             tags = request.POST.get('tags')
             slug = request.POST.get('slug')
@@ -86,6 +86,8 @@ def edit_post(request, slug):
             title = request.POST.get('title')
             body = request.POST.get('body')
             body = re.sub(r'<p><br></p>', '', body)
+            body = re.sub(r'<p class="ql-align-justify"><br></p>', '', body)
+            body = re.sub(r'<p class="ql-align-center"><br></p>', '', body)
             category = request.POST.get('category')
             tags = request.POST.get('tags')
             slug = request.POST.get('slug')

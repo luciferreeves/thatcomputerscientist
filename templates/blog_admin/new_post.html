@@ -26,12 +26,12 @@
           value="{{ blog_title }}"
         />
       </div>
-      <br>
+      {% comment %} <br> {% endcomment %}
       <div class="form-group">
-        <label for="slug">Slug</label>
+        {% comment %} <label for="slug">Slug</label> {% endcomment %}
           <input
               style="display: inline-block"
-              type="text"
+              type="hidden"
               class="form-control"
               id="slug"
               name="slug"
@@ -223,6 +223,45 @@
           },
           "formula-block": function () {
             insertFormula(quill, true);
+          },
+          image: function () {
+            // open image upload dialog
+            let fileInput = this.container.querySelector('input.ql-image[type=file]');
+            if (fileInput == null) {
+              fileInput = document.createElement('input');
+              fileInput.setAttribute('type', 'file');
+              fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+              fileInput.classList.add('ql-image');
+              fileInput.addEventListener('change', () => {
+                if (fileInput.files != null && fileInput.files[0] != null) {
+                  let range = this.quill.getSelection(true);
+                  const url = "/ignis/upload";
+                  const formData = new FormData();
+                  formData.append("image", fileInput.files[0]);
+                  formData.append("slug", document.getElementById("slug").value);
+                  // append csrf token in header
+                  const headers = new Headers();
+                  headers.append("X-CSRFToken", "{{ csrf_token }}");
+
+                  fetch(url, {
+                    method: "POST",
+                    headers: headers,
+                    body: formData,
+                  }).then((response) => response.json()).then((result) => {
+                    this.quill.updateContents(new Delta()
+                      .retain(range.index)
+                      .delete(range.length)
+                      .insert({ image: result.url })
+                    , Quill.sources.USER);
+                    fileInput.value = "";
+                  }).catch((error) => {
+                    console.error("Error:", error);
+                  });
+                }
+              });
+              this.container.appendChild(fileInput);
+            }
+            fileInput.click();
           },
         },
       },

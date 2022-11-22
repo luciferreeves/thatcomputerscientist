@@ -28,7 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
+DEBUG = True 
+# if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['http://*.67.20.192.102', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']

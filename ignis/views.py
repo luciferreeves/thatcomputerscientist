@@ -4,11 +4,11 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import base64
 from blog.models import Post
-from .objectstorage import ObjectStorage
 import base64
-import _md5
+from .models import PostImage, RepositoryTitle
 import json
 import requests
+from django.core.files.base import ContentFile
 # from .github import get_cover
 
 # Create your views here.
@@ -44,36 +44,64 @@ def post_image(request, post_id):
     return HttpResponse(image, content_type='image/png')
 
 @csrf_exempt
-def get_image(request, slug, md5):
-    object_storage = ObjectStorage()
-    image = object_storage.get_object(slug, md5)
-    return HttpResponse(base64.b64decode(image.data), content_type=image.metadata)
+def get_image(request, post_id, image_name):
+    if 'rpi_' in post_id:
+        # post has random post identifier => means it's a new post and not saved yet
+        # get image from temp_post_id
+        pi = PostImage.objects.filter(temp_post_id=post_id, name=image_name)
+    else:
+        # post has id => means it's an existing post
+        # get image from post_id
+        pi = PostImage.objects.filter(post=Post.objects.get(id=post_id), name=image_name)
+    if not pi:
+        return HttpResponse('No image found!', status=404)
+    
+    # open image and return
+    image = pi[0].image
+    with open(image.path, 'rb') as f:
+        return HttpResponse(f.read(), content_type='image/{}'.format(image.name.split('.')[-1]))
 
 @csrf_exempt
 def cover_image(request, repository):
-    url = 'https://socialify.git.ci/luciferreeves/{}/png?font=KoHo&language=1&name=1&pattern=Solid&theme=Dark'.format(repository)
+    force_reload = request.GET.get('force_reload')
+    # check if the image is in RepositoryTitles
+    try:
+        if force_reload:
+            raise Exception('Force reload')
+        repository_title = RepositoryTitle.objects.get(repository=repository)
+        image = repository_title.image
+    except:
+        # image is not in RepositoryTitles
+        # get image
+        url = 'https://socialify.git.ci/luciferreeves/{}/png?font=KoHo&language=1&name=1&pattern=Solid&theme=Dark'.format(repository)
+        image = requests.get(url).content
 
-    image = requests.get(url).content
+        # reduce image size to 320x160
+        image = Image.open(BytesIO(image))
+        image = image.resize((320, 160), Image.ANTIALIAS)
 
-    # reduce image size to 320x160
-    image = Image.open(BytesIO(image))
-    image = image.resize((320, 160), Image.ANTIALIAS)
+        # remove black background
+        image = image.convert('RGBA').getdata()
+        new_data = []
+        for item in image:
+            if item[0] == 0 and item[1] == 0 and item[2] == 0:
+                new_data.append((255, 255, 255, 0))
+            else:
+                new_data.append(item)
 
-    # remove black background
-    image = image.convert('RGBA').getdata()
-    new_data = []
-    for item in image:
-        if item[0] == 0 and item[1] == 0 and item[2] == 0:
-            new_data.append((255, 255, 255, 0))
-        else:
-            new_data.append(item)
+        # Convert back to png and return
+        output = BytesIO()
+        image = Image.new('RGBA', (320, 160))
+        image.putdata(new_data)
+        image.save(output, format='GIF')
+        image = output.getvalue()
 
-    # Convert back to png and return
-    output = BytesIO()
-    image = Image.new('RGBA', (320, 160))
-    image.putdata(new_data)
-    image.save(output, format='GIF')
-    return HttpResponse(output.getvalue(), content_type='image/gif')
+        # save image to RepositoryTitles
+        image = ContentFile(image, name='{}.png'.format(repository))
+        repository_title = RepositoryTitle(repository=repository, image=image)
+        repository_title.save()
+
+    return HttpResponse(image, content_type='image/gif')
 
 
 def upload_image(request):
@@ -82,48 +110,24 @@ def upload_image(request):
             return HttpResponse('Unauthorized', status=401)
         if not request.FILES.get('image'):
             return HttpResponse('No image provided!', status=400)
-        if not request.POST.get('slug'):
-            return HttpResponse('No slug provided!', status=400)
+        if not request.POST.get('id'):
+            return HttpResponse('No id provided!', status=400)
         
-        # upload image to object storage
+        # upload image to PostImage model
         image = request.FILES['image']
-        slug = request.POST.get('slug')
-        object_storage = ObjectStorage()
-        object_storage.create_directory(slug)
-        
-
-        image_data = image.read()
-        metadata = image.content_type
-
-        image_hash = _md5.md5(image_data).hexdigest()
-        data = base64.b64encode(image_data).decode('utf-8')
-
-        if not object_storage.object_exists(slug, image_hash):
-            object_storage.create_object(md5=image_hash, metadata=metadata, data=data, name=slug)
-
-        # return json response
+        post_id = request.POST['id']
+        if 'rpi_' in post_id:
+            # post has random post identifier => means it's a new post and not saved yet
+            # save image to temp_post_id
+            pi = PostImage(image=image, temp_post_id=post_id, post=None, name=image.name)
+        else:
+            # post has id => means it's an existing post
+            # save image to post_id
+            pi = PostImage(image=image, post=Post.objects.get(id=post_id), name=image.name)
+        pi.save()
         response = {
-            'url': "/ignis/image/{}/{}".format(slug, image_hash)
+            'url': '/ignis/image/{}/{}'.format(post_id, pi.name)
         }
-        
-        return HttpResponse(json.dumps(response), content_type='application/json', status=200)
+        return HttpResponse(json.dumps(response), content_type='application/json')
+    return HttpResponse('Method not allowed', status=405)
 
-
-def mvdir(request):
-    if not request.user.is_authenticated and not request.user.is_staff:
-        return HttpResponse('Unauthorized', status=401)
-    object_storage = ObjectStorage()
-    
-    # get from query params
-    old_name = request.GET.get('old')
-    new_name = request.GET.get('new')
-
-    if not old_name or not new_name:
-        return HttpResponse('No name provided!', status=400)
-
-    if old_name == "":
-        object_storage.create_directory(new_name)
-        return HttpResponse(json.dumps({'status': 'success'}), content_type='application/json', status=200)
-    else:
-        object_storage.rename_directory(old_name, new_name)
-        return HttpResponse(json.dumps({'status': 'success'}), content_type='application/json', status=200)

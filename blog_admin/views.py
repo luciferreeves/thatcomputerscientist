@@ -4,7 +4,10 @@ from users.models import UserProfile
 from django.contrib.auth.models import User
 from django.contrib import messages
 from blog.models import Post, Category, Tag
+from ignis.models import PostImage
 import re
+import random
+import string
 
 # Create your views here.
 
@@ -52,6 +55,7 @@ def new_post(request):
             tags = request.POST.get('tags')
             slug = request.POST.get('slug')
             post_image = request.FILES['post_image'] if 'post_image' in request.FILES else None
+            random_post_identifier = request.POST.get('random_post_identifier')
             if title and body and category and tags and slug and post_image:
                 try:
                     category = Category.objects.get(slug = category)
@@ -65,16 +69,25 @@ def new_post(request):
                     post_image = base64.b64encode(post_image)
                     post.post_image = "data:image/png;base64," + post_image.decode('utf-8')
                     post.save()
+                    PostImage.objects.filter(temp_post_id = random_post_identifier).update(post = post)
+                    PostImage.objects.filter(temp_post_id = random_post_identifier).update(temp_post_id = None)
+                    # replace all random_post_identifier with post.id in post.body
+                    post.body = post.body.replace(random_post_identifier, str(post.id))
+                    post.save()
                     messages.success(request, 'Post created successfully!')
                     return redirect('blog-admin:posts')
                 except Exception as e:
                     messages.error(request, 'Error: {}'.format(e), extra_tags='new_post_create_error')
-                    return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug })
+                    return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug, 'random_post_identifier': random_post_identifier })    
             else:
                 messages.error(request, 'Error: All fields are required!', extra_tags='new_post_create_error')
-                return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug })
+                return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug, 'random_post_identifier': random_post_identifier })
         else:
-            return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories })
+            # new random temorary post identifier - 8 digit alphanumeric string
+            
+            random_post_identifier = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+            random_post_identifier = 'rpi_' + random_post_identifier
+            return render(request, 'blog_admin/new_post.html', { 'title': 'New Post', 'categories': categories, 'random_post_identifier': random_post_identifier })
     else:
         return redirect('blog:home')
 

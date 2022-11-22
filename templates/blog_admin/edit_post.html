@@ -45,6 +45,16 @@
               value="{{ blog_slug }}"
           />
       </div>
+      <div class="form-group">
+        <input
+            style="display: inline-block"
+            type="hidden"
+            class="form-control"
+            id="post_id"
+            name="post_id"
+            value="{{ post.id }}"
+        />
+    </div>
       <br>
       <div class="form-group">
         <label for="content">Post Image</label>
@@ -245,7 +255,7 @@
                   const url = "/ignis/upload";
                   const formData = new FormData();
                   formData.append("image", fileInput.files[0]);
-                  formData.append("slug", document.getElementById("slug").value);
+                  formData.append("id", document.getElementById("post_id").value);
                   // append csrf token in header
                   const headers = new Headers();
                   headers.append("X-CSRFToken", "{{ csrf_token }}");

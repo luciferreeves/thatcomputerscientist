@@ -51,10 +51,30 @@ def get_image(request, slug, md5):
 
 @csrf_exempt
 def cover_image(request, repository):
-    url = 'https://socialify.git.ci/luciferreeves/{}/png?font=KoHo&language=1&name=1&pattern=Floating%20Cogs&theme=Dark'.format(repository)
+    url = 'https://socialify.git.ci/luciferreeves/{}/png?font=KoHo&language=1&name=1&pattern=Solid&theme=Dark'.format(repository)
 
     image = requests.get(url).content
-    return HttpResponse(image, content_type='image/png')
+
+    # reduce image size to 320x160
+    image = Image.open(BytesIO(image))
+    image = image.resize((320, 160), Image.ANTIALIAS)
+
+    # remove black background
+    image = image.convert('RGBA').getdata()
+    new_data = []
+    for item in image:
+        if item[0] == 0 and item[1] == 0 and item[2] == 0:
+            new_data.append((255, 255, 255, 0))
+        else:
+            new_data.append(item)
+
+    # Convert back to png and return
+    output = BytesIO()
+    image = Image.new('RGBA', (320, 160))
+    image.putdata(new_data)
+    image.save(output, format='GIF')
+    return HttpResponse(output.getvalue(), content_type='image/gif')
+
 
 def upload_image(request):
     if request.method == 'POST':

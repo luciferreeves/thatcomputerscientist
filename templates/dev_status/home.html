@@ -49,12 +49,12 @@
     <table style="width=720px; margin: 0 auto; table-layout: fixed;">
       {% for repo in repos %}
         <tr>
-          <td>
-            <a href="{% url 'dev_status:repo' repo.name %}" style="display: inline-block; margin-right: 10px; background-image: url('{% url 'ignis:cover_image' repo.name %}');" class="zoom"></a>
+          <td><a href="{% url 'dev_status:repo' repo.name %}">
+              <img src="{% url 'ignis:cover_image' repo.name %}" style="display: inline-block; margin-right: 10px;" class="zoom">
             </a>
           </td>
           <td>
-        <p style="font-size: 20px; font-weight: bold;">{{ repo.name }}</p>
+        <p style="font-size: 20px; font-weight: bold;"><a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a></p>
         <p style="font-size: 15px;">{{ repo.description }}</p>
         
         </td>

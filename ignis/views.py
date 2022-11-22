@@ -51,33 +51,10 @@ def get_image(request, slug, md5):
 
 @csrf_exempt
 def cover_image(request, repository):
-    url = 'https://socialify.git.ci/luciferreeves/{}/image?font=KoHo&language=1&name=1&pattern=Floating%20Cogs&theme=Dark'.format(repository)
-    # cover_store = ObjectStorage()
-    # image_hash = _md5.md5(url.encode()).hexdigest()
-    # # if not cover_store.object_exists('github_covers', image_hash):
-    #     # image = get_cover(url)
-    # import requests
-    # api_url = "https://url-to-screenshot.p.rapidapi.com/get"
-    # querystring = {"url": url, "height":"1280", "mobile":"0", "allocated_time":"2.0", "width":"640", "base64":"0" }
-    # headers = {
-    #     "Accept": "image/png",
-    #     "X-RapidAPI-Key": "XAeqfAn1TsmshDMloJ7qiewBExHVp1MKic7jsnkNIsvqIjdlN7",
-    #     "X-RapidAPI-Host": "url-to-screenshot.p.rapidapi.com"
-    # }
-    # response = requests.request("GET", api_url, headers=headers, params=querystring)
-    # image = response.content
-    # print(image)
-
-    # data = base64.b64encode(image).decode('utf-8')
-    # metadata = 'image/png'
+    url = 'https://socialify.git.ci/luciferreeves/{}/png?font=KoHo&language=1&name=1&pattern=Floating%20Cogs&theme=Dark'.format(repository)
 
     image = requests.get(url).content
-    return HttpResponse(image, content_type='image/svg+xml')
-
-
-    # cover_store.create_object(md5=image_hash, metadata='image/png', data=data, name='github_covers')
-    # return HttpResponse(base64.b64decode(cover_store.get_object('github_covers', image_hash).data), content_type='image/png')
-        # cover_store.create_object(md5=image_hash, metadata='image/png', data=data, name='github_covers'))
+    return HttpResponse(image, content_type='image/png')
 
 def upload_image(request):
     if request.method == 'POST':

@@ -18,31 +18,17 @@ def home(request):
     if not request.user.is_authenticated:
         filter = 'public'
     context = {}
-    repos = []
-    user = g.get_user()
-    for repo in user.get_repos(type=filter, sort=sort, direction=direction):
-        if 'luciferreeves' in repo.full_name:
-            if search != '':
-                search = search.lower()
-                search = ''.join(e for e in search if e.isalnum())
-                repo_name = repo.name.lower()
-                repo_name = ''.join(e for e in repo_name if e.isalnum())
-                repo_desc = repo.description.lower() if repo.description else ''
-                repo_desc = ''.join(e for e in repo_desc if e.isalnum())
-                if search in repo_name or search in repo_desc:
-                    repos.append(repo)
-            else:
-                repos.append(repo)
+    repos = g.get_user().get_repos(type=filter, sort=sort, direction=direction)
+
+    if search != '':
+        search = search.lower()
+        repos = [repo for repo in repos if search in str(repo.name).lower() or search in str(repo.description).lower()]
+    else:
+        repos = [repo for repo in repos if 'luciferreeves' in str(repo.full_name).lower()]
 
     context['repo_length'] = len(repos)
-
-    # Pagination
-    start = (int(page) - 1) * int(items)
-    end = start + int(items)
-    repos = repos[start:end]
-
+    context['repos'] = repos[(int(page) - 1) * int(items):int(page) * int(items)]
     context['title'] = '{} Repositories'.format(str(filter).capitalize())
-    context['repos'] = repos
     context['page'] = int(page)
     context['items'] = int(items)
     context['num_pages'] = math.ceil(context['repo_length'] / int(items))

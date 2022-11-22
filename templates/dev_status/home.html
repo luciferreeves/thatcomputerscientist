@@ -11,7 +11,7 @@
       {% endif %}
 
       {% comment %} Search and Filter {% endcomment %}
-      <table>
+      <table style="margin: 0 auto;"
         <form action="" method="get">
           <tr>
             <td>
@@ -76,9 +76,9 @@
               {% endif %}
             </td>
             <td width="500px">
-              <p style="margin: 10px auto;"><a class="anavdef" href="{% url 'dev_status:repo' repo.name %}" style="font-size: 18px;">
+              <h3 style="margin: 0px auto 8px auto;"><a href="{% url 'dev_status:repo' repo.name %}" style="font-size: 18px;">
                 {{ repo.name }}
-              </a></p>
+              </a></h3>
               {% if repo.description %}
                 <p style="margin-top: 0px;"><small>{{ repo.description }}</small></p>
               {% else %}
@@ -109,8 +109,7 @@
             </td>
             <td width="136px">
               <table>
-                <tr><td><a href="{% url 'dev_status:repo' repo.name %}">View Source</a></td></tr>
-                <tr><td><a href="{{ repo.html_url }}" target="_blank">View on GitHub</a></td></tr>
+                <tr><td style="color: #c9d1d9; background-color: #21262d; border-color: #f0f6fc; padding: 5px 10px; border-radius: 4px;"><a style="color: #c9d1d9; text-decoration: none; font-family: sans-serif; font-size: 14px;" href="{{ repo.html_url }}" target="_blank">View on GitHub</a></td></tr>
               </table>
             </td>
           </tr>

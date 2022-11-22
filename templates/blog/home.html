@@ -59,7 +59,7 @@
                   <td style="color: white; vertical-align: top; font-size: 16px;">
                     <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
                     <hr>
-                    <div style="width: 675px;">{{ announcement.content }}</div>
+                    <div style="width: 675px;">{{ announcement.content | safe }}</div>
                   </td>
                 </tr>
               </table>

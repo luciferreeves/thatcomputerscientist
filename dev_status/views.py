@@ -23,8 +23,7 @@ def home(request):
     if search != '':
         search = search.lower()
         repos = [repo for repo in repos if search in str(repo.name).lower() or search in str(repo.description).lower()]
-    else:
-        repos = [repo for repo in repos if 'luciferreeves' in str(repo.full_name).lower()]
+    repos = [repo for repo in repos if 'luciferreeves' in str(repo.full_name).lower()]
 
     context['repo_length'] = len(repos)
     context['repos'] = repos[(int(page) - 1) * int(items):int(page) * int(items)]

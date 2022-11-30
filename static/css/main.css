@@ -11,6 +11,10 @@ body {
     text-align: center;
 }
 
+.main {
+    padding: 10px;
+}    
+
 .zoom {
     width: 320px;
     height: 160px;

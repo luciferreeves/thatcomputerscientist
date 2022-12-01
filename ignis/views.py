@@ -75,7 +75,7 @@ def cover_image(request, repository):
     except:
         # image is not in RepositoryTitles
         # get image
-        url = 'https://tcssocialify.vercel.app/luciferreeves/{}/png?font=KoHo&language=1&language2=1&name=1&theme=Dark&pattern=Solid'.format(repository)
+        url = 'https://socialify.thatcomputerscientist.com/luciferreeves/{}/png?font=KoHo&language=1&language2=1&name=1&theme=Dark&pattern=Solid'.format(repository)
         print("Getting image for repository: {}".format(repository))
         image = requests.get(url).content
 

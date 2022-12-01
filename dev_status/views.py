@@ -2,6 +2,7 @@ from django.shortcuts import render
 from github import Github
 from dotenv import load_dotenv
 import os
+import requests
 import math
 
 load_dotenv()
@@ -15,18 +16,65 @@ def home(request):
     direction = request.GET.get('direction') or 'desc'
     search = request.GET.get('search') or ''
     context = {}
-    repo_rl = g.get_user('luciferreeves').get_repos(sort=sort, direction=direction)
-    repos = [repo for repo in repo_rl if (search.lower() in str(repo.name).lower() or search in str(repo.description).lower()) and 'luciferreeves' in str(repo.full_name).lower()] if search != '' else [repo for repo in repo_rl if 'luciferreeves' in str(repo.full_name).lower()]
-    context['repo_length'] = len(repos)
-    context['repos'] = repos[(int(page) - 1) * int(items):int(page) * int(items)]
-    context['title'] = 'Repositories'
+    sort_map = {
+        'updated': 'UPDATED_AT',
+        'stars': 'STARGAZERS',
+        'pushed': 'PUSHED_AT',
+        'created': 'CREATED_AT',
+        'name': 'NAME'
+    }
+    direction_map = {
+        'desc': 'DESC',
+        'asc': 'ASC'
+    }
+    
+    # make request to github api to get page of repos and total count of repos
+    url = 'https://api.github.com/graphql'
+    headers = {'Authorization': 'token ' + os.getenv('GH_TOKEN')}
+    user = 'luciferreeves'
+
+    query = """
+    query {{
+        user(login: "{user}") {{
+            repositories(
+                first: 100
+                orderBy: {{field: {sort}, direction: {direction}}}
+                ownerAffiliations: OWNER
+                privacy: PUBLIC
+            ) {{
+                totalCount
+                edges {{
+                    node {{
+                        name
+                        description
+                    }}
+                }}
+            }}
+        }}
+    }}
+    """.format(user=user, sort=sort_map[sort], direction=direction_map[direction])
+    data = requests.post(url, json={'query': query}, headers=headers).json()
+
+    repos = [{'name': repo['node']['name'], 'description': repo['node']['description']} for repo in data['data']['user']['repositories']['edges']]
+    total_count = data['data']['user']['repositories']['totalCount']
+
+    
+    context['search'] = search
+    if search:
+        context['repos'] = [repo for repo in repos if search.lower() in repo['name'].lower() or search.lower() in repo['description'].lower()]
+        context['total_count'] = len(context['repos'])
+    else:
+        context['repos'] = repos
+        context['total_count'] = total_count
+
+    # calculate pagination
     context['page'] = int(page)
     context['items'] = int(items)
-    context['num_pages'] = math.ceil(context['repo_length'] / int(items))
     context['sort'] = sort
     context['direction'] = direction
-    context['search'] = search
-
+    context['num_pages'] =math.ceil(context['total_count'] / context['items'])
+    context['repos'] = context['repos'][(context['page'] - 1) * context['items']:context['page'] * context['items']]
+    
     return render(request, 'dev_status/home.html', context)
 
 def get_repo(request, r='thatcomputerscientist', p=None):

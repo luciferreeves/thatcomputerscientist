@@ -249,8 +249,9 @@ summary {
     display: inline-block;
     padding: 5px 10px;
     cursor: pointer;
-    background-color: #06022c;
+    background: #06022c;
     color: #8693e1;
+    margin: 0 5px;
 }
 
 .page-disabled {
@@ -260,8 +261,12 @@ summary {
 
 .page-active {
     color: #fff;
-    background-color: #000;
+    background: #000;
     text-decoration: none;
+}
+
+.page-separator {
+    border-right: 1px solid #aaa;
 }
 
 .label {

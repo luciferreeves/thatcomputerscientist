@@ -68,52 +68,28 @@
     <table style="margin: 0 auto; border-spacing: 5px; border-collapse: separate;">
       <tr>
         {% if page == 1 %}
-          <td class="page page-disabled"><a href="#">&laquo;</a></td>
-          <td class="page page-disabled" style="margin-right: 15px;"><a href="#">&lsaquo;</a></td>
+          <td class="page page-disabled"><a class="page-disabled" href="#">&laquo;</a></td>
+          <td class="page page-disabled" style="margin-right: 15px;"><a class="page-disabled" href="#">&lsaquo;</a></td>
         {% else %}
-          <td class="page"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></td>
-          <td class="page" style="margin-right: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></td>
+          <td class="page"><a style="color: #8693e1;" href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></td>
+          <td class="page" style="margin-right: 15px; color: #8693e1;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></td>
         {% endif %}
         <td class="page-separator"> </td>
         {% for i in num_pages|times  %}
-          <td class="page {% if i == page %}page-active{% endif %}"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></td>
+          <td class="page {% if i == page %}page-active{% endif %}"><a {% if i == page %}style="color: white;" {% endif %} href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></td>
         {% endfor %}
         <td class="page-separator"> </td>
         {% if page == num_pages %}
-          <td class="page page-disabled" style="margin-left: 15px;"><a href="#">&rsaquo;</a></td>
-          <td class="page page-disabled"><a href="#">&raquo;</a></td>
+          <td class="page page-disabled" style="margin-left: 15px;"><a class="page-disabled" href="#">&rsaquo;</a></td>
+          <td class="page page-disabled"><a class="page-disabled" href="#">&raquo;</a></td>
         {% else %}
-          <td class="page" style="margin-left: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></td>
-          <td class="page"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></td>
+          <td class="page" style="margin-left: 15px;"><a style="color: #8693e1;" href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></td>
+          <td class="page"><a style="color: #8693e1;" href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></td>
         {% endif %}
       </tr>
     </table>
     </center>
   </div>
-
-    {% comment %} {% if num_pages and page %}
-        <div class="pagination">
-            {% if page == 1 %}
-                <span class="page page-disabled"><a href="#">&laquo;</a></span>
-                <span class="page page-disabled" style="margin-right: 15px;"><a href="#">&lsaquo;</a></span>
-            {% else %}
-                <span class="page"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></span>
-                <span class="page" style="margin-right: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></span>
-            {% endif %}
-            <span class="page-separator"> </span>
-            {% for i in num_pages|times  %}
-                <span class="page {% if i == page %}page-active{% endif %}"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></span>
-            {% endfor %}
-            <span class="page-separator"> </span>
-            {% if page == num_pages %}
-                <span class="page page-disabled" style="margin-left: 15px;"><a href="#">&rsaquo;</a></span>
-                <span class="page page-disabled"><a href="#">&raquo;</a></span>
-            {% else %}
-                <span class="page" style="margin-left: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></span>
-                <span class="page"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></span>
-            {% endif %}
-        </div>
-    {% endif %} {% endcomment %}
-    </div>
+ </div>
 </div>
 {% endblock %}

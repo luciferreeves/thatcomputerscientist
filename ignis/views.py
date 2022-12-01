@@ -35,6 +35,7 @@ def tex(request):
 
 @csrf_exempt
 def post_image(request, post_id):
+    post_id = post_id.replace('.png', '')
     pi = Post.objects.get(id=post_id).post_image
     if not pi:
         return HttpResponse('No image found!', status=404)
@@ -64,6 +65,7 @@ def get_image(request, post_id, image_name):
 @csrf_exempt
 def cover_image(request, repository):
     force_reload = request.GET.get('force_reload')
+    repository = repository.replace('.gif', '')
     # check if the image is in RepositoryTitles
     try:
         if force_reload:

@@ -64,11 +64,16 @@
       </td>
       <hr>
     </div>
-    <div class="content">
+    <div class="content" style="
+    width: 1010px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10px 0px 20px 0px;
+">
       <center>
         <table style="table-layout: fixed; width: 1000px;">
           <td width="250px" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
-          <td width="750px" style="vertical-align:top;"><div class="content">{% block content %} {% endblock %}</div></td>
+          <td width="750px" style="vertical-align:top;"><div>{% block content %} {% endblock %}</div></td>
         </table>
       </center>
     </div>

@@ -67,21 +67,21 @@
     {% if num_pages and page %}
         <div class="pagination">
             {% if page == 1 %}
-                <a href="#" class="disabled">&laquo;</a>
-                <a href="#" class="disabled">&lsaquo;</a>
+                <a href="#" class="page page-disabled">&laquo;</a>
+                <a href="#" class="page page-disabled" style="margin-right: 15px;">&lsaquo;</a>
             {% else %}
-                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a>
-                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1" class="page">&laquo;</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}" class="page" style="margin-right: 15px;">&lsaquo;</a>
             {% endif %}
             {% for i in num_pages|times  %}
-                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}" {% if i == page %}style="color:white;"{% endif %}>{{ i }}</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}" class="page {% if i == page %}page-active{% endif %}">{{ i }}</a>
             {% endfor %}
             {% if page == num_pages %}
-                <a href="#" class="disabled">&rsaquo;</a>
-                <a href="#" class="disabled">&raquo;</a>
+                <a href="#" class="page page-disabled" style="margin-left: 15px;">&rsaquo;</a>
+                <a href="#" class="page page-disabled">&raquo;</a>
             {% else %}
-                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a>
-                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}" class="page" style="margin-left: 15px;">&rsaquo;</a>
+                <a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}" class="page">&raquo;</a>
             {% endif %}
         </div>
     {% endif %}

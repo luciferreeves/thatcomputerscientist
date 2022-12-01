@@ -240,9 +240,28 @@ summary {
     margin-top: 1em;
 }
 
-.disabled {
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+.page {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #06022c;
+    color: #8693e1;
+}
+
+.page-disabled {
     color: #aaa;
     cursor: not-allowed;
+}
+
+.page-active {
+    color: #fff;
+    background-color: #000;
+    text-decoration: none;
 }
 
 .label {

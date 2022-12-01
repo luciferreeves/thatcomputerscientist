@@ -250,17 +250,17 @@ summary {
     padding: 5px 10px;
     cursor: pointer;
     background: #06022c;
-    color: #8693e1;
+    color: #8693e1 !important;
     margin: 0 5px;
 }
 
 .page-disabled {
-    color: #aaa;
+    color: #aaa !important;
     cursor: not-allowed;
 }
 
 .page-active {
-    color: #fff;
+    color: #fff !important;
     background: #000;
     text-decoration: none;
 }

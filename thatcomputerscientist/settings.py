@@ -32,9 +32,9 @@ DEBUG = True
 # if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['http://*.67.20.192.102', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']
-SESSION_COOKIE_DOMAIN = "67.20.192.102" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
-DOMAIN_NAME = "67.20.192.102" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost', 'https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']
+SESSION_COOKIE_DOMAIN = "localhost" if os.getenv('ENVIRONMENT') == 'development' else ".thatcomputerscientist.com"
+DOMAIN_NAME = "localhost" if os.getenv('ENVIRONMENT') == 'development' else "thatcomputerscientist.com"
 
 # Application definition
 

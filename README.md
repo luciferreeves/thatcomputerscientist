@@ -11,7 +11,7 @@ Source Code for my Personal Website.
 - CSS Compatibility: [CSS2](https://www.w3.org/TR/CSS2/), [CSS3](https://www.w3.org/TR/CSS3/)
 
 ## Installation
-Install [Python](https://www.python.org/downloads/). Then install requirements:
+Install [Python](https://www.python.org/downloads/) and [NodeJS](https://nodejs.org/en/download/) (if you want to use the local server). Then install requirements:
 ```bash
 pip install -r requirements.txt
 ```
@@ -22,6 +22,9 @@ npm install -g localtunnel
 ```
 
 ## Start the Server
+
+> **Note**: This step uses [localtunnel](https://localtunnel.github.io/www/) to create a public URL for the server. This is only for development purposes. For production, use a proper web server like [Apache](https://httpd.apache.org/) or [Nginx](https://www.nginx.com/). Also, if you don't want to use the local tunnel, you can use the default Django server by running `python manage.py runserver`, but you will need to change the `CSRF_TRUSTED_ORIGINS`, `SESSION_COOKIE_DOMAIN`, and `DOMAIN_NAME` settings in `settings.py` accordingly.
+
 First, make the `runserver.sh` file executable:
 ```bash
 chmod +x runserver.sh

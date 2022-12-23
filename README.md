@@ -32,6 +32,8 @@ Then, run the server:
 ./runserver.sh
 ```
 
+This will start the server which will be accessible at [https://thatcomputerscientist.loca.lt](https://thatcomputerscientist.loca.lt) (use `http` on older browsers). To stop the server, press `Ctrl+C`. The server will automatically restart when changes are made to the source code.
+
 <!-- Footnotes -->
 #### Footnotes
 

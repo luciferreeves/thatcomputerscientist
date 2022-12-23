@@ -1,19 +1,6 @@
 # That Computer Scientist
 Source Code for my Personal Website.
 
-## Current Screenshots
-
-![Old Mac OS 9 Browser](static/images/current/old.png)
-**Old Browser (Mac OS 9, Classilla 9.3.4)** 
-- Visible `position: absolute` on `position: relative` elements rendered incorrectly.
-
-![Old Windows 98 Browser](static/images/current/old_98.png)
-**Old Browser (Windows 98, Internet Explorer 5)**
-- Visible `a` tag color rendered incorrectly.
-
-![New Browser](static/images/current/new.png)
-**New Browser (Mac OS 13.0.1, Chrome 107.0.5304.110) _- Properly rendered._**
-
 ## Specifications
 - Server: [Nginx](https://www.nginx.com/)
 - Language: [Python](https://www.python.org/), [HTML](https://www.w3schools.com/html/), [CSS](https://www.w3schools.com/css/), [JavaScript](https://www.javascript.com/)
@@ -29,9 +16,20 @@ Install [Python](https://www.python.org/downloads/). Then install requirements:
 pip install -r requirements.txt
 ```
 
-Run the server:
+Install localtunnel (will need to prefix with `sudo` on Linux and Mac):
 ```bash
-python manage.py runserver
+npm install -g localtunnel
+```
+
+## Start the Server
+First, make the `runserver.sh` file executable:
+```bash
+chmod +x runserver.sh
+```
+
+Then, run the server:
+```bash
+./runserver.sh
 ```
 
 <!-- Footnotes -->

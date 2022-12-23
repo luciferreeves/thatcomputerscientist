@@ -1,2 +1,3 @@
 #!/bin/bash
-exec sudo ./manage.py runserver localhost:80
+
+lt -p 8000 -s thatcomputerscientist & python3 manage.py runserver && fg

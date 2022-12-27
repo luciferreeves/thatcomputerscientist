@@ -21,9 +21,8 @@ def login_user(request):
     next = request.POST.get('next', 'blog:home')
     username = request.POST['username']
     password = request.POST['password']
-    print (username, password)
-    if username == '' or password == '':
-        messages.error(request, 'Please fill in all fields.')
+    if username == '' or password == '' or username is None or password is None:
+        messages.error(request, 'Please fill in all fields.', extra_tags='loginError')
         return HttpResponseRedirect(next + '?username=' + username)
     else: 
         # check if email is verified

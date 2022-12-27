@@ -5,114 +5,111 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description"content="Welcome to the home of That Computer Scientist. I am Kumar Priyansh. This is my personal website where I share all of my thoughts, ideas, and experiences."/>
+    <meta name="description"content="{{ request.meta.description }}" />
+    <meta name="image" content="{{ request.meta.image }}" />
+    <meta name="url" content="{{ request.meta.url }}" />
+    <meta name="title" content="{{ request.meta.title }}" />
+    <meta property="og:title" content="{{ request.meta.title }}" />
+    <meta property="og:description" content="{{ request.meta.description }}" />
+    <meta property="og:image" content="{{ request.meta.image }}" />
+    <meta property="og:url" content="{{ request.meta.url }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ request.meta.title }}" />
+    <meta name="twitter:description" content="{{ request.meta.description }}" />
+    <meta name="twitter:image" content="{{ request.meta.image }}" />
+    <meta name="robots" content="{{ request.meta.robots }}" />
     <title>That Computer Scientist - {{ title }}</title>
     <link preload rel="stylesheet" href="{% static 'css/fonts.css' %}" />
     <link preload rel="stylesheet" href="{% static 'css/main.css' %}" />
-    {% if not request.old_browser %}
-      <style>
-        .sbtn {
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: contain;
-          height: 28px;
-          width: 48px;
-          background-image: url('/static/images/gifs/search_static.jpg');
-          position: relative;
-          top: -2px;
-        }
-        .sbtn:hover {
-            background-image: url('/static/images/gifs/search.gif');
-        }
-      </style>
-    {% endif %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}"/>
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}"/>
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}"/>
     <link rel="manifest" href="{% static 'images/favicons/site.webmanifest' %}"/>
   </head>
   <body>
-    <div class="header"></div>
-    <div style="width: 1000px; margin-left: auto; margin-right: auto;" align="right">
-      <td style="text-align: right">
-      <table style="vertical-align: middle; border-spacing: 12px; border-collapse: separate;{% if not request.old_browser %} margin-bottom: -8px;{% endif %} width: auto; display: inline-table;">
-        <tr>
-          <td>
-          {% if not request.onclick or not request.old_browser %}
-            <a class="navitem {% if not request.old_browser %}new{% endif %}" href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">
-              Source Code
-            </a>
-          {% else %}
-            <button class="navitem {% if not request.old_browser %}new{% endif %}" onclick="window.location.href='{% url 'dev_status:repo' 'thatcomputerscientist' %}'">
-              Source Code
-            </button>
-          {% endif %}
-          </td>
+    <div id="wrap">
+      <div id="header"></div>
+      
+      <div id="navbar">
+        <ul>
+          <li><a class="button" href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">Source Code</a></li>
           {% if user.is_authenticated %}
-          <td>
-            {% if not request.onclick or not request.old_browser %}
-              <a class="navitem" href="{% url 'users:logout' %}">
-                Logout
-              </a>
-            {% else %}
-              <button class="navitem" onclick="window.location.href='{% url 'users:logout' %}'">Logout</button>
-            {% endif %}
-          </td>
+          <li><a class="button button-special" href="{% url 'users:logout' %}">Logout</a></li>
           {% endif %}
-        </tr>
-      </table>
-      </td>
-      <hr>
-    </div>
-    <div class="content" style="
-    width: 1010px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    padding: 10px 0px 20px 0px;
-">
-      <center>
-        <table style="table-layout: fixed; width: 1000px; text-align:left;">
-          <td width="250px" style="vertical-align:top;">{% include 'blog/partials/sidebar.html' %}</td>
-          <td width="750px" style="vertical-align:top;"><div>{% block content %} {% endblock %}</div></td>
-        </table>
-      </center>
-    </div>
-    <div style="width: 1000px; margin: 0px auto 40px auto">
-      <hr style="margin: 2rem 0" />
-      <footer style="text-align: center">
-          <center>
-          <table>
-            <tr>
-              {% load ad %} {% for i in '12345789'|make_list %}
-              <td style="padding: 0 2px">
-                <img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" />
-              </td>
-              {% endfor %}
-            </tr>
-          </table>
-          <table>
-            <tr>
-              {% for i in '12345'|make_list %}
-              <td style="padding: 0 2px">
-                <img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" />
-              </td>
-              {% endfor %}
-            </tr>
-          </table>
-          <div style="width: 600px; margin-left: auto; margin-right: auto; !important">
-            <hr>
-            <p>&copy; {% now "Y" %} That Computer Scientist. Source code available on
-            <a href="https://github.com/luciferreeves/thatcomputerscientist"
-              >GitHub</a
-            >.</p>
-            <p>
-              <b>PS:</b> The ads shown on this website are fake and purely for
-              aesthetic purposes. I do not earn any money from them, neither clicking
-              them will redirect you to any other website.
-            </p>
-          </div>
-        </center>
-        </footer>
+        </ul>
+      </div>
+      
+      <div id="main-section">
+        <div id="sidebar">
+          {% include 'blog/partials/sidebar.html' %}
+        </div>
+        <div id="content">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+
+      <div id="footer">
+        <hr style="margin: 2rem 0" />
+        <center>
+          {% load ad %} {% for i in '12345789'|make_list %}
+            <span><img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" /></span>
+          {% endfor %}
+          <br />
+          {% for i in '12345'|make_list %}
+            <span><img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" /></span>
+          {% endfor %}
+          <br />
+        <center>
+        <p style="text-align: center; margin-top: 1rem">&copy; {% now "Y" %} That Computer Scientist. Source code available on
+          <a href="https://github.com/luciferreeves/thatcomputerscientist"
+            >GitHub
+          </a>.
+        </p>
+        <p style="text-align: center">
+          <b>PS:</b> The ads shown on this website are fake and purely for
+          aesthetic purposes. I do not earn any money from them, neither clicking
+          them will redirect you to any other website.
+        </p>
+      </div>
+      
+      {% comment %} <div style="width: 1000px; margin: 0px auto 40px auto">
+        <hr style="margin: 2rem 0" />
+        <footer style="text-align: center">
+            <center>
+            <table>
+              <tr>
+                {% load ad %} {% for i in '12345789'|make_list %}
+                <td style="padding: 0 2px">
+                  <img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" />
+                </td>
+                {% endfor %}
+              </tr>
+            </table>
+            <table>
+              <tr>
+                {% for i in '12345'|make_list %}
+                <td style="padding: 0 2px">
+                  <img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" />
+                </td>
+                {% endfor %}
+              </tr>
+            </table>
+            <div style="width: 600px; margin-left: auto; margin-right: auto; !important">
+              <hr>
+              <p>&copy; {% now "Y" %} That Computer Scientist. Source code available on
+              <a href="https://github.com/luciferreeves/thatcomputerscientist"
+                >GitHub</a
+              >.</p>
+              <p>
+                <b>PS:</b> The ads shown on this website are fake and purely for
+                aesthetic purposes. I do not earn any money from them, neither clicking
+                them will redirect you to any other website.
+              </p>
+            </div>
+          </center>
+          </footer>
+        </div> {% endcomment %}
+
       </div>
   </body>
 </html>

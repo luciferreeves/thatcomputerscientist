@@ -1,101 +1,78 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
-<div class="main">
+<div id="welcome">
+  <h2>Welcome</h2>
+  <p>
+    Welcome to the home of That Computer Scientist. This is my personal
+    website where I share all of my thoughts, ideas, and experiences. To know
+    more about me, please visit my <a href="#">About</a> page. If you
+    would like to connect with me, please visit my
+    <a href="#">Contact</a> page. Please use the sidebar to navigate
+    the site.
+  </p>
+  <p>
+    This website is a work in progress. I am currently working on adding more
+    features to this website. I aim to build a retro looking personal website,
+    where I will share my articles and Ideas, and will host some cool features and tools.
+  </p>
+  <img src="{% static 'images/gifs/construction.gif' %}" style="height:auto; width: 100%;">
+</div>
 
-  <div class="area">
-    <p class="titlebar">Welcome</p>
-    <div class="area-content">
-      <p>
-        Welcome to the home of That Computer Scientist. This is my personal
-        website where I share all of my thoughts, ideas, and experiences. To know
-        more about me, please visit my <a href="#">About</a> page. If you
-        would like to connect with me, please visit my
-        <a href="#">Contact</a> page. Please use the sidebar to navigate
-        the site.
-      </p>
-      <p>
-        This website is a work in progress. I am currently working on adding more
-        features to this website. I aim to build a retro looking personal website,
-        where I will share my articles and Ideas, which will be built entirely
-        around the idea of "collaborative writing" — where anyone can write new
-        articles or edit existing ones.
-      </p>
-    </div>
-  </div>
-  
-  <br />
-
+<div id="fake-banner-ad" class="mtctitem">
+  <h2>Advertisement</h2>
   {% load ad %}
-  <div class="ad">
-    <img src="{{'banner'|ad }}" alt="Ad" style="width: 698px; height: 90px;" border="0"/>
-  </div>
+  <img src="{{'banner'|ad }}" alt="Ad" style="width: 100%; height: auto;" border="0"/>
+</div>
 
-  <br />
+{% if announcements is not None %}
+<div id="announcements" class="mtctitem">
+  <h2><img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px; width: auto;"></h2>
+  <marquee behavior="scroll" direction="up" height="250" width="720" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
+    <ul style="width: 720px;">
+      {% for announcement in announcements %}
+      <li>
+        <span>
+          {% if announcement.is_new %}
+            <img class="ac" src="{% static 'images/gifs/new_announcement.gif' %}"/>
+          {% else %}
+            <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
+          {% endif %}
+        </span>
+        <span>
+          <b>{{ announcement.created_at | date:"M d, Y" }}</b>: {{ announcement.content | safe }}
+        </span>
+      </li>
+      <br><br>
+      {% endfor %}
+    </ul>
+  </marquee>
+</div>
+{% endif %}
 
-  <div style="text-align:center;">
-    <img src="{% static 'images/gifs/construction.gif' %}" style="height:28px; width: 702px;">
-  </div>
-  
-  <br />
-
-
-  {% if announcements is not None %}
-    <div class="area">
-      <p class="titlebar"> <img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px; width: auto;" class="updates"></p>
-      <div class="area-content">
-        <marquee behavior="scroll" direction="up" height="250" width="720" scrollamount="2" scrolldelay="10" onmouseover="this.stop()" onmouseout="this.start()">
-          <ul class="announcements">
-            {% for announcement in announcements %}
-            <li style="margin-bottom: 20px;">
-              <table>
-                <tr>
-                  <td width="30px" style="vertical-align: top;">
-                    {% if announcement.is_new %}
-                      <img class="ac" src="{% static 'images/gifs/new_announcement.gif' %}"/>
-                    {% else %}
-                      <img class="ac2" src="{% static 'images/gifs/hand.gif' %}"/>
-                    {% endif %}
-                  </td>
-                  <td style="color: white; vertical-align: top; font-size: 16px;">
-                    <b>{{ announcement.created_at | date:"M d, Y" }}</b> 
-                    <hr>
-                    <div style="width: 675px;">{{ announcement.content | safe }}</div>
-                  </td>
-                </tr>
-              </table>
-            </li>
-            {% endfor %}
-          </ul>
-        </marquee>
+{% if recent_posts %}
+<div id="recent-posts" class="mtctitem">
+  <h2>Recent Posts</h2>
+  {% for post in recent_posts %}
+    <div class="post" style="clear: both;">
+      <h1>
+        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+      </h1>
+      <p>
+        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
+        <em><a href="#">{{ post.author }}</a> in</em>
+        <em><a href="#">{{ post.category }}</a></em>
+      </p>
+      {% url 'ignis:post_image' post.id as cover_url %}
+      <p style="overflow:auto; text-align: justify; text-justify: inter-word; font-size: 13px; margin-bottom: 0px;">
+        <img src="{% url 'ignis:post_image' post.id %}.png" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 10px; margin-bottom: 10px; width: 200px; height: auto;">
+        {{ post.excerpt | safe }}
+      </p>
+      <div class="post-actions">
+        <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} Comments</a>
       </div>
     </div>
-    <br />
-  {% endif %}
-
-  
-  {% if recent_posts %}
-  <div class="area">
-    <p class="titlebar">Recent Posts</p>
-    <div class="area-content">
-      {% for post in recent_posts %}
-        <h2 style="margin-bottom: 12px;">
-          <a style="font-size: 24px;" href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
-        </h2>
-        <p style="margin-bottom: 16px; margin-top: 16px;">
-          Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
-          <em><a href="#">{{ post.author }}</a> in</em>
-          <em><a href="#">{{ post.category }}</a></em>
-        </p>
-        <div class="article-body">
-          <p>{{ post.excerpt | safe }}</p>
-        </div>
-        <p>
-          <em><a href="{% url 'blog:post' post.slug %}">Click here</a> to continue reading...</em>
-        </p>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-
+  {% endfor %}
 </div>
+{% endif %}
+
 {% endblock %}

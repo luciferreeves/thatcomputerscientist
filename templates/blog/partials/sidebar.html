@@ -1,212 +1,252 @@
 {% load static %}
-<div class="sidebar">
-    {% comment %} Search Area {% endcomment %}
-
-    <div class="area">
-        <div class="area-content area-bg" style="padding-top: 20px; margin-top: 20px;">
-            <form action="#" method="GET">
-                <input type="text" name="q" placeholder="Search..." class="sbox" autocomplete="off">
-                <input type="submit" align="center" class="sbtn" value="{% if request.old_browser %}Search{% else %}{% endif %}">
-            </form>
-            <p><small><a style="color: #e6e670; border-bottom: 1px dashed #f7b885; padding-bottom: 2px; text-decoration: none;" href="#">Advanced Search &gt;</a></small></p>
+{% comment %} Login Area {% endcomment %}
+{% if not user.is_authenticated %}
+<div id="login-area">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'users:login' %}" id="login-form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" style="display: none;">
+        <div>
+            <span style="width: 70px;">Username:</span>
+            <span style="width: 156px;">
+                <input type="text" style="width: 156px;" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}">
+            </span>
         </div>
-    </div>
-
-    <br>
-
-    {% comment %} Login Area {% endcomment %}
-    {% if not user.is_authenticated %}
-    <div class="area">
-        <p class="titlebar">Login</p>
-        <div class="area-content area-bg">
-            <form method="post" action="{% url 'users:login' %} ">
-                {% csrf_token %}
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}" required>
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required>
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <input type="submit" value="Login">
-            </form>
-            {% for message in messages %}
-                {% if 'loginError' in message.tags %}
-                    {% if message.message == "EVERR" and request.GET.username %}
-                    <form method="post" action="{% url 'users:sendverificationemail' %}" >
-                        <p class="{{message.tags}}">
-                            Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username" value="{{ request.GET.username }}"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
-                        </p>
-                        </form>
-                    {% else %}
-                    <p class="{{message.tags}}">{{message.message}}</p>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+        <div>
+            <span style="width: 70px;">Password:</span>
+            <span style="width: 156px;">
+                <input type="password" style="width: 156px;" id="password" name="password" placeholder="Password" autocomplete="off">
+            </span>
         </div>
-    </div>
-    <br>
-    {% endif %}
-
-    {% comment %} Navigation Area {% endcomment %}
-    <div class="area">
-        {% if user.is_authenticated %}
-            <p class="titlebar">Hello, {{ user.username }}!</p>
-        {% else %}
-            <p class="titlebar">Navigation</p>
+        <div>
+            <input type="hidden" name="next" value="{{ request.path }}" style="display: none;">
+            <input class="button button-special" type="submit" value="Login">
+        </div>
+    </form>
+    {% for message in messages %}
+        {% if 'loginError' in message.tags %}
+            {% if message.message == "EVERR" and request.GET.username %}
+            <form method="post" action="{% url 'users:sendverificationemail' %}" >
+                <p class="message {{message.tags}}">
+                    Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username" value="{{ request.GET.username }}"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
+                </p>
+                </form>
+            {% else %}
+            <p class="message {{message.tags}}">{{message.message}}</p>
+            {% endif %}
         {% endif %}
-        <div class="area-content area-bg">
-            <table style="table-layout: fixed; width: 230px;">
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/news.gif' %}" alt="Home" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'blog:home' %}">Home</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/book.gif' %}" alt="About" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">About</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/email.gif' %}" alt="Contact" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">Contact</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/pencil.gif' %}" alt="Blog" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">Blog</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/windows.gif' %}" alt="Repositories" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'dev_status:home' %}">Repositories</a></td>
-                </tr>
-                <tr>
-                    {% if user.is_authenticated %}
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/setup.gif' %}" alt="My Account" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'blog:account' %}">My Account</a></td>
-                    {% else %}
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/mouse.gif' %}" alt="My Account" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="{% url 'blog:register' %}">Register</a></td>
-                    {% endif %}
-                </tr>
-            </table>
-        </div>
-    </div>
+    {% endfor %}
+</div>
+{% endif %}
 
-    <br>
+<div id="search-area" {% if not user.is_authenticated %}class="mtsbitem"{% endif %}>
+    <h2>Search</h2>
+    <form action="#" method="GET">
+        <input type="text" name="q" placeholder="Search..." autocomplete="off" style="width: 166px;">
+        <input type="submit" align="center" class="button button-special" value="Search" style="width: 60px;">
+    </form>
+</div>
 
-    {% comment %} Load Fake Ad {% endcomment %}
-    <div class="area">
-        <p class="titlebar">Advertisement</p>
-        <div class="area-content area-bg">
-            {% load ad %}
-            <img src="{{ "big" | ad }}" alt="Advertisement" style="width: 100%; height: auto;">
-        </div>
-    </div>
-
-    <br>
-    {% comment %} Archives {% endcomment %}
-
-    <div class="area">
-        <p class="titlebar">Archives</p>
-        <div class="area-content area-bg">
-            <table style="table-layout: fixed; width: 230px;">
-                {% for archive in archives %}
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archive" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">{{ archive | date:"F Y" }}</a></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
-
-    <br>
-
-    {% comment %} Categories {% endcomment %}
-
-    <div class="area">
-        <p class="titlebar">Categories</p>
-        <div class="area-content area-bg">
-            <table style="table-layout: fixed; width: 230px;">
-                {% for category in categories %}
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/books.gif' %}" alt="Archive" border="0" class="icon">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class="anavdef" href="#">{{ category }}</a></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
-
-    {% comment %} Admin Section {% endcomment %}
-
-    {% if user.is_staff %}
-    <br>
-    <div class="area">
-        <p class="titlebar">Admin</p>
-        <div class="area-content area-bg">
-            <table style="table-layout: fixed; width: 230px;">
-                {% if user.is_superuser %}
-                    <tr>
-                        <td width="24px">
-                            <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                        </td>
-                        <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'admin:index' %}">Admin Area</a></td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:users' %}">Manage Users</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:posts' %}">Manage Posts</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:comments' %}">Manage Comments</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:categories' %}">Manage Categories</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:tags' %}">Manage Tags</a></td>
-                </tr>
-                <tr>
-                    <td width="24px">
-                        <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0" style="margin-left: auto; margin-right: auto; display: block; width: 14px; height: auto;">
-                    </td>
-                    <td style="padding-left: 12px; vertical-align: top;"><a class = "anavdef" href="{% url 'blog-admin:new-post' %}">Create New Post</a></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+<div id="navigation-area" class="mtsbitem">
+    {% if user.is_authenticated %}
+        <h2>Hello, {{ user.username }}!</h2>
+    {% else %}
+        <h2>Navigation</h2>
     {% endif %}
+    <ul>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/news.gif' %}" alt="Home" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:home' %}">
+                    Home
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/book.gif' %}" alt="About" border="0">
+            </span>
+            <span>
+                <a href="#">
+                    About
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/email.gif' %}" alt="Contact" border="0">
+            </span>
+            <span>
+                <a href="#">
+                    Contact
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/pencil.gif' %}" alt="Blog" border="0">
+            </span>
+            <span>
+                <a href="#">
+                    Blog
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/windows.gif' %}" alt="Repositories" border="0">
+            </span>
+            <span>
+                <a href="{% url 'dev_status:home' %}">
+                    Repositories
+                </a>
+            </span>
+        </li>
+        {% if user.is_authenticated %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/setup.gif' %}" alt="My Account" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:account' %}">
+                    My Account
+                </a>
+            </span>
+        </li>
+        {% else %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/mouse.gif' %}" alt="Register" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:register' %}">
+                    Register
+                </a>
+            </span>
+        </li>
+        {% endif %}
+    </ul>
 </div>
+
+<div id="fake-ad-area" class="mtsbitem">
+    <h2>Advertisement</h2>
+    {% load ad %}
+        <img src="{{ "big" | ad }}" alt="Advertisement" style="width: 100%; height: auto;">
 </div>
+
+<div id="archives-area" class="mtsbitem">
+    <h2>Archives</h2>
+    <ul>
+        {% for archive in archives %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="#">
+                    {{ archive | date:"F Y" }}
+                </a>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div id="categories-area" class="mtsbitem">
+    <h2>Categories</h2>
+    <ul>
+        {% for category in categories %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/books.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="#">
+                    {{ category }}
+                </a>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if user.is_staff %}
+<div id="admin-area" class="mtsbitem">
+    <h2>Admin</h2>
+    <ul>
+        {% if user.is_superuser %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'admin:index' %}">
+                    Admin Area
+                </a>
+            </span>
+        </li>
+        {% endif %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog-admin:users' %}">
+                    Manage Users
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog-admin:posts' %}">
+                    Manage Posts
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog-admin:categories' %}">
+                    Manage Categories
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog-admin:tags' %}">
+                    Manage Tags
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog-admin:comments' %}">
+                    Manage Comments
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog-admin:new-post' %}">
+                    Create New Post
+                </a>
+            </span>
+        </li>
+    </ul>
+</div>
+{% endif %}

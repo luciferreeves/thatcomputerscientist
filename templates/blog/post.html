@@ -8,8 +8,7 @@
   <article>
     {% load subdomain %}
     <div class="article-cover">
-        {% url 'ignis:post_image' post.id as cover_url %}
-        <img src="{% url 'ignis:post_image' post.id %}.png" alt="Cover Image" style="width: 720px; margin: 0 auto; display: block;">
+        <img src="{% url 'ignis:post_image' post.id %}?s=720" alt="Cover Image" style="width: 720px; margin: 0 auto; display: block;">
     </div>
     <h1 style="margin-bottom: 12px; font-size: 2rem;">{{ post.title }}</h1>
     <p style="line-height: 1.6em;">

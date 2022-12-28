@@ -20,6 +20,13 @@
         <div>
             <input type="hidden" name="next" value="{{ request.path }}" style="display: none;">
             <input class="button button-special" type="submit" value="Login">
+            {% if not user.is_authenticated %}
+            <span style="margin-left: 10px; width: 90px;">
+                <a href="{% url 'blog:register' %}" class="button button" style="text-decoration: none;">
+                    New User?
+                </a>
+            </span>
+            {% endif %}
         </div>
     </form>
     {% for message in messages %}
@@ -45,13 +52,36 @@
         <input type="submit" align="center" class="button button-special" value="Search" style="width: 60px;">
     </form>
 </div>
+{% if user.is_authenticated %}
+<div id="user-area" class="mtsbitem">
+    <h2>Hello, {{ user.username }}!</h2>
+    <ul>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/mouse.gif' %}" alt="Home" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:account' %}">
+                    My Account
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/key.gif' %}" alt="Home" border="0">
+            </span>
+            <span>
+                <a href="{% url 'users:logout' %}">
+                    Logout
+                </a>
+            </span>
+        </li>
+    </ul>
+</div>
+{% endif %}
 
 <div id="navigation-area" class="mtsbitem">
-    {% if user.is_authenticated %}
-        <h2>Hello, {{ user.username }}!</h2>
-    {% else %}
-        <h2>Navigation</h2>
-    {% endif %}
+    <h2>Links</h2>
     <ul>
         <li>
             <span>
@@ -65,45 +95,14 @@
         </li>
         <li>
             <span>
-                <img src="{% static 'images/site/icons/book.gif' %}" alt="About" border="0">
-            </span>
-            <span>
-                <a href="#">
-                    About
-                </a>
-            </span>
-        </li>
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/email.gif' %}" alt="Contact" border="0">
-            </span>
-            <span>
-                <a href="#">
-                    Contact
-                </a>
-            </span>
-        </li>
-        <li>
-            <span>
                 <img src="{% static 'images/site/icons/pencil.gif' %}" alt="Blog" border="0">
             </span>
             <span>
                 <a href="#">
-                    Blog
+                    Articles
                 </a>
             </span>
         </li>
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/windows.gif' %}" alt="Repositories" border="0">
-            </span>
-            <span>
-                <a href="{% url 'dev_status:home' %}">
-                    Repositories
-                </a>
-            </span>
-        </li>
-        {% if user.is_authenticated %}
         <li>
             <span>
                 <img src="{% static 'images/site/icons/setup.gif' %}" alt="Source Code" border="0">
@@ -114,18 +113,6 @@
                 </a>
             </span>
         </li>
-        {% else %}
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/mouse.gif' %}" alt="Register" border="0">
-            </span>
-            <span>
-                <a href="{% url 'blog:register' %}">
-                    Register
-                </a>
-            </span>
-        </li>
-        {% endif %}
     </ul>
 </div>
 
@@ -250,3 +237,19 @@
     </ul>
 </div>
 {% endif %}
+
+<div id="fun-stuff" class="mtsbitem">
+    <h2>Fun Stuff</h2>
+    <ul>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/windows.gif' %}" alt="Repositories" border="0">
+            </span>
+            <span>
+                <a href="{% url 'dev_status:home' %}">
+                    My Repositories
+                </a>
+            </span>
+        </li>
+    </ul>
+</div>

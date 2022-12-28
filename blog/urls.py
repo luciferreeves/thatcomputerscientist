@@ -5,9 +5,7 @@ from . import views
 app_name = 'blog'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('my/', RedirectView.as_view(pattern_name='account', permanent=False)),
-    path('account/', RedirectView.as_view(pattern_name='account', permanent=False)),
-    path('my/account', views.account, name='account'),
+    path('account', views.account, name='account'),
     path('register/', views.register, name='register'),
     path('articles/post/<str:slug>', views.post, name='post'),
     path('articles/post/<str:slug>/comment', views.comment, name='comment'),

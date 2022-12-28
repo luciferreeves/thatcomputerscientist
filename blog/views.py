@@ -43,16 +43,8 @@ def account(request):
         # Redirect to login page
         return redirect('blog:home')
 
-def homepage(request):
-    return render(request, 'blog/homepage.html', {'title': 'Homepage'})
-
 def register(request):
     user = request.user
-
-    # print request host
-    print(request.get_host())
-
-
     if user.is_authenticated:
         return redirect('blog:account')
     else:
@@ -65,7 +57,6 @@ def register(request):
                 form.save(request=request)
                 messages.success(request, 'Account was created! Please check your email to verify your account.', extra_tags='accountCreated')
                 return redirect('blog:register')
-                # return redirect('blog:home')
             else:
                 return render(request, 'blog/register.html', {'title': 'Register', 'form': form, 'captcha': captcha})
         else:

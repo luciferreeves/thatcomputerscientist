@@ -112,29 +112,7 @@ input {
     margin: auto;
 }
 
-#navbar {
-    text-align: right;
-    margin-bottom: 20px;
-}
-
-#navbar ul {
-    margin: 0px;
-    padding: 0px;
-}
-
-#navbar li {
-    display: inline;
-    margin: 0px;
-    padding: 0px;
-    list-style-type: none;
-}
-
-#navbar a {
-    text-decoration: none;
-    color: white;
-}
-
-#navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul {
+#navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul, #user-area ul, #fun-stuff ul {
     margin: 0px;
     padding: 0px;
 }
@@ -144,23 +122,14 @@ input {
     list-style-type: none;
 }
 
-#navigation-area li, #archives-area li, #categories-area li, #admin-area li, #announcements li {
+#navigation-area li, #archives-area li, #categories-area li, #admin-area li, #announcements li, #user-area li, #fun-stuff li {
     display: block;
     margin: 0px;
     padding: 0px;
     list-style-type: none;
 }
 
-#navigation-area a, #archives-area a, #categories-area a, #admin-area a, #announcements a {
-    text-decoration: none;
-    color: #a591ee;
-}
-
-#navigation-area a:hover, #archives-area a:hover, #categories-area a:hover, #admin-area a:hover, #announcements a:hover {
-    text-decoration: underline;
-}
-
-#navigation-area img, #archives-area img, #categories-area img {
+#navigation-area img, #archives-area img, #categories-area img, #user-area img, #fun-stuff img {
     width: 24px;
     vertical-align:middle;
 }
@@ -170,7 +139,7 @@ input {
     vertical-align:middle;
 }
 
-#navigation-area span, #archives-area span, #categories-area span, #admin-area span, #announcements span {
+#navigation-area span, #archives-area span, #categories-area span, #admin-area span, #announcements span, #user-area span, #fun-stuff span {
     margin-right: 10px;
 }
 

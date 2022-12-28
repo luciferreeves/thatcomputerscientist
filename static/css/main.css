@@ -74,7 +74,7 @@ input {
     margin-top: 20px;
 }
 
-.error {
+.error, .errorlist {
     color: #fa3737;
 }
 
@@ -137,6 +137,11 @@ input {
 #navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul {
     margin: 0px;
     padding: 0px;
+}
+
+#register_form ul {
+    padding: 0px;
+    list-style-type: none;
 }
 
 #navigation-area li, #archives-area li, #categories-area li, #admin-area li, #announcements li {

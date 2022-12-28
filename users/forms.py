@@ -12,7 +12,7 @@ from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=30)
+    username = forms.CharField(label='Username', max_length=30, min_length=4)
     email = forms.EmailField(label='Email')
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password (again)', widget=forms.PasswordInput)

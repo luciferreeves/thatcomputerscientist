@@ -9,6 +9,8 @@ from .models import PostImage, RepositoryTitle
 import json
 import requests
 from django.core.files.base import ContentFile
+from captcha.image import ImageCaptcha
+from users.tokens import CaptchaTokenGenerator
 # from .github import get_cover
 
 # Create your views here.
@@ -133,4 +135,10 @@ def upload_image(request):
         }
         return HttpResponse(json.dumps(response), content_type='application/json')
     return HttpResponse('Method not allowed', status=405)
+
+def captcha_image(request, captcha_string):
+    captcha = CaptchaTokenGenerator().decrypt(captcha_string)
+    imgcaptcha = ImageCaptcha()
+    data = imgcaptcha.generate(captcha)
+    return HttpResponse(data, content_type='image/png')
 

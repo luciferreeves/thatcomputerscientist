@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
-from .models import UserProfile, CaptchaStore
+from .models import UserProfile
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
@@ -13,7 +13,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .tokens import account_activation_token, EmailChangeTokenGenerator
 from django.utils.http import urlsafe_base64_decode
-import django.contrib.auth.password_validation as validators
 
 # Create your views here.
 def login_user(request):
@@ -195,49 +194,3 @@ def change_email(request, uidb64, token):
     else:
         messages.error(request, 'The verification link is invalid!')
         return redirect('blog:home')
-
-
-def register(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['password2']
-        captcha = request.POST['captcha']
-        csrf_token = request.META.get('CSRF_COOKIE')
-        current_captcha = CaptchaStore.objects.get(csrf_token=csrf_token).captcha_string
-        if str(captcha).lower() != str(current_captcha).lower():
-            messages.error(request, 'Captcha is incorrect!', extra_tags='captchaError')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER') + '?u={}&e={}'.format(username, email))
-        if password != confirm_password:
-            messages.error(request, 'Passwords do not match!', extra_tags='password2Error')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER') + '?u={}&e={}'.format(username, email))
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username is already in use!', extra_tags='usernameError')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER') + '?e={}'.format(email))
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email is already in use!', extra_tags='emailError')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER') + '?u={}'.format(username))
-        try:
-            validators.validate_password(password=password)
-        except Exception as e:
-            messages.error(request, e, extra_tags='passwordError')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER') + '?u={}&e={}'.format(username, email))
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.save()
-        user_profile = UserProfile(user=user)
-        user_profile.save()
-        # Send verification email
-        subject = 'Verify your email address'
-        message = render_to_string('verification_email.html', {
-            'user': user.username if user.first_name is None else user.first_name,
-            'site_name': 'That Computer Scientist',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-            'protocol': 'https://' if request.is_secure() else 'http://',
-            'domain': get_current_site(request).domain,
-        })
-        message = strip_tags(message)
-        send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [email])
-        messages.success(request, 'Account was created! Please check your email to verify your account.', extra_tags='accountCreated')
-        return redirect('blog:register')

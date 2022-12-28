@@ -1,17 +1,16 @@
 from datetime import datetime
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
-from users.models import UserProfile, CaptchaStore
+from users.models import UserProfile
 import hashlib
-from captcha.image import ImageCaptcha
 from random import choice
 from string import ascii_letters, digits
-import base64
-import json
 from .models import Post, Comment
 from .context_processors import recent_posts, avatar_list
 from announcements.models import Announcement
-
+from users.forms import RegisterForm
+from users.tokens import CaptchaTokenGenerator
+from django.contrib import messages
 
 # Create your views here.
 
@@ -47,52 +46,31 @@ def account(request):
 def homepage(request):
     return render(request, 'blog/homepage.html', {'title': 'Homepage'})
 
-
-def get_base64_captcha():
-    image = ImageCaptcha()
-    random_string = ''.join([choice(ascii_letters + digits) for n in range(6)])
-    data = image.generate(random_string)
-    base64_data = "data:image/png;base64," + base64.b64encode(data.getvalue()).decode()
-    return base64_data, random_string
-
 def register(request):
     user = request.user
-    csrf_token = request.META.get('CSRF_COOKIE')
-    try:
-            # Delete old captcha
-            CaptchaStore.objects.get(csrf_token=csrf_token).delete()
-    except CaptchaStore.DoesNotExist:
-        pass
+
+    # print request host
+    print(request.get_host())
+
+
     if user.is_authenticated:
         return redirect('blog:account')
     else:
-        if not csrf_token:
-            # Create a new CSRF token
-            csrf_token = ''.join([choice(ascii_letters + digits) for n in range(100)])
-        base64_data, random_string = get_base64_captcha()
-        try:
-            # Delete old captcha
-            CaptchaStore.objects.get(csrf_token=csrf_token).delete()
-        except CaptchaStore.DoesNotExist:
-            pass
-        # Create new captcha
-        CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
-        return render(request, 'blog/register.html', {'title': 'Register', 'captcha': base64_data})
-
-
-def refresh_captcha(request):
-    csrf_token = request.META.get('CSRF_COOKIE')
-    if not request.META.get('HTTP_REFERER') or request.META.get('HTTP_REFERER').split('/')[-2] != 'register':
-        response_data = {'status': 'error', 'message': 'Unauthorized!'}
-        return HttpResponse(json.dumps(response_data), content_type="application/json", status=401)
-    base64_data, random_string = get_base64_captcha()
-    try:
-        CaptchaStore.objects.get(csrf_token=csrf_token).delete()
-    except CaptchaStore.DoesNotExist:
-        pass
-    CaptchaStore.objects.create(captcha_string=random_string, csrf_token=csrf_token)
-    response_data = {'captcha': base64_data}
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+        random_string = ''.join([choice(ascii_letters + digits) for n in range(6)])
+        captcha = CaptchaTokenGenerator().encrypt(random_string)
+        if request.method == 'POST':
+            expected_captcha = CaptchaTokenGenerator().decrypt(request.POST.get('expected_captcha'))
+            form = RegisterForm(request.POST, expected_captcha=expected_captcha)
+            if form.is_valid():
+                form.save(request=request)
+                messages.success(request, 'Account was created! Please check your email to verify your account.', extra_tags='accountCreated')
+                return redirect('blog:register')
+                # return redirect('blog:home')
+            else:
+                return render(request, 'blog/register.html', {'title': 'Register', 'form': form, 'captcha': captcha})
+        else:
+            form = RegisterForm(expected_captcha=random_string)
+            return render(request, 'blog/register.html', {'title': 'Register', 'form': form, 'captcha': captcha})
 
 def post(request, slug):
     try:

@@ -9,7 +9,6 @@ urlpatterns = [
     path('account/', RedirectView.as_view(pattern_name='account', permanent=False)),
     path('my/account', views.account, name='account'),
     path('register/', views.register, name='register'),
-    path('register/refresh_captcha/', name='refresh_captcha', view=views.refresh_captcha),
     path('articles/post/<str:slug>', views.post, name='post'),
     path('articles/post/<str:slug>/comment', views.comment, name='comment'),
     path('articles/post/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),

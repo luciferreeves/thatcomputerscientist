@@ -1,6 +1,45 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+<h1>My Account</h1>
+<div id="avatar-area">
+    <img src="{{ user_profile.avatar_url }}" alt="{{ user.username }}'s avatar" width="200" height="200"/>
+</div>
+<div id="account-area">
+    <div id="user-details">
+        <form method="post" action="{% url 'users:update' %} ">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Account Details</legend>
+                <label for="firstname">First Name</label>
+                <input type="text" name="firstname" id="firstname" value="{{ user.first_name }}" placeholder="First Name" />
+                <label for="lastname">Last Name</label>
+                <input type="text" name="lastname" id="lastname" value="{{ user.last_name }}" placeholder="Last Name" />
+                <label for="gravatarEmail">Gravatar Email</label>
+                <input type="text" name="gravatarEmail" id="gravatarEmail" value="{{ user_profile.gravatar_email }}" placeholder="Gravatar Email" />
+                <label for="location">Location</label>
+                <input type="text" name="location" id="location" value="{{ user_profile.location }}" placeholder="Location" maxlength="50"/>
+                <label for="bio">Bio</label>
+                <textarea name="bio" id="bio" placeholder="Bio">{{ user_profile.bio }}</textarea>
+                <label for="isPublic">Account Visibility</label>
+                <select name="isPublic" id="isPublic">
+                    <option value="1"{% if user_profile.is_public %} selected{% endif %}>Public</option>
+                    <option value="0"{% if not user_profile.is_public %} selected{% endif %}>Private</option>
+                </select>
+                {% if user_profile.is_public %}
+                    <label for="emailPublic">Email Visibility</label>
+                    <select name="emailPublic" id="emailPublic">
+                        <option value="1"{% if user_profile.email_public %} selected{% endif %}>Public</option>
+                        <option value="0"{% if not user_profile.email_public %} selected{% endif %}>Private</option>
+                    </select>
+                {% endif %}
+                <input type="submit" value="Update Account" />
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+
 <div class="main">
-    <h1>My Account</h1>
     <p>You can change account settings for <strong>{{ user.username }}</strong> here. If you wish to have additional support, please contact me at <a href="mailto:support@thatcomputerscientist.com?subject=[URGENT]%20Support%20Request%20for%20{{ user.username }}">support@thatcomputerscientist.com</a>. Please take care of the following points before you submit your support request:</p>
     <ul>
         <li>Please do not edit the subject line.</li>
@@ -10,13 +49,6 @@
         <li>Do not send multiple support requests.</li>
         <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
     </ul>
-    <p>Your avatar is fetched from gravatar. Update your gravatar email to fetch the avatar. If you don't have an account, you can sign up for one <a href="https://en.gravatar.com/" target="_blank">here</a>. If you haven't set up your gravatar email, we would try to fetch your profile picture from your account email, by default. If your account email and gravatar email are the same, you do not need to set a gravatar email.</p>
-    {% if user_subdomain_url %}
-    {% load replace %}
-    <div class="alert" style="padding: 0 10px">
-        <p>Your account is publicly accessible at <a href="{{ user_subdomain_url }}">{{ user_subdomain_url|replace:"https://"|replace:"http://" }}</a>. If you wish to change your account to private, you can do so below.</p>
-    </div>
-    {% endif %}
     {% for message in messages %}
         <div class="alert {{message.tags}}">
             <p>{{ message }}</p>
@@ -49,35 +81,7 @@
             </form>
         </div>
         <div class="ac-main">
-            <form method="post" action="{% url 'users:update' %} ">
-                {% csrf_token %}
-                <fieldset>
-                    <legend>Account Details</legend>
-                    <label for="firstname">First Name</label>
-                    <input type="text" name="firstname" id="firstname" value="{{ user.first_name }}" placeholder="First Name" />
-                    <label for="lastname">Last Name</label>
-                    <input type="text" name="lastname" id="lastname" value="{{ user.last_name }}" placeholder="Last Name" />
-                    <label for="gravatarEmail">Gravatar Email</label>
-                    <input type="text" name="gravatarEmail" id="gravatarEmail" value="{{ user_profile.gravatar_email }}" placeholder="Gravatar Email" />
-                    <label for="location">Location</label>
-                    <input type="text" name="location" id="location" value="{{ user_profile.location }}" placeholder="Location" maxlength="50"/>
-                    <label for="bio">Bio</label>
-                    <textarea name="bio" id="bio" placeholder="Bio">{{ user_profile.bio }}</textarea>
-                    {% comment %} <label for="isPublic">Account Visibility</label>
-                    <select name="isPublic" id="isPublic">
-                        <option value="1"{% if user_profile.is_public %} selected{% endif %}>Public</option>
-                        <option value="0"{% if not user_profile.is_public %} selected{% endif %}>Private</option>
-                    </select>
-                    {% if user_profile.is_public %}
-                        <label for="emailPublic">Email Visibility</label>
-                        <select name="emailPublic" id="emailPublic">
-                            <option value="1"{% if user_profile.email_public %} selected{% endif %}>Public</option>
-                            <option value="0"{% if not user_profile.email_public %} selected{% endif %}>Private</option>
-                        </select>
-                    {% endif %} {% endcomment %}
-                    <input type="submit" value="Update Account" />
-                </fieldset>
-            </form>
+            
             <form method="post" action = "{% url 'users:sendchangeuseremail' %}">
                 {% csrf_token %}
                 <fieldset>

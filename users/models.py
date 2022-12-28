@@ -9,7 +9,7 @@ class UserProfile(models.Model):
     )
     location = models.CharField(max_length=50, blank=True)
     bio = models.TextField(blank=True)
-    gravatar_email = models.EmailField(blank=True)
+    avatar_url = models.TextField(blank=True)
     is_public = models.BooleanField(default=False)
     email_public = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)

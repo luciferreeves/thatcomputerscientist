@@ -2,7 +2,6 @@ from datetime import datetime
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from users.models import UserProfile, CaptchaStore
-from urllib.parse import urlparse
 import hashlib
 from captcha.image import ImageCaptcha
 from random import choice
@@ -10,7 +9,7 @@ from string import ascii_letters, digits
 import base64
 import json
 from .models import Post, Comment
-from .context_processors import recent_posts
+from .context_processors import recent_posts, avatar_list
 from announcements.models import Announcement
 
 
@@ -23,20 +22,24 @@ def home(request):
 
 def account(request):
     user = request.user
-    user_subdomain_url = None
+    avatarlist = avatar_list()
     if user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=user)
-            avatar = hashlib.md5(str(user_profile.gravatar_email).lower().encode('utf-8')).hexdigest() if user_profile.gravatar_email else hashlib.md5(str(user.email).lower().encode()).hexdigest()
-            if user_profile.is_public:
-                print(request.scheme)
-                scheme = request.is_secure() and "https" or "http"
-                domain = urlparse(request.build_absolute_uri()).netloc
-                user_subdomain_url = '{}://{}.{}'.format(scheme, user.username, domain)
+            if not user_profile.avatar_url:
+                # Set a random avatar
+                avatar_dir = choice(list(avatarlist.keys()))
+                avatar_file = choice(avatarlist[avatar_dir])
+                user_profile.avatar_url = '/static/images/avatars/' + avatar_dir + '/' + avatar_file
+                user_profile.save()
         except UserProfile.DoesNotExist:
-            user_profile = None
-            avatar = hashlib.md5(str(user.email).lower().encode()).hexdigest()
-        return render(request, 'blog/account.html', {'title': 'Account', 'user_profile': user_profile, 'avatar': avatar, 'user_subdomain_url': user_subdomain_url})
+            # Create a new user profile and set a random avatar
+            user_profile = UserProfile.objects.create(user=user)
+            avatar_dir = choice(list(avatarlist.keys()))
+            avatar_file = choice(avatarlist[avatar_dir])
+            user_profile.avatar_url = '/static/images/avatars/' + avatar_dir + '/' + avatar_file
+            user_profile.save()
+        return render(request, 'blog/account.html', {'title': 'Account', 'user_profile': user_profile})
     else:
         # Redirect to login page
         return redirect('blog:home')

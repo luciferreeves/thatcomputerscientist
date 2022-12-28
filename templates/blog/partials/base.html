@@ -32,8 +32,8 @@
       
       <div id="navbar">
         <ul>
-          <li><a class="button" href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">Source Code</a></li>
           {% if user.is_authenticated %}
+          <li><a class="button" href="{% url 'blog:account' %}">My Account</a></li>
           <li><a class="button button-special" href="{% url 'users:logout' %}">Logout</a></li>
           {% endif %}
         </ul>
@@ -71,45 +71,6 @@
           them will redirect you to any other website.
         </p>
       </div>
-      
-      {% comment %} <div style="width: 1000px; margin: 0px auto 40px auto">
-        <hr style="margin: 2rem 0" />
-        <footer style="text-align: center">
-            <center>
-            <table>
-              <tr>
-                {% load ad %} {% for i in '12345789'|make_list %}
-                <td style="padding: 0 2px">
-                  <img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" />
-                </td>
-                {% endfor %}
-              </tr>
-            </table>
-            <table>
-              <tr>
-                {% for i in '12345'|make_list %}
-                <td style="padding: 0 2px">
-                  <img src="{{'buttons'|ad }}" alt="Ad" style="width: 88px; height: 31px;" />
-                </td>
-                {% endfor %}
-              </tr>
-            </table>
-            <div style="width: 600px; margin-left: auto; margin-right: auto; !important">
-              <hr>
-              <p>&copy; {% now "Y" %} That Computer Scientist. Source code available on
-              <a href="https://github.com/luciferreeves/thatcomputerscientist"
-                >GitHub</a
-              >.</p>
-              <p>
-                <b>PS:</b> The ads shown on this website are fake and purely for
-                aesthetic purposes. I do not earn any money from them, neither clicking
-                them will redirect you to any other website.
-              </p>
-            </div>
-          </center>
-          </footer>
-        </div> {% endcomment %}
-
-      </div>
+    </div>
   </body>
 </html>

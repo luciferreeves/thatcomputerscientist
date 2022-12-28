@@ -106,11 +106,11 @@
         {% if user.is_authenticated %}
         <li>
             <span>
-                <img src="{% static 'images/site/icons/setup.gif' %}" alt="My Account" border="0">
+                <img src="{% static 'images/site/icons/setup.gif' %}" alt="Source Code" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:account' %}">
-                    My Account
+                <a href="{% url 'dev_status:repo' 'thatcomputerscientist' %}">
+                    Source Code
                 </a>
             </span>
         </li>

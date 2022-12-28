@@ -36,26 +36,29 @@ def tex(request):
     return HttpResponse(output.getvalue(), content_type='image/gif')
 
 @csrf_exempt
-def post_image(request, post_id):
+def post_image(request, size, post_id):
+    post_id = post_id.replace('.gif', '')
     pi = Post.objects.get(id=post_id).post_image
-    size = request.GET.get('s')
     if not pi:
         return HttpResponse('No image found!', status=404)
     
     # convert base64 data src to image
     image = base64.b64decode(pi.split(',')[1])
 
-    # if size is specified, resize image
-    try:
-        size = int(size)
+    size = int(size)
+    if size != 0:
         image = Image.open(BytesIO(image))
+
+        # set min and max size
+        if size < 100:
+            size = 100
+        elif size > 1000:
+            size = 1000
         
         # resize width to size, compute height
         width, height = image.size
         height = int(height * (size / width))
         width = size
-
-        print("Resizing image to {}x{}".format(width, height))
 
         # resize image
         image = image.resize((width, height), Image.ANTIALIAS)
@@ -65,7 +68,7 @@ def post_image(request, post_id):
         image.save(output, format='GIF')
 
         return HttpResponse(output.getvalue(), content_type='image/gif')
-    except:
+    else:
         # Convert back to gif and return
         output = BytesIO()
         output.write(image)

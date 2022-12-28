@@ -64,7 +64,7 @@
       </p>
       <p style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
         <span>
-          <img src="{% url 'ignis:post_image' post.id %}?s=200" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 10px; margin-bottom: 10px; width: 200px; height: auto;">
+          <img src="{% url 'ignis:post_image' '200' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 10px; margin-bottom: 10px; width: 200px; height: auto;">
         </span>
         <span>
           {{ post.excerpt | safe }}

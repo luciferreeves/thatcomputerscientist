@@ -5,7 +5,19 @@ from django.conf import settings
 def recent_posts():
     recent_posts = Post.objects.filter(is_public=True).order_by('-date')[:5]
     for post in recent_posts:
-        post.excerpt = post.body.split('>')[1].split('<')[0]
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(post.body, 'html.parser')
+
+        # Create excerpt, count min 1000 characters and max upto next paragraph
+        excerpt = ''
+        for paragraph in soup.find_all('p'):
+            excerpt += str(paragraph)
+
+            if len(excerpt) >= 1000:
+                break
+        post.excerpt = excerpt
+
+
         post.num_comments = Comment.objects.filter(post=post).count()
     return recent_posts
 

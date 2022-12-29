@@ -62,14 +62,12 @@
         <em><a href="#">{{ post.author }}</a> in</em>
         <em><a href="#">{{ post.category }}</a></em>
       </p>
-      <p style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
+      <div style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
         <span>
-          <img src="{% url 'ignis:post_image' '200' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 10px; margin-bottom: 10px; width: 200px; height: auto;">
+          <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 11px; margin-top: 4px; width: 320px; height: auto;">
         </span>
-        <span>
           {{ post.excerpt | safe }}
-        </span>
-      </p>
+      </div>
       <div class="post-actions" style="clear: both;">
         <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} Comments</a>
       </div>

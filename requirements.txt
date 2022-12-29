@@ -9,3 +9,5 @@ PyGithub
 requests
 pillow
 pycryptodome
+pygments
+bs4

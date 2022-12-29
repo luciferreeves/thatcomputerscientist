@@ -1,78 +1,76 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
- <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css"
-/>
-{% comment %}<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" /> {% endcomment %}
-<div class="main">
-  <article>
-    {% load subdomain %}
-    <div class="article-cover">
-        <img src="{% url 'ignis:post_image' '720' post.id %}.gif" alt="Cover Image" style="width: 720px; margin: 0 auto; display: block;">
-    </div>
-    <h1 style="margin-bottom: 12px; font-size: 2rem;">{{ post.title }}</h1>
+
+<div id="article">
+    <img src="{% url 'ignis:post_image' '730' post.id %}.gif" alt="Cover Image" style="width: 730px; margin: 0 auto; display: block;">
+    <h1>{{ post.title }}</h1>
     <p style="line-height: 1.6em;">
         Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="#">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
     </p>
-    <hr>
-
-    <div class="article-body">{{ post.body | safe }}</div>
-    <p><b>Tags:</b>
+    <p>Tags:
         {% for tag in tags %}
             <a href="#" class="tag">{{ tag.name }}</a>
         {% endfor %}
     </p>
-    <div id="comments" style="margin-top: 2rem;">
-        <h3>Comments</h3>
-        {% for comment in comments %}
-            <div class="comment" id="comment-{{ comment.id }}">
-                <div class="profile-picture">
-                    <img src="https://www.gravatar.com/avatar/{{ comment.avatar }}?s=100" alt="Profile Picture">
-                </div>
-                <div style="max-width: calc(100% - 63px);">
-                    <p class="comment-header">
-                        <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
-                        {% if comment.edited %}
-                            <em>(Edited)</em>
-                        {% endif %}
-                        {% if comment.user == user %}
-                            &nbsp;&nbsp;•&nbsp;&nbsp;
-                            <a href="javascript:;" onclick="editComment({{ comment.id }})">Edit</a>
-                            &nbsp;&nbsp;•&nbsp;&nbsp;
-                            <a href="{% url 'blog:delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
-                        {% endif %}
-                    </p>
-                    <p class="comment-body">
-                        <span id="comment-body-{{ comment.id }}">{{ comment.body }}</span>
-                        <form action="{% url 'blog:edit_comment' post.slug %}" method="POST" id="edit-form-{{ comment.id }}" style="display: none;">
-                            {% csrf_token %}
-                            <input type = "hidden" name="comment_id" value="{{ comment.id }}">
-                            <textarea name="body" id="body" cols="80" rows="10">{{ comment.body }}</textarea>
-                            <input type="submit" value="Update" style="display:inline-block;">
-                            <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" style="display:inline-block;">
-                        </form>
-                    </p>
-                </div>
-            </div>
-        {% endfor %}
-        {% if user.is_authenticated %}
-        <form action="{% url 'blog:comment' post.slug %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="comment">Add Comment:</label>
-                <textarea name="comment" id="comment" class="form-control" rows="5" cols="88"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Add Comment">
-            </div>
-        </form>
-        {% else %}
-            <p><em>You must be logged in to comment.</em></p>
-        {% endif %}
-    </div>
-</article>
-  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> {% endcomment %}
-  <script>
+    <hr>
+    <div id="article-body">{{ post.body | safe }}</div>
+</div>
+
+<div id="comments" style="clear: both;" class="mtsbitem">
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <div id="comment-{{ comment.id }}">
+            <table>
+                <tr>
+                    <td style="width: 60px; vertical-align: top;">
+                        <img src="{{ comment.avatar_url }}" alt="Profile Picture" style="width: 50px; height: auto;">
+                    </td>
+                    <td style="vertical-align: top;">
+                        <p style="margin-top: 0;">
+                            <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
+                            {% if comment.edited %}
+                                <em>(Edited)</em>
+                            {% endif %}
+                            {% if comment.user == user %}
+                                &nbsp;&nbsp;
+                                <a href="javascript:;" onclick="editComment({{ comment.id }})">Edit</a>
+                                &nbsp;&nbsp;
+                                <a href="{% url 'blog:delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
+                            {% endif %}
+                        </p>
+                        <p>
+                            <span id="comment-body-{{ comment.id }}">{{ comment.body }}</span>
+                            <form action="{% url 'blog:edit_comment' post.slug %}" method="POST" id="edit-form-{{ comment.id }}" style="display: none;">
+                                {% csrf_token %}
+                                <input type = "hidden" name="comment_id" value="{{ comment.id }}">
+                                <textarea name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
+                                <input type="submit" value="Update" class="button button-special">
+                                <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" class="button">
+                            </form>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    {% endfor %}
+</div>
+
+{% if user.is_authenticated %}
+<div id="new-comment" class="mtsbitem">
+    <h2>Leave a Comment</h2>
+    <form action="{% url 'blog:comment' post.slug %}" method="POST">
+        {% csrf_token %}
+        <textarea name="body" id="body" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
+        <input type="submit" value="Submit" class="button button-special">
+    </form>
+</div>
+{% else %}
+<div id="new-comment" class="mtsbitem">
+    <h2>Leave a Comment</h2>
+    <p>You must be logged in to leave a comment. <a href="{% url 'blog:login' %}">Login</a> or <a href="{% url 'blog:register' %}">Register</a>.</p>
+</div>
+{% endif %}
+
+<script>
     function editComment(id) {
         document.getElementById('comment-body-' + id).style.display = 'none';
         document.getElementById('edit-form-' + id).style.display = 'block';
@@ -83,5 +81,4 @@
         document.getElementById('edit-form-' + id).style.display = 'none';
     }
 </script>
-</div>
 {% endblock %}

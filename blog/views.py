@@ -66,14 +66,42 @@ def register(request):
 def post(request, slug):
     try:
         post = Post.objects.get(slug=slug)
+
+        # Highlight code blocks, if any in the post body
+        from pygments import highlight
+        from pygments.lexers import get_lexer_by_name
+        from pygments.lexers import guess_lexer
+        from pygments.formatters import HtmlFormatter
+        from bs4 import BeautifulSoup
+
+        # code stored in .ql-syntax class
+        soup = BeautifulSoup(post.body, 'html.parser')
+        code_blocks = soup.find_all('pre', class_='ql-syntax')
+        for code_block in code_blocks:
+            # replace &nbsp; with space
+            code_block.string = code_block.string.replace(u'\xa0', u' ')
+
+            # guess the language as there is no data-lang attribute
+            try:
+                lexer = guess_lexer(code_block.string)
+            except:
+                lexer = get_lexer_by_name('text')
+
+            # highlight the code
+            formatter = HtmlFormatter(noclasses=True, style='native')
+            highlighted_code = highlight(code_block.string, lexer, formatter)
+
+            # replace the code block with the highlighted code
+            code_block.replace_with(BeautifulSoup(highlighted_code, 'html.parser'))
+
+        post.body = str(soup)
+
+
         tags = post.tags.all()
         comments = Comment.objects.filter(post=post)
         for comment in comments:
-            try:
-                user_profile = UserProfile.objects.get(user=comment.user)
-                comment.avatar = hashlib.md5(str(user_profile.gravatar_email).lower().encode('utf-8')).hexdigest() if user_profile.gravatar_email else hashlib.md5(str(comment.user.email).lower().encode()).hexdigest()
-            except UserProfile.DoesNotExist:
-                comment.avatar = hashlib.md5(str(comment.user.email).lower().encode()).hexdigest()
+            user_profile = UserProfile.objects.get(user=comment.user)
+            comment.avatar_url = user_profile.avatar_url
         if post.is_public:
             return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
         else:

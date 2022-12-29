@@ -7,8 +7,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('account', views.account, name='account'),
     path('register/', views.register, name='register'),
-    path('articles/post/<str:slug>', views.post, name='post'),
-    path('articles/post/<str:slug>/comment', views.comment, name='comment'),
-    path('articles/post/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
-    path('articles/post/<str:slug>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
+    path('articles/<str:slug>', views.post, name='post'),
+    path('articles/<str:slug>/comment', views.comment, name='comment'),
+    path('articles/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
+    path('articles/<str:slug>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
 ]

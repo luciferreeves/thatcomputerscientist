@@ -32,12 +32,13 @@ h2 {
     margin-bottom: 15px;
 }
 
-input {
+input, textarea {
     padding: 5px 10px;
     border: none;
     outline: none;
     border-radius: 5px;
     font-size: 11px;
+    font-family: Verdana,Helvetica,Arial,Sans-Serif;
 }
 
 .button {
@@ -98,6 +99,22 @@ input {
     padding: 0px;
 }
 
+.ql-mathjax-block img, .ql-mathjax-inline img {
+    float: none !important;
+}
+
+.ql-mathjax-block img {
+    margin-bottom: 13px;
+}
+
+.ql-mathjax-inline img{
+    padding: 0px !important;
+}
+
+.highlight {
+    background: none !important;
+}
+
 #wrap {
     width: 1000px;
     margin: auto;
@@ -108,8 +125,9 @@ input {
     background-image: url("../images/site/Banner.gif");
     background-repeat: no-repeat;
     background-position: center;
-    height: 333px;
     margin: auto;
+    width: 1000px;
+    height: 360px;
 }
 
 #navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul, #user-area ul, #fun-stuff ul {
@@ -194,6 +212,24 @@ input {
     color: #56a6a1;
 }
 
+#article-body {
+    font-size: 13px;
+}
+
+#article-body img {
+    height: 250px;
+    width: auto;
+    float: left;
+    padding: 0px 10px 10px 0px;
+}
+
+#article-body h2, #article-body h1 {
+    text-transform: uppercase;
+    padding-bottom: 0px;
+    border-bottom: none;
+    margin: 13px;
+    font-size: 14px;
+}
 
 
 /* 

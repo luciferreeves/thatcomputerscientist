@@ -59,7 +59,7 @@
     <h2>Leave a Comment</h2>
     <form action="{% url 'blog:comment' post.slug %}" method="POST">
         {% csrf_token %}
-        <textarea name="body" id="body" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
+        <textarea name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
         <input type="submit" value="Submit" class="button button-special">
     </form>
 </div>

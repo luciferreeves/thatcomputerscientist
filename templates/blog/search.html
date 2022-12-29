@@ -1,0 +1,40 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+
+<div id="search-banner">
+    <h1>Combine your search terms:</h1>
+    <form action="{% url 'blog:search' %}" method="get">
+        <label for="query">Search for:</label>
+        <input type="text" name="query" value="{{ query }}" />
+        <label for="tags">With tags (separate with commas):</label>
+        <input type="text" name="tags" value="{{ tags }}" />
+        <label for="category">In category:</label>
+        <select name="category">
+            <option value="" {% if cate == '' %}selected{% endif %}>All categories</option>
+            {% for category in categories %}
+                <option value="{{ category.slug }}" {% if category.slug == cate %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Search" />
+    </form>
+</div>
+
+{% if posts %}
+    <div id="search-results">
+        <h2>Search results for "{{ query }}"</h2>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+                    <p>{{ post.excerpt }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    <div id="search-results">
+        <h2>No results found for "{{ query }}"</h2>
+    </div>
+{% endif %}
+
+
+{% endblock %}

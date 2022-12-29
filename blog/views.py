@@ -5,7 +5,7 @@ from users.models import UserProfile
 import hashlib
 from random import choice
 from string import ascii_letters, digits
-from .models import Post, Comment
+from .models import Category, Post, Comment
 from .context_processors import recent_posts, avatar_list
 from announcements.models import Announcement
 from users.forms import RegisterForm
@@ -167,3 +167,41 @@ def delete_comment(request, slug, comment_id):
             return HttpResponse('Comment not found!', status=404)
     else:
         return redirect('blog:home')
+
+
+def search(request):
+    categories = Category.objects.all()
+    tags = request.GET.get('tags')
+    category = request.GET.get('category')
+    query = request.GET.get('query')
+    search_in_body = False
+
+    # First check for query constraints
+    if len(query) == 0:
+        return render(request, 'blog/search.html', {'title': 'Search', 'posts': [], 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
+
+    if len(query) < 3:
+        return render(request, 'blog/search.html', {'title': 'Search', 'posts': [], 'categories': categories, 'tags': tags, 'cate': category, 'query': query, 'error': 'Query must be at least 3 characters long'})
+
+    if len(query) > 100:
+        search_in_body = True
+
+    # public posts which contain the query in the title or body
+    posts = Post.objects.filter(is_public=True, title__icontains=query) if not search_in_body else Post.objects.filter(is_public=True, body__icontains=query) | Post.objects.filter(is_public=True, title__icontains=query)
+
+    # filter by category slug
+    if category:
+        posts = posts.filter(category__slug=category)
+    else:
+        category = ''
+
+    # filter by tags
+    if tags:
+        posts = posts.filter(tags__name__in=tags.split(','))
+    else:
+        tags = ''
+
+    # order by date
+    posts = posts.order_by('-date')
+    return render(request, 'blog/search.html', {'title': 'Search', 'posts': posts, 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
+    

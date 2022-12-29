@@ -47,8 +47,8 @@
 
 <div id="search-area" {% if not user.is_authenticated %}class="mtsbitem"{% endif %}>
     <h2>Search</h2>
-    <form action="#" method="GET">
-        <input type="text" name="q" placeholder="Search..." autocomplete="off" style="width: 166px;">
+    <form action="{% url 'blog:search' %}" method="get">
+        <input type="text" name="query" placeholder="Search..." autocomplete="off" style="width: 166px;" value="{{ request.GET.query }}">
         <input type="submit" align="center" class="button button-special" value="Search" style="width: 60px;">
     </form>
 </div>

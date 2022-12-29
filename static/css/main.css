@@ -12,7 +12,12 @@ body {
     color: #dddddd;
 }
 
-a {
+#editor-container {
+    font-size: 11px;
+    font-family: Verdana,Helvetica,Arial,Sans-Serif;
+}
+
+a, #editor-container a {
     color: #a591ee;
     text-decoration: none;
 }
@@ -21,7 +26,7 @@ a:hover {
     text-decoration: underline;
 }
 
-h2 {
+h2, #editor-container h2 {
     color: white;
     font-size: 11px;
     font-weight: bold;
@@ -104,7 +109,8 @@ input, textarea {
 }
 
 .ql-mathjax-block img {
-    margin-bottom: 13px;
+    margin-bottom: 15px;
+    padding: 0px !important;
 }
 
 .ql-mathjax-inline img{
@@ -212,18 +218,19 @@ input, textarea {
     color: #56a6a1;
 }
 
-#article-body {
+#article-body, #editor-container {
     font-size: 13px;
+    text-align: justify;
 }
 
-#article-body img {
+#article-body img, #editor-container img {
     height: 250px;
     width: auto;
     float: left;
-    padding: 0px 10px 10px 0px;
+    padding: 0px 20px 20px 0px;
 }
 
-#article-body h2, #article-body h1 {
+#article-body h2, #article-body h1, #editor-container h2, #editor-container h1 {
     text-transform: uppercase;
     padding-bottom: 0px;
     border-bottom: none;

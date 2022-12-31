@@ -1,0 +1,49 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+
+<h2 style="margin-top:0px;"> All Posts</h2>
+{% if posts %}
+<div id="recent-posts" class="mtctitem">
+    {% for post in posts %}
+      <div class="post" style="clear: both;">
+        <h1>
+          <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+        </h1>
+        <div style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
+          <span>
+            <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 11px; width: 320px; height: auto;">
+          </span>
+            {{ post.excerpt | safe }}
+        </div>
+        <div class="post-actions" style="clear: both;">
+          <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} Comments</a>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div>
+    <table id="pagination">
+        <tr>
+        {% if page == 1 %}
+            <td><a class="disabled">&laquo;</a></td>
+            <td style="margin-right: 15px;"><a class="disabled">&lsaquo;</a></td>
+        {% else %}
+        <td><a href="{% url 'blog:articles' %}?page=1">&laquo;</a></td>
+        <td style="margin-right: 15px;"><a href="{% url 'blog:articles' %}?page={{ page|add:'-1' }}">&lsaquo;</a></td>
+      {% endif %}
+      {% load times %}
+      {% for i in num_pages|times  %}
+      <td><a {% if i == page %}class="active"{% endif %} href="{% url 'blog:articles' %}?page={{ i }}">{{ i }}</a></td>
+      {% endfor %}
+      {% if page == num_pages %}
+        <td style="margin-left: 15px;" class="disabled"><a class="disabled">&rsaquo;</a></td>
+        <td><a class="disabled">&raquo;</a></td>
+      {% else %}
+        <td style="margin-left: 15px;"><a href="{% url 'blog:articles' %}?page={{ page|add:'1' }}">&rsaquo;</a></td>
+        <td><a href="{% url 'blog:articles' %}?page={{ num_pages }}">&raquo;</a></td>
+      {% endif %}
+    </tr>
+  </table>
+</div>
+
+{% endblock %}

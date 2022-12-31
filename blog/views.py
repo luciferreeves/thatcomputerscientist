@@ -6,7 +6,7 @@ import hashlib
 from random import choice
 from string import ascii_letters, digits
 from .models import Category, Post, Comment
-from .context_processors import recent_posts, avatar_list
+from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments
 from announcements.models import Announcement
 from users.forms import RegisterForm
 from users.tokens import CaptchaTokenGenerator
@@ -204,4 +204,21 @@ def search(request):
     # order by date
     posts = posts.order_by('-date')
     return render(request, 'blog/search.html', {'title': 'Search', 'posts': posts, 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
-    
+
+from django.core.paginator import Paginator
+def articles(request):
+    page = request.GET.get('page') if request.GET.get('page') else 1
+    try:
+        page = int(page)
+    except:
+        page = 1
+
+    posts = Post.objects.filter(is_public=True).order_by('-date')
+    posts = Paginator(posts, 10)
+    posts = posts.page(page)
+    # add excerpt to each post
+    for post in posts:
+        post.excerpt = add_excerpt(post)
+        post.num_comments = add_num_comments(post)
+    num_pages = posts.paginator.num_pages
+    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page})

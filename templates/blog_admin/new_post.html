@@ -2,7 +2,6 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <div class="main">
   <section>
-    {% include 'blog_admin/partials/posts_topbar.html' %}
     <form action="{% url 'blog-admin:new-post' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-group">

@@ -1,24 +1,29 @@
 from .models import Post, Category, Comment
 import os
 from django.conf import settings
+from bs4 import BeautifulSoup
+
+def add_excerpt(post):
+    soup = BeautifulSoup(post.body, 'html.parser')
+
+    # Create excerpt, count min 1000 characters and max upto next paragraph
+    excerpt = ''
+    for paragraph in soup.find_all('p'):
+        excerpt += str(paragraph)
+
+        if len(excerpt) >= 1000:
+            break
+    return excerpt
+
+def add_num_comments(post):
+    num_comments = Comment.objects.filter(post=post).count()
+    return num_comments
 
 def recent_posts():
     recent_posts = Post.objects.filter(is_public=True).order_by('-date')[:5]
     for post in recent_posts:
-        from bs4 import BeautifulSoup
-        soup = BeautifulSoup(post.body, 'html.parser')
-
-        # Create excerpt, count min 1000 characters and max upto next paragraph
-        excerpt = ''
-        for paragraph in soup.find_all('p'):
-            excerpt += str(paragraph)
-
-            if len(excerpt) >= 1000:
-                break
-        post.excerpt = excerpt
-
-
-        post.num_comments = Comment.objects.filter(post=post).count()
+        post.excerpt = add_excerpt(post)
+        post.num_comments = add_num_comments(post)
     return recent_posts
 
 def categories(request):

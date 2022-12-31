@@ -65,26 +65,24 @@
   </div>
   <div class="pagination">
     <center>
-    <table style="margin: 0 auto; border-spacing: 5px; border-collapse: separate;">
+    <table id="pagination">
       <tr>
         {% if page == 1 %}
-          <td class="page page-disabled"><a class="page-disabled" href="#">&laquo;</a></td>
-          <td class="page page-disabled" style="margin-right: 15px;"><a class="page-disabled" href="#">&lsaquo;</a></td>
+          <td><a class="disabled">&laquo;</a></td>
+          <td style="margin-right: 15px;"><a class="disabled">&lsaquo;</a></td>
         {% else %}
-          <td class="page"><a style="color: #8693e1;" href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></td>
-          <td class="page" style="margin-right: 15px; color: #8693e1;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></td>
+          <td><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></td>
+          <td style="margin-right: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></td>
         {% endif %}
-        <td class="page-separator"> </td>
         {% for i in num_pages|times  %}
-          <td class="page {% if i == page %}page-active{% endif %}"><a {% if i == page %}style="color: white;" {% endif %} href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></td>
+          <td><a {% if i == page %}class="active"{% endif %} href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></td>
         {% endfor %}
-        <td class="page-separator"> </td>
         {% if page == num_pages %}
-          <td class="page page-disabled" style="margin-left: 15px;"><a class="page-disabled" href="#">&rsaquo;</a></td>
-          <td class="page page-disabled"><a class="page-disabled" href="#">&raquo;</a></td>
+          <td style="margin-left: 15px;"><a class="disabled">&rsaquo;</a></td>
+          <td><a class="disabled">&raquo;</a></td>
         {% else %}
-          <td class="page" style="margin-left: 15px;"><a style="color: #8693e1;" href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></td>
-          <td class="page"><a style="color: #8693e1;" href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></td>
+          <td style="margin-left: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></td>
+          <td><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></td>
         {% endif %}
       </tr>
     </table>

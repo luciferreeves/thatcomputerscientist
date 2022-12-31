@@ -39,6 +39,7 @@
                         </p>
                         <p>
                             <span id="comment-body-{{ comment.id }}">{{ comment.body }}</span>
+                            {% if comment.user == user %}
                             <form action="{% url 'blog:edit_comment' post.slug %}" method="POST" id="edit-form-{{ comment.id }}" style="display: none;">
                                 {% csrf_token %}
                                 <input type = "hidden" name="comment_id" value="{{ comment.id }}">
@@ -46,6 +47,7 @@
                                 <input type="submit" value="Update" class="button button-special">
                                 <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" class="button">
                             </form>
+                            {% endif %}
                         </p>
                     </td>
                 </tr>

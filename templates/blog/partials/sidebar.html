@@ -188,29 +188,17 @@
     </ul>
 </div>
 
-{% if user.is_staff %}
+{% if user.is_superuser %}
 <div id="admin-area" class="mtsbitem">
     <h2>Admin</h2>
     <ul>
-        {% if user.is_superuser %}
         <li>
             <span>
                 <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="{% url 'admin:index' %}">
-                    Admin Area
-                </a>
-            </span>
-        </li>
-        {% endif %}
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
-            </span>
-            <span>
-                <a href="{% url 'blog-admin:users' %}">
-                    Manage Users
+                <a href="{% url 'blog-admin:new-post' %}">
+                    Create New Post
                 </a>
             </span>
         </li>
@@ -229,27 +217,7 @@
                 <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="{% url 'blog-admin:categories' %}">
-                    Manage Categories
-                </a>
-            </span>
-        </li>
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
-            </span>
-            <span>
-                <a href="{% url 'blog-admin:tags' %}">
-                    Manage Tags
-                </a>
-            </span>
-        </li>
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
-            </span>
-            <span>
-                <a href="{% url 'blog-admin:comments' %}">
+                <a href="#">
                     Manage Comments
                 </a>
             </span>
@@ -259,8 +227,48 @@
                 <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="{% url 'blog-admin:new-post' %}">
-                    Create New Post
+                <a href="{% url 'admin:auth_user_changelist' %}">
+                    Manage Users
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'admin:blog_category_changelist' %}">
+                    Manage Categories
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'admin:blog_tag_changelist' %}">
+                    Manage Tags
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'admin:announcements_announcement_changelist' %}">
+                    Manage Announcements
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/right_hand.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'admin:index' %}">
+                    Admin Area
                 </a>
             </span>
         </li>

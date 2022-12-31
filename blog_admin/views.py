@@ -1,10 +1,8 @@
 import base64
 from django.shortcuts import render, redirect
-from users.models import UserProfile
-from django.contrib.auth.models import User
 from django.contrib import messages
 from blog.models import Post, Category, Tag
-from ignis.models import PostImage
+from ignis.models import PostImage, CoverImage
 import re
 import random
 import string
@@ -58,11 +56,8 @@ def new_post(request):
                     tags = [Tag.objects.get_or_create(slug = tag, name = tag)[0] for tag in tags]
                     post = Post.objects.create(title = title, body = body, category = category, slug = slug, author = request.user)
                     post.tags.set(tags)
-                    # convert post_image to base64 and save it in post.post_image
-                    post_image = post_image.read()
-                    post_image = base64.b64encode(post_image)
-                    post.post_image = "data:image/png;base64," + post_image.decode('utf-8')
-                    post.save()
+                    # save post image to cover image
+                    post_image = CoverImage.objects.create(image = post_image, post = post, name = 'cover image for post {}'.format(post.slug))
                     PostImage.objects.filter(temp_post_id = random_post_identifier).update(post = post)
                     PostImage.objects.filter(temp_post_id = random_post_identifier).update(temp_post_id = None)
                     # replace all random_post_identifier with post.id in post.body
@@ -112,10 +107,8 @@ def edit_post(request, slug):
                     post.author = request.user
                     post.tags.set(tags)
                     if post_image:
-                        # convert to data string src and save it in post.post_image
-                        post_image = post_image.read()
-                        post_image = base64.b64encode(post_image)
-                        post.post_image = "data:image/png;base64," + post_image.decode('utf-8')
+                        # update post image to cover image
+                        post_image = CoverImage.objects.create(image = post_image, post = post, name = 'cover image for {}'.format(post.slug))
                     post.save()
                     messages.success(request, 'Post edited successfully!')
                     return redirect('blog-admin:posts')

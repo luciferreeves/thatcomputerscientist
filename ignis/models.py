@@ -5,6 +5,14 @@ UPLOAD_ROOT = 'images/'
 
 # Only For Storing Images
 
+class CoverImage(models.Model):
+    image = models.ImageField(upload_to="{}/cover_images".format(UPLOAD_ROOT))
+    name = models.CharField(max_length=100, default=None, null=True)
+    post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
+
 class PostImage(models.Model):
     post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="{}/post_images".format(UPLOAD_ROOT))

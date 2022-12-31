@@ -208,17 +208,25 @@ def search(request):
 from django.core.paginator import Paginator
 def articles(request):
     page = request.GET.get('page') if request.GET.get('page') else 1
+    order_by = request.GET.get('order_by') if request.GET.get('order_by') else 'date'
+    direction = request.GET.get('direction') if request.GET.get('direction') else 'desc'
+    categories = Category.objects.all()
+    category = request.GET.get('category')
     try:
         page = int(page)
     except:
         page = 1
 
-    posts = Post.objects.filter(is_public=True).order_by('-date')
+    posts = Post.objects.filter(is_public=True).order_by('-' + order_by) if direction == 'desc' else Post.objects.filter(is_public=True).order_by(order_by)
+    if category and category != 'all':
+        posts = posts.filter(category__slug=category)
+    else:
+        category = 'all'
     posts = Paginator(posts, 10)
     posts = posts.page(page)
-    # add excerpt to each post
+
     for post in posts:
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)
     num_pages = posts.paginator.num_pages
-    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page})
+    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category})

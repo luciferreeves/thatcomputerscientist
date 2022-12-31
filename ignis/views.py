@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import base64
 from blog.models import Post
 import base64
-from .models import PostImage, RepositoryTitle
+from .models import PostImage, RepositoryTitle, CoverImage
 import json
 import requests
 from django.core.files.base import ContentFile
@@ -38,41 +38,36 @@ def tex(request):
 @csrf_exempt
 def post_image(request, size, post_id):
     post_id = post_id.replace('.gif', '')
-    pi = Post.objects.get(id=post_id).post_image
+    pi = CoverImage.objects.filter(post=Post.objects.get(id=post_id))
     if not pi:
         return HttpResponse('No image found!', status=404)
     
-    # convert base64 data src to image
-    image = base64.b64decode(pi.split(',')[1])
-
-    size = int(size)
-    if size != 0:
-        image = Image.open(BytesIO(image))
-
-        # set min and max size
-        if size < 100:
-            size = 100
-        elif size > 1000:
-            size = 1000
-        
-        # resize width to size, compute height
-        width, height = image.size
-        height = int(height * (size / width))
-        width = size
-
+    # open image and return
+    image = pi[0].image
+    with open(image.path, 'rb') as f:
         # resize image
-        image = image.resize((width, height), Image.ANTIALIAS)
+        size = int(size)
+        if size != 0:
 
-        # Convert back to gif and return
-        output = BytesIO()
-        image.save(output, format='GIF')
+            # set min and max size
+            if size < 100:
+                size = 100
+            elif size > 1000:
+                size = 1000
+            
+            image = Image.open(f)
+            # resize width to size, compute height
+            width, height = image.size
+            height = int(height * (size / width))
+            width = size
 
-        return HttpResponse(output.getvalue(), content_type='image/gif')
-    else:
-        # Convert back to gif and return
-        output = BytesIO()
-        output.write(image)
-        return HttpResponse(output.getvalue(), content_type='image/gif')
+            # resize image
+            image = image.resize((width, height), Image.ANTIALIAS)
+            output = BytesIO()
+            image.save(output, format='GIF')
+            return HttpResponse(output.getvalue(), content_type='image/gif')
+        else:
+            return HttpResponse(f.read(), content_type='image/gif')
 
 @csrf_exempt
 def get_image(request, post_id, image_name):

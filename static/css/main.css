@@ -37,13 +37,19 @@ h2, #editor-container h2 {
     margin-bottom: 15px;
 }
 
-input, textarea {
+input, textarea, select {
     padding: 5px 10px;
     border: none;
     outline: none;
     border-radius: 5px;
     font-size: 11px;
     font-family: Verdana,Helvetica,Arial,Sans-Serif;
+}
+
+textarea {
+    background: transparent;
+    border: solid 1px whitesmoke;
+    color: white;
 }
 
 /* Full width auto spacing table... ellipsis if text overflows */

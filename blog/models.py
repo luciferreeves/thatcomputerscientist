@@ -26,7 +26,6 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
     body = models.TextField()
     date = models.DateTimeField()
-    post_image = models.TextField(blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

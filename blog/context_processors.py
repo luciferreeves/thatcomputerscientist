@@ -2,6 +2,10 @@ from .models import Post, Category, Comment
 import os
 from django.conf import settings
 from bs4 import BeautifulSoup
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.lexers import guess_lexer
+from pygments.formatters import HtmlFormatter
 
 def add_excerpt(post):
     soup = BeautifulSoup(post.body, 'html.parser')
@@ -47,3 +51,24 @@ def avatar_list():
             if file.startswith('.'):
                 avatar_list[directory].remove(file)
     return avatar_list
+
+def highlight_code_blocks(code_block):
+    # replace &nbsp; with space
+    try:
+        cb = code_block.string
+    except:
+        cb = code_block
+    print(cb)
+    cb = cb.replace(u'\xa0', u' ')
+
+    # guess the language as there is no data-lang attribute
+    try:
+        lexer = guess_lexer(cb)
+    except:
+        lexer = get_lexer_by_name('text')
+
+    # highlight the code
+    formatter = HtmlFormatter(noclasses=True, style='native')
+    highlighted_code = highlight(cb, lexer, formatter)
+
+    return highlighted_code

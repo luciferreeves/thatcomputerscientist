@@ -24,8 +24,8 @@
                     <td style="width: 60px; vertical-align: top;">
                         <img src="{{ comment.avatar_url }}" alt="Profile Picture" style="width: 50px; height: auto;">
                     </td>
-                    <td style="vertical-align: top;">
-                        <p style="margin-top: 0;">
+                    <td style="vertical-align: top; width: 668px;">
+                        <div style="margin-bottom: 13px; border-bottom: dashed 1px white; padding-bottom: 13px;">
                             <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
                             {% if comment.edited %}
                                 <em>(Edited)</em>
@@ -36,19 +36,21 @@
                                 &nbsp;&nbsp;
                                 <a href="{% url 'blog:delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
                             {% endif %}
-                        </p>
-                        <p>
-                            <span id="comment-body-{{ comment.id }}">{{ comment.body }}</span>
-                            {% if comment.user == user %}
-                            <form action="{% url 'blog:edit_comment' post.slug %}" method="POST" id="edit-form-{{ comment.id }}" style="display: none;">
+                        </div>
+                        <div id="comment-body-{{ comment.id }}" class="comment">
+                            {{ comment.processed_body|safe }}
+                        </div>
+                        {% if comment.user == user %}
+                        <div id="edit-form-{{ comment.id }}" style="display: none; margin-bottom: 20px;">
+                            <form action="{% url 'blog:edit_comment' post.slug %}" method="POST">
                                 {% csrf_token %}
                                 <input type = "hidden" name="comment_id" value="{{ comment.id }}">
                                 <textarea name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
                                 <input type="submit" value="Update" class="button button-special">
                                 <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" class="button">
                             </form>
-                            {% endif %}
-                        </p>
+                        </div>
+                        {% endif %}
                     </td>
                 </tr>
             </table>
@@ -57,13 +59,43 @@
 </div>
 
 {% if user.is_authenticated %}
-<div id="new-comment" class="mtsbitem">
+<div id="new-comment">
     <h2>Leave a Comment</h2>
     <form action="{% url 'blog:comment' post.slug %}" method="POST">
         {% csrf_token %}
         <textarea name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
         <input type="submit" value="Submit" class="button button-special">
     </form>
+    <div id="comment-tips" style="color: #d8c6df;">
+        <p style="margin-bottom: 0;">Simple markup is supported:</p>
+        <ul style="list-style-type: disc;margin: 0;padding: 0;margin: 5px 0px 0px 30px;">
+            <li>Wrap text in double underscores (__) to make it <i>italic</i>.
+                <br>
+                &emsp;&emsp;e.g. <code>__italic__</code>
+                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + I</kbd>
+                <br><br>
+            </li>
+            <li>Wrap text in double asterisks (**) to make it <b>bold</b>.
+                <br>
+                &emsp;&emsp;e.g. <code>**bold**</code>
+                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + B</kbd>
+                <br><br>
+            </li>
+            <li>Wrap text in double tildes (~~) to <s>strikethrough</s> it.
+                <br>
+                &emsp;&emsp;e.g. <code>~~strikethrough~~</code>
+                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + D</kbd>
+                <br><br>
+            </li>
+            <li>Wrap text in triple backticks (```) to make it a code block.
+                <br>
+                &emsp;&emsp;e.g. <code>```code block```</code>, 
+                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + K</kbd>
+                <br><br>
+            </li>
+        </ul>
+        <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
+    </div>
 </div>
 {% else %}
 <div id="new-comment" class="mtsbitem">
@@ -81,6 +113,58 @@
     function cancelEdit(id) {
         document.getElementById('comment-body-' + id).style.display = 'block';
         document.getElementById('edit-form-' + id).style.display = 'none';
+    }
+
+    // We are aiming to keep the JS to ES3 for compatibility with older browsers.
+    // Get all textareas and bind the shortkeys.
+    var textareas = document.getElementsByTagName('textarea');
+
+    for (var i = 0; i < textareas.length; i++) {
+        textareas[i].addEventListener('keydown', function(e) {
+            if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + '**' + this.value.substring(start, end) + '**' + this.value.substring(end);
+                this.selectionStart = start + 2;
+                this.selectionEnd = end + 2;
+            } else if (e.keyCode == 73 && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + '__' + this.value.substring(start, end) + '__' + this.value.substring(end);
+                this.selectionStart = start + 2;
+                this.selectionEnd = end + 2;
+            } else if (e.keyCode == 68 && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + '~~' + this.value.substring(start, end) + '~~' + this.value.substring(end);
+                this.selectionStart = start + 2;
+                this.selectionEnd = end + 2;
+            } else if (e.keyCode == 75 && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + '```' + this.value.substring(start, end) + '```' + this.value.substring(end);
+                this.selectionStart = start + 3;
+                this.selectionEnd = end + 3;
+            }
+        });
+    }
+
+    // Bind the tab key to indent textareas by 4 spaces.
+    for (var i = 0; i < textareas.length; i++) {
+        textareas[i].addEventListener('keydown', function(e) {
+            if (e.keyCode == 9) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+                this.selectionStart = start + 4;
+                this.selectionEnd = end + 4;
+            }
+        });
     }
 </script>
 {% endblock %}

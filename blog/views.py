@@ -2,15 +2,17 @@ from datetime import datetime
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from users.models import UserProfile
-import hashlib
+from django.core.paginator import Paginator
 from random import choice
 from string import ascii_letters, digits
 from .models import Category, Post, Comment
-from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments
+from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments, highlight_code_blocks
 from announcements.models import Announcement
 from users.forms import RegisterForm
 from users.tokens import CaptchaTokenGenerator
 from django.contrib import messages
+from bs4 import BeautifulSoup
+import re
 
 # Create your views here.
 
@@ -67,32 +69,11 @@ def post(request, slug):
     try:
         post = Post.objects.get(slug=slug)
 
-        # Highlight code blocks, if any in the post body
-        from pygments import highlight
-        from pygments.lexers import get_lexer_by_name
-        from pygments.lexers import guess_lexer
-        from pygments.formatters import HtmlFormatter
-        from bs4 import BeautifulSoup
-
         # code stored in .ql-syntax class
         soup = BeautifulSoup(post.body, 'html.parser')
         code_blocks = soup.find_all('pre', class_='ql-syntax')
         for code_block in code_blocks:
-            # replace &nbsp; with space
-            code_block.string = code_block.string.replace(u'\xa0', u' ')
-
-            # guess the language as there is no data-lang attribute
-            try:
-                lexer = guess_lexer(code_block.string)
-            except:
-                lexer = get_lexer_by_name('text')
-
-            # highlight the code
-            formatter = HtmlFormatter(noclasses=True, style='native')
-            highlighted_code = highlight(code_block.string, lexer, formatter)
-
-            # replace the code block with the highlighted code
-            code_block.replace_with(BeautifulSoup(highlighted_code, 'html.parser'))
+            code_block.replace_with(BeautifulSoup(highlight_code_blocks(code_block), 'html.parser'))
 
         post.body = str(soup)
 
@@ -102,6 +83,30 @@ def post(request, slug):
         for comment in comments:
             user_profile = UserProfile.objects.get(user=comment.user)
             comment.avatar_url = user_profile.avatar_url
+
+            comment.processed_body = comment.body
+
+            # escape html tags
+            comment.processed_body = re.sub(r'<', '&lt;', comment.processed_body)
+            comment.processed_body = re.sub(r'>', '&gt;', comment.processed_body)
+
+            # any text between ``` and ``` must be highlighted as code
+            code_blocks = re.findall(r'```(.+?)```', comment.processed_body, re.DOTALL)
+            for code_block in code_blocks:
+                comment.processed_body = comment.processed_body.replace('```' + code_block + '```', highlight_code_blocks(code_block))
+
+            # retain line breaks, for every newline character, add a <br> tag
+            comment.processed_body = comment.processed_body.replace('\n', '<br>')
+
+            # replace multiple <br> tags with a single <br> tag
+            comment.processed_body = re.sub(r'<br>(\s*<br>)+', '<br><br>', comment.processed_body)
+
+            comment.processed_body = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', comment.processed_body)
+            comment.processed_body = re.sub(r'__(.+?)__', r'<i>\1</i>', comment.processed_body)
+            comment.processed_body = re.sub(r'~~(.+?)~~', r'<s>\1</s>', comment.processed_body)
+
+
+
         if post.is_public:
             return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
         else:
@@ -205,7 +210,6 @@ def search(request):
     posts = posts.order_by('-date')
     return render(request, 'blog/search.html', {'title': 'Search', 'posts': posts, 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
 
-from django.core.paginator import Paginator
 def articles(request):
     page = request.GET.get('page') if request.GET.get('page') else 1
     order_by = request.GET.get('order_by') if request.GET.get('order_by') else 'date'

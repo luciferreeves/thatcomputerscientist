@@ -60,4 +60,4 @@ class Comment(models.Model):
     edited_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return self.body
+        return self.body[:50] + '...' if len(self.body) > 50 else self.body

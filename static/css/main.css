@@ -203,7 +203,6 @@ kbd {
 
 .comment .highlight {
     width: 630px;
-    overflow-x: scroll;
 }
 
 .comment pre {

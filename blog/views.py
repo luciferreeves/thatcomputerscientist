@@ -38,8 +38,8 @@ def account(request):
     avatarlist = avatar_list()
     for key in avatarlist:
         avatarlist[key] = [re.sub(r'\.png$', '', string) for string in avatarlist[key]]
-        avatarlist[key] = [string.title() for string in avatarlist[key]]
         avatarlist[key].sort(key=natural_keys)
+    avatarlist = {k: avatarlist[k] for k in sorted(avatarlist)}
     
     print(avatarlist)
     if user.is_authenticated:

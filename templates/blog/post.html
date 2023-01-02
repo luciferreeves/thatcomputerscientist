@@ -67,34 +67,37 @@
         <input type="submit" value="Submit" class="button button-special">
     </form>
     <div id="comment-tips" style="color: #d8c6df;">
-        <p style="margin-bottom: 0;">Simple markup is supported:</p>
-        <ul style="list-style-type: disc;margin: 0;padding: 0;margin: 5px 0px 0px 30px;">
-            <li>Wrap text in double underscores (__) to make it <i>italic</i>.
-                <br>
-                &emsp;&emsp;e.g. <code>__italic__</code>
-                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + I</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in double asterisks (**) to make it <b>bold</b>.
-                <br>
-                &emsp;&emsp;e.g. <code>**bold**</code>
-                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + B</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in double tildes (~~) to <s>strikethrough</s> it.
-                <br>
-                &emsp;&emsp;e.g. <code>~~strikethrough~~</code>
-                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + D</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in triple backticks (```) to make it a code block.
-                <br>
-                &emsp;&emsp;e.g. <code>```code block```</code>, 
-                &emsp;&emsp;shortkey: <kbd>Ctrl or Cmd + K</kbd>
-                <br><br>
-            </li>
-        </ul>
-        <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
+        <br>
+        <a id="markup-tips" onclick="toggleTips()" style="cursor: pointer;">Text Markup Tips &gt;</a>
+        <div id="tips" style="display: none;">
+            <ul style="list-style-type: disc; margin: 0;padding: 0; margin: 5px 0px 0px 30px;">
+                <li>Wrap text in double underscores (__) to make it <i>italic</i>.
+                    <br>
+                    &nbsp;&nbsp;e.g. <code>__italic__</code>
+                    &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + I</kbd>
+                    <br><br>
+                </li>
+                <li>Wrap text in double asterisks (**) to make it <b>bold</b>.
+                    <br>
+                    &nbsp;&nbsp;e.g. <code>**bold**</code>
+                    &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + B</kbd>
+                    <br><br>
+                </li>
+                <li>Wrap text in double tildes (~~) to <s>strikethrough</s> it.
+                    <br>
+                    &nbsp;&nbsp;e.g. <code>~~strikethrough~~</code>
+                    &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + D</kbd>
+                    <br><br>
+                </li>
+                <li>Wrap text in triple backticks (```) to make it a code block.
+                    <br>
+                    &nbsp;&nbsp;e.g. <code>```code block```</code>, 
+                    &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + K</kbd>
+                    <br><br>
+                </li>
+            </ul>
+            <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
+        </div>
     </div>
 </div>
 {% else %}
@@ -113,6 +116,15 @@
     function cancelEdit(id) {
         document.getElementById('comment-body-' + id).style.display = 'block';
         document.getElementById('edit-form-' + id).style.display = 'none';
+    }
+
+    function toggleTips() {
+        var tips = document.getElementById('tips');
+        if (tips.style.display == 'none') {
+            tips.style.display = 'block';
+        } else {
+            tips.style.display = 'none';
+        }
     }
 
     // We are aiming to keep the JS to ES3 for compatibility with older browsers.

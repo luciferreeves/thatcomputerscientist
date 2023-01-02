@@ -1,8 +1,70 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-<h1>My Account</h1>
-<div id="avatar-area">
-    <img src="{{ user_profile.avatar_url }}" alt="{{ user.username }}'s avatar" width="200" height="200"/>
+{% load static %}
+<h2 style="margin-top: 0;">My Account</h2>
+<div id="profile-area">
+    <div style="width: 200px; height: 100%; display: inline; float: left;">
+        <div id="avatar-area" style="padding: 10px; margin-bottom: 10px;">
+            <img src="{% static 'images/avatars/' %}{{ user_profile.avatar_url }}.png" alt="{{ user.username }}'s avatar" width="140" height="140" style="display: block; margin: 0 auto;" />
+        </div>
+        <div id="side-links">
+            <p><a href="{% url 'blog:account' %}">Account Settings</a></p>
+            <p><a href="{% url 'blog:account' %}?tab=avatar">Change avatar</a></p>
+            <p><a href="{% url 'blog:account' %}?tab=details">Change details</a></p>
+            <p><a href="{% url 'blog:account' %}?tab=email">Change email</a></p>
+            <p><a href="{% url 'blog:account' %}?tab=password">Change password</a></p>
+            <p><a href="{% url 'blog:account' %}?tab=delete" class="error">Delete account</a></p>
+        </div>
+    </div>
+    <div style="width: 510px; height: 100%; display: inline; float: left; padding: 0px 10px;">
+        {% for message in messages %}
+        <div class="alert {{message.tags}}">
+            <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+        {% if  request.GET.tab == 'avatar' %}
+        <div id="avatar-chooser">
+            <p>Choose an avatar from the list below. The avatars are grouped by their theme.</p>
+            <form method="post" action="{% url 'users:updateavatar' %}">
+                {% csrf_token %}
+                {% for avatar_dir, avatar_files in avatarlist.items %}
+                <h2 style="clear:both;">{{ avatar_dir }}</h2>
+                <div class="avatar-directory">
+                    {% for avatar_file in avatar_files %}
+                    <div style="width: 255px; display: inline; float: left;">
+                        {% with ""|add:avatar_dir|add:"/"|add:avatar_file as avt_url %}
+                        <input type="radio" name="avatar" value="{{ avatar_dir }}/{{ avatar_file }}" id="{{ avatar_dir }}_{{ avatar_file }}" {% if user_profile.avatar_url == avt_url %}checked{% endif %} />
+                        <label for="{{ avatar_dir }}_{{ avatar_file }}">
+                            <img src="{% static 'images/avatars/' %}{{ avatar_dir }}/{{ avatar_file }}.png" alt="{{ avatar_file }}" width="50" height="50" loading="lazy" style="vertical-align: middle;" />
+                            {% load replace %}
+                            <span style="vertical-align: middle; text-transform: captialize">{{ avatar_file|replace:".Png" }}</span>
+                        </label>
+                        {% endwith %}
+                    </div>
+                    {% endfor %}
+                    <div style="clear: both;"></div>
+                    <br><br>
+                </div>
+                {% endfor %}
+                <input type="submit" value="Change Avatar" class="button button-special" />
+            </form>
+        </div>
+        {% else %}
+        <div id="help">
+            <p>You can change account settings for <strong>{{ user.username }}</strong> here. If you wish to have additional support, please contact me at <a href="mailto:support@thatcomputerscientist.com?subject=[URGENT]%20Support%20Request%20for%20{{ user.username }}">support@thatcomputerscientist.com</a>. Please take care of the following points before you submit your support request:</p>
+            <ul>
+                <li>Please do not edit the subject line.</li>
+                <li>As an individual monitoring this email, I request you to refrain yourself from spamming.</li>
+                <li>Please do not include any sensitive information (like credit card numbers, passwords, etc.) in the email.</li>
+                <li>Allow me upto 48 hours to respond to your support request.</li>
+                <li>Do not send multiple support requests.</li>
+                <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
 </div>
+
+{% comment %} 
 <div id="account-area">
     <div id="user-details">
         <form method="post" action="{% url 'users:update' %} ">
@@ -93,5 +155,5 @@
             </form>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 {% endblock %}

@@ -14,6 +14,18 @@ from django.contrib import messages
 from bs4 import BeautifulSoup
 import re
 
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+    '''
+    alist.sort(key=natural_keys) sorts in human order
+    http://nedbatchelder.com/blog/200712/human_sorting.html
+    (See Toothy's implementation in the comments)
+    '''
+    return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
+
 # Create your views here.
 
 def home(request):
@@ -24,6 +36,12 @@ def home(request):
 def account(request):
     user = request.user
     avatarlist = avatar_list()
+    for key in avatarlist:
+        avatarlist[key] = [re.sub(r'\.png$', '', string) for string in avatarlist[key]]
+        avatarlist[key] = [string.title() for string in avatarlist[key]]
+        avatarlist[key].sort(key=natural_keys)
+    
+    print(avatarlist)
     if user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=user)
@@ -31,16 +49,16 @@ def account(request):
                 # Set a random avatar
                 avatar_dir = choice(list(avatarlist.keys()))
                 avatar_file = choice(avatarlist[avatar_dir])
-                user_profile.avatar_url = '/static/images/avatars/' + avatar_dir + '/' + avatar_file
+                user_profile.avatar_url = avatar_dir + '/' + avatar_file
                 user_profile.save()
         except UserProfile.DoesNotExist:
             # Create a new user profile and set a random avatar
             user_profile = UserProfile.objects.create(user=user)
             avatar_dir = choice(list(avatarlist.keys()))
             avatar_file = choice(avatarlist[avatar_dir])
-            user_profile.avatar_url = '/static/images/avatars/' + avatar_dir + '/' + avatar_file
+            user_profile.avatar_url = avatar_dir + '/' + avatar_file
             user_profile.save()
-        return render(request, 'blog/account.html', {'title': 'Account', 'user_profile': user_profile})
+        return render(request, 'blog/account.html', {'title': 'Account', 'user_profile': user_profile, 'avatarlist': avatarlist})
     else:
         # Redirect to login page
         return redirect('blog:home')

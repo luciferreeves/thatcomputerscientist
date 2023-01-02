@@ -51,7 +51,6 @@ def update_user(request):
     first_name = request.POST['firstname']
     last_name = request.POST['lastname']
     location = request.POST['location']
-    gravatar_email = request.POST['gravatarEmail']
     bio = request.POST['bio']
     is_public = False
     email_public = False
@@ -69,18 +68,33 @@ def update_user(request):
         try:
             user_profile = UserProfile.objects.get(user=username)
             user_profile.location = location
-            user_profile.gravatar_email = gravatar_email
             user_profile.bio = bio
             user_profile.is_public = is_public
             user_profile.email_public = email_public
             user_profile.save()
         except UserProfile.DoesNotExist:
-            user_profile = UserProfile(user=username, location=location, gravatar_email=gravatar_email, bio=bio, is_public=is_public, email_public=email_public)
+            user_profile = UserProfile(user=username, location=location, bio=bio, is_public=is_public, email_public=email_public)
             user_profile.save()
         messages.success(request, 'Profile was successfully updated!')
         return redirect('blog:account')
     else:
         messages.error(request, 'Unable to update profile! Please try again later.')
+        return redirect('blog:home')
+
+def update_avatar(request):
+    user = request.user
+    if user is not None:
+        if request.method == 'POST':
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.avatar_url = request.POST['avatar']
+            user_profile.save()
+            messages.success(request, 'Avatar was successfully updated!')
+            return redirect('blog:account')
+        else:
+            messages.error(request, 'Unable to update avatar! Please try again later.')
+            return redirect('blog:home')
+    else:
+        messages.error(request, 'You must be logged in to update your avatar!')
         return redirect('blog:home')
 
     

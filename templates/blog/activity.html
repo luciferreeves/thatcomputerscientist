@@ -31,14 +31,12 @@
     {% if activity_user_profile.is_public %}
 
         {% if activity_recent_comments %}
-            <h1>Recent Comments</h1>
-            <hr><br>
+            <h2>Recent Comments</h2>
             <ul>
                 {% for comment in activity_recent_comments %}
-                    <li>
+                    <li style="background: #1c1c1c;padding: 20px 10px 10px 10px;margin-bottom: 10px;border-radius: 8px;"
                         <p>On <a href="{% url 'blog:post' comment.post.slug %}#comment-{{ comment.id }}">{{ comment.post.title }}</a>:
                             <blockquote>{{ comment.body|safe }}</blockquote></p>
-                        <p>------------------------------------------------------ </p>
                     </li>
                 {% endfor %}
             </ul>

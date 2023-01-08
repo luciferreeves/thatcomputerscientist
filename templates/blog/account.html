@@ -7,7 +7,7 @@
             <img src="{% static 'images/avatars/' %}{{ user_profile.avatar_url }}.png" alt="{{ user.username }}'s avatar" width="140" height="140" style="display: block; margin: 0 auto;" />
         </div>
         <div id="side-links">
-            <p><a href="{% url 'blog:account' %}">Account Settings</a></p>
+            <p><a href="{% url 'blog:account' %}">Account Home</a></p>
             <p><a href="{% url 'blog:account' %}?tab=avatar">Change avatar</a></p>
             <p><a href="{% url 'blog:account' %}?tab=details">Change details</a></p>
             <p><a href="{% url 'blog:account' %}?tab=email">Change email</a></p>
@@ -46,6 +46,17 @@
                 </div>
                 {% endfor %}
                 <input type="submit" value="Change Avatar" class="button button-special" />
+            </form>
+        </div>
+        {% elif request.GET.tab == 'details' %}
+        <div id="details">
+            <p>Change your account details here. You can change your first name, last name, bio, email and activity visibility.</p>
+            <form method="post"  action="{% url 'users:update' %}">
+                {% csrf_token %}
+                <table>
+                    {{ update_form.as_table }}
+                </table>
+                <input type="submit" value="Update Details" class="button button-special" />
             </form>
         </div>
         {% else %}

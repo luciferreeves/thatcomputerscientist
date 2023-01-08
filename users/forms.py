@@ -65,3 +65,34 @@ class RegisterForm(forms.Form):
 
         return user
 
+
+class UpdateUserDetailsForm(forms.Form):
+    first_name = forms.CharField(label='First name', max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'First name'}))
+    last_name = forms.CharField(label='Last name', max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'Last name'}))
+    location = forms.CharField(label='Location', max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'Location'}))
+    bio = forms.CharField(label='Bio', max_length=500, required=False, widget=forms.Textarea(attrs={'placeholder': 'Bio'}))
+    is_public = forms.ChoiceField(label='Activity Visibility', choices=((True, 'Public'), (False, 'Private')), widget=forms.RadioSelect)
+    email_public = forms.ChoiceField(label='Email Visibility', choices=((True, 'Public'), (False, 'Private')), widget=forms.RadioSelect)
+
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def save(self):
+        self.user.first_name = self.cleaned_data.get('first_name')
+        self.user.last_name = self.cleaned_data.get('last_name')
+        self.user.save()
+
+        user_profile = UserProfile.objects.get(user=self.user)
+        user_profile.location = self.cleaned_data.get('location')
+        user_profile.bio = self.cleaned_data.get('bio')
+        user_profile.is_public = self.cleaned_data.get('is_public')
+        user_profile.email_public = self.cleaned_data.get('email_public')
+        user_profile.save()
+
+        return (self.user, user_profile)

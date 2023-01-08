@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from .models import UserProfile
@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .tokens import account_activation_token, EmailChangeTokenGenerator
 from django.utils.http import urlsafe_base64_decode
+from .forms import UpdateUserDetailsForm
 
 # Create your views here.
 def login_user(request):
@@ -47,38 +48,21 @@ def logout_user(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def update_user(request):
-    username = request.user
-    first_name = request.POST['firstname']
-    last_name = request.POST['lastname']
-    location = request.POST['location']
-    bio = request.POST['bio']
-    is_public = False
-    email_public = False
-    if 'emailPublic' in request.POST:
-        email_public = True if request.POST['emailPublic'] == '1' and is_public else False
-
-    if 'isPublic' in request.POST:
-        is_public = True if request.POST['isPublic'] == '1' and is_public else False
-
-    if username is not None:
-        user = User.objects.get(username=username)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-        try:
-            user_profile = UserProfile.objects.get(user=username)
-            user_profile.location = location
-            user_profile.bio = bio
-            user_profile.is_public = is_public
-            user_profile.email_public = email_public
-            user_profile.save()
-        except UserProfile.DoesNotExist:
-            user_profile = UserProfile(user=username, location=location, bio=bio, is_public=is_public, email_public=email_public)
-            user_profile.save()
-        messages.success(request, 'Profile was successfully updated!')
-        return redirect('blog:account')
+    user = request.user
+    if user is not None:
+        if request.method == 'POST':
+            form = UpdateUserDetailsForm(request.POST, user=user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Profile was successfully updated!')
+                return redirect(reverse('blog:account') + '?tab=details')
+            else:
+                messages.error(request, 'Unable to update profile! Please try again later.')
+                return redirect(reverse('blog:account') + '?tab=details')
+        else:
+            return redirect(reverse('blog:account') + '?tab=details')
     else:
-        messages.error(request, 'Unable to update profile! Please try again later.')
+        messages.error(request, 'You must be logged in to update your profile!')
         return redirect('blog:home')
 
 def update_avatar(request):
@@ -89,10 +73,10 @@ def update_avatar(request):
             user_profile.avatar_url = request.POST['avatar']
             user_profile.save()
             messages.success(request, 'Avatar was successfully updated!')
-            return redirect('blog:account')
+            return redirect(reverse('blog:account') + '?tab=avatar')
         else:
             messages.error(request, 'Unable to update avatar! Please try again later.')
-            return redirect('blog:home')
+            return redirect(reverse('blog:account') + '?tab=avatar')
     else:
         messages.error(request, 'You must be logged in to update your avatar!')
         return redirect('blog:home')

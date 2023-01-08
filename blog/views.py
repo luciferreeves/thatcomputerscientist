@@ -8,7 +8,7 @@ from string import ascii_letters, digits
 from .models import Category, Post, Comment
 from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments, highlight_code_blocks
 from announcements.models import Announcement
-from users.forms import RegisterForm
+from users.forms import RegisterForm, UpdateUserDetailsForm
 from users.tokens import CaptchaTokenGenerator
 from django.contrib import messages
 from bs4 import BeautifulSoup
@@ -40,8 +40,7 @@ def account(request):
         avatarlist[key] = [re.sub(r'\.png$', '', string) for string in avatarlist[key]]
         avatarlist[key].sort(key=natural_keys)
     avatarlist = {k: avatarlist[k] for k in sorted(avatarlist)}
-    
-    print(avatarlist)
+
     if user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=user)
@@ -58,7 +57,13 @@ def account(request):
             avatar_file = choice(avatarlist[avatar_dir])
             user_profile.avatar_url = avatar_dir + '/' + avatar_file
             user_profile.save()
-        return render(request, 'blog/account.html', {'title': 'Account', 'user_profile': user_profile, 'avatarlist': avatarlist})
+
+        if request.GET.get('tab') == 'details':
+            update_form = UpdateUserDetailsForm(user=user, initial={'first_name': user.first_name, 'last_name': user.last_name, 'bio': user_profile.bio, 'is_public': user_profile.is_public, 'email_public': user_profile.email_public, 'location': user_profile.location})
+        else:
+            update_form = None
+
+        return render(request, 'blog/account.html',  {'title': 'Account', 'user_profile': user_profile, 'avatarlist': avatarlist, 'update_form': update_form})
     else:
         # Redirect to login page
         return redirect('blog:home')

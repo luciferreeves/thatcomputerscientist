@@ -12,7 +12,9 @@
             <p><a href="{% url 'blog:account' %}?tab=details">Change details</a></p>
             <p><a href="{% url 'blog:account' %}?tab=email">Change email</a></p>
             <p><a href="{% url 'blog:account' %}?tab=password">Change password</a></p>
+            {% if not user.is_superuser %}
             <p><a href="{% url 'blog:account' %}?tab=delete" class="error">Delete account</a></p>
+            {% endif %}
         </div>
     </div>
     <div style="width: 510px; height: 100%; display: inline; float: left; padding: 0px 10px;">
@@ -90,7 +92,7 @@
                 <input type="submit" value="Change Password" class="button button-special" />
             </form>
         </div>
-        {% elif request.GET.tab == 'delete' %}
+        {% elif request.GET.tab == 'delete' and not user.is_superuser %}
         <div id="delete">
             <p>Deleting your account will remove all your posts, comments and other data from the website. Please note that this action is irreversible. If you wish to delete your account, please enter your password in the box below:</p>
             <form method="post" action="{% url 'users:delete' %}">

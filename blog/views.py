@@ -2,11 +2,12 @@ from datetime import datetime
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from users.models import UserProfile
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from random import choice
 from string import ascii_letters, digits
 from .models import Category, Post, Comment
-from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments, highlight_code_blocks
+from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments, highlight_code_blocks, comment_processor
 from announcements.models import Announcement
 from users.forms import RegisterForm, UpdateUserDetailsForm
 from users.tokens import CaptchaTokenGenerator
@@ -106,29 +107,7 @@ def post(request, slug):
         for comment in comments:
             user_profile = UserProfile.objects.get(user=comment.user)
             comment.avatar_url = user_profile.avatar_url
-
-            comment.processed_body = comment.body
-
-            # escape html tags
-            comment.processed_body = re.sub(r'<', '&lt;', comment.processed_body)
-            comment.processed_body = re.sub(r'>', '&gt;', comment.processed_body)
-
-            # any text between ``` and ``` must be highlighted as code
-            code_blocks = re.findall(r'```(.+?)```', comment.processed_body, re.DOTALL)
-            for code_block in code_blocks:
-                comment.processed_body = comment.processed_body.replace('```' + code_block + '```', highlight_code_blocks(code_block))
-
-            # retain line breaks, for every newline character, add a <br> tag
-            comment.processed_body = comment.processed_body.replace('\n', '<br>')
-
-            # replace multiple <br> tags with a single <br> tag
-            comment.processed_body = re.sub(r'<br>(\s*<br>)+', '<br><br>', comment.processed_body)
-
-            comment.processed_body = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', comment.processed_body)
-            comment.processed_body = re.sub(r'__(.+?)__', r'<i>\1</i>', comment.processed_body)
-            comment.processed_body = re.sub(r'~~(.+?)~~', r'<s>\1</s>', comment.processed_body)
-
-
+            comment.processed_body = comment_processor(comment.body)
 
         if post.is_public:
             return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
@@ -257,3 +236,22 @@ def articles(request):
         post.num_comments = add_num_comments(post)
     num_pages = posts.paginator.num_pages
     return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category})
+
+def user_activity(request, username):
+    user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=user)
+    if user_profile.is_public:
+        recent_comments = Comment.objects.filter(user=user).order_by('-created_at')[:5]
+    else:
+        recent_comments = []
+
+    if user_profile.email_public:
+        user_email = user.email
+    else:
+        user_email = ''
+
+    for comment in recent_comments:
+        comment.body = comment_processor(comment.body)
+
+    return render(request, 'blog/activity.html', {'title': 'User Activity', 'activity_user': user, 'activity_user_profile': user_profile, 'activity_recent_comments': recent_comments, 'activity_user_email': user_email})
+    

@@ -1,0 +1,55 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+{% load static %}
+<div style="background: #0c2c50;margin-bottom: 20px;padding: 10px 20px;border-radius: 8px;">
+    <table>
+        <tr>
+            <td>
+                <img src="{% static 'images/avatars/' %}{{ activity_user_profile.avatar_url }}.png" alt="{{ activity_user.username }}'s avatar" width="140" height="140" />
+            </td>
+            <td style="padding-left: 20px;">
+                <p style="margin-top: 0px;">
+                    <span style="font-size: 16px; font-weight: bold;">{{ activity_user.first_name }} {{ activity_user.last_name }}</span>
+                    <a style="position: relative; top: -2px;" href="{% url 'blog:user_activity' activity_user.username %}"><b>@{{ activity_user.username }}</b></a>
+                </p>
+                {% if activity_user_profile.bio %}
+                    <p><b>Bio: </b>{{ activity_user_profile.bio }}</p>
+                {% endif %}
+    
+                {% if activity_user_profile.location %}
+                    <p><b>Location: </b>{{ activity_user_profile.location }}</p>
+                {% endif %}
+    
+                {% if activity_user_profile.email_public %}
+                    <p><b>Email: </b><a href="mailto:{{ activity_user.email }}">{{ activity_user.email }}</a></p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div style="clear: both;" id="activity">
+    {% if activity_user_profile.is_public %}
+
+        {% if activity_recent_comments %}
+            <h1>Recent Comments</h1>
+            <hr><br><br>
+            <ul>
+                {% for comment in activity_recent_comments %}
+                    <li>
+                        <p>On <a href="{% url 'blog:post' comment.post.slug %}#comment-{{ comment.id }}">{{ comment.post.title }}</a>:
+                            <blockquote>{{ comment.body|safe }}</blockquote></p>
+                        <p>------------------------------------------------------ </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    
+    {% else %}
+
+        <p>This user's profile is private.</p>
+
+    {% endif %}
+</div>
+
+
+{% endblock %}

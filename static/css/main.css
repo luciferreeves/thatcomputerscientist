@@ -234,7 +234,7 @@ kbd {
     height: 360px;
 }
 
-#navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul, #user-area ul, #fun-stuff ul {
+#navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul, #user-area ul, #fun-stuff ul, #activity ul {
     margin: 0px;
     padding: 0px;
 }
@@ -244,7 +244,7 @@ kbd {
     list-style-type: none;
 }
 
-#navigation-area li, #archives-area li, #categories-area li, #admin-area li, #announcements li, #user-area li, #fun-stuff li {
+#navigation-area li, #archives-area li, #categories-area li, #admin-area li, #announcements li, #user-area li, #fun-stuff li, #activity li {
     display: block;
     margin: 0px;
     padding: 0px;

@@ -6,6 +6,7 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.lexers import guess_lexer
 from pygments.formatters import HtmlFormatter
+import re
 
 def add_excerpt(post):
     soup = BeautifulSoup(post.body, 'html.parser')
@@ -72,3 +73,26 @@ def highlight_code_blocks(code_block):
     highlighted_code = highlight(cb, lexer, formatter)
 
     return highlighted_code
+
+def comment_processor(comment):
+    # escape html tags
+    comment = re.sub(r'<', '&lt;', comment)
+    comment = re.sub(r'>', '&gt;', comment)
+
+    # any text between ``` and ``` must be highlighted as code
+    code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
+    for code_block in code_blocks:
+        comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block))
+
+    # retain line breaks, for every newline character, add a <br> tag
+    comment = comment.replace('\n', '<br>')
+
+    # replace multiple <br> tags with a single <br> tag
+    comment = re.sub(r'<br>(\s*<br>)+', '<br><br>', comment)
+
+    comment = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', comment)
+    comment = re.sub(r'__(.+?)__', r'<i>\1</i>', comment)
+    comment = re.sub(r'~~(.+?)~~', r'<s>\1</s>', comment)
+
+    return comment
+

@@ -26,7 +26,7 @@
                     </td>
                     <td style="vertical-align: top; width: 668px;">
                         <div style="margin-bottom: 13px; border-bottom: dashed 1px white; padding-bottom: 13px;">
-                            <a href="#">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
+                            <a href="{% url 'blog:user_activity' comment.user.username %}">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
                             {% if comment.edited %}
                                 <em>(Edited)</em>
                             {% endif %}

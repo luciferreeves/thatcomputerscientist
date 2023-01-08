@@ -58,11 +58,21 @@
     <ul>
         <li>
             <span>
+                <img src="{% static 'images/site/icons/email.gif' %}" alt="Home" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:user_activity' user.username %}">
+                    Profile
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
                 <img src="{% static 'images/site/icons/mouse.gif' %}" alt="Home" border="0">
             </span>
             <span>
                 <a href="{% url 'blog:account' %}">
-                    My Account
+                    Account
                 </a>
             </span>
         </li>

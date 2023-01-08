@@ -14,8 +14,8 @@ from .tokens import account_activation_token
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30, min_length=4)
     email = forms.EmailField(label='Email')
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password (again)', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput, min_length=8)
+    password2 = forms.CharField(label='Password (again)', widget=forms.PasswordInput, min_length=8)
     captcha = forms.CharField(label='Captcha', max_length=6)
     expected_captcha = None
 
@@ -32,6 +32,8 @@ class RegisterForm(forms.Form):
         if password1 and password2:
             if password1 != password2:
                 raise forms.ValidationError('Passwords do not match.')
+        if len(password1) < 8:
+            raise forms.ValidationError('Password must be at least 8 characters long.')
         if str.lower(captcha) != str.lower(self.expected_captcha):
             raise forms.ValidationError('Captcha does not match.')
         if User.objects.filter(username=cleaned_data.get('username')).exists():

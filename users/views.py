@@ -111,6 +111,9 @@ def change_password(request):
         user = User.objects.get(username=username)
         if user.check_password(old_password):
             if new_password == confirm_password:
+                if len(new_password) < 8:
+                    messages.error(request, 'The new password must be at least 8 characters long!')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 user.set_password(new_password)
                 user.save()
                 update_session_auth_hash(request, user)

@@ -1,4 +1,3 @@
-import cryptocode
 import os
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from dotenv import load_dotenv
@@ -17,11 +16,17 @@ class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
 class EmailChangeTokenGenerator():
     def encrypt(self, email):
         auth_string = os.getenv('AUTHORIZATION_STRING')
-        return cryptocode.encrypt(email, auth_string)
+        key = auth_string.encode('utf-8')[0:16]
+        cipher = AES.new(key, AES.MODE_CFB, key)
+        return cipher.encrypt(email.encode('utf-8')).hex()
+
     
     def decrypt(self, token):
         auth_string = os.getenv('AUTHORIZATION_STRING')
-        return cryptocode.decrypt(token, auth_string)
+        key = auth_string.encode('utf-8')[0:16]
+        cipher = AES.new(key, AES.MODE_CFB, key)
+        return cipher.decrypt(bytes.fromhex(token)).decode('utf-8')
+
 
 class CaptchaTokenGenerator():
     def encrypt(self, captcha_string):

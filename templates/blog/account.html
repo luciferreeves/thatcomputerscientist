@@ -59,6 +59,46 @@
                 <input type="submit" value="Update Details" class="button button-special" />
             </form>
         </div>
+        {% elif request.GET.tab == 'email' %}
+        <div id="email">
+            <p>Change your email address here. Your current registered email is <em><u>{{ user.email }}</u></em>. Please note that a verification email will be sent to the new email address in order to update the current email address. Please provide the new email address in the box below:</p>
+            <form method="post" action = "{% url 'users:sendchangeuseremail' %}">
+                {% csrf_token %}
+                <p><input type="email" name="email" id="email" required placeholder="New email address" /></p>
+                <input type="submit" value="Update Email" class="button button-special" />
+            </form>
+        </div>
+        {% elif request.GET.tab == 'password' %}
+        <div id="password">
+            <form method="post" action="{% url 'users:changepassword' %}">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td><label for="oldPassword"><b>Current Password: </b></label></td>
+                        <td><input type="password" name="oldPassword" id="oldPassword" placeholder="Current Password" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="newPassword"><b>New Password: </b></label></td>
+                        <td><input type="password" name="newPassword" id="newPassword" placeholder="New Password" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirmPassword"><b>Confirm New Password: </b></label></td>
+                        <td><input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm New Password" /></td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="Change Password" class="button button-special" />
+            </form>
+        </div>
+        {% elif request.GET.tab == 'delete' %}
+        <div id="delete">
+            <p>Deleting your account will remove all your posts, comments and other data from the website. Please note that this action is irreversible. If you wish to delete your account, please enter your password in the box below:</p>
+            <form method="post" action="{% url 'users:delete' %}">
+                {% csrf_token %}
+                <p><input type="password" name="password" id="password" required placeholder="Password" /></p>
+                <input type="submit" value="Delete Account" class="button button-special" />
+            </form>
+        </div>
         {% else %}
         <div id="help">
             <p>You can change account settings for <strong>{{ user.username }}</strong> here. If you wish to have additional support, please contact me at <a href="mailto:support@thatcomputerscientist.com?subject=[URGENT]%20Support%20Request%20for%20{{ user.username }}">support@thatcomputerscientist.com</a>. Please take care of the following points before you submit your support request:</p>
@@ -74,97 +114,4 @@
         {% endif %}
     </div>
 </div>
-
-{% comment %} 
-<div id="account-area">
-    <div id="user-details">
-        <form method="post" action="{% url 'users:update' %} ">
-            {% csrf_token %}
-            <fieldset>
-                <legend>Account Details</legend>
-                <label for="firstname">First Name</label>
-                <input type="text" name="firstname" id="firstname" value="{{ user.first_name }}" placeholder="First Name" />
-                <label for="lastname">Last Name</label>
-                <input type="text" name="lastname" id="lastname" value="{{ user.last_name }}" placeholder="Last Name" />
-                <label for="gravatarEmail">Gravatar Email</label>
-                <input type="text" name="gravatarEmail" id="gravatarEmail" value="{{ user_profile.gravatar_email }}" placeholder="Gravatar Email" />
-                <label for="location">Location</label>
-                <input type="text" name="location" id="location" value="{{ user_profile.location }}" placeholder="Location" maxlength="50"/>
-                <label for="bio">Bio</label>
-                <textarea name="bio" id="bio" placeholder="Bio">{{ user_profile.bio }}</textarea>
-                <label for="isPublic">Account Visibility</label>
-                <select name="isPublic" id="isPublic">
-                    <option value="1"{% if user_profile.is_public %} selected{% endif %}>Public</option>
-                    <option value="0"{% if not user_profile.is_public %} selected{% endif %}>Private</option>
-                </select>
-                {% if user_profile.is_public %}
-                    <label for="emailPublic">Email Visibility</label>
-                    <select name="emailPublic" id="emailPublic">
-                        <option value="1"{% if user_profile.email_public %} selected{% endif %}>Public</option>
-                        <option value="0"{% if not user_profile.email_public %} selected{% endif %}>Private</option>
-                    </select>
-                {% endif %}
-                <input type="submit" value="Update Account" />
-            </fieldset>
-        </form>
-    </div>
-</div>
-
-
-
-<div class="main">
-    <p>You can change account settings for <strong>{{ user.username }}</strong> here. If you wish to have additional support, please contact me at <a href="mailto:support@thatcomputerscientist.com?subject=[URGENT]%20Support%20Request%20for%20{{ user.username }}">support@thatcomputerscientist.com</a>. Please take care of the following points before you submit your support request:</p>
-    <ul>
-        <li>Please do not edit the subject line.</li>
-        <li>As an individual monitoring this email, I request you to refrain yourself from spamming.</li>
-        <li>Please do not include any sensitive information (like credit card numbers, passwords, etc.) in the email.</li>
-        <li>Allow me upto 48 hours to respond to your support request.</li>
-        <li>Do not send multiple support requests.</li>
-        <li>Please note that this is a support request related to your account. Please do not file any bugs here. If you have noticed a bug, please report it to the <a href="https://github.com/luciferreeves/thatcomputerscientist/issues">GitHub Issues</a> page.</li>
-    </ul>
-    {% for message in messages %}
-        <div class="alert {{message.tags}}">
-            <p>{{ message }}</p>
-        </div>
-    {% endfor %}
-    <div class="account">
-        <div class="ac-sidebar">
-            <fieldset>
-                <legend>Avatar</legend>
-                <img src="https://www.gravatar.com/avatar/{{avatar}}?s=200" alt="{{ user.username }}'s avatar" width="200" height="200"/>
-            </fieldset>
-            <form method="post" action="{% url 'users:changepassword' %}">
-                {% csrf_token %}
-                <fieldset>
-                    <legend>Change Password</legend>
-                    <label for="oldPassword">Current Password</label>
-                    <input type="password" name="oldPassword" id="oldPassword" placeholder="Current Password" />
-                    <label for="newPassword">New Password</label>
-                    <input type="password" name="newPassword" id="newPassword" placeholder="New Password" />
-                    <label for="confirmPassword">Confirm New Password</label>
-                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm New Password" />
-                    <input type="submit" value="Change Password" />
-                </fieldset>
-            </form>
-            <form method="post" onsubmit="event.preventDefault();">
-                <fieldset>
-                    <legend class="error">Delete Account</legend>
-                    <input type="submit" value="Delete Account" />
-                </fieldset>
-            </form>
-        </div>
-        <div class="ac-main">
-            
-            <form method="post" action = "{% url 'users:sendchangeuseremail' %}">
-                {% csrf_token %}
-                <fieldset>
-                    <legend>Change Email</legend>
-                    <label for="email">Your current registered email is <em><u>{{ user.email }}</u></em>. Please note that a verification email will be sent to the new email address in order to update the current email address. Please provide the new email address in the box below:</label>
-                    <input type="email" name="email" id="email" placeholder="New Email" />
-                    <input type="submit" value="Change Email" />
-                </fieldset>
-            </form>
-        </div>
-    </div>
-</div> {% endcomment %}
 {% endblock %}

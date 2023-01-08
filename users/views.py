@@ -55,14 +55,34 @@ def update_user(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Profile was successfully updated!')
-                return redirect(reverse('blog:account') + '?tab=details')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 messages.error(request, 'Unable to update profile! Please try again later.')
-                return redirect(reverse('blog:account') + '?tab=details')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            return redirect(reverse('blog:account') + '?tab=details')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         messages.error(request, 'You must be logged in to update your profile!')
+        return redirect('blog:home')
+
+def delete_user(request):
+    user = request.user
+    if user is not None:
+        if request.method == 'POST':
+            password = request.POST['password']
+            if user.check_password(password):
+                # delete user, all comments, user profile details, and all posts
+                user.delete()
+                messages.success(request, 'Your account was successfully deleted!')
+                return redirect('blog:home')
+            else:
+                messages.error(request, 'Incorrect password!')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, 'Unable to delete account! Please try again later.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        messages.error(request, 'You must be logged in to delete your account!')
         return redirect('blog:home')
 
 def update_avatar(request):
@@ -73,10 +93,10 @@ def update_avatar(request):
             user_profile.avatar_url = request.POST['avatar']
             user_profile.save()
             messages.success(request, 'Avatar was successfully updated!')
-            return redirect(reverse('blog:account') + '?tab=avatar')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request, 'Unable to update avatar! Please try again later.')
-            return redirect(reverse('blog:account') + '?tab=avatar')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         messages.error(request, 'You must be logged in to update your avatar!')
         return redirect('blog:home')
@@ -95,13 +115,13 @@ def change_password(request):
                 user.save()
                 update_session_auth_hash(request, user)
                 messages.success(request, 'Password was successfully changed!')
-                return redirect('blog:account')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 messages.error(request, 'The new password and confirmation password do not match!')
-                return redirect('blog:account')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request, 'Old password is incorrect!')
-            return redirect('blog:account')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         messages.error(request, 'Unable to change password! Please try again later.')
         return redirect('blog:home')
@@ -118,8 +138,8 @@ def send_verification_email(request):
         'site_name': 'That Computer Scientist',
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
-        'protocol': 'https://' if request.is_secure() else 'http://',
-        'domain': get_current_site(request).domain,
+        'protocol': request.scheme + '://',
+        'domain': request.get_host(),
     })
     message = strip_tags(message)
     send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email])
@@ -150,14 +170,15 @@ def send_change_user_email(request):
     user = request.user
     new_email = request.POST['email']
     if user is not None:
+        # Check if the new and the old email are the same
+        if user.email == new_email:
+            messages.error(request, 'New email is the same as the old one!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
         # check if email is already in use
         if User.objects.filter(email=new_email).exists():
             messages.error(request, 'Email is already in use!')
             # Redirect to referrer
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        # Check if the new and the old email are the same
-        if user.email == new_email:
-            messages.error(request, 'New email is the same as the old one!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         # Send verification email
         subject = 'Verify your email address'
@@ -166,8 +187,8 @@ def send_change_user_email(request):
             'site_name': 'That Computer Scientist',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': EmailChangeTokenGenerator().encrypt(new_email),
-            'protocol': 'https://' if request.is_secure() else 'http://',
-            'domain': get_current_site(request).domain,
+            'protocol': request.scheme + '://',
+            'domain': request.get_host(),
         })
         message = strip_tags(message)
         send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [new_email])
@@ -188,7 +209,7 @@ def change_email(request, uidb64, token):
         user.email = new_email
         user.save()
         messages.success(request, 'Email was successfully changed!')
-        return redirect('blog:account')
+        return redirect(reverse('blog:account') + '?tab=email')
     else:
         messages.error(request, 'The verification link is invalid!')
         return redirect('blog:home')

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']
 SESSION_COOKIE_DOMAIN = ".thatcomputerscientist.com"
 DOMAIN_NAME = "thatcomputerscientist.com"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 

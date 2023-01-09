@@ -295,7 +295,6 @@ def donate(request):
             # convert the amount to inr
             init_amt = int(request.POST['amount'])
             amount = init_amt * math.ceil(rate) * 100
-            print(amount)
 
             # create a payment intent
             payment_intent = stripe.PaymentIntent.create(
@@ -304,12 +303,21 @@ def donate(request):
                 payment_method_types=['card'],
                 payment_method=payment_method.id,
                 confirm=True,
+                return_url=request.build_absolute_uri(reverse('blog:donate') + '?tab=success' + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt)),
             )
 
+            print(payment_intent)
+
             if payment_intent.status == 'succeeded':
-                return redirect(reverse('blog:donate') + '?tab=success&payment_method=' + payment_intent.payment_method_types[0] + '&payment_id=' + payment_intent.id + '&payment_status=' + payment_intent.status + '&payment_created=' + str(payment_intent.created) + '&payment_amount=' + str(int(payment_intent.amount / 100)) + '&payment_currency=' + payment_intent.currency + '&amount=' + str(init_amt))
+                return redirect(reverse('blog:donate') + '?tab=success&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt))
+            
+            elif payment_intent.status == 'requires_action':
+                url = payment_intent['next_action']['redirect_to_url']['url']
+                return redirect(url)
+
+                    
             else:
-                return redirect(reverse('blog:donate') + '?tab=error&payment_method=' + payment_intent.payment_method_types[0] + '&payment_id=' + payment_intent.id + '&payment_status=' + payment_intent.status + '&payment_created=' + str(payment_intent.created) + '&payment_amount=' + str(int(payment_intent.amount / 100)) + '&payment_currency=' + payment_intent.currency + '&amount=' + str(init_amt))
+                return redirect(reverse('blog:donate') + '?tab=error&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt))
 
         except Exception as e:
             print(e)

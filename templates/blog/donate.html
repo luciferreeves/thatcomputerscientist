@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
 
-{% if not request.GET.payment_id %}
+{% if not request.GET.payment_intent %}
 <div id="donation">
     <h2 style="text-transform: none; border: none; padding: 0; font-size: 16px;">
         {% if request.GET.referrer %}
@@ -37,24 +37,24 @@
 </div>
 {% endif %}
 
-{% if request.GET.payment_id and request.GET.payment_status == 'succeeded' %}
+{% if request.GET.payment_intent and request.GET.tab == 'success' %}
 <div id="donation-success" style="width: 400px; margin: 0 auto;">
     <h1>Thank you for your donation!</h1>
     <p>Your donation of ${{ request.GET.amount }} has been processed successfully. Thank you for your support! You can find the transaction details below.</p>
-    <p><b>Transaction ID:</b> {{ request.GET.payment_id }}</p>
+    <p><b>Transaction ID:</b> {{ request.GET.payment_intent }}</p>
     <p><b>Amount:</b> ${{ request.GET.amount }}</p>
     <p><b>Amount Charged:</b> INR {{ request.GET.payment_amount }}</p>
-    <p><b>Payment Method:</b> <span style="text-transform:uppercase">{{ request.GET.payment_method }}</span></p>
-    <p><b>Payment Status:</b> <span style="text-transform:uppercase">{{ request.GET.payment_status }}</span></p>
+    <p><b>Payment Method:</b> <span style="text-transform:uppercase">card</span></p>
+    <p><b>Payment Status:</b> <span style="text-transform:uppercase">success</span></p>
     <a href="{% url 'blog:home' %}" class="button button-special" style="text-decoration: none;">Return to Blog</a>
 </div>
 {% endif %}
 
-{% if request.GET.payment_id and request.GET.payment_status == 'failed' %}
+{% if request.GET.payment_intent and request.GET.tab == 'error' %}
 <div id="donation-failed" style="width: 400px; margin: 0 auto;">
     <h1>Donation Failed</h1>
     <p>Your donation of ${{ request.GET.amount }} has failed. You can find the transaction details below.</p>
-    <p><b>Transaction ID:</b> {{ request.GET.payment_id }}</p>
+    <p><b>Transaction ID:</b> {{ request.GET.payment_intent }}</p>
     <p><b>Amount:</b> ${{ request.GET.amount }}</p>
     <a href="{% url 'blog:donate' %}?amount={{ amount }}" class="button button-special" style="text-decoration: none;">Try Again</a>
 </div>

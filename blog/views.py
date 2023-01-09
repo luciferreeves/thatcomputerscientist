@@ -13,7 +13,17 @@ from users.forms import RegisterForm, UpdateUserDetailsForm
 from users.tokens import CaptchaTokenGenerator
 from django.contrib import messages
 from bs4 import BeautifulSoup
+from .forms import PaymentForm
 import re
+from dotenv import load_dotenv
+import os
+import stripe
+import requests
+import math
+load_dotenv()
+
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
+
 
 def atoi(text):
     return int(text) if text.isdigit() else text
@@ -254,4 +264,56 @@ def user_activity(request, username):
         comment.body = comment_processor(comment.body)
 
     return render(request, 'blog/activity.html', {'title': 'User Activity', 'activity_user': user, 'activity_user_profile': user_profile, 'activity_recent_comments': recent_comments, 'activity_user_email': user_email})
-    
+
+def donate(request):
+    amount = request.GET.get('amount')
+
+    try:
+        amount = int(amount)
+    except:
+        amount = 3
+    amount = amount if amount > 0 else 3
+    amount = amount if amount < 1000 else 1000
+    payment_form = PaymentForm(initial={'amount': amount})
+
+    if request.method == 'POST':
+        try:
+            # create a payment using stripe
+            payment_method = stripe.PaymentMethod.create(
+                type='card',
+                card={
+                    'number': request.POST['card_number'],
+                    'exp_month': request.POST['card_expiry_mm'],
+                    'exp_year': request.POST['card_expiry_yyyy'],
+                    'cvc': request.POST['card_cvv'],
+                },
+            )
+
+            # get the current usd to inr conversion rate
+            rate = requests.get('https://api.exchangerate-api.com/v4/latest/USD').json()['rates']['INR']
+
+            # convert the amount to inr
+            init_amt = int(request.POST['amount'])
+            amount = init_amt * math.ceil(rate) * 100
+            print(amount)
+
+            # create a payment intent
+            payment_intent = stripe.PaymentIntent.create(
+                amount=amount,
+                currency='inr',
+                payment_method_types=['card'],
+                payment_method=payment_method.id,
+                confirm=True,
+            )
+
+            if payment_intent.status == 'succeeded':
+                return redirect(reverse('blog:donate') + '?tab=success&payment_method=' + payment_intent.payment_method_types[0] + '&payment_id=' + payment_intent.id + '&payment_status=' + payment_intent.status + '&payment_created=' + str(payment_intent.created) + '&payment_amount=' + str(int(payment_intent.amount / 100)) + '&payment_currency=' + payment_intent.currency + '&amount=' + str(init_amt))
+            else:
+                return redirect(reverse('blog:donate') + '?tab=error&payment_method=' + payment_intent.payment_method_types[0] + '&payment_id=' + payment_intent.id + '&payment_status=' + payment_intent.status + '&payment_created=' + str(payment_intent.created) + '&payment_amount=' + str(int(payment_intent.amount / 100)) + '&payment_currency=' + payment_intent.currency + '&amount=' + str(init_amt))
+
+        except Exception as e:
+            print(e)
+            return redirect(reverse('blog:donate') + '?tab=error')
+
+    return render(request, 'blog/donate.html', {'title': 'Donate', 'amount': amount, 'payment_form': payment_form})
+

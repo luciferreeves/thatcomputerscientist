@@ -1,0 +1,63 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+{% load static %}
+
+{% if not request.GET.payment_id %}
+<div id="donation">
+    <h2 style="text-transform: none; border: none; padding: 0; font-size: 16px;">
+        {% if request.GET.referrer %}
+        Complete your donation of ${{ amount }}:
+        {% else %}
+        Donate to the blog:
+        {% endif %}
+    </h2>
+    <form method="POST" action="{% url 'blog:donate' %}">
+        {% csrf_token %}
+        <table>
+            {{ payment_form.as_table }}
+        </table>
+        <input type="submit" value="Donate" class="button button-special" />
+    </form>
+</div>
+<div id="fineprint" class="mtsbitem">
+    <h2>Donation Fine Print</h2>
+    <ul>
+        <li>Donations are processed by Stripe, no credit card information is stored on this site.</li>
+        <li>Donations are processed in INR. All conversions will be made according to the latest rates.</li>
+        <li>Donations are non-refundable. If you donate by accident, please contact me and I will refund your donation.</li>
+    </ul>
+</div>
+<div id="testing-info" class="mtsbitem error">
+    <h2>Testing Info</h2>
+    <p>The current payment form is only for testing purposes. It will not actually process a payment. If you would like to test the payment form, please use the following information:</p>
+    <ul>
+        <li>Card Number: 4242 4242 4242 4242</li>
+        <li>Expiration Date: Any date in the future</li>
+        <li>CVV: Any 3 digits</li>
+    </ul>
+</div>
+{% endif %}
+
+{% if request.GET.payment_id and request.GET.payment_status == 'succeeded' %}
+<div id="donation-success" style="width: 400px; margin: 0 auto;">
+    <h1>Thank you for your donation!</h1>
+    <p>Your donation of ${{ request.GET.amount }} has been processed successfully. Thank you for your support! You can find the transaction details below.</p>
+    <p><b>Transaction ID:</b> {{ request.GET.payment_id }}</p>
+    <p><b>Amount:</b> ${{ request.GET.amount }}</p>
+    <p><b>Amount Charged:</b> INR {{ request.GET.payment_amount }}</p>
+    <p><b>Payment Method:</b> <span style="text-transform:uppercase">{{ request.GET.payment_method }}</span></p>
+    <p><b>Payment Status:</b> <span style="text-transform:uppercase">{{ request.GET.payment_status }}</span></p>
+    <a href="{% url 'blog:home' %}" class="button button-special" style="text-decoration: none;">Return to Blog</a>
+</div>
+{% endif %}
+
+{% if request.GET.payment_id and request.GET.payment_status == 'failed' %}
+<div id="donation-failed" style="width: 400px; margin: 0 auto;">
+    <h1>Donation Failed</h1>
+    <p>Your donation of ${{ request.GET.amount }} has failed. You can find the transaction details below.</p>
+    <p><b>Transaction ID:</b> {{ request.GET.payment_id }}</p>
+    <p><b>Amount:</b> ${{ request.GET.amount }}</p>
+    <a href="{% url 'blog:donate' %}?amount={{ amount }}" class="button button-special" style="text-decoration: none;">Try Again</a>
+</div>
+{% endif %}
+
+{% endblock %}

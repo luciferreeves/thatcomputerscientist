@@ -15,6 +15,24 @@
     <div id="article-body">{{ post.body | safe }}</div>
 </div>
 
+<div id="donate" style="clear: both;" class="mtsbitem">
+    <h2 style="text-transform: none; border: none; margin: 0; padding: 0;">Liked this article?</h2>
+    <form action="{% url 'blog:donate' %}">
+        <input type="hidden" name="referrer" value="{{ post.slug }}" id="referrer" style="display: none;">
+        <p>
+            <span style="width:60px; display: inline-block;">Donate: </span>
+            <span style="width:90px; display: inline-block;">
+                <input type="number" name="amount" id="amount" value="5" min="3" style="width: 60px; text-align: center;" oninput="parseAmount()">
+            </span>
+            <span style="width:40px; display: inline-block;">USD</span>
+            <span style="width:100px; display: inline-block;">
+                <input type="submit" id="donate_btn" value="Donate $5" class="button button-special">
+            </span>
+        </p>
+    </form>
+</div>
+
+
 <div id="comments" style="clear: both;" class="mtsbitem">
     <h2>Comments</h2>
     {% for comment in comments %}
@@ -125,6 +143,21 @@
         } else {
             tips.style.display = 'none';
         }
+    }
+
+    function parseAmount(amount) {
+        var amount_input = document.getElementById('amount');
+        var donate_btn = document.getElementById('donate_btn');
+        var amount = amount_input.value;
+        amount = parseInt(amount);
+        if (isNaN(amount)) {
+            amount = 3;
+        }
+        amount = Math.max(amount, 3);
+        amount = Math.min(amount, 1000);
+        amount_input.value = amount;
+        // update donate button value 
+        donate_btn.value = 'Donate $' + amount;
     }
 
     // We are aiming to keep the JS to ES3 for compatibility with older browsers.

@@ -268,6 +268,11 @@ def user_activity(request, username):
 def donate(request):
     amount = request.GET.get('amount')
 
+    if request.GET.get('payment_intent') and request.GET.get('tab') == 'success':
+        payment_intent = stripe.PaymentIntent.retrieve(request.GET.get('payment_intent'))
+        if payment_intent.status != 'succeeded':
+            return redirect(reverse('blog:donate') + '?tab=error&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(request.GET.get('payment_amount')) / 100) + '&amount=' + str(request.GET.get('amount')) + '&error=' + payment_intent.last_payment_error.message)
+
     try:
         amount = int(amount)
     except:
@@ -306,8 +311,6 @@ def donate(request):
                 return_url=request.build_absolute_uri(reverse('blog:donate') + '?tab=success' + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt)),
             )
 
-            print(payment_intent)
-
             if payment_intent.status == 'succeeded':
                 return redirect(reverse('blog:donate') + '?tab=success&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt))
             
@@ -320,8 +323,7 @@ def donate(request):
                 return redirect(reverse('blog:donate') + '?tab=error&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt))
 
         except Exception as e:
-            print(e)
-            return redirect(reverse('blog:donate') + '?tab=error')
+            error = e.json_body['error']['message']
+            return redirect(reverse('blog:donate') + '?tab=error&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt) + '&error=' + str(error))
 
     return render(request, 'blog/donate.html', {'title': 'Donate', 'amount': amount, 'payment_form': payment_form})
-

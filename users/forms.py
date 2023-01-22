@@ -3,13 +3,13 @@
 from django import forms
 from django.contrib.auth.models import User
 from users.models import UserProfile
-from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
+from .mail_send import send_email
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30, min_length=4)
@@ -63,9 +63,11 @@ class RegisterForm(forms.Form):
             'domain': request.get_host(),
         })
         message = strip_tags(message)
-        send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email], fail_silently=False)
-
-        return user
+        # send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email], fail_silently=False)
+        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
+            return user
+        else:
+            return user
 
 class UpdateUserDetailsForm(forms.Form):
     first_name = forms.CharField(label='First name', max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'First name'}))

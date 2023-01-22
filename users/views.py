@@ -4,16 +4,15 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib import messages
 from .models import UserProfile
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.contrib.sites.shortcuts import get_current_site
 from .tokens import account_activation_token, EmailChangeTokenGenerator
 from django.utils.http import urlsafe_base64_decode
 from .forms import UpdateUserDetailsForm
+from .mail_send import send_email
 
 # Create your views here.
 def login_user(request):
@@ -134,7 +133,6 @@ def send_verification_email(request):
     username = request.POST['username']
     user = User.objects.get(username=username)
     
-
     subject = 'Verify your email address'
     message = render_to_string('verification_email.html', {
         'user': user.username if user.first_name is None else user.first_name,
@@ -145,9 +143,13 @@ def send_verification_email(request):
         'domain': request.get_host(),
     })
     message = strip_tags(message)
-    send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email])
-    messages.success(request, 'Verification email was sent! Please check your email.', extra_tags='loginError')
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
+        messages.success(request, 'Verification email was sent! Please check your email.', extra_tags='loginError')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        messages.error(request, 'Unable to send verification email! Please try again later.', extra_tags='loginError')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def verify_email(request, uidb64, token):
     try:
@@ -194,9 +196,15 @@ def send_change_user_email(request):
             'domain': request.get_host(),
         })
         message = strip_tags(message)
-        send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [new_email])
-        messages.success(request, 'Verification email was sent! Please check your email.')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        # send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [new_email])
+
+        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=new_email, subject=subject, body_html=message, body_text=message)):
+            messages.success(request, 'Verification email was sent! Please check your email.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, 'Unable to change email! Please try again later.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        
     else:
         messages.error(request, 'Unable to change email! Please try again later.')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

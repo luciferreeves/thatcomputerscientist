@@ -28,10 +28,14 @@
 </div>
 
 <div style="clear: both;" id="activity">
-    {% if activity_user_profile.is_public %}
+    {% if activity_user_profile.is_public or request.user.username == activity_user.username %}
 
-        {% if activity_recent_comments %}
-            <h2>Recent Comments</h2>
+    
+    {% if activity_recent_comments %}
+    <h2>Recent Comments</h2>
+        {% if not activity_user_profile.is_public and request.user.username == activity_user.username %}
+            <p class="info">Your profile is not public. Only you can see this information. If you want to change this, go to your <a href="{% url 'blog:account' %}?tab=details">account settings</a>.</p>
+        {% endif %}
             <ul>
                 {% for comment in activity_recent_comments %}
                     <li style="background: #1c1c1c;padding: 20px 10px 10px 10px;margin-bottom: 10px;border-radius: 8px;"

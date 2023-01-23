@@ -168,6 +168,10 @@ kbd {
     color: #00ff00;
 }
 
+.info {
+    color: #65c6c6;
+}
+
 .ac {
     margin-right: 5px;
     height: 12px;

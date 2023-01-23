@@ -2,9 +2,7 @@ from PIL import Image
 from io import BytesIO
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import base64
 from blog.models import Post
-import base64
 from .models import PostImage, RepositoryTitle, CoverImage
 import json
 import requests
@@ -23,7 +21,7 @@ def tex(request):
 
     import requests
 
-    image = requests.get('https://latex.codecogs.com/png.image?%5Cinline%20%5Clarge%20%5Cdpi%7B300%7D%5Cbg%7Btransparent%7D' + expression).content
+    image = requests.get('https://latex.codecogs.com/png.image?%5Cinline%20%5Clarge%20%5Cdpi%7B200%7D%5Cbg%7Btransparent%7D' + expression).content
 
     # Image is a transparent GIF with black text. Invert the colors.
     image = Image.open(BytesIO(image))

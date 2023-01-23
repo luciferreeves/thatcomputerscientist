@@ -3,13 +3,14 @@
 <div id="welcome">
   <h2>Welcome</h2>
   <p>
-    Welcome to the home of That Computer Scientist. This is my personal
-    website where I share all of my thoughts, ideas, and experiences. 
+    Welcome to the home of That Computer Scientist. My name is <a href="{% url 'blog:user_activity' 'bobby' %}">@bobby</a>, and this is my personal
+    website. I aim to build a retro looking personal website, where I share my thoughts, ideas, and experiences through articles, and will showcase some cool nostalgic features and tools.
   </p>
   <p>
-    This website is a work in progress. I am currently working on adding more
-    features to this website. I aim to build a retro looking personal website,
-    where I will share my articles and Ideas, and will host some cool features and tools.
+    To participate around various sections of the site, you will need to <a href="{% url 'blog:register' %}">register</a> for an account. I hope you enjoy your stay here, and if you have any questions, comments, or concerns about how this site operates and how your data is handled, please check out the <a href="{% url 'blog:policy' %}">site policy</a> page, or contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>. 
+  </p>
+  <p>
+    Also, please note that I am continuously working on this site, and it is still under construction. So, not all features are available yet, and some features may not work as intended. It's hard to support older browsers, alright?
   </p>
   <img src="{% static 'images/gifs/construction.gif' %}" style="height:auto; width: 100%;">
 </div>
@@ -55,8 +56,8 @@
       </h1>
       <p>
         Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by
-        <em><a href="#">{{ post.author }}</a> in</em>
-        <em><a href="#">{{ post.category }}</a></em>
+        <em><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a> in</em>
+        <em><a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a></em>
       </p>
       <div style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
         <span>

@@ -285,3 +285,6 @@ def archives(request):
 def categories(request):
     categories = Category.objects.all()
     return render(request, 'blog/categories.html', {'title': 'Categories', 'categories': categories})
+
+def policy(request):
+    return render(request, 'blog/site_policy.html', {'title': 'Site Policy'})

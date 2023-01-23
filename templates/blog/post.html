@@ -4,7 +4,7 @@
     <img src="{% url 'ignis:post_image' '730' post.id %}.gif" alt="Cover Image" style="width: 730px; margin: 0 auto; display: block;">
     <h1>{{ post.title }}</h1>
     <p style="line-height: 1.6em;">
-        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a> in <a href="#">{{ post.category }}</a></em>
+        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a> in <a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a></em>
     </p>
     <p>Tags:
         {% for tag in tags %}

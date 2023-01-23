@@ -215,7 +215,8 @@ def search(request):
     posts = posts.order_by('-date')
     return render(request, 'blog/search.html', {'title': 'Search', 'posts': posts, 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
 
-def articles(request):
+def articles(request, date=None):
+    type = 'articles'
     page = request.GET.get('page') if request.GET.get('page') else 1
     order_by = request.GET.get('order_by') if request.GET.get('order_by') else 'date'
     direction = request.GET.get('direction') if request.GET.get('direction') else 'desc'
@@ -226,7 +227,17 @@ def articles(request):
     except:
         page = 1
 
-    posts = Post.objects.filter(is_public=True).order_by('-' + order_by) if direction == 'desc' else Post.objects.filter(is_public=True).order_by(order_by)
+    if date:
+        date_month = date.split('_')[0] # month name like 'Decemeber'
+        date_year = date.split('_')[1] # year like '2019'
+        date_m = datetime.strptime(date_month, '%B').month # convert month name to month number
+        posts = Post.objects.filter(is_public=True, date__month=date_m, date__year=date_year)
+        type = 'articles-archive'
+        date = date_month + ' ' + date_year
+    else:
+        posts = Post.objects.filter(is_public=True)
+
+    posts = posts.order_by('-' + order_by) if direction == 'desc' else Post.objects.filter(is_public=True).order_by(order_by)
     if category and category != 'all':
         posts = posts.filter(category__slug=category)
     else:
@@ -238,7 +249,7 @@ def articles(request):
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)
     num_pages = posts.paginator.num_pages
-    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category})
+    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category, 'type': type, 'date': date if date else ''})
 
 def user_activity(request, username):
     user = User.objects.get(username=username)
@@ -257,3 +268,7 @@ def user_activity(request, username):
         comment.body = comment_processor(comment.body)
 
     return render(request, 'blog/activity.html', {'title': 'User Activity', 'activity_user': user, 'activity_user_profile': user_profile, 'activity_recent_comments': recent_comments, 'activity_user_email': user_email})
+
+def archives(request):
+    archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')
+    return render(request, 'blog/archives.html', {'title': 'Archives', 'archives': archives})

@@ -32,11 +32,11 @@ def recent_posts():
     return recent_posts
 
 def categories(request):
-    categories = Category.objects.all()
+    categories = Category.objects.all()[0:5]
     return {'categories': categories}
 
 def archives(request):
-    archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')
+    archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')[0:5]
     return {'archives': archives}
 
 def avatar_list():

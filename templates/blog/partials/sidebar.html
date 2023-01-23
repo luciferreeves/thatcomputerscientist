@@ -118,7 +118,7 @@
                 <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archives" border="0">
             </span>
             <span>
-                <a href="#">
+                <a href="{% url 'blog:archives' %}">
                     Archives
                 </a>
             </span>
@@ -171,7 +171,7 @@
                 <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="#">
+                <a href="{% url 'blog:archives' %}/{{ archive | date:"F_Y" }}">
                     {{ archive | date:"F Y" }}
                 </a>
             </span>

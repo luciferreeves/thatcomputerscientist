@@ -13,5 +13,7 @@ urlpatterns = [
     path('articles/<str:slug>/comment', views.comment, name='comment'),
     path('articles/<str:slug>/edit_comment', views.edit_comment, name='edit_comment'),
     path('articles/<str:slug>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
+    path('archives', views.archives, name='archives'),
+    path('archives/<str:date>', views.articles, name='archive_posts'),
     path('~<str:username>', views.user_activity, name='user_activity'),
 ]

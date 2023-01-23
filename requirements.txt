@@ -11,4 +11,3 @@ pillow
 pycryptodome
 pygments
 bs4
-stripe

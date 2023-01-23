@@ -13,16 +13,9 @@ from users.forms import RegisterForm, UpdateUserDetailsForm
 from users.tokens import CaptchaTokenGenerator
 from django.contrib import messages
 from bs4 import BeautifulSoup
-from .forms import PaymentForm
 import re
 from dotenv import load_dotenv
-import os
-import stripe
-import requests
-import math
 load_dotenv()
-
-stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 
 def atoi(text):
@@ -264,66 +257,3 @@ def user_activity(request, username):
         comment.body = comment_processor(comment.body)
 
     return render(request, 'blog/activity.html', {'title': 'User Activity', 'activity_user': user, 'activity_user_profile': user_profile, 'activity_recent_comments': recent_comments, 'activity_user_email': user_email})
-
-def donate(request):
-    amount = request.GET.get('amount')
-
-    if request.GET.get('payment_intent') and request.GET.get('tab') == 'success':
-        payment_intent = stripe.PaymentIntent.retrieve(request.GET.get('payment_intent'))
-        if payment_intent.status != 'succeeded':
-            return redirect(reverse('blog:donate') + '?tab=error&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(request.GET.get('payment_amount')) / 100) + '&amount=' + str(request.GET.get('amount')) + '&error=' + payment_intent.last_payment_error.message)
-
-    try:
-        amount = int(amount)
-    except:
-        amount = 3
-    amount = amount if amount > 0 else 3
-    amount = amount if amount < 1000 else 1000
-    payment_form = PaymentForm(initial={'amount': amount})
-
-    if request.method == 'POST':
-        try:
-            # create a payment using stripe
-            payment_method = stripe.PaymentMethod.create(
-                type='card',
-                card={
-                    'number': request.POST['card_number'],
-                    'exp_month': request.POST['card_expiry_mm'],
-                    'exp_year': request.POST['card_expiry_yyyy'],
-                    'cvc': request.POST['card_cvv'],
-                },
-            )
-
-            # get the current usd to inr conversion rate
-            rate = requests.get('https://api.exchangerate-api.com/v4/latest/USD').json()['rates']['INR']
-
-            # convert the amount to inr
-            init_amt = int(request.POST['amount'])
-            amount = init_amt * math.ceil(rate) * 100
-
-            # create a payment intent
-            payment_intent = stripe.PaymentIntent.create(
-                amount=amount,
-                currency='inr',
-                payment_method_types=['card'],
-                payment_method=payment_method.id,
-                confirm=True,
-                return_url=request.build_absolute_uri(reverse('blog:donate') + '?tab=success' + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt)),
-            )
-
-            if payment_intent.status == 'succeeded':
-                return redirect(reverse('blog:donate') + '?tab=success&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt))
-            
-            elif payment_intent.status == 'requires_action':
-                url = payment_intent['next_action']['redirect_to_url']['url']
-                return redirect(url)
-
-                    
-            else:
-                return redirect(reverse('blog:donate') + '?tab=error&payment_intent=' + payment_intent.id + '&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt))
-
-        except Exception as e:
-            error = e.json_body['error']['message']
-            return redirect(reverse('blog:donate') + '?tab=error&payment_amount=' + str(int(amount / 100)) + '&amount=' + str(init_amt) + '&error=' + str(error))
-
-    return render(request, 'blog/donate.html', {'title': 'Donate', 'amount': amount, 'payment_form': payment_form})

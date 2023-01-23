@@ -15,23 +15,6 @@
     <div id="article-body">{{ post.body | safe }}</div>
 </div>
 
-<div id="donate" style="clear: both;" class="mtsbitem">
-    <h2 style="text-transform: none; border: none; margin: 0; padding: 0;">Liked this article?</h2>
-    <form action="{% url 'blog:donate' %}">
-        <input type="hidden" name="referrer" value="{{ post.slug }}" id="referrer" style="display: none;">
-        <p>
-            <span style="width:60px; display: inline-block;">Donate: </span>
-            <span style="width:90px; display: inline-block;">
-                <input type="number" name="amount" id="amount" value="5" min="3" style="width: 60px; text-align: center;" oninput="parseAmount()">
-            </span>
-            <span style="width:40px; display: inline-block;">USD</span>
-            <span style="width:100px; display: inline-block;">
-                <input type="submit" id="donate_btn" value="Donate $5" class="button button-special">
-            </span>
-        </p>
-    </form>
-</div>
-
 
 <div id="comments" style="clear: both;" class="mtsbitem">
     <h2>Comments</h2>
@@ -79,15 +62,9 @@
 {% if user.is_authenticated %}
 <div id="new-comment">
     <h2>Leave a Comment</h2>
-    <form action="{% url 'blog:comment' post.slug %}" method="POST">
-        {% csrf_token %}
-        <textarea name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
-        <input type="submit" value="Submit" class="button button-special">
-    </form>
-    <div id="comment-tips" style="color: #d8c6df;">
-        <br>
-        <a id="markup-tips" onclick="toggleTips()" style="cursor: pointer;">Text Markup Tips &gt;</a>
-        <div id="tips" style="display: none;">
+    <div id="comment-tips" style="background-color: #2e1936;padding: 10px;margin-bottom: 15px;border-radius: 6px;">
+        <p>Text Markup Tips:</p>
+        <div id="tips">
             <ul style="list-style-type: disc; margin: 0;padding: 0; margin: 5px 0px 0px 30px;">
                 <li>Wrap text in double underscores (__) to make it <i>italic</i>.
                     <br>
@@ -117,6 +94,11 @@
             <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
         </div>
     </div>
+    <form action="{% url 'blog:comment' post.slug %}" method="POST">
+        {% csrf_token %}
+        <textarea name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
+        <input type="submit" value="Submit" class="button button-special">
+    </form>
 </div>
 {% else %}
 <div id="new-comment" class="mtsbitem">
@@ -134,30 +116,6 @@
     function cancelEdit(id) {
         document.getElementById('comment-body-' + id).style.display = 'block';
         document.getElementById('edit-form-' + id).style.display = 'none';
-    }
-
-    function toggleTips() {
-        var tips = document.getElementById('tips');
-        if (tips.style.display == 'none') {
-            tips.style.display = 'block';
-        } else {
-            tips.style.display = 'none';
-        }
-    }
-
-    function parseAmount(amount) {
-        var amount_input = document.getElementById('amount');
-        var donate_btn = document.getElementById('donate_btn');
-        var amount = amount_input.value;
-        amount = parseInt(amount);
-        if (isNaN(amount)) {
-            amount = 3;
-        }
-        amount = Math.max(amount, 3);
-        amount = Math.min(amount, 1000);
-        amount_input.value = amount;
-        // update donate button value 
-        donate_btn.value = 'Donate $' + amount;
     }
 
     // We are aiming to keep the JS to ES3 for compatibility with older browsers.

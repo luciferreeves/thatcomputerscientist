@@ -29,7 +29,10 @@
             <form method="post" action="{% url 'users:updateavatar' %}">
                 {% csrf_token %}
                 {% for avatar_dir, avatar_files in avatarlist.items %}
-                <h2 style="clear:both;">{{ avatar_dir }}</h2>
+                <h2 style="clear:both;background-color: #3E4245;padding: 8px 10px;border: none;background: -moz-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+                background: -webkit-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+                background: linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3E4245",endColorstr="#2E3131",GradientType=1);">{{ avatar_dir }}</h2>
                 <div class="avatar-directory">
                     {% for avatar_file in avatar_files %}
                     <div style="width: 255px; display: inline; float: left;">

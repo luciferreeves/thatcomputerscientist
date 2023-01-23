@@ -4,6 +4,8 @@
 <h2 style="margin-top:0px;"> All Posts</h2>
 {% elif type == 'articles-archive' %}
 <h2 style="margin-top:0px;"> Posts made in {{ date }}</h2>
+{% elif type == 'articles-category' %}
+<h2 style="margin-top:0px;"> Posts made in Category: {{ category }}</h2>
 {% endif %}
 
 <form id="filters" method="get">
@@ -18,6 +20,7 @@
         <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Ascending</option>
         <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Descending</option>
     </select>
+    {% if type != 'articles-category' %}
     <label for="category">&nbsp;&nbsp;In Category: </label>
     <select name="category">
         <option value="all" {% if category == 'all' %}selected{% endif %}>All</option>
@@ -25,6 +28,7 @@
         <option value="{{ cat.slug }}" {% if category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
         {% endfor %}
     </select>
+    {% endif %}
     <span>&nbsp;&nbsp;</span>
     <input type="submit" value="Apply" class="button button-special" />
 </form>

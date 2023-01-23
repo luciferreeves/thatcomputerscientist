@@ -128,7 +128,7 @@
                 <img src="{% static 'images/site/icons/books.gif' %}" alt="Categories" border="0">
             </span>
             <span>
-                <a href="#">
+                <a href="{% url 'blog:categories' %}">
                     Categories
                 </a>
             </span>
@@ -177,6 +177,16 @@
             </span>
         </li>
         {% endfor %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archives" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:archives' %}">
+                    All Archives...
+                </a>
+            </span>
+        </li>
     </ul>
 </div>
 
@@ -189,12 +199,22 @@
                 <img src="{% static 'images/site/icons/books.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="#">
+                <a href="{% url 'blog:categories' %}/{{ category.slug }}">
                     {{ category }}
                 </a>
             </span>
         </li>
         {% endfor %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/books.gif' %}" alt="Categories" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:categories' %}">
+                    All Categories...
+                </a>
+            </span>
+        </li>
     </ul>
 </div>
 

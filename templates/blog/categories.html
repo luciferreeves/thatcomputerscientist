@@ -1,0 +1,26 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<h2 style="margin-top:0px;">Categories</h2>
+{% load static %}
+{% if categories %}
+<div id="categories-area">
+    <ul>
+        {% for category in categories %}
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/books.gif' %}" alt="Archive" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:categories' %}/{{ category.slug }}">
+                    {{ category }}
+                </a>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<p>No categories found.</p>
+{% endif %}
+
+{% endblock %}
+

@@ -12,7 +12,7 @@
     <input type="submit" value="Register" class="button button-special">
 </form>
 <br><br>
-<p>By registering on this site, you agree to the <a href="{% url 'blog:policy' %}">Terms of Service</a>.</p>
+<p>By registering on this site, you agree to everything that's <a href="{% url 'blog:policy' %}">written here</a>.</p>
 {% for message in messages %}
     {% if 'accountCreated' in message.tags %}
         <p><small class="success">{{ message.message }}</small></p>

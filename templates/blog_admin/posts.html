@@ -1,33 +1,60 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+{% load static %}
 <div class="main">
     <div>
       {% include 'blog_admin/partials/posts_topbar.html' %}
+      <h2 {% if not messages %}style="border: none; margin-bottom: 0;"{% endif %}>{{ title }}</h2>
+      {% for message in messages  %}
+        <div style="text-align:center;padding:0;">
+          <p class="{{message.tags}}" style="text-align:center; margin-bottom: 15px;">{{ message }}</p>
+        </div>
+      {% endfor %}
       <table id="posts">
         <thead>
           <tr>
-            <th>Title</th>
+
+            <th colspan="3">Article</th>
             <th>Author</th>
             <th>Created</th>
             <th>Category</th>
-            <th>Visibility</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {% for post in posts %}
           <tr>
-            <td><a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a></td>
-            <td>{{ post.author }}</td>
-            <td>{{ post.date }}</td>
-            <td><a href="#">{{ post.category }}</a></td>
-            <td style="position: relative;"> {% if post.is_public %} <span class="label label-success">Published</span> {% else %} <span class="label label-warning">Draft</span> {% endif %} </td>
+            <td style="position: relative;"> 
+              {% if post.is_public %} 
+              {% comment %} <span class="label label-success">Published</span>  {% endcomment %}
+                <span>
+                  <img src="{% static 'images/site/icons/eye_open.png' %}" alt="Home" border="0" width="24" height="24">
+                </span>
+              {% else %} 
+              {% comment %} <span class="label label-warning">Draft</span> {% endif %}  {% endcomment %}
+                <span>
+                  <img src="{% static 'images/site/icons/eye_closed.png' %}" alt="Home" border="0" width="24" height="24">
+                </span>
+              {% endif %}
+            </td>
             <td>
-              <a href="{% url 'blog-admin:edit-post' post.slug %}">Edit</a>
-              <a href="{% url 'admin:blog_post_delete' post.id %}" class="error">Delete</a>
+              <img src="{% url 'ignis:post_image' '80' post.id %}.gif" alt="Cover Image" style="max-width: 80px; height: auto; display: block;">
+            </td>
+            <td>
+              <a href="{% url 'blog:post' post.slug %}">
+                <p>{{ post.title }}</p>
+              </a>
+            </td>
+            <td><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a></td>
+            <td>{{ post.date }}</td>
+            <td><a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a></td>
+            <td>
+              <p><a href="{% url 'blog-admin:new-post'%}?mode=edit&amp;post_id={{post.id}}">Edit Post Metadata</a></p>
+              <p><a href="{% url 'blog-admin:edit-post' post.slug %}">Edit Post Contents</a></p>
+              <p><a href="{% url 'admin:blog_post_delete' post.id %}" class="error">Delete Post</a></p>
               {% if post.is_public %}
-              <a href="{% url 'blog-admin:unpublish-post' post.slug %}" class="error" onclick="return confirm('This post will immediately be hidden from users. Proceed?')">Unpublish</a>
+              <p><a href="{% url 'blog-admin:unpublish-post' post.slug %}" class="error" onclick="return confirm('This post will immediately be hidden from users. Proceed?')">Unpublish Post</a></p>
               {% else %}
-              <a href="{% url 'blog-admin:publish-post' post.slug %}" class="success" onclick="return confirm('This post will immediately be shown to users. Proceed?')">Publish</a>
+              <p><a href="{% url 'blog-admin:publish-post' post.slug %}" class="success" onclick="return confirm('This post will immediately be shown to users. Proceed?')">Publish Post</a></p>
               {% endif %}
             </td>
           </tr>

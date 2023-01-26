@@ -1,301 +1,106 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-<div class="main">
-  <section>
-    <form action="{% url 'blog-admin:new-post' %}" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          style="display: inline-block"
-          type="text"
-          class="form-control"
-          id="title"
-          name="title"
-          placeholder="Enter an Amazing Title"
-          value="{{ blog_title }}"
-        />
-      </div>
-      {% comment %} <br> {% endcomment %}
-      <div class="form-group">
-        {% comment %} <label for="slug">Slug</label> {% endcomment %}
-          <input
-              style="display: inline-block"
-              type="hidden"
-              class="form-control"
-              id="slug"
-              name="slug"
-              placeholder="Enter an Amazing Slug"
-              value="{{ blog_slug }}"
-          />
-      </div>
-      <div class="form-group">
-          <input
-              style="display: inline-block"
-              type="hidden"
-              class="form-control"
-              id="random_post_identifier"
-              name="random_post_identifier"
-              value="{{ random_post_identifier }}"
-          />
-      </div>
-      <br>
-      <div class="form-group">
-        <label for="content">Post Image</label>
-        <input
-          style="display: inline-block"
-          type="file"
-          class="form-control"
-          id="post_image"
-          name="post_image"
-        />
-      </div>
-      <br>
-      <div class="form-group">
-        <div id="toolbar-container">
-          <span class="ql-formats">
-            <button class="ql-header" value="1"></button>
-            <button class="ql-header" value="2"></button>
-          </span>
-          <span class="ql-formats">
-            <button class="ql-bold"></button>
-            <button class="ql-italic"></button>
-            <button class="ql-underline"></button>
-            <button class="ql-strike"></button>
-          </span>
-          <span class="ql-formats">
-            <button class="ql-blockquote"></button>
-            <button class="ql-code-block"></button>
-          </span>
-          <span class="ql-formats">
-            <button class="ql-script" value="sub"></button>
-            <button class="ql-script" value="super"></button>
-          </span>
-
-          <span class="ql-formats">
-            <button class="ql-list" value="ordered"></button>
-            <button class="ql-list" value="bullet"></button>
-          </span>
-          <span class="ql-formats">
-            <select class="ql-align"></select>
-          </span>
-          <span class="ql-formats">
-            <button class="ql-link"></button>
-            <button class="ql-image"></button>
-            <button class="ql-formula"></button>
-            {% load static %}
-            <button class="ql-formula-block">
-              <img
-                style="height: 32px; position: relative; top: -6px; left: 4px; filter: invert(1)"
-                src="{% static 'images/icons/formula.png' %}"
-                alt="Block Formula"
-              />
-            </button>
-          </span>
-          <span class="ql-formats">
-            <button class="ql-clean"></button>
-          </span>
-        </div>
-        <div id="editor-container" style="height: 60vh"></div>
-      </div>
-      <br>
-      <div class="form-group">
-        <label for="tags">Tags</label>
-        <input
-          style="display: inline-block"
-          type="text"
-          class="form-control"
-          id="tags"
-          name="tags"
-          placeholder="Enter Tags"
-          value="{{ blog_tags }}"
-        />
-      </div>
-      <br>
-      <div class="form-group">
-        <label for="category">Category</label>
-          <select class="form-control" id="category" name="category" style = "display: inline-block">
-              {% for category in categories %}
-              <option value="{{ category.slug }}" {% if category.slug == blog_category %} selected {% endif %}>{{ category.name }}</option>
-              {% endfor %}
-          </select>
-      </div>
-      <div class="form-group" style="display: none;">
-          <textarea name="body" id="body">{{ blog_body }}</textarea>
-      </div>
-      <br>
-      <div class="form-group">
-          <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </form>
-  </section>
-</div>
-<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/T-vK/DynamicQuillTools@master/DynamicQuillTools.js"></script>
+{% if post %}
+<h2>Edit Post: {{ post.title }}</h2>
+{% else %}
+<h2>Create New Post</h2>
+{% endif %}
+<p>This page allows you to create metadata for a new post. You can add the actual content of the post in the next step.</p>
+<style>
+  td {
+    padding: 10px 0px;
+  }
+</style>
+{% for message in messages %}
+    {% if 'new_post_message' in message.tags %}
+      <p class="message {{message.tags}}">{{message.message}}</p>
+    {% endif %}
+{% endfor %}
+<form action="{% url 'blog-admin:new-post' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if post %}
+  <input type="hidden" name="post_id" value="{{ post.id }}" />
+  {% endif %}
+  <table style="table-layout: fixed;">
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Title <sup>*</sup></td>
+      <td><input type="text" name="title" id="title" placeholder="Enter an amazing title" {% if post %} value="{{ post.title }}" {% endif %} {% if return_object %} value="{{ return_object.title_value }}" {% endif %} required/></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Slug</td>
+      <td>
+        <span id="ag_slug" style="display: inline-block;">Auto generated.</span>
+        <input type="text" id="slug" name="slug" placeholder="Enter a custom slug" style="display: none;" {% if post %} value="{{ post.slug }}" {% endif %} {% if return_object %} value="{{ return_object.slug_value }}" {% endif %} />
+        <a style="cursor: pointer" id="slug_btn" onclick="customSlugToggle()">Use custom slug?</a>
+      </td>
+    </tr>
+    {% if post %}
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Cover Image</td>
+      <td>
+          <img src="{% url 'ignis:post_image' '300' post.id %}.gif" alt="Cover Image" style="width: 300px; margin: 0 auto; display: block;">
+      </td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">
+        {% if post %}
+          New Cover Image
+        {% else %}
+          Cover Image <sup>*</sup>
+        {% endif %}
+      </td>
+      <td>
+        <input style="padding-left: 0px;" type="file" name="post_image" {% if not post %}required{% endif %} {% if return_object %} value="{{ return_object.post_image_value }}" {% endif %} accept="image/png, image/gif, image/jpeg" />
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Tags <sup>*</sup></td>
+      <td>
+        <input type="text" name="tags" placeholder="tag1,tag2,tag3..." {% if post %} value="{{ post.tags }}" {% endif %} {% if return_object %} value="{{ return_object.tags_value }}" {% endif %} required/>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Category <sup>*</sup></td>
+      <td>
+        <select name="category">
+          {% for category in categories %}
+            <option value="{{ category.id }}" {% if post and post.category.id == category.id %} selected {% endif %} {% if return_object and return_object.category_value == category.id %} selected {% endif %}>{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <input type="submit" class="button button-special" {% if post %} value="Update Post" {% else %} value="Create Post" {% endif %} />
+</form>
 <script>
-  const Parchment = Quill.import("parchment");
-  const Delta = Quill.import("delta");
-  class MathjaxInline extends Parchment.Embed {
-    static create(value) {
-      const node = super.create(value);
-      if (typeof value === "string") {
-        node.innerHTML = this.gettex(value);
-        node.contentEditable = "false";
-        node.setAttribute("data-value", value);
-      }
-      return node;
-    }
-
-    static value(domNode) {
-      return domNode.getAttribute("data-value");
-    }
-
-    static gettex(latex) {
-      // make a GET request to /tex, returns a png response. render this to image tag
-      const url = `/ignis/tex?expr="${latex.replace(/'/g, '%27')}"`;
-      const img = `<img src='${url}' style="display: inline-block;margin: 0 auto;height: auto;max-height: 20px;vertical-align: middle;" />`;
-      return img;
-
-    }
+  function slugify(text) {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start of text
+      .replace(/-+$/, '')
+      .replace(/[^a-z0-9]/gi, ' ').trim();
   }
 
-  class MathjaxBlock extends Parchment.Embed {
-    static create(value) {
-      const node = super.create(value);
-      if (typeof value === "string") {
-        node.innerHTML = "" + this.gettex(value);
-        node.contentEditable = "false";
-        node.setAttribute("data-value", value);
-      }
-      return node;
-    }
 
-    static value(domNode) {
-      return domNode.getAttribute("data-value");
-    }
-
-    static gettex(latex) {
-      console.log(latex);
-      // make a POST request to /tex, returns a png response. render this to image tag
-      const url = `/ignis/tex?expr="${latex.replace(/'/g, '%27')}"`;
-      const img = `<img src='${url}' style="display: block; margin-left: auto; margin-right: auto; height: auto; max-height: 120px;" />`;
-      return img;
-    }
-  }
-
-  // Set module properties
-  MathjaxInline.blotName = "mathjax-inline";
-  MathjaxInline.className = "ql-mathjax-inline";
-  MathjaxInline.tagName = "SPAN";
-  MathjaxBlock.blotName = "mathjax-block";
-  MathjaxBlock.className = "ql-mathjax-block";
-  MathjaxBlock.tagName = "DIV";
-
-  // Register the module
-  Quill.register(MathjaxInline);
-  Quill.register(MathjaxBlock);
-
-  function insertFormula(quill, block) {
-    var range = quill.getSelection();
-    var latex = prompt(
-      "Enter a LaTeX formula",
-      quill.getText(range) == "" ? "e=mc^2" : quill.getText(range)
-    );
-    quill.deleteText(range.index, range.length);
-    if (block) {
-      quill.insertEmbed(range.index, "mathjax-block", latex);
+  function customSlugToggle() {
+    var ag_slug = document.getElementById('ag_slug');
+    var slug = document.getElementById('slug');
+    var slug_btn = document.getElementById('slug_btn');
+    if (ag_slug.style.display == 'inline-block') {
+      ag_slug.style.display = 'none';
+      slug.style.display = 'inline-block';
+      slug_btn.innerHTML = 'Use auto generated slug?';
     } else {
-      quill.insertEmbed(range.index, "mathjax-inline", latex);
+      ag_slug.style.display = 'inline-block';
+      slug.style.display = 'none';
+      slug_btn.innerHTML = 'Use custom slug?';
+      var title = document.getElementById('title');
+      slug.value = slugify(title.value);
     }
-    quill.insertText(range.index + range.length + 1, " ");
-    quill.setSelection(range.index + range.length + 1);
   }
-
-  var quill = new Quill("#editor-container", {
-    modules: {
-      toolbar: {
-        container: "#toolbar-container",
-        handlers: {
-          formula: function () {
-            insertFormula(quill, false);
-          },
-          "formula-block": function () {
-            insertFormula(quill, true);
-          },
-          image: function () {
-            // open image upload dialog
-            let fileInput = this.container.querySelector('input.ql-image[type=file]');
-            if (fileInput == null) {
-              fileInput = document.createElement('input');
-              fileInput.setAttribute('type', 'file');
-              fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
-              fileInput.classList.add('ql-image');
-              fileInput.addEventListener('change', () => {
-                if (fileInput.files != null && fileInput.files[0] != null) {
-                  let range = this.quill.getSelection(true);
-                  const url = "/ignis/upload";
-                  const formData = new FormData();
-                  formData.append("image", fileInput.files[0]);
-                  formData.append("id", document.getElementById("random_post_identifier").value);
-                  // append csrf token in header
-                  const headers = new Headers();
-                  headers.append("X-CSRFToken", "{{ csrf_token }}");
-
-                  fetch(url, {
-                    method: "POST",
-                    headers: headers,
-                    body: formData,
-                  }).then((response) => response.json()).then((result) => {
-                    this.quill.updateContents(new Delta()
-                      .retain(range.index)
-                      .delete(range.length)
-                      .insert({ image: result.url })
-                    , Quill.sources.USER);
-                    fileInput.value = "";
-                  }).catch((error) => {
-                    console.error("Error:", error);
-                  });
-                }
-              });
-              this.container.appendChild(fileInput);
-            }
-            fileInput.click();
-          },
-        },
-      },
-    },
-    placeholder: "Compose an epic...",
-    theme: "snow",
-  });
-
-  // update body on text change
-    quill.on("text-change", function (delta, oldDelta, source) {
-        document.getElementById("body").value = quill.root.innerHTML;
-    });
-
-    function slugify(text) {
-        return text
-            .toString()
-            .toLowerCase()
-            .replace(/\s+/g, "-") // Replace spaces with -
-            .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-            .replace(/\-\-+/g, "-") // Replace multiple - with single -
-            .replace(/^-+/, "") // Trim - from start of text
-            .replace(/-+$/, ""); // Trim - from end of text
-    }
-
-    // slugify title
-    document.getElementById("title").addEventListener("input", function () {
-        document.getElementById("slug").value = slugify(this.value);
-    });
-
-    try {
-      const value = document.getElementById("body").value;
-      const newValue = value.replace(/<p><br><\/p>/g, "");
-      const delta = quill.clipboard.convert(value);
-        quill.setContents(delta, "silent");
-    } catch (e) {
-        console.log(e);
-    }
 </script>
+
 {% endblock %}

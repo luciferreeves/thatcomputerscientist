@@ -11,7 +11,7 @@ class CoverImage(models.Model):
     post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE, null=True)

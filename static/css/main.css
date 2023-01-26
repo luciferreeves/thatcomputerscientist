@@ -78,7 +78,7 @@ kbd {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    table-layout: fixed;
+    /* table-layout: fixed; */
 }
 
 #posts td {
@@ -90,16 +90,17 @@ kbd {
 
 #posts th {
     text-align: left;
-    padding: 5px 0px;
-    border-bottom: solid 1px #dddddd;
+    padding: 10px 0px;
+    border-bottom: dotted 1px #dddddd;
+    border-top: solid 1px #dddddd;
     font-weight: bold;
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-size: 11px;
 }
 
-#posts tr {
+/* #posts tr {
     border-bottom: solid 1px #dddddd;
-}
+} */
 
 
 /* Pagination Table */

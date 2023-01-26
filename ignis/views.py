@@ -36,12 +36,12 @@ def tex(request):
 @csrf_exempt
 def post_image(request, size, post_id):
     post_id = post_id.replace('.gif', '')
-    pi = CoverImage.objects.filter(post=Post.objects.get(id=post_id))
+    pi = Post.objects.get(id=post_id)
     if not pi:
         return HttpResponse('No image found!', status=404)
     
     # open image and return
-    image = pi[0].image
+    image = pi.post_image
     with open(image.path, 'rb') as f:
         # resize image
         size = int(size)

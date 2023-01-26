@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
+from django.utils.text import slugify
+UPLOAD_ROOT = 'images/'
 
 # Create your models here.
 class Category(models.Model):
@@ -24,8 +25,9 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
-    body = models.TextField()
-    date = models.DateTimeField()
+    body = models.TextField(blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    post_image = models.ImageField(upload_to="{}/cover_images".format(UPLOAD_ROOT), blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -38,12 +40,12 @@ class Post(models.Model):
     is_public = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.date = timezone.now()
+        if not self.slug or self.slug == '':
+            self.slug = slugify(self.title)
         return super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 class Comment(models.Model):
     post = models.ForeignKey(

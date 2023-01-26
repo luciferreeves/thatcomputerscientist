@@ -1,12 +1,7 @@
-<div>
+<div style="float: right; position: relative; top: -10px;">
     <form style="display: inline-block;" action="{% url 'blog-admin:posts-search' %}" method="get">
         <input style="display: inline;" type="text" name="q" placeholder="Search Posts" autocomplete="off"/>
         <input style="display: inline;" type="submit" value="Search" class="button" />
     </form>
-    <span style="margin-left:10px;"><a href="{% url 'blog-admin:new-post' %}" class="button button-special" style="text-decoration: none;">Create New Post</a></span>
+    <span style="margin-left:10px;"><a href="{% url 'blog-admin:new-post' %}?mode=new" class="button button-special" style="text-decoration: none;">Create New Post</a></span>
 </div>
-<br><br><br>
-<h2>{{ title }}</h2>
-{% for message in messages  %}
-    <p class="{{message.tags}}" style="text-align:center;">{{ message }}</p>
-{% endfor %}

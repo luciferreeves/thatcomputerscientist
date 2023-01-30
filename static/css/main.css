@@ -328,9 +328,8 @@ kbd {
 
 #article-body img, #editor-container img {
     height: 250px;
-    width: auto;
     float: left;
-    padding: 0px 20px 20px 0px;
+    padding: 0px 13px 0px 0px;
 }
 
 #article-body h2, #article-body h1, #editor-container h2, #editor-container h1 {

@@ -102,6 +102,12 @@ def post(request, slug):
         for code_block in code_blocks:
             code_block.replace_with(BeautifulSoup(highlight_code_blocks(code_block), 'html.parser'))
 
+        # float: right every other image
+        images = soup.find_all('img')
+        for i in range(len(images)):
+            if i % 2 != 0:
+                images[i]['style'] = 'float: right; padding: 0px 0px 0px 13px;'
+
         post.body = str(soup)
 
 

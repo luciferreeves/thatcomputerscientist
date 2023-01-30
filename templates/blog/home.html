@@ -12,18 +12,14 @@
   <p>
     Also, To participate around various sections of the site, you will need to <a href="{% url 'blog:register' %}">register</a> for an account. I hope you enjoy your stay here.
   </p>
-  <img src="{% static 'images/gifs/construction.gif' %}" style="height:auto; width: 100%;">
+  <img src="{% static 'images/gifs/construction.gif' %}" style="width: 720px;">
 </div>
 
-<div id="fake-banner-ad" class="mtctitem">
-  <h2>Advertisement</h2>
-  {% load ad %}
-  <img src="{{'banner'|ad }}" alt="Ad" style="width: 100%; height: auto;" border="0"/>
-</div>
+
 
 {% if announcements is not None %}
 <div id="announcements" class="mtctitem">
-  <h2><img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px; width: auto;"></h2>
+  <h2><img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px;"></h2>
   <marquee behavior="scroll" direction="up" height="250" width="720" scrollamount="2" scrolldelay="20" onmouseover="this.stop()" onmouseout="this.start()">
     <ul style="width: 720px;">
       {% for announcement in announcements %}
@@ -45,7 +41,11 @@
   </marquee>
 </div>
 {% endif %}
-
+<div id="fake-banner-ad" class="mtctitem">
+  {% comment %} <h2>Advertisement</h2> {% endcomment %}
+  {% load ad %}
+  <img src="{{'banner'|ad }}" alt="Ad" style="width: 720px;" border="0"/>
+</div>
 {% if recent_posts %}
 <div id="recent-posts" class="mtctitem">
   <h2>Recent Posts</h2>
@@ -61,7 +61,7 @@
       </p>
       <div style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
         <span>
-          <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 11px; width: 320px; height: auto;">
+          <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 11px; width: 320px;">
         </span>
           {{ post.excerpt | safe }}
       </div>

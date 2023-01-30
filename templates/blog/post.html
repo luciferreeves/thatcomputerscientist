@@ -17,13 +17,13 @@
 
 
 <div id="comments" style="clear: both;" class="mtsbitem">
-    <h2>Comments</h2>
     {% for comment in comments %}
+        <h2>Comments</h2>
         <div id="comment-{{ comment.id }}">
             <table>
                 <tr>
                     <td style="width: 60px; vertical-align: top;">
-                        <img src="{% static 'images/avatars/' %}{{ comment.avatar_url }}.png" alt="Profile Picture" style="width: 50px; height: auto;">
+                        <img src="{% static 'images/avatars/' %}{{ comment.avatar_url }}.png" alt="Profile Picture" style="width: 50px;">
                     </td>
                     <td style="vertical-align: top; width: 668px;">
                         <div style="margin-bottom: 13px; border-bottom: dashed 1px white; padding-bottom: 13px;">

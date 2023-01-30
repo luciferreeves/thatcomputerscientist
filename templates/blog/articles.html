@@ -40,7 +40,7 @@
       <div class="post" style="clear: both;">
         <div style="text-align: justify; font-size: 13px; margin-bottom: 0px;">
           <span>
-            <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 11px; width: 320px; height: auto;">
+            <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; margin-right: 11px; width: 320px;">
           </span>
             <h1 style="margin-top: 0px; margin-bottom: 0px;">
                 <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>

@@ -3,18 +3,25 @@ from django.contrib.auth.models import User
 from blog.models import Post
 import re
 import jellyfish
+from fuzzywuzzy import process
 
 def get_similar_posts(slug):
 
     posts = Post.objects.all().filter(is_public=True)
-    similar_posts = []
-    for post in posts:
+    similar_posts = set()
+    title_choices = [post.title for post in posts]
+    slug_choices = [post.slug for post in posts]
 
-        slug_similarity = jellyfish.jaro_winkler(slug, post.slug)
-        title_similarity = jellyfish.jaro_winkler(slug, post.title)
-        
-        if slug_similarity > 0.8 or title_similarity > 0.8:
-            similar_posts.append(post)
+    title_match = process.extract(slug.replace('-', ' '), title_choices, limit=5)
+    slug_match = process.extract(slug, slug_choices, limit=5)
+
+    for title, score in title_match:
+        if score > 80:
+            similar_posts.add(posts.get(title=title))
+
+    for slug, score in slug_match:
+        if score > 80:
+            similar_posts.add(posts.get(slug=slug))
 
     return similar_posts
 

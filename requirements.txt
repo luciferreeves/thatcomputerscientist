@@ -12,3 +12,6 @@ pycryptodome
 pygments
 bs4
 jellyfish
+fuzzywuzzy
+python-Levenshtein
+

@@ -124,9 +124,9 @@ def post(request, slug):
             if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
                 return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
             else:
-                return HttpResponse('Post not found!', status=404)
+                raise Http404
     except Post.DoesNotExist:
-        return HttpResponse('Post not found!', status=404)
+        raise Http404
 
 def comment(request, slug):
     if request.method == 'POST':

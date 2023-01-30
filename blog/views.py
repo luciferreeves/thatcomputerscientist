@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from users.models import UserProfile
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
@@ -267,22 +267,26 @@ def articles(request, date=None, cg=None):
     return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category, 'type': type, 'date': date if date else '', 'cg': cg if cg else ''})
 
 def user_activity(request, username):
-    user = User.objects.get(username=username)
-    user_profile = UserProfile.objects.get(user=user)
-    if user_profile.is_public or user == request.user:
-        recent_comments = Comment.objects.filter(user=user).order_by('-created_at')[:5]
-    else:
-        recent_comments = []
+    try:
+        user = User.objects.get(username=username)
+        user_profile = UserProfile.objects.get(user=user)
+        if user_profile.is_public or user == request.user:
+            recent_comments = Comment.objects.filter(user=user).order_by('-created_at')[:5]
+        else:
+            recent_comments = []
 
-    if user_profile.email_public:
-        user_email = user.email
-    else:
-        user_email = ''
+        if user_profile.email_public:
+            user_email = user.email
+        else:
+            user_email = ''
 
-    for comment in recent_comments:
-        comment.body = comment_processor(comment.body)
+        for comment in recent_comments:
+            comment.body = comment_processor(comment.body)
 
-    return render(request, 'blog/activity.html', {'title': 'User Activity', 'activity_user': user, 'activity_user_profile': user_profile, 'activity_recent_comments': recent_comments, 'activity_user_email': user_email})
+        return render(request, 'blog/activity.html', {'title': 'User Activity', 'activity_user': user, 'activity_user_profile': user_profile, 'activity_recent_comments': recent_comments, 'activity_user_email': user_email})
+    except User.DoesNotExist:
+        # return default 404 page
+        raise Http404
 
 def archives(request):
     archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')

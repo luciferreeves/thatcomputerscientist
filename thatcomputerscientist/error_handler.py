@@ -30,7 +30,7 @@ def get_similar_users(username):
     return similar_users
 
 
-def _404(request, exception):
+def custom_404(request, exception):
     # Your custom 404 view logic here
     context = {
         'mode': 'generic',

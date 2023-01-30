@@ -28,7 +28,7 @@ sitemaps = {
     'github': GithubSitemap,
 }
 
-handler404 = 'thatcomputerscientist.error_handler._404'
+handler404 = 'thatcomputerscientist.error_handler.custom_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),

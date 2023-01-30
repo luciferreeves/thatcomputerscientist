@@ -38,7 +38,7 @@ def custom_404(request, exception):
     }
     path = request.path[1:] if request.path.startswith('/') else request.path
 
-    if (re.fullmatch(r'[\w-]+', path) or re.fullmatch(r'articles/[\w-]+', path)) and '-' in path:
+    if (re.fullmatch(r'[\w-]+', path) and '-' in path) or re.fullmatch(r'articles/[\w-]+', path):
         context['mode'] = 'article'
         path = path.replace('articles/', '') if path.startswith('articles/') else path
         similar_posts = get_similar_posts(path)

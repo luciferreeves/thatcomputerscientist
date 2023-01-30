@@ -143,6 +143,7 @@ kbd {
     background: -webkit-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
     background: linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3E4245",endColorstr="#2E3131",GradientType=1);
+    text-decoration: none;
 }
 
 .button-special {

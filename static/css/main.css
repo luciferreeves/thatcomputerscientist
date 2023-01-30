@@ -146,6 +146,10 @@ kbd {
     text-decoration: none;
 }
 
+.button:hover {
+    text-decoration: none;
+}
+
 .button-special {
     background-color: #8663e5;
     background: -moz-linear-gradient(90deg, #8663e5 0%, #6735c6 100%);

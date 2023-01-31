@@ -108,6 +108,11 @@ def post(request, slug):
             if i % 2 != 0:
                 images[i]['style'] = 'float: right; padding: 0px 0px 0px 13px;'
 
+        # remove all paragraphs which are: "<p class="ql-align-justify"><br></p>"
+        for p in soup.find_all('p', class_='ql-align-justify'):
+            if p.find('br') is not None:
+                p.decompose()
+
         post.body = str(soup)
 
 

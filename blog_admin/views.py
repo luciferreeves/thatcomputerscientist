@@ -99,44 +99,22 @@ def new_post(request):
 
 def edit_post(request, slug):
     if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
-        categories = Category.objects.all()
         post = Post.objects.get(slug = slug)
         if request.method == 'POST':
-            title = request.POST.get('title')
             body = request.POST.get('body')
             body = re.sub(r'<p><br></p>', '', body)
             body = re.sub(r'<p class="ql-align-justify"><br></p>', '', body)
-            body = re.sub(r'<p class="ql-align-center"><br></p>', '', body)
-            category = request.POST.get('category')
-            tags = request.POST.get('tags')
-            slug = request.POST.get('slug')
-            post_image = request.FILES['post_image'] if 'post_image' in request.FILES else None
-            if title and body and category and tags and slug:
-                try:
-                    category = Category.objects.get(slug = category)
-                    tags = tags.split(',')
-                    tags = [tag.strip() for tag in tags]
-                    tags = [Tag.objects.get_or_create(slug = tag, name = tag)[0] for tag in tags]
-                    post.title = title
-                    post.body = body
-                    post.category = category
-                    post.slug = slug
-                    post.author = request.user
-                    post.tags.set(tags)
-                    if post_image:
-                        # update post image to cover image
-                        post_image = CoverImage.objects.create(image = post_image, post = post, name = 'cover image for {}'.format(post.slug))
-                    post.save()
-                    messages.success(request, 'Post edited successfully!')
-                    return redirect('blog-admin:posts')
-                except Exception as e:
-                    messages.error(request, 'Error: {}'.format(e), extra_tags='edit_post_create_error')
-                    return render(request, 'blog_admin/edit_post.html', { 'title': 'Edit Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug, 'post': post })
-            else:
-                messages.error(request, 'Error: All fields are required!', extra_tags='edit_post_create_error')
-                return render(request, 'blog_admin/edit_post.html', { 'title': 'Edit Post', 'categories': categories, 'blog_title': title, 'blog_body': body, 'blog_category': category, 'blog_tags': tags, 'blog_slug': slug, 'post': post })
+            try:
+                post.body = body
+                post.save()
+                messages.success(request, 'Post edited successfully!')
+                return redirect('blog-admin:posts')
+            except Exception as e:
+                messages.error(request, 'Error: {}'.format(e), extra_tags='edit_post_create_error')
+                return render(request, 'blog_admin/edit_post.html', { 'title': 'Edit Post', 'post': post })
+
         else:
-            return render(request, 'blog_admin/edit_post.html', { 'title': 'Edit Post', 'categories': categories, 'blog_title': post.title, 'blog_body': post.body, 'blog_category': post.category.slug, 'blog_tags': ','.join([tag.slug for tag in post.tags.all()]), 'blog_slug': post.slug, 'post': post })
+            return render(request, 'blog_admin/edit_post.html', { 'title': 'Edit Post', 'post': post })
     else:
         return redirect('blog:home')
 

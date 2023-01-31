@@ -6,7 +6,11 @@
   <div style="width: 500px; display: inline;">
     {% if context.mode == 'article' %}
       {% load random_numbers %}
+      {% if context.similar_posts %}
       <img src="/static/images/site/errors/404/{% random_numbers 1 4 %}.gif" style="width: 500px;">
+      {% else %}
+      <img src="{% static 'images/site/errors/404/404.gif' %}" style="width: 500px;">
+      {% endif %}
       <br><br>
       <p>Hey! Skippy here! I am the 404 Assistant Bot for this site. Looks like you are trying to search an article, but I couldn't find the page. {% if context.similar_posts %}Maybe you are looking for one of these?{% endif %}</p>
       <ul style="position: relative; left: 30px; top: 10px;">

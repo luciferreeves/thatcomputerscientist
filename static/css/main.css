@@ -347,7 +347,7 @@ blockquote {
 }
 
 #article-body img, #editor-container img {
-    height: 250px;
+    height: 300px;
     float: left;
     padding: 0px 13px 0px 0px;
 }

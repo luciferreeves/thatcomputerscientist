@@ -359,6 +359,6 @@ blockquote {
     text-transform: uppercase;
     padding-bottom: 0px;
     border-bottom: none;
-    margin: 13px;
+    margin: 13px 0px;
     font-size: 14px;
 }

@@ -63,4 +63,13 @@
       </div>
     </div>
   </body>
+  <script type="text/javascript" src="http{% if request.is_secure %}s{% endif %}://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full">
+  </script>
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+          }
+      });
+  </script>
 </html>

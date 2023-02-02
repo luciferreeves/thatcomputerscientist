@@ -14,6 +14,7 @@ def add_excerpt(post):
     # Create excerpt, count min 1000 characters and max upto next paragraph
     excerpt = ''
     for paragraph in soup.find_all('p'):
+        paragraph = '<p>' + str(paragraph.text) + '</p>'
         excerpt += str(paragraph)
 
         if len(excerpt) >= 1000:

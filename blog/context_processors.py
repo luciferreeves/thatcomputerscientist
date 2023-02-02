@@ -94,5 +94,8 @@ def comment_processor(comment):
     comment = re.sub(r'__(.+?)__', r'<i>\1</i>', comment)
     comment = re.sub(r'~~(.+?)~~', r'<s>\1</s>', comment)
 
+    # remove any br tags at the end of the comment
+    comment = re.sub(r'<br>$', '', comment)
+
     return comment
 

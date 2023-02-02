@@ -74,9 +74,12 @@ kbd {
 }
 
 blockquote {
-    border-left: solid 5px #a591ee;
-    padding-left: 10px;
-    margin: 10px 0px;
+    border-left: solid 4px #a591ee;
+    width: 650px;
+    margin: 0px auto;
+    padding: 8px;
+    background: #2f2f2f;
+    color: #dddddd;
 }
 
 /* Full width auto spacing table... ellipsis if text overflows */

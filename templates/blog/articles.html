@@ -8,6 +8,8 @@
 <h2 style="margin-top:0px;"> Posts made in Category: {{ category }}</h2>
 {% endif %}
 
+
+{% if posts %}
 <form id="filters" method="get">
     <span><b>Filters:</b>&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <label for="order_by">Order By: </label>
@@ -32,8 +34,6 @@
     <span>&nbsp;&nbsp;</span>
     <input type="submit" value="Apply" class="button button-special" />
 </form>
-
-{% if posts %}
 <div id="recent-posts" class="mtctitem">
     {% for post in posts %}
       <br>
@@ -54,7 +54,6 @@
       <br>
     {% endfor %}
 </div>
-{% endif %}
 <div>
     <table id="pagination" style="clear: both;">
         <tr>
@@ -79,5 +78,16 @@
     </tr>
   </table>
 </div>
-
+<script type="text/javascript" src="http{% if request.is_secure %}s{% endif %}://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    });
+</script>
+{% else %}
+    <p>No posts found.</p>
+{% endif %}
 {% endblock %}

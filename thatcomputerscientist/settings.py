@@ -79,6 +79,7 @@ CONFIGURED_SUBDOMAINS = {
 
 ROOT_URLCONF = 'thatcomputerscientist.urls'
 
+AUTHENTICATION_BACKENDS = ['thatcomputerscientist.backends.CaseInsensitiveModelBackend']
 
 TEMPLATES = [
     {

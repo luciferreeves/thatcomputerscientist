@@ -273,7 +273,7 @@ def articles(request, date=None, cg=None):
 
 def user_activity(request, username):
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.get(username__iexact=username)
         user_profile = UserProfile.objects.get(user=user)
         if user_profile.is_public or user == request.user:
             recent_comments = Comment.objects.filter(user=user).order_by('-created_at')[:5]

@@ -44,8 +44,8 @@ class RegisterForm(forms.Form):
 
     def save(self, request):
         user = User.objects.create_user(
-            username=self.cleaned_data.get('username'),
-            email=self.cleaned_data.get('email'),
+            username=self.cleaned_data.get('username').lower(),
+            email=self.cleaned_data.get('email').lower(),
             password=self.cleaned_data.get('password1'),
         )
         user.save()

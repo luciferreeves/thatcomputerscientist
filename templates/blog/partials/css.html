@@ -1,0 +1,366 @@
+<style>
+    body {
+        background: black;
+        background-image: url("../images/site/bg.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+        font-size: 11px;
+        font-family: Verdana,Helvetica,Arial,Sans-Serif;
+        margin: 0px auto 0px;
+        padding: 0px;
+        color: #dddddd;
+        box-sizing: border-box;
+    }
+    
+    #editor-container {
+        font-size: 11px;
+        font-family: Verdana,Helvetica,Arial,Sans-Serif;
+    }
+    
+    a, #editor-container a {
+        color: #a591ee;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+    
+    h2, h3, #editor-container h2 {
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        margin: 0px;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+        border-bottom: solid 1px #dddddd;
+        margin-bottom: 15px;
+    }
+    
+    h3 {
+        text-transform: none;
+    }
+    
+    input, textarea, select {
+        padding: 5px 10px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        font-size: 11px;
+        font-family: Verdana,Helvetica,Arial,Sans-Serif;
+    }
+    
+    textarea {
+        background: transparent;
+        border: solid 1px whitesmoke;
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-line;
+    }
+    
+    kbd {
+        background-color: #eee;
+        border-radius: 3px;
+        border: 1px solid #b4b4b4;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+        color: #333;
+        display: inline-block;
+        font-size: 0.85em;
+        font-weight: 700;
+        line-height: 1;
+        padding: 2px 4px;
+        white-space: nowrap;
+    }
+    
+    blockquote {
+        border-left: solid 4px #a591ee;
+        width: 650px;
+        margin: 0px auto;
+        padding: 8px;
+        background: #2f2f2f;
+        color: #dddddd;
+    }
+    
+    /* Full width auto spacing table... ellipsis if text overflows */
+    #posts {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        /* table-layout: fixed; */
+    }
+    
+    #posts td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 5px 0px;
+    }
+    
+    #posts th {
+        text-align: left;
+        padding: 10px 0px;
+        border-bottom: dotted 1px #dddddd;
+        border-top: solid 1px #dddddd;
+        font-weight: bold;
+        text-transform: capitalize;
+        font-size: 11px;
+    }
+    
+    /* #posts tr {
+        border-bottom: solid 1px #dddddd;
+    } */
+    
+    
+    /* Pagination Table */
+    #pagination {
+        margin: 20px auto;
+        border-collapse: collapse;
+        font-weight: bold;
+    }
+    
+    #pagination a {
+        display: inline-block;
+        padding: 5px 10px;
+    }
+    
+    
+    .active {
+        color: #fff;
+    }
+    
+    .disabled {
+        color: #dddddd;
+        /* show invalid cursor */
+        cursor: not-allowed;
+    }
+    
+    
+    .button {
+        background-color: #3E4245;
+        border-radius: 5px;
+        color: #dddddd;
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px;
+        outline: none;
+        border: none;
+        text-decoration: none;
+        font-size: 11px;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+        background: -moz-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+        background: -webkit-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+        background: linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3E4245",endColorstr="#2E3131",GradientType=1);
+        text-decoration: none;
+    }
+    
+    .button:hover {
+        text-decoration: none;
+    }
+    
+    .button-special {
+        background-color: #8663e5;
+        background: -moz-linear-gradient(90deg, #8663e5 0%, #6735c6 100%);
+        background: -webkit-linear-gradient(90deg, #8663e5 0%, #6735c6 100%);
+        background: linear-gradient(90deg, #8663e5 0%, #6735c6 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8663e5",endColorstr="#6735c6",GradientType=1);
+    }
+    
+    .mtsbitem {
+        margin-top: 40px;
+    }
+    
+    .mtctitem {
+        margin-top: 20px;
+    }
+    
+    .error, .errorlist {
+        color: #fa3737;
+    }
+    
+    .success {
+        color: #00ff00;
+    }
+    
+    .info {
+        color: #65c6c6;
+    }
+    
+    .ac {
+        margin-right: 5px;
+        height: 12px;
+        width: 30px;
+    }
+    
+    .ac2 {
+        margin-right: 5px;
+        width: 30px;
+        height: 14px;
+    }
+    
+    .post-actions {
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: bold;
+        margin: 10px 0px 20px 0px;
+        padding: 0px;
+    }
+    
+    .ql-mathjax-block img, .ql-mathjax-inline img {
+        float: none !important;
+    }
+    
+    .ql-mathjax-block img {
+        margin-bottom: 15px;
+        padding: 0px !important;
+    }
+    
+    .ql-mathjax-inline img{
+        padding: 0px !important;
+    }
+    
+    .highlight {
+        background: none !important;
+        text-align: left !important;
+    }
+    
+    .comment {
+        width: 630px;
+        margin-bottom: 40px;
+    }
+    
+    .comment .highlight {
+        width: 630px;
+    }
+    
+    .comment pre {
+        margin: 0px;
+    }
+    
+    .noselect {
+        user-select: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+    
+    #wrap {
+        width: 1000px;
+        margin: auto;
+        text-align: left;
+    }
+    
+    #header {
+        background-image: url("../images/site/Banner.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: auto;
+        width: 1000px;
+        height: 360px;
+    }
+    
+    #navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul, #user-area ul, #fun-stuff ul, #activity ul {
+        margin: 0px;
+        padding: 0px;
+    }
+    
+    #register_form ul {
+        padding: 0px;
+        list-style-type: none;
+    }
+    
+    #navigation-area li, #archives-area li, #categories-area li, #admin-area li, #announcements li, #user-area li, #fun-stuff li, #activity li {
+        display: block;
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+    }
+    
+    #navigation-area img, #archives-area img, #categories-area img, #user-area img, #fun-stuff img {
+        width: 24px;
+        vertical-align:middle;
+    }
+    
+    #admin-area img {
+        width: 14px;
+        vertical-align:middle;
+    }
+    
+    #navigation-area span, #archives-area span, #categories-area span, #admin-area span, #announcements span, #user-area span, #fun-stuff span {
+        margin-right: 10px;
+    }
+    
+    #sidebar {
+        float: left;
+        margin: 0px;
+        padding: 0px;
+        width: 250px;
+        height: 100%;
+        display: inline;
+    }
+    
+    #content {
+        float: left;
+        margin: 0px;
+        padding: 0px 0px 0px 20px;
+        width: 730px;
+        height: 100%;
+        display: inline;
+    }
+    
+    #footer {
+        clear: both;
+        margin: 20px auto;
+        padding: 5px 0px 0px 0px;
+        width: 1000px;
+        display: block;
+    }
+    
+    #login-form div {
+        margin: 0px 0px 15px 0px;
+        padding: 0px;
+    }
+    
+    #login-form span {
+        display: inline-block;
+        width: 70px;
+    }
+    
+    #recent-posts h1 {
+        margin: 0px;
+        padding: 0px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    #recent-posts a {
+        color: #91b3ee;
+    }
+    
+    #recent-posts h1 a {
+        color: #56a6a1;
+    }
+    
+    #article-body, #editor-container {
+        font-size: 13px;
+        text-align: justify;
+    }
+    
+    #article-body img, #editor-container img {
+        height: 300px;
+        float: left;
+        padding: 0px 13px 0px 0px;
+    }
+    
+    #article-body h2, #article-body h1, #editor-container h2, #editor-container h1 {
+        text-transform: uppercase;
+        padding-bottom: 0px;
+        border-bottom: none;
+        margin: 13px 0px;
+        font-size: 14px;
+    }
+</style>

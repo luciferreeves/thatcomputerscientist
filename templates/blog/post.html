@@ -113,7 +113,6 @@
     <p><em>You must be logged in to leave a comment.</em></p>
 </div>
 {% endif %}
-{% include 'blog/partials/mathjax.html' %}
 <script>
     function editComment(id) {
         document.getElementById('comment-body-' + id).style.display = 'none';
@@ -186,4 +185,5 @@
         });
     }
 </script>
+{% include 'blog/partials/mathjax.html' %}
 {% endblock %}

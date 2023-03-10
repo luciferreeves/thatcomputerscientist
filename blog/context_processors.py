@@ -60,7 +60,6 @@ def highlight_code_blocks(code_block):
         cb = code_block.string
     except:
         cb = code_block
-    print(cb)
     cb = cb.replace(u'\xa0', u' ')
 
     # guess the language as there is no data-lang attribute

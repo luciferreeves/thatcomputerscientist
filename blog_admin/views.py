@@ -74,7 +74,6 @@ def new_post(request):
                         post.save()
                         return redirect(reverse('blog-admin:edit-post', kwargs = { 'slug': post.slug }))
                     except Exception as e:
-                        print(e)
                         messages.error(request, 'Some error occured while creating post.', extra_tags='error')
                         return redirect('blog-admin:posts')
             

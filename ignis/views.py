@@ -69,21 +69,20 @@ def post_image(request, size, post_id):
 
 @csrf_exempt
 def get_image(request, post_id, image_name):
-    if 'rpi_' in post_id:
-        # post has random post identifier => means it's a new post and not saved yet
-        # get image from temp_post_id
-        pi = PostImage.objects.filter(temp_post_id=post_id, name=image_name)
-    else:
-        # post has id => means it's an existing post
-        # get image from post_id
-        pi = PostImage.objects.filter(post=Post.objects.get(id=post_id), name=image_name)
+    # get image from post_id
+    pi = PostImage.objects.filter(post=Post.objects.get(id=post_id), name=image_name)
     if not pi:
         return HttpResponse('No image found!', status=404)
     
     # open image and return
     image = pi[0].image
     with open(image.path, 'rb') as f:
-        return HttpResponse(f.read(), content_type='image/{}'.format(image.name.split('.')[-1]))
+        image_file = f.read()
+        # convert to gif
+        image = Image.open(BytesIO(image_file))
+        output = BytesIO()
+        image.save(output, format='GIF')
+        return HttpResponse(output.getvalue(), content_type='image/gif')
 
 @csrf_exempt
 def cover_image(request, repository):
@@ -99,7 +98,6 @@ def cover_image(request, repository):
         # image is not in RepositoryTitles
         # get image
         url = 'https://socialify.thatcomputerscientist.com/luciferreeves/{}/png?font=KoHo&language=1&language2=1&name=1&theme=Dark&pattern=Solid'.format(repository)
-        print("Getting image for repository: {}".format(repository))
         image = requests.get(url).content
 
         # reduce image size to 320x160
@@ -142,14 +140,13 @@ def upload_image(request):
         # upload image to PostImage model
         image = request.FILES['image']
         post_id = request.POST['id']
-        if 'rpi_' in post_id:
-            # post has random post identifier => means it's a new post and not saved yet
-            # save image to temp_post_id
-            pi = PostImage(image=image, temp_post_id=post_id, post=None, name=image.name)
-        else:
-            # post has id => means it's an existing post
-            # save image to post_id
-            pi = PostImage(image=image, post=Post.objects.get(id=post_id), name=image.name)
+        # check if image already exists
+        pi = PostImage.objects.filter(post=Post.objects.get(id=post_id), name=image.name)
+        if pi:
+            # image already exists, delete it
+            pi[0].delete()
+        # save image to post_id
+        pi = PostImage(image=image, post=Post.objects.get(id=post_id), name=image.name)
         pi.save()
         response = {
             'url': '/ignis/image/{}/{}'.format(post_id, pi.name)

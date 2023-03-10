@@ -33,7 +33,7 @@ class CategorySitemap(Sitemap):
         return obj.created_at
 
     def location(self, obj):
-        return '/articles/categories/%s' % obj.slug
+        return '/weblog/categories/%s' % obj.slug
 
 class TagSitemap(Sitemap):
     changefreq = "weekly"
@@ -47,7 +47,7 @@ class TagSitemap(Sitemap):
         return obj.created_at
 
     def location(self, obj):
-        return '/articles/tags/%s' % obj.slug
+        return '/weblog/tags/%s' % obj.slug
 
 class StaticViewSitemap(Sitemap):
     changefreq = "always"

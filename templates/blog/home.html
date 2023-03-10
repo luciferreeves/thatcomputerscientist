@@ -15,8 +15,6 @@
   <img src="{% static 'images/gifs/construction.gif' %}" style="width: 720px;">
 </div>
 
-
-
 {% if announcements is not None %}
 <div id="announcements" class="mtctitem">
   <h2><img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px;"></h2>
@@ -71,39 +69,7 @@
     </div>
   {% endfor %}
 </div>
-<script type="text/javascript" src="{% static 'js/MathJax/MathJax.js' %}?config=TeX-AMS-MML_HTMLorMML-full">
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Register.StartupHook("End Jax",function () {
-      var BROWSER = MathJax.Hub.Browser;
-    
-      var canUseMML = (BROWSER.isFirefox && BROWSER.versionAtLeast("1.5")) ||
-                      (BROWSER.isMSIE    && BROWSER.hasMathPlayer) ||
-                      (BROWSER.isSafari  && BROWSER.versionAtLeast("5.0")) ||
-                      (BROWSER.isOpera   && BROWSER.versionAtLeast("9.52") &&
-                                           !BROWSER.versionAtLeast("14.0"));
-    
-      var CONFIG = MathJax.Hub.CombineConfig("MMLorHTML",{
-        prefer: {
-          MSIE:"MML", Firefox:"HTML", Opera:"HTML", Chrome:"HTML", Safari:"HTML",
-          other:"HTML"
-        }
-      });
-    
-      var jax = CONFIG.prefer[BROWSER] || CONFIG.prefer.other;
-      if (jax === "HTML") jax = "HTML-CSS"; else if (jax === "MML")  jax = "NativeMML";
-      if (jax === "NativeMML" && !canUseMML) jax = CONFIG.prefer.other;
-      return MathJax.Hub.setRenderer(jax);
-    });
-    MathJax.Hub.Config({
-        "tex2jax": {
-          "inlineMath": [['$','$'], ['\\(','\\)']],
-        },
-        "fast-preview": {
-            disabled: true
-        }
-    });
-</script>
+{% include 'blog/partials/mathjax.html' %}
 {% endif %}
 
 {% endblock %}

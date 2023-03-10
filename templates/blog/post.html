@@ -15,7 +15,6 @@
     <div id="article-body">{{ post.body | safe }}</div>
 </div>
 
-
 <div id="comments" style="clear: both;" class="mtsbitem">
     {% if comments %}
     <h2>Comments</h2>
@@ -99,6 +98,11 @@
                 &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + K</kbd>
                 <br><br>
             </li>
+            <li>Wrap text in double dollar sign ($$) to make it a math block and single dollar sign ($) to make it inline math. You can use LaTeX syntax.
+                <br>
+                &nbsp;&nbsp;e.g. <code>$$\frac{1}{2}$$</code> or <code>$\frac{1}{2}$</code>
+                <br><br>
+            </li>
         </ul>
         <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
     </div>
@@ -109,39 +113,7 @@
     <p><em>You must be logged in to leave a comment.</em></p>
 </div>
 {% endif %}
-<script type="text/javascript" src="{% static 'js/MathJax/MathJax.js' %}?config=TeX-AMS-MML_HTMLorMML-full">
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Register.StartupHook("End Jax",function () {
-      var BROWSER = MathJax.Hub.Browser;
-    
-      var canUseMML = (BROWSER.isFirefox && BROWSER.versionAtLeast("1.5")) ||
-                      (BROWSER.isMSIE    && BROWSER.hasMathPlayer) ||
-                      (BROWSER.isSafari  && BROWSER.versionAtLeast("5.0")) ||
-                      (BROWSER.isOpera   && BROWSER.versionAtLeast("9.52") &&
-                                           !BROWSER.versionAtLeast("14.0"));
-    
-      var CONFIG = MathJax.Hub.CombineConfig("MMLorHTML",{
-        prefer: {
-          MSIE:"MML", Firefox:"HTML", Opera:"HTML", Chrome:"HTML", Safari:"HTML",
-          other:"HTML"
-        }
-      });
-    
-      var jax = CONFIG.prefer[BROWSER] || CONFIG.prefer.other;
-      if (jax === "HTML") jax = "HTML-CSS"; else if (jax === "MML")  jax = "NativeMML";
-      if (jax === "NativeMML" && !canUseMML) jax = CONFIG.prefer.other;
-      return MathJax.Hub.setRenderer(jax);
-    });
-    MathJax.Hub.Config({
-        "tex2jax": {
-          "inlineMath": [['$','$'], ['\\(','\\)']],
-        },
-        "fast-preview": {
-            disabled: true
-        }
-    });
-</script>
+{% include 'blog/partials/mathjax.html' %}
 <script>
     function editComment(id) {
         document.getElementById('comment-body-' + id).style.display = 'none';

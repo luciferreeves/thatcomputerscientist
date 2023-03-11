@@ -62,7 +62,7 @@
             <br><br>
             <span style="font-size: 11px">Tags: </span>
             {% for tag in post.tags.all %}
-                <a href="#" class="tag">{{ tag.name|title }}</a>
+                <a href="#" class="tag">{{ tag.name|title }}</a>{% if not forloop.last %},{% endif %}
             {% endfor %}
             <br><br>
             <hr>

@@ -8,7 +8,7 @@
     </p>
     <p>Tags:
         {% for tag in tags %}
-            <a href="#" class="tag">{{ tag.name|title }}</a>
+            <a href="#" class="tag">{{ tag.name|title }}</a>{% if not forloop.last %},{% endif %}
         {% endfor %}
     </p>
     <hr>

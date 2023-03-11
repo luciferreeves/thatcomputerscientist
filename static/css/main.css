@@ -247,6 +247,24 @@ blockquote {
     -webkit-touch-callout: none;
 }
 
+.tag {
+    padding: 2px 4px;
+    margin: 0px 2px;
+    border-radius: 3px;
+    background: #3E4245;
+    color: #dddddd;
+    font-size: 11px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    background: -moz-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+    background: -webkit-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+    background: linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3E4245",endColorstr="#2E3131",GradientType=1);
+}
+
+.tag:hover {
+    text-decoration: none;
+}
+
 #wrap {
     width: 1000px;
     margin: auto;

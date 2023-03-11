@@ -30,7 +30,7 @@
           {% endif %}
         </span>
         <span>
-          <b>{{ announcement.created_at | date:"M d, Y" }}</b>:  <div style="text-align: justify">{{ announcement.content | safe }}</div>
+          <b>{{ announcement.created_at | date:"M d, Y" }}</b>: {{ announcement.content | safe }}
         </span>
       </li>
       <br><br>

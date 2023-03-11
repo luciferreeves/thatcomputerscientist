@@ -56,9 +56,18 @@
     <tr>
       <td style="font-weight: bold; padding-right: 20px;">Tags <sup>*</sup></td>
       <td>
-        <input type="text" name="tags" placeholder="tag1,tag2,tag3..." {% if post %} value="{{ post.tags }}" {% endif %} {% if return_object %} value="{{ return_object.tags_value }}" {% endif %} required/>
+        <select name="tags" multiple="multiple" required>
+          {% for tag in all_tags %}
+            <option value="{{ tag }}" {% if post and tag in post.tags %} selected {% endif %} {% if return_object and tag in return_object.tags_value %} selected {% endif %}>{{ tag }}</option>
+          {% endfor %}
+        </select>
       </td>
     </tr>
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Additional Tags</td>
+      <td>
+        <input type="text" name="additional_tags" placeholder="Comma-Separated Additional Tags" {% if return_object %} value="{{ return_object.additional_tags_value }}" {% endif %} />
+      </td>
     <tr>
       <td style="font-weight: bold; padding-right: 20px;">Category <sup>*</sup></td>
       <td>
@@ -74,16 +83,16 @@
   <input type="submit" class="button button-special" {% if post %} value="Update Post" {% else %} value="Create Post" {% endif %} />
 </form>
 <script>
-  function slugify(text) {
-    return text.toString().toLowerCase()
-      .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-      .replace(/^-+/, '')             // Trim - from start of text
-      .replace(/-+$/, '')
-      .replace(/[^a-z0-9]/gi, ' ').trim();
-  }
-
+  String.prototype.slugify = function (separator = "-") {
+    return this
+      .toString()
+      .normalize('NFD')                   // split an accented letter in the base letter and the acent
+      .replace(/[\u0300-\u036f]/g, '')   // remove all previously split accents
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9 ]/g, '')   // remove all chars not letters, numbers and spaces (to be replaced)
+      .replace(/\s+/g, separator);
+  };
 
   function customSlugToggle() {
     var ag_slug = document.getElementById('ag_slug');
@@ -98,7 +107,7 @@
       slug.style.display = 'none';
       slug_btn.innerHTML = 'Use custom slug?';
       var title = document.getElementById('title');
-      slug.value = slugify(title.value);
+      slug.value = title.value.slugify();
     }
   }
 </script>

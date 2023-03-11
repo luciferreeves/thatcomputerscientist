@@ -10,6 +10,11 @@ class Category(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == '':
+            self.slug = slugify(self.name)
+        return super(Category, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -18,6 +23,11 @@ class Tag(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == '':
+            self.slug = slugify(self.name)
+        return super(Tag, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

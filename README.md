@@ -5,6 +5,11 @@ Source Code for my Personal Website.
 
 - Visit [preview.thatcomputerscientist.com](https://preview.thatcomputerscientist.com) to see a instant live deployment of changes whenever I start changing something on my local machine. (_Availability of this server is not guaranteed as it is only active whenever I am working on the project_. Also, sometimes I keep the project loaded in my code editor, while being idle or doing something else – the link is viewable during this time as well.)
 
+## Screenshot
+![Live Screenshot](https://thatcomputerscientist.com/ignis/screenshot)
+
+_Screeshot served live from [thatcomputerscientist.com](https://thatcomputerscientist.com)'s server._
+
 ## Specifications
 - Server: [Nginx](https://www.nginx.com/)
 - Language: [Python](https://www.python.org/), [HTML](https://www.w3schools.com/html/), [CSS](https://www.w3schools.com/css/), [JavaScript](https://www.javascript.com/)

@@ -20,6 +20,11 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import PostSitemap, CategorySitemap, TagSitemap, StaticViewSitemap, GithubSitemap
 
+from PIL import Image
+from io import BytesIO
+from selenium import webdriver
+import time
+
 sitemaps = {
     'posts': PostSitemap,
     'categories': CategorySitemap,
@@ -41,3 +46,28 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+def get_screenshot():
+    # Configure Selenium WebDriver with headless Chrome options
+    options = webdriver.FirefoxOptions()
+    options.headless = True
+    driver = webdriver.Firefox(options=options)
+    driver.set_window_size(1280, 1280)
+
+    url = 'https://www.thatcomputerscientist.com'
+
+    # Wait until the page is loaded
+    driver.get(url)
+    time.sleep(5)
+    
+    screenshot = driver.get_screenshot_as_png()
+    screenshot = Image.open(BytesIO(screenshot))
+
+    # Close the browser
+    driver.quit()
+
+    # Save as 'siteshot.png'
+    screenshot.save('siteshot.png')
+
+get_screenshot()

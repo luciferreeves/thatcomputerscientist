@@ -134,3 +134,5 @@ dmypy.json
 images/
 
 staticfiles/
+
+siteshot.png

@@ -12,7 +12,6 @@ from users.tokens import CaptchaTokenGenerator
 
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
-from selenium import webdriver
 # from .github import get_cover
 
 # Create your views here.
@@ -167,29 +166,16 @@ def captcha_image(request, captcha_string):
 
 @never_cache
 def get_screenshot(request):
-    # Configure Selenium WebDriver with headless Chrome options
-    options = webdriver.FirefoxOptions()
-    options.headless = True
-    driver = webdriver.Firefox(options=options)
-    driver.set_window_size(1280, 1280)
-
-    url = 'https://www.thatcomputerscientist.com'
-
-    # Wait until the page is loaded
-    driver.get(url)
-    
-    screenshot = driver.get_screenshot_as_png()
-    screenshot = Image.open(BytesIO(screenshot))
-
-    # Close the browser
-    driver.quit()
-
-    # Convert the screenshot to a data URI
-    output = BytesIO()
-    screenshot.save(output, format='PNG')
-
-    response = HttpResponse(output.getvalue(), content_type='image/png')
-    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response['Pragma'] = 'no-cache'
-    response['Expires'] = '0'
-    return response
+    # open file called 'siteshot.png' in the root directory
+    with open('siteshot.png', 'rb') as f:
+        image = f.read()
+        # convert to png
+        image = Image.open(BytesIO(image))
+        output = BytesIO()
+        image.save(output, format='PNG')
+        
+        response = HttpResponse(output.getvalue(), content_type='image/png')
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response

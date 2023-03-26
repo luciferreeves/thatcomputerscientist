@@ -36,7 +36,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
     body = models.TextField(blank=True)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=False)
     post_image = models.ImageField(upload_to="{}/cover_images".format(UPLOAD_ROOT), blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,

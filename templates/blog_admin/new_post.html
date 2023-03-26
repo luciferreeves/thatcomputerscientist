@@ -78,6 +78,12 @@
         </select>
       </td>
     </tr>
+    <tr>
+      <td style="font-weight: bold; padding-right: 20px;">Post Date</td>
+      <td>
+        {% comment %} {{ post.post_date|date:"Y-m-d" }} {% endcomment %}
+        <input type="date" name="post_date" {% if post %} value="{{ post.post_date|date:'Y-m-d' }}" {% endif %} {% if return_object %} value="{{ return_object.post_date_value }}" {% endif %}/>
+      </td>
   </table>
   <br>
   <input type="submit" class="button button-special" {% if post %} value="Update Post" {% else %} value="Create Post" {% endif %} />

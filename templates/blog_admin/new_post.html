@@ -73,7 +73,7 @@
       <td>
         <select name="category">
           {% for category in categories %}
-            <option value="{{ category.id }}" {% if post and post.category.id == category.id %} selected {% endif %} {% if return_object and return_object.category_value == category.id %} selected {% endif %}>{{ category.name }}</option>
+            <option value="{{ category.id }}" {% if post and post.category == category.id %} selected {% endif %} {% if return_object and return_object.category_value == category.id %} selected {% endif %}>{{ category.name }}</option>
           {% endfor %}
         </select>
       </td>

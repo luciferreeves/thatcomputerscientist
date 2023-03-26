@@ -13,7 +13,6 @@ from users.tokens import CaptchaTokenGenerator
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 from selenium import webdriver
-import time
 # from .github import get_cover
 
 # Create your views here.
@@ -178,8 +177,6 @@ def get_screenshot(request):
 
     # Wait until the page is loaded
     driver.get(url)
-
-    time.sleep(5)
     
     screenshot = driver.get_screenshot_as_png()
     screenshot = Image.open(BytesIO(screenshot))

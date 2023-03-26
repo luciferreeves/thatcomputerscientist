@@ -70,4 +70,4 @@ def get_screenshot():
     # Save as 'siteshot.png'
     screenshot.save('siteshot.png')
 
-get_screenshot()
+# get_screenshot()

@@ -8,7 +8,7 @@ Source Code for my Personal Website.
 ## Screenshot
 ![Live Screenshot](https://thatcomputerscientist.com/ignis/screenshot)
 
-> <sub><sup>_Screeshot served live from [thatcomputerscientist.com](https://thatcomputerscientist.com)'s server. For efficiency purposes, the screenshot is taken once per build and is served from the server's cache. The screenshot is updated whenever I make a change to the website. Screenshots will generally be updated within 10 seconds after all GitHub Action Workflows have completed._</sup></sub>
+> <sub><sup>_Screenshot served live from [thatcomputerscientist.com](https://thatcomputerscientist.com)'s server. For efficiency purposes, the screenshot is taken once per build and is served from the server's cache. The screenshot is updated whenever I push changes to this repository. Screenshots will generally be updated within 10 seconds after all GitHub Actions Workflows have completed._</sup></sub>
 
 ## Specifications
 - Server: [Nginx](https://www.nginx.com/)

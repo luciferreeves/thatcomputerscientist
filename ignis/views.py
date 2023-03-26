@@ -3,12 +3,17 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from blog.models import Post
-from .models import PostImage, RepositoryTitle, CoverImage
+from .models import PostImage, RepositoryTitle
 import json
 import requests
 from django.core.files.base import ContentFile
 from captcha.image import ImageCaptcha
 from users.tokens import CaptchaTokenGenerator
+
+from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
+from selenium import webdriver
+import time
 # from .github import get_cover
 
 # Create your views here.
@@ -160,3 +165,34 @@ def captcha_image(request, captcha_string):
     data = imgcaptcha.generate(captcha)
     return HttpResponse(data, content_type='image/png')
 
+
+@never_cache
+def get_screenshot(request):
+    # Configure Selenium WebDriver with headless Chrome options
+    options = webdriver.FirefoxOptions()
+    options.headless = True
+    driver = webdriver.Firefox(options=options)
+    driver.set_window_size(1280, 1280)
+
+    url = 'https://www.thatcomputerscientist.com'
+
+    # Wait until the page is loaded
+    driver.get(url)
+
+    time.sleep(5)
+    
+    screenshot = driver.get_screenshot_as_png()
+    screenshot = Image.open(BytesIO(screenshot))
+
+    # Close the browser
+    driver.quit()
+
+    # Convert the screenshot to a data URI
+    output = BytesIO()
+    screenshot.save(output, format='PNG')
+
+    response = HttpResponse(output.getvalue(), content_type='image/png')
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response

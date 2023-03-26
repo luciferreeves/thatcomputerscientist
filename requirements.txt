@@ -14,4 +14,4 @@ bs4
 jellyfish
 fuzzywuzzy
 python-Levenshtein
-
+selenium

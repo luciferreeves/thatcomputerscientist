@@ -35,7 +35,7 @@ def natural_keys(text):
 def home(request):
     announcements = Announcement.objects.filter(is_public=True).order_by('-created_at')
     announcements = announcements if len(announcements) > 0 else None
-    return render(request, 'blog/home.html', {'title': 'Home', 'recent_posts': recent_posts(), 'announcements': announcements})
+    return render(request, 'blog/home.html', {'title': 'Home', 'posts': recent_posts(), 'announcements': announcements})
 
 def account(request):
     user = request.user

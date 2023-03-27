@@ -1,0 +1,26 @@
+{% for post in posts %}
+    <div class="post" style="clear: both;">
+    <span>
+        <img src="{% url 'ignis:post_image' '320' post.id %}.gif" alt="Cover image for {{ post.title }}" style="float: left; width: 320px; padding: 0px 13px 0px 0px">
+    </span>
+    <h1 style="margin-top: 0px; margin-bottom: 0px;">
+        <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+    </h1>
+    <br>
+        <span style="font-size: 11px">Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a> in <a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a></em></span>
+    <br><br>
+    <span style="font-size: 11px">Tags: </span>
+    {% for tag in post.tags.all %}
+        <a href="#" class="tag">{{ tag.name|title }}</a>{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    <br><br>
+    <hr>
+    <div style="text-align: justify; margin-bottom: 0px;">
+        {{ post.excerpt | safe }}
+    </div>
+    <div class="post-actions" style="clear: both;">
+        <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} Comments</a>
+    </div>
+    <br>
+    </div>
+{% endfor %}

@@ -21,7 +21,7 @@
         <span><b>Repository URL:</b></span>
         <span>&emsp;</span>
         <span>
-            <input style="width: 300px;" type="text" name="url" id="url" placeholder="GitHub repository URL" required value="{{ url }}" />
+            <input style="width: 300px;" type="text" name="url" id="url" placeholder="GitHub repository URL" required value="{% if url %}{{ url }}{% endif %}" />
         </span>
     </p>
    <p>

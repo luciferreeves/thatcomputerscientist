@@ -131,7 +131,7 @@ dmypy.json
 # .DS_Store for macOS
 .DS_Store
 
-images/
+/images/*
 
 staticfiles/
 

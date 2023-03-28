@@ -224,6 +224,14 @@ def socialify(request):
 
     url = 'https://socialify.thatcomputerscientist.com/{}/png?description={}&font={}&forks={}&issues={}&language={}&language2={}&name={}&owner=1&pattern={}&pulls={}&stargazers={}&theme={}'.format(repo, description, font, forks, issues, language_1, language_2, name, pattern, pulls, stargazers, theme)
 
-    print(url)
-    image = requests.get(url).content
-    return HttpResponse(image, content_type='image/png')
+    req = requests.get(url)
+    image = req.content
+    status = req.status_code
+
+    if status == 200:
+        return HttpResponse(image, content_type='image/png')
+    else:
+        with open('static/images/site/utgi.gif', 'rb') as f:
+            image = f.read()
+            return HttpResponse(image, content_type='image/gif')
+

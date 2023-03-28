@@ -303,3 +303,34 @@ def categories(request):
 
 def policy(request):
     return render(request, 'blog/site_policy.html', {'title': 'Site Policy'})
+
+def socialify(request):
+    url = request.GET.get('url') if request.GET.get('url') else None
+    if url:
+        # convert Github URL to repo owner/name
+        if 'github.com' in url:
+            url = url.split('github.com/')[1]
+            url = url.split('/')
+            url = url[0] + '/' + url[1]
+    socialify_options = {
+        'theme': 'Dark' if not request.GET.get('theme') else request.GET.get('theme'),
+        'font': 'Inter' if not request.GET.get('font') else request.GET.get('font'),
+        'description': 0 if not request.GET.get('description') else request.GET.get('description'),
+        'forks': 0 if not request.GET.get('forks') else request.GET.get('forks'),
+        'issues': 0 if not request.GET.get('issues') else request.GET.get('issues'),
+        'language_1': 0 if not request.GET.get('language_1') else request.GET.get('language_1'),
+        'language_2': 0 if not request.GET.get('language_2') else request.GET.get('language_2'),
+        'name': 0 if not request.GET.get('name') else request.GET.get('name'),
+        'owner': 1 if not request.GET.get('owner') else request.GET.get('owner'),
+        'stargazers': 0 if not request.GET.get('stargazers') else request.GET.get('stargazers'),
+        'pulls': 0 if not request.GET.get('pulls') else request.GET.get('pulls'),
+        'pattern': 'Plus' if not request.GET.get('pattern') else request.GET.get('pattern'),
+    }
+
+    for key, value in socialify_options.items():
+        if value == 'on':
+            socialify_options[key] = 1
+        elif value == 'off':
+            socialify_options[key] = 0
+
+    return render(request, 'blog/socialify.html', {'title': 'Socialify', 'options': socialify_options, 'url': url})

@@ -207,3 +207,23 @@ def get_screenshot(request):
         response['Pragma'] = 'no-cache'
         response['Expires'] = '0'
         return response
+
+def socialify(request):
+    repo = request.GET.get('repo')
+    theme = request.GET.get('theme')
+    font = request.GET.get('font')
+    pattern = request.GET.get('pattern')
+    name = request.GET.get('name')
+    description = request.GET.get('description')
+    language_1 = request.GET.get('language_1')
+    language_2 = request.GET.get('language_2')
+    stargazers = request.GET.get('stargazers')
+    forks = request.GET.get('forks')
+    issues = request.GET.get('issues')
+    pulls = request.GET.get('pulls')
+
+    url = 'https://socialify.thatcomputerscientist.com/{}/png?description={}&font={}&forks={}&issues={}&language={}&language2={}&name={}&owner=1&pattern={}&pulls={}&stargazers={}&theme={}'.format(repo, description, font, forks, issues, language_1, language_2, name, pattern, pulls, stargazers, theme)
+
+    print(url)
+    image = requests.get(url).content
+    return HttpResponse(image, content_type='image/png')

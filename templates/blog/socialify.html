@@ -1,0 +1,103 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<h2 style="margin-top:0px;">Socialify</h2>
+{% load static %}
+{% if url %}
+<p>
+    <img style="width: 730px;" src="{% url 'ignis:socialify' %}?repo={{ url }}&theme={{ options.theme }}&font={{ options.font }}&pattern={{ options.pattern }}&name={{ options.name }}&description={{ options.description }}&language_1={{ options.language_1 }}&language_2={{ options.language_2 }}&stargazers={{ options.stargazers }}&forks={{ options.forks }}&issues={{ options.issues }}&pulls={{ options.pulls }}" alt="Socialify" />
+</p>
+
+{% else %}
+<p><img style="width: 730px;" src="{% url 'ignis:socialify' %}?repo=luciferreeves/thatcomputerscientist&theme={{ options.theme }}&font={{ options.font }}&pattern={{ options.pattern }}&name=1&description=1&language_1=1&language_2=1&stargazers=1&forks=1&issues=1&pulls=1" alt="Socialify" />
+</p>
+{% endif %}
+<br>
+<p>Socialify is a image service that generates header images for your GitHub README.md files. Go ahead and try putting your GitHub repository URL in the input box below. A full React app is also available at <a href="https://socialify.thatcomputerscientist.com">https://socialify.thatcomputerscientist.com</a>.
+</p>
+<br>
+<hr>
+<br>
+<form action="" method="get">
+    <p>
+        <span><b>Repository URL:</b></span>
+        <span>&emsp;</span>
+        <span>
+            <input style="width: 300px;" type="text" name="url" id="url" placeholder="GitHub repository URL" required value="{{ url }}" />
+        </span>
+    </p>
+   <p>
+        <span><b>Theme:</b></span>
+        <span>&emsp;</span>
+        <select name="theme" id="theme">
+            <option value="Light" {% if options.theme == 'Light' %}selected{% endif %}>Light</option>
+            <option value="Dark" {% if options.theme == 'Dark' %}selected{% endif %}>Dark</option>
+        </select>
+        <span>&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+        <span><b>Font:</b></span>
+        <span>&emsp;</span>
+        <select name="font" id="font">
+            <option value="Inter" {% if options.font == 'Inter' %}selected{% endif %}>Inter</option>
+            <option value="Bitter" {% if options.font == 'Bitter' %}selected{% endif %}>Bitter</option>
+            <option value="Raleway" {% if options.font == 'Raleway' %}selected{% endif %}>Raleway</option>
+            <option value="Rokkitt" {% if options.font == 'Rokkitt' %}selected{% endif %}>Rokkitt</option>
+            <option value="Source Code Pro" {% if options.font == 'Source Code Pro' %}selected{% endif %}>Source Code Pro</option>
+            <option value="Koho" {% if options.font == 'Koho' %}selected{% endif %}>Koho</option>
+            <option value="Jost" {% if options.font == 'Jost' %}selected{% endif %}>Jost</option>
+        </select>
+    </p>
+    <p>
+        <span><b>Background Pattern:</b></span>
+        <span>&emsp;</span>
+        <select name="pattern" id="pattern">
+            <option value="Signal" {% if options.pattern == 'Signal' %}selected{% endif %}>Signal</option>
+            <option value="Charlie Brown" {% if options.pattern == 'Charlie Brown' %}selected{% endif %}>Charlie Brown</option>
+            <option value="Formal Invitation" {% if options.pattern == 'Formal Invitation' %}selected{% endif %}>Formal Invitation</option>
+            <option value="Plus" {% if options.pattern == 'Plus' %}selected{% endif %}>Plus</option>
+            <option value="Circuit Board" {% if options.pattern == 'Circuit Board' %}selected{% endif %}>Circuit Board</option>
+            <option value="Overlapping Hexagons" {% if options.pattern == 'Overlapping Hexagons' %}selected{% endif %}>Overlapping Hexagons</option>
+            <option value="Brick Wall" {% if options.pattern == 'Brick Wall' %}selected{% endif %}>Brick Wall</option>
+            <option value="Floating Cogs" {% if options.pattern == 'Floating Cogs' %}selected{% endif %}>Floating Cogs</option>
+            <option value="Diagonal Stripes" {% if options.pattern == 'Diagonal Stripes' %}selected{% endif %}>Diagonal Stripes</option>
+            <option value="Solid" {% if options.pattern == 'Solid' %}selected{% endif %}>Solid</option>
+        </select>
+    </p>
+    <p>
+        <input type="checkbox" name="owner" id="owner" {% if options.owner %}checked{% endif %} disabled />
+        <label for="owner">Show owner</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="name" id="name" {% if options.name %}checked{% endif %} />
+        <label for="name">Show name</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="description" id="description" {% if options.description %}checked{% endif %} />
+        <label for="description">Show description</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="language_1" id="language_1" {% if options.language_1 %}checked{% endif %} />
+        <label for="language_1">Show language 1</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="language_2" id="language_2" {% if options.language_2 %}checked{% endif %} />
+        <label for="language_2">Show language 2</label>
+        <br><br>
+        <input type="checkbox" name="stargazers" id="stargazers" {% if options.stargazers %}checked{% endif %} />
+        <label for="stargazers">Show Stargazers</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="forks" id="forks" {% if options.forks %}checked{% endif %} />
+        <label for="forks">Show forks</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="issues" id="issues" {% if options.issues %}checked{% endif %} />
+        <label for="issues">Show issues</label>
+        <span>&emsp;&emsp;</span>
+        <input type="checkbox" name="pulls" id="pulls" {% if options.pulls %}checked{% endif %} />
+        <label for="pulls">Show pulls</label>
+    </p>
+    <p>
+        <input type="submit" value="Generate" class="button button-special" />
+        {% if url %}
+            <a href=" {% url 'ignis:socialify' %}?repo={{ url }}&theme={{ options.theme }}&font={{ options.font }}&pattern={{ options.pattern }}&owner={{ options.owner }}&name={{ options.name }}&description={{ options.description }}&language_1={{ options.language_1 }}&language_2={{ options.language_2 }}&stargazers={{ options.stargazers }}&forks={{ options.forks }}&issues={{ options.issues }}&pulls={{ options.pulls }}" class="button" target="_blank">Download Image</a>
+        {% endif %}
+    </p>
+</form>
+{% if url %}
+<p><i>For additional download options,<a href="https://socialify.thatcomputerscientist.com/{{ url }}?theme={{ options.theme }}&font={{ options.font }}&pattern={{ options.pattern }}&owner={{ options.owner }}&name={{ options.name }}&description={{ options.description }}&language_1={{ options.language_1 }}&language_2={{ options.language_2 }}&stargazers={{ options.stargazers }}&forks={{ options.forks }}&issues={{ options.issues }}&pulls={{ options.pulls }}" target="_blank">view this image on Socialify</a>.</i></p>
+{% endif %}
+
+{% endblock %}
+

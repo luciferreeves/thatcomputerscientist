@@ -19,4 +19,5 @@ urlpatterns = [
     path('categories/<str:cg>', views.articles, name='category_posts'),
     path('~<str:username>', views.user_activity, name='user_activity'),
     path('policy', views.policy, name='policy'),
+    path('socialify', views.socialify, name='socialify'),
 ]

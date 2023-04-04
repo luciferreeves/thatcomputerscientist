@@ -8,6 +8,7 @@
         </div>
         <div id="side-links">
             <p><a href="{% url 'blog:account' %}">Account Home</a></p>
+            <p><a href="{% url 'blog:account' %}?tab=blinkies">Change profile blinkie</a></p>
             <p><a href="{% url 'blog:account' %}?tab=avatar">Change avatar</a></p>
             <p><a href="{% url 'blog:account' %}?tab=details">Change details</a></p>
             <p><a href="{% url 'blog:account' %}?tab=email">Change email</a></p>
@@ -51,6 +52,30 @@
                 </div>
                 {% endfor %}
                 <input type="submit" value="Change Avatar" class="button button-special" />
+            </form>
+        </div>
+        {% elif request.GET.tab == 'blinkies' %}
+        <div id="blinkie-chooser">
+            <form method="post" action="{% url 'users:updateblinkie' %}">
+                {% csrf_token %}
+                <p>Choose a blinkie to display on your public profile.</p>
+                <div style="display: inline; width: 250px; float: left;">
+                    <input type="radio" name="blinkie" value="" id="blinkie_none" checked />
+                    <label for="blinkie_none">
+                        <span style="vertical-align: middle;">None</span>
+                    </label>
+                </div>
+                {% for blinkie in blinkies %}
+                    <div style="display: inline; width: 250px; float: left;">
+                        <input type="radio" name="blinkie" value="{{ blinkie }}" id="blinkie_{{ blinkie }}" {% if user_profile.blinkie_url == blinkie %}checked{% endif %} />
+                        <label for="blinkie_{{ blinkie }}">
+                            <img src="{% static 'images/blinkies/' %}{{ blinkie }}.gif" alt="{{ blinkie }}" width="150" height="20" loading="lazy" style="vertical-align: middle;" />
+                        </label>
+                    </div>
+                {% endfor %}
+                <div style="clear: both;"></div>
+                <br><br>
+                <input type="submit" value="Change Blinkie" class="button button-special" />
             </form>
         </div>
         {% elif request.GET.tab == 'details' %}

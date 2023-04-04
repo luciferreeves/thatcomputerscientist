@@ -14,6 +14,7 @@ from users.tokens import CaptchaTokenGenerator
 from django.contrib import messages
 from bs4 import BeautifulSoup
 import re
+import os
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -41,9 +42,12 @@ def account(request):
     user = request.user
     avatarlist = avatar_list()
     for key in avatarlist:
-        avatarlist[key] = [re.sub(r'\.png$', '', string) for string in avatarlist[key]]
+        avatarlist[key] = [re.sub(r'\.gif$', '', string) for string in avatarlist[key]]
         avatarlist[key].sort(key=natural_keys)
     avatarlist = {k: avatarlist[k] for k in sorted(avatarlist)}
+
+    blinkies = [re.sub(r'\.gif$', '', string) for string in os.listdir('static/images/blinkies')]
+    blinkies.sort(key=natural_keys)
 
     if user.is_authenticated:
         try:
@@ -67,7 +71,7 @@ def account(request):
         else:
             update_form = None
 
-        return render(request, 'blog/account.html',  {'title': 'Account', 'user_profile': user_profile, 'avatarlist': avatarlist, 'update_form': update_form})
+        return render(request, 'blog/account.html',  {'title': 'Account', 'user_profile': user_profile, 'avatarlist': avatarlist, 'update_form': update_form, 'blinkies': blinkies})
     else:
         # Redirect to login page
         return redirect('blog:home')

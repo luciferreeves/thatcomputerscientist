@@ -13,6 +13,7 @@ class UserProfile(models.Model):
     is_public = models.BooleanField(default=False)
     email_public = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
+    blinkie_url = models.TextField(blank=True, default='')
 
     def __str__(self):
         return self.user.username

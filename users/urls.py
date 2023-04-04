@@ -13,6 +13,7 @@ urlpatterns = [
     path('/sendchangeuseremail', views.send_change_user_email, name='sendchangeuseremail'),
     path('/changeemail/<uidb64>/<token>', views.change_email, name='changeemail'),
     path('updateavatar', views.update_avatar, name='updateavatar'),
+    path('/updateblinkies', views.update_blinkie, name='updateblinkie'),
     path('/delete', views.delete_user, name='delete'),
 ]
 

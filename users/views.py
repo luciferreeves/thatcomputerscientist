@@ -100,6 +100,21 @@ def update_avatar(request):
         messages.error(request, 'You must be logged in to update your avatar!')
         return redirect('blog:home')
 
+def update_blinkie(request):
+    user =  request.user
+    if user is not None:
+        if request.method == 'POST':
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.blinkie_url = request.POST['blinkie']
+            user_profile.save()
+            messages.success(request, 'Blinkie was successfully updated!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, 'Unable to update blinkie! Please try again later.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        messages.error(request, 'You must be logged in to update your blinkie!')
+        return redirect('blog:home')
     
 def change_password(request):
     username = request.user

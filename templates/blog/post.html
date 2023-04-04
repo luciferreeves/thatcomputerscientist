@@ -113,32 +113,33 @@
     <p><em>You must be logged in to leave a comment.</em></p>
 </div>
 {% endif %}
+<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 <script>
     function editComment(id) {
-        document.getElementById('comment-body-' + id).style.display = 'none';
-        document.getElementById('edit-form-' + id).style.display = 'block';
+        $('#comment-body-' + id).hide();
+        $('#edit-form-' + id).show();
     }
 
     function cancelEdit(id) {
-        document.getElementById('comment-body-' + id).style.display = 'block';
-        document.getElementById('edit-form-' + id).style.display = 'none';
+        $('#comment-body-' + id).show();
+        $('#edit-form-' + id).hide();
     }
 
     // We are aiming to keep the JS to ES3 for compatibility with older browsers.
     // Get all textareas and bind the shortkeys.
-    var textareas = document.getElementsByTagName('textarea');
+    var textareas = $('textarea');
 
     function toggleTips() {
-        var tips = document.getElementById('tips');
-        if (tips.style.display == 'none') {
-            tips.style.display = 'block';
+        var tips = $('#tips');
+        if (tips.css('display') == 'none') {
+            tips.css('display', 'block');
         } else {
-            tips.style.display = 'none';
+            tips.css('display', 'none');
         }
     }
 
-    for (var i = 0; i < textareas.length; i++) {
-        textareas[i].addEventListener('keydown', function(e) {
+    textareas.each(function() {
+        $(this).keydown(function(e) {
             if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
                 e.preventDefault();
                 var start = this.selectionStart;
@@ -169,11 +170,11 @@
                 this.selectionEnd = end + 3;
             }
         });
-    }
+    });
 
     // Bind the tab key to indent textareas by 4 spaces.
-    for (var i = 0; i < textareas.length; i++) {
-        textareas[i].addEventListener('keydown', function(e) {
+    textareas.each(function() {
+        $(this).keydown(function(e) {
             if (e.keyCode == 9) {
                 e.preventDefault();
                 var start = this.selectionStart;
@@ -183,7 +184,7 @@
                 this.selectionEnd = end + 4;
             }
         });
-    }
+    });
 </script>
 {% include 'blog/partials/mathjax.html' %}
 {% endblock %}

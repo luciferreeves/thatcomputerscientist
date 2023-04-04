@@ -1,16 +1,13 @@
 body {
     background: black;
-    background-image: url("../images/site/bg.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
     font-size: 11px;
     font-family: Verdana,Helvetica,Arial,Sans-Serif;
     margin: 0px auto 0px;
     padding: 0px;
     color: #dddddd;
     box-sizing: border-box;
+    background-image: url("../images/site/stars.gif");
+    background-repeat: repeat;
 }
 
 #editor-container {

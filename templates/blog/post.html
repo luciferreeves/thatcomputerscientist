@@ -113,78 +113,70 @@
     <p><em>You must be logged in to leave a comment.</em></p>
 </div>
 {% endif %}
-<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-<script>
+<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
     function editComment(id) {
-        $('#comment-body-' + id).hide();
-        $('#edit-form-' + id).show();
+        document.getElementById('comment-body-' + id).style.display = 'none';
+        document.getElementById('edit-form-' + id).style.display = 'block';
     }
 
     function cancelEdit(id) {
-        $('#comment-body-' + id).show();
-        $('#edit-form-' + id).hide();
+        document.getElementById('comment-body-' + id).style.display = 'block';
+        document.getElementById('edit-form-' + id).style.display = 'none';
     }
 
-    // We are aiming to keep the JS to ES3 for compatibility with older browsers.
-    // Get all textareas and bind the shortkeys.
-    var textareas = $('textarea');
-
     function toggleTips() {
-        var tips = $('#tips');
-        if (tips.css('display') == 'none') {
-            tips.css('display', 'block');
+        var tips = document.getElementById('tips');
+        if (tips.style.display == 'none') {
+            tips.style.display = 'block';
         } else {
-            tips.css('display', 'none');
+            tips.style.display = 'none';
         }
     }
 
-    textareas.each(function() {
-        $(this).keydown(function(e) {
-            if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
-                this.value = this.value.substring(0, start) + '**' + this.value.substring(start, end) + '**' + this.value.substring(end);
-                this.selectionStart = start + 2;
-                this.selectionEnd = end + 2;
-            } else if (e.keyCode == 73 && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
-                this.value = this.value.substring(0, start) + '__' + this.value.substring(start, end) + '__' + this.value.substring(end);
-                this.selectionStart = start + 2;
-                this.selectionEnd = end + 2;
-            } else if (e.keyCode == 68 && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
-                this.value = this.value.substring(0, start) + '~~' + this.value.substring(start, end) + '~~' + this.value.substring(end);
-                this.selectionStart = start + 2;
-                this.selectionEnd = end + 2;
-            } else if (e.keyCode == 75 && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
-                this.value = this.value.substring(0, start) + '```' + this.value.substring(start, end) + '```' + this.value.substring(end);
-                this.selectionStart = start + 3;
-                this.selectionEnd = end + 3;
-            }
-        });
-    });
+    var textareas = $('textarea');
 
-    // Bind the tab key to indent textareas by 4 spaces.
-    textareas.each(function() {
-        $(this).keydown(function(e) {
-            if (e.keyCode == 9) {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
-                this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
-                this.selectionStart = start + 4;
-                this.selectionEnd = end + 4;
-            }
-        });
-    });
+    function insertAtCursor(field, text) {
+        if (field.createTextRange) {
+            var range = field.createTextRange();
+            range.collapse(true);
+            range.moveStart('character', text.length);
+            range.select();
+        } else if (field.setSelectionRange) {
+            var start = field.selectionStart;
+            field.value = field.value.substring(0, start) + text + field.value.substring(field.selectionEnd);
+            field.setSelectionRange(start + text.length, start + text.length);
+            field.focus();
+        }
+    }
+
+    function handleKeyDown(e) {
+        var field = e.target;
+        if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            insertAtCursor(field, '**');
+        } else if (e.keyCode == 73 && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            insertAtCursor(field, '__');
+        } else if (e.keyCode == 68 && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            insertAtCursor(field, '~~');
+        } else if (e.keyCode == 75 && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            insertAtCursor(field, '```');
+        } else if (e.keyCode == 9) {
+            e.preventDefault();
+            var start = field.selectionStart;
+            var end = field.selectionEnd;
+            field.value = field.value.substring(0, start) + '    ' + field.value.substring(end);
+            field.setSelectionRange(start + 4, end + 4);
+        }
+    }
+
+    for (var i = 0; i < textareas.length; i++) {
+        textareas[i].onkeydown = handleKeyDown;
+    }
 </script>
+
 {% include 'blog/partials/mathjax.html' %}
 {% endblock %}

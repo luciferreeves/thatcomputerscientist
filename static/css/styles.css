@@ -291,21 +291,15 @@ blockquote {
 }
 
 #sidebar {
-    float: left;
-    margin: 0px;
-    padding: 0px;
     width: 250px;
-    height: 100%;
-    display: inline;
 }
 
 #content {
-    float: left;
-    margin: 0px;
-    padding: 0px 0px 0px 20px;
     width: 730px;
-    height: 100%;
-    display: inline;
+} 
+
+#article, #comments, #new-comment {
+    width: 730px;
 }
 
 #footer {

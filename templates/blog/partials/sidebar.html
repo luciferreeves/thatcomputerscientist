@@ -4,52 +4,61 @@
 <div id="login-area">
     <h2>Login</h2>
     <form method="post" action="{% url 'users:login' %}" id="login-form">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" style="display: none;">
-        <div>
-            <span style="width: 70px;">Username:</span>
-            <span style="width: 156px;">
-                <input type="text" style="width: 156px;" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}">
-            </span>
-        </div>
-        <div>
-            <span style="width: 70px;">Password:</span>
-            <span style="width: 156px;">
-                <input type="password" style="width: 156px;" id="password" name="password" placeholder="Password" autocomplete="off">
-            </span>
-        </div>
-        <div>
-            <input type="hidden" name="next" value="{{ request.path }}" style="display: none;">
-            <input class="button button-special" type="submit" value="Login">
-            {% if not user.is_authenticated %}
-            <span style="margin-left: 10px; width: 90px;">
-                <a href="{% url 'blog:register' %}" class="button button" style="text-decoration: none;">
-                    New User?
-                </a>
-            </span>
-            {% endif %}
-        </div>
-    </form>
-    {% for message in messages %}
-        {% if 'loginError' in message.tags %}
-            {% if message.message == "EVERR" and request.GET.username %}
-            <form method="post" action="{% url 'users:sendverificationemail' %}" >
-                <p class="message {{message.tags}}">
-                    Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username" value="{{ request.GET.username }}"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
-                </p>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <table style="width: 100%; table-layout: fixed;">
+            <tbody>
+                <tr>
+                    <td style="width: 70px; padding-right: 10px;"><label for="username"><b>Username:</b></label></td>
+                    <td style="padding-top: 10px; width: 160px;"><input style="width: 140px;" type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}"></td>
+                </tr>
+                <tr>
+                    <td style="width: 70px; padding-right: 10px;"><label for="password"><b>Password:</b></label></td>
+                    <td style="padding-top: 10px; width: 160px;"><input style="width: 140px;" type="password" id="password" name="password" placeholder="Password" autocomplete="off"></td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;" colspan="2">
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="button button-special" type="submit" value="Login">
+                        {% if not user.is_authenticated %}
+                        <a href="{% url 'blog:register' %}" class="button button" style="text-decoration: none;">
+                            New User?
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% for message in messages %}
+            {% if 'loginError' in message.tags %}
+                {% if message.message == "EVERR" and request.GET.username %}
+                <form method="post" action="{% url 'users:sendverificationemail' %}">
+                    <p class="message {{message.tags}}">
+                        Your email is unverified. Please check your inbox for a verification email or to request a new verification email by clicking{% csrf_token %}<input type="hidden" name="username" value="{{ request.GET.username }}"><input style="display: inline; background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; margin: 0;" type="submit" value="here.">
+                    </p>
                 </form>
-            {% else %}
-            <p class="message {{message.tags}}">{{message.message}}</p>
+                {% else %}
+                <p class="message {{message.tags}}">{{message.message}}</p>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    </form>
 </div>
 {% endif %}
+
 
 <div id="search-area" {% if not user.is_authenticated %}class="mtsbitem"{% endif %}>
     <h2>Search</h2>
     <form action="{% url 'blog:search' %}" method="get">
-        <input type="text" name="query" placeholder="Search..." autocomplete="off" style="width: 166px;" value="{{ request.GET.query }}">
-        <input type="submit" align="center" class="button button-special" value="Search" style="width: 60px;">
+        <table style="width: 250px; border-spacing: 0; border-collapse: separate;">
+            <tr>
+                <td style="width: 150px; padding-right: 10px;">
+                    <input type="text" name="query" placeholder="Search..." autocomplete="off" style="width: 100%; box-sizing: border-box;" value="{{ request.GET.query }}">
+                </td>
+                <td style="width: 80px;">
+                    <input type="submit" align="center" class="button button-special" value="Search" style="width: 100%;">
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
 {% if user.is_authenticated %}

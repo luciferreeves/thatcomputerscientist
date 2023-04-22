@@ -69,7 +69,7 @@ def highlight_code_blocks(code_block):
         lexer = get_lexer_by_name('text')
 
     # highlight the code
-    formatter = HtmlFormatter(noclasses=True, style='native')
+    formatter = HtmlFormatter(noclasses=True, style='native', wrapcode=True)
     highlighted_code = highlight(cb, lexer, formatter)
 
     return highlighted_code

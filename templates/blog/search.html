@@ -1,40 +1,45 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+{% load get_list %}
+    <style>
+        #search-area {
+            display: none !important; /* Hide search area for this page */
+        }
 
-<div id="search-banner">
-    <h1>Combine your search terms:</h1>
-    <form action="{% url 'blog:search' %}" method="get">
-        <label for="query">Search for:</label>
-        <input type="text" name="query" value="{{ query }}" />
-        <label for="tags">With tags (separate with commas):</label>
-        <input type="text" name="tags" value="{{ tags }}" />
-        <label for="category">In category:</label>
-        <select name="category">
-            <option value="" {% if cate == '' %}selected{% endif %}>All categories</option>
-            {% for category in categories %}
-                <option value="{{ category.slug }}" {% if category.slug == cate %}selected{% endif %}>{{ category.name }}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Search" />
-    </form>
-</div>
+        #user-area {
+            margin-top: 0px;
+        }
+    </style>
 
-{% if posts %}
-    <div id="search-results">
-        <h2>Search results for "{{ query }}"</h2>
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
-                    <p>{{ post.excerpt }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% else %}
-    <div id="search-results">
-        <h2>No results found for "{{ query }}"</h2>
-    </div>
-{% endif %}
-
-
+    <table id="search" cellpadding="0" cellspacing="0">
+        <tr>
+            <td id="search_sidebar" style="width: 200px; vertical-align: top;">
+                <form method="get" url="{% url 'blog:search' %}">
+                    <h2>Search</h2>
+                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Query" style="width: 180px; display: block; margin: 10px 0;" required/>
+                    <h2 class="mtsbitem">Search In</h2>
+                    <input type="checkbox" name="search_in" value="posts" {% if 'posts' in search_in %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="search_in" style="vertical-align: middle;">Posts</label><br>
+                    <input type="checkbox" name="search_in" value="users" {% if 'users' in search_in %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="search_in" style="vertical-align: middle;">Users</label><br>
+                    <input type="checkbox" name="search_in" value="comments" {% if 'comments' in search_in %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="search_in" style="vertical-align: middle;">Comments</label><br>
+                    <h2 class="mtsbitem">Sort By</h2>
+                    <input type="radio" name="sort_by" value="relevance" {% if sort_by == 'relevance' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Relevance</label><br>
+                    <input type="radio" name="sort_by" value="date" {% if sort_by == 'date' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Date</label><br>
+                    <input type="radio" name="sort_by" value="popularity" {% if sort_by == 'popularity' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Popularity</label><br>
+                    <h2 class="mtsbitem">Order</h2>
+                    <input type="radio" name="order" value="ascending" {% if order == 'ascending' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="order" style="vertical-align: middle;">Ascending</label><br>
+                    <input type="radio" name="order" value="descending" {% if order == 'descending' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="order" style="vertical-align: middle;">Descending</label><br>
+                    <h2 class="mtsbitem">Date Range</h2>
+                    <input type="radio" name="date_range" value="any" {% if date_range == 'any' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="date_range" style="vertical-align: middle;">Any</label><br>
+                    <input type="radio" name="date_range" value="past_day" {% if date_range == 'past_day' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="date_range" style="vertical-align: middle;">Past Day</label><br>
+                    <input type="radio" name="date_range" value="past_week" {% if date_range == 'past_week' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="date_range" style="vertical-align: middle;">Past Week</label><br>
+                    <input type="radio" name="date_range" value="past_month" {% if date_range == 'past_month' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="date_range" style="vertical-align: middle;">Past Month</label><br>
+                    <input type="radio" name="date_range" value="past_year" {% if date_range == 'past_year' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="date_range" style="vertical-align: middle;">Past Year</label><br>
+                    <input type="submit" value="Search" class="button button-special" style="margin: 10px 0;"/>
+                </form>
+            </td>
+            <td id="search_results" style="width: 530px; vertical-align: top; padding-left: 20px;">
+                <h2>Search Results</h2>
+                <p>Coming Soon!</p>
+            </td>
+        </tr>
+    </table>
 {% endblock %}

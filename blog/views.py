@@ -13,6 +13,7 @@ from users.forms import RegisterForm, UpdateUserDetailsForm
 from users.tokens import CaptchaTokenGenerator
 from django.contrib import messages
 from bs4 import BeautifulSoup
+from haystack.query import SearchQuerySet
 import re
 import os
 from dotenv import load_dotenv
@@ -195,40 +196,26 @@ def delete_comment(request, slug, comment_id):
 
 
 def search(request):
-    categories = Category.objects.all()
-    tags = request.GET.get('tags')
-    category = request.GET.get('category')
-    query = request.GET.get('query')
-    search_in_body = False
+    query = request.GET.get('q')
+    search_in = request.GET.getlist('search_in') if request.GET.get('search_in') else ['posts']
+    sort_by = request.GET.get('sort_by') if request.GET.get('sort_by') else 'relevance'
+    order = request.GET.get('order') if request.GET.get('order') else 'ascending'
+    date_range = request.GET.get('date_range') if request.GET.get('date_range') else 'any'
+    search_model_map = {
+        'posts': Post,
+        'users': User,
+    }
 
-    # First check for query constraints
-    if len(query) == 0:
-        return render(request, 'blog/search.html', {'title': 'Search', 'posts': [], 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
+    if query:
+        search_results = SearchQuerySet().filter(content=query)
+        if search_in:
+            search_results = search_results.models(*[search_model_map[model] for model in search_in])
 
-    if len(query) < 3:
-        return render(request, 'blog/search.html', {'title': 'Search', 'posts': [], 'categories': categories, 'tags': tags, 'cate': category, 'query': query, 'error': 'Query must be at least 3 characters long'})
-
-    if len(query) > 100:
-        search_in_body = True
-
-    # public posts which contain the query in the title or body
-    posts = Post.objects.filter(is_public=True, title__icontains=query) if not search_in_body else Post.objects.filter(is_public=True, body__icontains=query) | Post.objects.filter(is_public=True, title__icontains=query)
-
-    # filter by category slug
-    if category:
-        posts = posts.filter(category__slug=category)
+        search_results = [result.object for result in search_results]
     else:
-        category = ''
+        search_results = None
 
-    # filter by tags
-    if tags:
-        posts = posts.filter(tags__name__in=tags.split(','))
-    else:
-        tags = ''
-
-    # order by date
-    posts = posts.order_by('-date')
-    return render(request, 'blog/search.html', {'title': 'Search', 'posts': posts, 'categories': categories, 'tags': tags, 'cate': category, 'query': query})
+    return render(request, 'blog/search.html', {'title': f"Search results for '{query}'", 'query': query, 'search_results': search_results, 'search_in': search_in, 'sort_by': sort_by, 'order': order, 'date_range': date_range})
 
 def articles(request, date=None, cg=None):
     type = 'articles'

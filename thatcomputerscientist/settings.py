@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'thatcomputerscientist',
+    'haystack',
     'blog',
     'users',
     'userpages',
@@ -58,6 +59,11 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 APPEND_SLASH = False
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

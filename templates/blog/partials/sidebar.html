@@ -51,11 +51,11 @@
     <form action="{% url 'blog:search' %}" method="get">
         <table style="width: 250px; border-spacing: 0; border-collapse: separate;">
             <tr>
-                <td style="width: 150px; padding-right: 10px;">
-                    <input type="text" name="query" placeholder="Search..." autocomplete="off" style="width: 100%; box-sizing: border-box;" value="{{ request.GET.query }}">
+                <td style="width: 170px; padding-right: 10px;">
+                    <input type="text" name="q" placeholder="Search..." autocomplete="off" style="width: 100%; box-sizing: border-box;" value="{{ request.GET.query }}">
                 </td>
-                <td style="width: 80px;">
-                    <input type="submit" align="center" class="button button-special" value="Search" style="width: 100%;">
+                <td style="width: 60px;">
+                    <input type="submit" align="center" class="button button-special" value="Search" style="max-width: 60px;">
                 </td>
             </tr>
         </table>

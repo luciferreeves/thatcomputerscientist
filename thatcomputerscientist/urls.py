@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import PostSitemap, CategorySitemap, TagSitemap, StaticViewSitemap, GithubSitemap
+from haystack.views import search_view_factory
 
 sitemaps = {
     'posts': PostSitemap,
@@ -31,7 +32,7 @@ sitemaps = {
 handler404 = 'thatcomputerscientist.error_handler.custom_404'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
     path('', include('blog.urls', namespace='blog')),
     path('users', include('users.urls', namespace='users')),
     path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),

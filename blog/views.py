@@ -204,6 +204,7 @@ def search(request):
     search_model_map = {
         'posts': Post,
         'users': User,
+        'comments': Comment,
     }
 
     if query:
@@ -214,6 +215,8 @@ def search(request):
         search_results = [result.object for result in search_results]
     else:
         search_results = None
+
+    print(search_results)
 
     return render(request, 'blog/search.html', {'title': f"Search results for '{query}'", 'query': query, 'search_results': search_results, 'search_in': search_in, 'sort_by': sort_by, 'order': order, 'date_range': date_range})
 

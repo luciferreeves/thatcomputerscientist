@@ -82,7 +82,7 @@ def comment_processor(comment):
     # any text between ``` and ``` must be highlighted as code
     code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
     for code_block in code_blocks:
-        comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block))
+        comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
 
     # retain line breaks, for every newline character, add a <br> tag
     comment = comment.replace('\n', '<br>')

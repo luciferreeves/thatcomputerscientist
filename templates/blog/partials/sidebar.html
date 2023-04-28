@@ -5,28 +5,26 @@
     <h2>Login</h2>
     <form method="post" action="{% url 'users:login' %}" id="login-form">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <table style="width: 100%; table-layout: fixed;">
-            <tbody>
-                <tr>
-                    <td style="width: 70px; padding-right: 10px;"><label for="username"><b>Username:</b></label></td>
-                    <td style="padding-top: 10px; width: 160px;"><input style="width: 140px;" type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}"></td>
-                </tr>
-                <tr>
-                    <td style="width: 70px; padding-right: 10px;"><label for="password"><b>Password:</b></label></td>
-                    <td style="padding-top: 10px; width: 160px;"><input style="width: 140px;" type="password" id="password" name="password" placeholder="Password" autocomplete="off"></td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 10px;" colspan="2">
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <input class="button button-special" type="submit" value="Login">
-                        {% if not user.is_authenticated %}
-                        <a href="{% url 'blog:register' %}" class="button button" style="text-decoration: none;">
-                            New User?
-                        </a>
-                        {% endif %}
-                    </td>
-                </tr>
-            </tbody>
+        <table style="width: 250px; border-spacing: 0; border-collapse: separate;">
+            <tr>
+                <td style="width: 70px;"><label for="username"><b>Username:</b></label></td>
+                <td style="padding-top: 10px; width: 160px;"><input style="width: 150px;" type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}"></td>
+            </tr>
+            <tr>
+                <td style="width: 70px;"><label for="password"><b>Password:</b></label></td>
+                <td style="padding-top: 10px; width: 160px;"><input style="width: 150px;" type="password" id="password" name="password" placeholder="Password" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td style="padding-top: 10px;" colspan="2">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input class="button button-special" type="submit" value="Login">
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'blog:register' %}" class="button button" style="text-decoration: none;">
+                        New User?
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
         </table>
         {% for message in messages %}
             {% if 'loginError' in message.tags %}
@@ -51,8 +49,8 @@
     <form action="{% url 'blog:search' %}" method="get">
         <table style="width: 250px; border-spacing: 0; border-collapse: separate;">
             <tr>
-                <td style="width: 170px; padding-right: 10px;">
-                    <input type="text" name="q" placeholder="Search..." autocomplete="off" style="width: 100%; box-sizing: border-box;" value="{{ request.GET.query }}">
+                <td style="width: 170px;">
+                    <input type="text" name="q" placeholder="Search..." autocomplete="off" style="width: 170px; box-sizing: border-box;" value="{{ request.GET.query }}">
                 </td>
                 <td style="width: 60px;">
                     <input type="submit" align="center" class="button button-special" value="Search" style="max-width: 60px;">

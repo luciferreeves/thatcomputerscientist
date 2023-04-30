@@ -2,7 +2,7 @@
 Hi {{ user }},
 
 Thanks for registering an account on {{ site_name }}. To verify your email address, please click the link below.
-{{ protocol }}{{ domain }}{% url 'users:verifyemail' uidb64=uid token=token %}
+{{ protocol }}{{ domain }}{% url 'users:changeemail' 'verifyemail' uid token %}
 
 Thanks,
 {{ site_name }} Team

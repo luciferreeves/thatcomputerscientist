@@ -1,17 +1,13 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from .models import UserProfile
 from django.contrib.auth.models import User
-from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from .tokens import account_activation_token, EmailChangeTokenGenerator
-from django.utils.http import urlsafe_base64_decode
 from .forms import UpdateUserDetailsForm
+from .accountFunctions import store_token, verify_token
 from .mail_send import send_email
 
 # Create your views here.
@@ -143,49 +139,6 @@ def change_password(request):
         messages.error(request, 'Unable to change password! Please try again later.')
         return redirect('blog:home')
 
-
-def send_verification_email(request):
-    username = request.POST['username']
-    user = User.objects.get(username=username)
-    
-    subject = 'Verify your email address'
-    message = render_to_string('verification_email.html', {
-        'user': user.username if user.first_name is None else user.first_name,
-        'site_name': 'That Computer Scientist',
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
-        'protocol': request.scheme + '://',
-        'domain': request.get_host(),
-    })
-    message = strip_tags(message)
-
-    if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
-        messages.success(request, 'Verification email was sent! Please check your email.', extra_tags='loginError')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    else:
-        messages.error(request, 'Unable to send verification email! Please try again later.', extra_tags='loginError')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-def verify_email(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-        try:
-            user_profile = UserProfile.objects.get(user=user.pk)
-        except UserProfile.DoesNotExist:
-            user_profile = UserProfile(user=user)
-            user_profile.save()
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user_profile.email_verified = True
-        user_profile.save()
-        messages.success(request, 'Your email has been verified! You can now login.', extra_tags='loginError')
-        return redirect('blog:home')
-    else:
-        messages.error(request, 'The verification link is invalid!')
-        return redirect('blog:home')
-
 def send_change_user_email(request):
     user = request.user
     new_email = request.POST['email']
@@ -202,11 +155,13 @@ def send_change_user_email(request):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         # Send verification email
         subject = 'Verify your email address'
+        uid, token = store_token(token_type='changeemail', user=user, email=new_email)
+
         message = render_to_string('email_change_verification_email.html', {
             'user': user.username if user.first_name is None else user.first_name,
             'site_name': 'That Computer Scientist',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': EmailChangeTokenGenerator().encrypt(new_email),
+            'uid': uid,
+            'token': token,
             'protocol': request.scheme + '://',
             'domain': request.get_host(),
         })
@@ -223,19 +178,52 @@ def send_change_user_email(request):
     else:
         messages.error(request, 'Unable to change email! Please try again later.')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+def send_verification_email(request):
+    # this is a post only view
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        subject = 'Verify your email address'
+        user = User.objects.get(username=username)
+        uid, token = store_token(token_type='verifyemail', user=user, email=user.email)
 
-def change_email(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-        new_email = EmailChangeTokenGenerator().decrypt(token)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None:
-        user.email = new_email
-        user.save()
-        messages.success(request, 'Email was successfully changed!')
-        return redirect(reverse('blog:account') + '?tab=email')
+        message = render_to_string('verification_email.html', {
+            'user': user.username if user.first_name is None else user.first_name,
+            'site_name': 'That Computer Scientist',
+            'uid': uid,
+            'token': token,
+            'protocol': 'https://' if request.is_secure() else 'http://',
+            'domain': request.get_host(),
+        })
+        message = strip_tags(message)
+        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
+            messages.success(request, 'Verification email was sent! Please check your email.', extra_tags='loginError')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, 'Unable to send verification email! Please try again later.', extra_tags='loginError')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        messages.error(request, 'The verification link is invalid!')
-        return redirect('blog:home')
+        messages.error(request, 'Unable to send verification email! Please try again later.', extra_tags='loginError')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def verify_email(request, mode, uid, token):
+    token_object = verify_token(mode, uid, token)
+    redirect_to = reverse('blog:account') + '?tab=email' if mode == 'changeemail' else 'blog:home'
+    success_message = 'Email was successfully changed!' if mode == 'changeemail' else 'Email was successfully verified!'
+    error_message = 'Unable to verify email! Please try again later.'
+
+    if token_object is not None and token_object.verified:
+        user = User.objects.get(pk=token_object.user_id)
+        user.email = token_object.email
+        user.save()
+        token_object.delete()
+
+        if not request.user.is_authenticated and mode == 'changeemail':
+            login(request, user)
+
+        messages.success(request, success_message, extra_tags='loginError' if mode == 'verifyemail' else '')
+        return redirect(redirect_to)
+    else:
+        messages.error(request, error_message)
+        return redirect(redirect_to)
+    

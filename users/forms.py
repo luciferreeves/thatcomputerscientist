@@ -3,12 +3,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from users.models import UserProfile
-from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from .tokens import account_activation_token
+from .accountFunctions import store_token
 from .mail_send import send_email
 
 class RegisterForm(forms.Form):
@@ -52,13 +49,15 @@ class RegisterForm(forms.Form):
         user_profile = UserProfile.objects.create(user=user)
         user_profile.save()
 
+        uid, token = store_token(token_type='verifyemail', user=user, email=user.email)
+
         # Send verification email
         subject = 'Verify your email address'
         message = render_to_string('verification_email.html', {
             'user': user.username if user.first_name is None else user.first_name,
             'site_name': 'That Computer Scientist',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
+            'uid': uid,
+            'token': token,
             'protocol': 'https://' if request.is_secure() else 'http://',
             'domain': request.get_host(),
         })

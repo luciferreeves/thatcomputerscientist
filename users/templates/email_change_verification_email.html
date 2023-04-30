@@ -2,7 +2,7 @@
 Hi {{ user }},
 
 We received a request to change you email address on {{ site_name }}. To verify and change your email address, please click the link below.
-{{ protocol }}{{ domain }}/users/changeemail/{{ uid }}/{{ token }}.
+{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}
 
 Please ignore this email if you did not make this request.
 

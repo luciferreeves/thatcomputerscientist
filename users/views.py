@@ -217,10 +217,6 @@ def verify_email(request, mode, uid, token):
         user.email = token_object.email
         user.save()
         token_object.delete()
-
-        if not request.user.is_authenticated and mode == 'changeemail':
-            login(request, user)
-
         messages.success(request, success_message, extra_tags='loginError' if mode == 'verifyemail' else '')
         return redirect(redirect_to)
     else:

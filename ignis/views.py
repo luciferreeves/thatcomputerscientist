@@ -88,9 +88,13 @@ def get_image(request, post_id, image_name):
         image_file = f.read()
         # convert to gif
         image = Image.open(BytesIO(image_file))
-        output = BytesIO()
-        image.save(output, format='GIF')
-        return HttpResponse(output.getvalue(), content_type='image/gif')
+        # check image format
+        if image.format != 'GIF':
+            image = image.convert('RGBA')
+            output = BytesIO()
+            image.save(output, format='GIF')
+            image_file = output.getvalue()
+        return HttpResponse(image_file, content_type='image/gif')
 
 @csrf_exempt
 def cover_image(request, repository):

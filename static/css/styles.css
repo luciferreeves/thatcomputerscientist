@@ -310,16 +310,6 @@ blockquote {
     display: block;
 }
 
-#login-form div {
-    margin: 0px 0px 15px 0px;
-    padding: 0px;
-}
-
-#login-form span {
-    display: inline-block;
-    width: 70px;
-}
-
 #recent-posts h1 {
     margin: 0px;
     padding: 0px;

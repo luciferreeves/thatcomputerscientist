@@ -1,14 +1,25 @@
 {% load static %}
 {% comment %} Login Area {% endcomment %}
 {% if not user.is_authenticated %}
+<link rel="stylesheet" href="{% static 'css/login-area.css' %}">
 <div id="login-area">
-    <h2>Login</h2>
     <form method="post" action="{% url 'users:login' %}" id="login-form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}">
+        <input type="password" id="password" name="password" placeholder="Password" autocomplete="off">
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="submit" value="">
+    </form>
+    <a href="{% url 'blog:register' %}" id="register-now-button"></a>
+</div>
+
+{% comment %} <div id="login-area">
+    <h2>Login</h2>
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <table style="width: 250px; border-spacing: 0; border-collapse: separate;">
             <tr>
                 <td style="width: 70px;"><label for="username"><b>Username:</b></label></td>
-                <td style="padding-top: 10px; width: 160px;"><input style="width: 150px;" type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}"></td>
+                <td style="padding-top: 10px; width: 160px;"></td>
             </tr>
             <tr>
                 <td style="width: 70px;"><label for="password"><b>Password:</b></label></td>
@@ -40,7 +51,7 @@
             {% endif %}
         {% endif %}
     {% endfor %}
-</div>
+</div> {% endcomment %}
 {% endif %}
 
 

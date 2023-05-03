@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
-UPLOAD_ROOT = 'images/' if settings.DEBUG else f'{settings.BASE_DIR}/../database/images/'
+UPLOAD_ROOT = 'images/' if settings.DEBUG else f'../database/images/'
 
 # Create your models here.
 class Category(models.Model):

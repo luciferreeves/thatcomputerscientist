@@ -2,7 +2,7 @@ from django.db import models
 from blog.models import Post
 from django.conf import settings
 
-UPLOAD_ROOT = 'images/' if settings.DEBUG else f'../database/images/'
+UPLOAD_ROOT = 'images/'
 
 # Only For Storing Images
 

@@ -1,6 +1,7 @@
 @import url(search.css);
 
 body {
+    width: 100%;
     background: black;
     font-size: 11px;
     font-family: Verdana,Helvetica,Arial,Sans-Serif;
@@ -8,9 +9,11 @@ body {
     padding: 0px;
     color: #dddddd;
     box-sizing: border-box;
-    background-image: url("../images/site/stars.gif");
-    background-repeat: repeat;
-    width: 100%;
+    background-image: url("../images/site/pattern.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% auto;
+    background-position: center center;
 }
 
 /* Cursor Styles */

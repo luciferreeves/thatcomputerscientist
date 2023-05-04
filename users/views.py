@@ -17,7 +17,8 @@ def login_user(request):
     username = request.POST['username']
     password = request.POST['password']
     if username == '' or password == '' or username is None or password is None:
-        messages.error(request, 'Please fill in all fields.', extra_tags='loginError')
+        # required fields are empty
+        messages.error(request, 'RFEERR', extra_tags='loginError')
         return HttpResponseRedirect(next + '?username=' + username)
     else: 
         # check if email is verified
@@ -32,10 +33,12 @@ def login_user(request):
                 login(request, user)
                 return HttpResponseRedirect(next)
             else:
-                messages.error(request, 'EVERR', extra_tags='loginError')
+                # email not verified
+                messages.error(request, 'ENVERR', extra_tags='loginError')
                 return HttpResponseRedirect(next + '?username=' + username)
         else:
-            messages.error(request, 'Invalid username or password.', extra_tags='loginError')
+            # invalid credentials
+            messages.error(request, 'IUOPERR', extra_tags='loginError')
             return HttpResponseRedirect(next + '?username=' + username)
 
 def logout_user(request):
@@ -197,19 +200,19 @@ def send_verification_email(request):
         })
         message = strip_tags(message)
         if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
-            messages.success(request, 'Verification email was sent! Please check your email.', extra_tags='loginError')
+            messages.success(request, 'VESENT', extra_tags='loginError')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            messages.error(request, 'Unable to send verification email! Please try again later.', extra_tags='loginError')
+            messages.error(request, 'VESENDERR', extra_tags='loginError')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        messages.error(request, 'Unable to send verification email! Please try again later.', extra_tags='loginError')
+        messages.error(request, 'VESENDERR', extra_tags='loginError')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def verify_email(request, mode, uid, token):
     token_object = verify_token(mode, uid, token)
     redirect_to = reverse('blog:account') + '?tab=email' if mode == 'changeemail' else 'blog:home'
-    success_message = 'Email was successfully changed!' if mode == 'changeemail' else 'Email was successfully verified!'
+    success_message = 'Email was successfully changed!' if mode == 'changeemail' else 'VESUCCESS'
     error_message = 'Unable to verify email! Please try again later.'
 
     if token_object is not None and token_object.verified:

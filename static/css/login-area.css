@@ -27,6 +27,14 @@
     border-radius: 4px;
 }
 
+/* Reset auto fill */
+#login-form input:-webkit-autofill,
+#login-form input:-webkit-autofill:hover, 
+#login-form input:-webkit-autofill:focus, 
+#login-form input:-webkit-autofill:active{
+    transition: background-color 1s ease-in 2000s;
+}
+
 #login-form input::placeholder {
     color: #787dab;
 }
@@ -52,4 +60,42 @@
     bottom: 30px;
     right: 40px;
     background: transparent;
+}
+
+#login-error {
+    position: relative;
+}
+
+#login-error > .RFEERR {
+    background: url('../images/backgrounds/login-messages/RFEERR.png') no-repeat;
+}
+
+#login-error > .IUOPERR {
+    background: url('../images/backgrounds/login-messages/IUOPERR.png') no-repeat;
+}
+
+#login-error > .ENVERR {
+    background: url('../images/backgrounds/login-messages/ENVERR.png') no-repeat;
+}
+
+#login-error > .VESENDERR {
+    background: url('../images/backgrounds/login-messages/VESENDERR.png') no-repeat;
+}
+
+#login-error > .VESENT {
+    background: url('../images/backgrounds/login-messages/VESENT.png') no-repeat;
+}
+
+#login-error > .VESUCCESS {
+    background: url('../images/backgrounds/login-messages/VESUCCESS.png') no-repeat;
+}
+
+#login-error > .messageBox {
+    position: absolute;
+    background-size: 250px 166px;
+    width: 250px;
+    height: 166px;
+    top: -100px;
+    left: -140px;
+    z-index: 2;
 }

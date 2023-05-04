@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 <div id="welcome">
-  <h2>Welcome</h2>
   <p>
     Welcome to the home of That Computer Scientist. My name is <a href="{% url 'blog:user_activity' 'bobby' %}">@bobby</a>, and this is my personal
     website. I aim to build a retro looking personal website, where I share my thoughts, ideas, and experiences through articles, and will showcase some cool nostalgic features and tools.
@@ -12,8 +12,8 @@
   <p>
     Also, To participate around various sections of the site, you will need to <a href="{% url 'blog:register' %}">register</a> for an account. I hope you enjoy your stay here.
   </p>
-  <img src="{% static 'images/gifs/construction.gif' %}" style="width: 720px;">
 </div>
+<img src="{% static 'images/gifs/construction.gif' %}" style="width: 720px;">
 
 {% if announcements is not None %}
 <div id="announcements" class="mtctitem">

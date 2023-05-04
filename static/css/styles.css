@@ -1,3 +1,5 @@
+@import url(search.css);
+
 body {
     background: black;
     font-size: 11px;
@@ -257,6 +259,7 @@ blockquote {
     margin: auto;
     width: 1000px;
     height: 360px;
+    position: relative;
 }
 
 #navigation-area ul, #archives-area ul, #categories-area ul, #admin-area ul, #announcements ul, #user-area ul, #fun-stuff ul, #activity ul {

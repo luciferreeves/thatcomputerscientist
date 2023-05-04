@@ -38,22 +38,6 @@
 </div>
 {% endif %}
 
-
-<div id="search-area" {% if not user.is_authenticated %}class="mtsbitem"{% endif %}>
-    <h2>Search</h2>
-    <form action="{% url 'blog:search' %}" method="get">
-        <table style="width: 250px; border-spacing: 0; border-collapse: separate;">
-            <tr>
-                <td style="width: 170px;">
-                    <input type="text" name="q" placeholder="Search..." autocomplete="off" style="width: 170px; box-sizing: border-box;" value="{{ request.GET.query }}">
-                </td>
-                <td style="width: 60px;">
-                    <input type="submit" align="center" class="button button-special" value="Search" style="max-width: 60px;">
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
 {% if user.is_authenticated %}
 <div id="user-area" class="mtsbitem">
     <h2>Hello, {{ user.username }}!</h2>

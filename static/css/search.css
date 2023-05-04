@@ -1,0 +1,30 @@
+#search-area {
+    width: 250px;
+    height: 110px;
+    background: url('../images/backgrounds/search-area.png') no-repeat;
+    background-size: 250px 110px;
+    margin: auto;
+    padding: 0px;
+    border: 0px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+#search-form {
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+}
+
+#search-form input[type=text]{
+    display: block;
+    width: 180px;
+    font-size: 12px;
+    background: transparent;
+    color: #231F20;
+    border-radius: 4px;
+}
+#search-form input::placeholder {
+    color: #524e4f;
+}

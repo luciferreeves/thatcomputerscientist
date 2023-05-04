@@ -12,7 +12,7 @@ body {
     background-image: url("../images/site/pattern.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 100% auto;
+    background-size: cover;
     background-position: center center;
 }
 

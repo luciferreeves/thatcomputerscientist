@@ -15,3 +15,36 @@
     width: 550px;
     margin: 12px 0px 12px 140px;
 }
+
+#announcements {
+    background: url('../images/backgrounds/announcements.png') no-repeat;
+    background-size: 730px 300px;
+    position: relative;
+    margin-top: 15px;
+    width: 730px;
+    height: 300px;
+}
+
+#update-gif {
+    height: 14px;
+    display: block;
+    position: relative;
+    left: 68px;
+    top: 11px;
+}
+
+marquee {
+    border: 15px solid transparent;
+    border-radius: 4px;
+    padding: 15px;
+    border-image: url('../images/backgrounds/announcements_border.png') 50 round;
+    width: 480px;
+    height: 180px;
+    position: relative;
+    left: 70px;
+    top: 23px;
+}
+
+marquee > ul {
+    text-align: justify;
+}

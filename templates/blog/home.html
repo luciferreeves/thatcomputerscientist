@@ -13,13 +13,12 @@
     Also, To participate around various sections of the site, you will need to <a href="{% url 'blog:register' %}">register</a> for an account. I hope you enjoy your stay here.
   </p>
 </div>
-<img src="{% static 'images/gifs/construction.gif' %}" style="width: 720px;">
-
-{% if announcements is not None %}
-<div id="announcements" class="mtctitem">
-  <h2><img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px;"></h2>
-  <marquee behavior="scroll" direction="up" height="250" width="720" scrollamount="2" scrolldelay="20" onmouseover="this.stop()" onmouseout="this.start()">
-    <ul style="width: 720px;">
+<img src="{% static 'images/gifs/construction.gif' %}" style="width: 730px;">
+<div id="announcements">
+  <img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px;" id="update-gif">
+  {% if announcements is not None %}
+  <marquee behavior="scroll" direction="up" scrollamount="2" scrolldelay="20" onmouseover="this.stop()" onmouseout="this.start()">
+    <ul>
       {% for announcement in announcements %}
       <li>
         <span>
@@ -37,8 +36,10 @@
       {% endfor %}
     </ul>
   </marquee>
+  {% endif %}
 </div>
-{% endif %}
+
+{% comment %}  {% endcomment %}
 <div id="fake-banner-ad" class="mtctitem">
   {% comment %} <h2>Advertisement</h2> {% endcomment %}
   {% load ad %}

@@ -1,10 +1,10 @@
 #welcome {
     width: 730px;
-    height: calc(262px - 40px);
+    height: calc(262px - 50px);
     background: url('../images/backgrounds/welcome-banner.png') no-repeat;
     background-size: 730px 262px;
     margin: auto;
-    padding: 40px 0px 0px 0px;
+    padding: 50px 0px 0px 0px;
     border: 0px;
     position: relative;
     margin-top: 15px;
@@ -12,6 +12,6 @@
 }
 
 #welcome > p {
-    width: 500px;
-    margin: 12px 0px 12px 98px;
+    width: 550px;
+    margin: 12px 0px 12px 140px;
 }

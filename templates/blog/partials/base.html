@@ -26,6 +26,10 @@
     <link rel="manifest" href="{% static 'images/favicons/site.webmanifest' %}"/>
   </head>
   <body>
+    <video id="bg-video" muted autoplay playsinline loop preload="auto" poster="{% static 'images/backgrounds/poster.png' %}">
+      <source src="{% static 'videos/background.mp4' %}#t=0.1" type="video/mp4" />
+    </video>
+    <div id="overlay"></div>
     <div id="wrap">
       <div id="header">
         <div id="search-area">

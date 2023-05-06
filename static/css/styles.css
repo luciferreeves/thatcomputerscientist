@@ -1,4 +1,5 @@
 @import url(search.css);
+@import url(sidebar.css);
 
 body {
     width: 100%;
@@ -48,7 +49,8 @@ a {
 
 a,
 #editor-container a {
-    color: #a591ee;
+    /* color: #a591ee; */
+    color: #d2baff;
     text-decoration: none;
 }
 
@@ -296,65 +298,6 @@ blockquote {
     width: 1000px;
     height: 360px;
     position: relative;
-}
-
-#navigation-area ul,
-#archives-area ul,
-#categories-area ul,
-#admin-area ul,
-#announcements ul,
-#user-area ul,
-#fun-stuff ul,
-#activity ul {
-    margin: 0px;
-    padding: 0px;
-}
-
-#register_form ul {
-    padding: 0px;
-    list-style-type: none;
-}
-
-#navigation-area li,
-#archives-area li,
-#categories-area li,
-#admin-area li,
-#announcements li,
-#user-area li,
-#fun-stuff li,
-#activity li {
-    display: block;
-    margin: 0px;
-    padding: 0px;
-    list-style-type: none;
-}
-
-#navigation-area img,
-#archives-area img,
-#categories-area img,
-#user-area img,
-#fun-stuff img {
-    width: 24px;
-    vertical-align: middle;
-}
-
-#admin-area img {
-    width: 14px;
-    vertical-align: middle;
-}
-
-#navigation-area span,
-#archives-area span,
-#categories-area span,
-#admin-area span,
-#announcements span,
-#user-area span,
-#fun-stuff span {
-    margin-right: 10px;
-}
-
-#sidebar {
-    width: 250px;
 }
 
 #content {

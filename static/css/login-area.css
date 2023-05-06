@@ -23,7 +23,7 @@
     font-size: 12px;
     padding: 4px 8px;
     background: transparent;
-    color: #54598E;
+    color: #fff;
     border-radius: 4px;
 }
 
@@ -36,7 +36,7 @@
 }
 
 #login-form input::placeholder {
-    color: #787dab;
+    color: #dcdcdc;
 }
 
 #login-form input[type=submit] {

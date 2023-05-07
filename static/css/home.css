@@ -12,10 +12,11 @@
 }
 
 #welcome > p {
-    width: 500px;
-    margin: 12px 0px 12px 100px;
+    width: 400px;
+    margin: 12px 0px 12px 50px;
     position: relative;
-    top: 69px;
+    top: 30px;
+    text-align: justify;
 }
 
 #announcements {

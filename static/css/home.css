@@ -44,7 +44,7 @@ marquee {
     position: relative;
     left: 120px;
     top: 23px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 marquee::after {

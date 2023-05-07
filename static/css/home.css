@@ -1,20 +1,21 @@
 #welcome {
     width: 730px;
     height: 262px;
-    background: url('../images/backgrounds/welcome-banner.png') no-repeat;
+    background: url('../images/backgrounds/welcome-banner.gif') no-repeat;
     background-size: 730px 262px;
     margin: 0px auto 20px auto;
     border: 0px;
     position: relative;
     margin-top: 15px;
     text-align: justify;
+    border-radius: 8px;
 }
 
 #welcome > p {
     width: 500px;
-    margin: 12px 0px 12px 142px;
+    margin: 12px 0px 12px 100px;
     position: relative;
-    top: 80px;
+    top: 69px;
 }
 
 #announcements {
@@ -30,20 +31,29 @@
     height: 14px;
     display: block;
     position: relative;
-    left: 68px;
+    left: 118px;
     top: 11px;
 }
 
 marquee {
     border: 15px solid transparent;
-    border-radius: 4px;
     padding: 15px;
-    border-image: url('../images/backgrounds/announcements_border.png') 50 round;
+    border-image: url('https://image.slidesdocs.com/responsive-images/docs/pop-art-bubble-dialog-in-shades-of-pink-and-purple-page-border-background-word-template_1ed12b1322__1131_1600.jpg') 45 round;
     width: 480px;
     height: 180px;
     position: relative;
-    left: 70px;
+    left: 120px;
     top: 23px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+marquee::after {
+    position: absolute;
+    top: -4px; bottom: -4px;
+    left: -4px; right: -4px;
+    content: '';
+    z-index: -1;
+    border-radius: 16px;
 }
 
 marquee > ul {

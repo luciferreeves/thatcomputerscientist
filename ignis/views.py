@@ -9,7 +9,7 @@ import requests
 from django.core.files.base import ContentFile
 from captcha.image import ImageCaptcha
 from users.tokens import CaptchaTokenGenerator
-
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 from PIL import Image
@@ -182,11 +182,23 @@ def get_screenshot(request):
         driver = webdriver.Firefox(options=options)
         driver.set_window_size(1280, 1440)
 
-        url = 'https://www.thatcomputerscientist.com'
+        url = 'https://www.thatcomputerscientist.com' if not settings.DEBUG else 'https://preview.thatcomputerscientist.com'
+        print(settings.DEBUG)
 
         # Wait until the page is loaded
         driver.get(url)
         time.sleep(5)
+
+        # write 3 chat messages in #chatbox-input
+        chatbox = driver.find_element('id', 'chatbox-input')
+        chatbox.send_keys('Hello!')
+        chatbox.send_keys(u'\ue007')
+
+        chatbox.send_keys('Welcome to my website!')
+        chatbox.send_keys(u'\ue007')
+
+        chatbox.send_keys('You are currently viewing a a dynamically generated screenshot of my website!')
+        chatbox.send_keys(u'\ue007')
         
         screenshot = driver.get_screenshot_as_png()
         screenshot = Image.open(BytesIO(screenshot))

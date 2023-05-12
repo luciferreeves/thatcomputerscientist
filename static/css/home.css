@@ -1,7 +1,7 @@
 #welcome {
     width: 730px;
     height: 262px;
-    background: url('../images/backgrounds/welcome-banner.gif') no-repeat;
+    background: url('../images/backgrounds/welcome-banner.png') no-repeat;
     background-size: 730px 262px;
     margin: 0px auto 20px auto;
     border: 0px;
@@ -12,11 +12,38 @@
 }
 
 #welcome > p {
-    width: 400px;
+    width: 375px;
     margin: 12px 0px 12px 50px;
     position: relative;
     top: 30px;
     text-align: justify;
+}
+
+#chatbox {
+    position: absolute;
+    right: 110px;
+    width: 160px;
+    top: 25px;
+}
+
+#messages {
+    height: 175px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.message {
+    text-align: left;
+}
+
+#chatbox-input {
+    width: 156px;
+    border: none;
+    padding: 10px 2px 2px 2px;
+    resize: none;
+    border-top: solid 1px rgba(222, 222, 222, 0.7);
+    border-radius: 0;
+    height: 35px;
 }
 
 #announcements {

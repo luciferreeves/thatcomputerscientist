@@ -41,7 +41,7 @@
         {% endif %}
             <ul>
                 {% for comment in activity_recent_comments %}
-                    <li style="background: #1c1c1c;padding: 20px 10px 10px 10px;margin-bottom: 10px;border-radius: 8px;"
+                    <li style="background: #1c1c1c;padding: 20px 10px 10px 10px;margin-bottom: 10px;border-radius: 8px;">
                         <p>On <a href="{% url 'blog:post' comment.post.slug %}#comment-{{ comment.id }}">{{ comment.post.title }}</a>:
                             <blockquote style="background: none; margin-top: 15px; padding: 0px 20px; width: 640px; margin-left: 20px;">{{ comment.body|safe }}</blockquote></p>
                     </li>
@@ -55,5 +55,7 @@
 
     {% endif %}
 </div>
+{% endblock %}
+{% block scripts%}
 {% include 'blog/partials/mathjax.html' %}
 {% endblock %}

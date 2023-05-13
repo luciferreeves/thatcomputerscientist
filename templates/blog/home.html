@@ -55,9 +55,11 @@
   <h2>Recent Posts</h2>
   {% include 'blog/partials/post_list.html' %}
 </div>
-{% include 'blog/partials/mathjax.html' %}
 {% endif %}
-<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+{% endblock %}
+
+{% block scripts %}
+{% include 'blog/partials/mathjax.html' %}
 <script type="text/javascript">
   var username = "{{ user.username }}" ? "{{ user.username }}" : "Anonymous";
   $(document).ready(function() {
@@ -76,5 +78,5 @@
       });
   });
 </script>
-
 {% endblock %}
+

@@ -7,6 +7,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .accountFunctions import store_token
 from .mail_send import send_email
+from random import choice
+from blog.context_processors import avatar_list
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30, min_length=4)
@@ -47,6 +49,9 @@ class RegisterForm(forms.Form):
         )
         user.save()
         user_profile = UserProfile.objects.create(user=user)
+        avatar_dir = choice(list(avatar_list().keys()))
+        avatar_file = choice(avatar_list()[avatar_dir])
+        user_profile.avatar_url = avatar_dir + '/' + avatar_file.replace('.gif', '')
         user_profile.save()
 
         uid, token = store_token(token_type='verifyemail', user=user, email=user.email)

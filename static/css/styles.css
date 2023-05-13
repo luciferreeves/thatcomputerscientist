@@ -54,6 +54,19 @@ a,
     text-decoration: none;
 }
 
+#fake-banner-ad{
+    border: dashed 1px #dddddd;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+#fake-banner-ad img, #fake-ad-area img {
+    display: block;
+    margin: 0px auto;
+    width: calc(100% - 8px);
+    border-radius: 8px;
+}
+
 a:hover {
     text-decoration: underline;
 }

@@ -176,29 +176,35 @@ def captcha_image(request, captcha_string):
 @never_cache
 def get_screenshot(request):
     # check if screenshot exists
-    if not os.path.exists('siteshot.png'):
+    if not os.path.exists('siteshots.png'):
         options = webdriver.FirefoxOptions()
         options.headless = True
         driver = webdriver.Firefox(options=options)
         driver.set_window_size(1280, 1440)
 
-        url = 'https://www.thatcomputerscientist.com' if not settings.DEBUG else 'https://preview.thatcomputerscientist.com'
+        url = 'http://localhost:8000'
         print(settings.DEBUG)
 
         # Wait until the page is loaded
         driver.get(url)
-        time.sleep(10)
+        time.sleep(5)
 
         # write 3 chat messages in #chatbox-input
         chatbox = driver.find_element('id', 'chatbox-input')
         chatbox.send_keys('Hello!')
+        time.sleep(0.1)
         chatbox.send_keys(u'\ue007')
+        time.sleep(0.5)
 
         chatbox.send_keys('Welcome to my website!')
+        time.sleep(0.1)
         chatbox.send_keys(u'\ue007')
+        time.sleep(0.5)
 
         chatbox.send_keys('You are currently viewing a dynamically generated screenshot of my website!')
+        time.sleep(0.1)
         chatbox.send_keys(u'\ue007')
+        time.sleep(0.5)
         
         screenshot = driver.get_screenshot_as_png()
         screenshot = Image.open(BytesIO(screenshot))

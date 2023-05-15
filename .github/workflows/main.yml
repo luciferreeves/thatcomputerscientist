@@ -13,25 +13,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY_ED25519 }}
         port: ${{ secrets.PORT }}
-        script: |
-          cd /home/ubuntu/thatcomputerscientist/
-          git pull origin main --recurse-submodules
-          rm -rf .env
-          cp /home/ubuntu/.env .
-          pip3 install -r requirements.txt
-          python3 manage.py makemigrations
-          python3 manage.py migrate
-          python3 manage.py collectstatic --noinput
-          kill $(ps aux | grep 'daphne -b 0.0.0.0 -p 8000 thatcomputerscientist.asgi:application' | grep -v grep | awk '{print $2}')
-          nohup daphne -b 0.0.0.0 -p 8000 thatcomputerscientist.asgi:application > /dev/null 2>&1 &
-          echo "Deployed Successfully"
-          echo "Taking Screenshot"
-          echo "Sleeping..."
-          sleep 5
-          echo Curl Running...
-          curl -k -L --output siteshot.png http://localhost:8000/ignis/screenshot
-          rm siteshot.png
-          echo "Screenshot Saved..."
-          ls thatcomputerscientist/
-          echo "Done"
-          
+        script: sh /home/ubuntu/deploy.sh

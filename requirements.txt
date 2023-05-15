@@ -16,3 +16,5 @@ fuzzywuzzy
 python-Levenshtein
 selenium
 django-haystack
+channels
+daphne

@@ -59,21 +59,7 @@
 {% include 'blog/partials/mathjax.html' %}
 <script type="text/javascript">
   var username = "{{ user.username }}" ? "{{ user.username }}" : "Anonymous";
-  $(document).ready(function() {
-      $('#chatbox-input').on('keyup', function(e) {
-          if (e.keyCode === 13) {
-              var msg = $('#chatbox-input').val();
-              if (msg.trim().length > 0) {
-                  var message = document.createElement("div");
-                  message.className = "message";
-                  message.innerHTML = "<b>" + username + "</b>: " + msg;
-                  $('#messages').append(message);
-                  $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 100);
-              }
-              $('#chatbox-input').val("");
-          } 
-      });
-  });
 </script>
+<script src="{% static 'js/chat.js' %}"></script>
 {% endblock %}
 

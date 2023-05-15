@@ -38,6 +38,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
     'dev_status',
     'announcements',
     'ignis',
+    'chat',
 ]
 
 SITE_ID = 1
@@ -105,8 +108,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
+# WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
+ASGI_APPLICATION = 'thatcomputerscientist.asgi.application'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

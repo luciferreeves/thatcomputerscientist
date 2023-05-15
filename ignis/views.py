@@ -187,7 +187,7 @@ def get_screenshot(request):
 
         # Wait until the page is loaded
         driver.get(url)
-        time.sleep(5)
+        time.sleep(10)
 
         # write 3 chat messages in #chatbox-input
         chatbox = driver.find_element('id', 'chatbox-input')

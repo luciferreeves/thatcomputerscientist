@@ -176,14 +176,13 @@ def captcha_image(request, captcha_string):
 @never_cache
 def get_screenshot(request):
     # check if screenshot exists
-    if not os.path.exists('siteshots.png'):
+    if not os.path.exists('siteshot.png'):
         options = webdriver.FirefoxOptions()
         options.headless = True
         driver = webdriver.Firefox(options=options)
         driver.set_window_size(1280, 1440)
 
         url = 'http://localhost:8000'
-        print(settings.DEBUG)
 
         # Wait until the page is loaded
         driver.get(url)

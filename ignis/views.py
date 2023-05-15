@@ -197,7 +197,7 @@ def get_screenshot(request):
         chatbox.send_keys('Welcome to my website!')
         chatbox.send_keys(u'\ue007')
 
-        chatbox.send_keys('You are currently viewing a a dynamically generated screenshot of my website!')
+        chatbox.send_keys('You are currently viewing a dynamically generated screenshot of my website!')
         chatbox.send_keys(u'\ue007')
         
         screenshot = driver.get_screenshot_as_png()

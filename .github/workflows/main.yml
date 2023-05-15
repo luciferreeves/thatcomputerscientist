@@ -13,4 +13,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY_ED25519 }}
         port: ${{ secrets.PORT }}
-        script: sh /home/ubuntu/deploy.sh
+        script: sudo sh /home/ubuntu/deploy.sh

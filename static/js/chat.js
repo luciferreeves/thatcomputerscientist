@@ -16,7 +16,6 @@ $(document).ready(function(){
         }
         $('#messages').append(messageElement);
         $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 100);
-        $('#chatbox-input').val("");
     }
 
     var protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';

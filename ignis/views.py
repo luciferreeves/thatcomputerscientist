@@ -9,7 +9,6 @@ import requests
 from django.core.files.base import ContentFile
 from captcha.image import ImageCaptcha
 from users.tokens import CaptchaTokenGenerator
-from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 from PIL import Image
@@ -187,23 +186,6 @@ def get_screenshot(request):
         # Wait until the page is loaded
         driver.get(url)
         time.sleep(5)
-
-        # write 3 chat messages in #chatbox-input
-        chatbox = driver.find_element('id', 'chatbox-input')
-        chatbox.send_keys('Hello!')
-        time.sleep(0.1)
-        chatbox.send_keys(u'\ue007')
-        time.sleep(0.5)
-
-        chatbox.send_keys('Welcome to my website!')
-        time.sleep(0.1)
-        chatbox.send_keys(u'\ue007')
-        time.sleep(0.5)
-
-        chatbox.send_keys('You are currently viewing a dynamically generated screenshot of my website!')
-        time.sleep(0.1)
-        chatbox.send_keys(u'\ue007')
-        time.sleep(0.5)
         
         screenshot = driver.get_screenshot_as_png()
         screenshot = Image.open(BytesIO(screenshot))

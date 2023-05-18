@@ -138,3 +138,5 @@ staticfiles/
 siteshot.png
 
 image_downloader.ipynb
+
+dump.rdb

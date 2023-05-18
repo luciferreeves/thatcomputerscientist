@@ -1,4 +1,5 @@
-Django
+django
+django-redis
 python-dotenv
 gunicorn
 whitenoise
@@ -17,4 +18,5 @@ python-Levenshtein
 selenium
 django-haystack
 channels
+channels_redis
 daphne

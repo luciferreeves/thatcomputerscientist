@@ -9,7 +9,7 @@ from .accountFunctions import store_token
 from .mail_send import send_email
 from random import choice
 from blog.context_processors import avatar_list
-
+import string
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30, min_length=4)
     email = forms.EmailField(label='Email')
@@ -17,6 +17,23 @@ class RegisterForm(forms.Form):
     password2 = forms.CharField(label='Password (again)', widget=forms.PasswordInput, min_length=8)
     captcha = forms.CharField(label='Captcha', max_length=6)
     expected_captcha = None
+    protected_usernames = [
+        'admin',
+        'administrator',
+        'root',
+        'thatcomputerscientist',
+        'skippy',
+        'system',
+        'test',
+        'user',
+        'webmaster',
+        'www',
+        'postmaster',
+        'hostmaster',
+        'info',
+        'support',
+    ]
+    allowed_chars = string.ascii_letters + string.digits 
 
     def __init__(self, *args, **kwargs):
         if 'expected_captcha' in kwargs:
@@ -37,6 +54,11 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError('Captcha does not match.')
         if User.objects.filter(username=cleaned_data.get('username')).exists():
             raise forms.ValidationError('Username already exists.')
+        if cleaned_data.get('username').lower() in self.protected_usernames:
+            raise forms.ValidationError('Username not allowed. Please choose another.')
+        for char in cleaned_data.get('username'):
+            if char not in self.allowed_chars:
+                raise forms.ValidationError('Username contains invalid characters. Only A-Z, a-z, and 0-9 are allowed.')
         if User.objects.filter(email=cleaned_data.get('email')).exists():
             raise forms.ValidationError('Email already exists.')
         return cleaned_data

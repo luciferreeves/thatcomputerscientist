@@ -1,40 +1,45 @@
 import json
-from channels.generic.websocket import WebsocketConsumer
-from asgiref.sync import async_to_sync
+from channels.generic.websocket import AsyncWebsocketConsumer
+from .chat_cache import handle_connect, handle_disconnect, handle_alone_user, discard_user_messages
+from .ai import invokeMFSkippy
 
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
         self.room_group_name = 'chat'
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-        self.accept()
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        await self.accept()
+        handle_connect()
+    
+    async def disconnect(self, close_code):
+        # Leave room group
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+        handle_disconnect()
+        discard_user_messages(user_identifier=self.channel_name)
 
-    def receive(self, text_data):
+    async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         username = text_data_json['username']
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat',
-                'message': message,
-                'username': username
-            }
-        )
 
-    def chat(self, event):
-        message = event['message']
-        username = event['username']
-        self.send(text_data=json.dumps({
-            'message': message,
-            'username': username
-        }))
-
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
+        # Send message to room group
+        await self.channel_layer.group_send(
+            self.room_group_name, {"type": "chat", "message": message, "username": username}
         )
+        is_alone_user = handle_alone_user()
+        if is_alone_user:
+            bot_response = invokeMFSkippy(message=message, identifier=self.channel_name)
+            if bot_response:
+                await self.channel_layer.group_send(
+                    self.room_group_name, {"type": "chat", "message": bot_response, "username": "Skippy"}
+                )
+        else:
+            discard_user_messages(user_identifier=self.channel_name)
+
+    # Receive message from room group
+    async def chat(self, event):
+        message = event["message"]
+        username = event["username"]
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({"message": message, "username": username}))
 

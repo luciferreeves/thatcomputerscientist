@@ -10,6 +10,9 @@ $(document).ready(function(){
             case 'disconnect':
                 messageElement.innerHTML = '<span style="color: #ff9494;">' + "<b>" + username + "</b>: " + message + '</span>';
                 break;
+            case 'bot':
+                messageElement.innerHTML = '<span style="color: #fbbf49;">' + "<b>" + username + "</b>: " + message + '</span>';
+                break;
             case 'default':
                 messageElement.innerHTML ="<b>" + username + "</b>: " + message;
                 break;
@@ -33,7 +36,13 @@ $(document).ready(function(){
     }
     ws.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        createMessageElement(data['message'].trim(), data['username'], 'default');
+        if(data['username'] == 'Skippy') { // Bot
+            createMessageElement(data['message'].trim(), data['username'], 'bot');
+        } else if (data['username'] == 'System') { // System
+            createMessageElement(data['message'].trim(), data['username'], 'connect');
+        } else { // User
+            createMessageElement(data['message'].trim(), data['username'], 'default');
+        }
     }
 
     $('#chatbox-input').on('keyup', function(e) {

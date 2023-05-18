@@ -19,6 +19,11 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# set n_connected_lc_users to 0 on startup
+
+import redis
+r = redis.Redis(host='localhost', port=6379, db=0)
+r.set('n_connected_lc_users', 0)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -112,9 +117,15 @@ TEMPLATES = [
 ASGI_APPLICATION = 'thatcomputerscientist.asgi.application'
 
 CHANNEL_LAYERS = {
+    # "default": {
+    #     "BACKEND": "channels.layers.InMemoryChannelLayer"
+    # }
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
 
 # Database
@@ -146,6 +157,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

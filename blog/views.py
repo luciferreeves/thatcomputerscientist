@@ -111,7 +111,7 @@ def post(request, slug):
         images = soup.find_all('img')
         for i in range(len(images)):
             if i % 2 != 0:
-                images[i]['style'] = 'float: right; margin: 13px; margin-right: 0px;'
+                images[i]['style'] = 'float: right; margin: 13px; margin-right: 0px; margin-top: 5px;'
 
         # remove all paragraphs which are: "<p class="ql-align-justify"><br></p>"
         for p in soup.find_all('p', class_='ql-align-justify'):

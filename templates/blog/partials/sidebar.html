@@ -76,7 +76,7 @@
 </div>
 {% endif %}
 
-<div id="navigation-area" class="mtsbitem">
+<div id="navigation-area" class="mtctitem">
     <h2>Links</h2>
     <ul>
         <li>
@@ -142,13 +142,13 @@
     </ul>
 </div>
 
-<div id="fake-ad-area" class="mtsbitem">
+<div id="fake-ad-area" class="mtctitem">
     {% comment %} <h2>Advertisement</h2> {% endcomment %}
     {% load ad %}
         <img src="{{ "big" | ad }}" alt="Advertisement">
 </div>
 
-<div id="archives-area" class="mtsbitem">
+<div id="archives-area" class="mtctitem">
     <h2>Archives</h2>
     <ul>
         {% for archive in archives %}
@@ -176,7 +176,7 @@
     </ul>
 </div>
 
-<div id="categories-area" class="mtsbitem">
+<div id="categories-area" class="mtctitem">
     <h2>Categories</h2>
     <ul>
         {% for category in categories %}
@@ -205,7 +205,7 @@
 </div>
 
 {% if user.is_superuser %}
-<div id="admin-area" class="mtsbitem">
+<div id="admin-area" class="mtctitem">
     <h2>Admin</h2>
     <ul>
         <li>
@@ -292,7 +292,7 @@
 </div>
 {% endif %}
 
-<div id="fun-stuff" class="mtsbitem">
+<div id="fun-stuff" class="mtctitem">
     <h2>Fun Stuff</h2>
     <ul>
         <li>

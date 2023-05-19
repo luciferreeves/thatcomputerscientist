@@ -85,3 +85,31 @@
     left: 110px;
     top: 45px;
 }
+
+#navigation-area h2,
+#archives-area h2,
+#categories-area h2,
+#admin-area h2,
+#fun-stuff h2 {
+    background: #311b4f;
+    padding: 10px 15px;
+    text-align: left;
+    margin: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: none;
+    font-size: 13px;
+    text-transform: capitalize;
+}
+
+#navigation-area ul,
+#archives-area ul,
+#categories-area ul,
+#admin-area ul,
+#fun-stuff ul {
+    background: #f4f1e90f;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+

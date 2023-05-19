@@ -79,7 +79,7 @@
 marquee {
     border: 15px solid transparent;
     padding: 15px;
-    border-image: url('https://image.slidesdocs.com/responsive-images/docs/pop-art-bubble-dialog-in-shades-of-pink-and-purple-page-border-background-word-template_1ed12b1322__1131_1600.jpg') 45 round;
+    border-image: url('../images/backgrounds/announcements_border.png') 45 round;
     width: 480px;
     height: 180px;
     position: relative;

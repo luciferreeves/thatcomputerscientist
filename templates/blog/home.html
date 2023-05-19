@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
-<div id="welcome">
+<div id="welcome" class="mtctitem">
   <p>
     Welcome to the home of That Computer Scientist. My name is <a href="{% url 'blog:user_activity' 'bobby' %}">@bobby</a>, and this is my personal
     website. I aim to build a retro looking personal website, where I share my thoughts, ideas, and experiences through articles, and will showcase some cool nostalgic features and tools.

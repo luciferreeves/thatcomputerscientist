@@ -1,25 +1,17 @@
 @import url(search.css);
 @import url(sidebar.css);
+@import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 body {
     width: 100%;
     background: black;
     font-size: 11px;
-    font-family: Verdana, Helvetica, Arial, Sans-Serif;
+    font-family: 'Mali', sans-serif;
     margin: 0px auto 0px;
     padding: 0px;
     color: #dddddd;
     box-sizing: border-box;
 }
-
-/* Cursor Styles */
-/* body {
-    cursor: url("../images/backgrounds/cursor_default.png"), auto;
-}
-
-a {
-    cursor: url("../images/backgrounds/cursor_link.png"), pointer;
-} */
 
 #bg-video {
     position: fixed;
@@ -348,7 +340,7 @@ blockquote {
 
 #article-body,
 #editor-container {
-    font-size: 13px;
+    font-size: 11px;
     text-align: justify;
 }
 
@@ -356,7 +348,8 @@ blockquote {
 #editor-container img {
     height: 300px;
     float: left;
-    padding: 0px 13px 0px 0px;
+    margin: 11px;
+    margin-left: 0;
 }
 
 #article-body h2,
@@ -366,6 +359,6 @@ blockquote {
     text-transform: uppercase;
     padding-bottom: 0px;
     border-bottom: none;
-    margin: 13px 0px;
+    margin: 11px 0px;
     font-size: 14px;
 }

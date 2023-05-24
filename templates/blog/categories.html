@@ -1,9 +1,9 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-<h2 style="margin-top:0px;">Categories</h2>
+<h2 style="margin-top:15px;">Categories</h2>
 {% load static %}
 {% if categories %}
 <div id="categories-area">
-    <ul>
+    <ul style="border-radius: 8px;">
         {% for category in categories %}
         <li>
             <span>

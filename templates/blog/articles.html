@@ -1,11 +1,10 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-
 {% if type == 'articles' %}
-<h2 style="margin-top:0px;"> All Posts</h2>
+<h2 style="margin-top:15px;"> All Posts</h2>
 {% elif type == 'articles-archive' %}
-<h2 style="margin-top:0px;"> Posts made in {{ date }}</h2>
+<h2 style="margin-top:15px;"> Posts made in {{ date }}</h2>
 {% elif type == 'articles-category' %}
-<h2 style="margin-top:0px;"> Posts made in Category: {{ category }}</h2>
+<h2 style="margin-top:15px;"> Posts made in Category: {{ category }}</h2>
 {% endif %}
 
 
@@ -34,8 +33,7 @@
     <span>&nbsp;&nbsp;</span>
     <input type="submit" value="Apply" class="button button-special" />
 </form>
-<div id="recent-posts" class="mtctitem">
-    <br>
+<div style="margin-top: -10px;">
     {% include 'blog/partials/post_list.html' %}
 </div>
 <div>

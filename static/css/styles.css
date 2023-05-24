@@ -20,6 +20,7 @@ body {
     min-width: 100%;
     min-height: 100%;
     z-index: -1;
+    object-fit: cover;
 }
 
 #overlay {
@@ -147,11 +148,6 @@ blockquote {
     font-size: 11px;
 }
 
-/* #posts tr {
-    border-bottom: solid 1px #dddddd;
-} */
-
-
 /* Pagination Table */
 #pagination {
     margin: 20px auto;
@@ -248,20 +244,6 @@ blockquote {
     padding: 0px;
 }
 
-.ql-mathjax-block img,
-.ql-mathjax-inline img {
-    float: none !important;
-}
-
-.ql-mathjax-block img {
-    margin-bottom: 15px;
-    padding: 0px !important;
-}
-
-.ql-mathjax-inline img {
-    padding: 0px !important;
-}
-
 .highlight {
     background: none !important;
     text-align: left !important;
@@ -274,6 +256,8 @@ blockquote {
 
 .comment .highlight {
     width: 630px;
+    word-wrap: break-word;
+    overflow-x: auto;
 }
 
 .comment pre {
@@ -321,21 +305,6 @@ blockquote {
     padding: 5px 0px 0px 0px;
     width: 1000px;
     display: block;
-}
-
-#recent-posts h1 {
-    margin: 0px;
-    padding: 0px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-#recent-posts a {
-    color: #91b3ee;
-}
-
-#recent-posts h1 a {
-    color: #56a6a1;
 }
 
 #article-body,

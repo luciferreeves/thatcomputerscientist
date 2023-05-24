@@ -1,9 +1,9 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-<h2 style="margin-top:0px;">Archives</h2>
+<h2 style="margin-top:15px;">Archives</h2>
 {% load static %}
 {% if archives %}
 <div id="archives-area">
-    <ul>
+    <ul style="border-radius: 8px;">
         {% for archive in archives %}
         <li>
             <span>

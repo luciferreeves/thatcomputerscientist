@@ -118,6 +118,13 @@ def post(request, slug):
             if p.find('br') is not None:
                 p.decompose()
 
+        # separate the body in two parts -> the first paragraph and the rest
+        first_paragraph = soup.find('p')
+        if first_paragraph is not None:
+            first_paragraph = str(first_paragraph)
+            soup.find('p').decompose()
+
+        post.first_paragraph = first_paragraph
         post.body = str(soup)
 
 

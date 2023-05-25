@@ -1,18 +1,31 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
+{% load tz %}
 <div id="article" class="mtsbitem">
-    <img src="{% url 'ignis:post_image' '730' post.id %}.gif" alt="Cover Image" style="width: 730px; margin: 0 auto; display: block;">
-    <h1>{{ post.title }}</h1>
-    <p style="line-height: 1.6em;">
-        Posted on <em><u>{{ post.date | date:"M d, Y" }}</u></em> by <em><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a> in <a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a></em>
-    </p>
-    <p>Tags:
-        {% for tag in tags %}
-            <a href="#" class="tag">{{ tag.name|title }}</a>{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    </p>
-    <hr>
-    <div id="article-body">{{ post.body | safe }}</div>
+    <h1 style="margin: 10px; text-align: left; font-size: 32px; font-weight: bold; color: #f4ebff;">
+        {{ post.title }}
+    </h1>
+    <div style="margin: 10px 0px 10px 12px; display: inline-block;">
+        {% with post.author.userprofile_set.first as userprofile %}
+        <div style="height: 20px; width: 20px; display: inline-block; margin-right: 4px; border-radius: 10px; background-image: url('{% static 'images/avatars/' %}{{ userprofile.avatar_url }}.gif'); background-size: cover; background-position: center;"></div>
+        {% endwith %}
+        <div style="display: inline-block; vertical-align: top;">
+            <a href="{% url 'blog:user_activity' post.author %}" style="font-weight: bold; font-size: 11px; position: relative; top: 2.5px;">
+                {{ post.author.first_name }} {{ post.author.last_name }}
+            </a>
+            <span style="position: relative; top: 2.5px;">posted in</span>
+            <a href="{% url 'blog:categories' %}/{{ post.category.slug }}" style="position: relative; top: 2.5px;">
+                {{ post.category }}
+            </a>
+            <span style="position: relative; top: 2.5px; margin-left: 4px;"><b>|</b></span>
+            <span style="position: relative; top: 2.5px; margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
+        </div>
+    </div>
+    <div id="article-body">
+        <div>{{ post.first_paragraph | safe }}</div>
+        <div style="width: 730px; height: 486.6667px; margin: 20px auto; display: block; border-radius: 8px; background-image: url('{% url 'ignis:post_image' '730' post.id %}.gif'); background-size: cover; background-position: center;"></div>
+        <div>{{ post.body | safe }}</div>
+    </div>
 </div>
 
 <div id="comments" style="clear: both;" class="mtsbitem">

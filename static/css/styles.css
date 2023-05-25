@@ -13,6 +13,10 @@ body {
     box-sizing: border-box;
 }
 
+input, textarea {
+    font-family: 'Mali', sans-serif !important;
+}
+
 #bg-video {
     position: fixed;
     right: 0;
@@ -116,7 +120,7 @@ kbd {
 
 blockquote {
     border-left: solid 4px #a591ee;
-    width: 650px;
+    /* width: 650px; */
     margin: 0px auto;
     padding: 8px;
     background: #2f2f2f;
@@ -311,6 +315,18 @@ blockquote {
 #editor-container {
     font-size: 11px;
     text-align: justify;
+}
+
+#article {
+    padding: 0px;
+    display: block;
+    clear: both;
+    width: 730px;
+}
+
+#article-body {
+    width: 730px;
+    margin: 0px 10px;
 }
 
 #article-body img,

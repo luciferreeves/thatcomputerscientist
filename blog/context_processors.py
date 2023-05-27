@@ -54,7 +54,7 @@ def avatar_list():
                 avatar_list[directory].remove(file)
     return avatar_list
 
-def highlight_code_blocks(code_block):
+def highlight_code_blocks(code_block, language=None):
     # replace &nbsp; with space
     try:
         cb = code_block.string
@@ -63,11 +63,16 @@ def highlight_code_blocks(code_block):
     cb = cb.replace(u'\xa0', u' ')
 
     # guess the language as there is no data-lang attribute
-    try:
-        lexer = guess_lexer(cb)
-    except:
-        lexer = get_lexer_by_name('text')
-
+    if language:
+        try:
+            lexer = get_lexer_by_name(language.strip())
+        except:
+            lexer = get_lexer_by_name('text')
+    else:
+        try:
+            lexer = guess_lexer(cb)
+        except:
+            lexer = get_lexer_by_name('text')
     # highlight the code
     formatter = HtmlFormatter(noclasses=True, style='native', wrapcode=True)
     highlighted_code = highlight(cb, lexer, formatter)
@@ -80,9 +85,24 @@ def comment_processor(comment):
     comment = re.sub(r'>', '&gt;', comment)
 
     # any text between ``` and ``` must be highlighted as code
+    # code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
+    # for code_block in code_blocks:
+    #     comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
+
+    # new highlight code block:
+    # any text between ``` and ``` must be highlighted as code with guessed language
+    # and any text between ```lang-<language> and ``` must be highlighted as code with specified language
     code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
     for code_block in code_blocks:
-        comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
+        if code_block.startswith('lang-'):
+            language = code_block.split('\n')[0].replace('lang-', '')
+            code_block = code_block.replace('lang-' + language + '\n', '')
+            # comment = highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>'), language)
+            comment = comment.replace('```lang-' + language + '\n' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>'), language))
+        else:
+            comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
+
+
 
     # retain line breaks, for every newline character, add a <br> tag
     comment = comment.replace('\n', '<br>')

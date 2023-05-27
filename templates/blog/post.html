@@ -2,10 +2,10 @@
 {% load static %}
 {% load tz %}
 <div id="article" class="mtsbitem">
-    <h1 style="margin: 10px; text-align: left; font-size: 32px; font-weight: bold; color: #f4ebff;">
+    <h1 style="margin: 10px 0; text-align: left; font-size: 32px; font-weight: bold; color: #f4ebff;">
         {{ post.title }}
     </h1>
-    <div style="margin: 10px 0px 10px 12px; display: inline-block;">
+    <div style="margin: 10px 0px 10px 0px; display: inline-block;">
         {% with post.author.userprofile_set.first as userprofile %}
         <div style="height: 20px; width: 20px; display: inline-block; margin-right: 4px; border-radius: 10px; background-image: url('{% static 'images/avatars/' %}{{ userprofile.avatar_url }}.gif'); background-size: cover; background-position: center;"></div>
         {% endwith %}
@@ -28,10 +28,9 @@
     </div>
 </div>
 
-<div id="comments" style="clear: both;" class="mtsbitem">
-    {% if comments %}
-    <h2>Comments</h2>
-    {% endif %}
+<h2 class="mtsbitem">Comments</h2>
+{% if comments %}
+<div id="comments" style="clear: both;">
     {% for comment in comments %}
         <div id="comment-{{ comment.id }}">
             <table>
@@ -72,6 +71,11 @@
         </div>
     {% endfor %}
 </div>
+{% else %}
+<div id="comments" style="clear: both;">
+    <p><em>Sadly, there are no comments yet. Be the first to leave one!</em></p>
+</div>
+{% endif %}
 
 {% if user.is_authenticated %}
 <div id="new-comment">

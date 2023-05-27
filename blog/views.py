@@ -136,6 +136,10 @@ def post(request, slug):
             comment.processed_body = comment_processor(comment.body)
 
         if post.is_public:
+            # modify request.meta description (only text) and image
+            request.meta['description'] = BeautifulSoup(first_paragraph, 'html.parser').get_text()
+            request.meta['image'] = 'https://thatcomputerscientist.com/ignis/post_image/720/' + str(post.id) + '.gif'
+
             return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
         else:
             if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:

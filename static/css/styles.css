@@ -322,8 +322,6 @@ blockquote {
     display: block;
     clear: both;
     width: 710px;
-    border: solid 1px #311b4f;
-    border-top: none;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }

@@ -39,7 +39,8 @@
             {{ post.excerpt | safe }} {% endcomment %}
         </div>
         <div class="post-actions" style="clear: both;">
-            <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} Comments</a>
+            <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} 
+            Comment{% if not post.num_comments == 1 %}s{% endif %}</a>
         </div>
     </div>
 {% endfor %}

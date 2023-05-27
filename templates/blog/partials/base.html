@@ -141,4 +141,13 @@
   <script src="{% static 'js/oneko.js' %}"></script>
   <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
   {% block scripts %} {% endblock %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-72XTC500FR');
+  </script>
 </html>

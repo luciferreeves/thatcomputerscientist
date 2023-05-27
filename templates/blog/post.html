@@ -1,8 +1,21 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
 {% load tz %}
-<div id="article" class="mtsbitem">
-    <h1 style="margin: 10px 0; text-align: left; font-size: 32px; font-weight: bold; color: #f4ebff;">
+<div id="post-actions-bar" class="mtsbitem">
+    <a class="pa-btn" href="#article-body">Article</a>
+    <a class="pa-btn" href="#comments">Opinions</a>
+    <a class="pa-btn" href="#new-comment">Your Thoughts?</a>
+    {% comment %} <a class="pa-btn" id="translate-jp" href="javascript:;">
+        <img src="{% static 'images/icons/translate.png' %}" alt="Translate to Japanese" style="height: 11px; width: 11px; margin-right: 5px; position: relative; top: 1px;">
+        {% if request.session.language == 'jp' %}
+            Translate to English
+        {% else %}
+            Translate to Japanese
+        {% endif %}
+    </a> {% endcomment %}
+</div>
+<div id="article">
+    <h1 style="padding: 20px 0; margin: 0; text-align: left; font-size: 32px; font-weight: bold; color: #f4ebff;">
         {{ post.title }}
     </h1>
     <div style="margin: 10px 0px 10px 0px; display: inline-block;">
@@ -21,14 +34,19 @@
             <span style="position: relative; top: 2.5px; margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
         </div>
     </div>
+
     <div id="article-body">
         <div>{{ post.first_paragraph | safe }}</div>
-        <div style="width: 730px; height: 486.6667px; margin: 20px auto; display: block; border-radius: 8px; background-image: url('{% url 'ignis:post_image' '730' post.id %}.gif'); background-size: cover; background-position: center;"></div>
+        <div style="width: 710px; height: 473.3333px; margin: 20px auto; display: block; border-radius: 8px; background-image: url('{% url 'ignis:post_image' '710' post.id %}.gif'); background-size: cover; background-position: center;"></div>
         <div>{{ post.body | safe }}</div>
     </div>
 </div>
 
-<h2 class="mtsbitem">Comments</h2>
+<h2 class="mtsbitem">Comments
+    <a href="#article" class="pa-btn" style="float: right; margin-top: 5px; text-transform: capitalize; font-weight: normal;">
+        Back to Top
+    </a>
+</h2>
 {% if comments %}
 <div id="comments" style="clear: both;">
     {% for comment in comments %}
@@ -194,6 +212,14 @@
     for (var i = 0; i < textareas.length; i++) {
         textareas[i].onkeydown = handleKeyDown;
     }
+
+    //pa-btn scroll animate override
+    $('.pa-btn').click(function() {
+        $('html, body').animate({
+            scrollTop: $($(this).attr('href')).offset().top - 50
+        }, 500);
+        return false;
+    });
 </script>
 
 {% include 'blog/partials/mathjax.html' %}

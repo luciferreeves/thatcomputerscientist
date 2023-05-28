@@ -1,6 +1,6 @@
 #welcome {
     width: 730px;
-    /* height: 262px; */
+    min-height: 262px;
     background: url('../images/backgrounds/welcome-banner.png') no-repeat;
     background-size: 730px 262px;
     margin: 0px auto 20px auto;

@@ -86,6 +86,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
+    'middleware.uuidmiddleware.UserUUIDMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {
@@ -110,6 +111,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'blog.context_processors.categories',
                 'blog.context_processors.archives',
+                'middleware.uuidmiddleware.userTrackingContextProcessor',
             ],
         },
     },

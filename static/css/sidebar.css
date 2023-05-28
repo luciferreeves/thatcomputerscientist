@@ -90,7 +90,8 @@
 #archives-area h2,
 #categories-area h2,
 #admin-area h2,
-#fun-stuff h2 {
+#fun-stuff h2,
+#online-users h2 {
     background: #311b4f;
     padding: 10px 15px;
     text-align: left;
@@ -106,10 +107,19 @@
 #archives-area ul,
 #categories-area ul,
 #admin-area ul,
-#fun-stuff ul {
+#fun-stuff ul,
+#online-users div {
     background: #f4f1e90f;
     padding: 10px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+#online-users div > ul {
+    padding: 0 0 0 20px;
+}
+
+#online-users p {
+    margin: 0;
 }
 

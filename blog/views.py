@@ -150,6 +150,7 @@ def post(request, slug):
 
         post.first_paragraph = first_paragraph
         post.body = str(soup)
+        post.views = '{:,}'.format(post.views)
 
 
         tags = post.tags.all()

@@ -1,15 +1,20 @@
 # Registration form
 
+import string
+from random import choice
+
 from django import forms
 from django.contrib.auth.models import User
-from users.models import UserProfile
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+
+from blog.context_processors import avatar_list
+from users.models import UserProfile
+
 from .accountFunctions import store_token
 from .mail_send import send_email
-from random import choice
-from blog.context_processors import avatar_list
-import string
+
+
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30, min_length=4)
     email = forms.EmailField(label='Email')

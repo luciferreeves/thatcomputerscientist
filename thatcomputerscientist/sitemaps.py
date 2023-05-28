@@ -1,9 +1,11 @@
+import os
+
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from blog.models import Post, Category, Tag
-from github import Github
 from dotenv import load_dotenv
-import os
+from github import Github
+
+from blog.models import Category, Post, Tag
 
 load_dotenv()
 

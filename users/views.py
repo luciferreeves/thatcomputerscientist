@@ -1,14 +1,17 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect, reverse
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
-from .models import UserProfile
+from django.contrib.auth import (authenticate, login, logout,
+                                 update_session_auth_hash)
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, reverse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from .forms import UpdateUserDetailsForm
+
 from .accountFunctions import store_token, verify_token
+from .forms import UpdateUserDetailsForm
 from .mail_send import send_email
+from .models import UserProfile
+
 
 # Create your views here.
 def login_user(request):

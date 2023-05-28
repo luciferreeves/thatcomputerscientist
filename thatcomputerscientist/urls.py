@@ -13,13 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from .sitemaps import PostSitemap, CategorySitemap, TagSitemap, StaticViewSitemap, GithubSitemap
+from django.urls import include, path
 from haystack.views import search_view_factory
+
+from .sitemaps import (CategorySitemap, GithubSitemap, PostSitemap,
+                       StaticViewSitemap, TagSitemap)
 
 sitemaps = {
     'posts': PostSitemap,

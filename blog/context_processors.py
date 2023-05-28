@@ -1,12 +1,14 @@
-from .models import Post, Category, Comment
 import os
-from django.conf import settings
-from bs4 import BeautifulSoup
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name
-from pygments.lexers import guess_lexer
-from pygments.formatters import HtmlFormatter
 import re
+
+from bs4 import BeautifulSoup
+from django.conf import settings
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name, guess_lexer
+
+from .models import Category, Comment, Post
+
 
 def add_excerpt(post):
     soup = BeautifulSoup(post.body, 'html.parser')

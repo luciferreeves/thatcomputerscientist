@@ -1,8 +1,9 @@
-import os
-from django.conf import settings
-import random
-from django import template
 import base64
+import os
+import random
+
+from django import template
+from django.conf import settings
 
 register = template.Library()
 

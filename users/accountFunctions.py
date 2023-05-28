@@ -1,7 +1,10 @@
-from users.models import TokenStore, UserProfile
-import uuid
 import secrets
+import uuid
+
 from django.utils import timezone
+
+from users.models import TokenStore, UserProfile
+
 
 def generate_token():
     uid = uuid.uuid4().hex

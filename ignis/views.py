@@ -1,21 +1,22 @@
-from PIL import Image
-from io import BytesIO
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from blog.models import Post
-from .models import PostImage, RepositoryTitle
 import json
+import os
+import time
+from io import BytesIO
+
 import requests
-from django.core.files.base import ContentFile
 from captcha.image import ImageCaptcha
-from users.tokens import CaptchaTokenGenerator
+from django.core.files.base import ContentFile
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
-from io import BytesIO
 from selenium import webdriver
-import time
-import os
+
+from blog.models import Post
+from users.tokens import CaptchaTokenGenerator
+
+from .models import PostImage, RepositoryTitle
+
 # from .github import get_cover
 
 # Create your views here.

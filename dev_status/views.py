@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from github import Github
-from dotenv import load_dotenv
-import os
-import requests
 import math
+import os
+
+import requests
+from django.shortcuts import render
+from dotenv import load_dotenv
+from github import Github
 
 load_dotenv()
 g = Github(os.getenv('GH_TOKEN'))

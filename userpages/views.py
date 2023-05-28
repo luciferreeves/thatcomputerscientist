@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from users.models import UserProfile
 from django.contrib.auth.models import User
+from django.http import Http404, HttpResponse
+from django.shortcuts import render
+
+from users.models import UserProfile
+
 
 # Create your views here.
 def home(request):

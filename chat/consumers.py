@@ -1,8 +1,12 @@
 import json
-from channels.generic.websocket import WebsocketConsumer
+
 from asgiref.sync import async_to_sync
-from .chat_cache import handle_connect, handle_disconnect, handle_alone_user, discard_user_messages
+from channels.generic.websocket import WebsocketConsumer
+
+from .chat_cache import (discard_user_messages, handle_alone_user,
+                         handle_connect, handle_disconnect)
 from .skippy import invokeMFSkippy
+
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):

@@ -1,8 +1,9 @@
 import os
+
+from Crypto.Cipher import AES
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from dotenv import load_dotenv
 from six import text_type
-from Crypto.Cipher import AES
 
 load_dotenv()
 

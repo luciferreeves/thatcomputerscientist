@@ -1,6 +1,7 @@
-from django.db import models
-from blog.models import Post
 from django.conf import settings
+from django.db import models
+
+from blog.models import Post
 
 UPLOAD_ROOT = 'images/'
 
@@ -34,6 +35,7 @@ class RepositoryTitle(models.Model):
 
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
 
 @receiver(post_delete, sender=PostImage)
 def submission_delete(sender, instance, **kwargs):

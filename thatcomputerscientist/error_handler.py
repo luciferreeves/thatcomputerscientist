@@ -1,9 +1,12 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from blog.models import Post
 import re
+
 import jellyfish
+from django.contrib.auth.models import User
+from django.shortcuts import render
 from fuzzywuzzy import process
+
+from blog.models import Post
+
 
 def get_similar_posts(slug):
 

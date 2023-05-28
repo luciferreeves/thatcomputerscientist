@@ -1,6 +1,8 @@
-from haystack import indexes
-from blog.models import Post, Comment
 from django.contrib.auth.models import User
+from haystack import indexes
+
+from blog.models import Comment, Post
+
 
 class PostIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)

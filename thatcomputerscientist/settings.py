@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
-from dotenv import load_dotenv
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -22,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # set n_connected_lc_users to 0 on startup
 
 import redis
+
 r = redis.Redis(host='localhost', port=6379, db=0)
 r.set('n_connected_lc_users', 0)
 
@@ -166,6 +168,8 @@ CACHES = {
         }
     }
 }
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

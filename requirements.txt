@@ -20,3 +20,4 @@ django-haystack
 channels
 channels_redis
 daphne
+user_agents

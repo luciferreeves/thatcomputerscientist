@@ -1,9 +1,11 @@
 # python script for sending SMTP configuration with Oracle Cloud Infrastructure Email Delivery
-import smtplib 
 import email.utils
-from email.message import EmailMessage
+import smtplib
 import ssl
+from email.message import EmailMessage
+
 from django.conf import settings
+
 
 def send_email(sender, sender_name, recipient, subject, body_html, body_text):
     # Replace sender@example.com with your "From" address.

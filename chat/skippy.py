@@ -1,5 +1,6 @@
 from .chat_cache import get_user_messages, save_user_messages
 
+
 def invokeMFSkippy(message, identifier):
     save_user_messages(user_identifier=identifier, message={'content': message, 'role': 'user'})
     user_messages = get_user_messages(user_identifier=identifier)

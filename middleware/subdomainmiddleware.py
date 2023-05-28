@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.shortcuts import redirect
+
+
 class SubdomainMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response

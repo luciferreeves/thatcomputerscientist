@@ -1,22 +1,30 @@
+import os
+import re
 from datetime import datetime
-from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse, Http404
-from users.models import UserProfile
-from django.contrib.auth.models import User
-from django.core.paginator import Paginator
 from random import choice
 from string import ascii_letters, digits
-from .models import Category, Post, Comment
-from .context_processors import recent_posts, avatar_list, add_excerpt, add_num_comments, highlight_code_blocks, comment_processor
+
+from bs4 import BeautifulSoup
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.cache import cache
+from django.core.paginator import Paginator
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect, render, reverse
+from dotenv import load_dotenv
+from haystack.query import SearchQuerySet
+from user_agents import parse
+
 from announcements.models import Announcement
 from users.forms import RegisterForm, UpdateUserDetailsForm
+from users.models import UserProfile
 from users.tokens import CaptchaTokenGenerator
-from django.contrib import messages
-from bs4 import BeautifulSoup
-from haystack.query import SearchQuerySet
-import re
-import os
-from dotenv import load_dotenv
+
+from .context_processors import (add_excerpt, add_num_comments, avatar_list,
+                                 comment_processor, highlight_code_blocks,
+                                 recent_posts)
+from .models import Category, Comment, Post
+
 load_dotenv()
 
 
@@ -101,6 +109,22 @@ def post(request, slug):
     try:
         post = Post.objects.get(slug=slug)
 
+        # Get the number of views for this post
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        user_agent_string = request.META.get('HTTP_USER_AGENT', '')
+        user_agent = parse(user_agent_string)
+        user_identifier = f'{ip}_{user_agent.browser.family}_{user_agent.browser.version_string}_{user_agent.os.family}_{user_agent.os.version_string}'
+        cache_key = f'post_view_count_{slug}_{user_identifier}'
+        view_count = cache.get(cache_key, 0)
+        if view_count == 0:
+            post.views += 1
+            post.save()
+            cache.set(cache_key, 1, 60 * 60 * 24 * 7) # 1 week
+
         # code stored in .ql-syntax class
         soup = BeautifulSoup(post.body, 'html.parser')
         code_blocks = soup.find_all('pre', class_='ql-syntax')
@@ -140,10 +164,10 @@ def post(request, slug):
             request.meta['description'] = BeautifulSoup(first_paragraph, 'html.parser').get_text()
             request.meta['image'] = 'https://thatcomputerscientist.com/ignis/post_image/720/' + str(post.id) + '.gif'
 
-            return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
+            return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments, 'view_count': view_count})
         else:
             if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
-                return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments})
+                return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments, 'view_count': view_count})
             else:
                 raise Http404
     except Post.DoesNotExist:

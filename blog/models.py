@@ -1,6 +1,7 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.utils.text import slugify
+
 UPLOAD_ROOT = 'images/'
 
 # Create your models here.
@@ -48,6 +49,7 @@ class Post(models.Model):
     )
     tags = models.ManyToManyField('Tag', blank=True)
     is_public = models.BooleanField(default=False)
+    views = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug or self.slug == '':

@@ -1,10 +1,12 @@
-from datetime import datetime
-from django.shortcuts import render, redirect, reverse
-from django.contrib import messages
-from blog.models import Post, Category, Tag
-from ignis.models import CoverImage
 import re
+from datetime import datetime
+
+from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render, reverse
+
+from blog.models import Category, Post, Tag
+from ignis.models import CoverImage
 
 # Create your views here.
 

@@ -32,6 +32,8 @@
             </a>
             <span style="position: relative; top: 2.5px; margin-left: 4px;"><b>|</b></span>
             <span style="position: relative; top: 2.5px; margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
+            <span style="position: relative; top: 2.5px; margin-left: 4px;"><b>|</b></span>
+            <span style="position: relative; top: 2.5px; margin-left: 4px;">{{ post.views }} view{% if not post.views == 1%}s{% endif %}</span>
         </div>
     </div>
 

@@ -27,34 +27,31 @@ def userTrackingContextProcessor(request):
     is_authenticated = request.user.is_authenticated
     is_staff = request.user.is_staff
 
-    # get a list of anonymous users (retire after 60 seconds)
-    anonymous_users = cache.get('anonymous_users', set())
-    logged_in_users = cache.get('logged_in_users', set())
-    admin_users = cache.get('admin_users', set())
+    # refresh online users every 300 seconds, with auto deleting expired keys
+    cache.set(f"presence_{user_uuid}", {
+        'is_authenticated': is_authenticated,
+        'is_staff': is_staff,
+    }, 300)
 
-    if not is_authenticated:
-        anonymous_users.add(user_uuid)
-        logged_in_users.discard(user_uuid)
-        admin_users.discard(user_uuid)
-    elif is_staff and is_authenticated:
-        admin_users.add(user_uuid)
-        anonymous_users.discard(user_uuid)
-        logged_in_users.discard(user_uuid)
-    else:
-        logged_in_users.add(user_uuid)
-        anonymous_users.discard(user_uuid)
-        admin_users.discard(user_uuid)
-    cache.set('anonymous_users', anonymous_users, 300)
-    cache.set('logged_in_users', logged_in_users, 300)
-    cache.set('admin_users', admin_users, 300)
+    # get all online users
+    online_now = cache.keys('presence_*')
 
-    anonymous_users = cache.get('anonymous_users', set())
-    logged_in_users = cache.get('logged_in_users', set())
-    admin_users = cache.get('admin_users', set())
+    # separate online users into anonymous, logged in, and admin users
+    anonymous_users = []
+    logged_in_users = []
+    admin_users = []
+
+    for user in online_now:
+        user_data = cache.get(user)
+        if user_data['is_authenticated'] == False:
+            anonymous_users.append(user_data)
+        elif user_data['is_authenticated'] == True and user_data['is_staff'] == False:
+            logged_in_users.append(user_data)
+        if user_data['is_staff'] == True:
+            admin_users.append(user_data)
 
     return {
         'anonymous_users': len(anonymous_users),
         'logged_in_users': len(logged_in_users),
         'admin_users': len(admin_users),
     }
-

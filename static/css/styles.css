@@ -13,7 +13,8 @@ body {
     box-sizing: border-box;
 }
 
-input, textarea {
+input,
+textarea {
     font-family: 'Mali', sans-serif !important;
 }
 
@@ -51,13 +52,14 @@ a,
     text-decoration: none;
 }
 
-#fake-banner-ad{
+#fake-banner-ad {
     border: dashed 1px #dddddd;
     padding: 4px;
     border-radius: 8px;
 }
 
-#fake-banner-ad img, #fake-ad-area img {
+#fake-banner-ad img,
+#fake-ad-area img {
     display: block;
     margin: 0px auto;
     width: calc(100% - 8px);
@@ -372,4 +374,62 @@ blockquote {
     border-bottom: none;
     margin: 11px 0px;
     font-size: 14px;
+}
+
+#ハンバーガー {
+    display: none;
+    position: absolute;
+    bottom: -15vw;
+    left: -10px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.post {
+    clear: both;
+    text-align: justify;
+}
+
+.post-header h1 {
+    margin: 30px 0px 0px 0px;
+    text-align: left;
+    font-size: 18px;
+}
+
+.author-info {
+    margin: 10px 0px 10px 20px;
+    display: inline-block;
+}
+
+.post-profile-image {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    margin-right: 4px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    top: 5px;
+}
+
+.post-image {
+    width: 350px;
+    height: 233px;
+    border-radius: 8px;
+}
+
+.post-image-r {
+    float: right;
+    margin-left: 11px;
+}
+
+.post-image-l {
+    float: left;
+    margin-right: 11px;
+}
+
+#article>h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
 }

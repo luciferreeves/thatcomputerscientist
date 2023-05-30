@@ -18,7 +18,7 @@
     <textarea id="chatbox-input" placeholder="Type your message here... (⏎ to send)"></textarea>
   </div>
 </div>
-<img src="{% static 'images/gifs/construction.gif' %}" style="width: 730px;">
+<img src="{% static 'images/gifs/construction.gif' %}" id="uc">
 <div id="announcements">
   <img src = "{% static 'images/gifs/update.gif' %}" style="height: 14px;" id="update-gif">
   {% if announcements is not None %}
@@ -45,7 +45,7 @@
 </div>
 <div id="fake-banner-ad" class="mtctitem">
   {% load ad %}
-  <img src="{{'banner'|ad }}" alt="Ad" style="width: 720px;" border="0"/>
+  <img src="{{'banner'|ad }}" alt="Ad" id="adfs" border="0"/>
 </div>
 {% if posts %}
 <div id="recent-posts" class="mtctitem">

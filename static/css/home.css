@@ -102,3 +102,11 @@ marquee::after {
 marquee>ul {
     text-align: justify;
 }
+
+#uc {
+    width: 730px;
+}
+
+#adfs {
+    width: 720px;
+}

@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 " />
     <meta name="description" content="{{ request.meta.description }}" />
     <meta name="image" content="{{ request.meta.image }}" />
     <meta name="url" content="{{ request.meta.url }}" />
@@ -14,8 +14,14 @@
     <meta property="og:image" content="{{ request.meta.image }}" />
     <meta property="og:url" content="{{ request.meta.url }}" />
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="That Computer Scientist - {{ title }}" />
-    <meta property="twitter:description" content="{{ request.meta.description }}" />
+    <meta
+      property="twitter:title"
+      content="That Computer Scientist - {{ title }}"
+    />
+    <meta
+      property="twitter:description"
+      content="{{ request.meta.description }}"
+    />
     <meta property="twitter:image" content="{{ request.meta.image }}" />
     <meta property="robots" content="{{ request.meta.robots }}" />
     <title>That Computer Scientist - {{ title }}</title>
@@ -23,6 +29,11 @@
       type="text/css"
       rel="stylesheet"
       href="{% static 'css/styles.css' %}"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/phone_compatibility.css' %}"
     />
     <link
       rel="apple-touch-icon"
@@ -50,21 +61,14 @@
         transition: 0.4s;
         opacity: 1;
       }
-      
+
       html.is-animating .transition-fade {
         opacity: 0;
       }
     </style>
   </head>
   <body>
-    <video
-      id="bg-video"
-      muted
-      autoplay
-      playsinline
-      loop
-      preload="auto"
-    >
+    <video id="bg-video" muted autoplay playsinline loop preload="auto">
       <source
         src="{% static 'videos/background.mp4' %}#t=0.1"
         type="video/mp4"
@@ -73,6 +77,13 @@
     <div id="overlay"></div>
     <div id="wrap">
       <div id="header">
+        <div id="ハンバーガー">
+          <div id="ham">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
         <div id="search-area">
           <form action="{% url 'blog:search' %}" method="get" id="search-form">
             <input
@@ -140,14 +151,20 @@
   </body>
   <script src="{% static 'js/oneko.js' %}"></script>
   <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+  <script src="{% static 'js/phone_compatibility.js' %}"></script>
   {% block scripts %} {% endblock %}
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"></script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"
+  ></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-    gtag('config', 'G-72XTC500FR');
+    gtag("config", "G-72XTC500FR");
   </script>
 </html>

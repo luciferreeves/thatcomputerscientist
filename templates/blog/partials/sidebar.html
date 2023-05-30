@@ -2,7 +2,6 @@
 {% comment %} Login Area {% endcomment %}
 {% if not user.is_authenticated %}
 <link rel="stylesheet" href="{% static 'css/login-area.css' %}">
-</div>
 {% for message in messages %}
 {% if 'loginError' in message.tags %}
         {% if message.message == "ENVERR" and request.GET.username %}

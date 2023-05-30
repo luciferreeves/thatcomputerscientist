@@ -15,32 +15,35 @@
     </a> {% endcomment %}
 </div>
 <div id="article">
-    <h1 style="padding: 20px 0; margin: 0; text-align: left; font-size: 32px; font-weight: bold; color: #f4ebff;">
+    <h1 style="text-align: left; color: #f4ebff;">
         {{ post.title }}
     </h1>
-    <div style="margin: 10px 0px 10px 0px; display: inline-block;">
+    <div class="author-info" style="margin-top: 0;">
         {% with post.author.userprofile_set.first as userprofile %}
-        <div style="height: 20px; width: 20px; display: inline-block; margin-right: 4px; border-radius: 10px; background-image: url('{% static 'images/avatars/' %}{{ userprofile.avatar_url }}.gif'); background-size: cover; background-position: center;"></div>
+            <span style="background-image: url('{% static 'images/avatars/' %}{{ userprofile.avatar_url }}.gif');" class="post-profile-image"></span>
         {% endwith %}
-        <div style="display: inline-block; vertical-align: top;">
-            <a href="{% url 'blog:user_activity' post.author %}" style="font-weight: bold; font-size: 11px; position: relative; top: 2.5px;">
+        <span>
+            <a href="{% url 'blog:user_activity' post.author %}" style="font-weight: bold;">
                 {{ post.author.first_name }} {{ post.author.last_name }}
             </a>
-            <span style="position: relative; top: 2.5px;">posted in</span>
-            <a href="{% url 'blog:categories' %}/{{ post.category.slug }}" style="position: relative; top: 2.5px;">
+        </span>
+        <span>posted in</span>
+        <span>
+            <a href="{% url 'blog:categories' %}/{{ post.category.slug }}" style="">
                 {{ post.category }}
             </a>
-            <span style="position: relative; top: 2.5px; margin-left: 4px;"><b>|</b></span>
-            <span style="position: relative; top: 2.5px; margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
-            <span style="position: relative; top: 2.5px; margin-left: 4px;"><b>|</b></span>
-            <span style="position: relative; top: 2.5px; margin-left: 4px;">{{ post.views }} view{% if not post.views == 1%}s{% endif %}</span>
-        </div>
+        </span>
+        <span style="margin-left: 4px;"><b>|</b></span>
+        <span style="margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
+        <span style="margin-left: 4px;"><b>|</b></span>
+        <span style="margin-left: 4px;">{{ post.views }} view{% if not post.views == 1%}s{% endif %}</span>
     </div>
 
     <div id="article-body">
-        <div>{{ post.first_paragraph | safe }}</div>
-        <div style="width: 710px; height: 473.3333px; margin: 20px auto; display: block; border-radius: 8px; background-image: url('{% url 'ignis:post_image' '710' post.id %}.gif'); background-size: cover; background-position: center;"></div>
-        <div>{{ post.body | safe }}</div>
+        {{ post.first_paragraph | safe }}
+        <img style="width: 100%; height: 473.3333px; margin: 20px auto; display: block; border-radius: 8px;" src="{% url 'ignis:post_image' '710' post.id %}.gif" alt="Post Image for {{ post.title }}">
+        <hr>
+        {{ post.body | safe }}
     </div>
 </div>
 

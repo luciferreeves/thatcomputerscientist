@@ -1,0 +1,297 @@
+/* 
+This is for compatibility for phones for resolution < 450
+
+All global modifications for phones are stored here. Since, I wrote the
+site for desktop only in mind, this is a quick fix for phones.
+
+There would certainly room for improvement later, if required. Right now,
+we will make the minimum changes to make sure all the content is visible
+and readable on phones. Some features might need to be disabled for phones,
+I am not sure yet.
+*/
+
+@media only screen and (max-width: 450px) {
+    body {
+        max-width: 100vw !important;
+        font-size: 12px !important;
+        /* line-height: 1.2rem; */
+        box-sizing: border-box;
+    }
+
+    h2 {
+        font-size: 14px !important;
+    }
+
+    h1,
+    .post-header h1,
+    article>h1 {
+        font-size: 1.5rem !important;
+        line-height: 1.8rem !important;
+    }
+
+    /* All elastic widths */
+    #wrap {
+        width: calc(100% - 20px) !important;
+        max-width: calc(100vw - 20px) !important;
+        margin: 0px auto !important;
+        padding: 10px;
+    }
+
+    #header,
+    #content,
+    #article,
+    #comments,
+    #new-comment,
+    #footer,
+    #welcome,
+    #welcome>p,
+    #uc,
+    #announcements,
+    marquee,
+    .post-image,
+    #post-actions-bar,
+    #article-body,
+    #archives-area,
+    #main-section,
+    #chatbox, #chatbox-input, #search_sidebar, #search_results {
+        width: calc(100% - 0px) !important;
+        max-width: calc(100% - 0px) !important;
+        box-sizing: border-box;
+        display: block !important;
+    }
+    p > img, .area > div {
+        max-width: 100% !important;
+    }
+
+    #header,
+    #content,
+    #article,
+    #footer,
+    #welcome,
+    #welcome>p,
+    #uc,
+    #announcements,
+    marquee,
+    .post-image,
+    #post-actions-bar,
+    #article-body,
+    #main-section #search_results {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #adfs {
+        width: calc(100% - 10px);
+    }
+
+    #sidebar {
+        display: none;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 5 !important;
+        background: #000000fa !important;
+        box-sizing: border-box;
+        padding: 2rem !important;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    #header {
+        height: 50vw !important;
+        margin-bottom: 15vw !important;
+    }
+
+    #welcome {
+        background: none !important;
+        background-size: auto !important;
+        margin: 1rem 0 !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+    }
+
+    #welcome>p {
+        margin: 12px 0 !important;
+        position: unset !important;
+    }
+    #chatbox {
+        display: block !important;
+        position: unset !important;
+        border: 10px solid #9566ff52 !important;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    #ハンバーガー {
+        display: block !important;
+    }
+
+    #search-area {
+        top: 50vw !important;
+    }
+
+    #announcements {
+        height: auto !important;
+        background: none !important;
+        background-size: auto !important;
+        margin-top: 15px !important;
+    }
+
+    marquee {
+        position: unset !important;
+        width: calc(100% - 0px) !important;
+        height: 40vh !important;
+        padding: 10px !important;
+    }
+
+    #update-gif {
+        top: -13px !important;
+        left: 0 !important;
+    }
+
+    .author-info {
+        display: block !important;
+        margin: 15px 0 !important;
+    }
+
+    .post-image {
+        display: block !important;
+        height: auto !important;
+        margin: 15px 0 !important;
+        float: none !important;
+    }
+
+    #comments>div>table>tbody>tr>td:nth-child(2),
+    .comment,
+    .highlight {
+        width: calc(100vw - 90px) !important;
+        font-size: 11px;
+    }
+
+    #comments>div>table>tbody>tr>td:nth-child(2) {
+        padding-left: 10px;
+    }
+
+    #article-body p,
+    #article-body ul,
+    #article-body ol,
+    #article-body blockquote,
+    #article-body pre,
+    #article-body table {
+        font-size: 12px !important;
+    }
+
+    #article-body img {
+        width: 100% !important;
+        height: auto !important;
+        margin: 15px 0 !important;
+        float: none !important;
+    }
+
+    #article-body h1,
+    #article-body h2 {
+        font-size: 14px !important;
+    }
+}
+
+#ham {
+    width: 35px;
+    height: 30px;
+    margin: 10px 10px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#ham span {
+    background-color: #FFF;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+}
+
+#ham span:nth-child(1) {
+    width: 100%;
+    height: 4px;
+    display: block;
+    top: 0px;
+    left: 0px;
+}
+
+#ham span:nth-child(2) {
+    width: 100%;
+    height: 4px;
+    display: block;
+    top: 13px;
+    left: 0px;
+}
+
+#ham span:nth-child(3) {
+    width: 100%;
+    height: 4px;
+    display: block;
+    bottom: 0px;
+    left: 0px;
+}
+
+#ham:not(.open):hover span:nth-child(1) {
+    width: 100%;
+    height: 4px;
+    display: block;
+    top: -2px;
+    left: 0px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+}
+
+#ham:not(.open):hover span:nth-child(2) {
+    width: 100%;
+    height: 4px;
+    display: block;
+    top: 13px;
+    left: 0px;
+    transition: .4s cubic-bezier(.8, .5, .2, 1.4);
+}
+
+#ham:not(.open):hover span:nth-child(3) {
+    width: 100%;
+    height: 4px;
+    display: block;
+    bottom: -2px;
+    left: 0px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+}
+
+#ham.open {
+    transform: rotate(90deg);
+}
+
+#ham.open span:nth-child(1) {
+    left: 3px;
+    top: 12px;
+    width: 30px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    transform: rotate(90deg);
+    transition-delay: 150ms;
+}
+
+#ham.open span:nth-child(2) {
+    left: 2px;
+    top: 20px;
+    width: 20px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    transform: rotate(45deg);
+    transition-delay: 50ms;
+}
+
+#ham.open span:nth-child(3) {
+    left: 14px;
+    top: 20px;
+    width: 20px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    transform: rotate(-45deg);
+    transition-delay: 100ms;
+}

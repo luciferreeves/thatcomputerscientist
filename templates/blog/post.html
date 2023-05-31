@@ -289,7 +289,7 @@
                     <li>Anytime, you wish to change your secret token, this can be done by entering your email and new secret token. Also, you do not fill your secret token everytime you comment. It will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
                     <li>If you do not fill the email and secret token fields, a random (non-existent) email and secret token will be generated for you. As long as you do not clear your browser data, you will be able to edit your comment later.</li>
                     {% comment %} <li>All comments will be passed through Akismet spam filter. If your comment is marked as spam, it will be immediately rejected. If you think this is a mistake, please contact me.</li> {% endcomment %}
-                    <li>If anytime, you wish to <a href="{% url 'blog:register' %}">register</a> for a full account, you can do so with the same email address. All your previous comments will be automatically migrated to your new account.</li>
+                    <li>If anytime, you wish to <a href="{% url 'blog:register' %}">register</a> for a full account, you can do so with the same email address. However, your previous comments will not be migrated to your new account.</li>
                 </ul>
             </div>
         </div>

@@ -253,6 +253,7 @@ blockquote {
 .highlight {
     background: none !important;
     text-align: left !important;
+    overflow-x: scroll;
 }
 
 .comment {

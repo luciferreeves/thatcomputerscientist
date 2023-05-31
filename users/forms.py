@@ -37,6 +37,14 @@ class RegisterForm(forms.Form):
         'hostmaster',
         'info',
         'support',
+        'anonymous',
+        'guest',
+        'nobody',
+        'someone',
+        'moderator',
+        'moderators',
+        'mods',
+        'crvs'
     ]
     allowed_chars = string.ascii_letters + string.digits 
 
@@ -58,14 +66,14 @@ class RegisterForm(forms.Form):
         if str.lower(captcha) != str.lower(self.expected_captcha):
             raise forms.ValidationError('Captcha does not match.')
         if User.objects.filter(username=cleaned_data.get('username')).exists():
-            raise forms.ValidationError('Username already exists.')
+            raise forms.ValidationError('Username not available. Please choose another.')
         if cleaned_data.get('username').lower() in self.protected_usernames:
-            raise forms.ValidationError('Username not allowed. Please choose another.')
+            raise forms.ValidationError('Username not available. Please choose another.')
         for char in cleaned_data.get('username'):
             if char not in self.allowed_chars:
                 raise forms.ValidationError('Username contains invalid characters. Only A-Z, a-z, and 0-9 are allowed.')
         if User.objects.filter(email=cleaned_data.get('email')).exists():
-            raise forms.ValidationError('Email already exists.')
+            raise forms.ValidationError('Email already exists. Please login if this account is yours.')
         return cleaned_data
 
     def save(self, request):

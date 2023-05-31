@@ -435,7 +435,8 @@ blockquote {
     margin-bottom: 10px;
 }
 
-#categories-area > ul, #archives-area > ul {
+#categories-area>ul,
+#archives-area>ul {
     position: relative;
     z-index: 1;
 }

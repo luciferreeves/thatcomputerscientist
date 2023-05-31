@@ -2,9 +2,8 @@
 {% load static %}
 {% load tz %}
 <div id="post-actions-bar" class="mtsbitem">
-    <a class="pa-btn" href="#article-body">Article</a>
+    <a class="pa-btn" href="{% url 'blog:home' %}">Home</a>
     <a class="pa-btn" href="#comments">Opinions</a>
-    <a class="pa-btn" href="#new-comment">Your Thoughts?</a>
     {% comment %} <a class="pa-btn" id="translate-jp" href="javascript:;">
         <img src="{% static 'images/icons/translate.png' %}" alt="Translate to Japanese" style="height: 11px; width: 11px; margin-right: 5px; position: relative; top: 1px;">
         {% if request.session.language == 'jp' %}
@@ -48,7 +47,7 @@
 </div>
 
 <h2 class="mtsbitem">Comments
-    <a href="#article" class="pa-btn" style="float: right; margin-top: 0px; text-transform: capitalize; font-weight: normal;">
+    <a href="#header" class="pa-btn" style="float: right; margin-top: 0px; text-transform: capitalize; font-weight: normal;">
         Back to Top
     </a>
 </h2>
@@ -106,35 +105,37 @@
     <form action="{% url 'blog:comment' post.slug %}" method="POST">
         {% csrf_token %}
         <textarea name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
-        <input type="submit" value="Submit" class="button button-special">
-    </form>
-</div>
-<div id="comment-tips" style="background-color: #2d1d3d;padding: 10px;margin-bottom: 15px;border-radius: 6px; margin-top: 15px;">
-    <span onclick="toggleTips()" style="cursor: pointer; border-bottom: dotted 1px white;" class="noselect">Text Markup Tips &gt;</span>
-    <div id="tips" style="display: none;">
-        <br>
-        <ul style="list-style-type: disc; margin: 0;padding: 0; margin: 5px 0px 0px 30px;">
-            <li>Wrap text in double underscores (__) to make it <i>italic</i>.
-                <br>
-                &nbsp;&nbsp;e.g. <code>__italic__</code>
-                &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + I</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in double asterisks (**) to make it <b>bold</b>.
-                <br>
-                &nbsp;&nbsp;e.g. <code>**bold**</code>
-                &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + B</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in double tildes (~~) to <s>strikethrough</s> it.
-                <br>
-                &nbsp;&nbsp;e.g. <code>~~strikethrough~~</code>
-                &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + D</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in triple backticks (```) to make it a code block:
-                <br>
-                &nbsp;&nbsp;e.g. 
+        <div id="comment-tips" style="    /* background-color: #2d1d3d; */
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        margin-top: -10px;
+        border: solid 1px white; width: calc(100% - 20px);">
+            <p onclick="toggleTips()" style="cursor: pointer; margin: 0;"><span style="border-bottom: dotted 1px white;" class="noselect">Text Markup Tips &gt;</span></p>
+            <div id="tips" style="display: none;">
+                <p>
+                    This site uses a custom built markup format for comments. It's very similar to Markdown. Only certain types of markup are allowed. Here's a list of what you can do:
+                </p>
+
+                <ul style="list-style-type: disc; margin: 0;padding: 0; margin: 5px 0px 0px 30px;">
+                    <li>Wrap text in double underscores (__) to make it <i>italic</i>.
+                        <br>
+                        e.g. <code>__italic__</code>
+                        <br><br>
+                    </li>
+                    <li>Wrap text in double asterisks (**) to make it <b>bold</b>.
+                        <br>
+                        e.g. <code>**bold**</code>
+                        <br><br>
+                    </li>
+                    <li>Wrap text in double tildes (~~) to <s>strikethrough</s> it.
+                        <br>
+                        e.g. <code>~~strikethrough~~</code>
+                        <br><br>
+                    </li>
+                    <li>Wrap text in triple backticks (<code>```</code>) to make it a code block:
+                        <br>
+                        e.g. 
 <pre>
     ```
     code block
@@ -146,18 +147,22 @@
     code block
     ```
 </pre> 
-                &nbsp;&nbsp;e.g. lang-python, lang-java, lang-javascript, etc.
-                &nbsp;&nbsp;shortkey: <kbd>Ctrl or Cmd + K</kbd>
-                <br><br>
-            </li>
-            <li>Wrap text in double dollar sign ($$) to make it a math block and single dollar sign ($) to make it inline math. You can use LaTeX syntax.
-                <br>
-                &nbsp;&nbsp;e.g. <code>$$\frac{1}{2}$$</code> or <code>$\frac{1}{2}$</code>
-                <br><br>
-            </li>
-        </ul>
-        <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
-    </div>
+                        e.g. lang-python, lang-java, lang-javascript, etc.
+                        <br><br><b>PS:</b> Tags for code block (<code>```</code>) must be contained on their respective individual lines. Only the language definition tag can be on the same line as the opening tag.
+                        <br><br>
+                    </li>
+                    <li>Wrap text in double dollar sign ($$) to make it a math block and single dollar sign ($) to make it inline math. You can use LaTeX syntax.
+                        <br>
+                        e.g. <code>$$\frac{1}{2}$$</code> or <code>$\frac{1}{2}$</code>
+                        <br><br>
+                    </li>
+                </ul>
+                <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="button button-special">
+    </form>
+    
 </div>
 {% else %}
 <div id="new-comment" class="mtsbitem">
@@ -180,63 +185,8 @@
 
     function toggleTips() {
         var tips = document.getElementById('tips');
-        if (tips.style.display == 'none') {
-            tips.style.display = 'block';
-        } else {
-            tips.style.display = 'none';
-        }
+        $('#tips').slideToggle('fast');
     }
-
-    var textareas = $('textarea');
-
-    function insertAtCursor(field, text) {
-        if (field.createTextRange) {
-            var range = field.createTextRange();
-            range.collapse(true);
-            range.moveStart('character', text.length);
-            range.select();
-        } else if (field.setSelectionRange) {
-            var start = field.selectionStart;
-            field.value = field.value.substring(0, start) + text + field.value.substring(field.selectionEnd);
-            field.setSelectionRange(start + text.length, start + text.length);
-            field.focus();
-        }
-    }
-
-    function handleKeyDown(e) {
-        var field = e.target;
-        if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-            insertAtCursor(field, '**');
-        } else if (e.keyCode == 73 && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-            insertAtCursor(field, '__');
-        } else if (e.keyCode == 68 && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-            insertAtCursor(field, '~~');
-        } else if (e.keyCode == 75 && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-            insertAtCursor(field, '```');
-        } else if (e.keyCode == 9) {
-            e.preventDefault();
-            var start = field.selectionStart;
-            var end = field.selectionEnd;
-            field.value = field.value.substring(0, start) + '    ' + field.value.substring(end);
-            field.setSelectionRange(start + 4, end + 4);
-        }
-    }
-
-    for (var i = 0; i < textareas.length; i++) {
-        textareas[i].onkeydown = handleKeyDown;
-    }
-
-    //pa-btn scroll animate override
-    $('.pa-btn').click(function() {
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top - 50
-        }, 500);
-        return false;
-    });
 </script>
 
 {% include 'blog/partials/mathjax.html' %}

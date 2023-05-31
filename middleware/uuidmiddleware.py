@@ -26,39 +26,45 @@ def userTrackingContextProcessor(request):
     # get the user's uuid from the cookie
     user_uuid = request.COOKIES.get('user_uuid')
 
-    # get the user's permissions
-    is_authenticated = request.user.is_authenticated
-    is_staff = request.user.is_staff
+    if user_uuid:
+        # get the user's permissions
+        is_authenticated = request.user.is_authenticated
+        is_staff = request.user.is_staff
 
-    # refresh online users every 300 seconds, with auto deleting expired keys
-    cache.set(f"presence_{user_uuid}", {
-        'is_authenticated': is_authenticated,
-        'is_staff': is_staff,
-    }, 300)
+        # refresh online users every 300 seconds, with auto deleting expired keys
+        cache.set(f"presence_{user_uuid}", {
+            'is_authenticated': is_authenticated,
+            'is_staff': is_staff,
+        }, 300)
 
-    # get all online users
-    online_now = cache.keys('presence_*')
+        # get all online users
+        online_now = cache.keys('presence_*')
 
-    # separate online users into anonymous, logged in, and admin users
-    anonymous_users = []
-    logged_in_users = []
-    admin_users = []
+        # separate online users into anonymous, logged in, and admin users
+        anonymous_users = []
+        logged_in_users = []
+        admin_users = []
 
-    for user in online_now:
-        user_data = cache.get(user)
-        if user_data['is_authenticated'] == False and user_data['is_staff'] == False:
-            anonymous_users.append(user_data)
-        elif user_data['is_authenticated'] == True and user_data['is_staff'] == False:
-            logged_in_users.append(user_data)
-        if user_data['is_staff'] == True:
-            admin_users.append(user_data)
-    
-    # it looks like in production, the anonymous users is 1 more than expected
-    if not settings.DEBUG:
-        anonymous_users = anonymous_users[:-1]
+        for user in online_now:
+            user_data = cache.get(user)
+            if user_data['is_authenticated'] == False and user_data['is_staff'] == False:
+                anonymous_users.append(user_data)
+            elif user_data['is_authenticated'] == True and user_data['is_staff'] == False:
+                logged_in_users.append(user_data)
+            if user_data['is_staff'] == True:
+                admin_users.append(user_data)
+        
+        # it looks like in production, the anonymous users is 1 more than expected
+        if not settings.DEBUG:
+            anonymous_users = anonymous_users[:-1]
 
+        return {
+            'anonymous_users': len(anonymous_users) or 0,
+            'logged_in_users': len(logged_in_users) or 0,
+            'admin_users': len(admin_users) or 0,
+        }
     return {
-        'anonymous_users': len(anonymous_users) or 0,
-        'logged_in_users': len(logged_in_users) or 0,
-        'admin_users': len(admin_users) or 0,
+        'anonymous_users': 0,
+        'logged_in_users': 0,
+        'admin_users': 0,
     }

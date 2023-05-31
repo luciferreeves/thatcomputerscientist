@@ -53,10 +53,6 @@ def userTrackingContextProcessor(request):
                 logged_in_users.append(user_data)
             if user_data['is_staff'] == True:
                 admin_users.append(user_data)
-        
-        # it looks like in production, the anonymous users is 1 more than expected
-        if not settings.DEBUG:
-            anonymous_users = anonymous_users[:-1]
 
         return {
             'anonymous_users': len(anonymous_users) or 0,

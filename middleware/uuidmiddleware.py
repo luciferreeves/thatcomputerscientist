@@ -43,7 +43,7 @@ def userTrackingContextProcessor(request):
 
     for user in online_now:
         user_data = cache.get(user)
-        if user_data['is_authenticated'] == False:
+        if user_data['is_authenticated'] == False and user_data['is_staff'] == False:
             anonymous_users.append(user_data)
         elif user_data['is_authenticated'] == True and user_data['is_staff'] == False:
             logged_in_users.append(user_data)

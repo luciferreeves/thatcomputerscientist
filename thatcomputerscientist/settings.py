@@ -87,6 +87,7 @@ MIDDLEWARE = [
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
+    'middleware.tz.TimezoneMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {
@@ -171,6 +172,7 @@ CACHES = {
     }
 }
 from django.core.cache import cache
+
 # clear the cache
 for key in cache.keys('presence_*'):
     cache.delete(key)

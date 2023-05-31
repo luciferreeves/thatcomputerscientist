@@ -1,5 +1,8 @@
+import hashlib
 import os
+import random
 import re
+import string
 from datetime import datetime
 from random import choice
 from string import ascii_letters, digits
@@ -9,7 +12,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
 from dotenv import load_dotenv
 from haystack.query import SearchQuerySet
@@ -23,10 +26,9 @@ from users.tokens import CaptchaTokenGenerator
 from .context_processors import (add_excerpt, add_num_comments, avatar_list,
                                  comment_processor, highlight_code_blocks,
                                  recent_posts)
-from .models import Category, Comment, Post
+from .models import AnonymousCommentUser, Category, Comment, Post
 
 load_dotenv()
-
 
 def atoi(text):
     return int(text) if text.isdigit() else text
@@ -156,9 +158,15 @@ def post(request, slug):
         tags = post.tags.all()
         comments = Comment.objects.filter(post=post)
         for comment in comments:
-            user_profile = UserProfile.objects.get(user=comment.user)
-            comment.avatar_url = user_profile.avatar_url
-            comment.processed_body = comment_processor(comment.body)
+            if comment.user:
+                user_profile = UserProfile.objects.get(user=comment.user)
+                comment.avatar_url = user_profile.avatar_url
+                comment.processed_body = comment_processor(comment.body)
+
+            if comment.anonymous_user:
+                user_profile = comment.anonymous_user
+                comment.avatar_url = user_profile.avatar
+                comment.processed_body = comment_processor(comment.body)
 
         if post.is_public:
             # modify request.meta description (only text) and image
@@ -195,6 +203,63 @@ def comment(request, slug):
             return redirect('blog:home')
     else:
         return redirect('blog:home')
+    
+def anon_comment(request, slug):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            # not allowed this is anonymous comment form
+            return redirect(reverse('blog:post', kwargs={'slug': slug}))
+        else:
+            anonymous_user = request.POST.get('anonymous-name')
+            anonymous_email = request.POST.get('anonymous-email')
+            anonymous_token, at = request.POST.get('anonymous-token'), request.POST.get('anonymous-token')
+            new_anonymous_token = request.POST.get('new-anonymous-token')
+            anonymous_comment = request.POST.get('anonymous-comment')
+            if not anonymous_user:
+                messages.error(request, 'Please enter a name!')
+                return redirect(reverse('blog:post', kwargs={'slug': slug}))
+            if not anonymous_comment:
+                messages.error(request, 'Please enter a comment!')
+                return redirect(reverse('blog:post', kwargs={'slug': slug}))
+            if not anonymous_email:
+                anonymous_email = ''.join(random.choice(string.ascii_lowercase) for i in range(10)) + '@anonymous.thatcomputerscientist.com'
+            if not anonymous_token:
+                anonymous_token = ''.join(random.choice(string.ascii_lowercase) for i in range(10))
+                at = anonymous_token
+
+            # generate a random avatar for the anonymous user
+            avatarlist = avatar_list()
+            for key in avatarlist:
+                avatarlist[key] = [re.sub(r'\.gif$', '', string) for string in avatarlist[key]]
+                avatarlist[key].sort(key=natural_keys)
+            avatarlist = {k: avatarlist[k] for k in sorted(avatarlist)}
+            avatar_dir = choice(list(avatarlist.keys()))
+            avatar_file = choice(avatarlist[avatar_dir])
+            anonymous_avatar = avatar_dir + '/' + avatar_file
+            anonymous_token = hashlib.sha256(anonymous_token.encode('utf-8')).hexdigest()
+            try:
+                anonymous_user = AnonymousCommentUser.objects.get(name=anonymous_user, email=anonymous_email, token=anonymous_token)
+            except AnonymousCommentUser.DoesNotExist:
+                anonymous_user = AnonymousCommentUser.objects.create(name=anonymous_user, email=anonymous_email, token=anonymous_token,
+            avatar=anonymous_avatar)
+            if new_anonymous_token:
+                at = new_anonymous_token
+                new_anonymous_token = hashlib.sha256(new_anonymous_token.encode('utf-8')).hexdigest()
+                anonymous_user.token = new_anonymous_token
+                anonymous_user.save()
+            
+            comment = Comment.objects.create(anonymous_user=anonymous_user, post=Post.objects.get(slug=slug), body=anonymous_comment)
+
+            # redirect to the post with the comment but set the anonymous user cookie
+            response = redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+            response.set_cookie('anonymous_name', anonymous_user.name, max_age=60*60*24*365)
+            response.set_cookie('anonymous_email', anonymous_user.email, max_age=60*60*24*365)
+            response.set_cookie('anonymous_token', at, max_age=60*60*24*365)
+
+            return response
+
+    else:
+        return redirect('blog:home')
 
 def edit_comment(request, slug):
     if request.method == 'POST':
@@ -215,6 +280,31 @@ def edit_comment(request, slug):
             return redirect('blog:home')
     else:
         return redirect('blog:home')
+    
+def anon_edit_comment(request, slug):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            # not allowed this is anonymous comment form
+            return redirect(reverse('blog:post', kwargs={'slug': slug}))
+        else:
+            anonymous_token = request.COOKIES.get('anonymous_token')
+            if not anonymous_token:
+                return HttpResponse('Unauthorized!', status=401)
+            try:
+                anonymous_token = hashlib.sha256(anonymous_token.encode('utf-8')).hexdigest()
+                comment = Comment.objects.get(id=request.POST.get('comment_id'))
+                if comment.anonymous_user.token == anonymous_token:
+                    comment.body = request.POST.get('body')
+                    comment.edited = True
+                    comment.edited_at = datetime.now()
+                    comment.save()
+                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+                else:
+                    return HttpResponse('Unauthorized!', status=401)
+            except Comment.DoesNotExist:
+                return HttpResponse('Comment not found!', status=404)
+    else:
+        return redirect('blog:home')
 
 def delete_comment(request, slug, comment_id):
     if request.user.is_authenticated:
@@ -228,8 +318,23 @@ def delete_comment(request, slug, comment_id):
         except Comment.DoesNotExist:
             return HttpResponse('Comment not found!', status=404)
     else:
-        return redirect('blog:home')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def anon_delete_comment(request, slug, comment_id):
+    if request.user.is_authenticated:
+        # not allowed this is anonymous comment form
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        anonymous_token = request.COOKIES.get('anonymous_token')
+        if not anonymous_token:
+            return HttpResponse('Unauthorized!', status=401)
+        anonymous_token = hashlib.sha256(anonymous_token.encode('utf-8')).hexdigest()
+        try:
+            comment = Comment.objects.get(id=comment_id, anonymous_user__token=anonymous_token)
+            comment.delete()
+            return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comments')
+        except Comment.DoesNotExist:
+            return HttpResponse('Comment not found!', status=404)
 
 def search(request):
     query = request.GET.get('q')

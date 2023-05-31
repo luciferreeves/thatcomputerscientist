@@ -1,6 +1,8 @@
 import uuid
-from django.core.cache import cache
+
 from django.conf import settings
+from django.core.cache import cache
+
 
 class UserUUIDMiddleware:
     # assign a uuid to the user if they don't have one

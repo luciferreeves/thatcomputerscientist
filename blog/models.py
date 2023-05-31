@@ -1,3 +1,5 @@
+import hashlib
+
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
@@ -58,6 +60,21 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.title)
+    
+class AnonymousCommentUser(models.Model):
+    name = models.CharField(max_length=32)
+    email = models.CharField(max_length=32)
+    token = models.CharField(max_length=128, unique=True)
+    avatar = models.CharField(max_length=128, blank=True)
+
+    @classmethod
+    def get_or_create(cls, email, token, avatar=''):
+        email_hash = hashlib.md5(email.encode('utf-8')).hexdigest()
+        token_hash = hashlib.sha256(token.encode('utf-8')).hexdigest()
+        return cls(email=email_hash, token=token_hash, avatar=avatar)
+    
+    def __str__(self):
+        return self.name
 
 class Comment(models.Model):
     post = models.ForeignKey(
@@ -67,6 +84,14 @@ class Comment(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    anonymous_user = models.ForeignKey(
+        'AnonymousCommentUser',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

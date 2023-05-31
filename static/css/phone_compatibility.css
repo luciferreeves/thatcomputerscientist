@@ -252,6 +252,16 @@ I am not sure yet.
         width: auto !important;
         float: none !important;
     }
+
+    #anonymous-profile-info > div > label {
+        display: block;
+    }
+    
+    #anonymous-profile-info > div > input {
+        width: calc(100% - 20px);
+        display: block;
+        margin: 10px 0;
+    }
 }
 
 #ham {

@@ -1,6 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 {% load static %}
 {% load tz %}
+{% load sha256 %}
 <div id="post-actions-bar" class="mtsbitem">
     <a class="pa-btn" href="{% url 'blog:home' %}">Home</a>
     <a class="pa-btn" href="#comments">Opinions</a>
@@ -62,7 +63,17 @@
                     </td>
                     <td style="vertical-align: top; width: 668px;">
                         <div style="margin-bottom: 13px; border-bottom: dashed 1px white; padding-bottom: 13px;">
-                            <a href="{% url 'blog:user_activity' comment.user.username %}">{{ comment.user.username }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
+                            <a href="{% if comment.user%}{% url 'blog:user_activity' comment.user.username %}{% else %}#{% endif %}">
+                                {% if comment.user %}
+                                    {{ comment.user.username }}
+                                {% else %}
+                                    {{ comment.anonymous_user.name }}
+                                {% endif %}
+                            </a> on <em>
+                                {% timezone request.COOKIES.user_timezone %}
+                                    {{ comment.created_at | date:"M d, Y h:i A" }}
+                                {% endtimezone %}
+                            </em>
                             {% if comment.edited %}
                                 <em>(Edited)</em>
                             {% endif %}
@@ -72,6 +83,12 @@
                                 &nbsp;&nbsp;
                                 <a href="{% url 'blog:delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
                             {% endif %}
+                            {% if comment.anonymous_user.name and comment.anonymous_user.email and comment.anonymous_user.token and comment.anonymous_user.token == request.COOKIES.anonymous_token|sha256 %}
+                                &nbsp;&nbsp;
+                                <a href="javascript:;" onclick="editComment({{ comment.id }})">Edit</a>
+                                &nbsp;&nbsp;
+                                <a href="{% url 'blog:anon_delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
+                            {% endif %}
                         </div>
                         <div id="comment-body-{{ comment.id }}" class="comment">
                             {{ comment.processed_body|safe }}
@@ -79,6 +96,17 @@
                         {% if comment.user == user %}
                         <div id="edit-form-{{ comment.id }}" style="display: none; margin-bottom: 20px;">
                             <form action="{% url 'blog:edit_comment' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                <input type = "hidden" name="comment_id" value="{{ comment.id }}">
+                                <textarea name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
+                                <input type="submit" value="Update" class="button button-special">
+                                <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" class="button">
+                            </form>
+                        </div>
+                        {% endif %}
+                        {% if comment.anonymous_user.name and comment.anonymous_user.email and comment.anonymous_user.token and comment.anonymous_user.token == request.COOKIES.anonymous_token|sha256 %}
+                        <div id="edit-form-{{ comment.id }}" style="display: none; margin-bottom: 20px;">
+                            <form action="{% url 'blog:anon_edit_comment' post.slug %}" method="POST">
                                 {% csrf_token %}
                                 <input type = "hidden" name="comment_id" value="{{ comment.id }}">
                                 <textarea name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
@@ -104,7 +132,7 @@
     <h2>Leave a Comment</h2>
     <form action="{% url 'blog:comment' post.slug %}" method="POST">
         {% csrf_token %}
-        <textarea name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
+        <textarea required name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
         <div id="comment-tips" style="    /* background-color: #2d1d3d; */
         padding: 10px;
         margin-bottom: 15px;
@@ -167,8 +195,113 @@
 {% else %}
 <div id="new-comment" class="mtsbitem">
     <h2>Leave a Comment</h2>
-    <p><em>You must be logged in to leave a comment.</em></p>
+    <p id="ancmClick">You must be <em>logged in</em> to leave a comment. Or, you can <a href="javascript:;" onclick="toggleAnon()">leave an anonymous comment</a>.</p>
+    <div  id="anonymous-comment-form" style="display: none;">
+    <form action="{% url 'blog:anon_comment' post.slug %}" method="POST">
+        {% csrf_token %}
+        <div id="anonymous-comment">
+            <div id="anonymous-profile-info">
+                <div>
+                    <label for="anonymous-name"><b>Name </b> <i>{% if request.COOKIES.anonymous_name %}(Pre-Filled){% else %}(Required){% endif %}</i>:</label>
+                    <input required type="text" name="anonymous-name" id="anonymous-name" value="{{ request.COOKIES.anonymous_name }}" placeholder="Display name">
+                </div>
+                <div>
+                    <label for="anonymous-email"><b>Email</b> <i>{% if request.COOKIES.anonymous_email %}(Pre-Filled){% else %}(Optional){% endif %}</i>:</label>
+                    <input type="text" name="anonymous-email" id="anonymous-email" value="{{ request.COOKIES.anonymous_email }}" placeholder="Your email address">   
+                </div>
+                <div>
+                    <input type="hidden" name="anonymous-token" id="anonymous-token" value="{{ request.COOKIES.anonymous_token }}">
+                    <label for="new-anonymous-token"><b>New Secret Token</b> <i>{% if request.COOKIES.anonymous_token %}(Pre-Filled){% else %}(Optional){% endif %}</i>:</label>
+                    <input type="text" name="new-anonymous-token" id="new-anonymous-token" value="" placeholder="New Secret Token">
+                    <p><small>You do not fill your secret token everytime you comment. Set it only once and change when needed.</small></p>
+                </div>
+            </div>
+        </div>
+        <textarea required name="anonymous-comment" id="anonymous-comment" cols="88" rows="10" style="width: 710px; display: block; margin: 15px 0;" placeholder="Your comment here..."></textarea>
+        <div id="comment-tips" style="    /* background-color: #2d1d3d; */
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        margin-top: -10px;
+        border: solid 1px white; width: calc(100% - 20px);">
+            <p onclick="toggleTips()" style="cursor: pointer; margin: 0;"><span style="border-bottom: dotted 1px white;" class="noselect">Text Markup Tips &gt;</span></p>
+            <div id="tips" style="display: none;">
+                <p>
+                    This site uses a custom built markup format for comments. It's very similar to Markdown. Only certain types of markup are allowed. Here's a list of what you can do:
+                </p>
+
+                <ul style="list-style-type: disc; margin: 0;padding: 0; margin: 5px 0px 0px 30px;">
+                    <li>Wrap text in double underscores (__) to make it <i>italic</i>.
+                        <br>
+                        e.g. <code>__italic__</code>
+                        <br><br>
+                    </li>
+                    <li>Wrap text in double asterisks (**) to make it <b>bold</b>.
+                        <br>
+                        e.g. <code>**bold**</code>
+                        <br><br>
+                    </li>
+                    <li>Wrap text in double tildes (~~) to <s>strikethrough</s> it.
+                        <br>
+                        e.g. <code>~~strikethrough~~</code>
+                        <br><br>
+                    </li>
+                    <li>Wrap text in triple backticks (<code>```</code>) to make it a code block:
+                        <br>
+                        e.g. 
+<pre>
+    ```
+    code block
+    ```
+</pre>
+                or define with language as:
+<pre>
+    ```lang-&lt;language&gt;
+    code block
+    ```
+</pre> 
+                        e.g. lang-python, lang-java, lang-javascript, etc.
+                        <br><br><b>PS:</b> Tags for code block (<code>```</code>) must be contained on their respective individual lines. Only the language definition tag can be on the same line as the opening tag.
+                        <br><br>
+                    </li>
+                    <li>Wrap text in double dollar sign ($$) to make it a math block and single dollar sign ($) to make it inline math. You can use LaTeX syntax.
+                        <br>
+                        e.g. <code>$$\frac{1}{2}$$</code> or <code>$\frac{1}{2}$</code>
+                        <br><br>
+                    </li>
+                </ul>
+                <p style="margin-top: -7px;">Any links, images or other markup will be kept as plain text. Also, free speech is good and all, but please keep it civil. Sufficient JavaScript support will be required to bind shortkeys. Please type the markup manually if you are on an older browser.</p>
+            </div>
+        </div>
+        <div id="comment-gotchas" style="    /* background-color: #2d1d3d; */
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        margin-top: -10px;
+        border: solid 1px white; width: calc(100% - 20px);">
+            <p onclick="toggleGotchas()" style="cursor: pointer; margin: 0;"><span style="border-bottom: dotted 1px white;" class="noselect">Anonymous Commenting Gotchas &gt;</span></p>
+            <div id="gotchas" style="display: none;">
+                <p>Athough its cool to be anonymous, there are a few things which will not work if you choose to comment anonymously:</p>
+                <ul>
+                    <li>If you do not set a Email and secret token, you will not be able to edit your comment later. This information will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
+                    <li>If you lose your secret token, that's basically permanent damage. You can always set a new secret token for the same email, but you will not be able to edit your previous comments.</li>
+                    <li>You will not be able to customize your avatar. You will be assigned a random site specific avatar.</li>
+                    <li>Anytime, you wish to change your secret token, this can be done by entering your email and new secret token. Also, you do not fill your secret token everytime you comment. It will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
+                    <li>If you do not fill the email and secret token fields, a random (non-existent) email and secret token will be generated for you. As long as you do not clear your browser data, you will be able to edit your comment later.</li>
+                    {% comment %} <li>All comments will be passed through Akismet spam filter. If your comment is marked as spam, it will be immediately rejected. If you think this is a mistake, please contact me.</li> {% endcomment %}
+                    <li>If anytime, you wish to <a href="{% url 'blog:register' %}">register</a> for a full account, you can do so with the same email address. All your previous comments will be automatically migrated to your new account.</li>
+                </ul>
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="button button-special">
+        <input type="button" value="Cancel" class="button" onclick="document.getElementById('anonymous-comment-form').style.display = 'none'; document.getElementById('ancmClick').style.display = 'block';">
+    </form>
+    <br>
+        <button class="button" onclick="cd()">Clear Form Data</button>
+    </div>
 </div>
+
+
 {% endif %}
 {% endblock %}
 {% block scripts %}
@@ -183,10 +316,32 @@
         document.getElementById('edit-form-' + id).style.display = 'none';
     }
 
+    function cd() {
+        // we will clear the user cookies
+        document.cookie = 'anonymous_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'anonymous_email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'anonymous_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        window.location.reload();
+    }
+
     function toggleTips() {
         var tips = document.getElementById('tips');
         $('#tips').slideToggle('fast');
     }
+
+    function toggleGotchas() {
+        var gotchas = document.getElementById('gotchas');
+        $('#gotchas').slideToggle('fast');
+    }
+
+    function toggleAnon() {
+        $('#ancmClick').hide();
+        $('#anonymous-comment-form').show();
+    };
+
+    {% if request.COOKIES.anonymous_name %}
+        toggleAnon();
+    {% endif %}
 </script>
 
 {% include 'blog/partials/mathjax.html' %}

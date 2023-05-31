@@ -170,6 +170,10 @@ CACHES = {
         }
     }
 }
+from django.core.cache import cache
+# clear the cache
+for key in cache.keys('presence_*'):
+    cache.delete(key)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 

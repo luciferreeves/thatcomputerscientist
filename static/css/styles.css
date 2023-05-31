@@ -439,3 +439,9 @@ blockquote {
     position: relative;
     z-index: 1;
 }
+
+@media only screen and (min-width: 481px) {
+    .post-body {
+        line-height: 15px;
+    }
+}

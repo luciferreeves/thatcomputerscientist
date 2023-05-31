@@ -23,7 +23,7 @@ class TimezoneMiddleware(object):
                 remote_ip = request.META.get('REMOTE_ADDR')
         
             geo_data = requests.get(f'http://ip-api.com/json/{remote_ip}').json()
-            user_timezone = geo_data['timezone']
+            user_timezone = geo_data['timezone'] or 'UTC'
 
             if user_timezone:
                 response = self.get_response(request)

@@ -316,7 +316,7 @@
         </li>
     </ul>
 </div>
-<div id="online-users" class="mtctitem">
+{% comment %} <div id="online-users" class="mtctitem">
     <h2>Who's Online?</h2>
     <div>
         <p>In total, there {% if not anonymous_users|add:logged_in_users|add:admin_users == 1%}are{% else %}is{% endif %} {{ anonymous_users|add:logged_in_users|add:admin_users }} user{% if not anonymous_users|add:logged_in_users|add:admin_users == 1%}s{% endif %} online ::</p>
@@ -327,4 +327,4 @@
         </ul>
         <p>(Based on users active over the past 5 minutes)</p>
     </div>
-</div>
+</div> {% endcomment %}

@@ -56,9 +56,9 @@
         </div>
         {% elif request.GET.tab == 'blinkies' %}
         <div id="blinkie-chooser">
+            <p>Choose a blinkie to display on your public profile.</p>
             <form method="post" action="{% url 'users:updateblinkie' %}">
                 {% csrf_token %}
-                <p>Choose a blinkie to display on your public profile.</p>
                 <div style="display: inline; width: 250px; float: left;">
                     <input type="radio" name="blinkie" value="" id="blinkie_none" checked />
                     <label for="blinkie_none">
@@ -73,10 +73,9 @@
                         </label>
                     </div>
                 {% endfor %}
-                <div style="clear: both;"></div>
-                <br><br>
-                <input type="submit" value="Change Blinkie" class="button button-special" />
+                <input type="submit" style="margin-top: 20px;" value="Change Blinkie" class="button button-special" />
             </form>
+            <div style="clear: both;"></div>
         </div>
         {% elif request.GET.tab == 'details' %}
         <div id="details">

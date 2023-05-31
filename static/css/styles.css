@@ -433,3 +433,8 @@ blockquote {
     font-size: 32px;
     margin-bottom: 10px;
 }
+
+#categories-area > ul, #archives-area > ul {
+    position: relative;
+    z-index: 1;
+}

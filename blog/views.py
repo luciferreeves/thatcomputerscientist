@@ -290,6 +290,7 @@ def articles(request, date=None, cg=None):
     posts = posts.order_by('-' + order_by) if direction == 'desc' else Post.objects.filter(is_public=True).order_by(order_by)
     if category and category != 'all':
         posts = posts.filter(category__slug=category)
+        category_name = Category.objects.get(slug=category).name
     else:
         category = 'all'
     posts = Paginator(posts, 10)
@@ -299,7 +300,7 @@ def articles(request, date=None, cg=None):
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)
     num_pages = posts.paginator.num_pages
-    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category, 'type': type, 'date': date if date else '', 'cg': cg if cg else ''})
+    return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category, 'category_name': category_name if category != 'all' else '', 'type': type, 'date': date if date else '', 'cg': cg if cg else ''})
 
 def user_activity(request, username):
     try:

@@ -53,7 +53,7 @@ I am not sure yet.
     #article-body,
     #archives-area,
     #main-section,
-    #chatbox, #chatbox-input, #search_sidebar, #search_results {
+    #chatbox, #chatbox-input, #search_sidebar, #search_results, blockquote, textarea {
         width: calc(100% - 0px) !important;
         max-width: calc(100% - 0px) !important;
         box-sizing: border-box;
@@ -61,6 +61,10 @@ I am not sure yet.
     }
     p > img, .area > div {
         max-width: 100% !important;
+    }
+
+    select {
+        margin: 5px 0 !important;
     }
 
     #header,
@@ -96,9 +100,15 @@ I am not sure yet.
         z-index: 5 !important;
         background: #000000fa !important;
         box-sizing: border-box;
-        padding: 2rem !important;
+        padding: 2rem 2rem 4rem 2rem !important;
         overflow-y: scroll;
         overflow-x: hidden;
+    }
+
+    #content {
+        display: block;
+        margin-top: 1rem !important;
+        width: calc(100vw - 20px) !important;
     }
 
     #header {
@@ -170,6 +180,7 @@ I am not sure yet.
     .highlight {
         width: calc(100vw - 90px) !important;
         font-size: 11px;
+        overflow-x: scroll;
     }
 
     #comments>div>table>tbody>tr>td:nth-child(2) {
@@ -195,6 +206,51 @@ I am not sure yet.
     #article-body h1,
     #article-body h2 {
         font-size: 14px !important;
+    }
+
+    #login-error > .messageBox {
+        top: 20px !important;
+        position: relative !important;
+        left: 10px !important;
+        margin-top: -2rem;
+    }
+
+    #profile-area {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    #profile-area > div {
+        width: auto !important;
+        display: block !important;
+        float: none !important;
+    }
+
+    #profile-area > div:nth-child(1) {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #blinkie-chooser > form, .avatar-directory {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-content: center;
+        justify-content: space-between;
+    }
+
+    .avatar-directory > div {
+        flex: 50%;
+    }
+
+    #blinkie-chooser > form > div, .avatar-directory > div {
+        display: block !important;
+        width: auto !important;
+        float: none !important;
     }
 }
 

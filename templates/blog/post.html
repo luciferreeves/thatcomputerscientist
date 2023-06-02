@@ -70,9 +70,7 @@
                                     {{ comment.anonymous_user.name }}
                                 {% endif %}
                             </a> on <em>
-                                {% timezone request.COOKIES.user_timezone %}
-                                    {{ comment.created_at | date:"M d, Y h:i A" }}
-                                {% endtimezone %}
+                                {{ comment.created_at | date:"M d, Y" }}
                             </em>
                             {% if comment.edited %}
                                 <em>(Edited)</em>

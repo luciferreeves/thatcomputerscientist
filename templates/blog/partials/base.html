@@ -57,13 +57,9 @@
       href="{% static 'images/favicons/site.webmanifest' %}"
     />
     <style>
-      .transition-fade {
-        transition: 0.4s;
-        opacity: 1;
-      }
-
-      html.is-animating .transition-fade {
-        opacity: 0;
+      .equation-container {
+        overflow-x: scroll;
+        white-space: nowrap; /* Prevent line breaks */
       }
     </style>
   </head>
@@ -184,6 +180,20 @@
             );
         };
       });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var equationElements = document.getElementsByTagName("*");
+  
+      for (var i = 0; i < equationElements.length; i++) {
+        var element = equationElements[i];
+  
+        if (element.innerHTML.startsWith("$$") && element.innerHTML.endsWith("$$")) {
+          element.style.overflowX = "scroll";
+          element.style.whiteSpace = "nowrap";
+          element.classList.add("equation-container");
+        }
+      }
     });
   </script>
 </html>

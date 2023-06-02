@@ -3,7 +3,7 @@
  * this site was written for desktop
  */
 
-const windowBreakpoint = 450;
+const windowBreakpoint = 480;
 
 // Listen for window resize
 $(window).resize(function() {

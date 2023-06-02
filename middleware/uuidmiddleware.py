@@ -55,12 +55,7 @@ def userTrackingContextProcessor(request):
                 admin_users.append(user_data)
 
         return {
-            'anonymous_users': len(anonymous_users) or 0,
-            'logged_in_users': len(logged_in_users) or 0,
-            'admin_users': len(admin_users) or 0,
+            'anonymous_users': len(anonymous_users),
+            'logged_in_users': len(logged_in_users),
+            'admin_users': len(admin_users),
         }
-    return {
-        'anonymous_users': 0,
-        'logged_in_users': 0,
-        'admin_users': 0,
-    }

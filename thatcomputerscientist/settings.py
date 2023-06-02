@@ -87,7 +87,6 @@ MIDDLEWARE = [
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
-    'middleware.tz.TimezoneMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {

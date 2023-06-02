@@ -17,7 +17,7 @@ def posts(request):
             page = int(page)
         except:
             page = 1
-        posts = Post.objects.all()[(page-1)*50:page*50]
+        posts = Post.objects.all().order_by('-date')[50 * (page - 1):50 * page]
         num_pages = Post.objects.all().count() // 50 + 1
         url_to_render = 'blog_admin/posts.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/posts.html'
         return render(request, url_to_render, { 'title': 'Manage Posts', 'posts': posts, 'num_pages': num_pages, 'page': page })

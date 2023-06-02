@@ -1,14 +1,19 @@
 import os
 import re
+import dotenv
+import requests
 
 from bs4 import BeautifulSoup
 from django.conf import settings
+from django.core.cache import cache
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, guess_lexer
 
+
 from .models import Category, Comment, Post
 
+dotenv.load_dotenv()
 
 def add_excerpt(post):
     soup = BeautifulSoup(post.body, 'html.parser')
@@ -81,19 +86,53 @@ def highlight_code_blocks(code_block, language=None):
 
     return highlighted_code
 
+def check_link_safety(link):
+    api_key = os.getenv('GOOGLE_SAFE_BROWSING_API_KEY')
+    api_url = 'https://safebrowsing.googleapis.com/v4/threatMatches:find'
+    cache_key = f"link_safety:{link}"
+    cache_timeout = 60 * 60 * 24 * 7  # 7 days
+
+    # Check if the result is already cached
+    cached_result = cache.get(cache_key)
+    if cached_result is not None:
+        return cached_result
+
+    payload = {
+        "threatInfo": {
+            "threatTypes": ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE", "POTENTIALLY_HARMFUL_APPLICATION"],
+            "platformTypes": ["ANY_PLATFORM"],
+            "threatEntryTypes": ["URL"],
+            "threatEntries": [{"url": link}]
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    params = {
+        "key": api_key,
+        "alt": "json"
+    }
+
+    response = requests.post(api_url, params=params, headers=headers, json=payload)
+    if response.status_code == 200:
+        # Successful API call
+        matches = response.json().get('matches', [])
+        return len(matches) == 0
+    else:
+        # Handle API error
+        print(f"Safe Browsing API error: {response.content}")
+
+    return False
+
+
 def comment_processor(comment):
     # escape html tags
     comment = re.sub(r'<', '&lt;', comment)
     comment = re.sub(r'>', '&gt;', comment)
 
     # any text between ``` and ``` must be highlighted as code
-    # code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
-    # for code_block in code_blocks:
-    #     comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
-
-    # new highlight code block:
-    # any text between ``` and ``` must be highlighted as code with guessed language
-    # and any text between ```lang-<language> and ``` must be highlighted as code with specified language
     code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
     for code_block in code_blocks:
         if code_block.startswith('lang-'):
@@ -104,7 +143,15 @@ def comment_processor(comment):
         else:
             comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
 
-
+    # any http or https links must be converted to anchor tags
+    links = re.findall(r'(https?://[^\s]+)', comment)
+    for link in links:
+        # check if the link is safe
+        if check_link_safety(link):
+            comment = comment.replace(link, '<a href="' + link + '" target="_blank">' + link + '</a>')
+        else:
+            # do not replace the link if it is not safe. Add a warning message after the link instead
+            comment = comment.replace(link, link + '<span style="color: red"> (Seems unsafe! Proceed with caution)</span>')
 
     # retain line breaks, for every newline character, add a <br> tag
     comment = comment.replace('\n', '<br>')

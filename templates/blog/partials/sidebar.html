@@ -316,6 +316,7 @@
         </li>
     </ul>
 </div>
+{% if logged_in_users or anonymous_users or admin_users %}
 <div id="online-users" class="mtctitem">
     <h2>Who's Online?</h2>
     <div>
@@ -328,3 +329,4 @@
         <p>(Based on users active over the past 5 minutes)</p>
     </div>
 </div>
+{% endif %}

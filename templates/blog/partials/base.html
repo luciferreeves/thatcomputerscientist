@@ -145,7 +145,11 @@
       </div>
     </div>
   </body>
-  <script src="{% static 'js/oneko.js' %}"></script>
+  {% if request.COOKIES.summonOneko == 'true' %}
+    <script src="{% static 'js/oneko.js' %}"></script>
+  {% endif %}
+
+
   <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
   <script src="{% static 'js/phone_compatibility.js' %}"></script>
   {% block scripts %} {% endblock %}
@@ -195,5 +199,15 @@
         }
       }
     });
+
+    function summonOneko() {
+      document.cookie = "summonOneko=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+      location.reload();
+    } 
+
+    function withdrawOneko() {
+      document.cookie = "summonOneko=false; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+      location.reload();
+    }
   </script>
 </html>

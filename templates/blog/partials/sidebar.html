@@ -314,6 +314,27 @@
                 </a>
             </span>
         </li>
+        <li>
+            {% if request.COOKIES.summonOneko == 'true' %}
+                <span>
+                    <img src="{% static 'images/site/withdraw_oneko.gif' %}" alt="Oneko" border="0">
+                </span>
+                <span>
+                    <a href="javascript:void(0);" onclick="withdrawOneko();">
+                        Withdraw Oneko
+                    </a>
+                </span>
+            {% else %}
+                <span>
+                    <img src="{% static 'images/site/summon_oneko.gif' %}" alt="Oneko" border="0">
+                </span>
+                <span>
+                    <a href="javascript:void(0);" onclick="summonOneko();">
+                        Summon Oneko
+                    </a>
+                </span>
+            {% endif %}
+        </li>
     </ul>
 </div>
 {% if logged_in_users or anonymous_users or admin_users %}

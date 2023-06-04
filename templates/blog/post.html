@@ -78,7 +78,7 @@
         </div>
         <div class="post-actions" style="clear: both;">
             <a href="{% url 'blog:post' read_next.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' read_next.slug %}#comments">{{ read_next.num_comments }}
-                Opinion{% if not read_next.comments.count == 1 %}s{% endif %}</a>
+                Opinion{% if not read_next.num_comments == 1 %}s{% endif %}</a>
         </div>
     </div>
 </div>

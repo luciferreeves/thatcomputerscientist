@@ -174,7 +174,8 @@ def post(request, slug):
             request.meta['description'] = BeautifulSoup(first_paragraph, 'html.parser').get_text()
             request.meta['image'] = 'https://thatcomputerscientist.com/ignis/post_image/720/' + str(post.id) + '.gif'
 
-            read_next = next_read(post)
+            # read_next = next_read(post)
+            read_next = None
 
             return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments, 'view_count': view_count, 'read_next': read_next})
         else:

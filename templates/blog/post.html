@@ -52,7 +52,7 @@
 <div id="read-next">
     <div class="post">
         <div class="post-header">
-            <h1><a style="color: #f4ebff;" href="{% url 'blog:post' read_next.slug %}">{{ read_next.title }}</a></h1>
+            <h1 style="margin: auto !important;"><a style="color: #f4ebff;" href="{% url 'blog:post' read_next.slug %}">{{ read_next.title }}</a></h1>
             <div class="author-info">
                 {% with read_next.author.userprofile_set.first as userprofile %}
                     <span style="background-image: url('{% static 'images/avatars/' %}{{ userprofile.avatar_url }}.gif');" class="post-profile-image"></span>

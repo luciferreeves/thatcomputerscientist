@@ -29,7 +29,7 @@ def next_read(post):
     max_similarity = np.argmax(similarity)
 
     if similarity[max_similarity] > 0.5:
-        post = posts[max_similarity]
+        post = posts[int(max_similarity)]
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)
         return post

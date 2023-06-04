@@ -47,6 +47,42 @@
     </div>
 </div>
 
+{% if read_next %}
+<h2 class="mtsbitem">Read Next</h2>
+<div id="read-next">
+    <div class="post">
+        <div class="post-header">
+            <h1><a style="color: #f4ebff;" href="{% url 'blog:post' read_next.slug %}">{{ read_next.title }}</a></h1>
+            <div class="author-info">
+                {% with read_next.author.userprofile_set.first as userprofile %}
+                    <span style="background-image: url('{% static 'images/avatars/' %}{{ userprofile.avatar_url }}.gif');" class="post-profile-image"></span>
+                {% endwith %}
+                <span>
+                    <a href="{% url 'blog:user_activity' read_next.author %}" style="font-weight: bold;">
+                        {{ read_next.author.first_name }} {{ read_next.author.last_name }}
+                    </a>
+                </span>
+                <span>posted in</span>
+                <span>
+                    <a href="{% url 'blog:categories' %}/{{ read_next.category.slug }}" style="">
+                        {{ read_next.category }}
+                    </a>
+                </span>
+                <span style="margin-left: 4px;"><b>|</b></span>
+                <span style="margin-left: 4px;">{% localtime on %}{{ read_next.date | date:"M d, Y" }}{% endlocaltime %}</span>
+            </div>
+        </div>
+        <div class="post-body">
+            <img class="post-image post-image-l" src="{% url 'ignis:post_image' '350' read_next.id %}.gif">
+            {{ read_next.excerpt | safe }}
+        </div>
+        <div class="post-actions" style="clear: both;">
+            <a href="{% url 'blog:post' read_next.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' read_next.slug %}#comments">{{ read_next.num_comments }}
+                Opinion{% if not read_next.comments.count == 1 %}s{% endif %}</a>
+        </div>
+    </div>
+</div>
+{% endif %}
 <h2 class="mtsbitem">Comments
     <a href="#header" class="pa-btn" style="float: right; margin-top: 0px; text-transform: capitalize; font-weight: normal;">
         Back to Top

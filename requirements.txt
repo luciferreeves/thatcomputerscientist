@@ -21,3 +21,5 @@ channels
 channels_redis
 daphne
 user_agents
+numpy
+scikit-learn

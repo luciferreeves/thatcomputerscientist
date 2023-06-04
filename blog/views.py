@@ -27,6 +27,7 @@ from .context_processors import (add_excerpt, add_num_comments, avatar_list,
                                  comment_processor, highlight_code_blocks,
                                  recent_posts)
 from .models import AnonymousCommentUser, Category, Comment, Post
+from .recommender import next_read
 
 load_dotenv()
 
@@ -173,7 +174,9 @@ def post(request, slug):
             request.meta['description'] = BeautifulSoup(first_paragraph, 'html.parser').get_text()
             request.meta['image'] = 'https://thatcomputerscientist.com/ignis/post_image/720/' + str(post.id) + '.gif'
 
-            return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments, 'view_count': view_count})
+            read_next = next_read(post)
+
+            return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments, 'view_count': view_count, 'read_next': read_next})
         else:
             if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff:
                 return render(request, 'blog/post.html', {'title': post.title, 'post': post, 'tags': tags, 'comments': comments, 'view_count': view_count})

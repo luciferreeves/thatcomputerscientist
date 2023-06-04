@@ -252,7 +252,7 @@ blockquote {
 
 .highlight {
     background: #311b4f26 !important;
-    padding: 20px;
+    padding: 5px 20px;
     box-sizing: border-box;
     border-radius: 8px;
     text-align: left !important;

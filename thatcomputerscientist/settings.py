@@ -34,7 +34,7 @@ r.set('n_connected_lc_users', 0)
 SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com']

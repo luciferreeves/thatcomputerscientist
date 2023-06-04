@@ -36,7 +36,8 @@ textarea {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: black;
+    opacity: 0.8;
     z-index: -1;
 }
 
@@ -444,16 +445,16 @@ blockquote {
     z-index: 1;
 }
 
-#anonymous-profile-info > div {
+#anonymous-profile-info > div, #anonymous-profile-info > #creds > div {
     margin: 10px 0;
 }
 
-#anonymous-profile-info > div > label {
+#anonymous-profile-info > div > label, #anonymous-profile-info > #creds > div > label {
     width: 200px;
     display: inline-block;
 }
 
-#anonymous-profile-info > div > input {
+#anonymous-profile-info > div > input, #anonymous-profile-info > #creds > div > input {
     width: 300px;
     display: inline-block;
 }

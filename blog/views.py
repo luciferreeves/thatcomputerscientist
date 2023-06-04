@@ -213,12 +213,12 @@ def anon_comment(request, slug):
             # not allowed this is anonymous comment form
             return redirect(reverse('blog:post', kwargs={'slug': slug}))
         else:
-            anonymous_user = request.POST.get('anonymous-name')
+            anonymous_name = request.POST.get('anonymous-name')
             anonymous_email = request.POST.get('anonymous-email')
             anonymous_token, at = request.POST.get('anonymous-token'), request.POST.get('anonymous-token')
             new_anonymous_token = request.POST.get('new-anonymous-token')
             anonymous_comment = request.POST.get('anonymous-comment')
-            if not anonymous_user:
+            if not anonymous_name:
                 messages.error(request, 'Please enter a name!')
                 return redirect(reverse('blog:post', kwargs={'slug': slug}))
             if not anonymous_comment:
@@ -241,14 +241,19 @@ def anon_comment(request, slug):
             anonymous_avatar = avatar_dir + '/' + avatar_file
             anonymous_token = hashlib.sha256(anonymous_token.encode('utf-8')).hexdigest()
             try:
-                anonymous_user = AnonymousCommentUser.objects.get(name=anonymous_user, email=anonymous_email, token=anonymous_token)
+                anonymous_user = AnonymousCommentUser.objects.get(email=anonymous_email, token=anonymous_token)
             except AnonymousCommentUser.DoesNotExist:
-                anonymous_user = AnonymousCommentUser.objects.create(name=anonymous_user, email=anonymous_email, token=anonymous_token,
+                anonymous_user = AnonymousCommentUser.objects.create(email=anonymous_email, token=anonymous_token,
             avatar=anonymous_avatar)
             if new_anonymous_token:
                 at = new_anonymous_token
                 new_anonymous_token = hashlib.sha256(new_anonymous_token.encode('utf-8')).hexdigest()
                 anonymous_user.token = new_anonymous_token
+                anonymous_user.save()
+            
+            # update the anonymous user's name if it has changed
+            if anonymous_user.name != anonymous_name:
+                anonymous_user.name = anonymous_name
                 anonymous_user.save()
             
             comment = Comment.objects.create(anonymous_user=anonymous_user, post=Post.objects.get(slug=slug), body=anonymous_comment)

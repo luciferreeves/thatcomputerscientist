@@ -257,11 +257,11 @@ I am not sure yet.
         float: none !important;
     }
 
-    #anonymous-profile-info > div > label {
+    #anonymous-profile-info > div > label, #anonymous-profile-info > #creds > div > label {
         display: block;
     }
     
-    #anonymous-profile-info > div > input {
+    #anonymous-profile-info > div > input, #anonymous-profile-info > #creds > div > input {
         width: calc(100% - 20px);
         display: block;
         margin: 10px 0;

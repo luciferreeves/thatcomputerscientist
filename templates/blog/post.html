@@ -5,6 +5,7 @@
 <div id="post-actions-bar" class="mtsbitem">
     <a class="pa-btn" href="{% url 'blog:home' %}">Home</a>
     <a class="pa-btn" href="#comments">Opinions</a>
+    <a class="pa-btn" href="javascript:;" onclick="lightsOff()">Lights <img id="lightsStatus" data-status="on" src="{% static 'images/site/on.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>
     {% comment %} <a class="pa-btn" id="translate-jp" href="javascript:;">
         <img src="{% static 'images/icons/translate.png' %}" alt="Translate to Japanese" style="height: 11px; width: 11px; margin-right: 5px; position: relative; top: 1px;">
         {% if request.session.language == 'jp' %}
@@ -236,18 +237,23 @@
         <div id="anonymous-comment">
             <div id="anonymous-profile-info">
                 <div>
-                    <label for="anonymous-name"><b>Name </b> <i>{% if request.COOKIES.anonymous_name %}(Pre-Filled){% else %}(Required){% endif %}</i>:</label>
-                    <input required type="text" name="anonymous-name" id="anonymous-name" value="{{ request.COOKIES.anonymous_name }}" placeholder="Display name">
+                    <label for="anonymous-name"><b>Name </b> <i>{% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %}(Pre-Filled){% else %}(Required){% endif %}</i>:</label>
+                    <input required type="text" name="anonymous-name" id="anonymous-name" value="{{ request.COOKIES.anonymous_name }}" placeholder="Display name" style="margin-right: 15px;">
+                    {% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %}
+                        <a href="javascript:;" onclick="toggleCreds()">Change Credentials</a>
+                    {% endif %}
                 </div>
-                <div>
-                    <label for="anonymous-email"><b>Email</b> <i>{% if request.COOKIES.anonymous_email %}(Pre-Filled){% else %}(Optional){% endif %}</i>:</label>
-                    <input type="text" name="anonymous-email" id="anonymous-email" value="{{ request.COOKIES.anonymous_email }}" placeholder="Your email address">   
-                </div>
-                <div>
-                    <input type="hidden" name="anonymous-token" id="anonymous-token" value="{{ request.COOKIES.anonymous_token }}">
-                    <label for="new-anonymous-token"><b>New Secret Token</b> <i>{% if request.COOKIES.anonymous_token %}(Pre-Filled){% else %}(Optional){% endif %}</i>:</label>
-                    <input type="text" name="new-anonymous-token" id="new-anonymous-token" value="" placeholder="New Secret Token">
-                    <p><small>You do not fill your secret token everytime you comment. Set it only once and change when needed.</small></p>
+                <div id="creds" {% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %} style="display: none;" {% endif %}>
+                    <div>
+                        <label for="anonymous-email"><b>Email</b> <i>{% if request.COOKIES.anonymous_email %}(Pre-Filled){% else %}(Optional){% endif %}</i>:</label>
+                        <input type="text" name="anonymous-email" id="anonymous-email" value="{{ request.COOKIES.anonymous_email }}" placeholder="Your email address">   
+                    </div>
+                    <div>
+                        <input type="hidden" name="anonymous-token" id="anonymous-token" value="{{ request.COOKIES.anonymous_token }}">
+                        <label for="new-anonymous-token"><b>New Secret Token</b> <i>{% if request.COOKIES.anonymous_token %}(Pre-Filled){% else %}(Optional){% endif %}</i>:</label>
+                        <input type="text" name="new-anonymous-token" id="new-anonymous-token" value="" placeholder="New Secret Token">
+                        <p><small>You do not fill your secret token everytime you comment. Set it only once and change when needed.</small></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -373,7 +379,25 @@
         $('#anonymous-comment-form').show();
     };
 
-    {% if request.COOKIES.anonymous_name %}
+    function toggleCreds() {
+        $('#creds').slideToggle('fast');
+    };
+
+    function lightsOff() {
+        // #overlay. Go from 0.8 -> 0.9 opacity
+        var currentStatus = $('#lightsStatus').attr('data-status');
+        if (currentStatus == 'off') {
+            $('#overlay').fadeTo('fast', 0.8);
+            $('#lightsStatus').attr('data-status', 'on');
+            $('#lightsStatus').attr('src', "{% static 'images/site/on.png' %}");
+        } else {
+            $('#overlay').fadeTo('fast', 0.9);
+            $('#lightsStatus').attr('data-status', 'off');
+            $('#lightsStatus').attr('src', "{% static 'images/site/off.png' %}");
+        }
+    }
+
+    {% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %}
         toggleAnon();
     {% endif %}
 </script>

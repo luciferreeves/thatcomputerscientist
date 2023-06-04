@@ -207,6 +207,10 @@ I am not sure yet.
     #article-body h2 {
         font-size: 14px !important;
     }
+    
+    #article-body > .highlight {
+        width: 100% !important;
+    }
 
     #login-error > .messageBox {
         top: 20px !important;

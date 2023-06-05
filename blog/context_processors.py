@@ -1,3 +1,4 @@
+import akismet
 import os
 import re
 import dotenv
@@ -14,6 +15,20 @@ from pygments.lexers import get_lexer_by_name, guess_lexer
 from .models import Category, Comment, Post
 
 dotenv.load_dotenv()
+
+akismet_api = akismet.Akismet(
+    key=os.getenv('AKISMET_API_KEY'),
+    blog_url='https://preview.thatcomputerscientist.com' if settings.DEBUG else 'https://thatcomputerscientist.com',
+)
+
+def check_spam(user_ip, user_agent, comment, author):
+    akismet_data = {
+        'comment_type': 'comment',
+        'comment_author': author,
+        'comment_content': comment,
+        'is_test': settings.DEBUG,
+    }
+    return akismet_api.comment_check(user_ip, user_agent, **akismet_data)
 
 def add_excerpt(post):
     soup = BeautifulSoup(post.body, 'html.parser')

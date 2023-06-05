@@ -25,7 +25,7 @@ from users.tokens import CaptchaTokenGenerator
 
 from .context_processors import (add_excerpt, add_num_comments, avatar_list,
                                  comment_processor, highlight_code_blocks,
-                                 recent_posts)
+                                 recent_posts, check_spam)
 from .models import AnonymousCommentUser, Category, Comment, Post
 from .recommender import next_read
 
@@ -189,6 +189,19 @@ def comment(request, slug):
     if request.method == 'POST':
         if request.user.is_authenticated:
             try:
+                 # check for spam first
+                user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+                if user_ip:
+                    user_ip = user_ip.split(',')[0]
+                else:
+                    user_ip = request.META.get('REMOTE_ADDR')
+                user_agent_string = request.META.get('HTTP_USER_AGENT', '')
+                user_agent = parse(user_agent_string)
+                if check_spam(user_ip=user_ip, user_agent=user_agent, comment=request.POST.get('body'), author=request.user.username):
+                    messages.error(request, request.POST.get('body'), extra_tags='spam')
+                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+                
+                # then we continue
                 post = Post.objects.get(slug=slug)
                 if post.is_public:
                     comment = Comment.objects.create(user=request.user, post=post, body=request.POST.get('comment'))
@@ -213,6 +226,19 @@ def anon_comment(request, slug):
             # not allowed this is anonymous comment form
             return redirect(reverse('blog:post', kwargs={'slug': slug}))
         else:
+            # check for spam first
+            user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+            if user_ip:
+                user_ip = user_ip.split(',')[0]
+            else:
+                user_ip = request.META.get('REMOTE_ADDR')
+            user_agent_string = request.META.get('HTTP_USER_AGENT', '')
+            user_agent = parse(user_agent_string)
+            if check_spam(user_ip=user_ip, user_agent=user_agent, comment=anonymous_comment, author=anonymous_name):
+                messages.error(request, anonymous_comment, extra_tags='spam')
+                return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#new-comment')
+
+            # now continue with the comment
             anonymous_name = request.POST.get('anonymous-name')
             anonymous_email = request.POST.get('anonymous-email')
             anonymous_token, at = request.POST.get('anonymous-token'), request.POST.get('anonymous-token')
@@ -272,6 +298,18 @@ def anon_comment(request, slug):
 def edit_comment(request, slug):
     if request.method == 'POST':
         if request.user.is_authenticated:
+            # check for spam first
+            user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+            if user_ip:
+                user_ip = user_ip.split(',')[0]
+            else:
+                user_ip = request.META.get('REMOTE_ADDR')
+            user_agent_string = request.META.get('HTTP_USER_AGENT', '')
+            user_agent = parse(user_agent_string)
+            if check_spam(user_ip=user_ip, user_agent=user_agent, comment=request.POST.get('body'), author=request.user.username):
+                messages.error(request, request.POST.get('body'), extra_tags='spam')
+                return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+
             try:
                 comment = Comment.objects.get(id=request.POST.get('comment_id'))
                 if comment.user == request.user:
@@ -295,6 +333,18 @@ def anon_edit_comment(request, slug):
             # not allowed this is anonymous comment form
             return redirect(reverse('blog:post', kwargs={'slug': slug}))
         else:
+            # check for spam first
+            user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+            if user_ip:
+                user_ip = user_ip.split(',')[0]
+            else:
+                user_ip = request.META.get('REMOTE_ADDR')
+            user_agent_string = request.META.get('HTTP_USER_AGENT', '')
+            user_agent = parse(user_agent_string)
+            if check_spam(user_ip=user_ip, user_agent=user_agent, comment=request.POST.get('body'), author=comment.anonymous_user.name):
+                messages.error(request, request.POST.get('body'), extra_tags='spam')
+                return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+
             anonymous_token = request.COOKIES.get('anonymous_token')
             if not anonymous_token:
                 return HttpResponse('Unauthorized!', status=401)

@@ -234,7 +234,7 @@
     <div  id="anonymous-comment-form" style="display: none;">
     <form action="{% url 'blog:anon_comment' post.slug %}" method="POST">
         {% csrf_token %}
-        <div id="anonymous-comment">
+        <div id="anonymous-comment-area">
             <div id="anonymous-profile-info">
                 <div>
                     <label for="anonymous-name"><b>Name </b> <i>{% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %}(Pre-Filled){% else %}(Required){% endif %}</i>:</label>
@@ -323,18 +323,18 @@
             <div id="gotchas" style="display: none;">
                 <p>Athough its cool to be anonymous, there are a few things which will not work if you choose to comment anonymously:</p>
                 <ul>
-                    <li>If you do not set a Email and secret token, you will not be able to edit your comment later. This information will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
+                    <li>Custom Email and Token allow you to edit / delete your comments from other devices. This information will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
+                    <li>If you do not fill the email and secret token fields, a random (non-existent) email and secret token will be generated for you. As long as you do not clear your browser data, you will be able to edit your comment later.</li>
+                    <li>Anytime, you wish to update your name, just change it in the name field. This will update your name for all your previous comments as well.</li>
+                    <li>Anytime, you wish to change your secret token, this can be done by entering a new secret token in the 'Credentials' area. It will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
                     <li>If you lose your secret token, that's basically permanent damage. You can always set a new secret token for the same email, but you will not be able to edit your previous comments.</li>
                     <li>You will not be able to customize your avatar. You will be assigned a random site specific avatar.</li>
-                    <li>Anytime, you wish to change your secret token, this can be done by entering your email and new secret token. Also, you do not fill your secret token everytime you comment. It will be stored locally and the site will remember your information, so you don't have to enter it again.</li>
-                    <li>If you do not fill the email and secret token fields, a random (non-existent) email and secret token will be generated for you. As long as you do not clear your browser data, you will be able to edit your comment later.</li>
-                    {% comment %} <li>All comments will be passed through Akismet spam filter. If your comment is marked as spam, it will be immediately rejected. If you think this is a mistake, please contact me.</li> {% endcomment %}
                     <li>If anytime, you wish to <a href="{% url 'blog:register' %}">register</a> for a full account, you can do so with the same email address. However, your previous comments will not be migrated to your new account.</li>
                 </ul>
             </div>
         </div>
         <input type="submit" value="Submit" class="button button-special">
-        <input type="button" value="Close" class="button" onclick="document.getElementById('anonymous-comment-form').style.display = 'none'; document.getElementById('ancmClick').style.display = 'block';">
+        <input type="button" value="Close" class="button" onclick="toggleAnon()">
     </form>
     {% comment %} <br>
         <button class="button" onclick="cd()">Clear Form Data</button> {% endcomment %}
@@ -345,6 +345,16 @@
 {% endif %}
 {% endblock %}
 {% block scripts %}
+{% comment %} check if there are error messages with extra tags 'spam' to see if the comment was spam {% endcomment %}
+{% if messages %}
+{% for message in messages %}
+{% if 'spam' in message.tags %}
+<script type="text/javascript">
+    alert('Your comment was marked as spam. If you think this is a mistake, please contact me.');
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
 <script type="text/javascript">
     function editComment(id) {
         document.getElementById('comment-body-' + id).style.display = 'none';
@@ -375,8 +385,8 @@
     }
 
     function toggleAnon() {
-        $('#ancmClick').hide();
-        $('#anonymous-comment-form').show();
+        $('#ancmClick').toggle();
+        $('#anonymous-comment-form').slideToggle('fast');
     };
 
     function toggleCreds() {
@@ -398,7 +408,8 @@
     }
 
     {% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %}
-        toggleAnon();
+    $('#ancmClick').toggle();
+    $('#anonymous-comment-form').toggle();
     {% endif %}
 </script>
 

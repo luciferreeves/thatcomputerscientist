@@ -56,7 +56,10 @@ a,
 
 img.little-staus {
     height: 24px;
+    border-radius: 50%;
     position: relative;
+    top: -18px; 
+    left: 28px;
 }
 
 #fake-banner-ad {

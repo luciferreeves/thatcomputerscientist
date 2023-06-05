@@ -96,11 +96,11 @@
             <table>
                 <tr>
                     <td style="width: 60px; vertical-align: top;">
-                        <img src="{% static 'images/avatars/' %}{{ comment.avatar_url }}.gif" alt="Profile Picture" style="width: 50px;">
+                        <img src="{% static 'images/avatars/' %}{{ comment.avatar_url }}.gif" alt="Profile Picture" style="width: 50px; border-radius: 50%;">
                         {% if not comment.user %}
-                        <img src="{% static 'images/site/unknown.png' %}" alt="Anonymous User" class="little-staus" style="top: -20px; left: 24px;">
+                        <img src="{% static 'images/site/unknown.png' %}" alt="Anonymous User" class="little-staus">
                         {% else %}
-                        <img src="{% static 'images/site/check.png' %}" alt="Registered User" class="little-staus" style="top: -24px; left: 28px;">
+                        <img src="{% static 'images/site/check.png' %}" alt="Registered User" class="little-staus" style="">
                         {% endif %}
                     </td>
                     <td style="vertical-align: top; width: 668px;">

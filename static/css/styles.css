@@ -51,6 +51,12 @@ a,
     /* color: #a591ee; */
     color: #d2baff;
     text-decoration: none;
+    cursor: pointer;
+}
+
+img.little-staus {
+    height: 24px;
+    position: relative;
 }
 
 #fake-banner-ad {

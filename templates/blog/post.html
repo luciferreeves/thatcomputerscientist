@@ -97,18 +97,15 @@
                 <tr>
                     <td style="width: 60px; vertical-align: top;">
                         <img src="{% static 'images/avatars/' %}{{ comment.avatar_url }}.gif" alt="Profile Picture" style="width: 50px;">
+                        {% if not comment.user %}
+                        <img src="{% static 'images/site/unknown.png' %}" alt="Anonymous User" class="little-staus" style="top: -20px; left: 24px;">
+                        {% else %}
+                        <img src="{% static 'images/site/check.png' %}" alt="Registered User" class="little-staus" style="top: -24px; left: 28px;">
+                        {% endif %}
                     </td>
                     <td style="vertical-align: top; width: 668px;">
                         <div style="margin-bottom: 13px; border-bottom: dashed 1px white; padding-bottom: 13px;">
-                            <a href="{% if comment.user%}{% url 'blog:user_activity' comment.user.username %}{% else %}#{% endif %}">
-                                {% if comment.user %}
-                                    {{ comment.user.username }}
-                                {% else %}
-                                    {{ comment.anonymous_user.name }}
-                                {% endif %}
-                            </a> on <em>
-                                {{ comment.created_at | date:"M d, Y" }}
-                            </em>
+                            <a {% if comment.user%}href="{% url 'blog:user_activity' comment.user.username %}"{% endif %}>{% if comment.user %}{{ comment.user.username }}{% else %}{{ comment.anonymous_user.name }}{% endif %}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
                             {% if comment.edited %}
                                 <em>(Edited)</em>
                             {% endif %}

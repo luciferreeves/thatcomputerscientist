@@ -51,7 +51,7 @@ def userTrackingContextProcessor(request):
             admin_users.append(user_data)
 
     return {
-        'anonymous_users': len(anonymous_users),
+        'anonymous_users': len(anonymous_users) - 1 if user_uuid else len(anonymous_users), 
         'logged_in_users': len(logged_in_users),
         'admin_users': len(admin_users),
     }

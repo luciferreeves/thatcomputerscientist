@@ -187,13 +187,17 @@ I am not sure yet.
         padding-left: 10px;
     }
 
-    #article-body p,
+    /* #article-body p,
     #article-body ul,
     #article-body ol,
     #article-body blockquote,
     #article-body pre,
     #article-body table {
-        font-size: 12px !important;
+        font-size: 13px;
+    } */
+
+    #article-body {
+        font-size: 13px;
     }
 
     #article-body img {

@@ -6,6 +6,7 @@
     <a class="pa-btn" href="{% url 'blog:home' %}">Home</a>
     <a class="pa-btn" href="#comments">Opinions</a>
     <a class="pa-btn" href="javascript:;" onclick="lightsOff()">Lights <img id="lightsStatus" data-status="on" src="{% static 'images/site/on.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>
+    <a class="pa-btn" href="javascript:;" onclick="blindMode()">Blind Mode <img id="blindStatus" data-status="off" src="{% static 'images/site/off.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>
     {% comment %} <a class="pa-btn" id="translate-jp" href="javascript:;">
         <img src="{% static 'images/icons/translate.png' %}" alt="Translate to Japanese" style="height: 11px; width: 11px; margin-right: 5px; position: relative; top: 1px;">
         {% if request.session.language == 'jp' %}
@@ -393,14 +394,59 @@
     function lightsOff() {
         // #overlay. Go from 0.8 -> 0.9 opacity
         var currentStatus = $('#lightsStatus').attr('data-status');
+        var windowWidth = document.documentElement.clientWidth;
         if (currentStatus == 'off') {
             $('#overlay').fadeTo('fast', 0.8);
+            if (windowWidth > 480) {
+                $('#sidebar').fadeTo('fast', 1);
+                $('#header').fadeTo('fast', 1);
+                $('#footer').fadeTo('fast', 1);
+            }
             $('#lightsStatus').attr('data-status', 'on');
             $('#lightsStatus').attr('src', "{% static 'images/site/on.png' %}");
         } else {
             $('#overlay').fadeTo('fast', 0.9);
+            if (windowWidth > 480) {
+                $('#sidebar').fadeTo('fast', 0.2);
+                $('#header').fadeTo('fast', 0.2);
+                $('#footer').fadeTo('fast', 0.2);
+            }
             $('#lightsStatus').attr('data-status', 'off');
             $('#lightsStatus').attr('src', "{% static 'images/site/off.png' %}");
+        }
+    }
+
+    function blindMode() {
+        var articleBody = $('#article-body');
+        var currentStatus = $('#blindStatus').attr('data-status');
+        var windowWidth = document.documentElement.clientWidth;
+        if (currentStatus == 'off') {
+            // turn on. On phones set font-size to 16px (<480 units), on desktop set font-size to 13px
+            if (windowWidth < 480) {
+                articleBody.animate({
+                    fontSize: '15px'
+                  }, 100);             
+            } else {
+                articleBody.animate({
+                    fontSize: '13px'
+                  }, 100);
+               
+            }
+            $('#blindStatus').attr('data-status', 'on');
+            $('#blindStatus').attr('src', "{% static 'images/site/on.png' %}");
+        } else {
+            // turn off. Phones - 12px, Desktop - 11px
+            if (windowWidth < 480) {
+                articleBody.animate({
+                    fontSize: '13px'
+                }, 100);
+            } else {
+                articleBody.animate({
+                    fontSize: '11px'
+                }, 100);
+            }
+            $('#blindStatus').attr('data-status', 'off');
+            $('#blindStatus').attr('src', "{% static 'images/site/off.png' %}");
         }
     }
 

@@ -5,7 +5,7 @@
 <div id="post-actions-bar" class="mtsbitem">
     <a class="pa-btn" href="{% url 'blog:home' %}">Home</a>
     <a class="pa-btn" href="#comments">Opinions</a>
-    <a class="pa-btn" href="javascript:;" onclick="lightsOff()">Lights <img id="lightsStatus" data-status="on" src="{% static 'images/site/on.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>
+    <a class="pa-btn" href="javascript:;" onclick="lightsOff()">Focus <img id="lightsStatus" data-status="off" src="{% static 'images/site/off.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>
     <a class="pa-btn" href="javascript:;" onclick="blindMode()">Spectacles <img id="blindStatus" data-status="off" src="{% static 'images/site/off.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>
     {% comment %} <a class="pa-btn" id="translate-jp" href="javascript:;">
         <img src="{% static 'images/icons/translate.png' %}" alt="Translate to Japanese" style="height: 11px; width: 11px; margin-right: 5px; position: relative; top: 1px;">

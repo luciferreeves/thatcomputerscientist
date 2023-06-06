@@ -39,15 +39,15 @@ function lightsOff() {
     // #overlay. Go from 0.8 -> 0.9 opacity
     var currentStatus = $('#lightsStatus').attr('data-status');
     var windowWidth = document.documentElement.clientWidth;
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         $('#overlay').fadeTo('fast', 0.8);
         if (windowWidth > 480) {
             $('#sidebar').children().fadeTo('fast', 1);
             $('#header').fadeTo('fast', 1);
             $('#footer').fadeTo('fast', 1);
         }
-        $('#lightsStatus').attr('data-status', 'on');
-        $('#lightsStatus').attr('src', onImage);
+        $('#lightsStatus').attr('data-status', 'off');
+        $('#lightsStatus').attr('src', offImage);
     } else {
         $('#overlay').fadeTo('fast', 0.9);
         if (windowWidth > 480) {
@@ -55,8 +55,8 @@ function lightsOff() {
             $('#header').fadeTo('fast', 0.2);
             $('#footer').fadeTo('fast', 0.2);
         }
-        $('#lightsStatus').attr('data-status', 'off');
-        $('#lightsStatus').attr('src', offImage);
+        $('#lightsStatus').attr('data-status', 'on');
+        $('#lightsStatus').attr('src', onImage);
     }
 }
 
@@ -99,13 +99,13 @@ var allInputElementsOnPage = $('input');
 // If lights are off, then on hover on sidebar .children(), fadeTo 1 for currently hovered child
 $('#sidebar').children().hover(function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         $(this).fadeTo('fast', 0.85);
     }
 }, function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
     // if none of the input elements are focused, then fadeTo 0.2
-    if (currentStatus == 'off' && allInputElementsOnPage.is(':focus') == false) {
+    if (currentStatus == 'on' && allInputElementsOnPage.is(':focus') == false) {
         $(this).fadeTo('fast', 0.2);
     }
 });
@@ -113,19 +113,19 @@ $('#sidebar').children().hover(function() {
 // same for header and footer
 $('#header').hover(function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         $(this).fadeTo('fast', 0.85);
     }
 }, function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off' && allInputElementsOnPage.is(':focus') == false) {
+    if (currentStatus == 'on' && allInputElementsOnPage.is(':focus') == false) {
         $(this).fadeTo('fast', 0.2);
     }
 });
 
 $('#search-form > input[type=text]').blur(function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         var isHovered = $('#header').is(':hover');
         if (isHovered == false) {
             $('#header').fadeTo('fast', 0.2);
@@ -135,7 +135,7 @@ $('#search-form > input[type=text]').blur(function() {
 
 $('#login-form > input').blur(function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         var isHovered = $('#login-area').is(':hover');
         if (isHovered == false) {
             $('#login-area').fadeTo('fast', 0.2);
@@ -145,12 +145,12 @@ $('#login-form > input').blur(function() {
 
 $('#footer').hover(function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         $(this).fadeTo('fast', 0.85);
     }
 }, function() {
     var currentStatus = $('#lightsStatus').attr('data-status');
-    if (currentStatus == 'off') {
+    if (currentStatus == 'on') {
         $(this).fadeTo('fast', 0.2);
     }
 });

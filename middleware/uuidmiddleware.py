@@ -25,28 +25,11 @@ def userTrackingContextProcessor(request):
 
     # get the user's uuid from the cookie
     user_uuid = request.COOKIES.get('user_uuid')
-    invalid_response = {
-        'anonymous_users': 1,
-        'logged_in_users':0,
-        'admin_users': 0,
-    }
-
-    if not user_uuid:
-        return invalid_response
-    
-    # see if we can connect to redis
-    try:
-        redis_instance.ping()
-        print('connected to redis')
-    except redis.exceptions.ConnectionError:
-        return invalid_response
-    
     user_data = {
         'is_authenticated': request.user.is_authenticated,
         'is_staff': request.user.is_staff,
     }
 
-    # refresh online users every 300 seconds, with auto deleting expired keys
     redis_instance.set(f"presence_{user_uuid}", json.dumps(user_data), ex=300)
 
     # get all online users

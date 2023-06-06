@@ -144,70 +144,14 @@
         </p>
       </div>
     </div>
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/globals.js' %}"></script>
+    <script src="{% static 'js/phone_compatibility.js' %}"></script>
+    {% if request.COOKIES.summonOneko == 'true' %}
+      <script src="{% static 'js/oneko.js' %}"></script>
+    {% endif %}
+    {% block scripts %} {% endblock %}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"></script>
   </body>
-  {% if request.COOKIES.summonOneko == 'true' %}
-    <script src="{% static 'js/oneko.js' %}"></script>
-  {% endif %}
-
-
-  <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-  <script src="{% static 'js/phone_compatibility.js' %}"></script>
-  {% block scripts %} {% endblock %}
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-72XTC500FR");
-
-    // Smooth scroll to anchor
-    $(document).ready(function () {
-      $('a[href^="#"]').on("click", function (e) {
-        e.preventDefault();
-
-        const target = $(this.getAttribute("href"));
-        if (target.length) {
-          $("html, body")
-            .stop()
-            .animate(
-              {
-                scrollTop: target.offset().top,
-              },
-              500
-            );
-        };
-      });
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-      var equationElements = document.getElementsByTagName("*");
-  
-      for (var i = 0; i < equationElements.length; i++) {
-        var element = equationElements[i];
-  
-        if (element.innerHTML.startsWith("$$") && element.innerHTML.endsWith("$$")) {
-          element.style.overflowX = "scroll";
-          element.style.whiteSpace = "nowrap";
-          element.classList.add("equation-container");
-        }
-      }
-    });
-
-    function summonOneko() {
-      document.cookie = "summonOneko=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-      location.reload();
-    } 
-
-    function withdrawOneko() {
-      document.cookie = "summonOneko=false; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-      location.reload();
-    }
-  </script>
 </html>

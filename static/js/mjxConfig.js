@@ -1,0 +1,53 @@
+var BROWSER = MathJax.Hub.Browser;
+
+var canUseMML =
+  (BROWSER.isFirefox && BROWSER.versionAtLeast("1.5")) ||
+  (BROWSER.isMSIE && BROWSER.hasMathPlayer) ||
+  (BROWSER.isSafari && BROWSER.versionAtLeast("5.0")) ||
+  (BROWSER.isOpera &&
+    BROWSER.versionAtLeast("9.52") &&
+    !BROWSER.versionAtLeast("14.0"));
+
+var CONFIG = MathJax.Hub.CombineConfig("default", {
+  prefer: {
+    MSIE: "HTML",
+    Firefox: "HTML",
+    Opera: "HTML",
+    Chrome: "CommonHTML",
+    Safari: "HTML",
+    other: "HTML",
+  },
+});
+
+var jax = CONFIG.prefer[BROWSER] || CONFIG.prefer.other;
+if (jax === "HTML") jax = "HTML-CSS";
+else if (jax === "MML") jax = "NativeMML";
+if (jax === "NativeMML" && !canUseMML) jax = CONFIG.prefer.other;
+
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/" + jax],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: [
+      "AMSmath.js",
+      "AMSsymbols.js",
+      "noErrors.js",
+      "noUndefined.js",
+    ],
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] },
+  tex2jax: {
+    inlineMath: [
+      ["$", "$"],
+      ["\\(", "\\)"],
+    ],
+    displayMath: [
+      ["$$", "$$"],
+      ["\\[", "\\]"],
+    ],
+    processEscapes: true,
+  },
+  "fast-preview": { disabled: true },
+  showProcessingMessages: false,
+  "HTML-CSS": { imageFont: null },
+});

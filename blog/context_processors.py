@@ -134,6 +134,8 @@ def check_link_safety(link):
     if response.status_code == 200:
         # Successful API call
         matches = response.json().get('matches', [])
+        # Cache the result
+        cache.set(cache_key, len(matches) == 0, cache_timeout)
         return len(matches) == 0
     else:
         # Handle API error

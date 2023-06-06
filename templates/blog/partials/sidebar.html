@@ -130,6 +130,18 @@
         </li> {% endcomment %}
         <li>
             <span>
+                <img src="{% static 'images/site/icons/translate.png' %}" alt="Translate" border="0">
+            </span>
+            <span>
+                {% if request.COOKIES.lang == 'ja' %}
+                <a href="javascript:changeLang('en');" class="notranslate">English</a>
+                {% else %}
+                <a href="javascript:changeLang('ja');" class="notranslate">日本語</a>
+                {% endif %}
+            </span>
+        </li>
+        {% comment %} <li>
+            <span>
                 <img src="{% static 'images/site/icons/setup.gif' %}" alt="Source Code" border="0">
             </span>
             <span>
@@ -137,7 +149,7 @@
                     Source Code
                 </a>
             </span>
-        </li>
+        </li> {% endcomment %}
     </ul>
 </div>
 
@@ -337,7 +349,7 @@
         </li>
     </ul>
 </div>
-{% if logged_in_users or anonymous_users or admin_users %}
+
 <div id="online-users" class="mtctitem">
     <h2>Who's Online?</h2>
     <div>
@@ -350,4 +362,3 @@
         <p>(Based on users active over the past 5 minutes)</p>
     </div>
 </div>
-{% endif %}

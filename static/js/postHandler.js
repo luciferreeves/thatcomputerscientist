@@ -101,7 +101,7 @@ function blindMode() {
 
 // if localStorage has blindMode set to on, then turn on blindMode
 var blindModeStatus = localStorage.getItem('blindMode');
-console.log(blindModeStatus);
+
 if (blindModeStatus == 'on') {
     blindMode();
 }

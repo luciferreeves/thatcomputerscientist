@@ -140,3 +140,6 @@ siteshot.png
 image_downloader.ipynb
 
 dump.rdb
+
+# credentials JSON files
+credentials-*.json

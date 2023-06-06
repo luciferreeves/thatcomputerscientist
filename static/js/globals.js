@@ -6,6 +6,11 @@ gtag("js", new Date());
 
 gtag("config", "G-72XTC500FR");
 
+function changeLang(lang) {
+  document.cookie = "lang=" + lang + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+  location.reload();
+}
+
 // Smooth scroll to anchor
 $(document).ready(function () {
   $('a[href^="#"]').on("click", function (e) {

@@ -355,7 +355,7 @@ blockquote {
 }
 
 .pa-btn {
-    margin: 0px;
+    margin: 0 2px 0 0;
     display: inline-block;
     text-decoration: none;
     font-size: 11px;

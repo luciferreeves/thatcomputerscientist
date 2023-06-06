@@ -78,6 +78,9 @@ function blindMode() {
         }
         $('#blindStatus').attr('data-status', 'on');
         $('#blindStatus').attr('src', onImage);
+
+        // we will allow blind mode to persist across pages, in local storage
+        localStorage.setItem('blindMode', 'on');
     } else {
         // turn off. Phones - 12px, Desktop - 11px
         if (windowWidth < 480) {
@@ -91,7 +94,16 @@ function blindMode() {
         }
         $('#blindStatus').attr('data-status', 'off');
         $('#blindStatus').attr('src', offImage);
+
+        localStorage.setItem('blindMode', 'off');
     }
+}
+
+// if localStorage has blindMode set to on, then turn on blindMode
+var blindModeStatus = localStorage.getItem('blindMode');
+console.log(blindModeStatus);
+if (blindModeStatus == 'on') {
+    blindMode();
 }
 
 var allInputElementsOnPage = $('input');

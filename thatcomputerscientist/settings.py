@@ -84,10 +84,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'middleware.translationMiddleware.TranslationMiddleware',
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
+    'middleware.translationMiddleware.TranslationMiddleware',
+    'middleware.contentCachingMiddleware.ContentCachingMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {

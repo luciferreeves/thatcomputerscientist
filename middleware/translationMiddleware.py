@@ -1,7 +1,9 @@
-from google.cloud import translate_v2 as translate
+import os
+
+from bs4 import BeautifulSoup
 from django.conf import settings
-import os 
 from django.core.cache import cache
+from google.cloud import translate_v2 as translate
 
 cred_path = os.path.join(settings.BASE_DIR, 'credentials-translate.json')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = cred_path
@@ -21,7 +23,13 @@ class TranslationMiddleware:
         if 'text' not in content_type:
             return response
         
-        HTML_content = response.content.decode('utf-8')
+        HTML_content =response.content.decode('utf-8').strip()
+
+        # add no translate class to the 'highlight' class
+        soup = BeautifulSoup(HTML_content, 'html.parser')
+        for tag in soup.find_all(class_='highlight'):
+            tag['class'].append('notranslate')
+        HTML_content = str(soup)
         
         HTML_content = HTML_content.replace(
             "That Computer Scientist",

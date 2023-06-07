@@ -1,16 +1,15 @@
-import akismet
 import os
 import re
+
+import akismet
 import dotenv
 import requests
-
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.core.cache import cache
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, guess_lexer
-
 
 from .models import Category, Comment, Post
 

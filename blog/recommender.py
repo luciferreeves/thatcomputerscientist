@@ -1,12 +1,14 @@
 # This is a very simple recommender system that recommends posts based on the
 # current post user is reading.
 
-from .models import Post
 import numpy as np
+from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from bs4 import BeautifulSoup
+
 from .context_processors import add_excerpt, add_num_comments
+from .models import Post
+
 
 def next_read(post):
     current_post = Post.objects.get(id=post.id)

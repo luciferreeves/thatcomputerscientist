@@ -24,8 +24,8 @@ from users.models import UserProfile
 from users.tokens import CaptchaTokenGenerator
 
 from .context_processors import (add_excerpt, add_num_comments, avatar_list,
-                                 comment_processor, highlight_code_blocks,
-                                 recent_posts, check_spam)
+                                 check_spam, comment_processor,
+                                 highlight_code_blocks, recent_posts)
 from .models import AnonymousCommentUser, Category, Comment, Post
 from .recommender import next_read
 

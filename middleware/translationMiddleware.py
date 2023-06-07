@@ -1,4 +1,5 @@
 import os
+from bs4 import BeautifulSoup
 from django.http import HttpResponse
 import redis
 
@@ -38,6 +39,12 @@ class TranslationMiddleware:
             return response
 
         HTML_content =response.content.decode('utf-8')
+
+        # add no translate class to the 'highlight' class
+        soup = BeautifulSoup(HTML_content, 'html.parser')
+        for tag in soup.find_all(class_='highlight'):
+            tag['class'].append('notranslate')
+        HTML_content = str(soup)
         
         HTML_content = HTML_content.replace(
             "That Computer Scientist",

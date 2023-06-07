@@ -20,15 +20,10 @@ class ContentCachingMiddleware(object):
 
         # Try to get cached response
         path = request.get_full_path()
-        cache_key = f'{lang_cookie}:{path}'
-
-        # clear cache if clear_cache is in query params
-        if request.GET.get('cc', '') == 'true':
-            r.delete(cache_key)
+        cache_key = f'path_cache_{lang_cookie}:{path}'
 
         cached_response = r.get(cache_key)
         if cached_response:
-            print('cached', cache_key)
             return HttpResponse(cached_response)
         
         # Get response from view

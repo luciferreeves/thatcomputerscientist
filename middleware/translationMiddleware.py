@@ -30,17 +30,13 @@ class TranslationMiddleware:
         
         # Try to get cached response
         path = request.get_full_path()
-        cache_key = cache_key = f'{lang_cookie}:{path}'
-        print(f'Japanese translation for {path} requested')
+        cache_key = cache_key = f'path_cache_{lang_cookie}:{path}'
 
         cache_response = r.get(cache_key)
         if cache_response:
-            print('cached', cache_key)
-            # r.delete(cache_key)
             response = HttpResponse(cache_response)
             return response
 
-        print('Cache not found, translating... for key: ', cache_key)
         HTML_content =response.content.decode('utf-8')
         
         HTML_content = HTML_content.replace(

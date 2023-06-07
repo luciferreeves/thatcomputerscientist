@@ -21,8 +21,9 @@ class TranslationMiddleware:
         # translate only if lang cookie is set to ja
         response = self.get_response(request)
         lang_cookie = request.COOKIES.get('lang', '')
+        path = request.get_full_path()
         
-        if lang_cookie != 'ja':
+        if lang_cookie != 'ja' or 'blog-admin' in path:
             return response
 
         content_type = response.get('Content-Type', '').lower()
@@ -30,7 +31,6 @@ class TranslationMiddleware:
             return response
         
         # Try to get cached response
-        path = request.get_full_path()
         cache_key = cache_key = f'path_cache_{lang_cookie}:{path}'
 
         cache_response = r.get(cache_key)

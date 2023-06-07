@@ -13,13 +13,13 @@ class ContentCachingMiddleware(object):
 
     def __call__(self, request):
         lang_cookie = request.COOKIES.get('lang', '')
+        path = request.get_full_path()
 
-        # Don't cache POST requests
-        if request.method == 'POST' or lang_cookie == 'ja':
+        # Don't cache POST requests or path contains 'blog-admin'
+        if request.method == 'POST' or lang_cookie == 'ja' or 'blog-admin' in path:
             return self.get_response(request)
 
         # Try to get cached response
-        path = request.get_full_path()
         cache_key = f'path_cache_{lang_cookie}:{path}'
 
         cached_response = r.get(cache_key)

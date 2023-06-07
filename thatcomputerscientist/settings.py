@@ -88,7 +88,6 @@ MIDDLEWARE = [
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
     'middleware.translationMiddleware.TranslationMiddleware',
-    'middleware.contentCachingMiddleware.ContentCachingMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {

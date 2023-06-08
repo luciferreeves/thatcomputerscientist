@@ -33,9 +33,6 @@ function triggerTranslation(language) {
       triggerTranslation(language);
     }, 100);
   } else {
-    console.log("triggering translation");
-    console.log(selectEl.options, selectEl.options.length); // HTMLOptionsCollection with options
-
     // Continue with the logic for handling the available options
     selectEl.value = language; // Change the value of the select element
     selectEl.dispatchEvent(new Event("change")); // Trigger change event

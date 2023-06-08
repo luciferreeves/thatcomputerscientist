@@ -106,7 +106,7 @@
                     </td>
                     <td style="vertical-align: top; width: 668px;">
                         <div style="margin-bottom: 13px; border-bottom: dashed 1px white; padding-bottom: 13px;">
-                            <a {% if comment.user%}href="{% url 'blog:user_activity' comment.user.username %}"{% endif %}>{% if comment.user %}{{ comment.user.username }}{% else %}{{ comment.anonymous_user.name }}{% endif %}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
+                            <a class="notranslate" {% if comment.user%}href="{% url 'blog:user_activity' comment.user.username %}"{% endif %}>{% if comment.user %}{{ comment.user.username }}{% else %}{{ comment.anonymous_user.name }}{% endif %}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>
                             {% if comment.edited %}
                                 <em>(Edited)</em>
                             {% endif %}
@@ -123,7 +123,7 @@
                                 <a href="{% url 'blog:anon_delete_comment' post.slug comment.id %}" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
                             {% endif %}
                         </div>
-                        <div id="comment-body-{{ comment.id }}" class="comment">
+                        <div id="comment-body-{{ comment.id }}" class="comment notranslate">
                             {{ comment.processed_body|safe }}
                         </div>
                         {% if comment.user == user %}
@@ -131,7 +131,7 @@
                             <form action="{% url 'blog:edit_comment' post.slug %}" method="POST">
                                 {% csrf_token %}
                                 <input type = "hidden" name="comment_id" value="{{ comment.id }}">
-                                <textarea name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
+                                <textarea class="notranslate" name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
                                 <input type="submit" value="Update" class="button button-special">
                                 <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" class="button">
                             </form>
@@ -142,7 +142,7 @@
                             <form action="{% url 'blog:anon_edit_comment' post.slug %}" method="POST">
                                 {% csrf_token %}
                                 <input type = "hidden" name="comment_id" value="{{ comment.id }}">
-                                <textarea name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
+                                <textarea class="notranslate" name="body" id="body" cols="78" rows="10" style="width: 640px; display: block; margin-bottom: 10px;">{{ comment.body }}</textarea>
                                 <input type="submit" value="Update" class="button button-special">
                                 <input type="button" value="Cancel" onclick="cancelEdit({{ comment.id }})" class="button">
                             </form>

@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 body {
+    position: unset !important;
     width: 100%;
     background: black;
     font-size: 11px;
@@ -11,6 +12,10 @@ body {
     padding: 0px;
     color: #dddddd;
     box-sizing: border-box;
+}
+
+.skiptranslate {
+    display: none !important;
 }
 
 input,

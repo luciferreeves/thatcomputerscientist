@@ -87,7 +87,7 @@ MIDDLEWARE = [
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
-    'middleware.translationMiddleware.TranslationMiddleware',
+    # 'middleware.translationMiddleware.TranslationMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {

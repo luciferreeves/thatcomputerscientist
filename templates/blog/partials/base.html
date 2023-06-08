@@ -62,6 +62,25 @@
         white-space: nowrap; /* Prevent line breaks */
       }
     </style>
+    {% if request.COOKIES.lang == 'ja' %}
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <script src="{% static 'js/tl.js' %}"></script>
+    {% endif %}
+
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/globals.js' %}"></script>
+    <script src="{% static 'js/phone_compatibility.js' %}"></script>
+    {% if request.COOKIES.summonOneko == 'true' %}
+    <script src="{% static 'js/oneko.js' %}"></script>
+    {% endif %} {% block scripts %} {% endblock %}
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"
+    ></script>
   </head>
   <body>
     <video id="bg-video" muted autoplay playsinline loop preload="auto">
@@ -144,14 +163,5 @@
         </p>
       </div>
     </div>
-    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'js/globals.js' %}"></script>
-    <script src="{% static 'js/phone_compatibility.js' %}"></script>
-    {% if request.COOKIES.summonOneko == 'true' %}
-      <script src="{% static 'js/oneko.js' %}"></script>
-    {% endif %}
-    {% block scripts %} {% endblock %}
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-72XTC500FR"></script>
   </body>
 </html>

@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <table id="main-section" cellpadding="0" cellspacing="0">
+      <table id="main-section" cellpadding="0" cellspacing="0" {% if request.COOKIES.lang == 'ja' %}style="visibility: hidden"{% endif %}>
         <tr>
           <td id="sidebar" valign="top">
             {% include 'blog/partials/sidebar.html' %}
@@ -144,6 +144,10 @@
         </p>
       </div>
     </div>
+    
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/globals.js' %}"></script>
+    <script src="{% static 'js/phone_compatibility.js' %}"></script>
     {% if request.COOKIES.lang == 'ja' %}
     <script
       type="text/javascript"
@@ -151,10 +155,6 @@
     ></script>
     <script src="{% static 'js/tl.js' %}"></script>
     {% endif %}
-
-    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'js/globals.js' %}"></script>
-    <script src="{% static 'js/phone_compatibility.js' %}"></script>
     {% if request.COOKIES.summonOneko == 'true' %}
     <script src="{% static 'js/oneko.js' %}"></script>
     {% endif %} {% block scripts %} {% endblock %}

@@ -14,8 +14,6 @@ var currentLang = document.cookie.replace(
   "$1"
 );
 
-console.log("currentLang: " + currentLang);
-
 if (currentLang == "ja") {
   triggerTranslation("ja");
 } else {
@@ -27,14 +25,17 @@ function triggerTranslation(language) {
   if (!selectEl) {
     setTimeout(function () {
       triggerTranslation(language);
-    }, 100);
+    }, 10);
   } else if (!selectEl.options || selectEl.options.length === 0) {
     setTimeout(function () {
       triggerTranslation(language);
-    }, 100);
+    }, 10);
   } else {
-    // Continue with the logic for handling the available options
-    selectEl.value = language; // Change the value of the select element
-    selectEl.dispatchEvent(new Event("change")); // Trigger change event
+    selectEl.value = language;
+    selectEl.dispatchEvent(new Event("change"));
+    // visiblity of #main-section is hidden until translation is done, show it after translation is done
+    setTimeout(function () {
+      document.getElementById("main-section").style.visibility = "visible";
+    }, 200);
   }
 }

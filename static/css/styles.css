@@ -18,6 +18,11 @@ body {
     display: none !important;
 }
 
+font:hover, .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+    background: none !important;
+    box-shadow: none !important;
+}
+
 input,
 textarea {
     font-family: 'Mali', sans-serif !important;

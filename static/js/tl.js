@@ -34,8 +34,6 @@ function triggerTranslation(language) {
     selectEl.value = language;
     selectEl.dispatchEvent(new Event("change"));
     // visiblity of #main-section is hidden until translation is done, show it after translation is done
-    setTimeout(function () {
-      document.getElementById("main-section").style.visibility = "visible";
-    }, 200);
+    document.getElementById("main-section").style.visibility = "visible";
   }
 }

@@ -387,6 +387,14 @@ blockquote {
     height: 300px;
     float: left;
     margin: 5px 11px 5px 0px;
+    max-width: 710px;
+}
+
+#article-body img.block,
+#editor-container img.block {
+    margin: 5px auto;
+    display: block;
+    height: auto;
 }
 
 #article-body h2,

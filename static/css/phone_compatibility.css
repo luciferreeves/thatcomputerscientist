@@ -203,6 +203,7 @@ I am not sure yet.
     #article-body img {
         width: 100% !important;
         height: auto !important;
+        max-height: auto !important;
         margin: 15px 0 !important;
         float: none !important;
     }

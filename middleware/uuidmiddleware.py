@@ -54,7 +54,7 @@ def userTrackingContextProcessor(request):
 
     an = len(anonymous_users)
     if user_uuid is not None:
-        an = an - 1
+        an = min(an - 1, 1)
 
     return {
         'anonymous_users': an,

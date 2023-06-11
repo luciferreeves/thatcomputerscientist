@@ -141,6 +141,11 @@ I am not sure yet.
         border-radius: 8px;
     }
 
+    .post-actions > span {
+        display: block !important;
+        float: none !important;
+    }
+
     #ハンバーガー {
         display: block !important;
     }

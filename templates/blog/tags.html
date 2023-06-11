@@ -1,0 +1,20 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<h2 style="margin-top:15px;">All Tags</h2>
+{% load static %}
+{% if tags %}
+{% comment %} Varying font sizes based on tag.count {% endcomment %}
+{% comment %} <ol> {% endcomment %}
+<center>
+{% for tag in tags %}
+    <span style="margin-bottom:8px;">
+        <a class="tag" style="font-size:{{ tag.pxs }}px;" href="{% url 'blog:tag_posts' tag.slug %}">{{ tag.name }} ({{ tag.count }} post{{ tag.count|pluralize }})</a>
+    </span>
+{% endfor %}
+</center>
+{% comment %} </ol> {% endcomment %}
+{% else %}
+<p>No Tags found.</p>
+{% endif %}
+
+{% endblock %}
+

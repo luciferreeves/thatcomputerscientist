@@ -1,0 +1,12 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+{% load static %}
+<h2 style="margin-top:15px;">Posts Tagged With "{{ tag.name }}"</h2>
+{% if posts %}
+<div style="margin-top: -10px;">
+    {% include 'blog/partials/post_list.html' %}
+</div>
+{% else %}
+<p>There are no posts tagged with "{{ tag.name }}".</p>
+{% endif %}
+{% endblock %}
+

@@ -81,9 +81,9 @@
 }
 
 #user-area > ul {
-    position: relative;
+    position: absolute;
     left: 110px;
-    top: 45px;
+    top: 58px;
 }
 
 #navigation-area h2,

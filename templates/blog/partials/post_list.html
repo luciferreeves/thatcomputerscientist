@@ -30,8 +30,16 @@
             {{ post.excerpt | safe }}
         </div>
         <div class="post-actions" style="clear: both;">
-            <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} 
-            Comment{% if not post.num_comments == 1 %}s{% endif %}</a>
+            <span style="float: left; margin: 8px 0 0 0;">
+                <a href="{% url 'blog:post' post.slug %}">Continue Reading</a> | <a href="{% url 'blog:post' post.slug %}#comments">{{ post.num_comments }} 
+                    Comment{% if not post.num_comments == 1 %}s{% endif %}</a>
+            </span>
+            {% comment %} tags {% endcomment %}
+            <span style="float: right;">
+                {% for tag in post.tags.all %}
+                    <a class="tag" href="{% url 'blog:tag_posts' tag.slug %}">{{ tag.name }}</a>
+                {% endfor %}
+            </span>
         </div>
     </div>
 {% endfor %}

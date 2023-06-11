@@ -26,7 +26,7 @@ from users.tokens import CaptchaTokenGenerator
 from .context_processors import (add_excerpt, add_num_comments, avatar_list,
                                  check_spam, comment_processor,
                                  highlight_code_blocks, recent_posts)
-from .models import AnonymousCommentUser, Category, Comment, Post
+from .models import AnonymousCommentUser, Category, Comment, Post, Tag
 from .recommender import next_read
 
 load_dotenv()
@@ -49,6 +49,24 @@ def home(request):
     announcements = Announcement.objects.filter(is_public=True).order_by('-created_at')
     announcements = announcements if len(announcements) > 0 else None
     return render(request, 'blog/home.html', {'title': 'Home', 'posts': recent_posts(), 'announcements': announcements})
+
+def tags(request):
+    tags = Tag.objects.all()
+    # add occurance count to each tag
+    for tag in tags:
+        tag.count = len(Post.objects.filter(tags__name__in=[tag.name]))
+        tag.pxs = 10 + tag.count * 2 if tag.count < 10 else 30 + tag.count
+        tag.pxs = min(tag.pxs, 36)
+    tags = sorted(tags, key=lambda x: x.count, reverse=True)
+    return render(request, 'blog/tags.html', {'title': 'Tags', 'tags': tags})
+
+def tag_posts(request, tag_slug):
+    tag = Tag.objects.get(slug=tag_slug)
+    posts = Post.objects.filter(tags__name__in=[tag.name]).order_by('views')
+    for post in posts:
+        post.excerpt = add_excerpt(post)
+        post.num_comments = add_num_comments(post)
+    return render(request, 'blog/tagged.html', {'title': 'Posts Tagged With: ' + tag.name, 'posts': posts, 'tag': tag})
 
 def account(request):
     user = request.user

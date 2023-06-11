@@ -384,10 +384,10 @@ blockquote {
 
 #article-body img,
 #editor-container img {
-    height: 300px;
     float: left;
     margin: 5px 11px 5px 0px;
     max-width: 710px;
+    max-height: 300px;
 }
 
 #article-body img.block,

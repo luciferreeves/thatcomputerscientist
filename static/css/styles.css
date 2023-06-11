@@ -150,21 +150,22 @@ blockquote {
 }
 
 /* Full width auto spacing table... ellipsis if text overflows */
-#posts {
+#tabular {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    /* table-layout: fixed; */
+    table-layout: fixed;
+    max-width: 710px;
 }
 
-#posts td {
+#tabular td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 5px 0px;
 }
 
-#posts th {
+#tabular th {
     text-align: left;
     padding: 10px 0px;
     border-bottom: dotted 1px #dddddd;

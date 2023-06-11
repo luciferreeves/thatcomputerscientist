@@ -9,11 +9,12 @@
           <p class="{{message.tags}}" style="text-align:center; margin-bottom: 15px;">{{ message }}</p>
         </div>
       {% endfor %}
-      <table id="posts">
+      <table id="tabular">
         <thead>
           <tr>
-
-            <th colspan="3">Article</th>
+            <th style="width: 28px; text-align: center;"></th>
+            <th style="width: 90px; text-align: center;">Cover</th>
+            <th colspan='1'>Article</th>
             <th>Author</th>
             <th>Created</th>
             <th>Category</th>
@@ -23,29 +24,23 @@
         <tbody>
           {% for post in posts %}
           <tr>
-            <td style="position: relative;"> 
+            <td>
               {% if post.is_public %} 
-              {% comment %} <span class="label label-success">Published</span>  {% endcomment %}
-                <span>
-                  <img src="{% static 'images/site/icons/eye_open.png' %}" alt="Home" border="0" width="24" height="24">
-                </span>
+                <img src="{% static 'images/site/icons/eye_open.png' %}" alt="Home" border="0" width="24" height="24" style="margin-left: 2px;">
               {% else %} 
-              {% comment %} <span class="label label-warning">Draft</span> {% endif %}  {% endcomment %}
-                <span>
-                  <img src="{% static 'images/site/icons/eye_closed.png' %}" alt="Home" border="0" width="24" height="24">
-                </span>
+                  <img src="{% static 'images/site/icons/eye_closed.png' %}" alt="Home" border="0" width="24" height="24" style="margin-left: 2px;">
               {% endif %}
             </td>
             <td>
-              <img src="{% url 'ignis:post_image' '80' post.id %}.gif" alt="Cover Image" style="width: 80px; display: block;">
+              <img src="{% url 'ignis:post_image' '80' post.id %}.gif" alt="Cover Image" style="width: 80px; display: block; margin: 0 auto;">
             </td>
-            <td>
+            <td colspan='1'>
               <a href="{% url 'blog:post' post.slug %}">
-                <p>{{ post.title }}</p>
+                {{ post.title }}
               </a>
             </td>
             <td><a href="{% url 'blog:user_activity' post.author %}">{{ post.author }}</a></td>
-            <td>{{ post.date }}</td>
+            <td>{{ post.date | date:"d M Y" }}</td>
             <td><a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a></td>
             <td>
               <p><a href="{% url 'blog-admin:new-post'%}?mode=edit&amp;post_id={{post.id}}">Edit Post Metadata</a></p>

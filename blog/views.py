@@ -457,12 +457,15 @@ def articles(request, date=None, cg=None):
     else:
         category = 'all'
     posts = Paginator(posts, 10)
-    posts = posts.page(page)
+    num_pages = posts.num_pages
+    try:
+        posts = posts.page(page)
+    except:
+        posts = posts.page(num_pages)
 
     for post in posts:
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)
-    num_pages = posts.paginator.num_pages
     return render(request, 'blog/articles.html', {'title': 'Articles', 'posts': posts, 'num_pages': num_pages, 'page': page, 'order_by': order_by, 'direction': direction, 'categories': categories, 'category': category, 'category_name': category_name if category != 'all' else '', 'type': type, 'date': date if date else '', 'cg': cg if cg else ''})
 
 def user_activity(request, username):

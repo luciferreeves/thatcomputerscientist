@@ -4,23 +4,39 @@ from datetime import datetime
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
-
-from blog.models import Category, Post, Tag
-from ignis.models import CoverImage
+from django.core.paginator import Paginator
+from blog.models import Category, Post, Tag, Comment
 
 # Create your views here.
 
 def posts(request):
     if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
         page = request.GET.get('page') if request.GET.get('page') else 1
+        posts = Post.objects.all().order_by('-date')
+        posts = Paginator(posts, 50)
+        num_pages = posts.num_pages
         try:
-            page = int(page)
+            posts = posts.page(page)
         except:
-            page = 1
-        posts = Post.objects.all().order_by('-date')[50 * (page - 1):50 * page]
-        num_pages = Post.objects.all().count() // 50 + 1
-        url_to_render = 'blog_admin/posts.html?page={}'.format(page) if int(page) and int(page) > 1 else 'blog_admin/posts.html'
-        return render(request, url_to_render, { 'title': 'Manage Posts', 'posts': posts, 'num_pages': num_pages, 'page': page })
+            posts = posts.page(num_pages)    
+        
+        return render(request, 'blog_admin/posts.html', { 'title': 'Manage Posts', 'posts': posts, 'num_pages': num_pages, 'page': page })
+    else:
+        return redirect('blog:home')
+    
+def comments(request):
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+        page = request.GET.get('page') if request.GET.get('page') else 1
+        comments = Comment.objects.all().order_by('-created_at')
+        comments = Paginator(comments, 50)
+        num_pages = comments.num_pages
+        try:
+            comments = comments.page(page)
+        except:
+            comments = comments.page(num_pages)
+
+        return render(request, 'blog_admin/comments.html', { 'title': 'Manage Comments', 'comments': comments, 'num_pages': num_pages, 'page': page })
+
     else:
         return redirect('blog:home')
 

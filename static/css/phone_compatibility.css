@@ -114,6 +114,7 @@ I am not sure yet.
     #header {
         height: 50vw !important;
         margin-bottom: 15vw !important;
+        opacity: 1 !important;
     }
 
     #welcome {

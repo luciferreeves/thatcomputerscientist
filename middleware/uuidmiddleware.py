@@ -52,8 +52,12 @@ def userTrackingContextProcessor(request):
         if user_data['is_staff'] == True:
             admin_users.append(user_data)
 
+    an = len(anonymous_users)
+    if user_uuid is not None:
+        an = an - 1
+
     return {
-        'anonymous_users': len(anonymous_users), 
+        'anonymous_users': an,
         'logged_in_users': len(logged_in_users),
         'admin_users': len(admin_users),
     }

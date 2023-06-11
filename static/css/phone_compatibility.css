@@ -117,6 +117,10 @@ I am not sure yet.
         opacity: 1 !important;
     }
 
+    #sidebar > div {
+        opacity: 1 !important;
+    }
+
     #welcome {
         background: none !important;
         background-size: auto !important;

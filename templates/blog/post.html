@@ -43,7 +43,7 @@
 
     <div id="article-body">
         {{ post.first_paragraph | safe }}
-        <img style="width: 100%; height: 473.3333px; margin: 20px auto; display: block; border-radius: 8px;" src="{% url 'ignis:post_image' '710' post.id %}.gif" alt="Post Image for {{ post.title }}">
+        <img style="width: 100%; height: 473.3333px; max-height: 473.3333px; margin: 20px auto; display: block; border-radius: 8px;" src="{% url 'ignis:post_image' '710' post.id %}.gif" alt="Post Image for {{ post.title }}">
         <hr>
         {{ post.body | safe }}
     </div>

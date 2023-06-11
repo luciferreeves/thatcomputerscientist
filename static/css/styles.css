@@ -387,7 +387,6 @@ blockquote {
     float: left;
     margin: 5px 11px 5px 0px;
     max-width: 710px;
-    max-height: 300px;
 }
 
 #article-body img.block,
@@ -489,5 +488,10 @@ blockquote {
 @media only screen and (min-width: 481px) {
     .post-body {
         line-height: 15px;
+    }
+
+    #article-body img,
+    #editor-container img {
+        max-height: 300px;
     }
 }

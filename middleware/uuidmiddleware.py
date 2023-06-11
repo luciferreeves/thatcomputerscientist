@@ -53,11 +53,13 @@ def userTrackingContextProcessor(request):
             admin_users.append(user_data)
 
     an = len(anonymous_users)
+    lo = len(logged_in_users)
+    ad = len(admin_users)
     if user_uuid is not None:
-        an = max(an - 1, 1)
+        an = max((an - 1), 0) if lo + ad > 0 else max(an - 1, 1)
 
     return {
         'anonymous_users': an,
-        'logged_in_users': len(logged_in_users),
-        'admin_users': len(admin_users),
+        'logged_in_users': lo,
+        'admin_users': ad,
     }

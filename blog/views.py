@@ -61,7 +61,10 @@ def tags(request):
     return render(request, 'blog/tags.html', {'title': 'Tags', 'tags': tags})
 
 def tag_posts(request, tag_slug):
-    tag = Tag.objects.get(slug=tag_slug)
+    try:
+        tag = Tag.objects.get(slug=tag_slug)
+    except Tag.DoesNotExist:
+        raise Http404("Tag does not exist")
     posts = Post.objects.filter(tags__name__in=[tag.name]).order_by('views')
     for post in posts:
         post.excerpt = add_excerpt(post)

@@ -54,10 +54,11 @@ def tags(request):
     tags = Tag.objects.all()
     # add occurance count to each tag
     for tag in tags:
-        tag.count = len(Post.objects.filter(tags__name__in=[tag.name]))
+        tag.count = len(Post.objects.filter(tags__name__in=[tag.name], is_public=True))
         tag.pxs = 10 + tag.count * 2 if tag.count < 10 else 30 + tag.count
         tag.pxs = min(tag.pxs, 36)
     tags = sorted(tags, key=lambda x: x.count, reverse=True)
+    tags = [tag for tag in tags if tag.count > 0]
     return render(request, 'blog/tags.html', {'title': 'Tags', 'tags': tags})
 
 def tag_posts(request, tag_slug):
@@ -65,7 +66,7 @@ def tag_posts(request, tag_slug):
         tag = Tag.objects.get(slug=tag_slug)
     except Tag.DoesNotExist:
         raise Http404("Tag does not exist")
-    posts = Post.objects.filter(tags__name__in=[tag.name]).order_by('views')
+    posts = Post.objects.filter(tags__name__in=[tag.name], is_public=True).order_by('views')
     for post in posts:
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)

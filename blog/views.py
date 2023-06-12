@@ -65,7 +65,12 @@ def tag_posts(request, tag_slug):
     try:
         tag = Tag.objects.get(slug=tag_slug)
     except Tag.DoesNotExist:
-        raise Http404("Tag does not exist")
+        tag = {
+            'name': tag_slug,
+            'slug': tag_slug,
+            'count': 0,
+        }
+        return render(request, 'blog/tagged.html', {'title': 'Posts Tagged With: ' + tag_slug, 'posts': None, 'tag': tag})
     posts = Post.objects.filter(tags__name__in=[tag.name], is_public=True).order_by('views')
     for post in posts:
         post.excerpt = add_excerpt(post)

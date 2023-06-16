@@ -133,11 +133,8 @@
                 <img src="{% static 'images/site/icons/translate.png' %}" alt="Translate" border="0">
             </span>
             <span>
-                {% if request.COOKIES.lang == 'ja' %}
-                <a href="javascript:changeLang('en');" class="notranslate">English</a>
-                {% else %}
-                <a href="javascript:changeLang('ja');" class="notranslate">日本語</a>
-                {% endif %}
+                <a href="javascript:changeLang('en');" id="tl_ja" style="display: none;" class="notranslate">English</a>
+                <a href="javascript:changeLang('ja');" id="tl_en" style="display: none;" class="notranslate">日本語</a>
             </span>
         </li>
         {% comment %} <li>

@@ -9,31 +9,54 @@ function googleTranslateElementInit() {
   );
 }
 
-var currentLang = document.cookie.replace(
-  /(?:(?:^|.*;\s*)lang\s*\=\s*([^;]*).*$)|^.*$/,
-  "$1"
-);
-
-if (currentLang == "ja") {
-  triggerTranslation("ja");
-} else {
-  triggerTranslation("en");
+function restoreLang() {
+  localStorage.setItem("lang", "en");
+  $('#tl_ja').hide();
+  $('#tl_en').show();
+  var translateContainers = $('iframe');
+  if (translateContainers.length === 0) {
+    // nothing
+  } else {
+    translateContainers.each(function (index, element) {
+      if (element.contentWindow.document.getElementById(":1.restore")) {
+        console.log(element.contentWindow.document.getElementById(":1.restore"));
+        element.contentWindow.document.getElementById(":1.restore").click();
+      }
+    });
+  }
 }
 
-function triggerTranslation(language) {
+function translateJapanese() {
+  localStorage.setItem("lang", "ja");
+  $('#tl_en').hide();
+  $('#tl_ja').show();
   var selectEl = document.querySelector("select.goog-te-combo");
+  console.log(selectEl);
   if (!selectEl) {
     setTimeout(function () {
-      triggerTranslation(language);
+      translateJapanese();
     }, 10);
   } else if (!selectEl.options || selectEl.options.length === 0) {
     setTimeout(function () {
-      triggerTranslation(language);
+      translateJapanese();
     }, 10);
   } else {
-    selectEl.value = language;
+    selectEl.value = 'ja';
     selectEl.dispatchEvent(new Event("change"));
-    // visiblity of #main-section is hidden until translation is done, show it after translation is done
-    document.getElementById("main-section").style.visibility = "visible";
   }
+}
+
+// init
+var currentLang = localStorage.getItem("lang");
+if (!currentLang) {
+  currentLang = "en";
+  localStorage.setItem("lang", "en");
+}
+if (currentLang === "ja") {
+  $('#tl_en').hide();
+  $('#tl_ja').show();
+} else {
+  $('#tl_ja').hide();
+  $('#tl_en').show();
+  restoreLang();
 }

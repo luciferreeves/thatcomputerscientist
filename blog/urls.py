@@ -1,5 +1,5 @@
 from django.urls import path
-from django.views.generic import RedirectView
+from .feed import RSSFeed
 
 from . import views
 
@@ -26,4 +26,5 @@ urlpatterns = [
     path('~<str:username>', views.user_activity, name='user_activity'),
     path('policy', views.policy, name='policy'),
     path('socialify', views.socialify, name='socialify'),
+    path('rss/', RSSFeed(), name='rss_feed'),
 ]

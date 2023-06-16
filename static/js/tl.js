@@ -19,7 +19,6 @@ function restoreLang() {
   } else {
     translateContainers.each(function (index, element) {
       if (element.contentWindow.document.getElementById(":1.restore")) {
-        console.log(element.contentWindow.document.getElementById(":1.restore"));
         element.contentWindow.document.getElementById(":1.restore").click();
       }
     });

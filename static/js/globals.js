@@ -14,6 +14,20 @@ function changeLang(lang) {
   }
 }
 
+function copyToClipboard(text) {
+  $('body').append('<input type="text" value="' + text + '" id="copyToClipboard">');
+  const copyText = $('#copyToClipboard');
+  copyText.select();
+  copyText[0].setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(copyText.val()).then(function () {
+    alert("Copied to clipboard!");
+  }, function (err) {
+    alert("Failed to copy to clipboard!");
+  });
+  copyText.remove();
+}
+
+
 // Smooth scroll to anchor
 $(document).ready(function () {
   $('a[href^="#"]').on("click", function (e) {

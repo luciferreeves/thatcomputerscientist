@@ -32,7 +32,7 @@ class RSSFeed(Feed):
     feed_type = feedgenerator.Rss201rev2Feed
 
     def items(self):
-        return Post.objects.all().order_by('-date')
+        return Post.objects.all().filter(is_public=True).order_by('-date')
     
     def item_title(self, item):
         return item.title

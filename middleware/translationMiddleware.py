@@ -1,8 +1,8 @@
 import os
-from bs4 import BeautifulSoup
-from django.http import HttpResponse
 
+from bs4 import BeautifulSoup
 from django.conf import settings
+from django.http import HttpResponse
 from google.cloud import translate_v2 as translate
 
 cred_path = os.path.join(settings.BASE_DIR, 'credentials-translate.json')

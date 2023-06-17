@@ -2,10 +2,11 @@ import re
 from datetime import datetime
 
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
-from django.core.paginator import Paginator
-from blog.models import Category, Post, Tag, Comment
+
+from blog.models import Category, Comment, Post, Tag
 
 # Create your views here.
 

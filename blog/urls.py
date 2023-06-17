@@ -1,7 +1,7 @@
 from django.urls import path
-from .feed import RSSFeed
 
 from . import views
+from .feed import RSSFeed
 
 app_name = 'blog'
 urlpatterns = [

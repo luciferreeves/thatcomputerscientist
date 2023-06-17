@@ -21,6 +21,14 @@ class UserUUIDMiddleware:
         return self.get_response(request)
 
 def userTrackingContextProcessor(request):
+    # ignore /rss/ path
+    if request.path.includes('/rss/'):
+        return {
+            'anonymous_users': 0,
+            'logged_in_users': 0,
+            'admin_users': 0,
+        }
+
     # user tracking context processor - track 3 types of users (anonymous, logged in, admin)
     # based on the user's uuid cookie. Only UUID are necessary to track online users. Then we
     # separate them into anonymous, logged in, and admin users based on their permissions.

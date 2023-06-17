@@ -22,7 +22,7 @@ class UserUUIDMiddleware:
 
 def userTrackingContextProcessor(request):
     # ignore /rss/ path
-    if request.path.includes('/rss/'):
+    if '/rss/' in request.path:
         return {
             'anonymous_users': 0,
             'logged_in_users': 0,

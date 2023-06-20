@@ -159,7 +159,10 @@ def post(request, slug):
         soup = BeautifulSoup(post.body, 'html.parser')
         code_blocks = soup.find_all('pre', class_='ql-syntax')
         for code_block in code_blocks:
-            code_block.replace_with(BeautifulSoup(highlight_code_blocks(code_block), 'html.parser'))
+            data_language = code_block.get('data-language')
+            if data_language == 'true':
+                data_language = None
+            code_block.replace_with(BeautifulSoup(highlight_code_blocks(code_block, language=data_language), 'html.parser'))
 
         # float: right every other image
         images = soup.find_all('img')

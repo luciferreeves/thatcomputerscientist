@@ -387,14 +387,14 @@ blockquote {
 #editor-container img {
     float: left;
     margin: 5px 11px 5px 0px;
-    max-width: 710px;
 }
 
 #article-body img.block,
 #editor-container img.block {
     margin: 5px auto;
     display: block;
-    height: auto;
+    max-height: none;
+    max-width: 710px;
 }
 
 #article-body h2,
@@ -514,5 +514,6 @@ blockquote {
     #article-body img,
     #editor-container img {
         max-height: 300px;
+        max-width: 300px;
     }
 }

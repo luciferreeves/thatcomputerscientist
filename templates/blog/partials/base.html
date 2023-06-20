@@ -155,7 +155,8 @@
     <script src="{% static 'js/tl.js' %}"></script>
     {% if request.COOKIES.summonOneko == 'true' %}
     <script src="{% static 'js/oneko.js' %}"></script>
-    {% endif %} {% block scripts %} {% endblock %}
+    {% endif %} 
+    {% block scripts %} {% endblock %}
     <!-- Google tag (gtag.js) -->
     <script
       async

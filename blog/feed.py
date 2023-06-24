@@ -12,7 +12,7 @@ request_domain = settings.DEBUG and 'https://preview.thatcomputerscientist.com' 
 
 class RSSFeed(Feed):
     title = 'That Computer Scientist'
-    link = '/weblog/'
+    link = '/weblog'
     description = 'RSS Feed for That Computer Scientist Weblog'
     feed_type = feedgenerator.Rss201rev2Feed
 

@@ -187,7 +187,6 @@
 
   var content = $("#body").val();
   content = content.replace(/<p><br><\/p>/g, "");
-  console.log(content);
   //quill.setContents(quill.clipboard.convert(content), "silent");
   quill.clipboard.dangerouslyPasteHTML(0, content);
   quill.on("text-change", function (delta, oldDelta, source) {

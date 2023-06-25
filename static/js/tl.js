@@ -13,13 +13,15 @@ function restoreLang() {
   localStorage.setItem("lang", "en");
   $('#tl_ja').hide();
   $('#tl_en').show();
+  $('body').addClass('en');
+  $('body').removeClass('ja');
   var translateContainers = $('iframe');
   if (translateContainers.length === 0) {
     // nothing
   } else {
     translateContainers.each(function (index, element) {
-      if (element.contentWindow.document.getElementById(":1.restore")) {
-        element.contentWindow.document.getElementById(":1.restore").click();
+      if (element.contentWindow.document.getElementById(":1.close")) {
+        element.contentWindow.document.getElementById(":1.close").click();
       }
     });
   }
@@ -29,8 +31,9 @@ function translateJapanese() {
   localStorage.setItem("lang", "ja");
   $('#tl_en').hide();
   $('#tl_ja').show();
+  $('body').addClass('ja');
+  $('body').removeClass('en');
   var selectEl = document.querySelector("select.goog-te-combo");
-  console.log(selectEl);
   if (!selectEl) {
     setTimeout(function () {
       translateJapanese();
@@ -54,8 +57,12 @@ if (!currentLang) {
 if (currentLang === "ja") {
   $('#tl_en').hide();
   $('#tl_ja').show();
+  $('body').addClass('ja');
+  $('body').removeClass('en');
 } else {
   $('#tl_ja').hide();
   $('#tl_en').show();
+  $('body').addClass('en');
+  $('body').removeClass('ja');
   restoreLang();
 }

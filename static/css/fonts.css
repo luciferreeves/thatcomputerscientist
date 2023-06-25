@@ -1,6 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
 @font-face {
-    font-family: 'TopNavbar';
-    src: url('../fonts/pdos.ttf') format('truetype');
+    font-family: 'Comic Code Regular';
+    src: url('../fonts/COCOLGR.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hatsukoi Friends Mini';
+    src: url('../fonts/HAKOIMI.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+code {
+    font-family: 'Comic Code Regular', sans-serif;
+}
+
+.en {
+    font-family: 'Mali', sans-serif;
+}
+
+body.ja, .ja {
+    font-family: 'Noto Sans JP', sans-serif;
 }

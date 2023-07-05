@@ -156,6 +156,63 @@
         <img src="{{ "big" | ad }}" alt="Advertisement">
 </div>
 
+<div id="fun-stuff" class="mtctitem">
+    <h2>Fun Stuff</h2>
+    <ul>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/fork.png' %}" alt="Repositories" border="0" style="padding: 2px; height: 20px; width: 20px;">
+            </span>
+            <span>
+                <a href="{% url 'dev_status:home' %}">
+                    My Repositories
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/anistar.gif' %}" alt="Socialify" border="0" style="padding: 2px; height: 20px; width: 20px;">
+            </span>
+            <span>
+                <a href="{% url 'blog:anilist' %}">
+                    My Anime List
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/windows.gif' %}" alt="Socialify" border="0">
+            </span>
+            <span>
+                <a href="{% url 'blog:socialify' %}">
+                    Socialify
+                </a>
+            </span>
+        </li>
+        <li>
+            {% if request.COOKIES.summonOneko == 'true' %}
+                <span>
+                    <img src="{% static 'images/site/withdraw_oneko.gif' %}" alt="Oneko" border="0">
+                </span>
+                <span>
+                    <a href="javascript:void(0);" onclick="withdrawOneko();">
+                        Withdraw Oneko
+                    </a>
+                </span>
+            {% else %}
+                <span>
+                    <img src="{% static 'images/site/summon_oneko.gif' %}" alt="Oneko" border="0">
+                </span>
+                <span>
+                    <a href="javascript:void(0);" onclick="summonOneko();">
+                        Summon Oneko
+                    </a>
+                </span>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+
 <div id="archives-area" class="mtctitem">
     <h2>Archives</h2>
     <ul>
@@ -299,53 +356,6 @@
     </ul>
 </div>
 {% endif %}
-
-<div id="fun-stuff" class="mtctitem">
-    <h2>Fun Stuff</h2>
-    <ul>
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/windows.gif' %}" alt="Repositories" border="0">
-            </span>
-            <span>
-                <a href="{% url 'dev_status:home' %}">
-                    My Repositories
-                </a>
-            </span>
-        </li>
-        <li>
-            <span>
-                <img src="{% static 'images/site/icons/windows.gif' %}" alt="Socialify" border="0">
-            </span>
-            <span>
-                <a href="{% url 'blog:socialify' %}">
-                    Socialify
-                </a>
-            </span>
-        </li>
-        <li>
-            {% if request.COOKIES.summonOneko == 'true' %}
-                <span>
-                    <img src="{% static 'images/site/withdraw_oneko.gif' %}" alt="Oneko" border="0">
-                </span>
-                <span>
-                    <a href="javascript:void(0);" onclick="withdrawOneko();">
-                        Withdraw Oneko
-                    </a>
-                </span>
-            {% else %}
-                <span>
-                    <img src="{% static 'images/site/summon_oneko.gif' %}" alt="Oneko" border="0">
-                </span>
-                <span>
-                    <a href="javascript:void(0);" onclick="summonOneko();">
-                        Summon Oneko
-                    </a>
-                </span>
-            {% endif %}
-        </li>
-    </ul>
-</div>
 
 {% if anonymous_users or logged_in_users or admin_users %}
 <div id="online-users" class="mtctitem">

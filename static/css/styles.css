@@ -18,6 +18,11 @@ body {
     display: none !important;
 }
 
+.iframe-loader {
+    background: url('../images/site/icons/loading-fast.gif') no-repeat top center;
+    background-size: 30%;
+}
+
 font:hover, .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
     background: none !important;
     box-shadow: none !important;

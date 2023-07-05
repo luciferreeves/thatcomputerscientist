@@ -27,4 +27,6 @@ urlpatterns = [
     path('policy', views.policy, name='policy'),
     path('socialify', views.socialify, name='socialify'),
     path('rss/', RSSFeed(), name='rss_feed'),
+    path('anidata', views.anidata, name='anidata'),
+    path('anilist', views.anilist, name='anilist'),
 ]

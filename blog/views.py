@@ -16,6 +16,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
 from dotenv import load_dotenv
 from haystack.query import SearchQuerySet
+import requests
 from user_agents import parse
 
 from announcements.models import Announcement
@@ -561,3 +562,27 @@ def socialify(request):
             socialify_options[key] = 0
 
     return render(request, 'blog/socialify.html', {'title': 'Socialify', 'options': socialify_options, 'url': url})
+
+def anilist(request):
+    return render(request, 'blog/anilist.html', {'title': 'My Anime List'})
+
+def anidata(request):
+    malURL = 'https://myanimelist.net/animelist/crvs'
+    MALContent = requests.get(malURL).content
+    MALContent = MALContent.decode('utf-8')
+    MALParsed = BeautifulSoup(MALContent, 'html.parser')
+    # remove script tags
+    for tag in MALParsed(['script', 'meta', 'noscript']):
+        tag.extract()
+
+    # add myanimelist.net to relative links
+    for link in MALParsed.find_all('a'):
+        if link.get('href') and link.get('href')[0] == '/':
+            link['href'] = 'https://myanimelist.net' + link['href']
+
+        # make all links open in new tab
+        link['target'] = '_blank'
+
+    MALContent = MALParsed.prettify()
+
+    return render(request, 'blog/anidata.html', {'title': 'My Anime List', 'MALContent': MALContent})

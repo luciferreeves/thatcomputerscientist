@@ -157,7 +157,7 @@
 </div>
 
 <div id="fun-stuff" class="mtctitem">
-    <h2>Fun Stuff</h2>
+    <h2>Good Stuff</h2>
     <ul>
         <li>
             <span>
@@ -189,6 +189,12 @@
                 </a>
             </span>
         </li>
+    </ul>
+</div>
+
+<div id="site-spells" class="mtctitem">
+    <h2>Site Spells</h2>
+    <ul>
         <li>
             {% if request.COOKIES.summonOneko == 'true' %}
                 <span>
@@ -209,6 +215,31 @@
                     </a>
                 </span>
             {% endif %}
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/patrick-star.gif' %}" alt="Patrick Star" border="0" id="patrick">
+            </span>
+            <span>
+                <a href="javascript:harlemShakeAndBake();">
+                    Harlem Shake
+                </a>
+            </span>
+        </li>
+        <li>
+            <div style="position: fixed; top: 0; left: 0;">
+                <div id="black" style="display: none;" onclick="javascript:handleDVD();">
+                    <div id="dvd"></div>
+                </div>
+            </div>
+            <span>
+                <img src="{% static 'images/site/dvd.gif' %}" alt="DVD" border="0">
+            </span>
+            <span>
+                <a href="javascript:handleDVD();">
+                    DVD SiteSaver
+                </a>
+            </span>
         </li>
     </ul>
 </div>

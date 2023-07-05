@@ -1,8 +1,8 @@
-
 #sidebar {
-    width: 250px;
+  width: 250px;
 }
 
+#site-spells ul,
 #navigation-area ul,
 #archives-area ul,
 #categories-area ul,
@@ -10,7 +10,8 @@
 #announcements ul,
 #user-area ul,
 #fun-stuff ul,
-#activity ul, 
+#activity ul,
+#site-spells li,
 #navigation-area li,
 #archives-area li,
 #categories-area li,
@@ -19,15 +20,16 @@
 #user-area li,
 #fun-stuff li,
 #activity li {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #register_form ul {
-    padding: 0px;
-    list-style-type: none;
+  padding: 0px;
+  list-style-type: none;
 }
 
+#site-spells li,
 #navigation-area li,
 #archives-area li,
 #categories-area li,
@@ -36,24 +38,26 @@
 #user-area li,
 #fun-stuff li,
 #activity li {
-    display: block;
-    list-style-type: none;
+  display: block;
+  list-style-type: none;
 }
 
+#site-spells img,
 #navigation-area img,
 #archives-area img,
 #categories-area img,
 #user-area img,
 #fun-stuff img {
-    width: 24px;
-    vertical-align: middle;
+  width: 24px;
+  vertical-align: middle;
 }
 
 #admin-area img {
-    width: 14px;
-    vertical-align: middle;
+  width: 14px;
+  vertical-align: middle;
 }
 
+#site-spells span,
 #navigation-area span,
 #archives-area span,
 #categories-area span,
@@ -61,65 +65,87 @@
 #announcements span,
 #user-area span,
 #fun-stuff span {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 #user-area {
-    background: url('../images/backgrounds/user-area.png') no-repeat;
-    background-size: 250px 150px;
-    width: 250px;
-    height: 150px;
+  background: url("../images/backgrounds/user-area.png") no-repeat;
+  background-size: 250px 150px;
+  width: 250px;
+  height: 150px;
 }
 
 #user-area > h2 {
-    margin: 0;
-    padding: 0;
-    border: none;
-    position: relative;
-    left: 100px;
-    top: 15px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  position: relative;
+  left: 100px;
+  top: 15px;
 }
 
 #user-area > ul {
-    position: absolute;
-    left: 110px;
-    top: 58px;
+  position: absolute;
+  left: 110px;
+  top: 58px;
 }
 
+#site-spells h2,
 #navigation-area h2,
 #archives-area h2,
 #categories-area h2,
 #admin-area h2,
 #fun-stuff h2,
 #online-users h2 {
-    background: #311b4f;
-    padding: 10px 15px;
-    text-align: left;
-    margin: 0;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom: none;
-    font-size: 13px;
-    text-transform: capitalize;
+  background: #311b4f;
+  padding: 10px 15px;
+  text-align: left;
+  margin: 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom: none;
+  font-size: 13px;
+  text-transform: capitalize;
 }
 
+#site-spells ul,
 #navigation-area ul,
 #archives-area ul,
 #categories-area ul,
 #admin-area ul,
 #fun-stuff ul,
 #online-users div {
-    background: #f4f1e90f;
-    padding: 10px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  background: #f4f1e90f;
+  padding: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 #online-users div > ul {
-    padding: 0 0 0 20px;
+  padding: 0 0 0 20px;
 }
 
 #online-users p {
-    margin: 0;
+  margin: 0;
 }
 
+#black {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background: #00000069;
+  z-index: 3;
+}
+
+#dvd {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100px;
+  width: 200px;
+  mask: url("https://upload.wikimedia.org/wikipedia/commons/9/9b/DVD_logo.svg");
+  -webkit-mask: url("https://upload.wikimedia.org/wikipedia/commons/9/9b/DVD_logo.svg");
+  background-repeat: no-repeat;
+  background-size: 150px;
+  background-position: center;
+}

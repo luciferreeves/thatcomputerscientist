@@ -15,18 +15,22 @@ function changeLang(lang) {
 }
 
 function copyToClipboard(text) {
-  $('body').append('<input type="text" value="' + text + '" id="copyToClipboard">');
-  const copyText = $('#copyToClipboard');
+  $("body").append(
+    '<input type="text" value="' + text + '" id="copyToClipboard">'
+  );
+  const copyText = $("#copyToClipboard");
   copyText.select();
   copyText[0].setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(copyText.val()).then(function () {
-    alert("Copied to clipboard!");
-  }, function (err) {
-    alert("Failed to copy to clipboard!");
-  });
+  navigator.clipboard.writeText(copyText.val()).then(
+    function () {
+      alert("Copied to clipboard!");
+    },
+    function (err) {
+      alert("Failed to copy to clipboard!");
+    }
+  );
   copyText.remove();
 }
-
 
 // Smooth scroll to anchor
 $(document).ready(function () {
@@ -61,15 +65,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-
-function summonOneko() {
-  document.cookie =
-    "summonOneko=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-  location.reload();
-}
-
-function withdrawOneko() {
-  document.cookie =
-    "summonOneko=false; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-  location.reload();
-}

@@ -499,12 +499,6 @@ blockquote {
     margin-bottom: 10px;
 }
 
-#categories-area>ul,
-#archives-area>ul {
-    position: relative;
-    z-index: 1;
-}
-
 #anonymous-profile-info > div, #anonymous-profile-info > #creds > div {
     margin: 10px 0;
 }

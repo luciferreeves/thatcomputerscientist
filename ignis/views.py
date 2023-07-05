@@ -180,7 +180,7 @@ def get_screenshot(request):
         options = webdriver.FirefoxOptions()
         options.headless = True
         driver = webdriver.Firefox(options=options)
-        driver.set_window_size(1280, 1440)
+        driver.set_window_size(1600, 2560)
 
         url = 'http://localhost:8000'
 

@@ -149,3 +149,11 @@
   background-size: 150px;
   background-position: center;
 }
+
+.vc {
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #8663e570 60%, #8663e595 60%);
+}

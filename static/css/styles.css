@@ -23,6 +23,14 @@ body {
     background-size: 30%;
 }
 
+::-moz-selection { /* Code for Firefox */
+    background: #311b4f;
+}
+
+::selection {
+    background: #311b4f;
+}
+
 font:hover, .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
     background: none !important;
     box-shadow: none !important;

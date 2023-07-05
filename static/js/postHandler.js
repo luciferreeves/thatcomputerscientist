@@ -48,6 +48,7 @@ function lightsOff() {
         }
         $('#lightsStatus').attr('data-status', 'off');
         $('#lightsStatus').attr('src', offImage);
+        localStorage.setItem('lights', 'off');
     } else {
         $('#overlay').fadeTo('fast', 0.9);
         if (windowWidth > 480) {
@@ -57,6 +58,7 @@ function lightsOff() {
         }
         $('#lightsStatus').attr('data-status', 'on');
         $('#lightsStatus').attr('src', onImage);
+        localStorage.setItem('lights', 'on');
     }
 }
 
@@ -101,9 +103,23 @@ function blindMode() {
 
 // if localStorage has blindMode set to on, then turn on blindMode
 var blindModeStatus = localStorage.getItem('blindMode');
+var lightsStatus = localStorage.getItem('lights');
+if (!blindModeStatus) {
+    localStorage.setItem('blindMode', 'on');
+    blindModeStatus = 'on';
+}
 
 if (blindModeStatus == 'on') {
     blindMode();
+}
+
+if (!lightsStatus) {
+    localStorage.setItem('lights', 'off');
+    lightsStatus = 'off';
+}
+
+if (lightsStatus == 'on') {
+    lightsOff();
 }
 
 var allInputElementsOnPage = $('input');

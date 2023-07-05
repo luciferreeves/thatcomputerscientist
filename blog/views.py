@@ -568,21 +568,27 @@ def anilist(request):
 
 def anidata(request):
     malURL = 'https://myanimelist.net/animelist/crvs'
-    MALContent = requests.get(malURL).content
-    MALContent = MALContent.decode('utf-8')
-    MALParsed = BeautifulSoup(MALContent, 'html.parser')
-    # remove script tags
-    for tag in MALParsed(['script', 'meta', 'noscript']):
-        tag.extract()
+    MAL = requests.get(malURL)
+    MALContent = MAL.content
+    MALStatus = MAL.status_code
+    
+    if MALStatus != 200:
+        MALContent = '<html><head><link rel="stylesheet" href="/static/css/styles.css"><style>img { width: 75%; display: block; margin: -20px auto 20px auto; } h1 { text-align: center; } p { text-align: center; } body {background: transparent !important;} </style></head><body><img src="/static/images/site/sad-failure.gif" alt="Sad Failure"><h1>MyAnimeList does not seem to respond at the moment.</h1><p>Maybe, we go <a href="https://myanimelist.net/animelist/crvs" target="_blank">knock on their door</a> instead?</p></body></html>'
+    else:
+        MALContent = MALContent.decode('utf-8')
+        MALParsed = BeautifulSoup(MALContent, 'html.parser')
+        # remove script tags
+        for tag in MALParsed(['script', 'meta', 'noscript']):
+            tag.extract()
 
-    # add myanimelist.net to relative links
-    for link in MALParsed.find_all('a'):
-        if link.get('href') and link.get('href')[0] == '/':
-            link['href'] = 'https://myanimelist.net' + link['href']
+        # add myanimelist.net to relative links
+        for link in MALParsed.find_all('a'):
+            if link.get('href') and link.get('href')[0] == '/':
+                link['href'] = 'https://myanimelist.net' + link['href']
 
-        # make all links open in new tab
-        link['target'] = '_blank'
+            # make all links open in new tab
+            link['target'] = '_blank'
 
-    MALContent = MALParsed.prettify()
+        MALContent = MALParsed.prettify()
 
     return render(request, 'blog/anidata.html', {'title': 'My Anime List', 'MALContent': MALContent})

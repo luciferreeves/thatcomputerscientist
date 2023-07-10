@@ -410,6 +410,10 @@ blockquote {
     max-width: 710px;
 }
 
+#preview img.block {
+    max-width: 100%;
+}
+
 #article-body h2,
 #article-body h1,
 #editor-container h2,

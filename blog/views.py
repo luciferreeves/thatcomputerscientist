@@ -158,7 +158,7 @@ def post(request, slug):
 
         # code stored in .ql-syntax class
         soup = BeautifulSoup(post.body, 'html.parser')
-        code_blocks = soup.find_all('pre', class_='ql-syntax')
+        code_blocks = soup.find_all('pre')
         for code_block in code_blocks:
             data_language = code_block.get('data-language')
             if data_language == 'true':

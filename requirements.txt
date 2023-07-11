@@ -25,3 +25,4 @@ numpy
 scikit-learn
 akismet
 google-cloud-translate
+django-hosts

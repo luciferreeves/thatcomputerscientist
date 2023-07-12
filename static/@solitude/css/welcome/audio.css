@@ -1,0 +1,142 @@
+.audio-bars {
+  position: relative;
+  display: flex;
+  width: auto;
+  transform: scale3d(2, 2, 1); /* EZ SCALE */
+}
+.bar {
+  background: #fff;
+  height: 20px;
+  width: 2px;
+  margin-right: 2px;
+}
+.bar:last-child {
+  margin-right: 0;
+}
+
+@keyframes sound {
+  0% {
+    transform: scale3d(1, 0.1, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes sound2 {
+  0% {
+    transform: scale3d(1, 0.1, 1);
+  }
+  100% {
+    transform: scale3d(1, 0.5, 1);
+  }
+}
+
+.bar:nth-child(1) {
+  animation: sound2 0ms -800ms linear infinite alternate;
+  animation-duration: 200ms;
+}
+.bar:nth-child(2) {
+  animation: sound 0ms -800ms linear infinite alternate;
+  animation-duration: 300ms;
+}
+.bar:nth-child(3) {
+  animation: sound 0ms -800ms linear infinite alternate;
+  animation-duration: 200ms;
+}
+.bar:nth-child(4) {
+  animation: sound 0ms -800ms linear infinite alternate;
+  animation-duration: 250ms;
+}
+.bar:nth-child(5) {
+  animation: sound2 0ms -800ms linear infinite alternate;
+  animation-duration: 150ms;
+}
+
+#welcome-playlist-player {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 16px 0 0 16px;
+  box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  position: absolute;
+  bottom: 2rem;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.5s ease;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0.8rem;
+  border: 0.2rem solid var(--button-color);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.8));
+}
+
+.player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.play {
+  height: 0;
+  width: 0;
+  margin-left: calc(2 * 0.25 * var(--button-height));
+  /*margin-left: 17px;*/
+  background: none;
+  border: none;
+  border-top: var(--button-height) solid transparent;
+  border-bottom: var(--button-height) solid transparent;
+  border-left: calc(var(--button-height) * 2 * 0.86) solid var(--button-color);
+}
+
+.pause {
+  position: relative;
+  background: none;
+  border: none;
+  height: calc(var(--button-height) * 2);
+  width: calc(var(--button-height) * 2 * 0.86);
+}
+.pause:before,
+.pause:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 33%;
+  background: var(--button-color);
+}
+.pause:before {
+  left: 0;
+}
+.pause:after {
+  right: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  color: #7679f5;
+}
+
+.artist {
+  color: #e2fdff;
+}
+
+.track {
+  letter-spacing: 0.1rem;
+}
+

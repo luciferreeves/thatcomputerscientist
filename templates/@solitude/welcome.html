@@ -1,1 +1,237 @@
-<h1>Shifoo's Solitude</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shifoo's Solitude | Welcome</title>
+    <meta name="description" content="Welcome to Shifoo's Solitude —  A Web Dungeon located beyond the Dark Hollows of the Endless Information SuperHighway — a dark yet tranquil place where all questions end, curiosity begins, the mind awakens, and one's journey begins anew in the solitude of a serene mind!" />
+    <link rel="stylesheet"type="text/css" href="{% static '@solitude/css/welcome/welcome.css' %}" />
+  </head>
+  <body>
+    <video id="cover-video" autoplay muted playsinline loop preload="auto" nocontrols>
+        <source src="{% static '@solitude/videos/solitude_welcome.mp4' %}#t=0.1" type="video/mp4" />
+    </video>
+    </div><div id="cover-wrapper">
+    <div id="welcome-content">
+        <div class="cwrapper">
+            <div class="text-box">
+                <h1>THE SOLITUDE</h1>
+            </div>
+        </div>
+        <p class="description"></p>
+        <button id="enter">Enter The Solitude!</button>
+        <div id="welcome-playlist-player">
+            <div class="controls">
+                <button role="play" id="playButton" class="play"></button>
+                <button role="pause" id="pauseButton" class="pause hidden"></button>
+            </div>
+            <img id="album-art" src="" alt="Album Art" width="100" height="100" />
+            <div class="player">
+                <div class="audio-bars">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <div class="audio-info">
+                    <p class="small">Currently Playing</p>
+                    <p class="track"><span id="track-title" class="title">Sleepy Rain</span> by <span id="track-artist" class="artist">lorenzzo</span></p>
+                    <p class="small"><span id="min-elap">00</span>:<span id="sec-elap">00</span> / <span id="min-dur">00</span>:<span id="sec-dur">00</span></p>
+                    <audio id="audio" preload="auto" nocontrols preload="auto">
+                        <source src="" type="audio/mp3" />
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        Object.defineProperty(Array.prototype, 'shuffle', {
+            value: function() {
+                for (let i = this.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this[i], this[j]] = [this[j], this[i]];
+                }
+                return this;
+            }
+        });
+
+        const playlistTracks = JSON.parse("{{ playlist_tracks }}".replace(/&quot;/g, '"'));
+        const tracks = Object.entries(playlistTracks).map(track => track[1]).shuffle();
+
+        const controls = document.querySelector('.controls');
+        const audio = document.querySelector('#audio');
+        const trackTitle = document.querySelector('#track-title');
+        const trackArtist = document.querySelector('#track-artist');
+        const albumArt = document.querySelector('#album-art');
+        const minElap = document.querySelector('#min-elap');
+        const secElap = document.querySelector('#sec-elap');
+        const minDur = document.querySelector('#min-dur');
+        const secDur = document.querySelector('#sec-dur');
+
+        let currentTrack = 0;
+
+        const loadAudio = new Promise((resolve, reject) => {
+            audio.addEventListener('canplaythrough', () => {
+                resolve(audio);
+            });
+        });
+
+        async function playAudio () {
+            audio.src = tracks[currentTrack].location;
+            const duration = audio.duration;
+            audio.play().catch(e => {
+                window.addEventListener('click', () => {
+                    controls.click();
+                    audio.play();
+                }, { once: true });
+            });
+            return audio;
+        }
+
+        function pauseAudio () {
+            audio.pause();
+        }
+
+        function nextTrack () {
+            currentTrack = (currentTrack + 1) % tracks.length;
+            audio.currentTime = 0;
+            playTrack();
+        }
+
+        function playTrack() {
+            const track = tracks[currentTrack];
+            trackTitle.textContent = track.title;
+            trackArtist.textContent = track.artist;
+            albumArt.src = track.cover_art;
+            playAudio().then(audio => {
+                audio.addEventListener('ended', nextTrack);
+            });
+        }
+
+        function updateIntervals() {
+            const duration = audio.duration;
+            const currentTime = audio.currentTime;
+            const elapsed = Math.floor(currentTime);
+            const total = Math.floor(duration);
+            const minutesElapsed = Math.floor(elapsed / 60);
+            const secondsElapsed = elapsed % 60;
+            const minutesTotal = Math.floor(total / 60) || 0;
+            const secondsTotal = total % 60 || 0;
+            minElap.textContent = minutesElapsed < 10 ? `0${minutesElapsed}` : minutesElapsed;
+            secElap.textContent = secondsElapsed < 10 ? `0${secondsElapsed}` : secondsElapsed;
+            minDur.textContent = minutesTotal < 10 ? `0${minutesTotal}` : minutesTotal;
+            secDur.textContent = secondsTotal < 10 ? `0${secondsTotal}` : secondsTotal;
+        }
+
+        function togglePlayPause () { 
+            const buttons = Array.from(this.children);
+            let triggeredButton;
+            buttons.forEach(button => {
+                if (!button.classList.contains('hidden')) {
+                    triggeredButton = button;
+                }
+                button.classList.toggle('hidden')
+            });
+            signalTrigger(triggeredButton);
+        };
+
+        function signalTrigger (button) {
+            const role = button.getAttribute('role');
+            switch (role) {
+                case 'play':
+                    playAudio();
+                    break;
+                case 'pause':
+                    pauseAudio();
+                    break;
+            }
+        }
+
+        audio.currentTime = 0;
+        controls.addEventListener('click', togglePlayPause);
+        audio.addEventListener('timeupdate', updateIntervals);
+
+        playTrack();
+
+        class TextScramble {
+            constructor(el) {
+              this.el = el
+              this.chars = '!<>-_\\/[]{}—=+*^?#________'
+              this.update = this.update.bind(this)
+            }
+            setText(newText) {
+              const oldText = this.el.innerText
+              const length = Math.max(oldText.length, newText.length)
+              const promise = new Promise((resolve) => this.resolve = resolve)
+              this.queue = []
+              for (let i = 0; i < length; i++) {
+                const from = oldText[i] || ''
+                const to = newText[i] || ''
+                const start = Math.floor(Math.random() * 40)
+                const end = start + Math.floor(Math.random() * 40)
+                this.queue.push({ from, to, start, end })
+              }
+              cancelAnimationFrame(this.frameRequest)
+              this.frame = 0
+              this.update()
+              return promise
+            }
+            update() {
+              let output = ''
+              let complete = 0
+              for (let i = 0, n = this.queue.length; i < n; i++) {
+                let { from, to, start, end, char } = this.queue[i]
+                if (this.frame >= end) {
+                  complete++
+                  output += to
+                } else if (this.frame >= start) {
+                  if (!char || Math.random() < 0.28) {
+                    char = this.randomChar()
+                    this.queue[i].char = char
+                  }
+                  output += `<span class="dud">${char}</span>`
+                } else {
+                  output += from
+                }
+              }
+              this.el.innerHTML = output
+              if (complete === this.queue.length) {
+                this.resolve()
+              } else {
+                this.frameRequest = requestAnimationFrame(this.update)
+                this.frame++
+              }
+            }
+            randomChar() {
+              return this.chars[Math.floor(Math.random() * this.chars.length)]
+            }
+          }
+
+          const phrases = [
+            'Welcome to Shifoo\'s Solitude',
+            'A Web Dungeon located beyond the Dark Hollows of the Endless Information SuperHighway',
+            'a dark yet tranquil place where all questions end, curiosity begins, the mind awakens,', 
+            'and one\'s journey begins anew in the solitude of a serene mind!',
+            'The Solitude awaits your arrival...'
+          ]
+          
+          const el = document.querySelector('.description')
+          const fx = new TextScramble(el)
+          
+          let counter = 0
+          const next = () => {
+            fx.setText(phrases[counter]).then(() => {
+              setTimeout(next, 3200)
+            })
+            counter = (counter + 1) % phrases.length
+          }
+          
+          next()
+
+    </script>
+
+  </body>
+</html>

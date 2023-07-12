@@ -11,6 +11,8 @@
 */
 @import url("https://fonts.googleapis.com/css2?family=Handlee&family=Poppins:wght@400&family=Share:wght@700&display=swap");
 @import url(audio.css);
+@import url(button.css);
+@import url(glitch.css);
 :root {
   --button-height: 0.5rem;
   --button-color: #edd;
@@ -42,7 +44,6 @@
   min-height: 100%;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.15);
   z-index: -99;
 }
 
@@ -52,6 +53,14 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background: repeating-linear-gradient(
+    0deg,
+    #0e0d0e77 25%,
+    #0e0d0e77 50%,
+    #17181977 50%,
+    #17181977 75%
+  );
+  background-size: 10px 10px;
 }
 
 .cwrapper {
@@ -78,21 +87,8 @@ p {
   margin-top: 10rem;
 }
 
-.description {
-  font-family: "Share", sans-serif;
-  font-size: 1rem;
-  margin-top: -4rem;
-  letter-spacing: 0.1rem;
+@media only screen and (max-width: 600px) {
+  .glitch {
+    font-size: 5rem;
+  }
 }
-
-.text-box {
-  font-family: "Share", cursive;
-}
-
-.text-box > h1 {
-  margin: 0;
-	font-size: 10rem;
-	color: rgb(255 255 255 / 60%);
-	padding: .5em;
-}
-

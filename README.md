@@ -1,14 +1,14 @@
-# That Computer Scientist
+# Shifoo (Previously _That Computer Scientist_)
 Source Code for my Personal Website.
 
-- Visit [thatcomputerscientist.com](https://thatcomputerscientist.com) to take a look at the current build.
+- Visit [shi.foo](https://shi.foo) to take a look at the current build.
 
 - Visit [preview.thatcomputerscientist.com](https://preview.thatcomputerscientist.com) to see a instant live deployment of changes whenever I start changing something on my local machine. (_Availability of this server is not guaranteed as it is only active whenever I am working on the project_. Also, sometimes I keep the project loaded in my code editor, while being idle or doing something else – the link is viewable during this time as well.)
 
 ## Screenshot
-![Live Screenshot](https://thatcomputerscientist.com/ignis/screenshot)
+![Live Screenshot](https://shi.foo/ignis/screenshot)
 
-> <sub><sup>_Screenshot served live from [thatcomputerscientist.com](https://thatcomputerscientist.com)'s server. For efficiency purposes, the screenshot is taken once per build and is served from the server's cache. The screenshot is updated whenever I push changes to this repository. Screenshots will generally be updated within 20 seconds after all GitHub Actions Workflows have completed._</sup></sub>
+> <sub><sup>_Screenshot served live from [shi.foo](https://shi.foo)'s server. For efficiency purposes, the screenshot is taken once per build and is served from the server's cache. The screenshot is updated whenever I push changes to this repository. Screenshots will generally be updated within 20 seconds after all GitHub Actions Workflows have completed._</sup></sub>
 
 ## Specifications
 - Server: [Nginx](https://www.nginx.com/)

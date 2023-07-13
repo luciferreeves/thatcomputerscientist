@@ -102,7 +102,7 @@ class RegisterForm(forms.Form):
             'domain': request.get_host(),
         })
         message = strip_tags(message)
-        # send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email], fail_silently=False)
+        # send_mail(subject, message, 'Shifoo <' + settings.EMAIL_HOST_USER + '>', [user.email], fail_silently=False)
         if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='Shifoo', recipient=user.email, subject=subject, body_html=message, body_text=message)):
             return user
         else:

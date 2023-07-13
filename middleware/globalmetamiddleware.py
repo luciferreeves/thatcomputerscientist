@@ -7,7 +7,7 @@ class GlobalMetaMiddleware:
     def __call__(self, request):
         request.meta = {
             # Default General Meta Tags
-            'description': 'Welcome to the home of That Computer Scientist. I am Kumar Priyansh. This is my personal website where I share all of my thoughts, ideas, and experiences.',
+            'description': 'Welcome to the home of Shifoo. I am Kumar Priyansh. This is my personal website where I share all of my thoughts, ideas, and experiences.',
             'image': 'https://shi.foo/static/images/logo/logo.png',
             'url': '{}://{}{}'.format(request.scheme, request.get_host(), request.path),
             

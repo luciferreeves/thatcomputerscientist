@@ -8,8 +8,8 @@ from .constants.welcome_playlist import WELCOME_TRACKS
 TEMPLATE_BASE_PATH = '@solitude'
 
 def home(request):
-    is_first_time = request.COOKIES.get('visited', False)
-    if not is_first_time:
+    visited = request.COOKIES.get('visited', False)
+    if not visited or visited == 'False':
         response = render(request, f'{TEMPLATE_BASE_PATH}/welcome.html', {
             'playlist_tracks': str(json.dumps(WELCOME_TRACKS))
         })

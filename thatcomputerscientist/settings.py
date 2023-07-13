@@ -39,8 +39,11 @@ DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo']
 SESSION_COOKIE_DOMAIN = None
-DOMAIN_NAME = "thatcomputerscientist.com"
+DOMAIN_NAME = "shi.foo"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+HOST_ROOTCONF = 'thatcomputerscientist.urls'
+ROOT_URLCONF = 'thatcomputerscientist.urls'
+DEFAULT_HOST = 'default'
 
 # Application definition
 
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'thatcomputerscientist',
     'haystack',
+    'django_hosts',
     'blog',
     'users',
     'userpages',
@@ -76,6 +80,7 @@ HAYSTACK_CONNECTIONS = {
 }
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -87,6 +92,7 @@ MIDDLEWARE = [
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
 CONFIGURED_SUBDOMAINS = {

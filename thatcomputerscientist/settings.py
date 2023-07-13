@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'thatcomputerscientist',
     'haystack',
-    'django_hosts',
     'blog',
     'users',
     'userpages',
@@ -76,11 +75,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-ROOT_HOSTCONF = 'thatcomputerscientist.hosts'
-DEFAULT_HOST = 'default'
-
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -92,7 +87,6 @@ MIDDLEWARE = [
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 CONFIGURED_SUBDOMAINS = {

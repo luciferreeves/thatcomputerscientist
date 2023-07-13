@@ -40,6 +40,7 @@ urlpatterns = [
     path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),
     path('repositories', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
     path('ignis', include(('ignis.urls', 'ignis'), namespace='ignis')),
+    path('@solitude', include(('solitude.urls', 'solitude'), namespace='solitude')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 

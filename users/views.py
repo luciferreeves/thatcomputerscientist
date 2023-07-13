@@ -165,7 +165,7 @@ def send_change_user_email(request):
 
         message = render_to_string('email_change_verification_email.html', {
             'user': user.username if user.first_name is None else user.first_name,
-            'site_name': 'That Computer Scientist',
+            'site_name': 'Shifoo',
             'uid': uid,
             'token': token,
             'protocol': request.scheme + '://',
@@ -174,7 +174,7 @@ def send_change_user_email(request):
         message = strip_tags(message)
         # send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [new_email])
 
-        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=new_email, subject=subject, body_html=message, body_text=message)):
+        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='Shifoo', recipient=new_email, subject=subject, body_html=message, body_text=message)):
             messages.success(request, 'Verification email was sent! Please check your email.')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
@@ -195,14 +195,14 @@ def send_verification_email(request):
 
         message = render_to_string('verification_email.html', {
             'user': user.username if user.first_name is None else user.first_name,
-            'site_name': 'That Computer Scientist',
+            'site_name': 'Shifoo',
             'uid': uid,
             'token': token,
             'protocol': 'https://' if request.is_secure() else 'http://',
             'domain': request.get_host(),
         })
         message = strip_tags(message)
-        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
+        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='Shifoo', recipient=user.email, subject=subject, body_html=message, body_text=message)):
             messages.success(request, 'VESENT', extra_tags='loginError')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:

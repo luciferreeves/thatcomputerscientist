@@ -8,12 +8,12 @@ from django.utils.feedgenerator import Enclosure
 
 from .models import Post
 
-request_domain = settings.DEBUG and 'https://preview.thatcomputerscientist.com' or 'https://thatcomputerscientist.com'
+request_domain = settings.DEBUG and 'https://preview.thatcomputerscientist.com' or 'https://shi.foo'
 
 class RSSFeed(Feed):
-    title = 'That Computer Scientist'
+    title = 'Shifoo'
     link = '/weblog'
-    description = 'RSS Feed for That Computer Scientist Weblog'
+    description = 'RSS Feed for Shifoo\'s Weblog'
     feed_type = feedgenerator.Rss201rev2Feed
 
     def items(self):

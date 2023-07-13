@@ -95,7 +95,7 @@ class RegisterForm(forms.Form):
         subject = 'Verify your email address'
         message = render_to_string('verification_email.html', {
             'user': user.username if user.first_name is None else user.first_name,
-            'site_name': 'That Computer Scientist',
+            'site_name': 'Shifoo',
             'uid': uid,
             'token': token,
             'protocol': 'https://' if request.is_secure() else 'http://',
@@ -103,7 +103,7 @@ class RegisterForm(forms.Form):
         })
         message = strip_tags(message)
         # send_mail(subject, message, 'That Computer Scientist <' + settings.EMAIL_HOST_USER + '>', [user.email], fail_silently=False)
-        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='That Computer Scientist', recipient=user.email, subject=subject, body_html=message, body_text=message)):
+        if (send_email(sender='noreply@thatcomputerscientist.com', sender_name='Shifoo', recipient=user.email, subject=subject, body_html=message, body_text=message)):
             return user
         else:
             return user

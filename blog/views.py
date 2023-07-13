@@ -204,7 +204,7 @@ def post(request, slug):
         if post.is_public:
             # modify request.meta description (only text) and image
             request.meta['description'] = BeautifulSoup(first_paragraph, 'html.parser').get_text()
-            request.meta['image'] = 'https://thatcomputerscientist.com/ignis/post_image/720/' + str(post.id) + '.gif'
+            request.meta['image'] = 'https://shi.foo/ignis/post_image/720/' + str(post.id) + '.gif'
 
             read_next = next_read(post)
 
@@ -283,7 +283,7 @@ def anon_comment(request, slug):
                 messages.error(request, 'Please enter a comment!')
                 return redirect(reverse('blog:post', kwargs={'slug': slug}))
             if not anonymous_email:
-                anonymous_email = ''.join(random.choice(string.ascii_lowercase) for i in range(10)) + '@anonymous.thatcomputerscientist.com'
+                anonymous_email = ''.join(random.choice(string.ascii_lowercase) for i in range(10)) + '@anonymous.shi.foo'
             if not anonymous_token:
                 anonymous_token = ''.join(random.choice(string.ascii_lowercase) for i in range(10))
                 at = anonymous_token

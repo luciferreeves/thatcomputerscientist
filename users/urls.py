@@ -19,6 +19,6 @@ urlpatterns = [
 ]
 
 # Configure Admin Site
-admin.site.site_header = 'That Computer Scientist Administation'
-admin.site.site_title = 'That Computer Scientist'
+admin.site.site_header = 'Shifoo Administation'
+admin.site.site_title = 'Shifoo'
 admin.site.index_title = 'Administration Area'

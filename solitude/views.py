@@ -1,8 +1,8 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from .constants.welcome_playlist import WELCOME_TRACKS
-
 import json
+
+from django.shortcuts import render
+
+from .constants.welcome_playlist import WELCOME_TRACKS
 
 # Create your views here.
 TEMPLATE_BASE_PATH = '@solitude'

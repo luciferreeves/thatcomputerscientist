@@ -7,6 +7,7 @@ from datetime import datetime
 from random import choice
 from string import ascii_letters, digits
 
+import requests
 from bs4 import BeautifulSoup
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -14,9 +15,9 @@ from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from dotenv import load_dotenv
 from haystack.query import SearchQuerySet
-import requests
 from user_agents import parse
 
 from announcements.models import Announcement
@@ -566,6 +567,7 @@ def socialify(request):
 def anilist(request):
     return render(request, 'blog/anilist.html', {'title': 'My Anime List'})
 
+@xframe_options_sameorigin
 def anidata(request):
     malURL = 'https://myanimelist.net/animelist/crvs'
     MAL = requests.get(malURL)

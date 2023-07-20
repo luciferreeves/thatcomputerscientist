@@ -3,8 +3,31 @@ Source Code for my Personal Website.
 
 - Visit [shi.foo](https://shi.foo) to take a look at the current build.
 
-- Visit [preview.thatcomputerscientist.com](https://preview.thatcomputerscientist.com) to see a instant live deployment of changes whenever I start changing something on my local machine. (_Availability of this server is not guaranteed as it is only active whenever I am working on the project_. Also, sometimes I keep the project loaded in my code editor, while being idle or doing something else – the link is viewable during this time as well.)
+- ~~Visit [preview.thatcomputerscientist.com](https://preview.thatcomputerscientist.com) to see a instant live deployment of changes whenever I start changing something on my local machine. (_Availability of this server is not guaranteed as it is only active whenever I am working on the project_. Also, sometimes I keep the project loaded in my code editor, while being idle or doing something else – the link is viewable during this time as well.)~~
 
+- [preview.thatcomputerscientist.com](https://preview.thatcomputerscientist.com) is no longer available. The shell script [`runserver.sh`](runserver.sh) can be used to start a local server that presents two domain options:
+    - `[*].peek.shi.foo` 
+    - `[*].thatcomputerscientist.com`
+
+Both these domains point to `127.0.0.1` and its a matter of preference which one to choose. The script also automatically generates SSL certificates for both domains and starts the server with HTTPS enabled. A complete, example command chain now looks like:
+```bash
+thatcomputerscientist on main [$!] ➜ ./runserver.sh
+Choose an option:
+[1]: (*).[peek].shi.foo
+[2]: (*).[peek].thatcomputerscientist.com
+Enter your choice (1 or 2): 1
+Password:
+Watching for file changes with StatReloader
+Validating models...
+
+System check identified no issues (0 silenced).
+July 20, 2023 - 06:54:38
+Django version 4.1.4, using settings 'thatcomputerscientist.settings'
+Starting development server at https://127.0.0.1:443/
+Using SSL certificate: SSL/peek.shi.foo+1.pem
+Using SSL key: SSL/peek.shi.foo+1-key.pem
+Quit the server with CONTROL-C.
+``` 
 ## Screenshot
 ![Live Screenshot](https://shi.foo/ignis/screenshot)
 

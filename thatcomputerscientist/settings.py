@@ -38,8 +38,8 @@ DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo']
-SESSION_COOKIE_DOMAIN = None
 DOMAIN_NAME = "shi.foo"
+SESSION_COOKIE_DOMAIN = ".domain.internal" if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ROOT_HOSTCONF = 'thatcomputerscientist.hosts'
 ROOT_URLCONF = 'thatcomputerscientist.urls'

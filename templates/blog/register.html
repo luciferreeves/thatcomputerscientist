@@ -13,6 +13,7 @@
 </form>
 <br><br>
 <p>By registering on this site, you agree to everything that's <a href="{% url 'blog:policy' %}">written here</a>.</p>
+<p><b>Note</b>: Upon registering, you will be sent an email with a link to activate your account. If you don't activate your account within 72 hours, your username will be released and you will have to register again.</p>
 {% for message in messages %}
     {% if 'accountCreated' in message.tags %}
         <p><small class="success">{{ message.message }}</small></p>

@@ -41,7 +41,6 @@ CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcom
 DOMAIN_NAME = "shi.foo"
 SESSION_COOKIE_DOMAIN = os.getenv('DOMAIN') if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
 ROOT_HOSTCONF = 'thatcomputerscientist.hosts'
 ROOT_URLCONF = 'thatcomputerscientist.urls'
 DEFAULT_HOST = 'default'

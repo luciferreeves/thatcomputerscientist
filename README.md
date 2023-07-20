@@ -10,24 +10,9 @@ Source Code for my Personal Website.
     - `[*].peek.thatcomputerscientist.com`
 
 Both these domains point to `127.0.0.1` and its a matter of preference which one to choose. The script also automatically generates SSL certificates for both domains and starts the server with HTTPS enabled. A complete, example command chain now looks like:
-```bash
-thatcomputerscientist on main [$!] ➜ ./runserver.sh
-Choose an option:
-[1]: (*).[peek].shi.foo
-[2]: (*).[peek].thatcomputerscientist.com
-Enter your choice (1 or 2): 1
-Password:
-Watching for file changes with StatReloader
-Validating models...
 
-System check identified no issues (0 silenced).
-July 20, 2023 - 06:54:38
-Django version 4.1.4, using settings 'thatcomputerscientist.settings'
-Starting development server at https://127.0.0.1:443/
-Using SSL certificate: SSL/peek.shi.foo+1.pem
-Using SSL key: SSL/peek.shi.foo+1-key.pem
-Quit the server with CONTROL-C.
-``` 
+![Example Command Chain](https://i.imgur.com/y3l6fJA.png)
+
 ## Screenshot
 ![Live Screenshot](https://shi.foo/ignis/screenshot)
 

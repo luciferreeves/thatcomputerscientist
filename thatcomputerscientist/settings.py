@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'thatcomputerscientist',
     'haystack',
     'django_hosts',
-    'blog',
+    'blog.apps.BlogConfig',
     'users',
     'userpages',
     'blog_admin',

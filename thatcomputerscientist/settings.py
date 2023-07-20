@@ -39,8 +39,9 @@ DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo']
 DOMAIN_NAME = "shi.foo"
-SESSION_COOKIE_DOMAIN = ".domain.internal" if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
+SESSION_COOKIE_DOMAIN = os.getenv('DOMAIN') if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 ROOT_HOSTCONF = 'thatcomputerscientist.hosts'
 ROOT_URLCONF = 'thatcomputerscientist.urls'
 DEFAULT_HOST = 'default'
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'sslserver',
     'thatcomputerscientist',
     'haystack',
     'django_hosts',

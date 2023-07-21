@@ -38,7 +38,6 @@ DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo']
-CORS_ALLOWED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo']
 DOMAIN_NAME = "shi.foo"
 SESSION_COOKIE_DOMAIN = os.getenv('DOMAIN') if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -61,7 +60,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'sslserver',
     'rest_framework',
-    'corsheaders',
     'thatcomputerscientist',
     'haystack',
     'django_hosts',
@@ -102,7 +100,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
     'middleware.globalmetamiddleware.GlobalMetaMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'middleware.uuidmiddleware.UserUUIDMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware'
 ]

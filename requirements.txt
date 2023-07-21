@@ -28,3 +28,4 @@ google-cloud-translate
 django-hosts
 apscheduler
 django-sslserver
+djangorestframework

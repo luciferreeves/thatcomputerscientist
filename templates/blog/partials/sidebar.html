@@ -130,7 +130,7 @@
         </li>
         <li>
             <span>
-                <img src="{% static 'images/site/icons/translate.png' %}" alt="Translate" border="0">
+                <img src="{% static 'images/site/icons/translate.png' %}" alt="Translate" border="0" style="padding: 2px 0px; height: 20px; width: auto;">
             </span>
             <span>
                 <a href="javascript:changeLang('en');" id="tl_ja" style="display: none;" class="notranslate en">English</a>
@@ -187,6 +187,15 @@
                 <a href="{% url 'blog:socialify' %}">
                     Socialify
                 </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <img src="{% static 'images/site/icons/globe.gif' %}" alt="Mastodon" border="0" style="padding: 2px 5px; height: 20px; width: auto;">
+            </span>
+            <span>
+                <a rel="me" href="https://mastodon.social/@selch">Mastodon</a>
+                <img width="11" height="11" src="https://img.icons8.com/glyph-neue/20/d2baff/external-link.png" alt="external-link"/ style="height: 11px; width: 11px; position: relative; top: -1px;">
             </span>
         </li>
     </ul>

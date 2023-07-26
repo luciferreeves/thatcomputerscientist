@@ -35,7 +35,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs/loader.js"></script>
 <script src="{% static 'js/editor-theme.js' %}"></script>
 <script>
-  const postBody = `{{ post.body|escape|safe }}"`;
+  const postBody = `{{ post.body|escape|safe }}`;
   var editorInstance;
 
   // default loads

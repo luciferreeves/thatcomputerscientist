@@ -1,0 +1,23 @@
+{% load tz %}
+{% load static %}
+{% for post in posts %}
+    {% comment %} This is the plain small version for search list {% endcomment %}
+    <h1 style="font-size: 16px; margin: 0 0 4px 0;">
+        <a style="color: #f4ebff;" href="{% url 'blog:post' post.slug %}">{{ post.title }}</a>
+    </h1>
+    <p>Posted by <a href="{% url 'blog:user_activity' post.author %}">{{ post.author.first_name }} {{ post.author.last_name }}</a> in <a href="{% url 'blog:categories' %}/{{ post.category.slug }}">{{ post.category }}</a> on {% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</p>
+    <img style="width: 150px; height: auto; float: left; margin: 0 8px 8px 0;" src="{% url 'ignis:post_image' '150' post.id %}.gif">
+    <div style="margin: -4px 0 8px 0;">
+        {{ post.body|truncatewords:150|safe }}
+    </div>
+    <div style="clear: both; border-top: 1px dashed #fff;"></div>
+    <p><b>Tags:</b> 
+        {% for tag in post.tags.all %}
+            <a class="tag" href="{% url 'blog:tag_posts' tag.slug %}">{{ tag.name }}</a>
+        {% endfor %}
+    </p>
+    <p>
+        <a href="{% url 'blog:post' post.slug %}">Read complete post...</a>
+    </p>
+    <br>
+{% endfor %}

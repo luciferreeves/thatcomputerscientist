@@ -14,7 +14,7 @@
                     <h2 class="mtsbitem">Sort By</h2>
                     <input type="radio" name="sort_by" value="relevance" {% if sort_by == 'relevance' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Relevance</label><br>
                     <input type="radio" name="sort_by" value="date" {% if sort_by == 'date' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Date</label><br>
-                    <input type="radio" name="sort_by" value="popularity" {% if sort_by == 'popularity' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Popularity</label><br>
+                    {% comment %} <input type="radio" name="sort_by" value="popularity" {% if sort_by == 'popularity' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="sort_by" style="vertical-align: middle;">Popularity</label><br> {% endcomment %}
                     <h2 class="mtsbitem">Order</h2>
                     <input type="radio" name="order" value="ascending" {% if order == 'ascending' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="order" style="vertical-align: middle;">Ascending</label><br>
                     <input type="radio" name="order" value="descending" {% if order == 'descending' %}checked{% endif %} style="margin: 5px 10px 5px 0px; vertical-align: middle;"/><label for="order" style="vertical-align: middle;">Descending</label><br>
@@ -29,9 +29,40 @@
             </td>
             <td id="search_results" style="width: 530px; vertical-align: top; padding-left: 20px;">
                 <h2>Search Results</h2>
-                <p>Sorry, this feature is under construction, and will be available soon.</p>
-                <p>In case, you were curious, your query returned {{ search_results|length }} results.</p>
+                <p style="margin-bottom: 20px;">Your search for "<strong>{{ request.GET.q }}</strong>" returned {{ search_results }} Result{% if search_results != 1 %}s{% endif %}.</p>
+
+                {% if 'posts' in search_in %}
+                    <h2 style="background: #311b4f; margin: 0 0 10px 0; border: dotted 1px white; padding: 5px;">Posts</h2>
+                    {% if posts|length != 0 %}
+                        {% include 'blog/partials/search/post_list.html' %}
+                    {% else %}
+                        <p>No posts found.</p>
+                    {% endif %}
+
+                {% endif %}
+
+                {% if 'users' in search_in %}
+                    <h2 style="background: #311b4f; margin: 0 0 10px 0; border: dotted 1px white; padding: 5px;">Users</h2>
+                    {% if users|length != 0 %}
+                        {% include 'blog/partials/search/user_list.html' %}
+                    {% else %}
+                        <p>No users found.</p>
+                    {% endif %}
+                {% endif %}
+
+                {% if 'comments' in search_in %}
+                    <h2 style="background: #311b4f; margin: 0 0 10px 0; border: dotted 1px white; padding: 5px;">Comments</h2>
+                    {% if comments|length != 0 %}
+                        {% include 'blog/partials/search/comment_list.html' %}
+                    {% else %}
+                        <p>No comments found.</p>
+                    {% endif %}
+                {% endif %}
+
             </td>
         </tr>
     </table>
+{% endblock %}
+{% block scripts %}
+{% include 'blog/partials/mathjax.html' %}
 {% endblock %}

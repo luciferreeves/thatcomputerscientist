@@ -7,6 +7,8 @@ from datetime import datetime
 from random import choice
 from string import ascii_letters, digits
 
+from datetime import timedelta
+from django.utils import timezone
 import requests
 from bs4 import BeautifulSoup
 from django.contrib import messages
@@ -437,19 +439,70 @@ def search(request):
         'users': User,
         'comments': Comment,
     }
+    now = timezone.now()
 
     if query:
         search_results = SearchQuerySet().filter(content=query)
         if search_in:
             search_results = search_results.models(*[search_model_map[model] for model in search_in])
 
-        search_results = [result.object for result in search_results]
+        # search_results = [result.object for result in search_results]
+        posts = [result.object for result in search_results if isinstance(result.object, Post)]
+        users = [result.object for result in search_results if isinstance(result.object, User)]
+        comments = [result.object for result in search_results if isinstance(result.object, Comment)]
+
+        # match-case sort_by
+        if sort_by == 'relevance' and order == 'ascending':
+            posts = sorted(posts, key=lambda post: post.views)
+            users = sorted(users, key=lambda user: user.username)
+            comments = sorted(comments, key=lambda comment: comment.id)
+        elif sort_by == 'relevance' and order == 'descending':
+            posts = sorted(posts, key=lambda post: post.views, reverse=True)
+            users = sorted(users, key=lambda user: user.username, reverse=True)
+            comments = sorted(comments, key=lambda comment: comment.id, reverse=True)
+        elif sort_by == 'date' and order == 'ascending':
+            posts = sorted(posts, key=lambda post: post.date)
+            users = sorted(users, key=lambda user: user.date_joined)
+            comments = sorted(comments, key=lambda comment: comment.created_at)
+        elif sort_by == 'date' and order == 'descending':
+            posts = sorted(posts, key=lambda post: post.date, reverse=True)
+            users = sorted(users, key=lambda user: user.date_joined, reverse=True)
+            comments = sorted(comments, key=lambda comment: comment.created_at, reverse=True)
+
+        # filter by date_range
+        if date_range == 'past_day':
+            posts = [post for post in posts if post.date >= now - timedelta(days=1)]
+            users = [user for user in users if user.date_joined >= now - timedelta(days=1)]
+            comments = [comment for comment in comments if comment.created_at >= now - timedelta(days=1)]
+        elif date_range == 'past_week':
+            posts = [post for post in posts if post.date >= now - timedelta(days=7)]
+            users = [user for user in users if user.date_joined >= now - timedelta(days=7)]
+            comments = [comment for comment in comments if comment.created_at >= now - timedelta(days=7)]
+        elif date_range == 'past_month':
+            posts = [post for post in posts if post.date >= now - timedelta(days=30)]
+            users = [user for user in users if user.date_joined >= now - timedelta(days=30)]
+            comments = [comment for comment in comments if comment.created_at >= now - timedelta(days=30)]
+        elif date_range == 'past_year':
+            posts = [post for post in posts if post.date >= now - timedelta(days=365)]
+            users = [user for user in users if user.date_joined >= now - timedelta(days=365)]
+            comments = [comment for comment in comments if comment.created_at >= now - timedelta(days=365)]
+        elif date_range == 'any':
+            # no need to filter
+            pass
+            
+        search_results = len(posts) + len(users) + len(comments)
     else:
-        search_results = None
+        search_results = 0
 
-    print(search_results)
+    # attach user profiles
+    for user in users:
+        user.profile = UserProfile.objects.get(user=user)
 
-    return render(request, 'blog/search.html', {'title': f"Search results for '{query}'", 'query': query, 'search_results': search_results, 'search_in': search_in, 'sort_by': sort_by, 'order': order, 'date_range': date_range})
+    # parse comments
+    for comment in comments:
+        comment.body = comment_processor(comment.body)
+
+    return render(request, 'blog/search.html', {'title': f"Search results for '{query}'", 'query': query, 'search_results': search_results, 'search_in': search_in, 'sort_by': sort_by, 'order': order, 'date_range': date_range, 'posts': posts, 'users': users, 'comments': comments})
 
 def articles(request, date=None, cg=None):
     type = 'articles'

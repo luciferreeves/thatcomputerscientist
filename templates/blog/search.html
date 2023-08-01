@@ -36,7 +36,7 @@
                     {% if posts|length != 0 %}
                         {% include 'blog/partials/search/post_list.html' %}
                     {% else %}
-                        <p>No posts found.</p>
+                        <p>No matching posts found.</p>
                     {% endif %}
 
                 {% endif %}
@@ -46,7 +46,7 @@
                     {% if users|length != 0 %}
                         {% include 'blog/partials/search/user_list.html' %}
                     {% else %}
-                        <p>No users found.</p>
+                        <p>No matching users found.</p>
                     {% endif %}
                 {% endif %}
 
@@ -55,7 +55,7 @@
                     {% if comments|length != 0 %}
                         {% include 'blog/partials/search/comment_list.html' %}
                     {% else %}
-                        <p>No comments found.</p>
+                        <p>No matching comments found.</p>
                     {% endif %}
                 {% endif %}
 

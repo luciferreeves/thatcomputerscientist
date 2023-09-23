@@ -16,64 +16,78 @@ from .models import Category, Comment, Post
 dotenv.load_dotenv()
 
 akismet_api = akismet.Akismet(
-    key=os.getenv('AKISMET_API_KEY'),
-    blog_url='https://preview.thatcomputerscientist.com' if settings.DEBUG else 'https://thatcomputerscientist.com',
+    key=os.getenv("AKISMET_API_KEY"),
+    blog_url="https://preview.thatcomputerscientist.com"
+    if settings.DEBUG
+    else "https://thatcomputerscientist.com",
 )
+
 
 def check_spam(user_ip, user_agent, comment, author):
     akismet_data = {
-        'comment_type': 'comment',
-        'comment_author': author,
-        'comment_content': comment,
-        'is_test': settings.DEBUG,
+        "comment_type": "comment",
+        "comment_author": author,
+        "comment_content": comment,
+        "is_test": settings.DEBUG,
     }
     return akismet_api.comment_check(user_ip, user_agent, **akismet_data)
 
+
 def add_excerpt(post):
-    soup = BeautifulSoup(post.body, 'html.parser')
+    soup = BeautifulSoup(post.body, "html.parser")
 
     # Create excerpt, count min 1000 characters and max upto next paragraph
-    excerpt = ''
-    for paragraph in soup.find_all('p'):
-        paragraph = '<p>' + str(paragraph.text) + '</p>'
+    excerpt = ""
+    for paragraph in soup.find_all("p"):
+        paragraph = "<p>" + str(paragraph.text) + "</p>"
         excerpt += str(paragraph)
 
         if len(excerpt) >= 1000:
             break
     return excerpt
 
+
 def add_num_comments(post):
     num_comments = Comment.objects.filter(post=post).count()
     return num_comments
 
+
 def recent_posts():
-    recent_posts = Post.objects.filter(is_public=True).order_by('-date')[:5]
+    recent_posts = Post.objects.filter(is_public=True).order_by("-date")[:5]
     for post in recent_posts:
         post.excerpt = add_excerpt(post)
         post.num_comments = add_num_comments(post)
     return recent_posts
 
+
 def categories(request):
     categories = Category.objects.all()[0:5]
-    return {'categories': categories}
+    return {"categories": categories}
+
 
 def archives(request):
-    archives = Post.objects.filter(is_public=True).dates('date', 'month', order='DESC')[0:5]
-    return {'archives': archives}
+    archives = Post.objects.filter(is_public=True).dates("date", "month", order="DESC")[
+        0:5
+    ]
+    return {"archives": archives}
+
 
 def avatar_list():
     avatar_list = {}
-    directory = os.path.join(settings.BASE_DIR, 'static', 'images', 'avatars')
+    directory = os.path.join(settings.BASE_DIR, "static", "images", "avatars")
     for directory in os.listdir(directory):
         # ignore hidden files
-        if directory.startswith('.'):
+        if directory.startswith("."):
             continue
-        avatar_list[directory] = os.listdir(os.path.join(settings.BASE_DIR, 'static', 'images', 'avatars', directory))
+        avatar_list[directory] = os.listdir(
+            os.path.join(settings.BASE_DIR, "static", "images", "avatars", directory)
+        )
         # remove hidden files
         for file in avatar_list[directory]:
-            if file.startswith('.'):
+            if file.startswith("."):
                 avatar_list[directory].remove(file)
     return avatar_list
+
 
 def highlight_code_blocks(code_block, language=None):
     # replace &nbsp; with space
@@ -81,28 +95,29 @@ def highlight_code_blocks(code_block, language=None):
         cb = code_block.string
     except:
         cb = code_block
-    cb = cb.replace(u'\xa0', u' ')
+    cb = cb.replace("\xa0", " ")
 
     # guess the language as there is no data-lang attribute
     if language:
         try:
             lexer = get_lexer_by_name(language.strip())
         except:
-            lexer = get_lexer_by_name('text')
+            lexer = get_lexer_by_name("text")
     else:
         try:
             lexer = guess_lexer(cb)
         except:
-            lexer = get_lexer_by_name('text')
+            lexer = get_lexer_by_name("text")
     # highlight the code
-    formatter = HtmlFormatter(noclasses=True, style='native', wrapcode=True)
+    formatter = HtmlFormatter(noclasses=True, style="native", wrapcode=True)
     highlighted_code = highlight(cb, lexer, formatter)
 
     return highlighted_code
 
+
 def check_link_safety(link):
-    api_key = os.getenv('GOOGLE_SAFE_BROWSING_API_KEY')
-    api_url = 'https://safebrowsing.googleapis.com/v4/threatMatches:find'
+    api_key = os.getenv("GOOGLE_SAFE_BROWSING_API_KEY")
+    api_url = "https://safebrowsing.googleapis.com/v4/threatMatches:find"
     cache_key = f"link_safety:{link}"
     cache_timeout = 60 * 60 * 24 * 7  # 7 days
 
@@ -113,26 +128,26 @@ def check_link_safety(link):
 
     payload = {
         "threatInfo": {
-            "threatTypes": ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE", "POTENTIALLY_HARMFUL_APPLICATION"],
+            "threatTypes": [
+                "MALWARE",
+                "SOCIAL_ENGINEERING",
+                "UNWANTED_SOFTWARE",
+                "POTENTIALLY_HARMFUL_APPLICATION",
+            ],
             "platformTypes": ["ANY_PLATFORM"],
             "threatEntryTypes": ["URL"],
-            "threatEntries": [{"url": link}]
+            "threatEntries": [{"url": link}],
         }
     }
 
-    headers = {
-        "Content-Type": "application/json"
-    }
+    headers = {"Content-Type": "application/json"}
 
-    params = {
-        "key": api_key,
-        "alt": "json"
-    }
+    params = {"key": api_key, "alt": "json"}
 
     response = requests.post(api_url, params=params, headers=headers, json=payload)
     if response.status_code == 200:
         # Successful API call
-        matches = response.json().get('matches', [])
+        matches = response.json().get("matches", [])
         # Cache the result
         cache.set(cache_key, len(matches) == 0, cache_timeout)
         return len(matches) == 0
@@ -145,42 +160,57 @@ def check_link_safety(link):
 
 def comment_processor(comment):
     # escape html tags
-    comment = re.sub(r'<', '&lt;', comment)
-    comment = re.sub(r'>', '&gt;', comment)
+    comment = re.sub(r"<", "&lt;", comment)
+    comment = re.sub(r">", "&gt;", comment)
 
     # any text between ``` and ``` must be highlighted as code
-    code_blocks = re.findall(r'```(.+?)```', comment, re.DOTALL)
+    code_blocks = re.findall(r"```(.+?)```", comment, re.DOTALL)
     for code_block in code_blocks:
-        if code_block.startswith('lang-'):
-            language = code_block.split('\n')[0].replace('lang-', '')
-            code_block = code_block.replace('lang-' + language + '\n', '')
+        if code_block.startswith("lang-"):
+            language = code_block.split("\n")[0].replace("lang-", "")
+            code_block = code_block.replace("lang-" + language + "\n", "")
             # comment = highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>'), language)
-            comment = comment.replace('```lang-' + language + '\n' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>'), language))
+            comment = comment.replace(
+                "```lang-" + language + "\n" + code_block + "```",
+                highlight_code_blocks(
+                    code_block.replace("&lt;", "<").replace("&gt;", ">"), language
+                ),
+            )
         else:
-            comment = comment.replace('```' + code_block + '```', highlight_code_blocks(code_block.replace('&lt;', '<').replace('&gt;', '>')))
+            comment = comment.replace(
+                "```" + code_block + "```",
+                highlight_code_blocks(
+                    code_block.replace("&lt;", "<").replace("&gt;", ">")
+                ),
+            )
 
     # any http or https links must be converted to anchor tags
-    links = re.findall(r'(https?://[^\s]+)', comment)
+    links = re.findall(r"(https?://[^\s]+)", comment)
     for link in links:
         # check if the link is safe
         if check_link_safety(link):
-            comment = comment.replace(link, '<a href="' + link + '" target="_blank">' + link + '</a>')
+            comment = comment.replace(
+                link, '<a href="' + link + '" target="_blank">' + link + "</a>"
+            )
         else:
             # do not replace the link if it is not safe. Add a warning message after the link instead
-            comment = comment.replace(link, link + '<span style="color: red"> (Seems unsafe! Proceed with caution)</span>')
+            comment = comment.replace(
+                link,
+                link
+                + '<span style="color: red"> (Seems unsafe! Proceed with caution)</span>',
+            )
 
     # retain line breaks, for every newline character, add a <br> tag
-    comment = comment.replace('\n', '<br>')
+    comment = comment.replace("\n", "<br>")
 
     # replace multiple <br> tags with a single <br> tag
-    comment = re.sub(r'<br>(\s*<br>)+', '<br><br>', comment)
+    comment = re.sub(r"<br>(\s*<br>)+", "<br><br>", comment)
 
-    comment = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', comment)
-    comment = re.sub(r'__(.+?)__', r'<i>\1</i>', comment)
-    comment = re.sub(r'~~(.+?)~~', r'<s>\1</s>', comment)
+    comment = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", comment)
+    comment = re.sub(r"__(.+?)__", r"<i>\1</i>", comment)
+    comment = re.sub(r"~~(.+?)~~", r"<s>\1</s>", comment)
 
     # remove any br tags at the end of the comment
-    comment = re.sub(r'<br>$', '', comment)
+    comment = re.sub(r"<br>$", "", comment)
 
     return comment
-

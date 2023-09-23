@@ -37,7 +37,7 @@ SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
 DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo']
+CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo', 'http://localhost']
 DOMAIN_NAME = "shi.foo"
 SESSION_COOKIE_DOMAIN = os.getenv('DOMAIN') if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

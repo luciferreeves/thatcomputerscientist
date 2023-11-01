@@ -1,53 +1,55 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
 <div class="main">
+  <div style="position: relative; top: 40px;">
+    <table style="margin: 0 auto; position: relative; top: 120px;">
+      <form action="" method="get">
+        <tr>
+          <td>
+            <p> Search &amp; Filter: &emsp;</p>
+          </td>
+          <td>
+            <input type="text" name="search" placeholder="Search Term" value="{{ search }}" autocomplete="off">
+          </td>
+          <td>
+            <select name="items">
+              <option value="10" {% if items == 10 %}selected{% endif %}>10</option>
+              <option value="25" {% if items == 25 %}selected{% endif %}>25</option>
+              <option value="50" {% if items == 50 %}selected{% endif %}>50</option>
+              <option value="100" {% if items == 100 %}selected{% endif %}>100</option>
+            </select>
+          </td>
+          <td>
+            <select name="sort">
+              <option value="full_name" {% if sort == 'full_name' %}selected{% endif %}>Name</option>
+              <option value="created" {% if sort == 'created' %}selected{% endif %}>Created</option>
+              <option value="updated" {% if sort == 'updated' %}selected{% endif %}>Updated</option>
+              <option value="pushed" {% if sort == 'pushed' %}selected{% endif %}>Pushed</option>
+              <option value="stars" {% if sort == 'stars' %}selected{% endif %}>Stars</option>
+            </select>
+          </td>
+          <td>
+            <select name="direction">
+              <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Ascending</option>
+              <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Descending</option>
+            </select>
+          </td>
+          <td>
+            <input type="submit" value="Go" style="position: relative; top: -2px;">
+          </td>
+        </tr>
+      </form>
+    </table>
+  </div>
   <div class="area">
     {% load static %}
     {% load times %}
-    <div style="background-image: url({% static 'images/site/repositories.png' %}); width: 720px; height: 173px; background-repeat: no-repeat; background-position: center;">
-      {% comment %} Search and Filter {% endcomment %}
-      <table style="margin: 0 auto; position: relative; top: 120px;">
-        <form action="" method="get">
-          <tr>
-            <td>
-              <p> Search &amp; Filter: &emsp;</p>
-            </td>
-            <td>
-              <input type="text" name="search" placeholder="Search Term" value="{{ search }}" autocomplete="off">
-            </td>
-            <td>
-              <select name="items">
-                <option value="10" {% if items == 10 %}selected{% endif %}>10</option>
-                <option value="25" {% if items == 25 %}selected{% endif %}>25</option>
-                <option value="50" {% if items == 50 %}selected{% endif %}>50</option>
-                <option value="100" {% if items == 100 %}selected{% endif %}>100</option>
-              </select>
-            </td>
-            <td>
-              <select name="sort">
-                <option value="full_name" {% if sort == 'full_name' %}selected{% endif %}>Name</option>
-                <option value="created" {% if sort == 'created' %}selected{% endif %}>Created</option>
-                <option value="updated" {% if sort == 'updated' %}selected{% endif %}>Updated</option>
-                <option value="pushed" {% if sort == 'pushed' %}selected{% endif %}>Pushed</option>
-                <option value="stars" {% if sort == 'stars' %}selected{% endif %}>Stars</option>
-              </select>
-            </td>
-            <td>
-              <select name="direction">
-                <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Ascending</option>
-                <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Descending</option>
-              </select>
-            </td>
-            <td>
-              <input type="submit" value="Go" style="position: relative; top: -2px;">
-            </td>
-          </tr>
-        </form>
-      </table>
-    </div>
+    <div style="background-image: url({% static 'images/site/repositories.png' %}); width: 100%; height: auto; background-repeat: no-repeat; background-position: center; background-size: cover; margin-top: -20px; padding: 100px 0px;"></div>
   </div>
   <hr>
-  <div class='repositories' style="width: 720px;">
-    <table style="width=720px; margin: 0 auto; table-layout: fixed;">
+  {% comment %} Search and Filter {% endcomment %}
+  
+  <div class='repositories'>
+    <table style="width=100%; margin: 0 auto; table-layout: fixed;">
       {% for repo in repos %}
         <tr>
           <td><a href="{% url 'dev_status:repo' repo.name %}">
@@ -55,8 +57,8 @@
             </a>
           </td>
           <td>
-        <p style="font-size: 20px; font-weight: bold;"><a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a></p>
-        <p style="font-size: 15px;">{{ repo.description }}</p>
+        <p style="font-size: 14px; font-weight: bold;"><a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a></p>
+        <p>{{ repo.description }}</p>
         
         </td>
         </tr>

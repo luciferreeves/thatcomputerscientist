@@ -3,10 +3,17 @@ version: '3'
 services:
   web:
     build: .
-    command: entrypoint.sh
     volumes:
       - .:/shifoo
       - /home/ubuntu/database/db.sqlite3:/database/db.sqlite3
       - /home/ubuntu/database/images:/shifoo/images
+  web_migrate:
+    extends:
+      service: web
+    command: python manage.py migrate
+  web_run:
+    extends:
+      service: web
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
-      - "8080:8000"
+      - "8000:8000"

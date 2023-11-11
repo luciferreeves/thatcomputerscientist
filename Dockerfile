@@ -2,10 +2,6 @@ ARG PYTHON_VERSION=3.11-slim-bullseye
 
 FROM python:${PYTHON_VERSION} AS base
 
-RUN ["chmod", "+x", "./thatcomputerscientist/entrypoint.sh"]
-
-ENTRYPOINT [ "./thatcomputerscientist/entrypoint.sh" ]
-
 RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-venv \

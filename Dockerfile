@@ -18,12 +18,6 @@ WORKDIR /shifoo
 
 COPY requirements.txt .
 
-RUN python3 -m venv /shifoo/venv
-
-RUN /shifoo/venv/bin/pip install --upgrade pip
-
-RUN source /shifoo/venv/bin/activate
-
 RUN pip install -r requirements.txt
 
 COPY . .

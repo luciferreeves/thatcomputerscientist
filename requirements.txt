@@ -12,6 +12,7 @@ bs4
 jellyfish
 fuzzywuzzy
 selenium
+django-haystack
 channels
 channels_redis
 daphne
@@ -20,3 +21,4 @@ numpy
 scikit-learn
 akismet
 apscheduler
+django-sslserver

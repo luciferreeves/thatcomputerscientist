@@ -28,6 +28,6 @@ RUN python manage.py makemigrations
 
 RUN python manage.py migrate
 
-EXPOSE 8080
+EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8080", "--workers", "2", "thatcomputerscientist.wsgi"]
+CMD ["python", "manage.py", "runserver"]

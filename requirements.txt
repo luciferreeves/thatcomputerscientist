@@ -8,7 +8,7 @@ cryptocode
 captcha
 PyGithub
 requests
-pillow
+pillow==9.5.0
 pycryptodome
 pygments
 bs4

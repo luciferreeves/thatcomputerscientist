@@ -8,11 +8,13 @@ cryptocode
 captcha
 PyGithub
 requests
+pillow
 pycryptodome
 pygments
 bs4
 jellyfish
 fuzzywuzzy
+python-Levenshtein
 selenium
 django-haystack
 channels
@@ -22,5 +24,9 @@ user_agents
 numpy
 scikit-learn
 akismet
+google-cloud-translate
+django-hosts
 apscheduler
 django-sslserver
+djangorestframework
+django-cors-headers

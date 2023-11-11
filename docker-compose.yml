@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: entrypoint.sh
+    volumes:
+      - .:/shifoo
+      - /home/ubuntu/database/db.sqlite3:/database/db.sqlite3
+      - /home/ubuntu/database/images:/shifoo/images
+    ports:
+      - "8080:8000"

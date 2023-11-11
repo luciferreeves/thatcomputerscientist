@@ -16,6 +16,12 @@ RUN mkdir -p /shifoo
 
 WORKDIR /shifoo
 
+# Bind database and images folders as read write.
+# /home/ubuntu/database -> db.sqlite3 :: bind to /database -> db.sqlite3 in container
+# /home/ubuntu/database/images -> images :: bind to /WORKDIR/images in container
+
+VOLUME ["/database", "/shifoo/images"]
+
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt

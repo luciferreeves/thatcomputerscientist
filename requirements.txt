@@ -4,9 +4,11 @@ python-dotenv
 gunicorn
 whitenoise
 six
+cryptocode
 captcha
 PyGithub
 requests
+pycryptodome
 pygments
 bs4
 jellyfish

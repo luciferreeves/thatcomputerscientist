@@ -43,8 +43,3 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-import os
-
-if os.path.exists('siteshot.png'):
-    os.remove('siteshot.png')

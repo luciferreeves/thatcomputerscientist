@@ -1,16 +1,12 @@
 import json
-import os
-import time
 from io import BytesIO
 
 import requests
 from captcha.image import ImageCaptcha
 from django.core.files.base import ContentFile
 from django.http import HttpResponse
-from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
-from selenium import webdriver
 
 from blog.models import Post
 from users.tokens import CaptchaTokenGenerator
@@ -172,70 +168,4 @@ def captcha_image(request, captcha_string):
     data = imgcaptcha.generate(captcha)
     return HttpResponse(data, content_type='image/png')
 
-
-@never_cache
-def get_screenshot(request):
-    # check if screenshot exists
-    if not os.path.exists('siteshot.png'):
-        options = webdriver.FirefoxOptions()
-        options.headless = True
-        driver = webdriver.Firefox(options=options)
-        driver.set_window_size(1600, 2560)
-
-        url = 'http://localhost:8000'
-
-        # Wait until the page is loaded
-        driver.get(url)
-        time.sleep(5)
-        
-        screenshot = driver.get_screenshot_as_png()
-        screenshot = Image.open(BytesIO(screenshot))
-
-        # Close the browser
-        driver.quit()
-
-        # Save as 'siteshot.png'
-        screenshot.save('siteshot.png', 'PNG')
-    
-
-    # open file called 'siteshot.png' in the root directory
-    with open('siteshot.png', 'rb') as f:
-        image = f.read()
-        # convert to png
-        image = Image.open(BytesIO(image))
-        output = BytesIO()
-        image.save(output, format='PNG')
-
-        response = HttpResponse(output.getvalue(), content_type='image/png')
-        response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-        response['Pragma'] = 'no-cache'
-        response['Expires'] = '0'
-        return response
-
-def socialify(request):
-    repo = request.GET.get('repo')
-    theme = request.GET.get('theme')
-    font = request.GET.get('font')
-    pattern = request.GET.get('pattern')
-    name = request.GET.get('name')
-    description = request.GET.get('description')
-    language_1 = request.GET.get('language_1')
-    language_2 = request.GET.get('language_2')
-    stargazers = request.GET.get('stargazers')
-    forks = request.GET.get('forks')
-    issues = request.GET.get('issues')
-    pulls = request.GET.get('pulls')
-
-    url = 'https://socialify.thatcomputerscientist.com/{}/png?description={}&font={}&forks={}&issues={}&language={}&language2={}&name={}&owner=1&pattern={}&pulls={}&stargazers={}&theme={}'.format(repo, description, font, forks, issues, language_1, language_2, name, pattern, pulls, stargazers, theme)
-
-    req = requests.get(url)
-    image = req.content
-    status = req.status_code
-
-    if status == 200:
-        return HttpResponse(image, content_type='image/png')
-    else:
-        with open('static/images/site/utgi.gif', 'rb') as f:
-            image = f.read()
-            return HttpResponse(image, content_type='image/gif')
 

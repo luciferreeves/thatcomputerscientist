@@ -2,9 +2,17 @@ import json
 import uuid
 
 import redis
+import os
+from dotenv import load_dotenv
 
-redis_instance = redis.StrictRedis(host='localhost', port=6379, db=0)
+load_dotenv()
 
+redis_instance = redis.StrictRedis(
+  host=os.getenv('REDIS_HOST'),
+  port=os.getenv('REDIS_PORT'),
+  password=os.getenv('REDIS_PASSWORD'),
+  db=0
+)
 
 class UserUUIDMiddleware:
     # assign a uuid to the user if they don't have one

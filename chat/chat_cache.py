@@ -2,7 +2,17 @@ import json
 
 import redis
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+r = redis.Redis(
+  host=os.getenv('REDIS_HOST'),
+  port=os.getenv('REDIS_PORT'),
+  password=os.getenv('REDIS_PASSWORD'),
+  db=0
+)
 
 def handle_connect():
     # increase number of connected users

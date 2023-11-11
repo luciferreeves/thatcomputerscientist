@@ -24,7 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import redis
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+# r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(
+  host=os.getenv('REDIS_HOST'),
+  port=os.getenv('REDIS_PORT'),
+  password=os.getenv('REDIS_PASSWORD'),
+  db=0
+)
 r.set('n_connected_lc_users', 0)
 
 # Quick-start development settings - unsuitable for production
@@ -140,7 +146,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [(f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}')],
         },
     },
 }
@@ -177,9 +183,10 @@ AUTH_PASSWORD_VALIDATORS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": os.getenv('REDIS_PASSWORD'),
         }
     }
 }

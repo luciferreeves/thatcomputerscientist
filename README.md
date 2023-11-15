@@ -1,6 +1,9 @@
 # Shifoo (Previously _That Computer Scientist_)
 Source Code for my Personal Website.
 
+- Visit [shi.foo](https://shi.foo) to take a look at the current build.
+
+
 ```
                               README DEPRECATION NOTICE
                               -------------------------
@@ -18,8 +21,6 @@ site to be compatible with HTML4 anymore lol.
 I will be updating the readme soon (hopefully) to reflect the current state of the site.
 ```
 
-
-- Visit [shi.foo](https://shi.foo) to take a look at the current build.
 
 ## Specifications
 - Server: [Nginx](https://www.nginx.com/)

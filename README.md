@@ -2,12 +2,18 @@
 Source Code for my Personal Website.
 
 ```
-                    README DEPRECATION NOTICE
-                    -------------------------
+                              README DEPRECATION NOTICE
+                              -------------------------
 
-Most of the specifications listed in this repository can be considered partially working. This is because the website (in general) needs to be running on a browser compatible with Windows XP or above or Mac OS X 10.6 or above. Although, our initial goal was to keep the site backwards compatible with Windows 98 and Mac OS 9, I think a bit of javascript makes the site more livelier (o˘◡˘o).
+Most of the specifications listed in this repository can be considered partially working. 
+This is because the website (in general) needs to be running on a browser compatible 
+with Windows XP or above or Mac OS X 10.6 or above. Although, our initial goal was to keep
+the site backwards compatible with Windows 98 and Mac OS 9, I think a bit of javascript 
+makes the site more livelier (o˘◡˘o).
 
-I keep pushing updates to this repository, but take this readme with a grain of salt from now on. The instructions, in general, will work for local development, but don't expect the site to be compatible with HTML4 anymore lol.
+I keep pushing updates to this repository, but take this readme with a grain of salt from 
+now on. The instructions, in general, will work for local development, but don't expect the 
+site to be compatible with HTML4 anymore lol.
 
 I will be updating the readme soon (hopefully) to reflect the current state of the site.
 ```

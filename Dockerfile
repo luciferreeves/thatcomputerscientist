@@ -2,62 +2,20 @@ ARG PYTHON_VERSION=3.11-slim-bullseye
 
 FROM python:${PYTHON_VERSION} AS base
 
-RUN apt-get update && apt-get install -y \
-    python3-pip \
-    python3-venv \
-    python3-dev \
-    python3-setuptools \
-    python3-wheel
+RUN apt-get update \
+    # dependencies for building Python packages
+    && apt-get install -y build-essential \
+    # psycopg2 dependencies
+    && apt-get install -y libpq-dev \
+    # Translations dependencies
+    && apt-get install -y gettext \
+    && apt-get install -y libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info \
+    # cleaning up unused files
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONDONTWRITEBYTEshifoo 1
 ENV PYTHONUNBUFFERED 1
-
-ARG DB_DATABASE=${DB_DATABASE}
-ENV DB_DATABASE=${DB_DATABASE}
-ARG DB_USER=${DB_USER}
-ENV DB_USER=${DB_USER}
-ARG DB_PASSWORD=${DB_PASSWORD}
-ENV DB_PASSWORD=${DB_PASSWORD}
-ARG DB_HOST=${DB_HOST}
-ENV DB_HOST=${DB_HOST}
-ARG DB_PORT=${DB_PORT}
-ENV DB_PORT=${DB_PORT}
-ARG MYSQL_ATTR_SSL_CA=${MYSQL_ATTR_SSL_CA}
-ENV MYSQL_ATTR_SSL_CA=${MYSQL_ATTR_SSL_CA}
-ARG AUTHORIZATION_STRING=${AUTHORIZATION_STRING}
-ENV AUTHORIZATION_STRING=${AUTHORIZATION_STRING}
-ARG EMAIL_USER=${EMAIL_USER}
-ENV EMAIL_USER=${EMAIL_USER}
-ARG EMAIL_PASSWORD=${EMAIL_PASSWORD}
-ENV EMAIL_PASSWORD=${EMAIL_PASSWORD}
-ARG MAIL_HOST=${MAIL_HOST}
-ENV MAIL_HOST=${MAIL_HOST}
-ARG ENVIRONMENT=${ENVIRONMENT}
-ENV ENVIRONMENT=${ENVIRONMENT}
-ARG GH_TOKEN=${GH_TOKEN}
-ENV GH_TOKEN=${GH_TOKEN}
-ARG STRIPE_PK=${STRIPE_PK}
-ENV STRIPE_PK=${STRIPE_PK}
-ARG STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-ENV STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-ARG ORACLE_SMTP_USER=${ORACLE_SMTP_USER}
-ENV ORACLE_SMTP_USER=${ORACLE_SMTP_USER}
-ARG ORACLE_SMTP_PASSWORD=${ORACLE_SMTP_PASSWORD}
-ENV ORACLE_SMTP_PASSWORD=${ORACLE_SMTP_PASSWORD}
-ARG ORACLE_SMTP_HOST=${ORACLE_SMTP_HOST}
-ENV ORACLE_SMTP_HOST=${ORACLE_SMTP_HOST}
-ARG AKISMET_API_KEY=${AKISMET_API_KEY}
-ENV AKISMET_API_KEY=${AKISMET_API_KEY}
-ARG GOOGLE_SAFE_BROWSING_API_KEY=${GOOGLE_SAFE_BROWSING_API_KEY}
-ENV GOOGLE_SAFE_BROWSING_API_KEY=${GOOGLE_SAFE_BROWSING_API_KEY}
-ARG REDIS_HOST=${REDIS_HOST}
-ENV REDIS_HOST=${REDIS_HOST}
-ARG REDIS_PASSWORD=${REDIS_PASSWORD}
-ENV REDIS_PASSWORD=${REDIS_PASSWORD}
-ARG REDIS_PORT=${REDIS_PORT}
-ENV REDIS_PORT=${REDIS_PORT}
-ARG DB_DATABASE=${SQLITE_DB_NAME}
-ENV DB_DATABASE=${SQLITE_DB_NAME}
 
 RUN mkdir -p /shifoo
 
@@ -69,12 +27,6 @@ RUN pip install -r requirements.txt
 
 COPY . /shifoo/
 
-RUN python manage.py collectstatic --noinput
-
-RUN python manage.py makemigrations
-
-RUN python manage.py migrate
-
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver"]
+CMD ["sh", "entrypoint.sh"]

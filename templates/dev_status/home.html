@@ -1,4 +1,5 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
+{% load replace %}
 <div class="main">
   <div style="position: relative; top: 40px;">
     <table style="margin: 0 auto; position: relative; top: 120px;">
@@ -57,9 +58,34 @@
             </a>
           </td>
           <td>
-        <p style="font-size: 14px; font-weight: bold;"><a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a></p>
-        <p>{{ repo.description }}</p>
-        
+          <p style="font-size: 14px; font-weight: bold;">
+            <a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a>
+            {% if repo.isFork %}
+              <span title="Forked Repository"><img src="{% static 'images/site/icons/isFork.png' %}" style="display: inline-block; margin-left: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
+            {% endif %}
+            {% if repo.isArchived %}
+              <span title="Archived Repository"><img src="{% static 'images/site/icons/cabinet.gif' %}" style="display: inline-block; margin-left: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
+            {% endif %}
+          </p>
+          <p>{{ repo.description }}</p>
+          <p>
+            {% if repo.homepageUrl %}
+              <span><img src="{% static 'images/site/icons/a-globe.gif' %}" style="display: inline-block; margin-right: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
+              <span style="margin-right: 20px;"><a href="{{ repo.homepageUrl }}" target="_blank">{{ repo.homepageUrl|replace:'https://'|replace:'http://' }}</a></span>
+            {% endif %}
+            <span title="Last Pushed"><b>Last Pushed:</b> <em>{{ repo.pushedAt }}</em></span>
+          </p>
+        <hr>
+          <p>
+            {% if repo.licenseInfo %}
+            <span title="License"><img src="{% static 'images/site/icons/scale.gif' %}" style="display: inline-block; margin-right: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
+            <span title="License" style="margin-right: 20px;">{{ repo.licenseInfo.name }}</span>
+            {% endif %}
+            <span title="Stargazers"><img src="{% static 'images/site/icons/anistar.gif' %}" style="display: inline-block; margin-right: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
+            <span title="Stargazers" style="margin-right: 20px;">{{ repo.stargazerCount }}</span>
+            <span title="Forks"><img src="{% static 'images/site/icons/isFork.png' %}" style="display: inline-block; margin-right: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
+            <span title="Forks">{{ repo.forkCount }}</span>
+          </p>
         </td>
         </tr>
       {% endfor %}

@@ -14,7 +14,7 @@ g = Github(os.getenv("GH_TOKEN"))
 def home(request):
     page = request.GET.get("page") or 1
     items = request.GET.get("items") or 10
-    sort = request.GET.get("sort") or "updated"
+    sort = request.GET.get("sort") or "pushed"
     direction = request.GET.get("direction") or "desc"
     search = request.GET.get("search") or ""
     context = {}
@@ -46,6 +46,15 @@ def home(request):
                     node {{
                         name
                         description
+                        forkCount
+                        homepageUrl
+                        isArchived
+                        isFork
+                        licenseInfo {{
+                            name
+                        }}
+                        pushedAt
+                        stargazerCount
                     }}
                 }}
             }}
@@ -55,12 +64,16 @@ def home(request):
         user=user, sort=sort_map[sort], direction=direction_map[direction]
     )
     data = requests.post(url, json={"query": query}, headers=headers).json()
-
     repos = [
-        {"name": repo["node"]["name"], "description": repo["node"]["description"]}
+        {"name": repo["node"]["name"], "description": repo["node"]["description"], "forkCount": repo["node"]["forkCount"], "homepageUrl": repo["node"]["homepageUrl"], "isArchived": repo["node"]["isArchived"], "isFork": repo["node"]["isFork"], "licenseInfo": repo["node"]["licenseInfo"], "pushedAt": repo["node"]["pushedAt"], "stargazerCount": repo["node"]["stargazerCount"]}
         for repo in data["data"]["user"]["repositories"]["edges"]
     ]
     total_count = data["data"]["user"]["repositories"]["totalCount"]
+
+    # convert pushedAt to date
+    for repo in repos:
+        repo["pushedAt"] = repo["pushedAt"].split("T")[0]
+
 
     context["search"] = search
     if search:

@@ -27,8 +27,14 @@
                     <input type="submit" value="Search" class="button button-special" style="margin: 10px 0;"/>
                 </form>
             </td>
-            <td id="search_results" style="width: 530px; vertical-align: top; padding-left: 20px;">
+            <td id="search_results" style="width: 530px; max-width: 530px; vertical-align: top; padding-left: 20px;">
                 <h2>Search Results</h2>
+                <style>
+                    div > pre {
+                        white-space: pre-wrap;
+                        word-wrap: break-word;
+                    }
+                </style>
                 <p style="margin-bottom: 20px;">Your search for "<strong>{{ request.GET.q }}</strong>" returned {{ search_results }} Result{% if search_results != 1 %}s{% endif %}.</p>
 
                 {% if 'posts' in search_in %}

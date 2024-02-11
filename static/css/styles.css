@@ -528,3 +528,13 @@ blockquote {
         max-width: 300px;
     }
 }
+
+.subhead {
+    initial-letter: 2;
+}
+
+.subhead::first-letter {
+    initial-letter: 2;
+    margin: 0 10px 0 0;
+}
+

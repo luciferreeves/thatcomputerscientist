@@ -183,6 +183,7 @@ def post(request, slug):
         first_paragraph = soup.find('p')
         if first_paragraph is not None:
             first_paragraph = str(first_paragraph)
+            first_paragraph = first_paragraph.replace('<p>', '<p class="subhead">')
             soup.find('p').decompose()
 
         post.first_paragraph = first_paragraph

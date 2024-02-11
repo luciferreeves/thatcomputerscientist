@@ -15,7 +15,7 @@
                     {% endif %}
                 </p>
                 {% if activity_user_profile.bio %}
-                    <p><b>Bio: </b>{{ activity_user_profile.bio }}</p>
+                    <p><b>Bio: </b>{{ activity_user_profile.bio|linebreaksbr }}</p>
                 {% endif %}
     
                 {% if activity_user_profile.location %}

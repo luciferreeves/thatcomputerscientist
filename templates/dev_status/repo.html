@@ -13,8 +13,11 @@
       style="display: inline-block; vertical-align: middle; height: 16px"
     />
   </span>
-  <a href="{% if parent == '' %}{% url 'dev_status:repo' repo %}{% else %}{% url 'dev_status:repo-path' repo parent %}{% endif %}">..</a>
-  {% endif %} 
+  <a
+    href="{% if parent == '' %}{% url 'dev_status:repo' repo %}{% else %}{% url 'dev_status:repo-path' repo parent %}{% endif %}"
+    >..</a
+  >
+  {% endif %}
 </p>
 {% if files and "byteSize" not in files %}
 <table id="file-list" width="100%">
@@ -46,14 +49,14 @@
           />
         </span>
         {% endif %}
-        <a href="{% url 'dev_status:repo-path' repo file.path %}">{{ file.name }}</a>
+        <a href="{% url 'dev_status:repo-path' repo file.path %}"
+          >{{ file.name }}</a
+        >
       </td>
-      <td>{{ file.commit.message }}</td>
+      <td>{{ file.commit.message|truncatechars:50 }}</td>
       <td>{{ file.commit.committedDate }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-{% endif %}
-  
-{% endblock %}
+{% endif %} {% endblock %}

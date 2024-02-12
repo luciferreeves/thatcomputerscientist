@@ -1,5 +1,6 @@
 import math
 import os
+import re
 
 import requests
 from django.shortcuts import render
@@ -124,7 +125,6 @@ def get_repo(request, r=None, p=None):
     url = "https://api.github.com/graphql"
     headers = {"Authorization": "token " + os.getenv("GH_TOKEN")}
     parent = "/".join(p.split("/")[:-1]) if p and not len(p.split("/")) == 0 else None
-    print(parent, p)
 
     # get the contents of the repository along with the latest commit associated with each file or directory
     query = """
@@ -186,7 +186,9 @@ def get_repo(request, r=None, p=None):
         )
 
         for entry in tree:
-            entry["uniquename"] = entry["path"].replace("/", "").replace(".", "")
+            # make path character only
+            entry["uniquename"] = re.sub(r"[^a-zA-Z]", "", entry["path"])
+
             query += """
             {uniquename}: history(first: 1, path: "{path}") {{
                 nodes {{

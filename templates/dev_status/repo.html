@@ -1,40 +1,59 @@
-{% extends 'blog/partials/base.html' %} {% block content %}
-<div class="main">
-  <h3 style="margin-bottom: 0px">
-    <em>Source Code</em>
-    {% comment %} <ul class="topnav" style="float:right;">
-      <li><a href="#">Commit History</a></li>
-      <li><a href="#">Build History</a></li>
-      <li><a href="#">Issues</a></li>
-      <li><a href="#">Pull Requests</a></li>
-    </ul> {% endcomment %}
-  </h3>
-  <hr>
-  <br>
-  <div class="files">
-    {% if parent %}
-      <div class="file">
-        <div class="ft-dir"></div>
-        <a class="file-name" href="{% url 'dev_status:repo-path' repo parent %}">..</a>
-      </div>
-    {% endif %}
-    {% if parent == '' %}
-      <div class="file">
-        <div class="ft-dir"></div>
-        <a class="file-name" href="{% url 'dev_status:repo' repo %}">..</a>
-      </div>
-    {% endif %}
-    {% if files %}
-        {% for file in files %}
-        <div class="file">
-          <div class="ft-{{ file.type }}"></div>
-          <a class="file-name" href="{% url 'dev_status:repo-path' repo file.path %}">{{ file.name }}</a>
-        </div>
-        {% endfor %}
-    {% endif %}
-    {% if file %}
-      <script src = "https://emgithub.com/embed-v2.js?target={{ file }}&style=github-dark-dimmed&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
-    {% endif %}
-  </div>
-</div>
+{% extends 'blog/partials/base.html' %} {% block content %} {% load static %}
+<img
+  style="width: 730px"
+  src="{% url 'ignis:socialify' %}?repo=luciferreeves/{{repo}}&theme=Dark&font=Koho&pattern=Floating%20Cogs&name=1&description=0&language_1=1&language_2=1&stargazers=1&forks=1&issues=1&pulls=1"
+  alt="Socialify"
+/>
+{% if parent is not None %}
+<p>
+  <span title="Go to parent directory" style="margin-right: 5px">
+    <img
+      src="{% static 'images/site/icons/folder.gif' %}"
+      alt="Folder"
+      style="display: inline-block; vertical-align: middle; height: 16px"
+    />
+  </span>
+  <a href="{% if parent == '' %}{% url 'dev_status:repo' repo %}{% else %}{% url 'dev_status:repo-path' repo parent %}{% endif %}">..</a>
+  {% endif %} 
+</p>
+{% if files and "byteSize" not in files %}
+<table id="file-list" width="100%">
+  <thead>
+    <tr style="margin-bottom: 10px; border-bottom: 1px solid #ddd">
+      <th>Name</th>
+      <th>Last Commit</th>
+      <th>Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in files %}
+    <tr>
+      <td>
+        {% if file.type == 'tree' %}
+        <span title="Directory" style="margin-right: 5px">
+          <img
+            src="{% static 'images/site/icons/folder.gif' %}"
+            alt="Folder"
+            style="display: inline-block; vertical-align: middle; height: 16px"
+          />
+        </span>
+        {% else %}
+        <span title="File" style="margin-right: 5px">
+          <img
+            src="{% static 'images/icons/notepad_file-2.png' %}"
+            alt="File"
+            style="display: inline-block; vertical-align: middle; height: 16px"
+          />
+        </span>
+        {% endif %}
+        <a href="{% url 'dev_status:repo-path' repo file.path %}">{{ file.name }}</a>
+      </td>
+      <td>{{ file.commit.message }}</td>
+      <td>{{ file.commit.committedDate }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+  
 {% endblock %}

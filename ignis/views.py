@@ -1,6 +1,6 @@
 import json
 from io import BytesIO
-import os
+
 import requests
 from captcha.image import ImageCaptcha
 from django.core.files.base import ContentFile
@@ -184,28 +184,11 @@ def socialify(request):
 
     url = 'https://socialify.thatcomputerscientist.com/{}/png?description={}&font={}&forks={}&issues={}&language={}&language2={}&name={}&owner=1&pattern={}&pulls={}&stargazers={}&theme={}'.format(repo, description, font, forks, issues, language_1, language_2, name, pattern, pulls, stargazers, theme)
 
-    image_unique_name = url.replace('https://socialify.thatcomputerscientist.com/', '').replace('/', '_')
-    image_path = 'images/repo_socialify_cache'
-    image_path = '{}/{}.png'.format(image_path, image_unique_name)
-
-    if repo.split('/')[0] == 'luciferreeves':
-        if os.path.exists(image_path):
-            with open(image_path, 'rb') as f:
-                image = f.read()
-                return HttpResponse(image, content_type='image/png')
-
     req = requests.get(url)
     image = req.content
     status = req.status_code
 
     if status == 200:
-        if not os.path.exists('images/repo_socialify_cache'):
-            os.makedirs('images/repo_socialify_cache')
-
-        with open(image_path, 'wb') as f:
-            if repo.split('/')[0] == 'luciferreeves':
-                f.write(image)
-
         return HttpResponse(image, content_type='image/png')
     else:
         with open('static/images/site/utgi.gif', 'rb') as f:

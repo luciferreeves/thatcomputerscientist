@@ -1,7 +1,7 @@
 {% extends 'blog/partials/base.html' %} {% block content %} {% load static %}
 <img
-  style="width: 730px"
-  src="{% url 'ignis:socialify' %}?repo=luciferreeves/{{repo}}&theme=Dark&font=Koho&pattern=Floating%20Cogs&name=1&description=0&language_1=1&language_2=1&stargazers=1&forks=1&issues=1&pulls=1"
+  style="width: 730px; display: block; margin: 40px auto 20px auto"
+  src="https://socialify.thatcomputerscientist.com/luciferreeves/{{repo}}/png?font=KoHo&forks=1&issues=1&language=1&language2=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark"
   alt="Socialify"
 />
 {% if parent is not None %}

@@ -15,10 +15,14 @@
   font-style: normal;
 }
 
-/* pre,
+.linenos,
 code {
   font-family: "Comic Code Regular", sans-serif;
-} */
+}
+
+.linenos > .linenodiv > pre {
+  line-height: 125%;
+}
 
 .en {
   font-family: "Mali", sans-serif;

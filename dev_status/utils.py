@@ -91,7 +91,7 @@ def highlight_code(text, filename):
         noclasses=True,
         style="native",
         wrapcode=True,
-        linenos="inline",
+        linenos="table",
         nobackground=True,
     )
     if lexer:

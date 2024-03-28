@@ -6,7 +6,13 @@ import requests
 from django.shortcuts import render
 from dotenv import load_dotenv
 from github import Github
-from dev_status.utils import relative_date
+from dev_status.utils import (
+    relative_date,
+    text_lines,
+    text_loc,
+    size_format,
+    highlight_code,
+)
 
 load_dotenv()
 g = Github(os.getenv("GH_TOKEN"))
@@ -172,6 +178,13 @@ def get_repo(request, r=None, p=None):
     else:
         # if it is a blob, display the file
         tree = data["data"]["repository"]["object"]
+        tree["path"] = p
+        tree["name"] = p.split("/")[-1]
+        if not tree["isBinary"]:
+            tree["lines"] = text_lines(tree["text"])
+            tree["loc"] = text_loc(tree["text"])
+            tree["size"] = size_format(tree["byteSize"])
+            tree["text"] = highlight_code(tree["text"], tree["name"])
 
     # get commit information for each file or directory
     if viewMode == "tree":

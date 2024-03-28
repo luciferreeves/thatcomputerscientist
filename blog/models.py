@@ -74,7 +74,7 @@ class AnonymousCommentUser(models.Model):
         return cls(email=email_hash, token=token_hash, avatar=avatar)
     
     def __str__(self):
-        return self.name
+        return self.name + "(" + self.email + ")"
 
 class Comment(models.Model):
     post = models.ForeignKey(

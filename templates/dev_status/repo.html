@@ -17,7 +17,7 @@
 <p>
   <span title="Go to parent directory" style="margin-right: 5px">
     <img
-      src="{% static 'images/site/icons/folder.gif' %}"
+      src="{% static 'images/site/icons/Folder.png' %}"
       alt="Folder"
       style="display: inline-block; vertical-align: middle; height: 16px"
     />
@@ -44,7 +44,7 @@
         {% if file.type == 'tree' %}
         <span title="Directory" style="margin-right: 5px">
           <img
-            src="{% static 'images/site/icons/folder.gif' %}"
+            src="{% static 'images/site/icons/Folder.png' %}"
             alt="Folder"
             style="display: inline-block; vertical-align: middle; height: 16px"
           />
@@ -95,22 +95,46 @@
   </div>
   {{files.text|safe}}
 </div>
+{% endif %} {% if "byteSize" in files and files.isBinary %}
 
-  {% comment %}
-  <p>
-    <span title="File" style="margin-right: 5px">
-      <img
-        src="{% static 'images/icons/notepad_file-2.png' %}"
-        alt="File"
-        style="display: inline-block; vertical-align: middle; height: 16px"
-      />
-    </span>
-    <a href="{% url 'dev_status:repo-path' repo files.path %}"
-      >{{ files.name }}</a
+<div
+  style="
+    background: #272727a3;
+    border: 1px solid #434343;
+    border-radius: 8px 8px 2px 2px;
+  "
+>
+  <div
+    style="
+      background: #353535;
+      padding: 0px 10px;
+      border-radius: 8px 8px 0px 0px;
+    "
+  >
+    <h4 style="margin: 0; margin-left: 10px">
+      Viewing
+      <a href="{% url 'dev_status:repo-path' repo files.path %}"
+        >{{ files.name }}</a
+      >
+      <pre style="display: inline-block; margin-left: 10px">
+{{ files.size }}</pre
+      >
+    </h4>
+  </div>
+  {% if files.isImage == True %}
+  <img
+    src="https://raw.githubusercontent.com/luciferreeves/{{repo}}/{{files.def_branch}}/{{files.path}}"
+    style="max-width: 100%; display: block; margin: 40px auto"
+    alt="{{files.name}}"
+  />
+  {% else %}
+  <p style="margin: 20px; text-align: center">Binary file, cannot display</p>
+  <p style="margin: 20px; text-align: center">
+    Download
+    <a
+      href="https://raw.githubusercontent.com/luciferreeves/{{repo}}/{{files.def_branch}}/{{files.path}}"
+      >here</a
     >
-    - {{ files.size }}
   </p>
-
-  <pre>{{ files.text }}</pre>
-  {% endcomment %} {% endif %} {% endblock %}
+  {% endif %} {% endif %} {% endblock content %}
 </div>

@@ -136,6 +136,9 @@ def get_repo(request, r=None, p=None):
     query = """
     query {{
         repository(owner: "luciferreeves", name: "{repo}") {{
+            defaultBranchRef {{
+                name
+            }}
             object(expression: "HEAD:{path}") {{
                 ... on Tree {{
                     entries {{
@@ -157,6 +160,7 @@ def get_repo(request, r=None, p=None):
     """.format(
         repo=r, path=p
     )
+
     data = requests.post(url, json={"query": query}, headers=headers).json()
 
     tree = []
@@ -166,6 +170,8 @@ def get_repo(request, r=None, p=None):
         )
     except:
         viewMode = "blob"
+
+    # default_branch = data["data"]["repository"]["defaultBranchRef"]["name"]
 
     # order tree by name and folder first if it is a tree
     if viewMode == "tree":
@@ -183,7 +189,6 @@ def get_repo(request, r=None, p=None):
         if not tree["isBinary"]:
             tree["lines"] = text_lines(tree["text"])
             tree["loc"] = text_loc(tree["text"])
-            tree["size"] = size_format(tree["byteSize"])
             tree["text"] = highlight_code(tree["text"], tree["name"])
 
     # get commit information for each file or directory
@@ -230,5 +235,13 @@ def get_repo(request, r=None, p=None):
     context["files"] = tree
     context["parent"] = parent
     context["repo"] = r
+
+    if "byteSize" in tree:
+        tree["size"] = size_format(tree["byteSize"])
+    # isImage?
+    if viewMode == "blob":
+        context["files"]["def_branch"] = data["data"]["repository"]["defaultBranchRef"]["name"]
+        if tree["name"].endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico", ".bmp")):
+            context["files"]["isImage"] = True
 
     return render(request, "dev_status/repo.html", context)

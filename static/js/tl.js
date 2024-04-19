@@ -45,6 +45,9 @@ function translateJapanese() {
   } else {
     selectEl.value = 'ja';
     selectEl.dispatchEvent(new Event("change"));
+    setTimeout(function () {
+      save();
+    }, 6969);
   }
 }
 
@@ -59,10 +62,36 @@ if (currentLang === "ja") {
   $('#tl_ja').show();
   $('body').addClass('ja');
   $('body').removeClass('en');
+  setTimeout(function () {
+    save();
+  }, 6969);
 } else {
   $('#tl_ja').hide();
   $('#tl_en').show();
   $('body').addClass('en');
   $('body').removeClass('ja');
   restoreLang();
+}
+
+// let entirePage;
+
+function save() {
+  // only body
+  const entirePage = document.getElementById('wrap').innerHTML;
+  const path = window.location.pathname;
+  
+  const storedPage = window.sessionStorage.getItem(path);
+
+  if (storedPage === null || storedPage !== entirePage) {
+    console.log('Saving page to DB');
+    window.sessionStorage.setItem(path, entirePage);
+  }
+
+  // db.collection('pages').doc(path).get().then(page => {
+  //   const storedPage = page?.page;
+  //   if (storedPage === null || storedPage !== entirePage) {
+  //     console.log('Saving page to DB');
+  //     savePageToDB(entirePage, path);
+  //   }
+  // });
 }

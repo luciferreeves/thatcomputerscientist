@@ -14,6 +14,9 @@ def next_read(post):
     current_post = Post.objects.get(id=post.id)
     posts = Post.objects.filter(is_public=True).exclude(id=current_post.id)
 
+    if len(posts) < 2:
+        return None
+
     # Our method is very simple. First we compare the bodies of the posts to
     # find the similarity between them. Then we sort the posts based on their
     # similarity and return the post with the highest similarity.

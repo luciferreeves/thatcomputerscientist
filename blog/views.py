@@ -227,7 +227,7 @@ def comment(request, slug):
                 r_spam = check_spam(comment=request.POST.get('body'))
                 if r_spam != 'N':
                     messages.error(request, r_spam, extra_tags='spam')
-                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
+                    return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#new-comment')
                 
                 # then we continue
                 post = Post.objects.get(slug=slug)

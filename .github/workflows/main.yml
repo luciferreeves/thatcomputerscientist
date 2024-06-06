@@ -13,7 +13,10 @@ jobs:
           key: ${{ secrets.KEY_ED25519 }}
           port: ${{ secrets.PORT }}
           script: |
-            if [ -z "$GEMINI_API_KEY" ]; then
-              export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            fi
+            # if [ -z "$GEMINI_API_KEY" ]; then
+            #   export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            # fi
+            # Add to /home/ubuntu/.env
+            grep -qxF 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' /home/ubuntu/.env || echo 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' >> /home/ubuntu/.env
+            cat /home/ubuntu/.env
             sh /home/ubuntu/deploy.sh

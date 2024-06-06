@@ -20,32 +20,34 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 akismet_api = akismet.Akismet(
     key=os.getenv("AKISMET_API_KEY"),
-    blog_url="https://preview.thatcomputerscientist.com"
-    if settings.DEBUG
-    else "https://thatcomputerscientist.com",
+    blog_url=(
+        "https://preview.thatcomputerscientist.com"
+        if settings.DEBUG
+        else "https://thatcomputerscientist.com"
+    ),
 )
 
 
 def check_spam(user_ip, user_agent, comment, author):
-    spam = False
-    akismet_data = {
-        "comment_type": "comment",
-        "comment_author": author,
-        "comment_content": comment,
-        "is_test": settings.DEBUG,
-    }
-    spam = akismet_api.comment_check(user_ip, user_agent, **akismet_data)
+    # spam = False
+    # akismet_data = {
+    #     "comment_type": "comment",
+    #     "comment_author": author,
+    #     "comment_content": comment,
+    #     "is_test": settings.DEBUG,
+    # }
+    # spam = akismet_api.comment_check(user_ip, user_agent, **akismet_data)
 
-    if spam:
-        return spam
-    
-    # Now we check with Google Generative AI 
+    # if spam:
+    #     return spam
+
+    # Now we check with Google Generative AI
     if gemini_api_key is None:
-        return spam
+        return False
     else:
         genai.configure(api_key=gemini_api_key)
-    
-    model = genai.GenerativeModel('gemini-1.5-flash')
+
+    model = genai.GenerativeModel("gemini-1.5-flash")
 
     input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam. N if the comment seems safe. Do not access links. Just mark Y or N for the text. \n\nText: {comment}"
 
@@ -54,9 +56,9 @@ def check_spam(user_ip, user_agent, comment, author):
     r_text = response.text
 
     if r_text == "Y":
-        spam = True
-
-    return spam
+        return True
+    else:
+        return False
 
 
 def add_excerpt(post):

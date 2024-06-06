@@ -16,7 +16,7 @@ jobs:
             # if [ -z "$GEMINI_API_KEY" ]; then
             #   export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
             # fi
-            # Add to /home/ubuntu/.env
-            grep -qxF 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' /home/ubuntu/.env || echo 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' >> /home/ubuntu/.env
+            # Add to /home/ubuntu/.shifooenv
+            grep -qxF 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' /home/ubuntu/.shifooenv || echo 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' >> /home/ubuntu/.shifooenv
             cat /home/ubuntu/deploy.sh
             sh /home/ubuntu/deploy.sh

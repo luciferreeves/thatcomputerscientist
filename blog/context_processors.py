@@ -50,9 +50,32 @@ def check_spam(comment, post):
     model = genai.GenerativeModel("gemini-pro")
     print(comment)
 
-    input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam, unrelated to post or random gibberish or a bunch of letters which make no sense or looks like a coupon code or something. N if the comment seems safe. Do not access links. Just mark Y or N for the text. Post Title: {post.title}. \n Post Body: {post.body}. \n Comment: {comment}. \n Judge if the comment belongs on the post or not. Random texts, links, and gibberish are considered spam. Trying to phish or promote shady links are also considered spam. Please mark Y if the comment seems like spam. N if the comment seems safe. Only output a single character. Y or N."
+    input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam, or random gibberish or a bunch of letters which make no sense or looks like a coupon code or something. Only block spam, nothing else. If a comment contains cuss words, personal attacks, profanity or any possible harrasment, it is NOT spam (unless it contains spammy gibberish or links). This is a strict spam only filter. N if the comment is not spam. Do not access links. Just mark Y or N for the text. Post Title: {post.title}. \n Comment: {comment}. \n Judge if the comment belongs on the post or not. Random texts, links, and gibberish are considered spam. Trying to phish or promote shady links are also considered spam. Output single character - either Y or N only."
 
-    response = model.generate_content(input_prompt)
+    bn = [
+        {
+            "category": "HARM_CATEGORY_DANGEROUS",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_NONE",
+        },
+    ]
+
+    response = model.generate_content(input_prompt, safety_settings=bn)
 
     r_text = response.text
 

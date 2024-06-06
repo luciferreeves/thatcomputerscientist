@@ -183,7 +183,7 @@ background: #ffffff0d;
     {% if messages %}
     {% for message in messages %}
     {% if 'spam' in message.tags %}
-        <p style="color: #ffb6b6;">Your comment was not allowed as it was marked as possible spam. If you think this is a mistake, please contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>.</p>
+        <p style="color: #ffb6b6;">Your comment was not allowed as it was marked as possible spam. If you think this is a mistake, please contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>. ({{ message }})</p>
     {% endif %}
     {% endfor %}
     {% endif %}

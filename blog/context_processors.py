@@ -48,8 +48,9 @@ def check_spam(comment, post):
         genai.configure(api_key=gemini_api_key)
 
     model = genai.GenerativeModel("gemini-pro")
+    print(comment)
 
-    input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam, unrelated to post or random gibberish. N if the comment seems safe. Do not access links. Just mark Y or N for the text. Post Title: {post.title}. \n Post Body: {post.body}. \n Comment: {comment}. \n Judge if the comment belongs on the post or not. Random texts, links, and gibberish are considered spam. Trying to phish or promote shady links are also considered spam. Please mark Y if the comment seems like spam. N if the comment seems safe. Only output a single character. Y or N."
+    input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam, unrelated to post or random gibberish or a bunch of letters which make no sense or looks like a coupon code or something. N if the comment seems safe. Do not access links. Just mark Y or N for the text. Post Title: {post.title}. \n Post Body: {post.body}. \n Comment: {comment}. \n Judge if the comment belongs on the post or not. Random texts, links, and gibberish are considered spam. Trying to phish or promote shady links are also considered spam. Please mark Y if the comment seems like spam. N if the comment seems safe. Only output a single character. Y or N."
 
     response = model.generate_content(input_prompt)
 

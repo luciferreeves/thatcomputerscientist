@@ -252,6 +252,13 @@ background: #ffffff0d;
 {% else %}
 <div id="new-comment" class="mtsbitem">
     <h2>Leave a Comment</h2>
+    {% if messages %}
+    {% for message in messages %}
+    {% if 'spam' in message.tags %}
+        <p style="color: #ffb6b6;">Your comment was not allowed as it was marked as possible spam. If you think this is a mistake, please contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>.</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
     <p id="ancmClick">You must be <em>logged in</em> to leave a comment. Or, you can <a href="javascript:;" onclick="toggleAnon()">leave an anonymous comment</a>.</p>
     <div  id="anonymous-comment-form" style="display: none;">
     <form action="{% url 'blog:anon_comment' post.slug %}" method="POST">

@@ -15,3 +15,5 @@ jobs:
           script: |
             grep -qxF 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' /home/ubuntu/.shifooenv || echo 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' >> /home/ubuntu/.shifooenv
             sh /home/ubuntu/deploy.sh
+
+            

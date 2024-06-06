@@ -1,16 +1,19 @@
 name: remote ssh command
 on: [push]
 jobs:
-
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY_ED25519 }}
-        port: ${{ secrets.PORT }}
-        script: sh /home/ubuntu/deploy.sh
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY_ED25519 }}
+          port: ${{ secrets.PORT }}
+          script: |
+            if [ -z "$GEMINI_API_KEY" ]; then
+              export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            fi
+            sh /home/ubuntu/deploy.sh

@@ -10,10 +10,13 @@ from django.core.cache import cache
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, guess_lexer
+import google.generativeai as genai
 
 from .models import Category, Comment, Post
 
 dotenv.load_dotenv()
+
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 akismet_api = akismet.Akismet(
     key=os.getenv("AKISMET_API_KEY"),
@@ -24,13 +27,36 @@ akismet_api = akismet.Akismet(
 
 
 def check_spam(user_ip, user_agent, comment, author):
+    spam = False
     akismet_data = {
         "comment_type": "comment",
         "comment_author": author,
         "comment_content": comment,
         "is_test": settings.DEBUG,
     }
-    return akismet_api.comment_check(user_ip, user_agent, **akismet_data)
+    spam = akismet_api.comment_check(user_ip, user_agent, **akismet_data)
+
+    if spam:
+        return spam
+    
+    # Now we check with Google Generative AI 
+    if gemini_api_key is None:
+        return spam
+    else:
+        genai.configure(api_key=gemini_api_key)
+    
+    model = genai.GenerativeModel('gemini-1.5-flash')
+
+    input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam. N if the comment seems safe. Do not access links. Just mark Y or N for the text. \n\nText: {comment}"
+
+    response = model.generate_content(input_prompt)
+
+    r_text = response.text
+
+    if r_text == "Y":
+        spam = True
+
+    return spam
 
 
 def add_excerpt(post):

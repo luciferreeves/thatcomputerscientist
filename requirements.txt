@@ -30,3 +30,4 @@ apscheduler
 django-sslserver
 djangorestframework
 django-cors-headers
+google-generativeai

@@ -180,6 +180,13 @@ background: #ffffff0d;
 {% if user.is_authenticated %}
 <div id="new-comment"  class="mtsbitem">
     <h2>Leave a Comment</h2>
+    {% if messages %}
+    {% for message in messages %}
+    {% if 'spam' in message.tags %}
+        <p style="color: red;">Your comment was not allowed as it was marked as possible spam. If you think this is a mistake, please contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>.</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
     <form action="{% url 'blog:comment' post.slug %}" method="POST">
         {% csrf_token %}
         <textarea required name="comment" id="comment" cols="88" rows="10" style="width: 710px; display: block; margin-bottom: 15px;" placeholder="Your comment here..."></textarea>
@@ -362,13 +369,6 @@ background: #ffffff0d;
 <script type="text/javascript">
     var onImage = "{% static 'images/site/on.png' %}";
     var offImage = "{% static 'images/site/off.png' %}";
-    {% if messages %}
-    {% for message in messages %}
-    {% if 'spam' in message.tags %}
-        alert('Your comment was marked as spam. If you think this is a mistake, please contact me.');
-    {% endif %}
-    {% endfor %}
-    {% endif %}
     {% if request.COOKIES.anonymous_name and request.COOKIES.anonymous_email and request.COOKIES.anonymous_token %}
         $('#ancmClick').toggle();
         $('#anonymous-comment-form').toggle();

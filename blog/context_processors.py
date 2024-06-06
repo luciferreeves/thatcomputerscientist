@@ -43,7 +43,7 @@ def check_spam(user_ip, user_agent, comment, author):
 
     # Now we check with Google Generative AI
     if gemini_api_key is None:
-        return False
+        return True
     else:
         genai.configure(api_key=gemini_api_key)
 

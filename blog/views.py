@@ -224,16 +224,9 @@ def comment(request, slug):
     if request.method == 'POST':
         if request.user.is_authenticated:
             try:
-                # check for spam first
-                user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
-                if user_ip:
-                    user_ip = user_ip.split(',')[0]
-                else:
-                    user_ip = request.META.get('REMOTE_ADDR')
-                user_agent_string = request.META.get('HTTP_USER_AGENT', '')
-                user_agent = parse(user_agent_string)
-                if check_spam(user_ip=user_ip, user_agent=user_agent, comment=request.POST.get('body'), author=request.user.username):
-                    messages.error(request, request.POST.get('body'), extra_tags='spam')
+                r_spam = check_spam(comment=request.POST.get('body'))
+                if r_spam != 'N':
+                    messages.error(request, r_spam, extra_tags='spam')
                     return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#comment-' + str(comment.id))
                 
                 # then we continue
@@ -266,16 +259,9 @@ def anon_comment(request, slug):
             anonymous_token, at = request.POST.get('anonymous-token'), request.POST.get('anonymous-token')
             new_anonymous_token = request.POST.get('new-anonymous-token')
             anonymous_comment = request.POST.get('anonymous-comment')
-            # check for spam first
-            user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
-            if user_ip:
-                user_ip = user_ip.split(',')[0]
-            else:
-                user_ip = request.META.get('REMOTE_ADDR')
-            user_agent_string = request.META.get('HTTP_USER_AGENT', '')
-            user_agent = parse(user_agent_string)
-            if check_spam(user_ip=user_ip, user_agent=user_agent, comment=anonymous_comment, author=anonymous_name):
-                messages.error(request, anonymous_comment, extra_tags='spam')
+            res_spam = check_spam(comment=anonymous_comment)
+            if res_spam != 'N':
+                messages.error(request, res_spam, extra_tags='spam')
                 return redirect(reverse('blog:post', kwargs={'slug': slug}) + '#new-comment')
 
             # now continue with the comment

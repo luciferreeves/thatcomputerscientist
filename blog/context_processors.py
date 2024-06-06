@@ -28,7 +28,7 @@ akismet_api = akismet.Akismet(
 )
 
 
-def check_spam(user_ip, user_agent, comment, author):
+def check_spam(comment):
     # spam = False
     # akismet_data = {
     #     "comment_type": "comment",
@@ -55,10 +55,7 @@ def check_spam(user_ip, user_agent, comment, author):
 
     r_text = response.text
 
-    if r_text == "Y":
-        return True
-    else:
-        return False
+    return r_text
 
 
 def add_excerpt(post):

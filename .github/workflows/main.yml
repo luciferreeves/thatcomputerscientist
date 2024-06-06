@@ -13,10 +13,8 @@ jobs:
           key: ${{ secrets.KEY_ED25519 }}
           port: ${{ secrets.PORT }}
           script: |
-            # if [ -z "$GEMINI_API_KEY" ]; then
-            #   export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            # fi
-            # Add to /home/ubuntu/.shifooenv
             grep -qxF 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' /home/ubuntu/.shifooenv || echo 'GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}' >> /home/ubuntu/.shifooenv
-            cat /home/ubuntu/deploy.sh
+            # Print the environment variables - test purpose
+            cat /home/ubuntu/.shifooenv
+            echo "Deploying the code"
             sh /home/ubuntu/deploy.sh

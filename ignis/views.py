@@ -74,7 +74,11 @@ def post_image(request, size, post_id):
 @csrf_exempt
 def get_image(request, post_id, image_name):
     # get image from post_id
-    pi = PostImage.objects.filter(post=Post.objects.get(id=post_id), name=image_name)
+    try: 
+        post = Post.objects.get(id=post_id)
+    except:
+        return HttpResponse('No post found!', status=404)
+    pi = PostImage.objects.filter(post=post, name=image_name)
     if not pi:
         return HttpResponse('No image found!', status=404)
     

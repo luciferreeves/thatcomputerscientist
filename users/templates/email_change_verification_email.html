@@ -1,12 +1,27 @@
-{% autoescape off %}
-Hi {{ user }},
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Email</title>
+  </head>
+  <body>
+    <h3>Change Your Current Email</h3>
+    <p>Hi {{ user }},</p>
+    <p>
+      We received a request to change your email address on {{ site_name }}. To
+      verify and change your email address, please click the link below.
+    </p>
+    <a
+      href="{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}"
+      >Change Email</a
+    >
+    <p>If the above link does not work, copy and paste the URL below into your browser:</p>
+    <a href="{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}">{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}</a>
 
-We received a request to change you email address on {{ site_name }}. To verify and change your email address, please click the link below.
-{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}
-
-Please ignore this email if you did not make this request.
-
-Thanks,
-{{ site_name }} Team
-
-{% endautoescape %}
+    <p>Please ignore this email if you did not make this request.</p>
+    <p>Thanks,</p>
+    <p>Bobby from {{ site_name }}</p>
+  </body>
+</html>

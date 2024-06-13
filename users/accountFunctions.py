@@ -28,12 +28,18 @@ def store_token(token_type, user, email=None):
     token_store.save()
     return uid, token
 
-def verify_token(token_type, uid, token):
+def verify_token(token_type, uid, token, hold_verification=False):
     try:
         token_store = TokenStore.objects.get(token_type=token_type, uid=uid, token=token)
         if token_store.expires > timezone.now() and not token_store.verified and token_store.token_type == token_type and token_store.uid == uid and token_store.token == token:
+
+            if hold_verification:
+                return token_store
             token_store.verified = True
-            UserProfile.objects.filter(user=token_store.user).update(email_verified=True)
+            
+            if token_type == "verifyemail":
+                UserProfile.objects.filter(user=token_store.user).update(email_verified=True)
+
             token_store.save()
 
         return token_store

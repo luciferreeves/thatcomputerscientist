@@ -1,0 +1,23 @@
+{% extends 'blog/partials/base.html' %} {% block content %}
+<p>
+  Enter a new password for your account. Your password must be at least 8
+  characters long.
+</p>
+<hr />
+<form method="post">
+  <input
+    type="hidden"
+    name="csrfmiddlewaretoken"
+    value="{{ csrf_token }}"
+    style="display: none"
+  />
+  <table id="resetpass_form">
+    {{ form.as_table }}
+  </table>
+  <br />
+  <input type="submit" value="Reset password" class="button button-special" />
+</form>
+<br /><br />
+{% for message in messages %} {% if 'passwordReset' in message.tags %}
+<p><small class="success">{{ message.message }}</small></p>
+{% endif %} {% endfor %} {% endblock content %}

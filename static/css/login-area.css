@@ -1,101 +1,116 @@
 #login-area {
-    width: 250px;
-    height: 350px;
-    background: url('../images/backgrounds/login-area.png') no-repeat;
-    background-size: 250px 350px;
-    margin: auto;
-    padding: 0px;
-    border: 0px;
-    position: relative;
+  width: 250px;
+  height: 350px;
+  background: url("../images/backgrounds/login-area.png") no-repeat;
+  background-size: 250px 350px;
+  margin: auto;
+  padding: 0px;
+  border: 0px;
+  position: relative;
 }
 
 #login-form {
-    display: block;
-    padding-top: 151px;
-    padding-left: 20px;
-    padding-right: 20px;
+  display: block;
+  padding-top: 151px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-#login-form input[type=text], #login-form input[type=password] {
-    display: block;
-    margin: 0px auto 18px auto;
-    width: 180px;
-    font-size: 12px;
-    padding: 4px 8px;
-    background: transparent;
-    color: #fff;
-    border-radius: 4px;
+#login-form input[type="text"],
+#login-form input[type="password"] {
+  display: block;
+  margin: 0px auto 18px auto;
+  width: 180px;
+  font-size: 12px;
+  padding: 4px 8px;
+  background: transparent;
+  color: #fff;
+  border-radius: 4px;
 }
 
 /* Reset auto fill */
 #login-form input:-webkit-autofill,
-#login-form input:-webkit-autofill:hover, 
-#login-form input:-webkit-autofill:focus, 
-#login-form input:-webkit-autofill:active{
-    transition: background-color 1s ease-in 2000s;
+#login-form input:-webkit-autofill:hover,
+#login-form input:-webkit-autofill:focus,
+#login-form input:-webkit-autofill:active {
+  transition: background-color 1s ease-in 2000s;
 }
 
 #login-form input::placeholder {
-    color: #dcdcdc;
+  color: #dcdcdc;
 }
 
-#login-form input[type=submit] {
-    width: 131px;
-    height: 26px;
-    cursor: pointer;
-    position: absolute;
-    bottom: 55px;
-    left: 61px;
-    border-radius: 2px;
-    background: transparent;
+#login-form input[type="submit"] {
+  width: 131px;
+  height: 26px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 55px;
+  left: 61px;
+  border-radius: 2px;
+  background: transparent;
 }
 
 #login-area > #register-now-button {
-    display: block;
-    width: 60px;
-    height: 12px;
-    cursor: pointer;
-    border-radius: 2px;
-    position: absolute;
-    bottom: 30px;
-    right: 40px;
-    background: transparent;
+  display: block;
+  width: 60px;
+  height: 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  background: transparent;
+}
+
+#login-area > #forgot-password-button {
+  display: block;
+  width: 80px;
+  height: 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 106px;
+  right: 26px;
+  background: transparent;
 }
 
 #login-error {
-    position: relative;
+  position: relative;
 }
 
 #login-error > .RFEERR {
-    background: url('../images/backgrounds/login-messages/RFEERR.png') no-repeat;
+  background: url("../images/backgrounds/login-messages/RFEERR.png") no-repeat;
 }
 
 #login-error > .IUOPERR {
-    background: url('../images/backgrounds/login-messages/IUOPERR.png') no-repeat;
+  background: url("../images/backgrounds/login-messages/IUOPERR.png") no-repeat;
 }
 
 #login-error > .ENVERR {
-    background: url('../images/backgrounds/login-messages/ENVERR.png') no-repeat;
+  background: url("../images/backgrounds/login-messages/ENVERR.png") no-repeat;
 }
 
 #login-error > .VESENDERR {
-    background: url('../images/backgrounds/login-messages/VESENDERR.png') no-repeat;
+  background: url("../images/backgrounds/login-messages/VESENDERR.png")
+    no-repeat;
 }
 
 #login-error > .VESENT {
-    background: url('../images/backgrounds/login-messages/VESENT.png') no-repeat;
+  background: url("../images/backgrounds/login-messages/VESENT.png") no-repeat;
 }
 
 #login-error > .VESUCCESS {
-    background: url('../images/backgrounds/login-messages/VESUCCESS.png') no-repeat;
+  background: url("../images/backgrounds/login-messages/VESUCCESS.png")
+    no-repeat;
 }
 
 #login-error > .messageBox {
-    position: absolute;
-    background-size: 250px 166px;
-    width: 250px;
-    height: 166px;
-    top: -100px;
-    left: -140px;
-    z-index: 2;
+  position: absolute;
+  background-size: 250px 166px;
+  width: 250px;
+  height: 166px;
+  top: -100px;
+  left: -140px;
+  z-index: 2;
 }

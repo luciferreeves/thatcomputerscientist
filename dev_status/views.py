@@ -93,14 +93,31 @@ def home(request):
         repo["pushedAt"] = repo["pushedAt"].split("T")[0]
 
     context["search"] = search
-    if search:
-        context["repos"] = [
-            repo
-            for repo in repos
-            if search.lower() in repo["name"].lower()
-            or search.lower() in repo["description"].lower()
-        ]
-        context["total_count"] = len(context["repos"])
+    if search is not None:
+        search_term = search.lower()
+        filtered_repos = []
+
+        for repo in repos:
+            repo_name = repo["name"]
+            repo_description = repo["description"]
+
+            if repo_name is not None and search_term in repo_name.lower():
+                filtered_repos.append(repo)
+            elif (
+                repo_description is not None and search_term in repo_description.lower()
+            ):
+                filtered_repos.append(repo)
+
+        context["repos"] = filtered_repos
+        context["total_count"] = len(filtered_repos)
+
+        # context["repos"] = [
+        #     repo
+        #     for repo in repos
+        #     if search.lower() in repo["name"].lower()
+        #     or search.lower() in repo["description"].lower()
+        # ]
+        # context["total_count"] = len(context["repos"])
     else:
         context["repos"] = repos
         context["total_count"] = total_count
@@ -240,8 +257,12 @@ def get_repo(request, r=None, p=None):
         tree["size"] = size_format(tree["byteSize"])
     # isImage?
     if viewMode == "blob":
-        context["files"]["def_branch"] = data["data"]["repository"]["defaultBranchRef"]["name"]
-        if tree["name"].endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico", ".bmp")):
+        context["files"]["def_branch"] = data["data"]["repository"]["defaultBranchRef"][
+            "name"
+        ]
+        if tree["name"].endswith(
+            (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico", ".bmp")
+        ):
             context["files"]["isImage"] = True
 
     return render(request, "dev_status/repo.html", context)

@@ -26,118 +26,126 @@ import redis
 
 # r = redis.Redis(host='localhost', port=6379, db=0)
 r = redis.Redis(
-  host=os.getenv('REDIS_HOST'),
-  port=os.getenv('REDIS_PORT'),
-  password=os.getenv('REDIS_PASSWORD'),
-  db=0
+    host=os.getenv("REDIS_HOST"),
+    port=os.getenv("REDIS_PORT"),
+    password=os.getenv("REDIS_PASSWORD"),
+    db=0,
 )
-r.set('n_connected_lc_users', 0)
+r.set("n_connected_lc_users", 0)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('AUTHORIZATION_STRING')
+SECRET_KEY = os.getenv("AUTHORIZATION_STRING")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv('ENVIRONMENT') == 'development' else False
+DEBUG = True if os.getenv("ENVIRONMENT") == "development" else False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://*.thatcomputerscientist.com', 'http://*.thatcomputerscientist.com', 'https://*.shi.foo', 'http://localhost']
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.thatcomputerscientist.com",
+    "http://*.thatcomputerscientist.com",
+    "https://*.shi.foo",
+    "http://localhost",
+]
 DOMAIN_NAME = "shi.foo"
-SESSION_COOKIE_DOMAIN = os.getenv('DOMAIN') if os.getenv('ENVIRONMENT') == 'development' else ".shi.foo"
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-ROOT_HOSTCONF = 'thatcomputerscientist.hosts'
-ROOT_URLCONF = 'thatcomputerscientist.urls'
-DEFAULT_HOST = 'default'
+SESSION_COOKIE_DOMAIN = (
+    os.getenv("DOMAIN") if os.getenv("ENVIRONMENT") == "development" else ".shi.foo"
+)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+ROOT_HOSTCONF = "thatcomputerscientist.hosts"
+ROOT_URLCONF = "thatcomputerscientist.urls"
+DEFAULT_HOST = "default"
 
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
-    'channels',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
-    'sslserver',
-    'thatcomputerscientist',
-    'haystack',
-    'blog.apps.BlogConfig',
-    'users',
-    'userpages',
-    'blog_admin',
-    'dev_status',
-    'announcements',
-    'ignis',
-    'chat',
+    "daphne",
+    "channels",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
+    "sslserver",
+    "thatcomputerscientist",
+    "haystack",
+    "blog.apps.BlogConfig",
+    "users",
+    "userpages",
+    "blog_admin",
+    "dev_status",
+    "announcements",
+    "ignis",
+    "chat",
 ]
 
 SITE_ID = 1
 APPEND_SLASH = False
 HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    "default": {
+        "ENGINE": "haystack.backends.simple_backend.SimpleEngine",
     },
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ]
 }
 
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'middleware.oldbrowsermiddleware.OldBrowserMiddleware',
-    'middleware.globalmetamiddleware.GlobalMetaMiddleware',
-    'middleware.uuidmiddleware.UserUUIDMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware'
+    "django_hosts.middleware.HostsRequestMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
+    "middleware.globalmetamiddleware.GlobalMetaMiddleware",
+    "middleware.ignismiddleware.IgnisMiddleware",
+    "middleware.uuidmiddleware.UserUUIDMiddleware",
+    "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
 CONFIGURED_SUBDOMAINS = {
-    '': 'thatcomputerscientist',
-    '*': 'userpages',
+    "": "thatcomputerscientist",
+    "*": "userpages",
 }
 
-ROOT_URLCONF = 'thatcomputerscientist.urls'
+ROOT_URLCONF = "thatcomputerscientist.urls"
 
-AUTHENTICATION_BACKENDS = ['thatcomputerscientist.backends.CaseInsensitiveModelBackend']
+AUTHENTICATION_BACKENDS = ["thatcomputerscientist.backends.CaseInsensitiveModelBackend"]
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ str(BASE_DIR / 'templates') ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'blog.context_processors.categories',
-                'blog.context_processors.archives',
-                'middleware.uuidmiddleware.userTrackingContextProcessor',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [str(BASE_DIR / "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "blog.context_processors.categories",
+                "blog.context_processors.archives",
+                "middleware.uuidmiddleware.userTrackingContextProcessor",
             ],
         },
     },
 ]
 
 # WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
-ASGI_APPLICATION = 'thatcomputerscientist.asgi.application'
+ASGI_APPLICATION = "thatcomputerscientist.asgi.application"
 
 CHANNEL_LAYERS = {
     # "default": {
@@ -146,7 +154,11 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}')],
+            "hosts": [
+                (
+                    f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}'
+                )
+            ],
         },
     },
 }
@@ -155,9 +167,9 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, os.environ.get('SQLITE_DB_NAME')),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, os.environ.get("SQLITE_DB_NAME")),
     }
 }
 
@@ -167,16 +179,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -186,14 +198,14 @@ CACHES = {
         "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": os.getenv('REDIS_PASSWORD'),
-        }
+            "PASSWORD": os.getenv("REDIS_PASSWORD"),
+        },
     }
 }
 from django.core.cache import cache
 
 # clear the cache
-for key in cache.keys('presence_*'):
+for key in cache.keys("presence_*"):
     cache.delete(key)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
@@ -201,9 +213,9 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -213,24 +225,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 # STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_USE_TLS = True
 # EMAIL_HOST = os.getenv('MAIL_HOST')
-EMAIL_HOST = os.getenv('ORACLE_SMTP_HOST')
+EMAIL_HOST = os.getenv("ORACLE_SMTP_HOST")
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
-USERNAME_SMTP = os.getenv('ORACLE_SMTP_USER')
-PASSWORD_SMTP = os.getenv('ORACLE_SMTP_PASSWORD')
+USERNAME_SMTP = os.getenv("ORACLE_SMTP_USER")
+PASSWORD_SMTP = os.getenv("ORACLE_SMTP_PASSWORD")

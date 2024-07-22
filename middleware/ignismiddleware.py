@@ -25,6 +25,10 @@ class IgnisMiddleware(MiddlewareMixin):
     def __call__(self, request):
         response = self.get_response(request)
 
+        # id request is from localhost, do not process
+        if re.match(r"^localhost", request.get_host()):
+            return response
+
         # Do not process non-HTML responses
         if not response["Content-Type"].startswith("text/html"):
             return response

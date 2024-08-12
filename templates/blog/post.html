@@ -2,7 +2,7 @@
 {% load static %}
 {% load tz %}
 {% load sha256 %}
-<div id="post-actions-bar" class="mtsbitem">
+<div id="post-actions-bar" class="mtsbitem" style="margin-top: 12px;">
     <a class="pa-btn" href="{% url 'blog:home' %}">Home</a>
     <a class="pa-btn" href="#comments">Opinions</a>
     <a class="pa-btn" href="javascript:;" onclick="lightsOff()">Focus <img id="lightsStatus" data-status="off" src="{% static 'images/site/off.png' %}" alt="Off" style="height: 11px; position: relative; top: 2px;"></a>

@@ -96,7 +96,11 @@
           <td id="sidebar" valign="top">
             {% include 'blog/partials/sidebar.html' %}
           </td>
-          <td id="content" valign="top" style="padding-left: 20px">
+          <td
+            id="content"
+            valign="top"
+            style="padding-left: 20px; {% if not user.is_authenticated %}padding-top: 32px;{% endif %}"
+          >
             {% block content %} {% endblock %}
           </td>
         </tr>

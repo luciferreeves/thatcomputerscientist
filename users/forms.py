@@ -16,15 +16,40 @@ from .mail_send import send_email
 
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(label="Username", max_length=30, min_length=4)
-    email = forms.EmailField(label="Email")
+    username = forms.CharField(
+        label="Username",
+        max_length=30,
+        min_length=4,
+        required=True,
+        widget=forms.TextInput(
+            attrs={"placeholder": "Username", "autocomplete": "off"}
+        ),
+    )
+    email = forms.EmailField(
+        label="Email",
+        max_length=255,
+        required=True,
+        widget=forms.EmailInput(attrs={"placeholder": "Email", "autocomplete": "off"}),
+    )
     password1 = forms.CharField(
-        label="Password", widget=forms.PasswordInput, min_length=8
+        label="Password",
+        min_length=8,
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"}),
     )
     password2 = forms.CharField(
-        label="Password (again)", widget=forms.PasswordInput, min_length=8
+        label="Password (again)",
+        widget=forms.PasswordInput(attrs={"placeholder": "Password (again)"}),
+        min_length=8,
+        required=True,
     )
-    captcha = forms.CharField(label="Captcha", max_length=6)
+    captcha = forms.CharField(
+        label="Captcha",
+        max_length=6,
+        min_length=6,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Captcha", "autocomplete": "off"}),
+    )
     expected_captcha = None
     protected_usernames = [
         "admin",
@@ -169,6 +194,7 @@ class ForgotPasswordForm(forms.Form):
         else:
             raise forms.ValidationError("Failed to send email.")
 
+
 class ResetPasswordForm(forms.Form):
     password1 = forms.CharField(
         label="New Password", widget=forms.PasswordInput, min_length=8
@@ -192,6 +218,7 @@ class ResetPasswordForm(forms.Form):
         user.set_password(self.cleaned_data.get("password1"))
         user.save()
         return user
+
 
 class UpdateUserDetailsForm(forms.Form):
     first_name = forms.CharField(

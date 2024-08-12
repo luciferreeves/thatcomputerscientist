@@ -1,24 +1,42 @@
 {% extends 'blog/partials/base.html' %} {% block content %}
-<h1 style="margin-top: 0px;">Register for an account</h1>
-<p>Register for an account to post your thoughts and get feedback from other users.</p>
-<hr>
+<h1 style="margin-top: 30px">Register for an account</h1>
+<p>
+  Register for an account to post your thoughts and get feedback from other
+  users.
+</p>
+<hr />
 <form method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" style="display: none;">
-    <table id="register_form">
-        {{ form.as_table }}
-    </table>
-    <p><img width="160" height="60" src="{% url 'ignis:captcha_image' captcha %}" alt="Captcha" id="captcha"></p>
-    <input type="hidden" name="expected_captcha" value="{{ captcha }}">
-    <input type="submit" value="Register" class="button button-special">
+  <input
+    type="hidden"
+    name="csrfmiddlewaretoken"
+    value="{{ csrf_token }}"
+    style="display: none"
+  />
+  <table id="register_form">
+    {{ form.as_table }}
+  </table>
+  <p>
+    <img
+      width="160"
+      height="60"
+      src="{% url 'ignis:captcha_image' captcha %}"
+      alt="Captcha"
+      id="captcha"
+    />
+  </p>
+  <input type="hidden" name="expected_captcha" value="{{ captcha }}" />
+  <input type="submit" value="Register" class="button button-special" />
 </form>
-<br><br>
-<p>By registering on this site, you agree to everything that's <a href="{% url 'blog:policy' %}">written here</a>.</p>
-<p><b>Note</b>: Upon registering, you will be sent an email with a link to activate your account. If you don't activate your account within 72 hours, your username will be released and you will have to register again.</p>
-{% for message in messages %}
-    {% if 'accountCreated' in message.tags %}
-        <p><small class="success">{{ message.message }}</small></p>
-    {% endif %}
-{% endfor %}
-{% endblock %}
-
-
+<br /><br />
+<p>
+  By registering on this site, you agree to everything that's
+  <a href="{% url 'blog:policy' %}">written here</a>.
+</p>
+<p>
+  <b>Note</b>: Upon registering, you will be sent an email with a link to
+  activate your account. If you don't activate your account within 72 hours,
+  your username will be released and you will have to register again.
+</p>
+{% for message in messages %} {% if 'accountCreated' in message.tags %}
+<p><small class="success">{{ message.message }}</small></p>
+{% endif %} {% endfor %} {% endblock %}

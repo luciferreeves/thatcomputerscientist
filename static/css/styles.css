@@ -15,10 +15,13 @@ body {
 }
 
 .skiptranslate {
+<<<<<<< HEAD
   visibility: hidden !important;
 }
 
 .skiptranslate > iframe {
+=======
+>>>>>>> 164950f013807651da5dca224a70fadef6986953
   display: none !important;
 }
 
@@ -295,7 +298,15 @@ blockquote {
   box-sizing: border-box;
   border-radius: 8px;
   text-align: left !important;
+<<<<<<< HEAD
   overflow-x: scroll;
+=======
+  overflow-x: auto;
+
+  // Custom Horizontal Scrollbar
+  scrollbar-width: thin;
+  scrollbar-color: #311b4f #311b4f26;
+>>>>>>> 164950f013807651da5dca224a70fadef6986953
 }
 
 .comment {

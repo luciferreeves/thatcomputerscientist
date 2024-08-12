@@ -15,13 +15,10 @@ body {
 }
 
 .skiptranslate {
-<<<<<<< HEAD
   visibility: hidden !important;
 }
 
 .skiptranslate > iframe {
-=======
->>>>>>> 164950f013807651da5dca224a70fadef6986953
   display: none !important;
 }
 

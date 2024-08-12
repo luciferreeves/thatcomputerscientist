@@ -8,7 +8,7 @@ WORKDIR /shifoo
 
 COPY . /shifoo
 
-RUN pip3 install -r requirements.txt --break-system-packages
+RUN pip3 install -r requirements.txt
 
 RUN chmod +x entrypoint.sh
 

@@ -1,31 +1,16 @@
-ARG PYTHON_VERSION=3.11-slim-bullseye
+FROM ubuntu:20.04
 
-FROM python:${PYTHON_VERSION} AS base
-
-RUN apt-get update \
-    # dependencies for building Python packages
-    && apt-get install -y build-essential \
-    # psycopg2 dependencies
-    && apt-get install -y libpq-dev \
-    # Translations dependencies
-    && apt-get install -y gettext \
-    && apt-get install -y libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info \
-    # cleaning up unused files
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-    && rm -rf /var/lib/apt/lists/*
-
-ENV PYTHONDONTWRITEBYTEshifoo 1
-ENV PYTHONUNBUFFERED 1
+RUN apt-get update && apt-get install -y python3 python3-pip python3-dev libffi-dev libssl-dev python3-venv
 
 RUN mkdir -p /shifoo
 
 WORKDIR /shifoo
 
-COPY requirements.txt /shifoo/
+COPY . /shifoo
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt --break-system-packages
 
-COPY . /shifoo/
+RUN chmod +x entrypoint.sh
 
 EXPOSE 8000
 

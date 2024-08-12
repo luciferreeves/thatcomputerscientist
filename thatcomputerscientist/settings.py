@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 from dotenv import load_dotenv
 
@@ -103,6 +104,7 @@ MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -113,7 +115,12 @@ MIDDLEWARE = [
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
     "middleware.ignismiddleware.IgnisMiddleware",
     "middleware.uuidmiddleware.UserUUIDMiddleware",
+    "middleware.i18nmiddleware.I18NMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, "locale"),
 ]
 
 CONFIGURED_SUBDOMAINS = {
@@ -213,7 +220,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
 
 TIME_ZONE = "UTC"
 
@@ -221,6 +228,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = (
+    ("en", _("English")),
+    ("ja", _("Japanese"))
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

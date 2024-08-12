@@ -159,11 +159,11 @@
   {% comment %}
   <script src="{% static 'js/db.js' %}"></script>
   {% endcomment %}
-  <script
+  {% comment %} <script
     type="text/javascript"
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-  ></script>
-  <script src="{% static 'js/tl.js' %}"></script>
+  ></script> {% endcomment %}
+  {% comment %} <script src="{% static 'js/tl.js' %}"></script> {% endcomment %}
   {% if request.COOKIES.summonOneko == 'true' %}
   <script src="{% static 'js/oneko.js' %}"></script>
   {% endif %} {% block scripts %} {% endblock %}

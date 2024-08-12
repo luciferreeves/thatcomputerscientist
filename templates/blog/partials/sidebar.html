@@ -134,8 +134,13 @@
                 <img src="{% static 'images/site/icons/translate.png' %}" alt="Translate" border="0" style="padding: 2px 0px; height: 20px; width: auto;">
             </span>
             <span>
-                <a href="javascript:changeLang('en');" id="tl_ja" style="display: none;" class="notranslate en">English</a>
-                <a href="javascript:changeLang('ja');" id="tl_en" style="display: none;" class="notranslate ja">日本語</a>
+                {% if request.COOKIES.site_language == 'ja' %}
+                    <a href="javascript:changeLang('en');" class="notranslate en">English</a>
+                {% endif %}
+
+                {% if request.COOKIES.site_language == 'en' or not request.COOKIES.site_language %}
+                    <a href="javascript:changeLang('ja');" class="notranslate ja">日本語</a>
+                {% endif %}
             </span>
         </li>
     </ul>

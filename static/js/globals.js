@@ -7,12 +7,20 @@ gtag("js", new Date());
 gtag("config", "G-72XTC500FR");
 
 function changeLang(lang) {
-  if (lang === "ja") {
-    translateJapanese();
-  } else {
-    restoreLang();
-  }
+  var date = new Date();
+  date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days
+  var expires = "expires=" + date.toUTCString();
+
+  // Set the cookie
+  document.cookie = "site_language=" + lang + ";" + expires + ";path=/";
+
+  // Debugging: Print cookie value
+  console.log("Cookie set: site_language=" + lang);
+
+  // Reload the page to apply the new language
+  location.reload();
 }
+
 
 function copyToClipboard(text) {
   $("body").append(

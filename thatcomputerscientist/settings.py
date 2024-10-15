@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "sslserver",
     "thatcomputerscientist",
     "haystack",
+    "apps.core",
     "blog.apps.BlogConfig",
     "users",
     "userpages",
@@ -227,11 +228,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
-LANGUAGES = (
-    ("en", _("English")),
-    ("ja", _("Japanese"))
-)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

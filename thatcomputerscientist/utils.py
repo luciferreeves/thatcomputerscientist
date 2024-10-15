@@ -1,0 +1,8 @@
+def i18npatterns(LANGUAGE_CODE):
+    DEFAULT_LANGUAGE = "en"
+    SUPPORTED_LANGUAGES = ["en", "ja"]
+
+    if LANGUAGE_CODE in SUPPORTED_LANGUAGES:
+        return LANGUAGE_CODE
+
+    return DEFAULT_LANGUAGE

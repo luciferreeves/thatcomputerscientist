@@ -1,4 +1,3 @@
-from django.utils.translation import activate
 from django.utils.deprecation import MiddlewareMixin
 
 
@@ -6,9 +5,9 @@ class I18NMiddleware(MiddlewareMixin):
     def process_request(self, request):
         language = request.COOKIES.get("site_language")
         if language:
-            activate(language)
+            request.LANGUAGE_CODE = language
         else:
-            activate("en")
+            request.LANGUAGE_CODE = "en"
         request.LANGUAGE_CODE = language
 
     def process_response(self, request, response):

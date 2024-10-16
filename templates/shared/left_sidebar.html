@@ -1,11 +1,16 @@
 {% load static %}
 {% if not user.is_authenticated %}
-  <link rel="stylesheet" href="{% static 'css/login-area.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/shared/login-area.css' %}" />
+  {% if request.LANGUAGE_CODE == 'ja' %}
+    <link rel="stylesheet" href="{% static 'css/ja/login-area.css' %}" />
+  {% else %}
+    <link rel="stylesheet" href="{% static 'css/en/login-area.css' %}" />
+  {% endif %}
   <div id="login-area">
     <form method="post" action="#" id="login-form">
       <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-      <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}" />
-      <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" />
+      <input type="text" id="username" name="username" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}ユーザー名{% else %}Username{% endif %}" autocomplete="off" value="{{ request.GET.username }}" />
+      <input type="password" id="password" name="password" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}パスワード{% else %}Password{% endif %}" autocomplete="off" />
       <input type="hidden" name="next" value="{{ request.path }}" />
       <input type="submit" value="" />
     </form>
@@ -13,3 +18,19 @@
     <a href="#" id="forgot-password-button"></a>
   </div>
 {% endif %}
+
+<div style="display: flex;">
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjZscHIzaDFmbDNwc2xkaWwxMmNrNGJ5eDd4aGowbTZkb2F3dXF4MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/AqcfW6opza0r1eznPc/giphy.webp"
+    alt="language change animation" width="24px" height="24px" style="margin-right: 10px;" />
+  <a href="" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
+    {% if request.LANGUAGE_CODE == 'ja' %}English{% else %}日本語{% endif %}
+  </a>
+</div>
+
+<script>
+  function changeLanguage(language) {
+    document.cookie = `site_language=${language};path=/`;
+    location.reload();
+  }
+</script>
+

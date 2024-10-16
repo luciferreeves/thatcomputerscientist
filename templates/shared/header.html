@@ -1,20 +1,39 @@
 {% load static %}
 <div style="position: relative; padding: 20px 0;">
-  <img draggable="false" src="{% static 'images/core/shared/title_banner.png' %}" srcset="
-    {% static 'images/core/shared/title_banner.png' %} 1x,
-    {% static 'images/core/shared/title_banner@2x.png' %} 2x,
-    {% static 'images/core/shared/title_banner@3x.png' %} 3x" alt="Shifoo Title Banner" class="title-banner" width="1000" height="333" loading="lazy" />
+  {% if request.LANGUAGE_CODE == 'ja' %}
+    {% with banner_image='images/core/shared/title_banner_ja' %}
+      <img draggable="false" src="{% static banner_image|add:'@2x.png' %}" srcset="
+        {% static banner_image|add:'@2x.png' %} 1x,
+        {% static banner_image|add:'@2x.png' %} 2x,
+        {% static banner_image|add:'@3x.png' %} 3x"
+        alt="Shifoo Title Banner" class="title-banner" width="1000" height="333" loading="lazy" />
+    {% endwith %}
+  {% else %}
+    {% with banner_image='images/core/shared/title_banner' %}
+      <img draggable="false" src="{% static banner_image|add:'@2x.png' %}" srcset="
+        {% static banner_image|add:'@2x.png' %} 1x,
+        {% static banner_image|add:'@2x.png' %} 2x,
+        {% static banner_image|add:'@3x.png' %} 3x"
+        alt="Shifoo Title Banner" class="title-banner" width="1000" height="333" loading="lazy" />
+    {% endwith %}
+  {% endif %}
+  
   <img draggable="false" src="{% static 'images/core/shared/neko_sitting.png' %}" srcset="
     {% static 'images/core/shared/neko_sitting.png' %} 1x,
-    {% static 'images/core/shared/neko_sitting@2x.png' %} 2x" alt="Picture of Neko Boy Sitting on the Divider Line" style="position: absolute; bottom: -41px; right: 0; width: 188px; height: 333px; z-index: 1;" />
-  <button onClick="dontYouDare(event)" style="width: 50px;height: 12px;position: absolute;bottom: 46px;right: 366px;background-color: transparent;outline:none;border: 0;cursor: pointer; z-index: 2;"></button>
-  <button onClick="leaveWebsite()" style="width: 37px;height: 12px;position: absolute;bottom: 46px;right: 238px;background-color: transparent;outline:none;border: 0;cursor: pointer; z-index: 2;"></button>
-  <button onClick="leaveWebsite()" style="width: 7px;height: 6px;position: absolute;bottom: 106px;right: 233px;background-color: transparent;outline:none;border: 0;cursor: pointer;z-index: 2;"></button>
+    {% static 'images/core/shared/neko_sitting@2x.png' %} 2x" 
+    alt="Picture of Neko Boy Sitting on the Divider Line" 
+    style="position: absolute; bottom: -41px; right: {% if request.LANGUAGE_CODE == 'ja' %}-16px{% else %}0{% endif %}; width: 188px; height: 333px; z-index: 1;" />
+  
+  <button onclick="dontYouDare(event)" style="width: {% if request.LANGUAGE_CODE == 'ja' %}56px{% else %}50px{% endif %};height: 12px;position: absolute;bottom: {% if request.LANGUAGE_CODE == 'ja' %}47px{% else %}46px{% endif %};right: {% if request.LANGUAGE_CODE == 'ja' %}360px{% else %}366px{% endif %};background-color: transparent;outline:none;border: 0;cursor: pointer;z-index: 2;"></button>
+  <button onclick="leaveWebsite()" style="width: 37px;height: 12px;position: absolute;bottom: {% if request.LANGUAGE_CODE == 'ja' %}47px{% else %}46px{% endif %};right: {% if request.LANGUAGE_CODE == 'ja' %}145px{% else %}238px{% endif %};background-color: transparent;outline:none;border: 0;cursor: pointer;z-index: 2;"></button>
+  <button onclick="leaveWebsite()" style="width: 7px;height: 6px;position: absolute;bottom: {% if request.LANGUAGE_CODE == 'ja' %}107px{% else %}106px{% endif %};right: {% if request.LANGUAGE_CODE == 'ja' %}141px{% else %}233px{% endif %};background-color: transparent;outline:none;border: 0;cursor: pointer;z-index: 2;"></button>
+  
   <div style="position: absolute;bottom: 60px;left: 584px;font-size: 7px;text-transform: uppercase;color: #560054;font-weight: bold; display: none;">
-    Times Fucked Around: <span id="timesFA" style="font-size: 7px;"></span>
+    {% if request.LANGUAGE_CODE == 'ja' %}ぶらぶらした回数{% else %}Times Fucked Around{% endif %}: <span id="timesFA" style="font-size: 7px;"></span>
   </div>
+  
   <audio src="{% static 'audio/present-day-heh.mp3' %}" id="presentDayAudio" preload="auto"></audio>
-  <button onClick="stopAndPlayPresentDay(event)" style="width: 113px;height: 93px;position: absolute;top: 134px;left: 664px;background-color: transparent;outline:none;border: 0;z-index: 2;"></button>
+  <button onclick="stopAndPlayPresentDay(event)" style="width: 113px;height: 93px;position: absolute;top: 134px;left: 664px;background-color: transparent;outline:none;border: 0;z-index: 2;"></button>
 </div>
 
 {% block scripts %}

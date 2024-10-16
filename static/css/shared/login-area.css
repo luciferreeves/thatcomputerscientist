@@ -1,12 +1,6 @@
 #login-area {
   width: 200px;
   height: 280px;
-  /* background: url("../images/core/sidebar/login-area.png") no-repeat; */
-  background-image: image-set(
-    url("../images/core/sidebar/login-area@2x.png") 1x,
-    url("../images/core/sidebar/login-area@2x.png") 2x,
-    url("../images/core/sidebar/login-area@3x.png") 3x
-  );
   background-repeat: no-repeat;
   background-size: 200px 280px;
   margin: auto;
@@ -56,30 +50,6 @@
   top: 96px;
   left: 48px;
   border-radius: 2px;
-  background: transparent;
-}
-
-#login-area > #register-now-button {
-  display: block;
-  width: 50px;
-  height: 12px;
-  cursor: pointer;
-  border-radius: 2px;
-  position: absolute;
-  bottom: 23px;
-  right: 32px;
-  background: transparent;
-}
-
-#login-area > #forgot-password-button {
-  display: block;
-  width: 64px;
-  height: 12px;
-  cursor: pointer;
-  border-radius: 2px;
-  position: absolute;
-  bottom: 85px;
-  right: 21px;
   background: transparent;
 }
 

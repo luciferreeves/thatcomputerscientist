@@ -1,0 +1,22 @@
+{% load static %}
+<div style="position: relative; padding: 20px 0;">
+  <img draggable="false" src="{% static 'images/core/shared/title_banner.png' %}" srcset="
+    {% static 'images/core/shared/title_banner.png' %} 1x,
+    {% static 'images/core/shared/title_banner@2x.png' %} 2x,
+    {% static 'images/core/shared/title_banner@3x.png' %} 3x" alt="Shifoo Title Banner" class="title-banner" width="1000" height="333" loading="lazy" />
+  <img draggable="false" src="{% static 'images/core/shared/neko_sitting.png' %}" srcset="
+    {% static 'images/core/shared/neko_sitting.png' %} 1x,
+    {% static 'images/core/shared/neko_sitting@2x.png' %} 2x" alt="Picture of Neko Boy Sitting on the Divider Line" style="position: absolute; bottom: -41px; right: 0; width: 188px; height: 333px; z-index: 1;" />
+  <button onClick="dontYouDare(event)" style="width: 50px;height: 12px;position: absolute;bottom: 46px;right: 366px;background-color: transparent;outline:none;border: 0;cursor: pointer; z-index: 2;"></button>
+  <button onClick="leaveWebsite()" style="width: 37px;height: 12px;position: absolute;bottom: 46px;right: 238px;background-color: transparent;outline:none;border: 0;cursor: pointer; z-index: 2;"></button>
+  <button onClick="leaveWebsite()" style="width: 7px;height: 6px;position: absolute;bottom: 106px;right: 233px;background-color: transparent;outline:none;border: 0;cursor: pointer;z-index: 2;"></button>
+  <div style="position: absolute;bottom: 60px;left: 584px;font-size: 7px;text-transform: uppercase;color: #560054;font-weight: bold; display: none;">
+    Times Fucked Around: <span id="timesFA" style="font-size: 7px;"></span>
+  </div>
+  <audio src="{% static 'audio/present-day-heh.mp3' %}" id="presentDayAudio" preload="auto"></audio>
+  <button onClick="stopAndPlayPresentDay(event)" style="width: 113px;height: 93px;position: absolute;top: 134px;left: 664px;background-color: transparent;outline:none;border: 0;z-index: 2;"></button>
+</div>
+
+{% block scripts %}
+  <script src="{% static 'js/youdontdare.js' %}"></script>
+{% endblock %}

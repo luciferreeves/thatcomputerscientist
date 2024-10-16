@@ -1,31 +1,38 @@
 #login-area {
-  width: 250px;
-  height: 350px;
-  background: url("../images/backgrounds/login-area.png") no-repeat;
-  background-size: 250px 350px;
+  width: 200px;
+  height: 280px;
+  /* background: url("../images/core/sidebar/login-area.png") no-repeat; */
+  background-image: image-set(
+    url("../images/core/sidebar/login-area@2x.png") 1x,
+    url("../images/core/sidebar/login-area@2x.png") 2x,
+    url("../images/core/sidebar/login-area@3x.png") 3x
+  );
+  background-repeat: no-repeat;
+  background-size: 200px 280px;
   margin: auto;
   padding: 0px;
   border: 0px;
   position: relative;
+  top: -65px;
 }
 
 #login-form {
   display: block;
-  padding-top: 151px;
-  padding-left: 20px;
-  padding-right: 20px;
+  position: relative;
+  top: 118px;
 }
 
 #login-form input[type="text"],
 #login-form input[type="password"] {
   display: block;
-  margin: 0px auto 18px auto;
-  width: 180px;
-  font-size: 12px;
+  margin: 10px auto;
+  width: 144px;
+  font-size: 11px;
   padding: 4px 8px;
   background: transparent;
-  color: #fff;
+  color: #4a2e6f;
   border-radius: 4px;
+  font-weight: bold;
 }
 
 /* Reset auto fill */
@@ -37,41 +44,42 @@
 }
 
 #login-form input::placeholder {
-  color: #dcdcdc;
+  color: #4a2e6f;
+  font-weight: normal;
 }
 
 #login-form input[type="submit"] {
-  width: 131px;
-  height: 26px;
+  width: 106px;
+  height: 22px;
   cursor: pointer;
   position: absolute;
-  bottom: 55px;
-  left: 61px;
+  top: 96px;
+  left: 48px;
   border-radius: 2px;
   background: transparent;
 }
 
 #login-area > #register-now-button {
   display: block;
-  width: 60px;
+  width: 50px;
   height: 12px;
   cursor: pointer;
   border-radius: 2px;
   position: absolute;
-  bottom: 30px;
-  right: 40px;
+  bottom: 23px;
+  right: 32px;
   background: transparent;
 }
 
 #login-area > #forgot-password-button {
   display: block;
-  width: 80px;
+  width: 64px;
   height: 12px;
   cursor: pointer;
   border-radius: 2px;
   position: absolute;
-  bottom: 106px;
-  right: 26px;
+  bottom: 85px;
+  right: 21px;
   background: transparent;
 }
 

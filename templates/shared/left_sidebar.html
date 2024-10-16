@@ -1,0 +1,15 @@
+{% load static %}
+{% if not user.is_authenticated %}
+  <link rel="stylesheet" href="{% static 'css/login-area.css' %}" />
+  <div id="login-area">
+    <form method="post" action="#" id="login-form">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+      <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}" />
+      <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" />
+      <input type="hidden" name="next" value="{{ request.path }}" />
+      <input type="submit" value="" />
+    </form>
+    <a href="#" id="register-now-button"></a>
+    <a href="#" id="forgot-password-button"></a>
+  </div>
+{% endif %}

@@ -75,7 +75,7 @@
   height: 150px;
 }
 
-#user-area > h2 {
+#user-area>h2 {
   margin: 0;
   padding: 0;
   border: none;
@@ -84,7 +84,7 @@
   top: 15px;
 }
 
-#user-area > ul {
+#user-area>ul {
   position: absolute;
   left: 110px;
   top: 58px;
@@ -121,7 +121,7 @@
   border-bottom-right-radius: 8px;
 }
 
-#online-users div > ul {
+#online-users div>ul {
   padding: 0 0 0 20px;
 }
 
@@ -143,8 +143,8 @@
   top: 0px;
   height: 100px;
   width: 200px;
-  mask: url("https://upload.wikimedia.org/wikipedia/commons/9/9b/DVD_logo.svg");
   -webkit-mask: url("https://upload.wikimedia.org/wikipedia/commons/9/9b/DVD_logo.svg");
+  mask: url("https://upload.wikimedia.org/wikipedia/commons/9/9b/DVD_logo.svg");
   background-repeat: no-repeat;
   background-size: 150px;
   background-position: center;

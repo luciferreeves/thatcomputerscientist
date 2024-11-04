@@ -1,15 +1,17 @@
+/* Login Area Container */
 #login-area {
   width: 200px;
   height: 280px;
-  background-repeat: no-repeat;
-  background-size: 200px 280px;
-  margin: auto;
-  padding: 0px;
-  border: 0px;
   position: relative;
   top: -65px;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: 200px 280px;
+  padding: 0;
+  border: 0;
 }
 
+/* Login Form */
 #login-form {
   display: block;
   position: relative;
@@ -19,22 +21,14 @@
 #login-form input[type="text"],
 #login-form input[type="password"] {
   display: block;
-  margin: 10px auto;
   width: 144px;
-  font-size: 11px;
+  margin: 10px auto;
   padding: 4px 8px;
-  background: transparent;
-  color: #4a2e6f;
-  border-radius: 4px;
+  font-size: 11px;
   font-weight: bold;
-}
-
-/* Reset auto fill */
-#login-form input:-webkit-autofill,
-#login-form input:-webkit-autofill:hover,
-#login-form input:-webkit-autofill:focus,
-#login-form input:-webkit-autofill:active {
-  transition: background-color 1s ease-in 2000s;
+  color: #4a2e6f;
+  background: transparent;
+  border-radius: 4px;
 }
 
 #login-form input::placeholder {
@@ -43,52 +37,78 @@
 }
 
 #login-form input[type="submit"] {
-  width: 106px;
-  height: 22px;
-  cursor: pointer;
   position: absolute;
   top: 96px;
   left: 48px;
-  border-radius: 2px;
+  width: 106px;
+  height: 22px;
   background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
+/* Autofill Override */
+#login-form input:-webkit-autofill,
+#login-form input:-webkit-autofill:hover,
+#login-form input:-webkit-autofill:focus,
+#login-form input:-webkit-autofill:active {
+  transition: background-color 1s ease-in 2000s;
+}
+
+/* Error Messages */
 #login-error {
   position: relative;
 }
 
-#login-error > .RFEERR {
-  background: url("../images/backgrounds/login-messages/RFEERR.png") no-repeat;
-}
-
-#login-error > .IUOPERR {
-  background: url("../images/backgrounds/login-messages/IUOPERR.png") no-repeat;
-}
-
-#login-error > .ENVERR {
-  background: url("../images/backgrounds/login-messages/ENVERR.png") no-repeat;
-}
-
-#login-error > .VESENDERR {
-  background: url("../images/backgrounds/login-messages/VESENDERR.png")
-    no-repeat;
-}
-
-#login-error > .VESENT {
-  background: url("../images/backgrounds/login-messages/VESENT.png") no-repeat;
-}
-
-#login-error > .VESUCCESS {
-  background: url("../images/backgrounds/login-messages/VESUCCESS.png")
-    no-repeat;
-}
-
-#login-error > .messageBox {
+#login-error>.messageBox {
   position: absolute;
-  background-size: 250px 166px;
-  width: 250px;
-  height: 166px;
   top: -100px;
   left: -140px;
   z-index: 2;
+  width: 250px;
+  height: 166px;
+  background-size: 250px 166px;
+}
+
+#login-error>.RFEERR {
+  background: url("../images/backgrounds/login-messages/RFEERR.png") no-repeat;
+}
+
+#login-error>.IUOPERR {
+  background: url("../images/backgrounds/login-messages/IUOPERR.png") no-repeat;
+}
+
+#login-error>.ENVERR {
+  background: url("../images/backgrounds/login-messages/ENVERR.png") no-repeat;
+}
+
+#login-error>.VESENDERR {
+  background: url("../images/backgrounds/login-messages/VESENDERR.png") no-repeat;
+}
+
+#login-error>.VESENT {
+  background: url("../images/backgrounds/login-messages/VESENT.png") no-repeat;
+}
+
+#login-error>.VESUCCESS {
+  background: url("../images/backgrounds/login-messages/VESUCCESS.png") no-repeat;
+}
+
+/* Login Area Button Styles */
+#login-area>#register-now-button,
+#login-area>#forgot-password-button {
+  display: block;
+  height: 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  position: absolute;
+  background: transparent;
+}
+
+#login-area>#register-now-button {
+  bottom: 23px;
+}
+
+#login-area>#forgot-password-button {
+  bottom: 85px;
 }

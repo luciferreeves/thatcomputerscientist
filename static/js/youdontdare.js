@@ -73,7 +73,7 @@ function applyStyles(x, y, container) {
     container.style.position = 'absolute'
     container.style.top = `${y}px`
     container.style.left = `${x}px`
-    container.style.fontSize = '8px'
+    container.style.fontSize = '11px'
     container.style.userSelect = 'none'
     container.style.transition = 'opacity 0.5s ease-in-out'
     container.style.textShadow = '0 0 2px #e014df, 0 0 4px #e014df, 0 0 6px #e014df, 0 0 10px #ff00ff, 0 0 14px #ff00ff'

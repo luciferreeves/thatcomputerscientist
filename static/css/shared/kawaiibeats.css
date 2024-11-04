@@ -1,0 +1,106 @@
+/* Kawaii Beats Player Container */
+.kawaiibeats {
+    width: 200px;
+    height: 320px;
+    position: relative;
+    left: 20px;
+    top: 6px;
+    background-image: url("../../images/kawaiibeats/kawaii_beats.gif");
+    background-size: 200px 320px;
+    background-repeat: no-repeat;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.kawaiibeats::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 160px;
+    height: 280px;
+    background-color: black;
+    opacity: 0.75;
+    z-index: -1;
+}
+
+/* Track Information */
+#song-title {
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    width: 160px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#song-artist-album {
+    position: absolute;
+    top: 40px;
+    left: 25px;
+    width: 150px;
+    font-size: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Player Elements */
+#song-cover {
+    position: absolute;
+    top: 65px;
+    left: 30px;
+    width: 140px;
+    height: 140px;
+}
+
+#song-visualizer {
+    position: absolute;
+    top: 190px;
+    left: 30px;
+}
+
+#custom-seekbar {
+    position: absolute;
+    top: 220px;
+    left: 30px;
+    cursor: pointer;
+}
+
+#song-time {
+    position: absolute;
+    top: 240px;
+    left: 30px;
+    width: 140px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Player Controls */
+#song-controls {
+    position: absolute;
+    top: 260px;
+    left: 30px;
+    width: 140px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#song-controls button {
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+#song-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

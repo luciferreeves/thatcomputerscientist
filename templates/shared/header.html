@@ -2,16 +2,16 @@
 <div style="position: relative; padding: 20px 0;">
   {% if request.LANGUAGE_CODE == 'ja' %}
     {% with banner_image='images/core/shared/title_banner_ja' %}
-      <img draggable="false" src="{% static banner_image|add:'@2x.png' %}" srcset="
-        {% static banner_image|add:'@2x.png' %} 1x,
+      <img draggable="false" src="{% static banner_image|add:'.png' %}" srcset="
+        {% static banner_image|add:'.png' %} 1x,
         {% static banner_image|add:'@2x.png' %} 2x,
         {% static banner_image|add:'@3x.png' %} 3x"
         alt="Shifoo Title Banner" class="title-banner" width="1000" height="333" loading="lazy" />
     {% endwith %}
   {% else %}
     {% with banner_image='images/core/shared/title_banner' %}
-      <img draggable="false" src="{% static banner_image|add:'@2x.png' %}" srcset="
-        {% static banner_image|add:'@2x.png' %} 1x,
+      <img draggable="false" src="{% static banner_image|add:'.png' %}" srcset="
+        {% static banner_image|add:'.png' %} 1x,
         {% static banner_image|add:'@2x.png' %} 2x,
         {% static banner_image|add:'@3x.png' %} 3x"
         alt="Shifoo Title Banner" class="title-banner" width="1000" height="333" loading="lazy" />

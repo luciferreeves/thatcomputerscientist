@@ -22,24 +22,8 @@
     <link type="text/css" rel="stylesheet" href="{% static 'css/shared/core.css' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {% if request.LANGUAGE_CODE == 'ja' %}
-    <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
-    <style>
-      * {
-        font-family: "Yuji Boku", sans-serif;
-        font-size: 11px;
-        letter-spacing: 0cap;
-      }
-    </style>
-    {% else %}
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-    <style>
-      * {
-        font-family: "Mali", sans-serif;
-        font-size: 11px;
-      }
-    </style>
-    {% endif %}
+    <script src="{% static 'js/shared/resolutionScaling.js' %}"></script>
     {% block head %}
 
     {% endblock %}

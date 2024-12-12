@@ -1,0 +1,92 @@
+MUSIC_FILES = [
+    {
+        "id": "Bling-Bang-Bang-Born.mp3",
+        "title": "Bling Bang Bang Born",
+        "artist": "CREEPY NUTS",
+        "album": "Bling Bang Bang Born",
+    },
+    {
+        "id": "DADDY ! DADDY ! DO !.mp3",
+        "title": "DADDY ! DADDY ! DO !",
+        "artist": "Masayuki Suzuki",
+        "album": "Kaguya-sama: Love Is War",
+    },
+    {
+        "id": "Duvet.mp3",
+        "title": "Duvet",
+        "artist": "Boa",
+        "album": "Serial Experiments Lain",
+    },
+    {
+        "id": "Nandemonaiya - movie ver..mp3",
+        "title": "Nandemonaiya - movie ver.",
+        "artist": "RADWIMPS",
+        "album": "Your Name",
+    },
+    {
+        "id": "Shinunoga E-Wa.mp3",
+        "title": "Shinunoga E-Wa",
+        "artist": "Fujii Kaze",
+        "album": "HELP EVER HURT NEVER",
+    },
+    {
+        "id": "Sparkle - movie ver..mp3",
+        "title": "Sparkle - movie ver.",
+        "artist": "RADWIMPS",
+        "album": "Your Name",
+    },
+    {
+        "id": "Zenzenzense - movie ver..mp3",
+        "title": "Zenzenzense - movie ver.",
+        "artist": "RADWIMPS",
+        "album": "Your Name",
+    },
+    {
+        "id": "アイドル.mp3",
+        "title": "アイドル",
+        "artist": "YOASOBI",
+        "album": "アイドル",
+    },
+    {
+        "id": "ただ声一つ.mp3",
+        "title": "ただ声一つ",
+        "artist": "ロクデナシ",
+        "album": "ただ声一つ",
+    },
+    {
+        "id": "好きだから。.mp3",
+        "title": "好きだから。",
+        "artist": "『ユイカ』",
+        "album": "好きだから。",
+    },
+    {
+        "id": "忘れてください.mp3",
+        "title": "忘れてください",
+        "artist": "Yorushika",
+        "album": "忘れてください",
+    },
+    {
+        "id": "恋愛サーキュレーション.mp3",
+        "title": "恋愛サーキュレーション",
+        "artist": "物語シリーズ",
+        "album": "Utamonogatari Special Edition",
+    },
+    {
+        "id": "知らないままで.mp3",
+        "title": "知らないままで",
+        "artist": "ロクデナシ",
+        "album": "知らないままで",
+    },
+    {
+        "id": "言って。.mp3",
+        "title": "言って。",
+        "artist": "Yorushika",
+        "album": "夏草が邪魔をする",
+    },
+    {
+        "id": "青のすみか.mp3",
+        "title": "青のすみか",
+        "artist": "Tatsuya Kitani",
+        "album": "青のすみか",
+    },
+]

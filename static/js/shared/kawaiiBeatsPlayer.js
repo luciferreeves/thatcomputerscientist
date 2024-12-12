@@ -182,7 +182,7 @@ class SongStore {
         try {
             const response = await fetch('/stream/random-song');
             const data = await response.json();
-            return data.song;
+            return data;
         } catch (error) {
             console.error('Error fetching new song:', error);
             return null;

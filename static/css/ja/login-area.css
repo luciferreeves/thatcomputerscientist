@@ -1,10 +1,6 @@
 #login-area {
-  background-image: -webkit-image-set(url("../../images/core/sidebar/login-area_ja@2x.png") 1x,
-      url("../../images/core/sidebar/login-area_ja@2x.png") 2x,
-      url("../../images/core/sidebar/login-area_ja@3x.png") 3x);
-  background-image: image-set(url("../../images/core/sidebar/login-area_ja@2x.png") 1x,
-      url("../../images/core/sidebar/login-area_ja@2x.png") 2x,
-      url("../../images/core/sidebar/login-area_ja@3x.png") 3x);
+  background-image: url("../../images/core/sidebar/login-area_ja@3x.png");
+  background-image: url("../../images/core/sidebar/login-area_ja@3x.png");
 }
 
 #login-area>#register-now-button {

@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'SweetFairy';
+    src: url('../../fonts/SWEETFAIRY.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Navigation Links */
+.navigation-links {
+    margin: 24px 0px;
+}
+
+.navigation-title {
+    font-family: 'SweetFairy', sans-serif;
+    filter: drop-shadow(2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0px 1px 1px #623795) drop-shadow(0px 1px 1px #623795);
+    color: #623795;
+}
+
+.navigation-title-container {
+    background-color: #311B4F;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+html[lang='en'] .navigation-title {
+    font-size: 18px;
+}
+
+html[lang='ja'] .navigation-title {
+    font-size: 14px;
+}
+
+.navigation-item {
+    display: flex;
+    align-items: center;
+    margin: 4px 0px;
+}
+
+.navigation-items-container {
+    background-color: #f4f1e90f;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.navigation-item img {
+    width: 20px;
+    margin-right: 8px;
+}

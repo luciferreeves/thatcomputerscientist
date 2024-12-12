@@ -1,30 +1,79 @@
 {% load static %}
-{% if not user.is_authenticated %}
-  <link rel="stylesheet" href="{% static 'css/shared/login-area.css' %}" />
-  {% if request.LANGUAGE_CODE == 'ja' %}
-    <link rel="stylesheet" href="{% static 'css/ja/login-area.css' %}" />
-  {% else %}
-    <link rel="stylesheet" href="{% static 'css/en/login-area.css' %}" />
+<div class="left-sidebar">
+  {% if not user.is_authenticated %}
+    <link rel="stylesheet" href="{% static 'css/shared/login-area.css' %}" />
+    {% if request.LANGUAGE_CODE == 'ja' %}
+      <link rel="stylesheet" href="{% static 'css/ja/login-area.css' %}" />
+    {% else %}
+      <link rel="stylesheet" href="{% static 'css/en/login-area.css' %}" />
+    {% endif %}
+    <div id="login-area">
+      <form method="post" action="#" id="login-form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+        <input type="text" id="username" name="username" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}ユーザー名{% else %}Username{% endif %}" autocomplete="off" value="{{ request.GET.username }}" />
+        <input type="password" id="password" name="password" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}パスワード{% else %}Password{% endif %}" autocomplete="off" />
+        <input type="hidden" name="next" value="{{ request.path }}" />
+        <input type="submit" value="" />
+      </form>
+      <a href="#" id="register-now-button"></a>
+      <a href="#" id="forgot-password-button"></a>
+    </div>
   {% endif %}
-  <div id="login-area">
-    <form method="post" action="#" id="login-form">
-      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-      <input type="text" id="username" name="username" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}ユーザー名{% else %}Username{% endif %}" autocomplete="off" value="{{ request.GET.username }}" />
-      <input type="password" id="password" name="password" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}パスワード{% else %}Password{% endif %}" autocomplete="off" />
-      <input type="hidden" name="next" value="{{ request.path }}" />
-      <input type="submit" value="" />
-    </form>
-    <a href="#" id="register-now-button"></a>
-    <a href="#" id="forgot-password-button"></a>
-  </div>
-{% endif %}
 
-<div style="display: flex;">
-  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjZscHIzaDFmbDNwc2xkaWwxMmNrNGJ5eDd4aGowbTZkb2F3dXF4MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/AqcfW6opza0r1eznPc/giphy.webp"
-    alt="language change animation" width="24px" height="24px" style="margin-right: 10px;" />
-  <a href="" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
-    {% if request.LANGUAGE_CODE == 'ja' %}English{% else %}日本語{% endif %}
-  </a>
+  <link rel="stylesheet" href="{% static 'css/shared/left-sidebar.css' %}" />
+
+  <!-- Navigation -->
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}ナビゲーション{% else %}Navigation{% endif %}</h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img src={% static 'images/core/icons/home.png' %} alt="Home Icon" />
+        <a href="#home">{% if request.LANGUAGE_CODE == 'ja' %}ホーム{% else %}Home{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/journalofrandomthoughts.png' %}" alt="Journal of Random Thoughts Icon" />
+        <a href="#journalofrandomthoughts">{% if request.LANGUAGE_CODE == 'ja' %}ランダム思考のジャーナル{% else %}Journal of Random Thoughts{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/weblog.gif' %}" alt="Weblog Icon" />
+        <a href="#weblog">{% if request.LANGUAGE_CODE == 'ja' %}ウェブログ{% else %}Weblog{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/shrines.png' %}" alt="Shrines Icon" />
+        <a href="#shrines">{% if request.LANGUAGE_CODE == 'ja' %}神社{% else %}Shrines{% endif %}</a>
+      </div>
+      <div class="navigation-item {% if request.LANGUAGE_CODE == 'ja' %}en{% else %}ja{% endif %}">
+        <img src="{% static 'images/core/icons/changelanguage.png' %}" alt="Change Language Icon" />
+        <a href="#" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
+          {% if request.LANGUAGE_CODE == 'ja' %}English (英語){% else %}日本語 (Japanese){% endif %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}シリアルエクスペリメンツ：シフー{% else %}Serial Experiments: Shifoo{% endif %}</h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/socialify.png' %}" alt="Socialify Icon" />
+        <a href="#socialify">{% if request.LANGUAGE_CODE == 'ja' %}ソーシャリファイ{% else %}Socialify{% endif %}</a>
+      </div>  
+    </div> 
+  </div>
+
+
+
+  {% comment %} <div style="display: flex;">
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjZscHIzaDFmbDNwc2xkaWwxMmNrNGJ5eDd4aGowbTZkb2F3dXF4MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/AqcfW6opza0r1eznPc/giphy.webp"
+      alt="language change animation" width="24px" height="24px" style="margin-right: 10px;" />
+    <a href="" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
+      {% if request.LANGUAGE_CODE == 'ja' %}English{% else %}日本語{% endif %}
+    </a>
+  </div> {% endcomment %}
 </div>
 
 <script>

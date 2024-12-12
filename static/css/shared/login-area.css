@@ -3,7 +3,6 @@
   width: 200px;
   height: 280px;
   position: relative;
-  top: -65px;
   margin: auto;
   background-repeat: no-repeat;
   background-size: 200px 280px;
@@ -24,7 +23,7 @@
   width: 144px;
   margin: 10px auto;
   padding: 4px 8px;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: bold;
   color: #4a2e6f;
   background: transparent;

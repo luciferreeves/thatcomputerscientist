@@ -29,7 +29,7 @@ const SEEKBAR_CONFIG = {
 };
 
 const STORE_LIMIT = artworkCollection.length;
-const MIN_SCREEN_WIDTH = 1600;
+const MIN_SCREEN_WIDTH = 2800;
 
 // Audio Context and Core Variables
 let audioContext;
@@ -537,4 +537,3 @@ async function init() {
 }
 
 init();
-

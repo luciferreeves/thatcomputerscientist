@@ -42,6 +42,7 @@ let isPlaying = false;
 let currentSong = null;
 let isLoading = true;
 let isDragging = false;
+let Debugging = true;
 
 // DOM Elements
 const elements = {
@@ -162,7 +163,8 @@ class SongStore {
             };
         }
         // Get new song if we're at the end
-        const newSong = await this.fetchNewSong();
+        const nextSongId = this.songs[this.currentIndex]?.id;
+        const newSong = await this.fetchNewSong(nextSongId);
         return this.addSong(newSong);
     }
 
@@ -178,9 +180,10 @@ class SongStore {
         return null;
     }
 
-    async fetchNewSong() {
+    async fetchNewSong(nextSongId = null) {
         try {
-            const response = await fetch('/stream/random-song');
+            const url = nextSongId ? `/stream/random-song?next=${nextSongId}` : '/stream/random-song';
+            const response = await fetch(url);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -370,6 +373,7 @@ function drawVisualizer() {
 // State Management Functions
 function savePlaybackState() {
     if (!currentSong) return;
+    if (Debugging) return;
 
     const currentTime = isPlaying ? audioContext.currentTime - startTime : pauseTime;
     const state = {

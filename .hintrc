@@ -7,7 +7,9 @@
       "default",
       {
         "ignore": [
-          "image-rendering: crisp-edges"
+          "image-rendering: crisp-edges",
+          "scrollbar-width",
+          "scrollbar-width: none"
         ]
       }
     ]

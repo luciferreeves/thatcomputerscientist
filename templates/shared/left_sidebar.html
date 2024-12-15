@@ -42,6 +42,10 @@
         <a href="#shrines">{% if request.LANGUAGE_CODE == 'ja' %}神社{% else %}Shrines{% endif %}</a>
       </div>
       <div class="navigation-item">
+        <img src="{% static 'images/core/icons/screenshots.png' %}" alt="Screenshots Icon" />
+        <a href="#screenshots">{% if request.LANGUAGE_CODE == 'ja' %}スクリーンショット{% else %}Screenshots{% endif %}</a>
+      </div>
+      <div class="navigation-item">
         <img src="{% static 'images/core/icons/chatrooms.png' %}" alt="Chatrooms Icon" />
         <a href="#chatrooms">{% if request.LANGUAGE_CODE == 'ja' %}チャットルーム{% else %}Chatrooms{% endif %}</a>
       </div>
@@ -53,6 +57,17 @@
         <img src="{% static 'images/core/icons/preferences.png' %}" alt="Site Preferences Icon" />
         <a href="#preferences">{% if request.LANGUAGE_CODE == 'ja' %}サイトの設定{% else %}Site Preferences{% endif %}</a>
       </div>
+      <div class="navigation-item">
+        {% if not user.is_authenticated %}
+          <img src="{% static 'images/core/icons/registeraccount.png' %}" alt="Register Account Icon" />
+          <a href="#register">{% if request.LANGUAGE_CODE == 'ja' %}アカウント登録{% else %}Register Account{% endif %}</a>
+        {% else %}
+          <img src="{% static 'images/core/icons/useraccount.png' %}" alt="My Account Icon" />
+          <a href="#account">{% if request.LANGUAGE_CODE == 'ja' %}マイアカウント{% else %}My Account{% endif %}</a>
+        {% endif %}
+      </div>
+
+
       <div class="navigation-item {% if request.LANGUAGE_CODE == 'ja' %}en{% else %}ja{% endif %}">
         <img src="{% static 'images/core/icons/changelanguage.png' %}" alt="Change Language Icon" />
         <a href="#" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
@@ -99,6 +114,10 @@
       <div class="navigation-item">
         <img src="{% static 'images/core/icons/marketplace.png' %}" alt="Marketplace Icon" />
         <a href="#marketplace">{% if request.LANGUAGE_CODE == 'ja' %}マーケットプレイス{% else %}Marketplace{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/discussions.png' %}" alt="Discussions Icon" />
+        <a href="#discussions">{% if request.LANGUAGE_CODE == 'ja' %}ディスカッション{% else %}Discussions{% endif %}</a>
       </div>
     </div>
   </div>

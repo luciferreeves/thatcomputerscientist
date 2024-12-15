@@ -1,12 +1,12 @@
 {% load static %}
-<div class="left-sidebar" {% if user.is_authenticated %}style="top: -24px;"{% endif %}>
+<div class="left-sidebar" {% if user.is_authenticated %}style="top: -34px;"{% endif %}>
+<link rel="stylesheet" href="{% static 'css/shared/login-area.css' %}" />
+{% if request.LANGUAGE_CODE == 'ja' %}
+  <link rel="stylesheet" href="{% static 'css/ja/login-area.css' %}" />
+{% else %}
+  <link rel="stylesheet" href="{% static 'css/en/login-area.css' %}" />
+{% endif %}
   {% if not user.is_authenticated %}
-    <link rel="stylesheet" href="{% static 'css/shared/login-area.css' %}" />
-    {% if request.LANGUAGE_CODE == 'ja' %}
-      <link rel="stylesheet" href="{% static 'css/ja/login-area.css' %}" />
-    {% else %}
-      <link rel="stylesheet" href="{% static 'css/en/login-area.css' %}" />
-    {% endif %}
     <div id="login-area">
       <form method="post" action="#" id="login-form">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
@@ -17,6 +17,38 @@
       </form>
       <a href="#" id="register-now-button"></a>
       <a href="#" id="forgot-password-button"></a>
+    </div>
+  {% else %}
+    <div id="user-area">
+      <h2 class="user-title">{% if request.LANGUAGE_CODE == 'ja' %}こんにちは、{{ user.username }}さん{% else %}Hello, {{ user.username }}{% endif %}</h2>
+      <div class="user-avatar">
+        <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif" alt="{{ user.username }}'s avatar" />
+      </div>
+      <div class="user-items-container">
+        <div class="user-item">
+          <img src="{% static 'images/core/icons/journals.png' %}" alt="Journals Icon" />
+          <a href="#journals">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナル{% else %}Journals{% endif %}</a>
+      </div>
+      <div class="user-item">
+        <img src="{% static 'images/core/icons/pagodarealm.png' %}" alt="The Pagoda Realm Icon" />
+        <a href="#pagodarealm">{% if request.LANGUAGE_CODE == 'ja' %}パゴダレルム{% else %}The Pagoda Realm{% endif %}</a>
+      </div>
+      <div class="user-item">
+        <img src="{% static 'images/core/icons/mypage.png' %}" alt="My Page Icon" />
+        <a href="#mypage">{% if request.LANGUAGE_CODE == 'ja' %}マイページ{% else %}My Page{% endif %}</a>
+      </div>
+      <div class="user-item">
+        <img src="{% static 'images/core/icons/logout.png' %}" alt="Logout Icon" />
+        <a href="#logout">{% if request.LANGUAGE_CODE == 'ja' %}ログアウト{% else %}Logout{% endif %}</a>
+      </div>
+    </div>
+
+      {% comment %} <div class="user-links">
+        <a href="#journals">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナル{% else %}Journals{% endif %}</a>
+        <a href="#mymatrix">{% if request.LANGUAGE_CODE == 'ja' %}マトリックス{% else %}My Matrix{% endif %}</a>
+        <a href="#mypage">{% if request.LANGUAGE_CODE == 'ja' %}マイページ{% else %}My Page{% endif %}</a>
+        <a href="#logout">{% if request.LANGUAGE_CODE == 'ja' %}ログアウト{% else %}Logout{% endif %}</a>
+      </div> {% endcomment %}
     </div>
   {% endif %}
 

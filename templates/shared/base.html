@@ -33,7 +33,7 @@
     <div id="body-wrapper">
       {% include 'shared/header.html' %}
       <div id="content-wrapper">
-        <div id="left-sidebar" {% if user.is_authenticated %}style="border-top-left-radius: 8px;"{% endif %}>
+        <div id="left-sidebar" {% if user.is_authenticated %}style="border-top-left-radius: 0px;"{% endif %}>
           {% include 'shared/left_sidebar.html' %}
         </div>
         <div id="main-content">

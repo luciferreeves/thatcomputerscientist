@@ -111,6 +111,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "middleware.userprofilemiddleware.UserProfileMiddleware",
     "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
     "middleware.ignismiddleware.IgnisMiddleware",

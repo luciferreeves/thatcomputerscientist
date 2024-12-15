@@ -101,7 +101,7 @@ img {
   width: 100%;
   height: 100%;
   background-color: #000;
-  opacity: 0.8;
+  opacity: 0.75;
   z-index: -99;
 }
 
@@ -305,4 +305,9 @@ html[lang='ja'] .navigation-title {
 .footer-copyright,
 .footer-credits {
   margin: 8px 0px;
+}
+
+/* Text Formatting */
+.section-title {
+  margin: 16px 0px;
 }

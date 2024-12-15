@@ -46,6 +46,23 @@
   {% endif %}
 </div>
 <div class="pamphlet pamphlet-banner"></div>
+<h1 class="section-title">Recent Anime Activity</h1>
+<div class="recent-anime">
+  {% for anime in recent_mal_activity.anime %}
+    <div class="anime">
+      <div class="anime-image">
+        <img src="{{ anime.image_url }}" alt="{{ anime.title }}">
+      </div>
+      <div class="anime-content">
+        <h3>{{ anime.title }}</h3>
+        <div class="anime-details">
+          <span class="anime-status">{{ anime.status }}</span>
+          <span class="anime-episodes">{{ anime.episodes_seen }}/{{ anime.episodes_total }}</span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 {% endblock %}
 {% block scripts %}
 <script src="{% static 'js/libs/marquee.js' %}"></script>

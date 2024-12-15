@@ -46,6 +46,10 @@
   {% endif %}
 </div>
 <div class="pamphlet pamphlet-banner"></div>
+<h1 class="section-title">最近の考察</h1>
+<div class="recent-weblogs">
+  {% include 'partials/weblog_list.html' with posts=recent_weblogs %}
+</div>
 <h1 class="section-title">最近のアニメ活動</h1>
 <div class="recent-anime">
   {% for anime in recent_mal_activity.anime %}

@@ -22,9 +22,14 @@ from dotenv import load_dotenv
 from haystack.query import SearchQuerySet
 from user_agents import parse
 
-from announcements.models import Announcement
+from apps.administration.models import Announcement
 from users.accountFunctions import verify_token
-from users.forms import RegisterForm, ResetPasswordForm, UpdateUserDetailsForm, ForgotPasswordForm
+from users.forms import (
+    RegisterForm,
+    ResetPasswordForm,
+    UpdateUserDetailsForm,
+    ForgotPasswordForm,
+)
 from users.models import UserProfile
 from users.tokens import CaptchaTokenGenerator
 
@@ -233,6 +238,7 @@ def forgotpassword(request):
                 {"title": "Forgot Password", "form": form},
             )
 
+
 def resetpassword(request, uid, token):
     user = request.user
     if user.is_authenticated:
@@ -241,7 +247,7 @@ def resetpassword(request, uid, token):
         if request.method == "POST":
             form = ResetPasswordForm(request.POST)
             if form.is_valid():
-                token_object = verify_token('resetpassword', uid, token)
+                token_object = verify_token("resetpassword", uid, token)
                 if token_object is not None and token_object.verified:
                     user = User.objects.get(pk=token_object.user_id)
                     form.save(user)
@@ -270,9 +276,9 @@ def resetpassword(request, uid, token):
             return render(
                 request,
                 "blog/resetpass_input.html",
-                    {"title": "Reset Password", "form": form},
-                )
-                
+                {"title": "Reset Password", "form": form},
+            )
+
 
 def post(request, slug):
     try:

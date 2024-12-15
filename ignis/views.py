@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 
-from blog.models import Post
+from apps.blog.models import Post
 from users.tokens import CaptchaTokenGenerator
 
 from .models import PostImage, RepositoryTitle

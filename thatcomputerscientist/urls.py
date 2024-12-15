@@ -40,6 +40,7 @@ handler404 = "thatcomputerscientist.error_handler.custom_404"
 
 urlpatterns = [
     path("", include("apps.core.urls", namespace="core")),
+    path("weblog/", include("apps.blog.urls", namespace="weblog")),
     path("services/stream/", include("services.stream.urls", namespace="stream")),
     path("services/pamphlet", include("services.pamphlet.urls", namespace="pamphlet")),
     path("admin/", include("apps.administration.urls", namespace="administration")),

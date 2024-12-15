@@ -49,7 +49,7 @@
 <h1 class="section-title">最近のアニメ活動</h1>
 <div class="recent-anime">
   {% for anime in recent_mal_activity.anime %}
-    <div class="anime">
+    <a class="anime" href="{{ anime.url }}" target="_blank">
       <div class="anime-image">
         <img src="{{ anime.image_url }}" alt="{{ anime.title }}">
       </div>
@@ -60,7 +60,7 @@
           <span class="anime-episodes">{{ anime.episodes_seen }}/{{ anime.episodes_total }}</span>
         </div>
       </div>
-    </div>
+    </a>
   {% endfor %}
 </div>
 {% endblock %}

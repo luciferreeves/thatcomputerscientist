@@ -114,7 +114,8 @@
 }
 
 .anime-image {
-    width: 100%;
+    width: 180px;
+    height: 256px;
     overflow: hidden;
 }
 
@@ -152,56 +153,6 @@
 .anime:hover {
     transform: translateY(-2px);
     transition: transform 0.2s ease;
-    box-shadow: 2px 4px 0 rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: currentColor;
 }
-
-/* 
-#announcements {
-    background: url('../images/backgrounds/announcements.png') no-repeat;
-    background-size: 730px 300px;
-    position: relative;
-    margin-top: 15px;
-    width: 730px;
-    height: 300px;
-}
-
-#update-gif {
-    height: 14px;
-    display: block;
-    position: relative;
-    left: 118px;
-    top: 11px;
-}
-
-marquee {
-    border: 15px solid transparent;
-    padding: 15px;
-    border-image: url('../images/backgrounds/announcements_border.png') 45 round;
-    width: 480px;
-    height: 180px;
-    position: relative;
-    left: 120px;
-    top: 23px;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-marquee::after {
-    position: absolute;
-    top: -4px;
-    bottom: -4px;
-    left: -4px;
-    right: -4px;
-    content: '';
-    z-index: -1;
-    border-radius: 16px;
-}
-
-marquee>ul {
-    text-align: justify;
-}
-
-
-
-#adfs {
-    width: 720px;
-} */

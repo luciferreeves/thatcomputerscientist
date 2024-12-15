@@ -180,6 +180,27 @@
       </div>
     </div>
   </div>
+
+  {% if user.is_staff or user.is_superuser %}
+    <div class="navigation-links">
+      <div class="navigation-title-container">
+        <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}アドミンアレア{% else %}Admin Area{% endif %}</h1>
+      </div>
+      <div class="navigation-items-container">
+        <div class="navigation-item">
+          <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Announcements Icon" />
+          <a href="#manage-announcements">{% if request.LANGUAGE_CODE == 'ja' %}アナウンスメント管理{% else %}Manage Announcements{% endif %}</a>
+        </div>
+        <div class="navigation-item">
+          <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Users Icon" />
+          <a href="#manage-users">{% if request.LANGUAGE_CODE == 'ja' %}ユーザー管理{% else %}Manage Users{% endif %}</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <p class="sidebar-credits">
+    This website uses cookies and there's nothing you can do about it!
+  </p>
 </div>
 
 <script>

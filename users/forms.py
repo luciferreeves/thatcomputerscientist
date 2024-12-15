@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-from blog.context_processors import avatar_list
+from apps.blog.context_processors import avatar_list
 from users.models import UserProfile
 
 from .accountFunctions import store_token

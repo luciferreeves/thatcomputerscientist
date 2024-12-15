@@ -3,13 +3,17 @@ from django.urls import path
 from . import views
 from .feed import RSSFeed
 
-app_name = "blog"
+app_name = "weblog"
 urlpatterns = [
     path("", views.home, name="home"),
     path("account", views.account, name="account"),
     path("register", views.register, name="register"),
     path("forgotpassword", views.forgotpassword, name="forgotpassword"),
-    path('forgotpassword/reset?uid=<str:uid>&token=<str:token>', views.resetpassword, name='resetpassword'),
+    path(
+        "forgotpassword/reset?uid=<str:uid>&token=<str:token>",
+        views.resetpassword,
+        name="resetpassword",
+    ),
     path("search", views.search, name="search"),
     path("weblog", views.articles, name="articles"),
     path("weblog/<str:slug>", views.post, name="post"),

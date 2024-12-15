@@ -4,20 +4,36 @@
 <link rel="stylesheet" href="{% static 'css/shared/kawaiibeats.css' %}">
 {% endblock head %}
 
-<div class="kawaiibeats">
-    <p id="song-title">Loading...</p>
-    <p id="song-artist-album">Loading...</p>
-    <img onerror="this.src=getRandomArtwork()" id="song-cover" alt="Song Cover">
-    <canvas id="song-visualizer" width="140" height="30"></canvas>
-    <div id="song-time">
-      <span id="song-time-elapsed">0:00</span>
-      <span id="song-time-total">0:00</span>
+<div class="right-sidebar">
+  <div class="kawaiibeats">
+      <p id="song-title">Loading...</p>
+      <p id="song-artist-album">Loading...</p>
+      <img onerror="this.src=getRandomArtwork()" id="song-cover" alt="Song Cover">
+      <canvas id="song-visualizer" width="140" height="30"></canvas>
+      <div id="song-time">
+        <span id="song-time-elapsed">0:00</span>
+        <span id="song-time-total">0:00</span>
+      </div>
+      <div id="song-controls">
+          <button id="song-prev">&lt;</button>
+          <button id="song-play">&#9658;</button>
+          <button id="song-next">&gt;</button>
+      </div>
+  </div>
+
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}おすすめ{% else %}The Good Stuff{% endif %}</h1>
     </div>
-    <div id="song-controls">
-        <button id="song-prev">&lt;</button>
-        <button id="song-play">&#9658;</button>
-        <button id="song-next">&gt;</button>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/calendar.png' %}" alt="Calendar Icon" />
+        <a href="#calendar">{% if request.LANGUAGE_CODE == 'ja' %}ブログカレンダー{% else %}Post Calendar{% endif %}</a>
+      </div>
     </div>
+  </div>
+
+  <div class="pamphlet pamphlet-big"></div>
 </div>
 
 {% block scripts %}

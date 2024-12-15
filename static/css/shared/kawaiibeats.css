@@ -3,8 +3,7 @@
     width: 200px;
     height: 320px;
     position: relative;
-    left: 20px;
-    top: 6px;
+    margin-top: 8px;
     background-image: url("../../images/kawaiibeats/kawaii_beats.gif");
     background-size: 200px 320px;
     background-repeat: no-repeat;

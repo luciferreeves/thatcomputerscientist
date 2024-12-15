@@ -42,7 +42,6 @@ let isPlaying = false;
 let currentSong = null;
 let isLoading = true;
 let isDragging = false;
-let Debugging = true;
 
 // DOM Elements
 const elements = {
@@ -182,7 +181,7 @@ class SongStore {
 
     async fetchNewSong(nextSongId = null) {
         try {
-            const url = nextSongId ? `/stream/random-song?next=${nextSongId}` : '/stream/random-song';
+            const url = nextSongId ? `/services/stream/random-song?next=${nextSongId}` : '/services/stream/random-song';
             const response = await fetch(url);
             const data = await response.json();
             return data;
@@ -373,7 +372,6 @@ function drawVisualizer() {
 // State Management Functions
 function savePlaybackState() {
     if (!currentSong) return;
-    if (Debugging) return;
 
     const currentTime = isPlaying ? audioContext.currentTime - startTime : pauseTime;
     const state = {
@@ -406,7 +404,7 @@ async function loadNewSong(autoplay = false, direction = 'next') {
         currentSong = nextSong;
         updateSongInfo(); // This will now use the cached artwork
 
-        await fetchAudio(`/stream/song/${currentSong.id}`);
+        await fetchAudio(`/services/stream/song/${currentSong.id}`);
         pauseTime = 0; // Reset seek position for new song
 
         if (wasPlaying) {
@@ -519,7 +517,7 @@ async function init() {
             };
 
             updateSongInfo();
-            await fetchAudio(`/stream/song/${state.songId}`);
+            await fetchAudio(`/services/stream/song/${state.songId}`);
             pauseTime = state.timeStamp || 0;
 
             if (state.isPlaying) {

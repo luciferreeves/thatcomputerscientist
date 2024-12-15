@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class StreamConfig(AppConfig):
+class PamphletConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "apps.stream"
+    name = "services.pamphlet"

@@ -2,7 +2,7 @@
 import os
 import random
 from hashlib import md5
-from apps.stream.songs import MUSIC_FILES
+from services.stream.songs import MUSIC_FILES
 import requests
 from django.http import HttpResponse, JsonResponse
 

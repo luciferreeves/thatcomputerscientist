@@ -45,9 +45,16 @@
           {% include 'shared/right_sidebar.html' %}
         </div>
       </div>
+      <div id="footer">
+        {% include 'shared/footer.html' %}
+      </div>
     </div>
   </body>
   {% block scripts %}
+    <script src="{% static 'js/libs/pamphlet.js' %}"></script>
 
+    <script type="text/javascript">
+      new Pamphlet();
+    </script>
   {% endblock %}
 </html>

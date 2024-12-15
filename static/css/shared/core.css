@@ -160,18 +160,55 @@ img {
   border-top-left-radius: 14px;
 }
 
-.left-sidebar {
-  position: relative;
-  top: -65px;
-}
-
 #main-content {
-  width: 780px;
-  padding: 0 20px;
+  width: 800px;
+  padding: 0 0px 0px 20px;
   border-top: 1px solid #fff;
 }
 
 #right-sidebar {
   width: 200px;
   border-top: 1px solid #fff;
+}
+
+#footer {
+  width: 1200px;
+  padding: 8px 0;
+  text-align: center;
+  border-top: 1px solid #fff;
+}
+
+.right-sidebar {
+  position: relative;
+  left: 20px;
+}
+
+.left-sidebar {
+  position: relative;
+  top: -65px;
+}
+
+.pamphlet-big {
+  width: 200px;
+  height: auto;
+}
+
+.pamphlet-banner {
+  width: 780px;
+  height: 100px;
+  padding: 4px;
+  border: 1px solid #fff;
+  margin: 8px 0px;
+}
+
+.pamphlet-button {
+  width: 88px;
+  height: 31px;
+  display: inline-block;
+}
+
+.footer-buttons,
+.footer-copyright,
+.footer-credits {
+  margin: 8px 0px;
 }

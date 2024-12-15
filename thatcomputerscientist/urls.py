@@ -39,8 +39,11 @@ sitemaps = {
 handler404 = "thatcomputerscientist.error_handler.custom_404"
 
 urlpatterns = [
+    # Main site: Defined by template rendering
     path("", include("apps.core.urls", namespace="core")),
-    path("stream/", include("apps.stream.urls", namespace="stream")),
+    # Services: Defined by API endpoints, HTTPStreaming, HTTPResponse, etc.
+    path("services/stream/", include("services.stream.urls", namespace="stream")),
+    path("services/pamphlet", include("services.pamphlet.urls", namespace="pamphlet")),
     # path('users', include('users.urls', namespace='users')),
     # path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),
     # path('repositories', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),

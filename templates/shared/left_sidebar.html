@@ -53,6 +53,8 @@
     </div>
   </div>
 
+  <div class="pamphlet pamphlet-big"></div>
+
   <div class="navigation-links">
     <div class="navigation-title-container">
       <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}シリアルエクスペリメンツ：シフー{% else %}Serial Experiments: Shifoo{% endif %}</h1>
@@ -61,7 +63,11 @@
       <div class="navigation-item">
         <img src="{% static 'images/core/icons/socialify.png' %}" alt="Socialify Icon" />
         <a href="#socialify">{% if request.LANGUAGE_CODE == 'ja' %}ソーシャリファイ{% else %}Socialify{% endif %}</a>
-      </div>  
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/anime.png' %}" alt="Anime Icon" />
+        <a href="#anime">{% if request.LANGUAGE_CODE == 'ja' %}アニメ配信{% else %}Anime Streams{% endif %}</a>
+      </div>
     </div> 
   </div>
 </div>

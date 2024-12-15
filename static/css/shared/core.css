@@ -1,15 +1,22 @@
 /* Reset and Base Styles */
 @font-face {
-  font-family: 'TheHeart';
-  src: url('../../fonts/THEHEART.ttf') format('truetype');
+  font-family: 'Klee';
+  src: url('../../fonts/KleeOne-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Yomogi';
-  src: url('../../fonts/YOMOGI.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'Klee';
+  src: url('../../fonts/KleeOne-SemiBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SweetFairy';
+  src: url('../../fonts/SWEETFAIRY.otf') format('opentype');
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -20,6 +27,8 @@
   outline: none;
   border: none;
   color: #fff;
+  font-family: 'Klee', sans-serif;
+  font-size: 12px;
 }
 
 /* HTML and Body Base */
@@ -29,19 +38,19 @@ html {
   min-width: 1200px;
 }
 
-html[lang='en'],
+/* html[lang='en'],
 html[lang='en'] input,
 .en {
-  font-family: 'TheHeart', sans-serif;
-  font-size: 14px;
+  font-family: 'AP';
+  font-size: 12px;
 }
 
 html[lang='ja'],
 html[lang='ja'] input,
 .ja {
-  font-family: 'Yomogi', sans-serif;
+  font-family: 'AP';
   font-size: 12px;
-}
+} */
 
 body {
   min-height: 100vh;
@@ -55,16 +64,17 @@ hr {
   background: #fff;
 }
 
-a {
-  color: #fff;
+a,
+a:link,
+a:visited {
+  color: #8DC6FF;
   text-decoration: none;
 }
 
-a:link,
-a:visited,
+
 a:hover,
 a:active {
-  color: #fff;
+  color: #2381DF;
 }
 
 a:hover {
@@ -83,8 +93,9 @@ img {
 
 #video-background {
   position: fixed;
-  right: 0;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   min-width: 100%;
   min-height: 100%;
   z-index: -100;
@@ -99,7 +110,7 @@ img {
   width: 100%;
   height: 100%;
   background-color: #000;
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: -99;
 }
 
@@ -153,7 +164,23 @@ img {
   }
 }
 
-/* Sidebar and Main Content */
+/* Main Content */
+
+#right-sidebar {
+  width: 200px;
+  border-top: 1px solid #fff;
+}
+
+#footer {
+  width: 1200px;
+  margin-top: 8px;
+  padding: 8px 0;
+  text-align: center;
+  border-top: 1px solid #fff;
+}
+
+/* Sidebar Stuff */
+
 #left-sidebar {
   width: 200px;
   border-top: 1px solid #fff;
@@ -166,18 +193,6 @@ img {
   border-top: 1px solid #fff;
 }
 
-#right-sidebar {
-  width: 200px;
-  border-top: 1px solid #fff;
-}
-
-#footer {
-  width: 1200px;
-  padding: 8px 0;
-  text-align: center;
-  border-top: 1px solid #fff;
-}
-
 .right-sidebar {
   position: relative;
   left: 20px;
@@ -187,6 +202,94 @@ img {
   position: relative;
   top: -65px;
 }
+
+.sidebar-credits {
+  border-top: 1px solid #fff;
+  padding: 8px 0;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Navigation Links */
+.navigation-links {
+  margin: 24px 0px;
+}
+
+.navigation-title {
+  font-family: 'SweetFairy', sans-serif;
+  filter: drop-shadow(2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0px 1px 1px #2381DF) drop-shadow(0px 1px 1px #2381DF);
+  color: #2381DF;
+}
+
+.navigation-title-container {
+  background-color: #002B62;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+html[lang='en'] .navigation-title {
+  font-size: 18px;
+}
+
+html[lang='ja'] .navigation-title {
+  font-size: 14px;
+}
+
+.navigation-item {
+  display: flex;
+  align-items: center;
+  margin: 4px 0px;
+}
+
+.navigation-items-container {
+  background-color: #f4f1e90f;
+  padding: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.navigation-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Sidebar Search Bar */
+
+#search-area {
+  width: 200px;
+  height: 88px;
+  background: url('../../images/core/sidebar/search-area.png') no-repeat;
+  background-size: 200px 88px;
+  margin: auto;
+  padding: 0px;
+  border: 0px;
+  position: relative;
+  bottom: 0px;
+  right: 0px;
+}
+
+#search-form {
+  position: absolute;
+  bottom: 10px;
+  left: 40px;
+}
+
+#search-form input[type=text] {
+  display: block;
+  width: 180px;
+  font-size: 12px;
+  background: transparent;
+  color: #231F20;
+  border-radius: 4px;
+}
+
+#search-form input::placeholder {
+  color: #524e4f;
+}
+
+/* Pamphlet Ads */
 
 .pamphlet-big {
   width: 200px;

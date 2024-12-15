@@ -23,17 +23,50 @@
 
   <div class="navigation-links">
     <div class="navigation-title-container">
-      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}おすすめ{% else %}The Good Stuff{% endif %}</h1>
+      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}シリアルエクスペリメンツ：シフー{% else %}Serial Experiments: Shifoo{% endif %}</h1>
     </div>
     <div class="navigation-items-container">
       <div class="navigation-item">
-        <img src="{% static 'images/core/icons/calendar.png' %}" alt="Calendar Icon" />
-        <a href="#calendar">{% if request.LANGUAGE_CODE == 'ja' %}ブログカレンダー{% else %}Post Calendar{% endif %}</a>
+        <img src="{% static 'images/core/icons/socialify.png' %}" alt="Socialify Icon" />
+        <a href="#socialify">{% if request.LANGUAGE_CODE == 'ja' %}ソーシャリファイ{% else %}Socialify{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/repositories.png' %}" alt="My Repositories Icon" />
+        <a href="#repositories">{% if request.LANGUAGE_CODE == 'ja' %}マイリポジトリ{% else %}My Repositories{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/myanimelist.png' %}" alt="My Anime List Icon" />
+        <a href="#myanimelist">{% if request.LANGUAGE_CODE == 'ja' %}マイアニメリスト{% else %}My Anime List{% endif %}</a>
       </div>
     </div>
   </div>
-
   <div class="pamphlet pamphlet-big"></div>
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}ザ・マトリックス{% else %}The Matrix{% endif %}
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/pamphlet.png' %}" alt="Pamphlet Icon" />
+        <a href="#pamphlet">{% if request.LANGUAGE_CODE == 'ja' %}パンフレット{% else %}Pamphlet{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/webring.png' %}" alt="Caravan Icon" />
+        <a href="#webring">{% if request.LANGUAGE_CODE == 'ja' %}キャラバン{% else %}Caravan{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/guestbook.png' %}" alt="Ledger Icon" />
+        <a href="#guestbookservice">{% if request.LANGUAGE_CODE == 'ja' %}レジャー{% else %}Ledger{% endif %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/census.png' %}" alt="Census Icon" />
+        <a href="#census">{% if request.LANGUAGE_CODE == 'ja' %}センサス{% else %}Census{% endif %}</a>
+      </div>
+    </div>
+  </div>
+  <p class="sidebar-credits">
+    This website uses cookies and there's nothing you can do about it!
+  </p>
 </div>
 
 {% block scripts %}

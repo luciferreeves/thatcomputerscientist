@@ -21,9 +21,8 @@
 #login-form input[type="password"] {
   display: block;
   width: 144px;
-  margin: 10px auto;
-  padding: 4px 8px;
-  font-size: 16px;
+  margin: 5px auto;
+  padding: 5px 8px;
   font-weight: bold;
   color: #4a2e6f;
   background: transparent;

@@ -39,16 +39,15 @@ sitemaps = {
 handler404 = "thatcomputerscientist.error_handler.custom_404"
 
 urlpatterns = [
-    # Main site: Defined by template rendering
     path("", include("apps.core.urls", namespace="core")),
-    # Services: Defined by API endpoints, HTTPStreaming, HTTPResponse, etc.
     path("services/stream/", include("services.stream.urls", namespace="stream")),
     path("services/pamphlet", include("services.pamphlet.urls", namespace="pamphlet")),
+    path("admin/", include("apps.administration.urls", namespace="administration")),
+    path("administration-corner/", admin.site.urls),
     # path('users', include('users.urls', namespace='users')),
     # path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),
     # path('repositories', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
     # path('ignis', include(('ignis.urls', 'ignis'), namespace='ignis')),
-    # path('admin/', admin.site.urls),
     # path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 

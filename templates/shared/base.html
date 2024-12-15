@@ -33,7 +33,7 @@
     <div id="body-wrapper">
       {% include 'shared/header.html' %}
       <div id="content-wrapper">
-        <div id="left-sidebar">
+        <div id="left-sidebar" {% if user.is_authenticated %}style="border-top-left-radius: 8px;"{% endif %}>
           {% include 'shared/left_sidebar.html' %}
         </div>
         <div id="main-content">
@@ -51,10 +51,10 @@
     </div>
   </body>
   {% block scripts %}
-    <script src="{% static 'js/libs/pamphlet.js' %}"></script>
-
-    <script type="text/javascript">
-      new Pamphlet();
-    </script>
+    
   {% endblock %}
+  <script src="{% static 'js/libs/pamphlet.js' %}"></script>
+  <script type="text/javascript">
+    new Pamphlet();
+  </script>
 </html>

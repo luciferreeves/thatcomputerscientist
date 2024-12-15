@@ -22,4 +22,44 @@
     </div>
 </div>
 <img src="{% static 'images/core/gifs/construction.gif' %}" id="uc">
+<div id="announcements">
+  <img src="{% static 'images/core/gifs/update.gif' %}" style="height: 14px; position: relative; top: 4px; left: 124px;">
+  {% if announcements is not None %}
+  <div id="announcement-container">
+    <div id="announcementsMarquee">
+      {% for announcement in announcements %}
+        <div class="announcement">
+          <div class="announcement-icon">
+            {% if announcement.is_new %}
+              <img src="{% static 'images/core/gifs/new_announcement.gif' %}" alt="New Announcement" />
+            {% else %}
+              <img src="{% static 'images/core/gifs/hand.gif' %}" alt="Announcement" />
+            {% endif %}
+          </div>
+          <div class="announcement-content">
+            <u><strong>{{ announcement.created_at | date:"M d, Y" }}</strong></u>: {{ announcement.content_ja | safe }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+<div class="pamphlet pamphlet-banner"></div>
 {% endblock %}
+{% block scripts %}
+<script src="{% static 'js/libs/marquee.js' %}"></script>
+<script type="text/javascript">
+  const announcementsMarquee = document.getElementById('announcementsMarquee');
+  const marquee = new Marquee(announcementsMarquee, {
+    behavior: 'scroll',
+    direction: 'up',
+    scrollamount: 1,
+    scrolldelay: 50,
+    width: '100%',
+    height: '236px',
+    onmouseover: 'this.stop()',
+    onmouseout: 'this.start()'
+  });
+</script>
+{% endblock scripts %}

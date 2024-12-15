@@ -76,12 +76,11 @@ INSTALLED_APPS = [
     "thatcomputerscientist",
     "haystack",
     "apps.core",
+    "apps.administration",
     "blog.apps.BlogConfig",
     "users",
-    "userpages",
     "blog_admin",
     "dev_status",
-    "announcements",
     "ignis",
     "chat",
 ]

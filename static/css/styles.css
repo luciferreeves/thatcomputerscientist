@@ -18,7 +18,7 @@ body {
   visibility: hidden !important;
 }
 
-.skiptranslate > iframe {
+.skiptranslate>iframe {
   display: none !important;
 }
 
@@ -296,8 +296,6 @@ blockquote {
   border-radius: 8px;
   text-align: left !important;
   overflow-x: auto;
-
-  // Custom Horizontal Scrollbar
   scrollbar-width: thin;
   scrollbar-color: #311b4f #311b4f26;
 }
@@ -507,24 +505,24 @@ blockquote {
   margin-right: 0px;
 }
 
-#article > h1 {
+#article>h1 {
   font-size: 32px;
   margin-bottom: 10px;
 }
 
-#anonymous-profile-info > div,
-#anonymous-profile-info > #creds > div {
+#anonymous-profile-info>div,
+#anonymous-profile-info>#creds>div {
   margin: 10px 0;
 }
 
-#anonymous-profile-info > div > label,
-#anonymous-profile-info > #creds > div > label {
+#anonymous-profile-info>div>label,
+#anonymous-profile-info>#creds>div>label {
   width: 200px;
   display: inline-block;
 }
 
-#anonymous-profile-info > div > input,
-#anonymous-profile-info > #creds > div > input {
+#anonymous-profile-info>div>input,
+#anonymous-profile-info>#creds>div>input {
   width: 300px;
   display: inline-block;
 }

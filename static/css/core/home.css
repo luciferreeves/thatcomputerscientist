@@ -56,6 +56,49 @@
     width: 780px;
 }
 
+#announcements {
+    background: url('../../images/core/backgrounds/announcements.png') no-repeat;
+    background-size: 780px 320px;
+    position: relative;
+    margin-top: 12px;
+    width: 780px;
+    height: 320px;
+}
+
+#announcement-container {
+    width: 580px;
+    height: 280px;
+    position: relative;
+    top: 8px;
+    left: 128px;
+    border: 16px solid transparent;
+    padding: 8px;
+    border-image: url('../../images/core/backgrounds/announcements_border.jpg') 45 round;
+}
+
+.announcement {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    white-space: normal;
+    min-height: 30px;
+}
+
+.announcement-icon {
+    flex-shrink: 0;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+.announcement-icon img {
+    height: 14px;
+    width: 30px;
+}
+
+.announcement-content {
+    flex-grow: 1;
+}
+
 /* 
 #announcements {
     background: url('../images/backgrounds/announcements.png') no-repeat;

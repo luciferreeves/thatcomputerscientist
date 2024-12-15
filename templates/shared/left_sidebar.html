@@ -1,5 +1,5 @@
 {% load static %}
-<div class="left-sidebar">
+<div class="left-sidebar" {% if user.is_authenticated %}style="top: -24px;"{% endif %}>
   {% if not user.is_authenticated %}
     <link rel="stylesheet" href="{% static 'css/shared/login-area.css' %}" />
     {% if request.LANGUAGE_CODE == 'ja' %}

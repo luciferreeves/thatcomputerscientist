@@ -4,8 +4,13 @@ from django.utils import timezone
 
 # Create your models here.
 
+
 class Announcement(models.Model):
+    class Meta:
+        db_table = "announcements_announcement"
+
     content = models.TextField()
+    content_ja = models.TextField(blank=True)
     created_at = models.DateTimeField()
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -20,5 +25,4 @@ class Announcement(models.Model):
         return super(Announcement, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.content
-        
+        return self.content[:50] + "..."

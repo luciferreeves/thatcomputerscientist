@@ -141,6 +141,8 @@ image_downloader.ipynb
 
 dump.rdb
 
+*.internaltest
+
 # credentials JSON files
 credentials-*.json
 SSL

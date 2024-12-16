@@ -14,7 +14,13 @@ class UserProfile(models.Model):
     is_public = models.BooleanField(default=False)
     email_public = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
-    blinkie_url = models.TextField(blank=True, default='')
+    blinkie_url = models.TextField(blank=True, default="")
+    experience = models.IntegerField(default=0)
+    level = models.IntegerField(default=1)
+    balance = models.IntegerField(default=500)
+    journal_streak = models.IntegerField(default=0)
+    journal_streak_reset = models.BooleanField(default=False)
+    journal_streak_best = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username

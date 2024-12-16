@@ -53,30 +53,30 @@
     <p class="stats-bio">{{ user.profile.bio|linebreaksbr }}</p>
     <div class="user-stats">
       <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}経験値{% else %}XP{% endif %}</p>
-      <p class="stat-value">{{ user.profile.experience }}0 / 1000</p>
+      <p class="stat-value">{{ user.profile.experience }} / 1000</p>
     </div>
     <div class="user-stats">
       <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}レベル{% else %}Level{% endif %}</p>
-      <p class="stat-value">{{ user.profile.level }}1</p>
+      <p class="stat-value">{{ user.profile.level }}</p>
     </div>
     <div class="user-stats">
       <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}残高{% else %}Balance{% endif %}</p>
       <p class="stat-value">
-        <span>{{ user.profile.balance }}0</span>
+        <span>{{ user.profile.balance }}</span>
         <img src="{% static 'images/core/icons/coin.png' %}" alt="Coin Icon" />
       </p>
     </div>
     <div class="user-stats">
       <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナルエントリー{% else %}Journal Entries{% endif %}</p>
-      <p class="stat-value">{{ user.profile.journal_entries }}0</p>
+      <p class="stat-value">{{ user.profile.journal_entries }}</p>
     </div>
     <div class="user-stats">
       <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナル連続記録{% else %}Journal Streak{% endif %}</p>
-      <p class="stat-value">{{ user.profile.journal_streak }}0 days</p>
+      <p class="stat-value">{{ user.profile.journal_streak }} days</p>
     </div>
     <div class="user-stats">
       <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}ウェブログ投稿{% else %}Weblog Posts{% endif %}</p>
-      <p class="stat-value">{{ user.profile.weblog_posts }}0</p>
+      <p class="stat-value">{{ user.profile.weblogs_created }}</p>
     </div>
     <div class="stat-links">
       <a href="#">{% if request.LANGUAGE_CODE == 'ja' %}ドレッシングルーム{% else %}Dressing Room{% endif %}</a>

@@ -63,6 +63,38 @@ a:active {
   color: #df23c4;
 }
 
+button {
+  background: #4444b1;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #df23c4;
+}
+
+button:active {
+  background: #8d8dff;
+}
+
+button:disabled {
+  background: #8d8dff;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background: #8d8dff;
+}
+
+button:focus {
+  outline: none;
+}
+
 a:hover {
   text-decoration: underline;
 }

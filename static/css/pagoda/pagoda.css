@@ -1,0 +1,213 @@
+/* Main Container */
+.pagoda-realm {
+    background-color: rgba(134, 99, 229, 0.1);
+    border: 1px solid #8d8dff;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 16px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.pagoda-realm::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #df23c4, transparent);
+    animation: scanline 2s linear infinite;
+}
+
+/* Banner */
+.pagoda-banner {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+/* Typography */
+.pagoda-realm h2 {
+    color: #8d8dff;
+    margin: 24px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(141, 141, 255, 0.3);
+}
+
+.pagoda-realm h3 {
+    color: #da73ff;
+    margin: 16px 0 12px;
+}
+
+.pagoda-realm p {
+    margin: 12px 0;
+    line-height: 1.6;
+}
+
+.pagoda-realm em {
+    color: #df23c4;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.pagoda-realm strong {
+    color: #da73ff;
+    font-weight: 600;
+}
+
+/* Lists */
+.pagoda-realm ol,
+.pagoda-realm ul {
+    margin: 16px 0;
+    padding-left: 24px;
+}
+
+.pagoda-realm li {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+/* Table Styles */
+.pagoda-realm table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.pagoda-realm th,
+.pagoda-realm td {
+    padding: 12px;
+    border: 1px solid rgba(141, 141, 255, 0.3);
+    text-align: left;
+}
+
+.pagoda-realm th {
+    background: rgba(134, 99, 229, 0.2);
+    color: #8d8dff;
+    font-weight: 600;
+}
+
+.pagoda-realm td {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.pagoda-realm td a {
+    color: #8d8dff;
+    text-decoration: none;
+}
+
+.pagoda-realm td a:hover {
+    color: #df23c4;
+    text-decoration: underline;
+}
+
+/* Forms */
+.pagoda-dashboard-empty form {
+    background: rgba(98, 55, 149, 0.2);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+}
+
+.pagoda-realm label {
+    display: block;
+    margin: 12px 0 4px;
+    color: #da73ff;
+    font-weight: 500;
+}
+
+.pagoda-realm input[type="text"],
+.pagoda-realm select {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #8663e5;
+    border-radius: 4px;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.pagoda-realm input[type="text"]:focus,
+.pagoda-realm select:focus {
+    border-color: #df23c4;
+    box-shadow: 0 0 8px rgba(223, 35, 196, 0.3);
+}
+
+.pagoda-realm select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238d8dff' viewBox='0 0 16 16'%3E%3Cpath d='M8 10l4-4H4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* Note Text */
+.pagoda-realm .note {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+    margin: 4px 0 12px;
+}
+
+/* Buttons */
+.pagoda-realm button {
+    background: linear-gradient(45deg, #8663e5, #df23c4);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+}
+
+.pagoda-realm button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(223, 35, 196, 0.5);
+}
+
+/* Dashboard Sites Table */
+.pagoda-dashboard-sites table {
+    margin-bottom: 24px;
+}
+
+.pagoda-dashboard-sites td {
+    text-align: left;
+}
+
+/* Error Messages */
+.pagoda-realm [class*="Error"] {
+    color: #ff9a9a;
+    background: rgba(255, 0, 0, 0.1);
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+/* Animation */
+@keyframes scanline {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .pagoda-realm {
+        margin: 16px;
+    }
+
+    .pagoda-realm table {
+        display: block;
+        overflow-x: auto;
+    }
+}

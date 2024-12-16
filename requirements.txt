@@ -1,4 +1,5 @@
 django
+dnspython
 django-redis
 python-dotenv
 gunicorn

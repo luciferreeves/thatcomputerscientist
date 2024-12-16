@@ -1,0 +1,213 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/pagoda/pagoda.css' %}">
+{% endblock head %} 
+{% block content %}
+<div class="pagoda-realm">
+{% if not request.COOKIES.visitedPagodaRealm %}
+    <img src="{% static 'images/pagoda/pagoda_banner.png' %}" alt="The Pagoda Realm Banner" class="pagoda-banner">
+    <hr>
+    <div class="pagoda-introduction-text">
+        <h2>Welcome to The Pagoda Realm, {{ user.first_name }}!</h2>
+        <p>What is The Pagoda Realm, you might ask? If you recall, it was a service in the list of services that I promised to
+            provide access you to when you signed up for an account. But in reality, I lied to you. The Pagoda Realm is not a
+            single service, but a <em>collection</em> of services that I have carefully designed to help you in with your
+            <em>Neocities</em> and other retro static site hosting projects like <em>Nekoweb</em>. The web is a canvas, and you
+            are the artist, limited only by your imagination. The Pagoda Realm is a place where you can integrate various tools
+            on your own website, which would have been otherwise hard to do.
+        </p>
+        <p>All services are built to be very simple to use and beginner-friendly. A lot of these services provide data in JSON
+            and as well as prerendered iframes, so you can use them in your own website without having to worry about the
+            technical details. The components are designed to be fashionable and usually support variety of themes and
+            custom CSS to match your website's design.
+        </p>
+        <h3>How do I use the services in The Pagoda Realm?</h3>
+        <p>Using the services in The Pagoda Realm is very simple. If you are looking at this page, that means that you have already
+            cleared the first step, which is to sign up for an account. Once you have signed up for an account, you need to connect
+            your website to The Pagoda Realm. This can be done in two ways:</p>
+        <ol>
+            <li><strong>Using DNS Verification</strong> - This is the recommended method. You can add a TXT record to your website's
+                DNS settings to verify that you own the website. Once the DNS record is added, you can connect your website to The
+                Pagoda Realm.</li>
+            <li><strong>Using Meta Tag Verification</strong> - This is the alternative method if you are using a host like Neocities
+                or Nekoweb and do not have access to the DNS settings. You can add a meta tag to your website's HTML to verify that
+                you own the website. Once the meta tag is added, you can connect your website to The Pagoda Realm.</li>
+        </ol>
+        <p>Once your website is connected to The Pagoda Realm, you can start using the services. You can create a journal, write a
+            weblog post, add comments to your weblog post, join the webring, add entries to the guestbook, show ads on your website,
+            and view the number of visitors that have visited your website. You can also embed the services on your website using
+            the JSON API or the prerendered iframe.</p>
+        <h3>What services are available in The Pagoda Realm?</h3>
+        <p>Here are some of the services that are available in The Pagoda Realm:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Description</th>
+                    <th>Embeddable as</th>
+                    <th>API</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Journals</td>
+                    <td>A daily diary like journal that you can use to write about your day, thoughts, and feelings.</td>
+                    <td>JSON, iframe</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Weblogs</td>
+                    <td>A simple weblog service that you can use to write articles, stories, and blog posts.</td>
+                    <td>JSON, iframe</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Weblog Comments</td>
+                    <td>A simple comment system that you can use to add comments to your weblog posts.</td>
+                    <td>JSON, iframe</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Caravan</td>
+                    <td>A webring service that binds all the websites registered on The Pagoda Realm together.</td>
+                    <td>iframe</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Ledger</td>
+                    <td>Ledger is a guestbook service that you can use to receive feedback and comments from your website visitors.</td>
+                    <td>JSON, iframe</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Pamphlet</td>
+                    <td>Pamphlet is a ad-simulation service which shows random fake period specific ads on your website.</td>
+                    <td>JavaScript</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Census</td>
+                    <td>Census is a service that shows the number of visitors that have visited your website.</td>
+                    <td>iframe</td>
+                    <td>Yes</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li><strong>Journals</strong> - A daily diary like journal that you can use to write about your day, thoughts, and
+                feelings. Journals are both private and public, and you can create multiple journals for different purposes.
+                Public journals can be embedded on your website. You will be able to view your journal entries in a calendar
+                view, and you can also export your journal entries in JSON format. Furthermore, you can also use the journal
+                entries in your own website using the JSON API.</li>
+            <li><strong>Weblogs</strong> - A simple weblog service that you can use to write articles, stories, and blog posts.
+                Weblogs are always public by default (unless in draft mode), and you can only have one weblog per account. You
+                can categorize your posts, tag them, and edit the post in full HTML mode and even change CSS on per post basis.
+                You can also embed your weblog posts on your website using the JSON API or the prerendered iframe.</li>
+            <li><strong>Weblog Comments</strong> - A simple comment system that you can use to add comments to your weblog posts.
+                You can customize the comment system to match your website's design, and you can also moderate the comments
+                before they are published. The comment system is also available as a JSON API and prerendered iframe.</li>
+            <li><strong>Caravan</strong> - A webring service that binds all the websites registered on The Pagoda Realm together.
+                You automatically become a member of the webring when you link your website to the Pagoda Realm. You can also
+                upload custom banner image for your website preview, embed the badge on your website, and view the list of
+                websites in the webring. The webring is also available as a prerendered iframe.</li>
+            <li><strong>Ledger</strong> - Ledger is a guestbook service that you can use to receive feedback and comments from
+                your website visitors. You can customize the guestbook to match your website's design, and you can moderate the
+                entries before they are published. The guestbook is also available as a JSON API and prerendered iframe.</li>
+            <li><strong>Pamphlet</strong> - Pamphlet is a ad-simulation service which shows random fake period specific ads on your
+                website. Pamphlet can show banner ads and square ads. It can also show 88 x 31 pixel buttons. It is available as a
+                JavaScript library which you need to initialize on your website.</li>
+            <li><strong>Census</strong> - Census is a service that shows the number of visitors that have visited your website. It
+                can show the number of visitors in the last 24 hours, the last 7 days, and the total number of visitors. Census is
+                available as a prerendered iframe and as a JSON API.</li>
+        </ul>
+        <p>These are just some of the services that are available in The Pagoda Realm. I will be adding more services in the
+            future, so stay tuned for more updates. If you have any questions or feedback, please feel free to contact me. I hope
+            you enjoy using The Pagoda Realm!</p>
+        <p>Thank you for using The Pagoda Realm!</p>
+        <button onclick="document.cookie = 'visitedPagodaRealm=true; expires=Fri, 31 Dec 9999 23:59:59 GMT'; window.location.reload();">I Understand What I Must Do!</button>
+    </div>
+{% else %}
+    {% if not pagoda_sites %}
+    <div class="pagoda-dashboard-empty">
+        <h2>Welcome to The Pagoda Realm, {{ user.first_name }}!</h2>
+        <p>It looks like you have not connected any websites to The Pagoda Realm yet. To get started, you need to connect your
+            website to The Pagoda Realm. This can be done in two ways:</p>
+        <ol>
+            <li><strong>Using DNS Verification</strong> - This is the recommended method. You can add a TXT record to your website's
+                DNS settings to verify that you own the website. Once the DNS record is added, you can connect your website to The
+                Pagoda Realm.</li>
+            <li><strong>Using Meta Tag Verification</strong> - This is the alternative method if you are using a host like Neocities
+                or Nekoweb and do not have access to the DNS settings. You can add a meta tag to your website's HTML to verify that
+                you own the website. Once the meta tag is added, you can connect your website to The Pagoda Realm.</li>
+        </ol>
+        <h2>Connect Your Website to The Pagoda Realm</h2>
+        <form action="{% url "pagoda:home" %}" method="post">
+            {% csrf_token %}
+            <label for="site_name">Site Name</label>
+            <input type="text" name="site_name" id="site_name" placeholder="My Website">
+            <label for="root_url">Root URL</label>
+            <input type="text" name="root_url" id="root_url" placeholder="https://mysite.neocities.org">
+            <p class="note">Note: The root URL should be the URL of your website's homepage. It can also be your custom domain
+                if you have one.</p>
+            <label for="verification_method">Verification Method</label>
+            <select name="verification_method" id="verification_method">
+                <option value="DNS">DNS Verification</option>
+                <option value="Meta">Meta Tag Verification</option>
+            </select>
+            <button type="submit">Connect Website</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="pagoda-dashboard-sites">
+        <h2 style="margin: 8px 0px;">Your Connected Websites</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Site Name</th>
+                    <th>Root URL</th>
+                    <th>Verified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for site in pagoda_sites %}
+                <tr>
+                    <td><a href="{% url "pagoda:site" site.siteUniqueIdentifier %}">{{ site.name }}</a></td>
+                    <td style="text-align: center;"><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+                    <td style="text-align: center;">{% if site.verified %}✅{% else %}❌{% endif %}</td>
+                    <td style="text-align: center;">
+                        <a href="{% url "pagoda:site" site.siteUniqueIdentifier %}">Manage Site</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagoda-dashboard-empty">
+            <h2>Connect Another Website to The Pagoda Realm</h2>
+            <form action="{% url "pagoda:home" %}" method="post">
+                {% csrf_token %}
+                <label for="site_name">Site Name</label>
+                <input type="text" name="site_name" id="site_name" placeholder="My Website">
+                <label for="root_url">Root URL</label>
+                <input type="text" name="root_url" id="root_url" placeholder="https://mysite.neocities.org">
+                <p class="note">Note: The root URL should be the URL of your website's homepage. It can also be your custom domain
+                    if you have one.</p>
+                <label for="verification_method">Verification Method</label>
+                <select name="verification_method" id="verification_method">
+                    <option value="DNS">DNS Verification</option>
+                    <option value="Meta">Meta Tag Verification</option>
+                </select>
+                <button type="submit">Connect Website</button>
+            </form>
+            {% for message in messages %}
+            {% if 'pagodaError' in message.tags %}
+            <p style="color: #ff9a9a;">{{ message }}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+</div>
+{% endblock content %}

@@ -20,6 +20,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOGIN_URL = "/"
 
 # set n_connected_lc_users to 0 on startup
 
@@ -78,6 +79,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.administration",
     "apps.blog",
+    "apps.pagoda",
     "services.users",
     "services.stream",
     "services.pamphlet",

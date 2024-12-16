@@ -19,7 +19,7 @@
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
         <input type="text" id="username" name="username" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}ユーザー名{% else %}Username{% endif %}" autocomplete="off" value="{{ request.GET.username }}" />
         <input type="password" id="password" name="password" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}パスワード{% else %}Password{% endif %}" autocomplete="off" />
-        <input type="hidden" name="next" value="{{ request.path }}" />
+        <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{{ request.path }}{% endif %}" />
         <input type="submit" value="" />
       </form>
       <a href="#" id="register-now-button"></a>
@@ -38,7 +38,7 @@
         </div>
         <div class="user-item">
           <img src="{% static 'images/core/icons/pagodarealm.png' %}" alt="The Pagoda Realm Icon" />
-          <a href="#pagodarealm">{% if request.LANGUAGE_CODE == 'ja' %}パゴダレルム{% else %}The Pagoda Realm{% endif %}</a>
+          <a href="{% url "pagoda:home" %}">{% if request.LANGUAGE_CODE == 'ja' %}パゴダレルム{% else %}The Pagoda Realm{% endif %}</a>
         </div>
         <div class="user-item">
           <img src="{% static 'images/core/icons/mypage.png' %}" alt="My Page Icon" />
@@ -59,7 +59,7 @@
     <div class="navigation-items-container">
       <div class="navigation-item">
         <img src={% static 'images/core/icons/home.png' %} alt="Home Icon" />
-        <a href="#home">{% if request.LANGUAGE_CODE == 'ja' %}ホーム{% else %}Home{% endif %}</a>
+        <a href="{% url "core:home" %}">{% if request.LANGUAGE_CODE == 'ja' %}ホーム{% else %}Home{% endif %}</a>
       </div>
       <div class="navigation-item">
         <img src="{% static 'images/core/icons/journalofrandomthoughts.png' %}" alt="Journal of Random Thoughts Icon" />

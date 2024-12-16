@@ -1,0 +1,165 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<style>
+.verification-container {
+    background-color: rgba(134, 99, 229, 0.1);
+    border: 1px solid #8d8dff;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 16px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .verification-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #df23c4, transparent);
+    animation: scanline 2s linear infinite;
+  }
+  
+  /* Page Title */
+  .verification-container h1 {
+    color: #fff;
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px #8663e5;
+  }
+  
+  /* Section Headers */
+  .verification-container h2 {
+    color: #8d8dff;
+    margin: 12px 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(141, 141, 255, 0.3);
+  }
+  
+  /* Status Indicators */
+  .verification-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin: 8px 4px;
+  }
+  
+  .status-verified {
+    background-color: rgba(0, 255, 0, 0.2);
+    border: 1px solid #00ff00;
+  }
+  
+  .status-not-verified {
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff0000;
+  }
+  
+  /* Code Display */
+  .verification-container code {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 0px 12px;
+    border-radius: 4px;
+    border: 1px solid #8663e5;
+    display: inline-block;
+    margin: 8px 0;
+    font-family: monospace;
+    font-size: 12px;
+  }
+  
+  /* Record Display */
+  .record-details {
+    background-color: rgba(98, 55, 149, 0.2);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+  }
+  
+  .record-details p {
+    margin: 8px 0;
+  }
+  
+  /* Buttons */
+  .verification-container button {
+    background: linear-gradient(45deg, #8663e5, #df23c4);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 8px 8px 8px 0;
+    transition: all 0.3s ease;
+  }
+  
+  .verification-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(223, 35, 196, 0.5);
+  }
+  
+  .delete-button {
+    background: linear-gradient(45deg, #ff3366, #ff0000) !important;
+  }
+  
+  /* Strong Tags */
+  .verification-container strong {
+    color: #da73ff;
+    font-weight: 600;
+  }
+  
+  /* Animation */
+  @keyframes scanline {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 1200px) {
+    .verification-container {
+      margin: 16px;
+    }
+  }
+</style>
+{% endblock head %}
+{% block content %}
+<div class="verification-container">
+    <h1>{{ site.name }}の認証詳細</h1>
+    <p>The Pagoda Realmでサイトを認証するために必要な情報は以下の通りです：</p>
+    <p><strong>認証方法：</strong> {% if site.verificationMethod == 'DNS' %}DNS認証{% else %}メタタグ認証{% endif %}</p>
+    <div class="record-details">
+        {% if site.verificationMethod == 'DNS' %}
+            <p><strong>TXTレコード名：</strong> {{ site.verficationRecordName }}</p>
+            <p><strong>TXTレコード値：</strong> {{ site.verificationRecordValue }}</p>
+        {% else %}
+            <p><strong>メタタグ：</strong><code>&lt;meta name="{{ site.verficationRecordName }}" content="{{ site.verificationRecordValue }}"&gt;</code></p>
+        {% endif %}
+    </div>
+    <p>
+        <strong>認証状態：</strong> 
+        <span class="verification-status {% if site.verified %}status-verified{% else %}status-not-verified{% endif %}">
+            {% if site.verified %}認証済み{% else %}未認証{% endif %}
+        </span>
+    </p>
+
+    <h2>認証手順</h2>
+    <p>サイトを認証するには、以下の情報をサイトのコードに追加する必要があります：</p>
+    {% if site.verificationMethod == 'DNS' %}
+        <p>ドメインレジストラのコントロールパネルにログインし、以下の詳細で新しいTXTレコードを追加してください：</p>
+        <p><strong>レコード名：</strong> {{ site.verficationRecordName }}</p>
+        <p><strong>レコード値：</strong> {{ site.verificationRecordValue }}</p>
+    {% else %}
+        <p>サイトのHTMLコードを開き、<code>&lt;head&gt;</code>セクションに以下のメタタグを追加してください：</p>
+        <p><code>&lt;meta name="{{ site.verficationRecordName }}" content="{{ site.verificationRecordValue }}"&gt;</code></p>
+    {% endif %}
+    <p>情報を追加したら、下のボタンをクリックして認証状態を確認してください。</p>
+
+    <button class="verify-button" onclick="window.location.href = '{% url 'pagoda:site_status' site.siteUniqueIdentifier %}'">認証状態を確認</button>
+    <button class="delete-button" onclick="window.location.href = '{% url 'pagoda:delete_site' site.siteUniqueIdentifier %}'">サイトを削除</button>
+</div>
+{% endblock %}

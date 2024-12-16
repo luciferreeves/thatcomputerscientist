@@ -1,3 +1,167 @@
 {% extends 'shared/base.html' %}
 {% load static %}
-Welcome to the
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/pagoda/pagoda.css' %}">
+{% endblock head %} 
+{% block content %}
+<div class="pagoda-realm">
+{% if not request.COOKIES.visitedPagodaRealm %}
+    <img src="{% static 'images/pagoda/pagoda_banner.png' %}" alt="The Pagoda Realm バナー" class="pagoda-banner">
+    <hr>
+    <div class="pagoda-introduction-text">
+        <h2>The Pagoda Realmへようこそ、{{ user.first_name }}さん！</h2>
+        <p>The Pagoda Realmって何だろう？と思われるかもしれませんね。実は、アカウント登録時にお約束したサービスリストの中の1つでした。でも実は、ちょっとだけウソをついていたんです。The Pagoda Realmは単なる1つのサービスではなく、<em>Neocities</em>や<em>Nekoweb</em>のようなレトロな静的サイトホスティングプロジェクトをサポートするために慎重に設計された<em>サービスの集まり</em>なんです。ウェブはキャンバスで、あなたはアーティスト。想像力が限界です。The Pagoda Realmは、通常では実装が難しいさまざまなツールをあなたのウェブサイトに簡単に統合できる場所なんです。</p>
+        <p>すべてのサービスは、超シンプルで初心者にも優しく設計されています。多くのサービスはJSONデータと事前レンダリングされたiframeを提供しているので、技術的な詳細を気にすることなく、自分のウェブサイトで使用できます。コンポーネントはオシャレにデザインされていて、通常はさまざまなテーマやカスタムCSSをサポートしているので、あなたのウェブサイトのデザインにぴったり合わせられます。</p>
+        <h3>The Pagoda Realmのサービスはどうやって使うの？</h3>
+        <p>The Pagoda Realmのサービスの使い方はとってもシンプル！このページを見ているということは、最初のステップであるアカウント登録は既に完了していますね。アカウント登録が済んだら、次はあなたのウェブサイトをThe Pagoda Realmに接続する必要があります。接続方法は2つあります：</p>
+        <ol>
+            <li><strong>DNS認証を使用する</strong> - これがおすすめの方法です。ウェブサイトのDNS設定にTXTレコードを追加して、サイトの所有権を証明します。DNSレコードを追加したら、ウェブサイトをThe Pagoda Realmに接続できます。</li>
+            <li><strong>メタタグ認証を使用する</strong> - NeocitiesやNekowebのようなホストを使用していてDNS設定にアクセスできない場合の代替方法です。ウェブサイトのHTMLにメタタグを追加して、サイトの所有権を証明します。メタタグを追加したら、ウェブサイトをThe Pagoda Realmに接続できます。</li>
+        </ol>
+        <p>ウェブサイトがThe Pagoda Realmに接続されたら、サービスを使い始めることができます。ジャーナルを作成したり、ウェブログ投稿を書いたり、ウェブログ投稿にコメントを追加したり、ウェブリングに参加したり、ゲストブックにエントリーを追加したり、ウェブサイトに広告を表示したり、訪問者数を確認したりできます。また、JSON APIや事前レンダリングされたiframeを使用して、サービスをウェブサイトに埋め込むこともできます。</p>
+        <h3>The Pagoda Realmではどんなサービスが利用できるの？</h3>
+        <p>The Pagoda Realmで利用できるサービスをご紹介します：</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>サービス</th>
+                    <th>説明</th>
+                    <th>埋め込み形式</th>
+                    <th>API</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Journals</td>
+                    <td>毎日の出来事、考え、感情を書き留めることができる日記形式のジャーナル。</td>
+                    <td>JSON, iframe</td>
+                    <td>あり</td>
+                </tr>
+                <tr>
+                    <td>Weblogs</td>
+                    <td>記事、物語、ブログ投稿を書くことができるシンプルなウェブログサービス。</td>
+                    <td>JSON, iframe</td>
+                    <td>あり</td>
+                </tr>
+                <tr>
+                    <td>Weblog Comments</td>
+                    <td>ウェブログ投稿にコメントを追加できるシンプルなコメントシステム。</td>
+                    <td>JSON, iframe</td>
+                    <td>あり</td>
+                </tr>
+                <tr>
+                    <td>Caravan</td>
+                    <td>The Pagoda Realmに登録されているすべてのウェブサイトを結びつけるウェブリングサービス。</td>
+                    <td>iframe</td>
+                    <td>なし</td>
+                </tr>
+                <tr>
+                    <td>Ledger</td>
+                    <td>ウェブサイト訪問者からフィードバックやコメントを受け取れるゲストブックサービス。</td>
+                    <td>JSON, iframe</td>
+                    <td>あり</td>
+                </tr>
+                <tr>
+                    <td>Pamphlet</td>
+                    <td>ウェブサイトにランダムなレトロ風の偽広告を表示する広告シミュレーションサービス。</td>
+                    <td>JavaScript</td>
+                    <td>なし</td>
+                </tr>
+                <tr>
+                    <td>Census</td>
+                    <td>ウェブサイトの訪問者数を表示するサービス。</td>
+                    <td>iframe</td>
+                    <td>あり</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li><strong>Journals</strong> - 毎日の出来事、考え、感情を書き留めることができる日記形式のジャーナルです。ジャーナルはプライベートとパブリックの両方が可能で、目的に応じて複数のジャーナルを作成できます。パブリックジャーナルはウェブサイトに埋め込むことができます。ジャーナルエントリーはカレンダービューで表示でき、JSONフォーマットでエクスポートすることもできます。さらに、JSON APIを使用してウェブサイトでジャーナルエントリーを利用することもできます。</li>
+            <li><strong>Weblogs</strong> - 記事、物語、ブログ投稿を書くことができるシンプルなウェブログサービスです。ウェブログは（下書きモード以外では）デフォルトで常にパブリックで、アカウントごとに1つのウェブログしか持てません。投稿をカテゴリー分けしたり、タグ付けしたり、フルHTMLモードで編集したり、投稿ごとにCSSを変更したりすることができます。JSON APIや事前レンダリングされたiframeを使用して、ウェブログ投稿をウェブサイトに埋め込むこともできます。</li>
+            <li><strong>Weblog Comments</strong> - ウェブログ投稿にコメントを追加できるシンプルなコメントシステムです。コメントシステムをウェブサイトのデザインに合わせてカスタマイズでき、公開前にコメントを管理することもできます。コメントシステムはJSON APIと事前レンダリングされたiframeとしても利用可能です。</li>
+            <li><strong>Caravan</strong> - The Pagoda Realmに登録されているすべてのウェブサイトを結びつけるウェブリングサービスです。The Pagoda Realmにウェブサイトをリンクすると自動的にウェブリングのメンバーになります。ウェブサイトのプレビュー用にカスタムバナー画像をアップロードしたり、バッジをウェブサイトに埋め込んだり、ウェブリング内のウェブサイトリストを表示したりすることもできます。ウェブリングは事前レンダリングされたiframeとしても利用可能です。</li>
+            <li><strong>Ledger</strong> - ウェブサイト訪問者からフィードバックやコメントを受け取れるゲストブックサービスです。ゲストブックをウェブサイトのデザインに合わせてカスタマイズでき、公開前にエントリーを管理することもできます。ゲストブックはJSON APIと事前レンダリングされたiframeとしても利用可能です。</li>
+            <li><strong>Pamphlet</strong> - ウェブサイトにランダムなレトロ風の偽広告を表示する広告シミュレーションサービスです。Pamphletはバナー広告と四角形広告を表示できます。88 x 31ピクセルのボタンも表示できます。ウェブサイトで初期化する必要のあるJavaScriptライブラリとして利用可能です。</li>
+            <li><strong>Census</strong> - ウェブサイトの訪問者数を表示するサービスです。過去24時間、過去7日間、および総訪問者数を表示できます。Censusは事前レンダリングされたiframeとJSON APIとして利用可能です。</li>
+        </ul>
+        <p>これらは、The Pagoda Realmで利用できるサービスの一部にすぎません。今後さらにサービスを追加していく予定なので、アップデートをお楽しみに！質問やフィードバックがありましたら、お気軽にご連絡ください。The Pagoda Realmをお楽しみください！</p>
+        <p>The Pagoda Realmをご利用いただき、ありがとうございます！</p>
+        <button onclick="document.cookie = 'visitedPagodaRealm=true; expires=Fri, 31 Dec 9999 23:59:59 GMT'; window.location.reload();">理解しました！</button>
+    </div>
+{% else %}
+    {% if not pagoda_sites %}
+    <div class="pagoda-dashboard-empty">
+        <h2>The Pagoda Realmへようこそ、{{ user.first_name }}さん！</h2>
+        <p>まだThe Pagoda Realmに接続されているウェブサイトがないようですね。始めるには、ウェブサイトをThe Pagoda Realmに接続する必要があります。接続方法は2つあります：</p>
+        <ol>
+            <li><strong>DNS認証を使用する</strong> - これがおすすめの方法です。ウェブサイトのDNS設定にTXTレコードを追加して、サイトの所有権を証明します。DNSレコードを追加したら、ウェブサイトをThe Pagoda Realmに接続できます。</li>
+            <li><strong>メタタグ認証を使用する</strong> - NeocitiesやNekowebのようなホストを使用していてDNS設定にアクセスできない場合の代替方法です。ウェブサイトのHTMLにメタタグを追加して、サイトの所有権を証明します。メタタグを追加したら、ウェブサイトをThe Pagoda Realmに接続できます。</li>
+        </ol>
+        <h2>The Pagoda Realmにウェブサイトを接続する</h2>
+        <form action="{% url "pagoda:home" %}" method="post">
+            {% csrf_token %}
+            <label for="site_name">サイト名</label>
+            <input type="text" name="site_name" id="site_name" placeholder="マイウェブサイト">
+            <label for="root_url">ルートURL</label>
+            <input type="text" name="root_url" id="root_url" placeholder="https://mysite.neocities.org">
+            <p class="note">注意：ルートURLはウェブサイトのホームページのURLです。カスタムドメインをお持ちの場合は、それを使用することもできます。</p>
+            <label for="verification_method">認証方法</label>
+            <select name="verification_method" id="verification_method">
+                <option value="DNS">DNS認証</option>
+                <option value="Meta">メタタグ認証</option>
+            </select>
+            <button type="submit">ウェブサイトを接続</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="pagoda-dashboard-sites">
+        <h2 style="margin: 8px 0px;">接続済みのウェブサイト</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>サイト名</th>
+                    <th>ルートURL</th>
+                    <th>認証済み</th>
+                    <th>アクション</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for site in pagoda_sites %}
+                <tr>
+                    <td><a href="{% url "pagoda:site" site.siteUniqueIdentifier %}">{{ site.name }}</a></td>
+                    <td style="text-align: center;"><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+                    <td style="text-align: center;">{% if site.verified %}✅{% else %}❌{% endif %}</td>
+                    <td style="text-align: center;">
+                        <a href="{% url "pagoda:site" site.siteUniqueIdentifier %}">サイトを管理</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagoda-dashboard-empty">
+            <h2>The Pagoda Realmに別のウェブサイトを接続する</h2>
+            <form action="{% url "pagoda:home" %}" method="post">
+                {% csrf_token %}
+                <label for="site_name">サイト名</label>
+                <input type="text" name="site_name" id="site_name" placeholder="マイウェブサイト">
+                <label for="root_url">ルートURL</label>
+                <input type="text" name="root_url" id="root_url" placeholder="https://mysite.neocities.org">
+                <p class="note">注意：ルートURLはウェブサイトのホームページのURLです。カスタムドメインをお持ちの場合は、それを使用することもできます。</p>
+                <label for="verification_method">認証方法</label>
+                <select name="verification_method" id="verification_method">
+                    <option value="DNS">DNS認証</option>
+                    <option value="Meta">メタタグ認証</option>
+                </select>
+                <button type="submit">ウェブサイトを接続</button>
+            </form>
+            {% for message in messages %}
+            {% if 'pagodaError' in message.tags %}
+            <p style="color: #ff9a9a;">{{ message }}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+</div>
+{% endblock content %}

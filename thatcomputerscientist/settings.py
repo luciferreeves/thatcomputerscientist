@@ -218,7 +218,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # for key in cache.keys("presence_*"):
 #     cache.delete(key)
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

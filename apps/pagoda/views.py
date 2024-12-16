@@ -7,7 +7,11 @@ from internal.pagoda_utilities import (
     pagoda_verification_record_generator,
     pagoda_url_sanitizer,
 )
-from django.http import Http404, HttpResponseRedirect
+from django.http import (
+    HttpResponse,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+)
 from django.urls import reverse
 from django.contrib import messages
 import dns.resolver
@@ -78,24 +82,26 @@ def home(request):
 @login_required
 def site_dashboard(request, site_id):
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
-    site = PagodaSites.objects.get(siteUniqueIdentifier=site_id, owner=request.user)
-    context = {
-        "site": site,
-    }
-    META = {
-        "title": f"Manage {site.name} — The Pagoda Realm",
-    }
-    request.meta.update(META)
-    if site.verified:
-        return render(
-            request, f"{LANGUAGE_CODE}/pagoda/site_verification.html", context
-        )
-    elif not site.verified:
-        return render(
-            request, f"{LANGUAGE_CODE}/pagoda/site_verification.html", context
-        )
-    else:
-        return Http404()
+    try:
+        site = PagodaSites.objects.get(siteUniqueIdentifier=site_id, owner=request.user)
+        context = {
+            "site": site,
+        }
+        META = {
+            "title": f"Manage {site.name} — The Pagoda Realm",
+        }
+        request.meta.update(META)
+        if site.verified:
+            return render(
+                request, f"{LANGUAGE_CODE}/pagoda/site_dashboard.html", context
+            )
+
+        if not site.verified:
+            return render(
+                request, f"{LANGUAGE_CODE}/pagoda/site_verification.html", context
+            )
+    except PagodaSites.DoesNotExist:
+        return HttpResponseNotFound()
 
 
 @login_required
@@ -103,12 +109,7 @@ def check_verification_status(request, site_id):
     site = PagodaSites.objects.get(siteUniqueIdentifier=site_id, owner=request.user)
 
     if site.verified:
-        messages.success(
-            request,
-            "The site has been verified successfully.",
-            extra_tags="pagodaSuccess",
-        )
-        return HttpResponseRedirect(reverse("pagoda:site", args=[site_id]))
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
     if site.verificationMethod == "DNS":
         domain = site.url.replace("http://", "").replace("https://", "")
@@ -123,22 +124,10 @@ def check_verification_status(request, site_id):
                     if txt_string.decode("utf-8") == txt_value:
                         site.verified = True
                         site.save()
-                        messages.success(
-                            request,
-                            "The site has been verified successfully.",
-                            extra_tags="pagodaSuccess",
-                        )
-                        return HttpResponseRedirect(
-                            reverse("pagoda:site", args=[site_id])
-                        )
+                        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
         except dns.resolver.NoAnswer:
             pass
-        messages.error(
-            request,
-            "The site could not be verified. Please check the DNS records and try again.",
-            extra_tags="pagodaError",
-        )
-        return HttpResponseRedirect(reverse("pagoda:site", args=[site_id]))
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     elif site.verificationMethod == "Meta":
         domain = site.url
         response = requests.get(domain)
@@ -151,22 +140,12 @@ def check_verification_status(request, site_id):
             ):
                 site.verified = True
                 site.save()
-                messages.success(
-                    request,
-                    "The site has been verified successfully.",
-                    extra_tags="pagodaSuccess",
-                )
-                return HttpResponseRedirect(reverse("pagoda:site", args=[site_id]))
-        messages.error(
-            request,
-            "The site could not be verified. Please check the Meta tags and try again.",
-            extra_tags="pagodaError",
-        )
-        return HttpResponseRedirect(reverse("pagoda:site", args=[site_id]))
+                return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
     else:
         pass
 
-    return Http404()
+    return HttpResponseNotFound()
 
 
 @login_required
@@ -174,11 +153,6 @@ def delete_site(request, site_id):
     site = PagodaSites.objects.get(siteUniqueIdentifier=site_id, owner=request.user)
     if site:
         site.delete()
-        messages.success(
-            request,
-            "The site has been deleted successfully.",
-            extra_tags="pagodaSuccess",
-        )
         return HttpResponseRedirect(reverse("pagoda:home"))
     else:
         messages.error(

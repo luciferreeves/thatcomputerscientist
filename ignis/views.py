@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 
 from apps.blog.models import Post
-from users.tokens import CaptchaTokenGenerator
+from services.users.tokens import CaptchaTokenGenerator
 
 from .models import PostImage, RepositoryTitle
 

@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from apps.blog.context_processors import avatar_list
-from users.models import UserProfile
+from services.users.models import UserProfile
 
 from .accountFunctions import store_token
 from .mail_send import send_email

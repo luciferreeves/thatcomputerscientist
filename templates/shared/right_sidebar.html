@@ -45,6 +45,48 @@
     </div>
   </div>
   <div class="pamphlet pamphlet-big"></div>
+
+  {% if user.is_authenticated %}
+  <div class="user-stats-area">
+    <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif" class="stats-profile-image" alt="{{ user.first_name }}'s Avatar">
+    <h2 class="stats-username"><a href="#">{{ user.first_name }} {{ user.last_name }}</a></h2>
+    <p class="stats-bio">{{ user.profile.bio|linebreaksbr }}</p>
+    <div class="user-stats">
+      <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}経験値{% else %}XP{% endif %}</p>
+      <p class="stat-value">{{ user.profile.experience }}0 / 1000</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}レベル{% else %}Level{% endif %}</p>
+      <p class="stat-value">{{ user.profile.level }}1</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}残高{% else %}Balance{% endif %}</p>
+      <p class="stat-value">
+        <span>{{ user.profile.balance }}0</span>
+        <img src="{% static 'images/core/icons/coin.png' %}" alt="Coin Icon" />
+      </p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナルエントリー{% else %}Journal Entries{% endif %}</p>
+      <p class="stat-value">{{ user.profile.journal_entries }}0</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナル連続記録{% else %}Journal Streak{% endif %}</p>
+      <p class="stat-value">{{ user.profile.journal_streak }}0 days</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% if request.LANGUAGE_CODE == 'ja' %}ウェブログ投稿{% else %}Weblog Posts{% endif %}</p>
+      <p class="stat-value">{{ user.profile.weblog_posts }}0</p>
+    </div>
+    <div class="stat-links">
+      <a href="#">{% if request.LANGUAGE_CODE == 'ja' %}ドレッシングルーム{% else %}Dressing Room{% endif %}</a>
+      <a href="#">{% if request.LANGUAGE_CODE == 'ja' %}実績{% else %}Achievements{% endif %}</a>
+      <a href="#">{% if request.LANGUAGE_CODE == 'ja' %}ウェブログ{% else %}Weblog{% endif %}</a>
+    </div>
+  </div>
+
+  {% endif %}
+
   <div class="navigation-links">
     <div class="navigation-title-container">
       <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}ザ・マトリックス{% else %}The Matrix{% endif %}

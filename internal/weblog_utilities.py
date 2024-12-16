@@ -1,6 +1,8 @@
 from apps.blog.models import Post, Comment
 from bs4 import BeautifulSoup
 
+AUTHOR_USERNAME = "bobby"
+
 
 def add_excerpt(post, lang="en"):
     if lang == "ja":
@@ -14,7 +16,6 @@ def add_excerpt(post, lang="en"):
 
         if len(excerpt) >= 1000:
             break
-    print(excerpt)
     return excerpt
 
 
@@ -23,8 +24,10 @@ def add_num_comments(post):
     return num_comments
 
 
-def recent_weblogs(lang="en"):
-    recent_posts = Post.objects.filter(is_public=True).order_by("-date")[:5]
+def recent_weblogs(lang="en", amount=3):
+    recent_posts = Post.objects.filter(
+        is_public=True, author__username=AUTHOR_USERNAME
+    ).order_by("-date")[:amount]
     for post in recent_posts:
         post.excerpt = add_excerpt(post, lang)
         post.num_comments = add_num_comments(post)

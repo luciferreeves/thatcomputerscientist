@@ -23,15 +23,15 @@ from haystack.query import SearchQuerySet
 from user_agents import parse
 
 from apps.administration.models import Announcement
-from users.accountFunctions import verify_token
-from users.forms import (
+from services.users.accountFunctions import verify_token
+from services.users.forms import (
     RegisterForm,
     ResetPasswordForm,
     UpdateUserDetailsForm,
     ForgotPasswordForm,
 )
-from users.models import UserProfile
-from users.tokens import CaptchaTokenGenerator
+from services.users.models import UserProfile
+from services.users.tokens import CaptchaTokenGenerator
 
 from .context_processors import (
     add_excerpt,

@@ -1,5 +1,5 @@
 from django.utils.deprecation import MiddlewareMixin
-from users.models import UserProfile
+from services.users.models import UserProfile
 
 
 class UserProfileMiddleware(MiddlewareMixin):

@@ -43,6 +43,7 @@ urlpatterns = [
     path("weblog/", include("apps.blog.urls", namespace="weblog")),
     path("services/stream/", include("services.stream.urls", namespace="stream")),
     path("services/pamphlet", include("services.pamphlet.urls", namespace="pamphlet")),
+    path("services/auth/", include("services.users.urls", namespace="auth")),
     path("admin/", include("apps.administration.urls", namespace="administration")),
     path("administration-corner/", admin.site.urls),
     # path('users', include('users.urls', namespace='users')),

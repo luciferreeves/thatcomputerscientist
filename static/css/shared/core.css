@@ -1,11 +1,13 @@
 /* Reset and Base Styles */
-@font-face {
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap');
+
+/* @font-face {
   font-family: 'Klee';
   src: url('../../fonts/KleeOne-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap
-}
+} */
 
 @font-face {
   font-family: 'SweetFairy';
@@ -39,7 +41,7 @@ body {
 body,
 textarea,
 input {
-  font-family: 'Klee';
+  font-family: 'M PLUS Rounded 1c';
   font-size: 12px;
   font-weight: 400;
 }
@@ -257,6 +259,63 @@ html[lang='ja'] .navigation-title {
   width: 20px;
   height: 20px;
   margin-right: 8px;
+}
+
+.user-stats-area {
+  margin: 12px 0px 0px 0px;
+  background-color: #f4f1e90f;
+  padding: 8px 0px;
+  border-radius: 8px;
+}
+
+.stats-profile-image {
+  width: 120px;
+  height: 120px;
+  margin: 4px auto;
+  display: block;
+}
+
+.stats-username,
+.stats-bio {
+  margin: 4px 0px;
+}
+
+.stats-bio {
+  padding: 4px 0px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.user-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  background-color: #6446858a;
+}
+
+.user-stats:nth-child(odd) {
+  background-color: #54266a85;
+}
+
+.stat-links a {
+  display: block;
+  padding: 4px;
+}
+
+.stat-links a::before {
+  content: '>';
+  margin-right: 4px;
+}
+
+.stat-value {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-value img {
+  width: 12px;
+  height: 12px;
 }
 
 /* Sidebar Search Bar */

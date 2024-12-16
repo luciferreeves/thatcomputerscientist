@@ -152,7 +152,7 @@
 .user-avatar {
   width: 72px;
   height: 72px;
-  border: solid 2px #8d8dff;
+  /* border: solid 2px #8d8dff; */
   padding: 4px;
   position: absolute;
   bottom: 0;
@@ -162,4 +162,6 @@
 .user-avatar img {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+
 }

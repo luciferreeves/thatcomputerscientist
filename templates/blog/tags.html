@@ -7,7 +7,7 @@
 <center>
 {% for tag in tags %}
     <span style="margin-bottom:8px;">
-        <a class="tag" style="font-size:{{ tag.pxs }}px;" href="{% url 'blog:tag_posts' tag.slug %}">{{ tag.name }} ({{ tag.count }} post{{ tag.count|pluralize }})</a>
+        <a class="tag" style="font-size:{{ tag.pxs }}px;" href="#">{{ tag.name }} ({{ tag.count }} post{{ tag.count|pluralize }})</a>
     </span>
 {% endfor %}
 </center>

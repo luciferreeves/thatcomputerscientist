@@ -10,7 +10,7 @@
                 <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:archives' %}/{{ archive | date:"F_Y" }}">
+                <a href="#/{{ archive | date:"F_Y" }}">
                     {{ archive | date:"F Y" }}
                 </a>
             </span>

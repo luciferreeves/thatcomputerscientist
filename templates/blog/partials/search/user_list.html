@@ -3,7 +3,7 @@
 <div class="user_info" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
     <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif" alt="Profile Picture" style="width: 50px; border-radius: 50%; float: left; margin-right: 10px; margin-top: 5px;">
     <div>
-        <p><a href="{% url 'blog:user_activity' user.username %}">@{{ user.username }}</a> {% if user.first_name %}| <a href="{% url 'blog:user_activity' user.username %}">{{ user.first_name }}{% endif %} {% if user.last_name %}{{ user.last_name }}{% endif %}</a></p>
+        <p><a href="#">@{{ user.username }}</a> {% if user.first_name %}| <a href="#">{{ user.first_name }}{% endif %} {% if user.last_name %}{{ user.last_name }}{% endif %}</a></p>
         {% if user.profile.bio %}
             <p><b>Bio:</b> {{ user.profile.bio }}</p>
         {% endif %}

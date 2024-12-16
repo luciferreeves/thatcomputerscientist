@@ -7,14 +7,14 @@
             <img src="{% static 'images/avatars/' %}{{ user_profile.avatar_url }}.gif" alt="{{ user.username }}'s avatar" width="140" height="140" style="display: block; margin: 0 auto;" />
         </div>
         <div id="side-links">
-            <p><a href="{% url 'blog:account' %}">Account Home</a></p>
-            <p><a href="{% url 'blog:account' %}?tab=blinkies">Change profile blinkie</a></p>
-            <p><a href="{% url 'blog:account' %}?tab=avatar">Change avatar</a></p>
-            <p><a href="{% url 'blog:account' %}?tab=details">Change details</a></p>
-            <p><a href="{% url 'blog:account' %}?tab=email">Change email</a></p>
-            <p><a href="{% url 'blog:account' %}?tab=password">Change password</a></p>
+            <p><a href="#">Account Home</a></p>
+            <p><a href="#?tab=blinkies">Change profile blinkie</a></p>
+            <p><a href="#?tab=avatar">Change avatar</a></p>
+            <p><a href="#?tab=details">Change details</a></p>
+            <p><a href="#?tab=email">Change email</a></p>
+            <p><a href="#?tab=password">Change password</a></p>
             {% if not user.is_superuser %}
-            <p><a href="{% url 'blog:account' %}?tab=delete" class="error">Delete account</a></p>
+            <p><a href="#?tab=delete" class="error">Delete account</a></p>
             {% endif %}
         </div>
     </div>
@@ -27,7 +27,7 @@
         {% if  request.GET.tab == 'avatar' %}
         <div id="avatar-chooser">
             <p>Choose an avatar from the list below. The avatars are grouped by their theme.</p>
-            <form method="post" action="{% url 'users:updateavatar' %}">
+            {% comment %} <form method="post" action="{% url 'users:updateavatar' %}"> {% endcomment %}
                 {% csrf_token %}
                 {% for avatar_dir, avatar_files in avatarlist.items %}
                 <h2 style="clear:both;background-color: #3E4245;padding: 8px 10px;border: none;background: -moz-linear-gradient(90deg, #3E4245 0%, #2E3131 100%);
@@ -57,7 +57,7 @@
         {% elif request.GET.tab == 'blinkies' %}
         <div id="blinkie-chooser">
             <p>Choose a blinkie to display on your public profile.</p>
-            <form method="post" action="{% url 'users:updateblinkie' %}">
+            {% comment %} <form method="post" action="{% url 'users:updateblinkie' %}"> {% endcomment %}
                 {% csrf_token %}
                 <div style="display: inline; width: 250px; float: left;">
                     <input type="radio" name="blinkie" value="" id="blinkie_none" checked />
@@ -80,7 +80,7 @@
         {% elif request.GET.tab == 'details' %}
         <div id="details">
             <p>Change your account details here. You can change your first name, last name, bio, email and activity visibility.</p>
-            <form method="post"  action="{% url 'users:update' %}">
+            {% comment %} <form method="post"  action="{% url 'users:update' %}"> {% endcomment %}
                 {% csrf_token %}
                 <table>
                     {{ update_form.as_table }}
@@ -91,7 +91,7 @@
         {% elif request.GET.tab == 'email' %}
         <div id="email">
             <p>Change your email address here. Your current registered email is <em><u>{{ user.email }}</u></em>. Please note that a verification email will be sent to the new email address in order to update the current email address. Please provide the new email address in the box below:</p>
-            <form method="post" action = "{% url 'users:sendchangeuseremail' %}">
+            {% comment %} <form method="post" action = "{% url 'users:sendchangeuseremail' %}"> {% endcomment %}
                 {% csrf_token %}
                 <p><input type="email" name="email" id="email" required placeholder="New email address" /></p>
                 <input type="submit" value="Update Email" class="button button-special" />
@@ -99,7 +99,7 @@
         </div>
         {% elif request.GET.tab == 'password' %}
         <div id="password">
-            <form method="post" action="{% url 'users:changepassword' %}">
+            {% comment %} <form method="post" action="{% url 'users:changepassword' %}"> {% endcomment %}
                 {% csrf_token %}
                 <table>
                     <tr>
@@ -122,7 +122,7 @@
         {% elif request.GET.tab == 'delete' and not user.is_superuser %}
         <div id="delete">
             <p>Deleting your account will remove all your posts, comments and other data from the website. Please note that this action is irreversible. If you wish to delete your account, please enter your password in the box below:</p>
-            <form method="post" action="{% url 'users:delete' %}">
+            {% comment %} <form method="post" action="{% url 'users:delete' %}"> {% endcomment %}
                 {% csrf_token %}
                 <p><input type="password" name="password" id="password" required placeholder="Password" /></p>
                 <input type="submit" value="Delete Account" class="button button-special" />

@@ -5,7 +5,7 @@
 {% for message in messages %}
 {% if 'loginError' in message.tags %}
         {% if message.message == "ENVERR" and request.GET.username %}
-            <form method="post" action="{% url 'users:sendverificationemail' %}" style="position: relative;">
+            {% comment %} <form method="post" action="{% url 'users:sendverificationemail' %}" style="position: relative;"> {% endcomment %}
                 {% csrf_token %}
                 <input type="hidden" name="username" value="{{ request.GET.username }}">
                 <input type="submit" value="" style="    display: block;
@@ -26,15 +26,15 @@
         {% endif %}
     {% endfor %}
 <div id="login-area">
-    <form method="post" action="{% url 'users:login' %}" id="login-form">
+    {% comment %} <form method="post" action="{% url 'users:login' %}" id="login-form"> {% endcomment %}
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" value="{{ request.GET.username }}">
         <input type="password" id="password" name="password" placeholder="Password" autocomplete="off">
         <input type="hidden" name="next" value="{{ request.path }}">
         <input type="submit" value="">
     </form>
-    <a href="{% url 'blog:register' %}" id="register-now-button"></a>
-    <a href="{% url 'blog:forgotpassword' %}" id="forgot-password-button"></a>
+    <a href="#" id="register-now-button"></a>
+    <a href="#" id="forgot-password-button"></a>
 </div>
 {% endif %}
 
@@ -47,7 +47,7 @@
                 <img src="{% static 'images/site/icons/email.gif' %}" alt="Home" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:user_activity' user.username %}">
+                <a href="#">
                     Profile
                 </a>
             </span>
@@ -57,7 +57,7 @@
                 <img src="{% static 'images/site/icons/mouse.gif' %}" alt="Home" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:account' %}">
+                <a href="#">
                     Account
                 </a>
             </span>
@@ -67,7 +67,7 @@
                 <img src="{% static 'images/site/icons/key.gif' %}" alt="Home" border="0">
             </span>
             <span>
-                <a href="{% url 'users:logout' %}">
+                {% comment %} <a href="{% url 'users:logout' %}"> {% endcomment %}
                     Logout
                 </a>
             </span>
@@ -84,7 +84,7 @@
                 <img src="{% static 'images/site/icons/news.gif' %}" alt="Home" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:home' %}">
+                <a href="#">
                     Home
                 </a>
             </span>
@@ -94,7 +94,7 @@
                 <img src="{% static 'images/site/icons/pencil.gif' %}" alt="Blog" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:articles' %}">
+                <a href="#">
                     Weblog
                 </a>
             </span>
@@ -104,7 +104,7 @@
                 <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archives" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:archives' %}">
+                <a href="#">
                     Archives
                 </a>
             </span>
@@ -114,7 +114,7 @@
                 <img src="{% static 'images/site/icons/books.gif' %}" alt="Categories" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:categories' %}">
+                <a href="#">
                     Categories
                 </a>
             </span>
@@ -124,7 +124,7 @@
                 <img src="{% static 'images/site/icons/issues.gif' %}" alt="Tags" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:tags' %}">
+                <a href="#">
                     Tags
                 </a>
             </span>
@@ -160,7 +160,7 @@
                 <img src="{% static 'images/site/icons/fork.png' %}" alt="Repositories" border="0" style="padding: 2px; height: 20px; width: 20px;">
             </span>
             <span>
-                <a href="{% url 'dev_status:home' %}">
+                {% comment %} <a href="{% url 'dev_status:home' %}"> {% endcomment %}
                     My Repositories
                 </a>
             </span>
@@ -170,7 +170,7 @@
                 <img src="{% static 'images/site/icons/anistar.gif' %}" alt="Socialify" border="0" style="padding: 2px; height: 20px; width: 20px;">
             </span>
             <span>
-                <a href="{% url 'blog:anilist' %}">
+                <a href="#">
                     My Anime List
                 </a>
             </span>
@@ -180,7 +180,7 @@
                 <img src="{% static 'images/site/icons/windows.gif' %}" alt="Socialify" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:socialify' %}">
+                <a href="#">
                     Socialify
                 </a>
             </span>
@@ -258,7 +258,7 @@
                 <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:archives' %}/{{ archive | date:"F_Y" }}">
+                <a href="#/{{ archive | date:"F_Y" }}">
                     {{ archive | date:"F Y" }}
                 </a>
             </span>
@@ -269,7 +269,7 @@
                 <img src="{% static 'images/site/icons/cabinet.gif' %}" alt="Archives" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:archives' %}">
+                <a href="#">
                     All Archives...
                 </a>
             </span>
@@ -286,7 +286,7 @@
                 <img src="{% static 'images/site/icons/books.gif' %}" alt="Archive" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:categories' %}/{{ category.slug }}">
+                <a href="#/{{ category.slug }}">
                     {{ category }}
                 </a>
             </span>
@@ -297,7 +297,7 @@
                 <img src="{% static 'images/site/icons/books.gif' %}" alt="Categories" border="0">
             </span>
             <span>
-                <a href="{% url 'blog:categories' %}">
+                <a href="#">
                     All Categories...
                 </a>
             </span>

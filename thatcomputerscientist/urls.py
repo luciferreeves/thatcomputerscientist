@@ -17,24 +17,25 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.sitemaps.views import sitemap
+
+# from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
-from .sitemaps import (
-    CategorySitemap,
-    GithubSitemap,
-    PostSitemap,
-    StaticViewSitemap,
-    TagSitemap,
-)
+# from .sitemaps import (
+#     CategorySitemap,
+#     GithubSitemap,
+#     PostSitemap,
+#     StaticViewSitemap,
+#     TagSitemap,
+# )
 
-sitemaps = {
-    "posts": PostSitemap,
-    "categories": CategorySitemap,
-    "tags": TagSitemap,
-    "static": StaticViewSitemap,
-    "github": GithubSitemap,
-}
+# sitemaps = {
+#     "posts": PostSitemap,
+#     "categories": CategorySitemap,
+#     "tags": TagSitemap,
+#     "static": StaticViewSitemap,
+#     "github": GithubSitemap,
+# }
 
 handler404 = "thatcomputerscientist.error_handler.custom_404"
 

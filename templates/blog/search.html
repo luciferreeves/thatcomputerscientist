@@ -4,7 +4,7 @@
     <table id="search" cellpadding="0" cellspacing="0">
         <tr>
             <td id="search_sidebar" style="width: 200px; vertical-align: top;">
-                <form method="get" url="{% url 'blog:search' %}">
+                <form method="get" url="#">
                     <h2>Search</h2>
                     <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Query" style="width: 180px; display: block; margin: 10px 0;" required/>
                     <h2 class="mtsbitem">Search In</h2>

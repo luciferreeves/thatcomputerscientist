@@ -24,16 +24,16 @@ LOGIN_URL = "/"
 
 # set n_connected_lc_users to 0 on startup
 
-import redis
+# import redis
 
 # r = redis.Redis(host='localhost', port=6379, db=0)
-r = redis.Redis(
-    host=os.getenv("REDIS_HOST"),
-    port=os.getenv("REDIS_PORT"),
-    password=os.getenv("REDIS_PASSWORD"),
-    db=0,
-)
-r.set("n_connected_lc_users", 0)
+# r = redis.Redis(
+#     host=os.getenv("REDIS_HOST"),
+#     port=os.getenv("REDIS_PORT"),
+#     password=os.getenv("REDIS_PASSWORD"),
+#     db=0,
+# )
+# r.set("n_connected_lc_users", 0)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -73,9 +73,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
-    "sslserver",
+    # "sslserver",
     "thatcomputerscientist",
-    "haystack",
+    # "haystack",
     "apps.core",
     "apps.administration",
     "apps.blog",
@@ -83,29 +83,29 @@ INSTALLED_APPS = [
     "services.users",
     "services.stream",
     "services.pamphlet",
-    "blog_admin",
-    "dev_status",
-    "ignis",
-    "chat",
+    # "blog_admin",
+    # "dev_status",
+    # "ignis",
+    # "chat",
 ]
 
 SITE_ID = 1
 APPEND_SLASH = False
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "haystack.backends.simple_backend.SimpleEngine",
-    },
-}
+# HAYSTACK_CONNECTIONS = {
+#     "default": {
+#         "ENGINE": "haystack.backends.simple_backend.SimpleEngine",
+#     },
+# }
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ]
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": [
+#         "rest_framework.authentication.BasicAuthentication",
+#         "rest_framework.authentication.SessionAuthentication",
+#     ]
+# }
 
 MIDDLEWARE = [
-    "django_hosts.middleware.HostsRequestMiddleware",
+    # "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -114,24 +114,24 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "middleware.userprofilemiddleware.UserProfileMiddleware",
-    "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
-    "middleware.globalmetamiddleware.GlobalMetaMiddleware",
-    "middleware.ignismiddleware.IgnisMiddleware",
-    "middleware.uuidmiddleware.UserUUIDMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
     "middleware.i18nmiddleware.I18NMiddleware",
-    "django_hosts.middleware.HostsResponseMiddleware",
+    "middleware.userprofilemiddleware.UserProfileMiddleware",
+    "middleware.globalmetamiddleware.GlobalMetaMiddleware",
+    # "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
+    # "middleware.ignismiddleware.IgnisMiddleware",
+    # "middleware.uuidmiddleware.UserUUIDMiddleware",
+    # "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, "locale"),
-]
+# LOCALE_PATHS = [
+#     os.path.join(BASE_DIR, "locale"),
+# ]
 
-CONFIGURED_SUBDOMAINS = {
-    "": "thatcomputerscientist",
-    "*": "userpages",
-}
+# CONFIGURED_SUBDOMAINS = {
+#     "": "thatcomputerscientist",
+#     "*": "userpages",
+# }
 
 ROOT_URLCONF = "thatcomputerscientist.urls"
 
@@ -150,7 +150,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.blog.context_processors.categories",
                 "apps.blog.context_processors.archives",
-                "middleware.uuidmiddleware.userTrackingContextProcessor",
+                # "middleware.uuidmiddleware.userTrackingContextProcessor",
             ],
         },
     },
@@ -160,19 +160,17 @@ TEMPLATES = [
 ASGI_APPLICATION = "thatcomputerscientist.asgi.application"
 
 CHANNEL_LAYERS = {
+    "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
     # "default": {
-    #     "BACKEND": "channels.layers.InMemoryChannelLayer"
-    # }
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [
-                (
-                    f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}'
-                )
-            ],
-        },
-    },
+    #     "BACKEND": "channels_redis.core.RedisChannelLayer",
+    #     "CONFIG": {
+    #         "hosts": [
+    #             (
+    #                 f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}'
+    #             )
+    #         ],
+    #     },
+    # },
 }
 
 # Database
@@ -204,21 +202,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": os.getenv("REDIS_PASSWORD"),
-        },
-    }
-}
-from django.core.cache import cache
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             "PASSWORD": os.getenv("REDIS_PASSWORD"),
+#         },
+#     }
+# }
+# from django.core.cache import cache
 
 # clear the cache
-for key in cache.keys("presence_*"):
-    cache.delete(key)
+# for key in cache.keys("presence_*"):
+#     cache.delete(key)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
@@ -248,12 +246,12 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-EMAIL_USE_TLS = True
-# EMAIL_HOST = os.getenv('MAIL_HOST')
-EMAIL_HOST = os.getenv("ORACLE_SMTP_HOST")
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv("EMAIL_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
+# EMAIL_USE_TLS = True
+# # EMAIL_HOST = os.getenv('MAIL_HOST')
+# EMAIL_HOST = os.getenv("ORACLE_SMTP_HOST")
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
-USERNAME_SMTP = os.getenv("ORACLE_SMTP_USER")
-PASSWORD_SMTP = os.getenv("ORACLE_SMTP_PASSWORD")
+# USERNAME_SMTP = os.getenv("ORACLE_SMTP_USER")
+# PASSWORD_SMTP = os.getenv("ORACLE_SMTP_PASSWORD")

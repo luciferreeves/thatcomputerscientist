@@ -9,7 +9,7 @@
             <td style="padding-left: 20px;">
                 <p style="margin-top: 0px;">
                     <span style="font-size: 16px; font-weight: bold;">{{ activity_user.first_name }} {{ activity_user.last_name }}</span>
-                    <a style="position: relative; top: -2px;" href="{% url 'blog:user_activity' activity_user.username %}"><b>@{{ activity_user.username }}</b></a>
+                    <a style="position: relative; top: -2px;" href="#"><b>@{{ activity_user.username }}</b></a>
                     {% if activity_user_profile.blinkie_url %}
                         <img src="{% static 'images/blinkies/' %}{{ activity_user_profile.blinkie_url }}.gif" alt="{{ activity_user_profile.blinkie_url }}" height="20" width="150" style="position: relative; top: 2px; left: 10px;" />
                     {% endif %}
@@ -37,12 +37,12 @@
     {% if activity_recent_comments %}
     <h2>Recent Comments</h2>
         {% if not activity_user_profile.is_public and request.user.username == activity_user.username %}
-            <p class="info">Your profile is not public. Only you can see this information. If you want to change this, go to your <a href="{% url 'blog:account' %}?tab=details">account settings</a>.</p>
+            <p class="info">Your profile is not public. Only you can see this information. If you want to change this, go to your <a href="#?tab=details">account settings</a>.</p>
         {% endif %}
             <ul>
                 {% for comment in activity_recent_comments %}
                     <li style="background: #1c1c1c;padding: 20px 10px 10px 10px;margin-bottom: 10px;border-radius: 8px;">
-                        <p>On <a href="{% url 'blog:post' comment.post.slug %}#comment-{{ comment.id }}">{{ comment.post.title }}</a>:
+                        <p>On <a href="#comment-{{ comment.id }}">{{ comment.post.title }}</a>:
                             <blockquote style="background: none; margin-top: 15px; padding: 0px 20px; width: 640px; margin-left: 20px;">{{ comment.body|safe }}</blockquote></p>
                     </li>
                 {% endfor %}

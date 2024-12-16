@@ -15,7 +15,7 @@
       <p>Hey! Skippy here! I am the 404 Assistant Bot for this site. Looks like you are trying to search an article, but I couldn't find the page. {% if context.similar_posts %}Maybe you are looking for one of these?{% endif %}</p>
       <ul style="position: relative; left: 30px; top: 10px;">
         {% for post in context.similar_posts %}
-          <li><a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a></li>
+          <li><a href="#">{{ post.title }}</a></li>
         {% endfor %}
       </ul>
     {% elif context.mode == 'user' %}
@@ -24,7 +24,7 @@
       <p>Hey! Skippy here! I am the 404 Assistant Bot for this site. Looks like you are trying to search a user with username <b>{{ context.username }}</b> but I couldn't find any user with that username. {% if context.similar_users %}Maybe you are looking for one of these users?{% endif %}</p>
       <ul style="position: relative; left: 30px; top: 10px;">
         {% for user in context.similar_users %}
-          <li><a href="{% url 'blog:user_activity' user.username %}">{{ user.username }}</a></li>
+          <li><a href="#">{{ user.username }}</a></li>
         {% endfor %}
       </ul>
     {% else %}
@@ -32,7 +32,7 @@
       <p>Hey! Skippy here! I am the 404 Assistant Bot for this site. Unfortunately, I couldn't find the page you were looking for. Let me guide you home!</p>
     {% endif %}
     <br>
-    <p><a href="{% url 'blog:home' %}" class="button button-special">Go Home</a></p>
+    <p><a href="#" class="button button-special">Go Home</a></p>
   </div>
   <div style="clear:both;"></div>
   <div style="margin-top: 28px; border-bottom: dotted 1px #fefefe;"></div>

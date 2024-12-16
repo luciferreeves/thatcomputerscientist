@@ -14,11 +14,11 @@
       verify and change your email address, please click the link below.
     </p>
     <a
-      href="{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}"
+      {% comment %} href="{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}" {% endcomment %}
       >Change Email</a
     >
     <p>If the above link does not work, copy and paste the URL below into your browser:</p>
-    <a href="{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}">{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}</a>
+    {% comment %} <a href="{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}">{{ protocol }}{{ domain }}{% url 'users:changeemail' 'changeemail' uid token %}</a> {% endcomment %}
 
     <p>Please ignore this email if you did not make this request.</p>
     <p>Thanks,</p>

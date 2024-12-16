@@ -2,11 +2,13 @@ import json
 from io import BytesIO
 
 import requests
-from captcha.image import ImageCaptcha
+
+# from captcha.image import ImageCaptcha
 from django.core.files.base import ContentFile
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from PIL import Image
+
+# from PIL import Image
 
 from apps.blog.models import Post
 from services.users.tokens import CaptchaTokenGenerator
@@ -31,10 +33,10 @@ def tex(request):
         + expression
     ).content
 
-    # Image is a transparent GIF with black text. Invert the colors.
-    image = Image.open(BytesIO(image))
-    image = image.convert("RGBA")
-    image = Image.eval(image, lambda x: 255 - x)
+    # # Image is a transparent GIF with black text. Invert the colors.
+    # image = Image.open(BytesIO(image))
+    # image = image.convert("RGBA")
+    # image = Image.eval(image, lambda x: 255 - x)
 
     # Convert back to gif and return
     output = BytesIO()
@@ -62,14 +64,14 @@ def post_image(request, size, post_id):
             elif size > 1000:
                 size = 1000
 
-            image = Image.open(f)
+            # image = Image.open(f)
             # resize width to size, compute height
             width, height = image.size
             height = int(height * (size / width))
             width = size
 
             # resize image
-            image = image.resize((width, height), Image.ANTIALIAS)
+            # image = image.resize((width, height), Image.ANTIALIAS)
             output = BytesIO()
             image.save(output, format="GIF")
             return HttpResponse(output.getvalue(), content_type="image/gif")
@@ -93,7 +95,7 @@ def get_image(request, post_id, image_name):
     with open(image.path, "rb") as f:
         image_file = f.read()
         # convert to gif
-        image = Image.open(BytesIO(image_file))
+        # image = Image.open(BytesIO(image_file))
         # check image format
         if image.format != "GIF":
             image = image.convert("RGBA")
@@ -122,8 +124,8 @@ def cover_image(request, repository):
         image = requests.get(url).content
 
         # reduce image size to 320x160
-        image = Image.open(BytesIO(image))
-        image = image.resize((320, 160), Image.ANTIALIAS)
+        # image = Image.open(BytesIO(image))
+        # image = image.resize((320, 160), Image.ANTIALIAS)
 
         # remove black background
         image = image.convert("RGBA").getdata()
@@ -136,7 +138,7 @@ def cover_image(request, repository):
 
         # Convert back to png and return
         output = BytesIO()
-        image = Image.new("RGBA", (320, 160))
+        # image = Image.new("RGBA", (320, 160))
         image.putdata(new_data)
         image.save(output, format="GIF")
         image = output.getvalue()
@@ -178,14 +180,14 @@ def upload_image(request):
 
 def captcha_image(request, captcha_string):
     captcha = CaptchaTokenGenerator().decrypt(captcha_string)
-    imgcaptcha = ImageCaptcha()
-    imgcaptcha.character_rotate = (-15, 15)
-    imgcaptcha.character_warp_dx = (0, 0)
-    imgcaptcha.character_warp_dy = (0, 0)
-    imgcaptcha.character_offset_dx = (12, 20)
-    imgcaptcha.character_offset_dy = (0, 6)
-    data = imgcaptcha.generate(captcha)
-    return HttpResponse(data, content_type="image/png")
+    # imgcaptcha = ImageCaptcha()
+    # imgcaptcha.character_rotate = (-15, 15)
+    # imgcaptcha.character_warp_dx = (0, 0)
+    # imgcaptcha.character_warp_dy = (0, 0)
+    # imgcaptcha.character_offset_dx = (12, 20)
+    # imgcaptcha.character_offset_dy = (0, 6)
+    # data = imgcaptcha.generate(captcha)
+    return HttpResponse("", content_type="image/png")
 
 
 def socialify(request):

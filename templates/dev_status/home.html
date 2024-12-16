@@ -53,13 +53,13 @@
     <table style="width=100%; margin: 0 auto; table-layout: fixed;">
       {% for repo in repos %}
         <tr>
-          <td><a href="{% url 'dev_status:repo' repo.name %}">
+          {% comment %} <td><a href="{% url 'dev_status:repo' repo.name %}"> {% endcomment %}
               <img src="{% url 'ignis:cover_image' repo.name %}.gif" style="display: inline-block; margin-right: 10px;" class="zoom" border="0">
             </a>
           </td>
           <td>
           <p style="font-size: 14px; font-weight: bold;">
-            <a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a>
+            {% comment %} <a href="{% url 'dev_status:repo' repo.name %}">{{ repo.name }}</a> {% endcomment %}
             {% if repo.isFork %}
               <span title="Forked Repository"><img src="{% static 'images/site/icons/isFork.png' %}" style="display: inline-block; margin-left: 5px; height: 16px; position: relative; top: 4px;" border="0"></span>
             {% endif %}
@@ -99,18 +99,18 @@
           <td><a class="disabled">&laquo;</a></td>
           <td style="margin-right: 15px;"><a class="disabled">&lsaquo;</a></td>
         {% else %}
-          <td><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></td>
-          <td style="margin-right: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></td>
+          {% comment %} <td><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page=1">&laquo;</a></td> {% endcomment %}
+          {% comment %} <td style="margin-right: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:-1 }}">&lsaquo;</a></td> {% endcomment %}
         {% endif %}
         {% for i in num_pages|times  %}
-          <td><a {% if i == page %}class="active"{% endif %} href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></td>
+          {% comment %} <td><a {% if i == page %}class="active"{% endif %} href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ i }}">{{ i }}</a></td> {% endcomment %}
         {% endfor %}
         {% if page == num_pages %}
           <td style="margin-left: 15px;"><a class="disabled">&rsaquo;</a></td>
           <td><a class="disabled">&raquo;</a></td>
         {% else %}
-          <td style="margin-left: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></td>
-          <td><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></td>
+          {% comment %} <td style="margin-left: 15px;"><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ page|add:1 }}">&rsaquo;</a></td>
+          <td><a href="{% url 'dev_status:home'%}?search={{ search }}&items={{ items }}&filter={{ filter }}&sort={{ sort }}&direction={{ direction }}&page={{ num_pages }}">&raquo;</a></td> {% endcomment %}
         {% endif %}
       </tr>
     </table>

@@ -42,19 +42,19 @@
             <td><a class="disabled">&laquo;</a></td>
             <td style="margin-right: 15px;"><a class="disabled">&lsaquo;</a></td>
         {% else %}
-        <td><a href="{% url 'blog:articles' %}?page=1&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&laquo;</a></td>
-        <td style="margin-right: 15px;"><a href="{% url 'blog:articles' %}?page={{ page|add:'-1' }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&lsaquo;</a></td>
+        <td><a href="#?page=1&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&laquo;</a></td>
+        <td style="margin-right: 15px;"><a href="#?page={{ page|add:'-1' }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&lsaquo;</a></td>
       {% endif %}
       {% load times %}
       {% for i in num_pages|times  %}
-      <td><a {% if i == page %}class="active"{% endif %} href="{% url 'blog:articles' %}?page={{ i }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">{{ i }}</a></td>
+      <td><a {% if i == page %}class="active"{% endif %} href="#?page={{ i }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">{{ i }}</a></td>
       {% endfor %}
       {% if page == num_pages %}
         <td style="margin-left: 15px;" class="disabled"><a class="disabled">&rsaquo;</a></td>
         <td><a class="disabled">&raquo;</a></td>
       {% else %}
-        <td style="margin-left: 15px;"><a href="{% url 'blog:articles' %}?page={{ page|add:'1' }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&rsaquo;</a></td>
-        <td><a href="{% url 'blog:articles' %}?page={{ num_pages }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&raquo;</a></td>
+        <td style="margin-left: 15px;"><a href="#?page={{ page|add:'1' }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&rsaquo;</a></td>
+        <td><a href="#?page={{ num_pages }}&order_by={{ order_by }}&direction={{ direction }}&category={{ category }}">&raquo;</a></td>
       {% endif %}
     </tr>
   </table>

@@ -1,16 +1,17 @@
 import os
 import re
 
-import akismet
+# import akismet
 import dotenv
 import requests
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.core.cache import cache
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import get_lexer_by_name, guess_lexer
-import google.generativeai as genai
+
+# from pygments import highlight
+# from pygments.formatters import HtmlFormatter
+# from pygments.lexers import get_lexer_by_name, guess_lexer
+# import google.generativeai as genai
 
 from .models import Category, Comment, Post
 
@@ -18,14 +19,14 @@ dotenv.load_dotenv()
 
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
-akismet_api = akismet.Akismet(
-    key=os.getenv("AKISMET_API_KEY"),
-    blog_url=(
-        "https://preview.thatcomputerscientist.com"
-        if settings.DEBUG
-        else "https://thatcomputerscientist.com"
-    ),
-)
+# akismet_api = akismet.Akismet(
+#     key=os.getenv("AKISMET_API_KEY"),
+#     blog_url=(
+#         "https://preview.thatcomputerscientist.com"
+#         if settings.DEBUG
+#         else "https://thatcomputerscientist.com"
+#     ),
+# )
 
 
 def check_spam(comment, post):
@@ -42,48 +43,50 @@ def check_spam(comment, post):
     #     return spam
 
     # Now we check with Google Generative AI
-    if gemini_api_key is None:
-        return True
-    else:
-        genai.configure(api_key=gemini_api_key)
+    # if gemini_api_key is None:
+    #     return True
+    # else:
+    #     genai.configure(api_key=gemini_api_key)
 
-    model = genai.GenerativeModel("gemini-pro")
-    print(comment)
+    # model = genai.GenerativeModel("gemini-pro")
+    # print(comment)
 
-    input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam, or random gibberish or a bunch of letters which make no sense or looks like a coupon code or something. Only block spam, nothing else. If a comment contains cuss words, personal attacks, profanity or any possible harrasment, it is NOT spam (unless it contains spammy gibberish or links). This is a strict spam only filter. N if the comment is not spam. Do not access links. Just mark Y or N for the text. Post Title: {post.title}. \n Comment: {comment}. \n Judge if the comment belongs on the post or not. Random texts, links, and gibberish are considered spam. Trying to phish or promote shady links are also considered spam. Output single character - either Y or N only."
+    # input_prompt = f"Comment Processing Checker. This is for a personal blog site. Output only Y or N for the included text. Y if the comment seems like spam, or random gibberish or a bunch of letters which make no sense or looks like a coupon code or something. Only block spam, nothing else. If a comment contains cuss words, personal attacks, profanity or any possible harrasment, it is NOT spam (unless it contains spammy gibberish or links). This is a strict spam only filter. N if the comment is not spam. Do not access links. Just mark Y or N for the text. Post Title: {post.title}. \n Comment: {comment}. \n Judge if the comment belongs on the post or not. Random texts, links, and gibberish are considered spam. Trying to phish or promote shady links are also considered spam. Output single character - either Y or N only."
 
-    bn = [
-        {
-            "category": "HARM_CATEGORY_DANGEROUS",
-            "threshold": "BLOCK_NONE",
-        },
-        {
-            "category": "HARM_CATEGORY_HARASSMENT",
-            "threshold": "BLOCK_NONE",
-        },
-        {
-            "category": "HARM_CATEGORY_HATE_SPEECH",
-            "threshold": "BLOCK_NONE",
-        },
-        {
-            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            "threshold": "BLOCK_NONE",
-        },
-        {
-            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-            "threshold": "BLOCK_NONE",
-        },
-    ]
+    # bn = [
+    #     {
+    #         "category": "HARM_CATEGORY_DANGEROUS",
+    #         "threshold": "BLOCK_NONE",
+    #     },
+    #     {
+    #         "category": "HARM_CATEGORY_HARASSMENT",
+    #         "threshold": "BLOCK_NONE",
+    #     },
+    #     {
+    #         "category": "HARM_CATEGORY_HATE_SPEECH",
+    #         "threshold": "BLOCK_NONE",
+    #     },
+    #     {
+    #         "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+    #         "threshold": "BLOCK_NONE",
+    #     },
+    #     {
+    #         "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+    #         "threshold": "BLOCK_NONE",
+    #     },
+    # ]
 
-    response = model.generate_content(input_prompt, safety_settings=bn)
+    # response = model.generate_content(input_prompt, safety_settings=bn)
 
-    r_text = response.text
+    # r_text = response.text
 
-    r_text = r_text.strip()
+    # r_text = r_text.strip()
 
-    print(r_text)
+    # print(r_text)
 
-    return r_text
+    # return r_text
+
+    return False
 
 
 def add_excerpt(post):

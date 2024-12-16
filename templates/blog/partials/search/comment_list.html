@@ -2,7 +2,7 @@
 <ul style="list-style: none; padding: 0px; margin: 0px;">
 {% for comment in comments  %}
     <li style="background: #1c1c1c;padding: 10px; margin-bottom: 10px;border-radius: 8px; max-width: 530px;">
-        <p><a class="notranslate" {% if comment.user%}href="{% url 'blog:user_activity' comment.user.username %}"{% endif %}>{% if comment.user %}{{ comment.user.username }}{% else %}{{ comment.anonymous_user.name }}{% endif %}</a> commented on <a href="{% url 'blog:post' comment.post.slug %}#comment-{{ comment.id }}">{{ comment.post.title }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>:
+        <p><a class="notranslate" {% if comment.user%}href="#"{% endif %}>{% if comment.user %}{{ comment.user.username }}{% else %}{{ comment.anonymous_user.name }}{% endif %}</a> commented on <a href="##comment-{{ comment.id }}">{{ comment.post.title }}</a> on <em>{{ comment.created_at | date:"M d, Y" }}</em>:
             <blockquote style="background: none; margin-top: 15px; padding: 0px 20px; margin-left: 20px;">{{ comment.body|safe }}</blockquote></p>
     </li>
 {% endfor %}

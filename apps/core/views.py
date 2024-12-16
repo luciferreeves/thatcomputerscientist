@@ -12,7 +12,7 @@ def home(request):
         "title": "Home",
     }
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
-    request.meta.update(META)
+    request.META.update(META)
     announcements = Announcement.objects.filter(is_public=True).order_by("-created_at")
     context = {
         "announcements": announcements,

@@ -7,8 +7,15 @@
   <link rel="stylesheet" href="{% static 'css/en/login-area.css' %}" />
 {% endif %}
   {% if not user.is_authenticated %}
+  {% for message in messages %}
+  {% if 'loginError' in message.tags %}
+    <div id="login-error">
+      <div class="messageBox {{message.message}}"></div>
+    </div>
+  {% endif %}
+  {% endfor %}
     <div id="login-area">
-      <form method="post" action="#" id="login-form">
+      <form method="post" action="{% url 'auth:login' %}" id="login-form">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
         <input type="text" id="username" name="username" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}ユーザー名{% else %}Username{% endif %}" autocomplete="off" value="{{ request.GET.username }}" />
         <input type="password" id="password" name="password" placeholder="{% if request.LANGUAGE_CODE == 'ja' %}パスワード{% else %}Password{% endif %}" autocomplete="off" />
@@ -39,7 +46,7 @@
         </div>
         <div class="user-item">
           <img src="{% static 'images/core/icons/logout.png' %}" alt="Logout Icon" />
-          <a href="#logout">{% if request.LANGUAGE_CODE == 'ja' %}ログアウト{% else %}Logout{% endif %}</a>
+          <a href="{% url 'auth:logout' %}">{% if request.LANGUAGE_CODE == 'ja' %}ログアウト{% else %}Logout{% endif %}</a>
         </div>
       </div>
     </div>
@@ -95,7 +102,7 @@
 
       <div class="navigation-item {% if request.LANGUAGE_CODE == 'ja' %}en{% else %}ja{% endif %}">
         <img src="{% static 'images/core/icons/changelanguage.png' %}" alt="Change Language Icon" />
-        <a href="#" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
+        <a href="javascript:void(0);" onclick="changeLanguage({% if request.LANGUAGE_CODE == 'ja' %}'en'{% else %}'ja'{% endif %})">
           {% if request.LANGUAGE_CODE == 'ja' %}English (英語){% else %}日本語 (Japanese){% endif %}
         </a>
       </div>

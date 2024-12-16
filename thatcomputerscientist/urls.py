@@ -52,5 +52,8 @@ urlpatterns = [
     # path('ignis', include(('ignis.urls', 'ignis'), namespace='ignis')),
     # path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
+admin.site.site_header = "Shifoo Administation"
+admin.site.site_title = "Shifoo"
+admin.site.index_title = "Administration Area"
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

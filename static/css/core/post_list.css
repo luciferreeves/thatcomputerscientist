@@ -8,7 +8,7 @@
 }
 
 .author-info {
-    margin: 8px 0px;
+    margin: 4px 0px 8px 0px;
 }
 
 .post-profile-image {
@@ -45,7 +45,7 @@
 
 .post-content p {
     text-align: justify;
-    margin: 8px 0px;
+    margin: 4px 0px;
 }
 
 .post-actions {

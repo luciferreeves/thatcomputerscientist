@@ -1,13 +1,10 @@
 /* Reset and Base Styles */
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap');
 
-/* @font-face {
-  font-family: 'Klee';
-  src: url('../../fonts/KleeOne-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap
-} */
+@font-face {
+  font-family: 'SourceHanSansVariable';
+  src: url('../../fonts/SourceHanSans-VF.ttf') format('truetype');
+  font-weight: 100 300 400 500 600 700 900;
+}
 
 @font-face {
   font-family: 'SweetFairy';
@@ -41,9 +38,10 @@ body {
 body,
 textarea,
 input {
-  font-family: 'M PLUS Rounded 1c';
+  font-family: 'SourceHanSansVariable';
   font-size: 12px;
   font-weight: 400;
+  line-height: 1.5;
 }
 
 /* Element Styles */

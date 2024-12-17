@@ -1,0 +1,140 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<style>
+    .journal-header-area {
+        width: 780px;
+        height: 200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .journal-content-area {
+        display: flex;
+        padding: 4px 0px;
+        gap: 8px;
+    }
+
+    .journal-sidebar {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .journal-stats-area {
+        background-color: #f4f1e90f;
+        border-radius: 8px;
+    }
+
+    .journal-stats-area h3 {
+        text-align: center;
+        padding: 8px 0px 4px 0px;
+    }
+
+    .journal-stats-profile-image {
+        width: 128px;
+        height: 128px;
+        margin: 4px auto;
+        display: block;
+    }
+
+    .journal-stats {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px;
+        background-color: #6446858a;
+        gap: 12px;
+    }
+
+    .journal-stats:nth-child(odd) {
+        background-color: #54266a85;
+    }
+
+    .journal-stats .stat-name {
+        font-weight: bold;
+    }
+
+    .journal-stats:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .journal-entry {
+        background-color: #f4f1e90f;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 8px;
+    }
+
+    ..journal-entry-title, .journal-entry-details {
+        padding: 4px 0px;
+    }
+
+    .journal-entry-details {
+        margin-bottom: 8px;
+        font-size: 0.8em;
+    }
+
+    .journal-entry-content {
+        padding: 8px 0px;
+    }
+
+    {{ journal.custom_css }}
+</style>
+{% endblock head %}
+{% block content %}
+<div class="journal-header-area">
+    <h1 class="journal-title">{{ journal.name }}<h1>
+</div>
+<div class="journal-content-area">
+    <div class="journal-sidebar">
+        <div class="journal-stats-area">
+            {% with journal.owner.userprofile_set.first as journal_holder_profile %}
+            <h3>Journal Holder's Profile</h3>
+            <img src="{% static 'images/avatars/' %}{{ journal_holder_profile.avatar_url }}.gif" class="journal-stats-profile-image" alt="{{ journal.owner.first_name }}'s Avatar">
+            <div class="journal-stats">
+                <p class="stat-name">Profile</p>
+                <p class="stat-value">{{ journal.owner.first_name }} {{ journal.owner.last_name }}</p>
+            </div>
+            <div class="journal-stats">
+                <p class="stat-name">Bio</p>
+                <p class="stat-value">{{ journal_holder_profile.bio|linebreaksbr }}</p>
+            </div>
+            <div class="journal-stats">
+                <p class="stat-name">XP</p>
+                <p class="stat-value">{{ journal_holder_profile.experience }} / 1000</p>
+            </div>
+            <div class="journal-stats">
+                <p class="stat-name">Level</p>
+                <p class="stat-value">{{ journal_holder_profile.level }}</p>
+            </div>
+            <div class="journal-stats">
+                <p class="stat-name">Journal Entries</p>
+                <p class="stat-value">{{ journal.entries.all|length }}</p>
+            </div>
+            <div class="journal-stats">
+                <p class="stat-name">Journal Streak</p>
+                <p class="stat-value">{{ journal_holder_profile.journal_streak }} days</p>
+            </div>
+            <div class="journal-stats">
+                <p class="stat-name">Weblog Posts</p>
+                <p class="stat-value">{{ journal_holder_profile.weblogs_created }}</p>
+            </div>
+            {% endwith %}
+        </div>
+    </div>
+    <div class="journal-entries">
+        <p>{{ journal.entries.all|length }} entries</p>
+        {% for entry in journal.entries.all %}
+        <div class="journal-entry">
+            <h2 class="journal-entry-title">{{ entry.title }}</h2>
+            <p class="journal-entry-details">Posted on {{ entry.created_at|date:"F j, Y" }}</p>
+            <hr>
+            <p class="journal-entry-content">{{ entry.body|linebreaksbr }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

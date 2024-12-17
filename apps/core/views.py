@@ -13,7 +13,7 @@ def home(request):
         "title": "Home",
     }
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
-    request.META.update(META)
+    request.meta.update(META)
     announcements = Announcement.objects.filter(is_public=True).order_by("-created_at")
     context = {
         "announcements": announcements,
@@ -29,7 +29,7 @@ def my_journals(request):
         "title": "My Journals",
     }
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
-    request.META.update(META)
+    request.meta.update(META)
     journals = Journal.objects.filter(owner=request.user).order_by("-created_at")
     context = {
         "journals": journals,

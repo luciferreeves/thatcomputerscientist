@@ -78,7 +78,7 @@
             <div class="journal-alignment-center">{{ journal.private }}</div>
             <div class="journal-alignment-center">{{ journal.entries.all|length }}</div>
             <div class="journal-alignment-center">
-                <a href="#view" class="action-button">View</a>
+                <a href="{% url "journal:single" journal.slug %}" class="action-button">View</a>
                 <a href="#manage" class="action-button">Manage</a>
             </div>
         </div>

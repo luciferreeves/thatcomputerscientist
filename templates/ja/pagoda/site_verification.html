@@ -160,6 +160,16 @@
     <p>情報を追加したら、下のボタンをクリックして認証状態を確認してください。</p>
 
     <button class="verify-button" onclick="window.location.href = '{% url 'pagoda:site_status' site.siteUniqueIdentifier %}'">認証状態を確認</button>
-    <button class="delete-button" onclick="window.location.href = '{% url 'pagoda:delete_site' site.siteUniqueIdentifier %}'">サイトを削除</button>
+    <button class="delete-button" onclick="javascript:deleteSite();'">サイトを削除</button>
 </div>
 {% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    function deleteSite() {
+      if (confirm("Are you sure you want to remove this connected website? This action is permanent and cannot be undone.")) {
+        const deletionURL = "{% url 'pagoda:delete_site' site.siteUniqueIdentifier %}";
+        window.location.href = deletionURL;
+      }
+    }
+</script>
+{% endblock scripts %}

@@ -1,0 +1,88 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<style>
+    .my-journals {
+        padding: 12px 0px;
+    }
+
+    .my-journals-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #8d8dff;
+    }
+
+    .journal-list {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+      
+    .journal-list-header, .journal-list-item {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        padding: 12px;
+    }
+
+    .journal-list-header {
+        background: linear-gradient(90deg, #4444b1, #623795);
+        border-bottom: 1px solid #8d8dff;
+    }
+
+    
+    .journal-list-header-title {
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    .journal-list-item {
+        border-bottom: 1px solid rgba(141, 141, 255, 0.2);
+        background: rgba(98, 55, 149, 0.1);
+        transition: background 0.3s ease;
+    }
+  
+    .journal-list-item:nth-child(odd) {
+        background: rgba(68, 68, 177, 0.1);
+    }
+    
+    .journal-alignment-left {
+        justify-content: flex-start !important;
+    }
+
+    .journal-alignment-center {
+        display: flex;
+        justify-content: center !important;
+        gap: 8px;
+    }
+</style>
+{% endblock head %} 
+{% block content %}
+<div class="my-journals">
+    <div class="my-journals-header">
+        <h1 class="navigation-title" style="font-size: 24px;">My Journals</h1>
+        <a href="#create" class="link-button">Create a Journal</a>
+    </div>
+    <div class="journal-list">
+        <div class="journal-list-header">
+            <div class="journal-list-header-title">Title</div>
+            <div class="journal-list-header-title">Private</div>
+            <div class="journal-list-header-title">Entries</div>
+            <div class="journal-list-header-title">Actions</div>
+        </div>
+        {% for journal in journals %}
+        <div class="journal-list-item">
+            <div class="journal-alignment-left">{{ journal.name }}</div>
+            <div class="journal-alignment-center">{{ journal.private }}</div>
+            <div class="journal-alignment-center">{{ journal.entries.all|length }}</div>
+            <div class="journal-alignment-center">
+                <a href="#view" class="action-button">View</a>
+                <a href="#manage" class="action-button">Manage</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

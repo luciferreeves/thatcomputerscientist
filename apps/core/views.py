@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from thatcomputerscientist.utils import i18npatterns
 from apps.administration.models import Announcement
+from apps.journals.models import Journal
 from internal.mal_wrapper import get_mal_recent_activity
 from internal.weblog_utilities import recent_weblogs
 
@@ -20,3 +21,17 @@ def home(request):
         "recent_weblogs": recent_weblogs(lang=LANGUAGE_CODE),
     }
     return render(request, f"{LANGUAGE_CODE}/core/home.html", context)
+
+
+# My Pages
+def my_journals(request):
+    META = {
+        "title": "My Journals",
+    }
+    LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
+    request.META.update(META)
+    journals = Journal.objects.filter(owner=request.user).order_by("-created_at")
+    context = {
+        "journals": journals,
+    }
+    return render(request, f"{LANGUAGE_CODE}/core/my/journals.html", context)

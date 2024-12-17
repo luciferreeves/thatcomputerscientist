@@ -34,7 +34,7 @@
       <div class="user-items-container">
         <div class="user-item">
           <img src="{% static 'images/core/icons/journals.png' %}" alt="Journals Icon" />
-          <a href="#journals">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナル{% else %}Journals{% endif %}</a>
+          <a href="{% url "core:my_journals" %}">{% if request.LANGUAGE_CODE == 'ja' %}ジャーナル{% else %}Journals{% endif %}</a>
         </div>
         <div class="user-item">
           <img src="{% static 'images/core/icons/pagodarealm.png' %}" alt="The Pagoda Realm Icon" />

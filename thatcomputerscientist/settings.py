@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     "apps.administration",
     "apps.blog",
     "apps.pagoda",
+    "apps.journals",
     "services.users",
     "services.stream",
     "services.pamphlet",

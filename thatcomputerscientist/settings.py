@@ -44,13 +44,20 @@ SECRET_KEY = os.getenv("AUTHORIZATION_STRING")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("ENVIRONMENT") == "development" else False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "shi.foo",
+    "www.shi.foo",
+    "thatcomputerscientist.com",
+    "www.thatcomputerscientist.com",
+] + (["localhost", "127.0.0.1"] if DEBUG else [])
+
 CSRF_TRUSTED_ORIGINS = [
     "https://*.thatcomputerscientist.com",
     "http://*.thatcomputerscientist.com",
     "https://*.shi.foo",
     "http://localhost",
 ]
+
 DOMAIN_NAME = "shi.foo"
 SESSION_COOKIE_DOMAIN = (
     os.getenv("DOMAIN") if os.getenv("ENVIRONMENT") == "development" else ".shi.foo"

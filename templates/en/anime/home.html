@@ -1,0 +1,46 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/anime/anime.css' %}">
+{% endblock head %}
+{% block content %}
+<div class="a-title-banner">
+    <div class="overlay-bottom-radial"></div>
+    <div class="a-title-banner-content">
+        <h1>Anime</h1>
+        <form method="GET" action="{% url 'anime:search' %}">
+            <label for="q">Keywords:</label>
+            <input type="text" name="q" placeholder="Search anime..." value="{{ request.GET.q }}">
+            <label for="genre">Genre:</label>
+            <select name="genre" id="genre">
+                <option value="">All</option>
+                {% for genre in genres %}
+                <option value="{{ genre }}" {% if request.GET.genre == genre %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            </select>
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort">
+                {% for sortOption in sortings %}
+                <option value="{{ sortOption.value }}" {% if request.GET.sort == sortOption.value %}selected{% endif %}>{{ sortOption.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="order-toggle">
+                <input type="radio" name="order" value="asc" id="asc" {% if request.GET.order == 'asc' %}checked{% endif %}>
+                <label for="asc">↑</label>
+                <input type="radio" name="order" value="desc" id="desc" {% if request.GET.order == 'desc' %}checked{% elif not request.GET.order %}checked{% endif %}>
+                <label for="desc">↓</label>
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
+{% include 'partials/_anime_list.html' with anime_list=trending_anime title="Trending Anime" %}
+{% include 'partials/_anime_list.html' with anime_list=popular_anime title="Popular Anime" %}
+{% include 'partials/_anime_list.html' with anime_list=top_anime title="Top Rated Anime" %}
+{% include 'partials/_anime_list.html' with anime_list=top_airing_anime title="Top Airing Anime" %}
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/shared/animeList.js' %}"></script>
+{% endblock scripts %}

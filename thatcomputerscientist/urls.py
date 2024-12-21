@@ -44,6 +44,7 @@ urlpatterns = [
     path("journal/", include("apps.journals.urls", namespace="journal")),
     path("weblog/", include("apps.blog.urls", namespace="weblog")),
     path("pagoda/", include("apps.pagoda.urls", namespace="pagoda")),
+    path("anime/", include("apps.anime.urls", namespace="anime")),
     path("services/stream/", include("services.stream.urls", namespace="stream")),
     path("services/pamphlet", include("services.pamphlet.urls", namespace="pamphlet")),
     path("services/auth/", include("services.users.urls", namespace="auth")),

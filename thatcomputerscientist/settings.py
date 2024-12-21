@@ -91,7 +91,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
-APPEND_SLASH = False
+APPEND_SLASH = True
 # HAYSTACK_CONNECTIONS = {
 #     "default": {
 #         "ENGINE": "haystack.backends.simple_backend.SimpleEngine",

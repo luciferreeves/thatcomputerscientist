@@ -1,0 +1,78 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% load pagination %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/anime/anime.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="a-title-banner">
+    <div class="overlay-bottom-radial"></div>
+    <div class="a-title-banner-content">
+        <h1>Search Anime</h1>
+        <form method="GET">
+            <label for="q">Keywords:</label>
+            <input type="text" name="q" placeholder="Search anime..." value="{{ request.GET.q }}">
+            <label for="genre">Genre:</label>
+            <select name="genre" id="genre">
+                <option value="">All</option>
+                {% for genre in genres %}
+                <option value="{{ genre }}" {% if request.GET.genre == genre %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            </select>
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort">
+                {% for sortOption in sortings %}
+                <option value="{{ sortOption.value }}" {% if request.GET.sort == sortOption.value %}selected{% endif %}>{{ sortOption.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="order-toggle">
+                <input type="radio" name="order" value="asc" id="asc" {% if request.GET.order == 'asc' %}checked{% endif %}>
+                <label for="asc">↑</label>
+                <input type="radio" name="order" value="desc" id="desc" {% if request.GET.order == 'desc' %}checked{% endif %}>
+                <label for="desc">↓</label>
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="search-results-info">
+    <div class="search-summary">
+        Found <span class="result-count">{{ total_results }}</span> results
+        {% if request.GET.q %} for "<span class="search-term">{{ request.GET.q }}</span>"{% endif %}
+        {% if request.GET.genre %} in <span class="search-genre">{{ request.GET.genre }}</span>{% endif %}
+    </div>
+</div>
+
+{% include 'partials/_anime_list.html' with anime_list=search_results %}
+
+{% if total_pages > 1 %}
+<div class="pagination">
+    {% if current_page > 1 %}
+        {% with current_page|add:"-1" as prev_page %}
+        <a href="{% url 'anime:search' %}?{{ request.GET|set_page_param:prev_page }}" class="page-link">&lt;</a>
+        {% endwith %}
+    {% endif %}
+    
+    {% for p in total_pages|get_page_range:current_page %}
+        {% if p == '...' %}
+            <span class="page-ellipsis">...</span>
+        {% else %}
+            <a href="{% url 'anime:search' %}?{{ request.GET|set_page_param:p }}" 
+               class="page-link {% if p == current_page %}active{% endif %}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+    
+    {% if current_page < total_pages %}
+        {% with current_page|add:"1" as next_page %}
+        <a href="{% url 'anime:search' %}?{{ request.GET|set_page_param:next_page }}" class="page-link">&gt;</a>
+        {% endwith %}
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock content %}
+{% block scripts %}
+<script src="{% static 'js/shared/animeList.js' %}"></script>
+{% endblock scripts %}

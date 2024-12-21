@@ -1,0 +1,62 @@
+{% load color_to_rgb %}
+<div class="anime-list-section">
+    {% if title %}
+    <h2 class="section-title">{{ title }}</h2>
+    {% endif %}
+    <div class="anime-grid">
+        {% for anime in anime_list.results %}
+        <a href="{% url "anime:anime" anime.id %}" class="anime-card" style="--anime-color: {{ anime.color|default:'#8d8dff' }};--anime-color-rgb: {{ anime.color|default:'141, 141, 255'|color_to_rgb }};">
+            <div class="anime-poster">
+                <img src="{{ anime.image }}" alt="{{ anime.title.english }}">
+            </div>
+            <div class="anime-basic-info">
+                <h3 class="anime-title" style="color:{{anime.color}}">{{ anime.title.english|default:anime.title.romaji }}</h3>
+                <div class="anime-meta">
+                    <span class="anime-status">{{ anime.status }}</span>
+                    {% if anime.totalEpisodes %}
+                    <span>{{ anime.totalEpisodes }} eps</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="anime-hover-card">
+                <div class="hover-card-cover">
+                    {% if anime.cover %}
+                        <img src="{{ anime.cover }}" alt="Cover">
+                    {% else %}
+                        <div class="hover-card-color" style="background-color: {{ anime.color|default:'#1a1f29' }}"></div>
+                    {% endif %}
+                    <div class="hover-card-title-area">
+                        <h3>{{ anime.title.english|default:anime.title.romaji }}</h3>
+                    </div>
+                </div>
+                <div class="hover-card-content">
+                    <div class="hover-card-poster">
+                        <img src="{{ anime.image }}" alt="{{ anime.title.english }}">
+                    </div>
+                    <div class="hover-card-details">
+                        <div class="hover-card-meta">
+                            <span>{{ anime.type }}</span>
+                            <span>{{ anime.status }}</span>
+                            {% if anime.totalEpisodes %}
+                            <span>{{ anime.totalEpisodes }} Episodes</span>
+                            {% endif %}
+                            {% if anime.rating %}
+                            <span>★ {{ anime.rating }}%</span>
+                            {% endif %}
+                        </div>
+                        <div class="hover-card-description">
+                            {{ anime.description|truncatewords:50 }}
+                        </div>
+                        <div class="hover-card-genres">
+                            {% for genre in anime.genres %}
+                            <span class="genre-tag">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

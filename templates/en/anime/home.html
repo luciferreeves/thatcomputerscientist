@@ -34,13 +34,11 @@
         </form>
     </div>
 </div>
-{% include 'partials/_anime_list.html' with anime_list=trending_anime title="Trending Anime" %}
-{% include 'partials/_anime_list.html' with anime_list=popular_anime title="Popular Anime" %}
-{% include 'partials/_anime_list.html' with anime_list=top_anime title="Top Rated Anime" %}
-{% include 'partials/_anime_list.html' with anime_list=top_airing_anime title="Top Airing Anime" %}
-
+{% include 'partials/_anime_list.html' with anime_list=top_airing_anime title="Currently Top Airing" %}
+{% include 'partials/_anime_list.html' with anime_list=popular_anime title="Most Popular Among Folks" %}
+{% include 'partials/_anime_list.html' with anime_list=top_anime title="Highly Rated Stuff" %}
+{% include 'partials/_anime_list.html' with anime_list=trending_anime title="The Trending Section" %}
+{% include "partials/_anime_footer.html" %}
 {% endblock content %}
 
-{% block scripts %}
-<script src="{% static 'js/shared/animeList.js' %}"></script>
-{% endblock scripts %}
+

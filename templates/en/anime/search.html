@@ -45,7 +45,7 @@
     </div>
 </div>
 
-{% include 'partials/_anime_list.html' with anime_list=search_results %}
+{% include 'partials/_anime_list.html' with anime_list=search_results.results %}
 
 {% if total_pages > 1 %}
 <div class="pagination">
@@ -71,8 +71,5 @@
     {% endif %}
 </div>
 {% endif %}
-
+{% include "partials/_anime_footer.html" %}
 {% endblock content %}
-{% block scripts %}
-<script src="{% static 'js/shared/animeList.js' %}"></script>
-{% endblock scripts %}

@@ -214,7 +214,7 @@
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: end;
 }
 
 .overlay-bottom-radial {
@@ -223,7 +223,7 @@
     left: 0;
     width: 780px;
     height: 195px;
-    background: radial-gradient(ellipse 600px 195px at center bottom, rgba(13, 20, 28, 0.95) 0%, rgba(19, 26, 44, 0.8) 50%, transparent 100%);
+    background: radial-gradient(ellipse 600px 195px at center bottom, rgb(0 0 0 / 100%) 0%, rgb(0 0 0 / 70%) 50%, transparent 100%);
     z-index: 1;
 }
 
@@ -375,4 +375,20 @@ input[type="radio"][name="order"]+label:hover {
 .page-ellipsis {
     color: #7ee8c7;
     padding: 6px 12px;
+}
+
+.section-title-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.anime-footer {
+    margin: 12px 0;
+    padding: 8px 0;
+    border-top: 1px solid rgba(141, 141, 255, 0.8);
+}
+
+.anime-footer ul {
+    padding: 0 0 0 24px;
 }

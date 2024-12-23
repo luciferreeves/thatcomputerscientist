@@ -19,7 +19,6 @@
   box-sizing: border-box;
   outline: none;
   border: none;
-  color: #fff;
 }
 
 /* HTML and Body Base */
@@ -193,7 +192,7 @@ img {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 300;
+  z-index: 9;
   opacity: 0.18;
 }
 

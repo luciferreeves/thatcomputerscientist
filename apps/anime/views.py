@@ -40,6 +40,7 @@ sortings = [
 
 ANIME_PROVIDER_MAP = {}
 CONSUMET_BASE_URL = os.getenv("CONSUMET_URL")
+ZORO_URL = os.getenv("ZORO_URL")
 
 
 def get_anime(anime_id, dub=False):
@@ -61,7 +62,42 @@ def get_anime(anime_id, dub=False):
         return get_anime(anime_id, dub)
 
     ANIME_PROVIDER_MAP[anime_id] = provider
+
+    # filter out relations/recommendations which are not anime: TV, OVA, MOVIE, SPECIAL, ONA
+    data["relations"] = [
+        relation
+        for relation in data.get("relations", [])
+        if relation.get("type") in ["TV", "OVA", "MOVIE", "SPECIAL", "ONA"]
+    ]
+
+    data["recommendations"] = [
+        recommendation
+        for recommendation in data.get("recommendations", [])
+        if recommendation.get("type") in ["TV", "OVA", "MOVIE", "SPECIAL", "ONA"]
+    ]
+
     return data
+
+
+def get_anime_streaming_data(anime_id, current_episode, dub=False):
+    provider = ANIME_PROVIDER_MAP.get(anime_id, "zoro")
+    current_episode_id = current_episode.get("id")
+    if provider == "zoro":
+        episode_id = (
+            current_episode_id.replace("$episode$", "?ep=")
+            .replace("$dub", "")
+            .replace("$sub", "")
+        )
+        params = {"animeEpisodeId": episode_id, "category": "dub" if dub else "sub"}
+        response = requests.get(
+            f"{ZORO_URL}/api/v2/hianime/episode/sources", params=params
+        )
+        return response.json()
+    else:
+        response = requests.get(
+            f"{CONSUMET_BASE_URL}/meta/anilist/watch/{current_episode_id}",
+        )
+        return response.json()
 
 
 def sort_mapper(sort_by, order):
@@ -104,6 +140,7 @@ def anime_results(
     response = requests.get(
         f"{CONSUMET_BASE_URL}/meta/anilist/advanced-search", params=params
     )
+
     return response.json()
 
 
@@ -127,7 +164,7 @@ def cache_anime_page(timeout=60 * 15):
     return decorator
 
 
-@cache_page(60 * 15)
+# @cache_page(60 * 15)
 def home(request):
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
     request.meta.update({"title": "Anime: Home"})
@@ -135,12 +172,14 @@ def home(request):
     context = {
         "genres": genres,
         "sortings": sortings,
-        "trending_anime": anime_results(sort="trending", per_page=8),
-        "popular_anime": anime_results(sort="popularity", per_page=8),
-        "top_anime": anime_results(sort="score", per_page=8),
-        "top_airing_anime": anime_results(
-            sort="popularity", status="releasing", per_page=8
+        "trending_anime": anime_results(sort="trending", per_page=8).get("results", []),
+        "popular_anime": anime_results(sort="popularity", per_page=8).get(
+            "results", []
         ),
+        "top_anime": anime_results(sort="score", per_page=8).get("results", []),
+        "top_airing_anime": anime_results(
+            sort="popularity", status="releasing", per_page=16
+        ).get("results", []),
     }
     return render(request, f"{LANGUAGE_CODE}/anime/home.html", context)
 
@@ -172,12 +211,17 @@ def search(request):
     return render(request, f"{LANGUAGE_CODE}/anime/search.html", context)
 
 
-@cache_anime_page(timeout=60 * 15)
+# @cache_anime_page(timeout=60 * 15)
 def anime(request, anime_id, e=None):
-    anime_data = get_anime(anime_id, request.COOKIES.get("anime_dub", False))
+    dub = request.COOKIES.get("anime_dub", False)
+    anime_data = get_anime(anime_id, dub)
     episode_numbers = [
         int(episode.get("number")) for episode in anime_data.get("episodes", [])
     ]
+    try:
+        e = int(e)
+    except (TypeError, ValueError):
+        e = None
 
     if episode_numbers:
         if not e:
@@ -187,13 +231,37 @@ def anime(request, anime_id, e=None):
                     kwargs={"anime_id": anime_id, "e": episode_numbers[0]},
                 )
             )
-        if int(e) not in episode_numbers:
+        max_episode = max(episode_numbers)
+        if e > max_episode:
+            return redirect(
+                reverse(
+                    "anime:anime",
+                    kwargs={"anime_id": anime_id, "e": max_episode},
+                )
+            )
+        if e not in episode_numbers:
             return redirect(
                 reverse("anime:anime", kwargs={"anime_id": anime_id, "e": 1})
             )
 
+    anime_data["current_episode"] = anime_data.get("episodes", [])[e - 1] if e else None
+    anime_data["totalEpisodes"] = (
+        len(episode_numbers)
+        if not anime_data["totalEpisodes"]
+        else anime_data["totalEpisodes"]
+    )
+    streaming_data = get_anime_streaming_data(
+        anime_id, anime_data["current_episode"], dub
+    )
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
     request.meta.update(
         {"title": f"Anime: {anime_data.get('title', {}).get('romaji')}"}
     )
-    return render(request, f"{LANGUAGE_CODE}/anime/anime.html", {"anime": anime_data})
+    streaming_data["data"]["sources"] = streaming_data["data"]["sources"][0]
+
+    print(streaming_data)
+    return render(
+        request,
+        f"{LANGUAGE_CODE}/anime/anime.html",
+        {"anime": anime_data, "streaming_data": streaming_data},
+    )

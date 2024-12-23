@@ -1,12 +1,292 @@
 {% extends 'shared/base.html' %}
 {% load static %}
+
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/anime/anime.css' %}">
+<link rel="stylesheet" href="{% static 'css/anime/single_anime.css' %}">
+<link rel="stylesheet" href="{% static 'css/anime/video_player.css' %}">
 {% endblock head %}
+
 {% block content %}
-{{ anime }}
+<div class="anime-single">
+    <div class="player-area">
+        <div class="video-container">
+            <div class="win98-player">
+                <div class="win98-title-bar">
+                    <div class="title-bar-text">{{ anime.title.english|default:anime.title.romaji }}</div>
+                </div>
+                <div class="win98-player-content">
+                    {% if user.is_authenticated %}
+                    <video id="video-player">
+                        <!-- captions added dynamically -->
+                    </video>
+                    <div id="custom-subtitles" class="custom-subtitles"></div>
+                    {% else %}
+                    <div id="video-player" class="unauth-video">
+                        <div class="unauth-warning">
+                            <div class="warning-icon">
+                                <svg viewBox="0 0 32 32">
+                                    <path d="M16,2 L2,28 L30,28 L16,2 Z M16,6 L27,26 L5,26 L16,6 Z" fill="#ffdd00"/>
+                                    <path d="M16,11 L16,20 M16,22 L16,24" stroke="#ffdd00" stroke-width="3" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="warning-message">
+                                <div class="warning-title">Authentication Required</div>
+                                <div class="warning-text">No undeserving lackeys allowed among these parts of the internet. Either register or login to access this content.</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                  <div class="episode-title">Episode {{ anime.current_episode.number }}. {{ anime.current_episode.title }}</div>
+                  <div class="win98-controls">
+                    <div class="seek-control">
+                      <span class="time-current">00:00</span>
+                      <div class="seek-slider-container">
+                        <input type="range" class="seek-slider" min="0" max="100" value="0">
+                        <div class="seek-track">
+                            <div class="seek-fill"></div>
+                            <div class="seek-buffer"></div>
+                        </div>
+                        <div class="seek-thumb"></div>
+                      </div>
+                      <span class="time-total">00:00</span>
+                    </div>
+                    <div class="controls-and-volume">
+                      <div class="control-buttons">
+                        <button class="win98-btn" id="playBtn">
+                          <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" />
+                          </svg>
+                          
+                        </button>
+                        <button class="win98-btn" id="pauseBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="win98-icon">
+                                <path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button class="win98-btn" id="stopBtn">
+                          <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.5 7.5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9Z" clip-rule="evenodd" />
+                          </svg>
+                        </button>
+                        <button class="win98-btn" id="seekBackBtn">
+                            <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
+                              </svg>
+                        </button>
+                        <button class="win98-btn" id="seekForwardBtn">
+                          <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256l-7.108-4.061C13.555 6.346 12 7.249 12 8.689v2.34L5.055 7.061Z" />
+                          </svg>                          
+                        </button>
+                        <button class="win98-btn" id="fullscreenBtn">
+                          <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                          </svg>
+                        </button>
+                        <div class="quality-control">
+                            <button class="win98-btn quality-btn">
+                                <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>                          
+                                <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                </svg>
+                                Auto
+                            </button>
+                            <div class="quality-menu">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        <div class="sub-dub-control">
+                          <button class="win98-btn sub-dub-btn">
+                            <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                            </svg>
+                            <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+                            </svg>                              
+                            {% if request.COOKIES.anime_dub == 'True' %}
+                                Dub
+                            {% else %}
+                                Sub
+                            {% endif %}
+                          </button>
+                          <div class="sub-dub-menu">
+                            <button onclick="javascript:document.cookie='anime_dub=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';location.reload();">Sub</button>
+                            <button onclick="javascript:document.cookie='anime_dub=True;path=/';location.reload();">Dub</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="volume-control">
+                        <button class="win98-btn" id="muteBtn">
+                          <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+                          </svg>                          
+                        </button>
+                        <div class="volume-slider-container">
+                            <input type="range" class="volume-slider" min="0" max="100" value="100">
+                            <div class="volume-track">
+                                <div class="volume-fill"></div>
+                            </div>
+                            <div class="volume-thumb"></div>
+                        </div>
+                        {% if streaming_data.data.tracks %}
+                        <div class="caption-control">
+                            <button class="win98-btn" id="ccBtn">
+                                <svg class="win98-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                </svg>
+                                English
+                            </button>
+                            <div class="caption-menu">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    <!-- Anime Details Section -->
+    <div class="anime-details">
+        <div class="details-grid">
+            <div class="info-section">
+                <img src="{{ anime.image }}" alt="{{ anime.title.english }}" class="anime-poster">
+                <div class="info-list">
+                    <div class="info-item">
+                        <span class="label">Status:</span>
+                        <span>{{ anime.status }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Type:</span>
+                        <span>{{ anime.type }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Episodes:</span>
+                        <span>{{ anime.totalEpisodes }}</span>
+                    </div>
+                    {% if anime.duration %}
+                    <div class="info-item">
+                        <span class="label">Duration:</span>
+                        <span>{{ anime.duration }} min</span>
+                    </div>
+                    {% endif %}
+                    {% if anime.rating %}
+                    <div class="info-item">
+                        <span class="label">Rating:</span>
+                        <span>★ {{ anime.rating }}%</span>
+                    </div>
+                    {% endif %}
+                    <div class="info-item">
+                        <span class="label">Studios:</span>
+                        <span>{{ anime.studios|join:", " }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="episodes-list">
+                    <div class="episodes-header">
+                        <h3>Episodes</h3>
+                        <span>{{ anime.totalEpisodes }} Total</span>
+                    </div>
+                    <div class="episodes-scroll" id="episodeList">
+                        {% for episode in anime.episodes %}
+                        <a href="{% url "anime:anime" anime.id episode.number %}" class="episode-item {% if episode.number == anime.current_episode.number %}active{% endif %}" {% if episode.number == anime.current_episode.number %}id="currentEpisode"{% endif %}>
+                            <div class="episode-preview">
+                                <img src="{{ episode.image }}" alt="Episode {{ episode.number }}">
+                            </div>
+                            <div class="episode-text">
+                                <span class="ep-number">{{ episode.number }}.</span>
+                                <span class="ep-title">{{ episode.title }}</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="synopsis">
+                    <h1 class="anime-title" style="color: {{ anime.color|default:'#8d8dff' }}">
+                        {{ anime.title.english|default:anime.title.romaji }}
+                    </h1>
+                    <p>{{ anime.description|safe }}</p>
+                    <div class="genres-list">
+                        <span class="genres-label">Genres:</span>
+                        {% for genre in anime.genres %}
+                        <a href="{% url 'anime:search' %}?genre={{ genre }}" class="genre-link">{{ genre }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Characters Section -->
+        <div class="characters-section">
+            <h3>Characters</h3>
+            <div class="characters-grid">
+                {% for character in anime.characters %}
+                <div class="character-card">
+                    <div class="character-image">
+                        <img src="{{ character.image }}" alt="{{ character.name.full }}">
+                    </div>
+                    <div class="character-info">
+                        <span class="character-name">{{ character.name.full }}</span>
+                        <span class="character-role">{{ character.role }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="recommendations-section">
+            {% include 'partials/_anime_list.html' with anime_list=anime.relations title="Related Anime" %}
+        </div>
+        <div class="recommendations-section">
+            {% include 'partials/_anime_list.html' with anime_list=anime.recommendations title="Recommended Anime" %}
+        </div>
+    </div>
+</div>
 {% endblock content %}
-
 {% block scripts %}
+{% if user.is_authenticated %}
+<script src="{% static 'js/libs/hls.js' %}"></script>
+<script src="{% static 'js/libs/videoPlayer.js' %}"></script>
+{{ streaming_data.data.tracks|json_script:"tracks-data" }}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const videoStreamingURL = `/services/stream/anime/?url=${encodeURIComponent('{{ streaming_data.data.sources.url }}')}`;
+        const tracks = JSON.parse(document.getElementById('tracks-data').textContent)
+            .filter(track => track.kind === 'captions')
+            .map(track => ({
+                ...track,
+                file: `/services/stream/anime/?url=${encodeURIComponent(track.file)}`
+            }));
+        
+        // hide captions menu if no captions available
+        if (tracks.length === 0) {
+            document.querySelector('.caption-control').style.display = 'none';
+        }
+        
+
+        const player = new VideoPlayer({
+            source: {
+                url: videoStreamingURL,
+                type: 'hls',
+                tracks: tracks
+            }
+        });
+        
+        const currentEpisode = document.getElementById('currentEpisode');
+        if (currentEpisode) {
+            const episodeList = document.getElementById('episodeList');
+            episodeList.scrollTop = currentEpisode.offsetTop - episodeList.offsetTop - 10;
+        }
+    });
+</script>
+{% endif %}
 {% endblock scripts %}

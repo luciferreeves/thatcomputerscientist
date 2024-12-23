@@ -1,10 +1,20 @@
 {% load color_to_rgb %}
+{% load static %}
 <div class="anime-list-section">
     {% if title %}
-    <h2 class="section-title">{{ title }}</h2>
+    <div class="section-title-area">
+        <h2 class="section-title">{{ title }}</h2>
+        {% if title == "Most Popular Among Folks" %}
+        <a href="{% url 'anime:search' %}?sort=popularity" class="section-view-all">All Popular Titles →</a>
+        {% elif title == "Highly Rated Stuff" %}
+        <a href="{% url 'anime:search' %}?sort=score" class="section-view-all">All Top Rated Titles →</a>
+        {% elif title == "The Trending Section" %}
+        <a href="{% url 'anime:search' %}?sort=trending" class="section-view-all">All Trending Titles →</a>
+        {% endif %}
+    </div>
     {% endif %}
     <div class="anime-grid">
-        {% for anime in anime_list.results %}
+        {% for anime in anime_list %}
         <a href="{% url "anime:anime" anime.id %}" class="anime-card" style="--anime-color: {{ anime.color|default:'#8d8dff' }};--anime-color-rgb: {{ anime.color|default:'141, 141, 255'|color_to_rgb }};">
             <div class="anime-poster">
                 <img src="{{ anime.image }}" alt="{{ anime.title.english }}">
@@ -60,3 +70,6 @@
         {% endfor %}
     </div>
 </div>
+{% block scripts %}
+<script src="{% static 'js/shared/animeList.js' %}"></script>
+{% endblock scripts %}

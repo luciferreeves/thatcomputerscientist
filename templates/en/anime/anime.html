@@ -17,9 +17,10 @@
                 </div>
                 <div class="win98-player-content">
                     {% if user.is_authenticated %}
-                    <video id="video-player">
-                        <!-- captions added dynamically -->
-                    </video>
+                    <div class="retro-buffer">
+                        <img src="{% static 'images/core/gifs/buffering.gif' %}" alt="Loading...">
+                    </div>
+                    <video id="video-player"></video>
                     <div id="custom-subtitles" class="custom-subtitles"></div>
                     {% else %}
                     <div id="video-player" class="unauth-video">
@@ -260,26 +261,40 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const videoStreamingURL = `/services/stream/anime/?url=${encodeURIComponent('{{ streaming_data.data.sources.url }}')}`;
-        const tracks = JSON.parse(document.getElementById('tracks-data').textContent)
-            .filter(track => track.kind === 'captions')
-            .map(track => ({
-                ...track,
-                file: `/services/stream/anime/?url=${encodeURIComponent(track.file)}`
-            }));
+        var tracks = [];
+        try {
+            tracks = JSON.parse(document.getElementById('tracks-data').textContent)
+                .filter(track => track.kind === 'captions')
+                .map(track => ({
+                    ...track,
+                    file: `/services/stream/anime/?url=${encodeURIComponent(track.file)}`
+                }));
+        } catch (error) {}
         
-        // hide captions menu if no captions available
         if (tracks.length === 0) {
-            document.querySelector('.caption-control').style.display = 'none';
+            try {
+                document.querySelector('.caption-control').style.display = 'none';
+            } catch (error) {}
         }
-        
 
-        const player = new VideoPlayer({
-            source: {
-                url: videoStreamingURL,
-                type: 'hls',
-                tracks: tracks
-            }
-        });
+        let player;
+        if (videoStreamingURL !== '/services/stream/anime/?url=') {
+            player = new VideoPlayer({
+                source: {
+                    url: videoStreamingURL,
+                    type: 'hls',
+                    tracks: tracks
+                }
+            });
+        } else {
+            player = new VideoPlayer({
+                source: {
+                    url: '',
+                    type: 'video',
+                    tracks: tracks
+                }
+            });
+        }
         
         const currentEpisode = document.getElementById('currentEpisode');
         if (currentEpisode) {

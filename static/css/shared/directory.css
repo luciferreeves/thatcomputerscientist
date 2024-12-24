@@ -1,0 +1,197 @@
+.directory-viewer {
+    position: relative;
+    user-select: none;
+    padding: 4px;
+    height: 100%;
+}
+
+.directory-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    padding: 4px;
+}
+
+.folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px;
+    cursor: default;
+    position: relative;
+}
+
+.folder-icon {
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+.folder-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.selection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+.folder-item.selected .selection-overlay {
+    background: rgba(0, 0, 255, 0.5);
+}
+
+.folder-name {
+    margin-top: 4px;
+    font-size: 11px;
+    text-align: center;
+    max-width: 76px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.folder-item.selected .folder-name {
+    color: #fff;
+    background: #000080;
+}
+
+/* Selection rectangle */
+.selection-rectangle {
+    position: absolute;
+    border: 1px dotted #000;
+    background: rgba(0, 0, 255, 0.1);
+    pointer-events: none;
+}
+
+/* Context Menu */
+.context-menu {
+    display: none;
+    position: absolute;
+    background: #C0C0C0;
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    padding: 2px;
+    font-size: 11px;
+    box-shadow: 1px 1px 0 0 #000;
+    min-width: 160px;
+    z-index: 1000;
+    color: #000;
+}
+
+.context-menu.show {
+    display: block;
+}
+
+.menu-item {
+    padding: 3px 20px;
+    cursor: default;
+}
+
+.menu-item:hover {
+    background: #000080;
+    color: #FFF;
+}
+
+.menu-separator {
+    height: 1px;
+    background: #808080;
+    margin: 3px 2px;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.windows98-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 300px;
+}
+
+.windows98-modal .modal-titlebar {
+    background-color: navy;
+    color: white;
+    padding: 2px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.windows98-modal .modal-title {
+    font-weight: bold;
+}
+
+.windows98-modal .modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.windows98-modal .modal-content {
+    padding: 20px;
+    background-color: #c0c0c0;
+}
+
+.windows98-modal .modal-buttons {
+    background-color: #c0c0c0;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #808080;
+}
+
+.windows98-modal button {
+    min-width: 75px;
+    padding: 4px 8px;
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+}
+
+.windows98-modal button:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.windows98-modal .file-upload-form,
+.windows98-modal .folder-creation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.windows98-modal .upload-progress {
+    background-color: white;
+    border: 1px solid #808080;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.windows98-modal .progress-bar {
+    background-color: navy;
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.windows98-modal .progress-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: navy;
+}

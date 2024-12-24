@@ -39,6 +39,17 @@
     box-shadow: none;
 }
 
+.win98-player:fullscreen .retro-buffer {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.win98-player:fullscreen .retro-buffer img {
+    height: 64px;
+    width: 64px;
+}
+
 .win98-player:fullscreen .win98-title-bar,
 .win98-player:fullscreen .episode-title {
     display: none;
@@ -287,6 +298,8 @@ input[type="range"].volume-slider {
     min-width: 100px;
     margin-bottom: 4px;
     z-index: 10;
+    max-height: 180px;
+    overflow: scroll;
 }
 
 .quality-menu.show,
@@ -412,4 +425,23 @@ video::-webkit-media-text-track-container {
 
 video::-webkit-media-text-track {
     display: none !important;
+}
+
+/* Retro Buffer Styles */
+.retro-buffer {
+    position: absolute;
+    top: 246px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: none;
+}
+
+.retro-buffer img {
+    height: 32px;
+    width: 32px;
+}
+
+.video-loading .retro-buffer {
+    display: block;
 }

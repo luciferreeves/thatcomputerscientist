@@ -1,4 +1,5 @@
 django
+django-redis
 python-dotenv
 daphne
 channels
@@ -6,3 +7,4 @@ dnspython
 requests
 bs4
 pillow
+minio

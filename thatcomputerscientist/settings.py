@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from internal.cache_utils import clear_cache
 
 from dotenv import load_dotenv
 
@@ -40,6 +41,9 @@ LOGIN_URL = "/"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("AUTHORIZATION_STRING")
+MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT")
+MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY")
+MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("ENVIRONMENT") == "development" else False
@@ -210,21 +214,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#             "PASSWORD": os.getenv("REDIS_PASSWORD"),
-#         },
-#     }
-# }
-# from django.core.cache import cache
+# Redis Cache Configuration
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
-# clear the cache
-# for key in cache.keys("presence_*"):
-#     cache.delete(key)
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "SOCKET_CONNECT_TIMEOUT": 5,
+            "SOCKET_TIMEOUT": 5,
+            "RETRY_ON_TIMEOUT": True,
+            "MAX_CONNECTIONS": 1000,
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+            "PICKLE_VERSION": -1,
+            "IGNORE_EXCEPTIONS": True,
+        },
+        "TIMEOUT": 60 * 15,
+    }
+}
+
+clear_cache(pattern="*presence*")
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 

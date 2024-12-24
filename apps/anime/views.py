@@ -2,10 +2,8 @@ import os
 from django.urls import reverse
 import requests
 from django.shortcuts import redirect, render
-from django.views.decorators.cache import cache_page
-from functools import wraps
-from django.core.cache import cache
 from thatcomputerscientist.utils import i18npatterns
+from internal.cache_utils import cache_data
 
 genres = [
     "Action",
@@ -43,6 +41,24 @@ CONSUMET_BASE_URL = os.getenv("CONSUMET_URL")
 ZORO_URL = os.getenv("ZORO_URL")
 
 
+def sort_mapper(sort_by, order):
+    sort_mappings = {
+        "popularity": "POPULARITY",
+        "trending": "TRENDING",
+        "start_date": "START_DATE",
+        "end_date": "END_DATE",
+        "score": "SCORE",
+        "favourites": "FAVOURITES",
+        "title": "TITLE_ROMAJI",
+    }
+
+    if sort_by not in sort_mappings or order not in ["asc", "desc"]:
+        return None
+
+    return f"{sort_mappings[sort_by]}{'_DESC' if order == 'desc' else ''}"
+
+
+@cache_data(timeout=60 * 60, prefix="anime_data")
 def get_anime(anime_id, dub=False):
     provider = ANIME_PROVIDER_MAP.get(anime_id, "zoro")
     params = {"dub": "true"} if dub else {}
@@ -79,6 +95,25 @@ def get_anime(anime_id, dub=False):
     return data
 
 
+def find_optimal_server(episode_id, dub):
+    params = {"animeEpisodeId": episode_id}
+    response = requests.get(f"{ZORO_URL}/api/v2/hianime/episode/servers", params=params)
+    response = response.json()
+    if "message" in response:
+        return None
+
+    response = response["data"]
+    if dub and "dub" in response and len(response["dub"]) > 0:
+        return response["dub"][0]["serverName"]
+    elif len(response["sub"]) > 0 and "sub" in response:
+        return response["sub"][0]["serverName"]
+    elif len(response["raw"]) > 0:
+        return response["raw"][0]["serverName"]
+    else:
+        return None
+
+
+@cache_data(timeout=60 * 60 * 24 * 7, prefix="streaming_data")
 def get_anime_streaming_data(anime_id, current_episode, dub=False):
     provider = ANIME_PROVIDER_MAP.get(anime_id, "zoro")
     current_episode_id = current_episode.get("id")
@@ -92,34 +127,52 @@ def get_anime_streaming_data(anime_id, current_episode, dub=False):
         response = requests.get(
             f"{ZORO_URL}/api/v2/hianime/episode/sources", params=params
         )
-        return response.json()
+        if response.status_code == 200:
+            return response.json()
+        else:
+            server = find_optimal_server(episode_id, dub)
+            params["server"] = server
+            response = requests.get(
+                f"{ZORO_URL}/api/v2/hianime/episode/sources", params=params
+            )
+            if response.status_code == 200:
+                return response.json()
+            else:
+                ANIME_PROVIDER_MAP[anime_id] = "gogoanime"
+                return get_anime_streaming_data(anime_id, current_episode, dub)
     else:
         response = requests.get(
             f"{CONSUMET_BASE_URL}/meta/anilist/watch/{current_episode_id}",
         )
-        return response.json()
+
+        data = {
+            "tracks": [],
+            "intro": {"start": 0, "end": 0},
+            "outro": {"start": 0, "end": 0},
+            "sources": [],
+            "anilistID": 0,
+            "malID": 0,
+        }
+
+        if not "message" in response.json():
+            default_source = next(
+                (s for s in response.json()["sources"] if s["quality"] == "default"),
+                None,
+            )
+            data["sources"].append({"url": default_source["url"], "type": "hls"})
+        else:
+            data["sources"].append(
+                {
+                    "url": "",
+                    "type": "",
+                }
+            )
+
+        return {"data": data}
 
 
-def sort_mapper(sort_by, order):
-    sort_mappings = {
-        "popularity": "POPULARITY",
-        "trending": "TRENDING",
-        "start_date": "START_DATE",
-        "end_date": "END_DATE",
-        "score": "SCORE",
-        "favourites": "FAVOURITES",
-        "title": "TITLE_ROMAJI",
-    }
-
-    if sort_by not in sort_mappings or order not in ["asc", "desc"]:
-        return None
-
-    return f"{sort_mappings[sort_by]}{'_DESC' if order == 'desc' else ''}"
-
-
-def anime_results(
-    sort="trending", order="desc", genre="", query="", page=1, per_page=12, status=""
-):
+@cache_data(timeout=60 * 60, prefix="anime_results")
+def anime_results(**kwargs):
     supported_status = [
         "releasing",
         "not_yet_released",
@@ -127,6 +180,15 @@ def anime_results(
         "finished",
         "hiatus",
     ]
+
+    sort = kwargs.get("sort", "trending")
+    order = kwargs.get("order", "desc")
+    genre = kwargs.get("genre", "")
+    query = kwargs.get("query", "")
+    page = kwargs.get("page", 1)
+    per_page = kwargs.get("per_page", 12)
+    status = kwargs.get("status", "")
+
     params = {
         "page": page,
         "perPage": per_page,
@@ -144,27 +206,6 @@ def anime_results(
     return response.json()
 
 
-def cache_anime_page(timeout=60 * 15):
-    def decorator(view_func):
-        @wraps(view_func)
-        def _wrapped_view(request, anime_id, e=None, *args, **kwargs):
-            cache_key = f"anime_page:{anime_id}:ep{e}:dub{request.COOKIES.get('anime_dub', False)}"
-            cached_response = cache.get(cache_key)
-
-            if cached_response:
-                return cached_response
-
-            response = view_func(request, anime_id, e, *args, **kwargs)
-            if response.status_code == 200:
-                cache.set(cache_key, response, timeout)
-            return response
-
-        return _wrapped_view
-
-    return decorator
-
-
-# @cache_page(60 * 15)
 def home(request):
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
     request.meta.update({"title": "Anime: Home"})
@@ -211,7 +252,6 @@ def search(request):
     return render(request, f"{LANGUAGE_CODE}/anime/search.html", context)
 
 
-# @cache_anime_page(timeout=60 * 15)
 def anime(request, anime_id, e=None):
     dub = request.COOKIES.get("anime_dub", False)
     anime_data = get_anime(anime_id, dub)
@@ -243,25 +283,36 @@ def anime(request, anime_id, e=None):
             return redirect(
                 reverse("anime:anime", kwargs={"anime_id": anime_id, "e": 1})
             )
+        anime_data["current_episode"] = (
+            anime_data.get("episodes", [])[e - 1] if e else None
+        )
 
-    anime_data["current_episode"] = anime_data.get("episodes", [])[e - 1] if e else None
     anime_data["totalEpisodes"] = (
         len(episode_numbers)
         if not anime_data["totalEpisodes"]
         else anime_data["totalEpisodes"]
     )
-    streaming_data = get_anime_streaming_data(
-        anime_id, anime_data["current_episode"], dub
-    )
+    if "current_episode" in anime_data:
+        streaming_data = get_anime_streaming_data(
+            anime_id, anime_data["current_episode"], dub
+        )
+        print(streaming_data)
+        streaming_data["data"]["sources"] = streaming_data["data"]["sources"][0]
+    else:
+        streaming_data = {}
+
     LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
     request.meta.update(
         {"title": f"Anime: {anime_data.get('title', {}).get('romaji')}"}
     )
-    streaming_data["data"]["sources"] = streaming_data["data"]["sources"][0]
 
-    print(streaming_data)
+    context = {
+        "anime": anime_data,
+        "streaming_data": streaming_data,
+    }
+
     return render(
         request,
         f"{LANGUAGE_CODE}/anime/anime.html",
-        {"anime": anime_data, "streaming_data": streaming_data},
+        context,
     )

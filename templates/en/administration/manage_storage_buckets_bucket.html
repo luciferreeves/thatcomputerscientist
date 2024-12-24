@@ -1,0 +1,257 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/shared/directory.css' %}">
+{% endblock head %}
+{% block content %}
+<h2 style="margin: 8px 0;">Viewing Bucket: {{ bucket_name }}/{{ object_path }}</h2>
+<hr>
+<div class="bucket-navigation">
+    <button class="bucket-navigation-button" onclick="showCreateFolderForm()">Create Folder</button>
+    <button class="bucket-navigation-button" onclick="showUploadFileForm()">Upload File</button>
+</div>
+<div class="directory-viewer">
+    <div class="directory-content">
+        {% if up_url %}
+        <div class="folder-item" data-path="{{ up_url }}">
+        {% else %}
+        <div class="folder-item" data-path="{% url "administration:manage_storage_buckets" %}">
+        {% endif %}
+            <div class="folder-icon">
+                <img src="{% static 'images/core/icons/folder.png' %}" alt="Folder">
+                <div class="selection-overlay"></div>
+            </div>
+            <div class="folder-name">..</div>
+        </div>
+        {% for object in objects %}
+        {% if object.type == "file" and object.file_type != object.name %}
+        <div class="folder-item" data-path="https://cdn.rize.moe/{{ bucket_name }}/{{ object.path }}">
+        {% else %}
+        <div class="folder-item" data-path="{% url "administration:view_object_path" bucket_name=bucket_name object_path=object.path %}">
+        {% endif %}
+            <div class="folder-icon">
+                {% if object.type == "file" and object.file_type != object.name %}
+                {% if object.file_type == "mp3" %}
+                <img src="{% static 'images/core/icons/music.png' %}" alt="Music">
+                {% elif object.file_type == "jpg" or object.file_type == "png" %}
+                <img src="https://cdn.rize.moe/{{ bucket_name }}/{{ object.path }}" alt="Image" style="width: 64px; height: auto;">
+                {% else %}
+                <img src="{% static 'images/core/icons/file.png' %}" alt="File">
+                {% endif %}
+                {% else %}
+                <img src="{% static 'images/core/icons/folder.png' %}" alt="Folder">
+                {% endif %}
+                <div class="selection-overlay"></div>
+            </div>
+            <div class="folder-name">{{ object.name }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="{% static 'js/shared/directory.js' %}"></script>
+<script>
+    // Windows 98 style modals for file upload and folder creation
+    function createWindows98Modal(title, content, buttons) {
+        // Create modal container
+        const modal = document.createElement('div');
+        modal.className = 'windows98-modal';
+        modal.innerHTML = `
+            <div class="modal-titlebar">
+                <span class="modal-title">${title}</span>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-content">
+                ${content}
+            </div>
+            <div class="modal-buttons">
+                ${buttons.map(btn => `<button class="${btn.class}">${btn.text}</button>`).join('')}
+            </div>
+        `;
+
+        // Close button functionality
+        const closeBtn = modal.querySelector('.modal-close');
+        closeBtn.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+
+        // Add to body
+        document.body.appendChild(modal);
+
+        return modal;
+    }
+
+    function showCreateFolderForm() {
+        const content = `
+            <div class="folder-creation-form">
+                <label for="folder-name">Folder Name:</label>
+                <input type="text" id="folder-name" name="folder_path" required>
+            </div>
+        `;
+
+        const modal = createWindows98Modal('Create Folder', content, [
+            { 
+                text: 'OK', 
+                class: 'btn-ok' 
+            },
+            { 
+                text: 'Cancel', 
+                class: 'btn-cancel' 
+            }
+        ]);
+
+        const okBtn = modal.querySelector('.btn-ok');
+        const cancelBtn = modal.querySelector('.btn-cancel');
+        const folderNameInput = modal.querySelector('#folder-name');
+
+        okBtn.addEventListener('click', () => {
+            const folderName = folderNameInput.value.trim();
+            
+            if (!folderName) {
+                alert('Please enter a folder name');
+                return;
+            }
+
+            // AJAX call to create folder
+            fetch('{% url "administration:manage_storage_bucket_create_folder" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: new URLSearchParams({
+                    'bucket': '{{ bucket_name }}',
+                    'folder_path': '{{ object_path }}' + folderName
+                })
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.status === 'success') {
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Full error:', error);
+                alert('An error occurred while creating the folder');
+            });
+
+            document.body.removeChild(modal);
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+    }
+
+    function showUploadFileForm() {
+        const content = `
+            <div class="file-upload-form">
+                <label for="file-upload">Select File:</label>
+                <input type="file" id="file-upload" name="file" required>
+                <div class="upload-progress" style="display:none;">
+                    <div class="progress-bar"></div>
+                    <span class="progress-text">0%</span>
+                </div>
+            </div>
+        `;
+
+        const modal = createWindows98Modal('Upload File', content, [
+            { 
+                text: 'OK', 
+                class: 'btn-ok' 
+            },
+            { 
+                text: 'Cancel', 
+                class: 'btn-cancel' 
+            }
+        ]);
+
+        const okBtn = modal.querySelector('.btn-ok');
+        const cancelBtn = modal.querySelector('.btn-cancel');
+        const fileInput = modal.querySelector('#file-upload');
+        const progressContainer = modal.querySelector('.upload-progress');
+        const progressBar = modal.querySelector('.progress-bar');
+        const progressText = modal.querySelector('.progress-text');
+
+        okBtn.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+
+            // Create FormData for file upload
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('bucket', '{{ bucket_name }}');
+            formData.append('current_path', '{{ object_path }}');
+
+            // Show progress bar
+            progressContainer.style.display = 'block';
+            okBtn.disabled = true;
+
+            // AJAX upload with progress
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '{% url "administration:manage_storage_bucket_upload_file" %}', true);
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = `${percentComplete}%`;
+                    progressText.textContent = `${percentComplete}%`;
+                }
+            };
+
+            xhr.onload = () => {
+                const response = JSON.parse(xhr.responseText);
+                
+                if (xhr.status === 200) {
+                    // Success - reload page or update directory view
+                    location.reload();
+                } else {
+                    alert(response.message || 'Upload failed');
+                    progressContainer.style.display = 'none';
+                    okBtn.disabled = false;
+                }
+            };
+
+            xhr.onerror = () => {
+                alert('Upload failed');
+                progressContainer.style.display = 'none';
+                okBtn.disabled = false;
+            };
+
+            xhr.send(formData);
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+    }
+
+    // Utility function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock scripts %}

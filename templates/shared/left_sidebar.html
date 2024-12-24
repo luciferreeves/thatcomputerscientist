@@ -194,6 +194,10 @@
           <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Users Icon" />
           <a href="#manage-users">{% if request.LANGUAGE_CODE == 'ja' %}ユーザー管理{% else %}Manage Users{% endif %}</a>
         </div>
+        <div class="navigation-item">
+          <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Storage Buckets Icon" />
+          <a href="{% url "administration:manage_storage_buckets" %}">{% if request.LANGUAGE_CODE == 'ja' %}ストレージバケット管理{% else %}Manage Storage Buckets{% endif %}</a>
+        </div>
       </div>
     </div>
   {% endif %}

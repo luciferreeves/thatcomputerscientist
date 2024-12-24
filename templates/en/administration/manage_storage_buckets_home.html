@@ -1,0 +1,26 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/shared/directory.css' %}">
+{% endblock head %}
+{% block content %}
+<h2 style="margin: 8px 0;">Manage Storage Buckets</h2>
+<hr>
+<div class="directory-viewer">
+    <div class="directory-content">
+        {% for bucket in buckets %}
+        <div class="folder-item" data-path="{% url "administration:view_single_bucket" bucket.name %}">
+            <div class="folder-icon">
+                <img src="{% static 'images/core/icons/folder.png' %}" alt="Folder">
+                <div class="selection-overlay"></div>
+            </div>
+            <div class="folder-name">{{ bucket.name }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="{% static 'js/shared/directory.js' %}"></script>
+{% endblock scripts %}

@@ -1,4 +1,4 @@
-{% extends 'shared/base.html' %}
+{% extends 'shared/core/base.html' %}
 {% load static %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/core/home.css' %}">
@@ -48,7 +48,7 @@
 <div class="pamphlet pamphlet-banner"></div>
 <h1 class="section-title">最近の考察</h1>
 <div class="recent-weblogs">
-  {% include 'partials/weblog_list.html' with posts=recent_weblogs %}
+  {% include 'partials/_weblog_list.html' with posts=recent_weblogs %}
 </div>
 <h1 class="section-title">最近のアニメ活動</h1>
 <div class="recent-anime">

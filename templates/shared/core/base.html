@@ -30,10 +30,10 @@
     </video>
     <div id="video-overlay"></div>
     <div id="body-wrapper">
-      {% include 'shared/header.html' %}
+      {% include 'partials/_header.html' %}
       <div id="content-wrapper">
         <div id="left-sidebar" {% if user.is_authenticated %}style="border-top-left-radius: 0px;"{% endif %}>
-          {% include 'shared/left_sidebar.html' %}
+          {% include 'partials/_left_sidebar.html' %}
         </div>
         <div id="main-content">
           {% block content %}
@@ -41,11 +41,11 @@
           {% endblock %}
         </div>
         <div id="right-sidebar">
-          {% include 'shared/right_sidebar.html' %}
+          {% include 'partials/_right_sidebar.html' %}
         </div>
       </div>
       <div id="footer">
-        {% include 'shared/footer.html' %}
+        {% include 'partials/_footer.html' %}
       </div>
     </div>
     <div id="scanlines"></div>

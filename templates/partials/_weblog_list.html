@@ -9,7 +9,7 @@
             </div>
             <div class="post-content">
                 <h2>
-                    <a href="#">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}</a>
+                    <a href="{% url "weblog:single_post" post.slug %}">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}</a>
                 </h2>
                 <div class="author-info">
                     {% with post.author.userprofile_set.first as authorprofile %}
@@ -26,7 +26,7 @@
         </div>
         <div class="post-actions">
             <div class="post-links">
-                <a href="#">{% if request.LANGUAGE_CODE == 'ja' %}続きを読む{% else %}Continue Reading{% endif %}</a> | 
+                <a href="{% url "weblog:single_post" post.slug %}">{% if request.LANGUAGE_CODE == 'ja' %}続きを読む{% else %}Continue Reading{% endif %}</a> | 
                 <a href="##comments">{{ post.num_comments }} 
                 {% if request.LANGUAGE_CODE == 'ja' %}
                     コメント

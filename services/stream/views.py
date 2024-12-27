@@ -69,6 +69,9 @@ def stream_song(request, song_id: int) -> HttpResponse:
 
 
 def anime_stream(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Access not allowed")
+
     if not request.COOKIES.get("csrftoken"):
         return HttpResponseForbidden("Invalid request")
 

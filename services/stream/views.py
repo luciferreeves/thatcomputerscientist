@@ -69,20 +69,20 @@ def stream_song(request, song_id: int) -> HttpResponse:
 
 
 def anime_stream(request):
-    if not request.COOKIES.get("csrftoken"):
-        return HttpResponseForbidden("Invalid request")
-
-    referrer = request.META.get("HTTP_REFERER")
-    if not referrer:
-        return HttpResponseForbidden("Direct access not allowed")
-
-    parsed_uri = urlparse(referrer)
-    referrer_host = parsed_uri.netloc.split(":")[0]
-
-    if referrer_host not in settings.ALLOWED_HOSTS:
-        return HttpResponseForbidden("Access not allowed")
-
     url = request.GET.get("url")
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
+    if not str(url).endswith(".vtt"):
+        referrer = request.META.get("HTTP_REFERER")
+        if not referrer:
+            return HttpResponseForbidden()
+
+        parsed_uri = urlparse(referrer)
+        referrer_host = parsed_uri.netloc.split(":")[0]
+
+        if referrer_host not in settings.ALLOWED_HOSTS:
+            return HttpResponseForbidden()
 
     if not url:
         return HttpResponse("No URL provided", status=400)

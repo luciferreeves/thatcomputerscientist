@@ -69,9 +69,10 @@ def stream_song(request, song_id: int) -> HttpResponse:
 
 
 def anime_stream(request):
-    url = request.GET.get("url")
     if not request.user.is_authenticated:
-        return HttpResponseForbidden()
+        return HttpResponseForbidden("Access not allowed")
+
+    url = request.GET.get("url")
 
     if not str(url).endswith(".vtt"):
         referrer = request.META.get("HTTP_REFERER")

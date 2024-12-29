@@ -222,7 +222,7 @@ def home(request):
             sort="popularity", status="releasing", per_page=16
         ).get("results", []),
     }
-    return render(request, f"{LANGUAGE_CODE}/anime/home.html", context)
+    return render(request, f"shared/anime/home.html", context)
 
 
 def search(request):
@@ -249,7 +249,7 @@ def search(request):
         "total_pages": search_results.get("totalPages", 1),
         "total_results": search_results.get("totalResults", 0),
     }
-    return render(request, f"{LANGUAGE_CODE}/anime/search.html", context)
+    return render(request, f"shared/anime/search.html", context)
 
 
 def anime(request, anime_id, e=None):
@@ -313,6 +313,6 @@ def anime(request, anime_id, e=None):
 
     return render(
         request,
-        f"{LANGUAGE_CODE}/anime/anime.html",
+        f"shared/anime/anime.html",
         context,
     )

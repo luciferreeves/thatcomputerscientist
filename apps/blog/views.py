@@ -1,3 +1,16 @@
+from django.http import HttpResponseNotFound
+from django.shortcuts import render
+from apps.blog.models import Post
+
+
+def single_post(request, slug):
+    try:
+        post = Post.objects.get(slug=slug)
+        return render(request, "shared/blog/single_weblog.html", {"post": post})
+    except Post.DoesNotExist:
+        return HttpResponseNotFound()
+
+
 # import hashlib
 # import os
 # import random

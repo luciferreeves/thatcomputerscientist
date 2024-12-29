@@ -5,6 +5,7 @@ from .feed import RSSFeed
 
 app_name = "weblog"
 urlpatterns = [
+    path("<str:slug>/", views.single_post, name="single_post"),
     # path("", views.home, name="home"),
     # path("account", views.account, name="account"),
     # path("register", views.register, name="register"),

@@ -17,7 +17,7 @@
                     {% endwith %}
                     <a href="#"> {{ post.author.first_name }} {{ post.author.last_name }}</a>
                     <span>{% if request.LANGUAGE_CODE == 'ja' %}投稿カテゴリー：{% else %}posted in{% endif %}</span>
-                    <a href="#{{ post.category.slug }}">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.category.name_ja }}{% else %}{{ post.category }}{% endif %}</a>
+                    <a href="#{{ post.category.slug }}">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.category.name_ja }}{% else %}{{ post.category.name }}{% endif %}</a>
                     <span>{% if request.LANGUAGE_CODE == 'ja' %}投稿日：{% else %}on{% endif %}</span>
                     <span style="margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
                 </div>
@@ -27,11 +27,11 @@
         <div class="post-actions">
             <div class="post-links">
                 <a href="{% url "weblog:single_post" post.slug %}">{% if request.LANGUAGE_CODE == 'ja' %}続きを読む{% else %}Continue Reading{% endif %}</a> | 
-                <a href="##comments">{{ post.num_comments }} 
+                <a href="##comments">{{ post.comments.all|length }}
                 {% if request.LANGUAGE_CODE == 'ja' %}
                     コメント
                 {% else %}
-                    Comment{% if not post.num_comments == 1 %}s{% endif %}
+                    Comment{% if not post.comments.all|length == 1 %}s{% endif %}
                 {% endif %}</a>
             </div>
             <div class="post-tags">

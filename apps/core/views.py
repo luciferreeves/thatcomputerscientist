@@ -28,10 +28,9 @@ def my_journals(request):
     META = {
         "title": "My Journals",
     }
-    LANGUAGE_CODE = i18npatterns(request.LANGUAGE_CODE)
     request.meta.update(META)
     journals = Journal.objects.filter(owner=request.user).order_by("-created_at")
     context = {
         "journals": journals,
     }
-    return render(request, f"{LANGUAGE_CODE}/core/my/journals.html", context)
+    return render(request, f"shared/my/journals.html", context)

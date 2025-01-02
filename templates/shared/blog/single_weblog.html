@@ -1,1 +1,95 @@
 {% extends "shared/core/base.html" %}
+{% load static %}
+{% load tz %}
+{% block title %}
+<title>{% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}</title>
+{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/core/post_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog/weblog.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+{% endblock head %}
+{% block content %}
+<div class="weblog-container">
+    <div class="weblog-title-area">
+        <h1>
+            {% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}
+        </h1>
+        <div class="weblog-details">
+            <div class="author-info">
+                {% with post.author.userprofile_set.first as authorprofile %}
+                <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif" class="post-profile-image" alt="{{ post.author.first_name }}'s Avatar">
+                {% endwith %}
+                <a href="#"> {{ post.author.first_name }} {{ post.author.last_name }}</a>
+                <span>{% if request.LANGUAGE_CODE == 'ja' %}投稿カテゴリー：{% else %}posted in{% endif %}</span>
+                <a href="#{{ post.category.slug }}">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.category.name_ja }}{% else %}{{ post.category }}{% endif %}</a>
+                <span>{% if request.LANGUAGE_CODE == 'ja' %}投稿日：{% else %}on{% endif %}</span>
+                <span style="margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
+            </div>
+            <div class="post-info">
+                <span>{% if request.LANGUAGE_CODE == 'ja' %}アクセス数：{% else %}Views: {% endif %}{{ post.views }}</span>
+                <span>&emsp;|&emsp;</span>
+                <span>{% if request.LANGUAGE_CODE == 'ja' %}コメント数：{% else %}Comments: {% endif %}{{ post.comments.all|length }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="weblog-content">
+        {{ post.first_paragraph | safe }}
+    </div>
+    <div class="weblog-image">
+        <img src="{{ post.image_url }}" alt="{% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}">
+    </div>
+    <div class="weblog-content" id="weblog-body-content">
+        {{ post.body | safe }}
+    </div>
+    <div class="post-actions">
+        <div class="post-tags">
+        {% if request.LANGUAGE_CODE == 'ja' %}タグ: {% else %}Tagged with: {% endif %}
+        {% for tag in post.tags.all %}
+            <a class="post-tag" href="#{{ tag.slug }}">{% if request.LANGUAGE_CODE == 'ja' %}{{ tag.name_ja }}{% else %}{{ tag.name }}{% endif %}</a>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const content = document.getElementById('weblog-body-content');
+        const floatLeftImages = content.querySelectorAll('img:nth-of-type(odd)');
+    
+        floatLeftImages.forEach(img => {
+            let currentNode = img.nextElementSibling;
+            let charCount = 0;
+            
+            while (currentNode && charCount < 512) {
+                if (currentNode.tagName === 'UL') {
+                    const wrapper = document.createElement('div');
+                    wrapper.style.display = 'inline-block';
+                    wrapper.style.maxWidth = '418px';
+                    
+                    currentNode.parentNode.insertBefore(wrapper, currentNode);
+                    wrapper.appendChild(currentNode);
+                    break;
+                }
+                
+                charCount += (currentNode.textContent || '').length;
+                currentNode = currentNode.nextElementSibling;
+            }
+        });
+    });
+
+    function renderMath() {
+        renderMathInElement(document.querySelector('.weblog-content'), {
+            delimiters: [
+                {left: "$", right: "$", display: false},
+                {left: "$$", right: "$$", display: true}
+            ],
+            throwOnError: false,
+            output: 'html'
+        });
+    }
+</script>
+{% endblock scripts %}

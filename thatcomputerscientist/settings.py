@@ -130,8 +130,8 @@ MIDDLEWARE = [
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
     "middleware.i18nmiddleware.I18NMiddleware",
     "middleware.userprofilemiddleware.UserProfileMiddleware",
+    "middleware.ignismiddleware.IgnisRedirectMiddleware",
     # "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
-    # "middleware.ignismiddleware.IgnisMiddleware",
     # "middleware.uuidmiddleware.UserUUIDMiddleware",
     # "django_hosts.middleware.HostsResponseMiddleware",
 ]

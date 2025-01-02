@@ -1,11 +1,29 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from apps.blog.models import Post
+from apps.blog.models import Post, Comment
+from internal.weblog_utilities import highlight_code
+from bs4 import BeautifulSoup
 
 
 def single_post(request, slug):
     try:
         post = Post.objects.get(slug=slug)
+
+        lang_code = request.LANGUAGE_CODE
+        if lang_code == "ja":
+            post.body = highlight_code(post.body_ja)
+        else:
+            post.body = highlight_code(post.body)
+
+        soup = BeautifulSoup(post.body, "html.parser")
+        first_paragraph = soup.find("p")
+        if first_paragraph is not None:
+            first_paragraph = str(first_paragraph)
+            soup.find("p").decompose()
+
+        post.first_paragraph = first_paragraph
+        post.body = str(soup)
+
         return render(request, "shared/blog/single_weblog.html", {"post": post})
     except Post.DoesNotExist:
         return HttpResponseNotFound()

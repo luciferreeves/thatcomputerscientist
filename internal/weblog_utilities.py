@@ -1,35 +1,38 @@
-from apps.blog.models import Post, Comment
+from apps.blog.models import Post
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name, guess_lexer
 from pygments.formatters import HtmlFormatter
+from pygments.styles.vim import VimStyle
+from pygments.style import Style
+from pygments.token import Comment
 from bs4 import BeautifulSoup
 import html
 
 AUTHOR_USERNAME = "bobby"
 
 
-def add_excerpt(post, lang="en"):
-    if lang == "ja":
-        soup = BeautifulSoup(post.body_ja, "html.parser")
-    else:
-        soup = BeautifulSoup(post.body, "html.parser")
-    excerpt = ""
-    for paragraph in soup.find_all("p"):
-        paragraph = "<p>" + str(paragraph.text) + "</p>"
-        excerpt += str(paragraph)
+class ShifooHighlight(Style):
+    """Custom Vim style with modified comment colors"""
 
-        if len(excerpt) >= 1000:
-            break
-    return excerpt
+    # Inherit all styles from VimStyle
+    styles = dict(VimStyle.styles)
+
+    # Override comment styles using proper token types
+    styles.update(
+        {Comment: "#666666", Comment.Preproc: "#666666", Comment.Special: "#666666"}
+    )
 
 
-def recent_weblogs(lang="en", amount=3):
-    recent_posts = Post.objects.filter(
-        is_public=True, author__username=AUTHOR_USERNAME
-    ).order_by("-date")[:amount]
-    for post in recent_posts:
-        post.excerpt = add_excerpt(post, lang)
-    return recent_posts
+def recent_weblogs(lang="en", amount=10):
+    queryset = (
+        Post.objects.filter(is_public=True, author__username=AUTHOR_USERNAME)
+        .prefetch_related(
+            "tags", "translations", "category__translations", "tags__translations"
+        )
+        .order_by("-date")[:amount]
+    )
+
+    return Post.translate_queryset(queryset, lang)
 
 
 def highlight_code(html_content):
@@ -55,7 +58,7 @@ def highlight_code(html_content):
 
         formatter = HtmlFormatter(
             noclasses=True,
-            style="native",
+            style=ShifooHighlight,
             wrapcode=True,
             cssstyles="background: none; padding: 8px 0;",
         )

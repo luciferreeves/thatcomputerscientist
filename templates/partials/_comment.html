@@ -1,0 +1,59 @@
+<div class="comment-container" id="comment-{{ comment.id }}" style="margin-left: {% widthratio 24 1 comment.level %}px;">
+    <div class="comment-header">
+        {% if comment.user %}
+            <img src="{{ comment.user.avatar.url }}" alt="{{ comment.user.username }}">
+            <span class="font-medium">{{ comment.user.username }}</span>
+        {% else %}
+            <img src="{{ comment.anonymous_user.avatar }}" alt="{{ comment.anonymous_user.name }}">
+            <span class="font-medium">{{ comment.anonymous_user.name }}</span>
+        {% endif %}
+        <span>{{ comment.created_at|timesince }} ago</span>
+        {% if comment.edited %}
+            <span>(edited)</span>
+        {% endif %}
+    </div>
+
+    <div>
+        <p>{{ comment.body }}</p>
+    </div>
+
+    <div class="comment-actions">
+        <button 
+                onclick="showReplyForm('{{ comment.id }}')">
+            Reply
+        </button>
+        {% if user == comment.user or is_admin %}
+            <button
+                    onclick="showEditForm('{{ comment.id }}')">
+                Edit
+            </button>
+            <button
+                    onclick="deleteComment('{{ comment.id }}')">
+                Delete
+            </button>
+        {% endif %}
+    </div>
+
+    <!-- Reply form (hidden by default) -->
+    <div id="reply-form-{{ comment.id }}" style="display: none; margin-left: 24px;">
+        <form method="POST" action="#" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <textarea name="body" rows="3" 
+                      placeholder="Write a reply..."></textarea>
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="hideReplyForm('{{ comment.id }}')">
+                    Cancel
+                </button>
+                <button type="submit">
+                    Reply
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Nested replies -->
+    {% for reply in comment.replies.all %}
+        {% include 'partials/_comment.html' with comment=reply %}
+    {% endfor %}
+</div>

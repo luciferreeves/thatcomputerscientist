@@ -5,11 +5,11 @@
     <div class="post">
         <div class="post-body">
             <div class="post-image">
-                <img src="{{ post.image_url }}" alt="{% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}">
+                <img src="{{ post.image_url }}" alt="{{ post.title }}">
             </div>
             <div class="post-content">
                 <h2>
-                    <a href="{% url "weblog:single_post" post.slug %}">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.title_ja }}{% else %}{{ post.title }}{% endif %}</a>
+                    <a href="{% url "weblog:single_post" post.slug %}">{{ post.title }}</a>
                 </h2>
                 <div class="author-info">
                     {% with post.author.userprofile_set.first as authorprofile %}
@@ -17,17 +17,19 @@
                     {% endwith %}
                     <a href="#"> {{ post.author.first_name }} {{ post.author.last_name }}</a>
                     <span>{% if request.LANGUAGE_CODE == 'ja' %}投稿カテゴリー：{% else %}posted in{% endif %}</span>
-                    <a href="#{{ post.category.slug }}">{% if request.LANGUAGE_CODE == 'ja' %}{{ post.category.name_ja }}{% else %}{{ post.category.name }}{% endif %}</a>
+                    <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
                     <span>{% if request.LANGUAGE_CODE == 'ja' %}投稿日：{% else %}on{% endif %}</span>
                     <span style="margin-left: 4px;">{% localtime on %}{{ post.date | date:"M d, Y" }}{% endlocaltime %}</span>
                 </div>
-                {{ post.excerpt | safe }}
+                <div class="post-exerpt">
+                    {{ post.excerpt | safe }}
+                </div>
             </div>
         </div>
         <div class="post-actions">
             <div class="post-links">
                 <a href="{% url "weblog:single_post" post.slug %}">{% if request.LANGUAGE_CODE == 'ja' %}続きを読む{% else %}Continue Reading{% endif %}</a> | 
-                <a href="##comments">{{ post.comments.all|length }}
+                <a href="{% url "weblog:single_post" post.slug %}#comments">{{ post.comments.all|length }}
                 {% if request.LANGUAGE_CODE == 'ja' %}
                     コメント
                 {% else %}
@@ -36,7 +38,7 @@
             </div>
             <div class="post-tags">
             {% for tag in post.tags.all %}
-                <a class="post-tag" href="#{{ tag.slug }}">{% if request.LANGUAGE_CODE == 'ja' %}{{ tag.name_ja }}{% else %}{{ tag.name }}{% endif %}</a>
+                <a class="post-tag" href="#{{ tag.slug }}">{{ tag.name }}</a>
             {% endfor %}
             </div>
         </div>

@@ -98,41 +98,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.link-button {
-  background: rgba(134, 99, 229, 0.2);
-  padding: 8px 16px;
-  border-radius: 4px;
-  color: #8d8dff;
-  text-decoration: none;
-  border: 1px solid #8d8dff;
-  transition: all 0.3s ease;
-  font-size: 12px;
-}
-
-.link-button:hover {
-  background: rgba(223, 35, 196, 0.2);
-  border-color: #df23c4;
-  color: #df23c4;
-  text-decoration: none;
-  transform: translateY(-2px);
-}
-
-.action-button {
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: #8d8dff;
-  text-decoration: none;
-  font-size: 11px;
-  transition: all 0.2s ease;
-  background: rgba(141, 141, 255, 0.1);
-}
-
-.action-button:hover {
-  color: #df23c4;
-  background: rgba(223, 35, 196, 0.1);
-  text-decoration: none;
-}
-
 textarea {
   resize: none;
   background: transparent;
@@ -182,44 +147,6 @@ img {
 
 #content-wrapper {
   display: flex;
-}
-
-/* SCANLINES */
-#scanlines {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9;
-  opacity: 0.18;
-}
-
-#scanlines:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .4) 50%);
-  background-size: 100% 4px;
-  will-change: background, background-size;
-  animation: scanlines 0.2s linear infinite;
-}
-
-@keyframes scanlines {
-  from {
-    background: linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .4) 50%);
-    background-size: 100% 4px;
-  }
-
-  to {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .4) 50%, transparent 50%);
-    background-size: 100% 4px;
-  }
 }
 
 /* Main Content */
@@ -447,4 +374,79 @@ html[lang='ja'] .navigation-title {
 /* Text Formatting */
 .section-title {
   margin: 16px 0px;
+}
+
+
+/* SCANLINES */
+#scanlines {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9;
+  opacity: 0.18;
+}
+
+#scanlines:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .4) 50%);
+  background-size: 100% 4px;
+  will-change: background, background-size;
+  animation: scanlines 0.2s linear infinite;
+}
+
+@keyframes scanlines {
+  from {
+    background: linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .4) 50%);
+    background-size: 100% 4px;
+  }
+
+  to {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .4) 50%, transparent 50%);
+    background-size: 100% 4px;
+  }
+}
+
+/* Other Stuff */
+.link-button {
+  background: rgba(134, 99, 229, 0.2);
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: #8d8dff;
+  text-decoration: none;
+  border: 1px solid #8d8dff;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.link-button:hover {
+  background: rgba(223, 35, 196, 0.2);
+  border-color: #df23c4;
+  color: #df23c4;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.action-button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #8d8dff;
+  text-decoration: none;
+  font-size: 11px;
+  transition: all 0.2s ease;
+  background: rgba(141, 141, 255, 0.1);
+}
+
+.action-button:hover {
+  color: #df23c4;
+  background: rgba(223, 35, 196, 0.1);
+  text-decoration: none;
 }

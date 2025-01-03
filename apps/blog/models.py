@@ -64,17 +64,61 @@ class PostTranslation(Translation):
 
 
 class TranslatableMixin:
+    @classmethod
+    def translate_queryset(cls, queryset, language_code="en"):
+        processed_objects = set()
+        return [obj.translate(language_code, processed_objects) for obj in queryset]
+
+    def translate(self, language_code="en", processed_objects=None):
+        if processed_objects is None:
+            processed_objects = set()
+
+        instance_id = f"{self.__class__.__name__}_{self.pk}"
+        if instance_id in processed_objects:
+            return self
+
+        processed_objects.add(instance_id)
+        translation = self.get_translation(language_code)
+
+        if translation:
+            translated_fields = [
+                field.name
+                for field in translation._meta.get_fields()
+                if not field.is_relation
+                and field.name not in ["id", "language", "created_at", "updated_at"]
+            ]
+
+            for field_name in translated_fields:
+                translated_value = getattr(translation, field_name, None)
+                if translated_value is not None:
+                    setattr(self, field_name, translated_value)
+
+        self._translate_relations(language_code, processed_objects)
+        return self
+
+    def _translate_relations(self, language_code, processed_objects):
+        for field in self._meta.get_fields():
+            if not hasattr(field, "related_model") or not hasattr(
+                field.related_model, "translate"
+            ):
+                continue
+
+            if field.one_to_many or field.many_to_many:
+                related_manager = getattr(self, field.name, None)
+                if related_manager and hasattr(related_manager, "all"):
+                    for obj in related_manager.all():
+                        obj.translate(language_code, processed_objects)
+
+            elif field.many_to_one or field.one_to_one:
+                related_obj = getattr(self, field.name, None)
+                if related_obj and hasattr(related_obj, "translate"):
+                    related_obj.translate(language_code, processed_objects)
+
     def get_translation(self, language_code):
         try:
             return self.translations.get(language=language_code)
         except self.translations.model.DoesNotExist:
             return None
-
-    def translate(self, field_name, language_code="en"):
-        translation = self.get_translation(language_code)
-        if translation and hasattr(translation, field_name):
-            return getattr(translation, field_name)
-        return getattr(self, field_name)
 
 
 class Weblog(models.Model):
@@ -94,7 +138,7 @@ class Weblog(models.Model):
         return self.name
 
 
-class Category(models.Model):
+class Category(TranslatableMixin, models.Model):
     weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     name_ja = models.CharField(
@@ -120,7 +164,7 @@ class Category(models.Model):
         return self.translate("name", language_code)
 
 
-class Tag(models.Model):
+class Tag(TranslatableMixin, models.Model):
     weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     name_ja = models.CharField(
@@ -145,7 +189,7 @@ class Tag(models.Model):
         return self.translate("name", language_code)
 
 
-class Post(models.Model):
+class Post(TranslatableMixin, models.Model):
     weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     title_ja = models.CharField(
@@ -176,15 +220,52 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.weblog.name} - {self.title}"
 
-    def get_excerpt(self, language_code="en", length=1000):
-        content = self.get_body(language_code)
-        soup = BeautifulSoup(content, "html.parser")
-        excerpt = ""
-        for paragraph in soup.find_all("p"):
-            excerpt += f"<p>{paragraph.text}</p>"
-            if len(excerpt) >= length:
-                break
-        return excerpt
+    def get_excerpt(self, length=1000):
+        if not hasattr(self, "_excerpt"):
+            soup = BeautifulSoup(self.body, "html.parser")
+            excerpt = ""
+            for paragraph in soup.find_all("p"):
+                paragraph = "<p>" + str(paragraph) + "</p>"
+                excerpt += str(paragraph)
+
+                if len(excerpt) >= length:
+                    break
+            self._excerpt = excerpt
+        return self._excerpt
+
+    @property
+    def excerpt(self):
+        return self.get_excerpt()
+
+    def get_processed_body(self):
+        if not hasattr(self, "_processed_body"):
+            soup = BeautifulSoup(self.body, "html.parser")
+            first_p = soup.find("p")
+
+            self._first_paragraph = str(first_p) if first_p else ""
+            if first_p:
+                first_p.decompose()
+
+            self._processed_body = str(soup)
+
+        return self._processed_body
+
+    @property
+    def processed_body(self):
+        return self.get_processed_body()
+
+    @property
+    def first_paragraph(self):
+        if not hasattr(self, "_first_paragraph"):
+            self.get_processed_body()
+        return self._first_paragraph
+
+    def translate(self, language_code="en", processed_objects=None):
+        instance = super().translate(language_code, processed_objects)
+        if hasattr(instance, "_processed_body"):
+            delattr(instance, "_processed_body")
+            delattr(instance, "_first_paragraph")
+        return instance
 
 
 class AnonymousCommentUser(models.Model):
@@ -218,6 +299,8 @@ class Comment(models.Model):
     parent = models.ForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True, related_name="replies"
     )
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     edited = models.BooleanField(default=False)

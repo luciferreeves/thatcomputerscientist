@@ -191,10 +191,17 @@ class WeblogAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("post", "get_author", "created_at", "edited")
+    list_display = (
+        "post",
+        "get_author",
+        "created_at",
+        "edited",
+        "upvotes",
+        "downvotes",
+    )
     list_filter = ("edited", "created_at")
     search_fields = ("body", "user__username", "anonymous_user__name")
-    readonly_fields = ("created_at", "edited", "edited_at")
+    readonly_fields = ("created_at", "edited_at")
 
     def get_author(self, obj):
         return obj.user.username if obj.user else obj.anonymous_user.name

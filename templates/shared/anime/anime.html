@@ -255,14 +255,14 @@
     {{ streaming_data.data.tracks|json_script:'tracks-data' }}
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const videoStreamingURL = `/services/stream/anime/?url=${encodeURIComponent('{{ streaming_data.data.sources.url }}')}`
+        const videoStreamingURL = `/services/stream/anime?video_id=${encodeURIComponent('{{ streaming_data.data.sources.url }}')}`
         var tracks = []
         try {
           tracks = JSON.parse(document.getElementById('tracks-data').textContent)
             .filter((track) => track.kind === 'captions')
             .map((track) => ({
               ...track,
-              file: `/services/stream/anime/?url=${encodeURIComponent(track.file)}`
+              file: `/services/stream/track?track_id=${encodeURIComponent(track.file)}`
             }))
         } catch (error) {}
       
@@ -273,7 +273,7 @@
         }
       
         let player
-        if (videoStreamingURL !== '/services/stream/anime/?url=') {
+        if (videoStreamingURL !== '/services/stream/anime?video_id=') {
           player = new VideoPlayer({
             source: {
               url: videoStreamingURL,

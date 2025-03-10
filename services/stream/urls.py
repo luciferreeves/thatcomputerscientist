@@ -6,5 +6,6 @@ app_name = "stream"
 urlpatterns = [
     path("random-song", views.random_song, name="random_song"),
     path("song/<int:song_id>", views.stream_song, name="stream_song"),
-    path("anime/", views.anime_stream, name="anime_stream"),
+    path("anime", views.anime_stream, name="anime_stream"),
+    path("track", views.track_stream, name="track_stream"),
 ]

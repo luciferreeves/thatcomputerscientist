@@ -5,6 +5,7 @@ import re
 from urllib.parse import quote, urljoin, urlparse
 
 from django.conf import settings
+from internal.crypto_utilities import decode_url, encode_url
 from services.stream.songs import MUSIC_FILES
 import requests
 from django.http import (
@@ -69,10 +70,19 @@ def stream_song(request, song_id: int) -> HttpResponse:
 
 
 def anime_stream(request):
+    return handle_stream(request)
+
+
+def track_stream(request):
+    return handle_stream(request, isTrack=True)
+
+
+def handle_stream(request, isTrack=False):
     if not request.user.is_authenticated:
         return HttpResponseForbidden("Access not allowed")
 
-    url = request.GET.get("url")
+    url = request.GET.get("video_id") if not isTrack else request.GET.get("track_id")
+    url = decode_url(url)
 
     if not str(url).endswith(".vtt"):
         referrer = request.META.get("HTTP_REFERER")
@@ -116,7 +126,10 @@ def anime_stream(request):
                     # Handle both absolute and relative URLs
                     if not line.startswith("http"):
                         line = urljoin(base_url, line)
-                    proxy_url = f"/services/stream/anime?url={quote(line)}"
+                    proxy_url = (
+                        f"/services/stream/anime?video_id={quote(encode_url(line))}"
+                    )
+                    # proxy_url = f"/services/stream/anime?url={quote(line)}"
                     modified_content.append(proxy_url)
                 else:
                     modified_content.append(line)
@@ -139,7 +152,10 @@ def anime_stream(request):
                 # If it's not a full URL, join it with the base URL
                 if not sprite_url.startswith("http"):
                     sprite_url = urljoin(base_url, sprite_url)
-                return f"/watch/stream?url={quote(sprite_url)}"
+                return (
+                    f"/services/stream/track?track_id={quote(encode_url(sprite_url))}"
+                )
+                # return f"/watch/stream?url={quote(sprite_url)}"
 
             # Replace all image URLs with proxied versions
             modified_content = re.sub(sprite_pattern, replace_url, content)

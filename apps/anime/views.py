@@ -2,6 +2,7 @@ import os
 from django.urls import reverse
 import requests
 from django.shortcuts import redirect, render
+from internal.crypto_utilities import encode_url
 from thatcomputerscientist.utils import i18npatterns
 from internal.cache_utils import cache_data
 
@@ -203,8 +204,6 @@ def anime_results(**kwargs):
         f"{CONSUMET_BASE_URL}/meta/anilist/advanced-search", params=params
     )
 
-    print(response.text)
-
     return response.json()
 
 
@@ -298,8 +297,14 @@ def anime(request, anime_id, e=None):
         streaming_data = get_anime_streaming_data(
             anime_id, anime_data["current_episode"], dub
         )
-        print(streaming_data)
+
         streaming_data["data"]["sources"] = streaming_data["data"]["sources"][0]
+        streaming_data["data"]["sources"]["url"] = encode_url(
+            streaming_data["data"]["sources"]["url"]
+        )
+
+        for track in streaming_data["data"]["tracks"]:
+            track["file"] = encode_url(track["file"])
     else:
         streaming_data = {}
 

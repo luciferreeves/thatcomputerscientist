@@ -202,7 +202,101 @@
     color: #ffa800;
 }
 
-/* Add all other genre styles here */
+.genre-link[href*="Cars"] {
+    background: rgba(128, 128, 128, 0.15);
+    border: 1px solid #808080;
+    color: #808080;
+}
+
+.genre-link[href*="Comedy"] {
+    background: rgba(255, 255, 0, 0.15);
+    border: 1px solid #ffff00;
+    color: #ffff00;
+}
+
+.genre-link[href*="Drama"] {
+    background: rgba(147, 112, 219, 0.15);
+    border: 1px solid #9370db;
+    color: #9370db;
+}
+
+.genre-link[href*="Fantasy"] {
+    background: rgba(0, 191, 255, 0.15);
+    border: 1px solid #00bfff;
+    color: #00bfff;
+}
+
+.genre-link[href*="Horror"] {
+    background: rgba(139, 0, 0, 0.15);
+    border: 1px solid #8b0000;
+    color: #8b0000;
+}
+
+.genre-link[href*="Mahou Shoujo"] {
+    background: rgba(255, 182, 193, 0.15);
+    border: 1px solid #ffb6c1;
+    color: #ffb6c1;
+}
+
+.genre-link[href*="Mecha"] {
+    background: rgba(169, 169, 169, 0.15);
+    border: 1px solid #a9a9a9;
+    color: #a9a9a9;
+}
+
+.genre-link[href*="Music"] {
+    background: rgba(138, 43, 226, 0.15);
+    border: 1px solid #8a2be2;
+    color: #8a2be2;
+}
+
+.genre-link[href*="Mystery"] {
+    background: rgba(75, 0, 130, 0.15);
+    border: 1px solid #4b0082;
+    color: #4b0082;
+}
+
+.genre-link[href*="Psychological"] {
+    background: rgba(0, 100, 0, 0.15);
+    border: 1px solid #006400;
+    color: #006400;
+}
+
+.genre-link[href*="Romance"] {
+    background: rgba(255, 105, 180, 0.15);
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
+}
+
+.genre-link[href*="Sci-Fi"] {
+    background: rgba(0, 255, 255, 0.15);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+}
+
+.genre-link[href*="Slice of Life"] {
+    background: rgba(152, 251, 152, 0.15);
+    border: 1px solid #98fb98;
+    color: #98fb98;
+}
+
+.genre-link[href*="Sports"] {
+    background: rgba(255, 140, 0, 0.15);
+    border: 1px solid #ff8c00;
+    color: #ff8c00;
+}
+
+.genre-link[href*="Supernatural"] {
+    background: rgba(186, 85, 211, 0.15);
+    border: 1px solid #ba55d3;
+    color: #ba55d3;
+}
+
+.genre-link[href*="Thriller"] {
+    background: rgba(220, 20, 60, 0.15);
+    border: 1px solid #dc143c;
+    color: #dc143c;
+}
 
 /* Hover effect */
 .genre-link:hover {

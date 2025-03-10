@@ -203,6 +203,8 @@ def anime_results(**kwargs):
         f"{CONSUMET_BASE_URL}/meta/anilist/advanced-search", params=params
     )
 
+    print(response.text)
+
     return response.json()
 
 

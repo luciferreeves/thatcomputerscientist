@@ -14,7 +14,9 @@
     <meta property="og:image" content="{{ request.meta.image }}" />
     <meta property="og:url" content="{{ request.meta.url }}" />
     <meta property="robots" content="{{ request.meta.robots }}" />
-    {% block title %}{% endblock title %}
+    {% block title %}
+
+    {% endblock %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}" />
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}" />
@@ -28,11 +30,12 @@
     <video autoplay muted loop id="video-background" preload="auto">
       <source src="{% static 'videos/background_.mp4' %}" type="video/mp4" />
     </video>
+    <img src="{% static 'images/core/img/pngegg.png' %}" id="spaceship" />
     <div id="video-overlay"></div>
     <div id="body-wrapper">
       {% include 'partials/_header.html' %}
       <div id="content-wrapper">
-        <div id="left-sidebar" {% if user.is_authenticated %}style="border-top-left-radius: 0px;"{% endif %}>
+        <div id="left-sidebar" style="{% if user.is_authenticated %}border-top-left-radius: 0px;{% endif %}">
           {% include 'partials/_left_sidebar.html' %}
         </div>
         <div id="main-content">
@@ -51,10 +54,48 @@
     <div id="scanlines"></div>
   </body>
   {% block scripts %}
-    
+
   {% endblock %}
   <script src="{% static 'js/libs/pamphlet.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
   <script type="text/javascript">
-    new Pamphlet();
+    new Pamphlet()
+    const animationPlayed = sessionStorage.getItem('animationPlayed')
+    document.addEventListener('DOMContentLoaded', function () {
+      // Move all calculations inside the DOMContentLoaded event
+      const spaceship = document.getElementById('spaceship')
+      const leftSidebar = document.getElementById('left-sidebar')
+      const sidebarRect = leftSidebar.getBoundingClientRect()
+      const sidebarLeft = sidebarRect.left
+      const sidebarTop = sidebarRect.top
+      const initialX = Math.min(200, sidebarLeft - 100)
+    
+      if (animationPlayed) {
+        // Set final position of spaceship
+        gsap.set(spaceship, { x: sidebarLeft + 100, y: -200, rotation: -10 })
+        return
+      }
+    
+      gsap.registerPlugin(MotionPathPlugin)
+    
+      gsap.to(spaceship, {
+        duration: 120,
+        motionPath: {
+          path: [
+            { x: initialX, y: -50 },
+            { x: sidebarLeft, y: -100 },
+            { x: sidebarLeft + 100, y: -200 }
+          ],
+          curviness: 1.5
+        },
+        ease: 'power2.inOut',
+        rotation: -10,
+        onComplete: () => {
+          // Set animation played flag
+          sessionStorage.setItem('animationPlayed', true)
+        }
+      })
+    })
   </script>
 </html>

@@ -23,7 +23,7 @@ class ShifooHighlight(Style):
     )
 
 
-def recent_weblogs(lang="en", amount=10):
+def recent_weblogs(lang="en", amount=3):
     queryset = (
         Post.objects.filter(is_public=True, author__username=AUTHOR_USERNAME)
         .prefetch_related(

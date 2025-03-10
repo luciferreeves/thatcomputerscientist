@@ -54,7 +54,14 @@
 
   <div class="navigation-links">
     <div class="navigation-title-container">
-      <h1 class="navigation-title">{% if request.LANGUAGE_CODE == 'ja' %}ナビゲーション{% else %}Navigation{% endif %}</h1>
+      {% comment %} {% if request.LANGUAGE_CODE == 'ja' %}
+        <img src="{% static 'images/core/messages/texts/navigation_ja.png' %}" alt="ナビゲーション" class="navigation-title" />
+      {% else %}
+        <img src="{% static 'images/core/messages/texts/navigation_en.gif' %}" alt="Navigation" class="navigation-title" />
+      {% endif %} {% endcomment %}
+      <h1 class="navigation-title">
+        {% if request.LANGUAGE_CODE == 'ja' %}ナビゲーション{% else %}Navigation{% endif %}
+      </h1>
     </div>
     <div class="navigation-items-container">
       <div class="navigation-item">

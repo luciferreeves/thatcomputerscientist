@@ -69,7 +69,7 @@ def post_image(request, size, post_id):
             width = size
 
             # resize image
-            image = image.resize((width, height), Image.ANTIALIAS)
+            image = image.resize((width, height))
             output = BytesIO()
             image.save(output, format="GIF")
             return HttpResponse(output.getvalue(), content_type="image/gif")

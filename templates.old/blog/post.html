@@ -180,7 +180,8 @@ background: #ffffff0d;
 {% if user.is_authenticated %}
 <div id="new-comment"  class="mtsbitem">
     <h2>Leave a Comment</h2>
-    {% if messages %}
+    <h4 style="margin-top: 0; font-size: 16px;">Commenting has been currently disabled as the site is undergoing heavy changes. Please check back later.</h4>
+    {% comment %} {% if messages %}
     {% for message in messages %}
     {% if 'spam' in message.tags %}
         <p style="color: #ffb6b6;">Your comment was not allowed as it was marked as possible spam. If you think this is a mistake, please contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>.</p>
@@ -246,13 +247,14 @@ background: #ffffff0d;
             </div>
         </div>
         <input type="submit" value="Submit" class="button button-special">
-    </form>
+    </form> {% endcomment %}
     
 </div>
 {% else %}
 <div id="new-comment" class="mtsbitem">
     <h2>Leave a Comment</h2>
-    {% if messages %}
+    <h4 style="margin-top: 0; font-size: 16px;">Commenting has been currently disabled as the site is undergoing heavy changes. Please check back later.</h4>
+    {% comment %} {% if messages %}
     {% for message in messages %}
     {% if 'spam' in message.tags %}
         <p style="color: #ffb6b6;">Your comment was not allowed as it was marked as possible spam. If you think this is a mistake, please contact me at <a href="mailto:webmaster@thatcomputerscientist.com">webmaster@thatcomputerscientist.com</a>.</p>
@@ -364,10 +366,10 @@ background: #ffffff0d;
         </div>
         <input type="submit" value="Submit" class="button button-special">
         <input type="button" value="Close" class="button" onclick="toggleAnon()">
-    </form>
+    </form> {% endcomment %}
     {% comment %} <br>
         <button class="button" onclick="cd()">Clear Form Data</button> {% endcomment %}
-    </div>
+    {% comment %} </div> {% endcomment %}
 </div>
 
 {% endif %}

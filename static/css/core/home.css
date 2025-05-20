@@ -1,0 +1,157 @@
+#welcome {
+    width: 780px;
+    min-height: 280px;
+    background: url('../../images/core/backgrounds/welcome-banner.png') no-repeat;
+    background-size: 780px 280px;
+    margin: 15px auto;
+    border: 0px;
+    position: relative;
+    text-align: justify;
+    border-radius: 8px;
+}
+
+#welcome>p {
+    width: 410px;
+    margin: 12px 0px 12px 48px;
+    position: relative;
+    top: 20px;
+    text-align: justify;
+}
+
+#chatbox {
+    position: absolute;
+    right: 116px;
+    width: 172px;
+    top: 24px;
+}
+
+#messages {
+    height: 176px;
+    overflow-y: scroll;
+    position: relative;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#messages::-webkit-scrollbar {
+    display: none;
+}
+
+.message {
+    text-align: left;
+}
+
+#chatbox-input {
+    width: 168px;
+    border: none;
+    margin-top: 4px;
+    padding: 4px 2px 2px 2px;
+    resize: none;
+    border-top: solid 1px rgba(222, 222, 222, 0.7);
+    border-radius: 0;
+    height: 64px;
+}
+
+#uc {
+    width: 780px;
+}
+
+#announcements {
+    background: url('../../images/core/backgrounds/announcements.png') no-repeat;
+    background-size: 780px 320px;
+    position: relative;
+    margin-top: 12px;
+    width: 780px;
+    height: 320px;
+}
+
+#announcement-container {
+    width: 580px;
+    height: 280px;
+    position: relative;
+    top: 8px;
+    left: 128px;
+    border: 16px solid transparent;
+    padding: 8px;
+    border-image: url('../../images/core/backgrounds/announcements_border.jpg') 45 round;
+}
+
+.announcement {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    white-space: normal;
+    min-height: 30px;
+}
+
+.announcement-icon {
+    flex-shrink: 0;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+.announcement-icon img {
+    height: 14px;
+    width: 30px;
+}
+
+.announcement-content {
+    flex-grow: 1;
+}
+
+.recent-anime {
+    width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.anime {
+    width: 180px;
+    overflow: hidden;
+}
+
+.anime-image {
+    width: 180px;
+    height: 256px;
+    overflow: hidden;
+}
+
+.anime-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.anime-content {
+    padding: 10px;
+}
+
+.anime-content h3 {
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.anime-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.anime-status {
+    background: #3d304a;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.anime:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+    text-decoration: none;
+    color: currentColor;
+}

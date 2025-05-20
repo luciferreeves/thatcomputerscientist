@@ -286,3 +286,8 @@ img {
 .footer-credits {
     margin: 8px 0px;
 }
+
+/* Text Formatting */
+.section-title {
+    margin: 16px 0px;
+}

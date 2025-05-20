@@ -13,9 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+
 # from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
@@ -30,18 +32,13 @@ from django.urls import include, path
 #     'github': GithubSitemap,
 # }
 
-handler404 = 'thatcomputerscientist.error_handler.custom_404'
+# handler404 = 'thatcomputerscientist.error_handler.custom_404'
 
 urlpatterns = [
-    path('', include('core.urls', namespace='core')),
-
-    # Authentication
-    path('auth/', include('auth.urls', namespace='auth')),
-
-    # Administration
-    path('admin/administration/', admin.site.urls),
-
-
+    path("", include("core.urls", namespace="core")),
+    path("services/", include("services.urls", namespace="services")),
+    path("auth/", include("auth.urls", namespace="auth")),
+    path("admin/administration/", admin.site.urls),
     # path('', include('blog.urls', namespace='blog')),
     # path('users', include('users.urls', namespace='users')),
     # path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),

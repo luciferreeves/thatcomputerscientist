@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 16:28+0000\n"
+"POT-Creation-Date: 2025-05-20 00:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
 #: templates/blog/home.html:8
 #, python-format
 msgid ""
@@ -44,31 +45,12 @@ msgid ""
 "  </p>\n"
 "  "
 msgstr ""
-"\n"
-"  <p>\n"
-"    Shifooのホームへようこそ（以前は<i>That Computer Scientist</i>）。私の名"
-"前は<a href=\"%(bobby_profile_url)s\">@bobby</a>で、これは私の個人的な\n"
-"    ウェブサイトです。レトロな個人ウェブサイトを作成し、記事を通じて私の考"
-"え、アイデア、経験を共有し、いくつかのクールで懐かしい機能とツールを展示する"
-"ことを目指しています。\n"
-"  </p>\n"
-"  <p>\n"
-"  このサイトは継続的に作業中で、まだ建設中ですので、すべての機能が利用可能で"
-"はなく、一部の機能が意図した通りに動作しない場合があります。\n"
-"  </p>\n"
-"  <p>\n"
-"    サイドバーには<a href=\"#fun-stuff\">楽しいもの</a>もあり、それを試してみ"
-"ることができます。近い将来、さらに多くのものを追加する予定です。\n"
-"    また、サイトのさまざまなセクションに参加するには、<a "
-"href=\"%(register_url)s\">登録</a>する必要があります。ここでの滞在を楽しんで"
-"ください。\n"
-"  </p>\n"
-"  "
 
-#: thatcomputerscientist/settings.py:232
+#: thatcomputerscientist/settings.py:231
 msgid "English"
 msgstr ""
 
-#: thatcomputerscientist/settings.py:233
+#: thatcomputerscientist/settings.py:232
 msgid "Japanese"
 msgstr ""
+

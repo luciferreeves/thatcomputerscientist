@@ -22,7 +22,6 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # set n_connected_lc_users to 0 on startup
-
 import redis
 
 # r = redis.Redis(host='localhost', port=6379, db=0)
@@ -72,17 +71,17 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
-    "sslserver",
+    # "sslserver",
     "thatcomputerscientist",
     "haystack",
     "blog.apps.BlogConfig",
     "users",
-    "userpages",
-    "blog_admin",
-    "dev_status",
+    # "userpages",
+    # "blog_admin",
+    # "dev_status",
     "announcements",
     "ignis",
-    "chat",
+    # "chat",
 ]
 
 SITE_ID = 1
@@ -93,12 +92,12 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ]
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": [
+#         "rest_framework.authentication.BasicAuthentication",
+#         "rest_framework.authentication.SessionAuthentication",
+#     ]
+# }
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
@@ -110,25 +109,25 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
-    "middleware.ignismiddleware.IgnisMiddleware",
-    "middleware.uuidmiddleware.UserUUIDMiddleware",
     "middleware.i18nmiddleware.I18NMiddleware",
-    "django_hosts.middleware.HostsResponseMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
+    # "middleware.ignismiddleware.IgnisMiddleware",
+    # "middleware.uuidmiddleware.UserUUIDMiddleware",
+    # "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
 
-CONFIGURED_SUBDOMAINS = {
-    "": "thatcomputerscientist",
-    "*": "userpages",
-}
+# CONFIGURED_SUBDOMAINS = {
+#     "": "thatcomputerscientist",
+#     "*": "userpages",
+# }
 
-ROOT_URLCONF = "thatcomputerscientist.urls"
+# ROOT_URLCONF = "thatcomputerscientist.urls"
 
 AUTHENTICATION_BACKENDS = ["thatcomputerscientist.backends.CaseInsensitiveModelBackend"]
 

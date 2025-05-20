@@ -1,0 +1,43 @@
+{% load tz %}
+{% load static %}
+{% load i18n %}
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
+{% for post in posts %}
+  <div class="post">
+    <div class="post-body">
+      <div class="post-image">
+        <img src="{{ post.image_url }}" alt="{{ post.title }}" />
+      </div>
+      <div class="post-content">
+        <h2><a href="#{{ post.slug }}">{{ post.title }}</a></h2>
+        <div class="author-info">
+          {% with authorprofile=post.author.userprofile_set.first %}
+            <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif" class="post-profile-image" alt="{{ post.author.first_name }}'s Avatar" />
+          {% endwith %}
+          <a href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a>
+          <span>{% translate 'posted in' %}</span>
+          <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
+          <span>{% translate 'on' %}</span>
+          <span style="margin-left: 4px;">{% localtime on %}{{ post.date|date:'M d, Y' }}{% endlocaltime %}</span>
+        </div>
+        <div class="post-exerpt">{{ post.excerpt|safe }}</div>
+      </div>
+    </div>
+    <div class="post-actions">
+      <div class="post-links">
+        <a href="#{{ post.slug }}">{% translate 'Continue Reading' %}</a> |
+        <a href="#{{ post.slug }}#comments">
+          {% blocktranslate count comment_count=post.comments.all|length %}
+          {{ comment_count }} Comment{% plural %}
+          {{ comment_count }} Comments{% endblocktranslate %}
+        </a>
+      </div>
+      <div class="post-tags">
+        {% for tag in post.tags.all %}
+          <a class="post-tag" href="#{{ tag.slug }}">{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

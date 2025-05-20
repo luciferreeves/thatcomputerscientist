@@ -30,7 +30,6 @@
     overflow-y: scroll;
     position: relative;
     -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 
 #messages::-webkit-scrollbar {

@@ -1,8 +1,6 @@
 {% load static %}
 {% load i18n %}
-{% block head %}
-  <link rel="stylesheet" href="{% static 'css/shared/sidebar.css' %}" />
-{% endblock %}
+
 <div class="left-sidebar{% if user.is_authenticated %} left-sidebar-authenticated{% endif %}">
   {% if not user.is_authenticated %}
     {% for message in messages %}

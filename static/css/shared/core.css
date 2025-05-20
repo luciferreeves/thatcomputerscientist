@@ -279,3 +279,10 @@ img {
     height: 31px;
     display: inline-block;
 }
+
+/* Footer */
+.footer-buttons,
+.footer-copyright,
+.footer-credits {
+    margin: 8px 0px;
+}

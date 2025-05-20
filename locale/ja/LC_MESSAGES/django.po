@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-20 03:50+0000\n"
+"POT-Creation-Date: 2025-05-20 05:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,147 +18,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: templates/_partials/left_sidebar.html:18
+#: templates/_partials/footer.html:22
+msgid ""
+"Source code available on\n"
+"  <a href=\"https://github.com/luciferreeves/thatcomputerscientist\" "
+"target=\"_blank\">GitHub</a>. All rights reserved. Every pixel on this "
+"website is handcrafted with love and care."
+msgstr ""
+"ソースコードは\n"
+"  <a href=\"https://github.com/luciferreeves/thatcomputerscientist\" "
+"target=\"_blank\">GitHub</a>で見れるよ。全ての権利は留保。このサイトの"
+"ピクセル全部が愛情とこだわりで手作りされてる。"
+
+#: templates/_partials/footer.html:28
+#, python-format
+msgid ""
+"\n"
+"  <strong>PS:</strong> The ads shown on this website are fake and purely for "
+"aesthetic purposes. I do not earn any money from them, neither clicking them "
+"will redirect you to any other website. If you have any questions, comments, "
+"or concerns about how this site operates and how your data is handled, "
+"please check out the\n"
+"  <a href=\"%(privacy_url)s\">Privacy Policy</a> page. View\n"
+"  <a href=\"%(sitemap_url)s\">Sitemap</a>."
+msgstr ""
+"\n"
+"  <strong>おまけ:</strong> このサイトの広告は全部偽物で、見た目のためだけにあるんだ。"
+"俺はこれで一銭も稼いでないし、クリックしても他のサイトに飛ばないから安心してね。"
+"このサイトの運営方法やデータの扱いについて質問やコメント、心配事があったら\n"
+"  <a href=\"%(privacy_url)s\">プライバシーポリシー</a>をチェックしてみて。"
+"あと\n"
+"  <a href=\"%(sitemap_url)s\">サイトマップ</a>も見れるよ。"
+
+#: templates/_partials/left_sidebar.html:16
 msgid "Username"
 msgstr "ユーザー名"
 
-#: templates/_partials/left_sidebar.html:19
+#: templates/_partials/left_sidebar.html:17
 msgid "Password"
 msgstr "パスワード"
 
-#: templates/_partials/left_sidebar.html:34
+#: templates/_partials/left_sidebar.html:32
 #, python-format
 msgid "Hello, %(username)s"
 msgstr "こんにちは、%(username)sさん"
 
-#: templates/_partials/left_sidebar.html:41
+#: templates/_partials/left_sidebar.html:39
 msgid "Journals"
 msgstr "ジャーナル"
 
-#: templates/_partials/left_sidebar.html:45
+#: templates/_partials/left_sidebar.html:43
 msgid "The Pagoda Realm"
 msgstr "パゴダレルム"
 
-#: templates/_partials/left_sidebar.html:49
+#: templates/_partials/left_sidebar.html:47
 msgid "My Page"
 msgstr "マイページ"
 
-#: templates/_partials/left_sidebar.html:53
+#: templates/_partials/left_sidebar.html:51
 msgid "Logout"
 msgstr "ログアウト"
 
-#: templates/_partials/left_sidebar.html:60
+#: templates/_partials/left_sidebar.html:58
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: templates/_partials/left_sidebar.html:65
+#: templates/_partials/left_sidebar.html:63
 msgid "Home"
 msgstr "ホーム"
 
-#: templates/_partials/left_sidebar.html:69
+#: templates/_partials/left_sidebar.html:67
 msgid "Journal of Random Thoughts"
 msgstr "ランダム思考のジャーナル"
 
-#: templates/_partials/left_sidebar.html:73
+#: templates/_partials/left_sidebar.html:71
+#: templates/_partials/right_sidebar.html:96
 msgid "Weblog"
 msgstr "ウェブログ"
 
-#: templates/_partials/left_sidebar.html:77
+#: templates/_partials/left_sidebar.html:75
 msgid "Shrines"
 msgstr "神社"
 
-#: templates/_partials/left_sidebar.html:81
+#: templates/_partials/left_sidebar.html:79
 msgid "Screenshots"
 msgstr "スクリーンショット"
 
-#: templates/_partials/left_sidebar.html:85
+#: templates/_partials/left_sidebar.html:83
 msgid "Chatrooms"
 msgstr "チャットルーム"
 
-#: templates/_partials/left_sidebar.html:89
+#: templates/_partials/left_sidebar.html:87
 msgid "Guestbook"
 msgstr "ゲストブック"
 
-#: templates/_partials/left_sidebar.html:93
+#: templates/_partials/left_sidebar.html:91
 msgid "Site Preferences"
 msgstr "サイトの設定"
 
-#: templates/_partials/left_sidebar.html:98
+#: templates/_partials/left_sidebar.html:96
 msgid "Register Account"
 msgstr "アカウント登録"
 
-#: templates/_partials/left_sidebar.html:101
+#: templates/_partials/left_sidebar.html:99
 msgid "My Account"
 msgstr "マイアカウント"
 
-#: templates/_partials/left_sidebar.html:118
+#: templates/_partials/left_sidebar.html:116
 msgid "Search"
 msgstr "検索"
 
-#: templates/_partials/left_sidebar.html:123
+#: templates/_partials/left_sidebar.html:121
 msgid "The Good Stuff"
 msgstr "おすすめ"
 
-#: templates/_partials/left_sidebar.html:128
+#: templates/_partials/left_sidebar.html:126
 msgid "Post Calendar"
 msgstr "ブログカレンダー"
 
-#: templates/_partials/left_sidebar.html:132
+#: templates/_partials/left_sidebar.html:130
 msgid "Anime Streams"
 msgstr "アニメ配信"
 
-#: templates/_partials/left_sidebar.html:136
+#: templates/_partials/left_sidebar.html:134
+#: templates/_partials/right_sidebar.html:102
 msgid "The Matrix"
 msgstr "ザ・マトリックス"
 
-#: templates/_partials/left_sidebar.html:140
+#: templates/_partials/left_sidebar.html:138
 msgid "RSS Feed"
 msgstr "RSSフィード"
 
-#: templates/_partials/left_sidebar.html:144
+#: templates/_partials/left_sidebar.html:142
 msgid "Marketplace"
 msgstr "マーケットプレイス"
 
-#: templates/_partials/left_sidebar.html:148
+#: templates/_partials/left_sidebar.html:146
 msgid "Discussions"
 msgstr "ディスカッション"
 
-#: templates/_partials/left_sidebar.html:155
+#: templates/_partials/left_sidebar.html:153
 msgid "Site Spells"
 msgstr "サイトの魔法"
 
-#: templates/_partials/left_sidebar.html:161
+#: templates/_partials/left_sidebar.html:159
 msgid "Withdraw Oneko"
 msgstr "おねこを引っ込める"
 
-#: templates/_partials/left_sidebar.html:164
+#: templates/_partials/left_sidebar.html:162
 msgid "Summon Oneko"
 msgstr "おねこを召喚"
 
-#: templates/_partials/left_sidebar.html:169
+#: templates/_partials/left_sidebar.html:167
 msgid "Harlem Shake"
 msgstr "ハーレムシェイク"
 
-#: templates/_partials/left_sidebar.html:173
+#: templates/_partials/left_sidebar.html:171
 msgid "DVD Sitesaver"
 msgstr "DVDサイトセーバー"
 
-#: templates/_partials/left_sidebar.html:180
+#: templates/_partials/left_sidebar.html:178
 msgid "Admin Area"
 msgstr "アドミンアレア"
 
-#: templates/_partials/left_sidebar.html:185
+#: templates/_partials/left_sidebar.html:183
 msgid "Manage Announcements"
 msgstr "アナウンスメント管理"
 
-#: templates/_partials/left_sidebar.html:189
+#: templates/_partials/left_sidebar.html:187
 msgid "Manage Users"
 msgstr "ユーザー管理"
 
-#: templates/_partials/left_sidebar.html:193
+#: templates/_partials/left_sidebar.html:191
 msgid "Manage Storage Buckets"
 msgstr "ストレージバケット管理"
 
-#: templates/_partials/left_sidebar.html:199
+#: templates/_partials/left_sidebar.html:197
 msgid "This website uses cookies and there's nothing you can do about it!"
-msgstr "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできません！"
+msgstr ""
+"このウェブサイトはクッキーを使用しており、あなたはそれについて何もできませ"
+"ん！"
+
+#: templates/_partials/right_sidebar.html:7
+#: templates/_partials/right_sidebar.html:10
+msgid "Loading..."
+msgstr "ロード中..."
+
+#: templates/_partials/right_sidebar.html:26
+msgid "Serial Experiments: Shifoo"
+msgstr "シリアルエクスペリメンツ：シフー"
+
+#: templates/_partials/right_sidebar.html:31
+msgid "Socialify"
+msgstr "ソーシャリファイ"
+
+#: templates/_partials/right_sidebar.html:35
+msgid "My Repositories"
+msgstr "マイリポジトリ"
+
+#: templates/_partials/right_sidebar.html:39
+msgid "My Anime List"
+msgstr "マイアニメリスト"
+
+#: templates/_partials/right_sidebar.html:43
+msgid "My Games"
+msgstr "マイゲーム"
+
+#: templates/_partials/right_sidebar.html:56
+msgid "XP"
+msgstr "XP"
+
+#: templates/_partials/right_sidebar.html:62
+msgid "Level"
+msgstr "レベル"
+
+#: templates/_partials/right_sidebar.html:68
+msgid "Balance"
+msgstr "バランス"
+
+#: templates/_partials/right_sidebar.html:77
+msgid "Journal Entries"
+msgstr "ジャーナルエントリ"
+
+#: templates/_partials/right_sidebar.html:83
+msgid "Journal Streak"
+msgstr "ジャーナルストリーク"
+
+#: templates/_partials/right_sidebar.html:89
+msgid "Weblog Posts"
+msgstr "ウェブログポスト"
+
+#: templates/_partials/right_sidebar.html:94
+msgid "Dressing Room"
+msgstr "ドレッシングルーム"
+
+#: templates/_partials/right_sidebar.html:95
+msgid "Achievements"
+msgstr "実績"
+
+#: templates/_partials/right_sidebar.html:107
+msgid "Pamphlet"
+msgstr "パンフレット"
+
+#: templates/_partials/right_sidebar.html:111
+msgid "Caravan"
+msgstr "キャラバン"
+
+#: templates/_partials/right_sidebar.html:115
+msgid "Ledger"
+msgstr "レジャー"
+
+#: templates/_partials/right_sidebar.html:119
+msgid "Census"
+msgstr "センサス"
+
+#: templates/_partials/right_sidebar.html:125
+msgid "You are Visitor #"
+msgstr "あんたは訪問者ナンバー"

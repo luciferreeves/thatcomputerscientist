@@ -162,9 +162,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [
-                (
-                    f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}'
-                )
+                f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}'
             ],
         },
     },
@@ -228,10 +226,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-LANGUAGES = (
-    ("en", _("English")),
-    ("ja", _("Japanese"))
-)
+LANGUAGES = (("en", _("English")), ("ja", _("Japanese")))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

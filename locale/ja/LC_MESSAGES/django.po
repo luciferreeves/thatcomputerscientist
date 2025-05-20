@@ -191,8 +191,8 @@ msgid "Manage Users"
 msgstr "ユーザー管理"
 
 #: templates/_partials/left_sidebar.html:191
-msgid "Manage Storage Buckets"
-msgstr "ストレージバケット管理"
+msgid "Manage Song Streaming"
+msgstr "曲ストリーミング管理"
 
 #: templates/_partials/left_sidebar.html:197
 msgid "This website uses cookies and there's nothing you can do about it!"

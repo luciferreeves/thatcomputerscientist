@@ -35,9 +35,10 @@ handler404 = 'thatcomputerscientist.error_handler.custom_404'
 urlpatterns = [
     path('', include('core.urls', namespace='core')),
 
+    # Authentication
+    path('auth/', include('auth.urls', namespace='auth')),
 
-
-    # Django Admin
+    # Administration
     path('admin/administration/', admin.site.urls),
 
 

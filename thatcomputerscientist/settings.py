@@ -111,6 +111,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
     "middleware.i18nmiddleware.I18NMiddleware",
+    "middleware.userprofilemiddleware.UserProfileMiddleware",
     # "whitenoise.middleware.WhiteNoiseMiddleware",
     # "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
     # "middleware.ignismiddleware.IgnisMiddleware",

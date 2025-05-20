@@ -55,7 +55,159 @@
       </div>
     </div>
   {% endif %}
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% translate 'Navigation' %}</h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/home.png' %}" alt="Home Icon" />
+        <a href="{% url 'core:home' %}">{% translate 'Home' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/journalofrandomthoughts.png' %}" alt="Journal of Random Thoughts Icon" />
+        <a href="#journal-of-random-thoughts">{% translate 'Journal of Random Thoughts' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/weblog.gif' %}" alt="Weblog Icon" />
+        <a href="#weblog">{% translate 'Weblog' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/shrines.png' %}" alt="Shrines Icon" />
+        <a href="#shrines">{% translate 'Shrines' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/screenshots.png' %}" alt="Screenshots Icon" />
+        <a href="#screenshots">{% translate 'Screenshots' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/chatrooms.png' %}" alt="Chatrooms Icon" />
+        <a href="#chatrooms">{% translate 'Chatrooms' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/guestbook.png' %}" alt="Guestbook Icon" />
+        <a href="#guestbook">{% translate 'Guestbook' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/preferences.png' %}" alt="Site Preferences Icon" />
+        <a href="#preferences">{% translate 'Site Preferences' %}</a>
+      </div>
+      <div class="navigation-item">
+        {% if not user.is_authenticated %}
+          <img src="{% static 'images/core/icons/registeraccount.png' %}" alt="Register Account Icon" />
+          <a href="#register">{% translate 'Register Account' %}</a>
+        {% else %}
+          <img src="{% static 'images/core/icons/useraccount.png' %}" alt="My Account Icon" />
+          <a href="#account">{% translate 'My Account' %}</a>
+        {% endif %}
+      </div>
+      <div class="navigation-item {{ request.LANGUAGE_CODE }}">
+        <img src="{% static 'images/core/icons/changelanguage.png' %}" alt="Change Language Icon" />
+        <a href="javascript:void(0);" onclick="changeLanguage('{{ request.ALT_LANGUAGE }}')">
+          {% if request.LANGUAGE_CODE == 'ja' %}
+            English (英語)
+          {% else %}
+            日本語 (Japanese)
+          {% endif %}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="search-area">
+    <form action="#" method="get" id="search-form">
+      <input type="text" name="q" placeholder="{% translate 'Search' %}" autocomplete="off" value="{{ request.GET.q }}" required />
+    </form>
+  </div>
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% translate 'The Good Stuff' %}</h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/calendar.png' %}" alt="Calendar Icon" />
+        <a href="#calendar">{% translate 'Post Calendar' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/anime.png' %}" alt="Anime Icon" />
+        <a href="#anime">{% translate 'Anime Streams' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/matrix.png' %}" alt="The Matrix Icon" />
+        <a href="#matrix">{% translate 'The Matrix' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/rss.png' %}" alt="RSS Icon" />
+        <a href="#rss">{% translate 'RSS Feed' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/marketplace.png' %}" alt="Marketplace Icon" />
+        <a href="#marketplace">{% translate 'Marketplace' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/discussions.png' %}" alt="Discussions Icon" />
+        <a href="#discussions">{% translate 'Discussions' %}</a>
+      </div>
+    </div>
+  </div>
+  <div class="pamphlet pamphlet-big"></div>
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% translate 'Site Spells' %}</h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        {% if request.COOKIES.summonOneko == 'true' %}
+          <img src="{% static 'images/core/icons/withdraw_oneko.gif' %}" alt="Withdraw Oneko Icon" />
+          <a href="javascript:void(0);" onclick="document.cookie = 'summonOneko=false;path=/';location.reload();">{% translate 'Withdraw Oneko' %}</a>
+        {% else %}
+          <img src="{% static 'images/core/icons/summon_oneko.gif' %}" alt="Summon Oneko Icon" />
+          <a href="javascript:void(0);" onclick="document.cookie = 'summonOneko=true;path=/';location.reload();">{% translate 'Summon Oneko' %}</a>
+        {% endif %}
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/harlemshake.gif' %}" alt="Harlem Shake Icon" />
+        <a href="javascript:harlemShakeAndBake();">{% translate 'Harlem Shake' %}</a>
+      </div>
+      <div class="navigation-item">
+        <img src="{% static 'images/core/icons/dvd.png' %}" alt="DVD Sitesaver Icon" />
+        <a href="javascript:dvdSitesaver();">{% translate 'DVD Sitesaver' %}</a>
+      </div>
+    </div>
+  </div>
+  {% if user.is_staff or user.is_superuser %}
+    <div class="navigation-links">
+      <div class="navigation-title-container">
+        <h1 class="navigation-title">{% translate 'Admin Area' %}</h1>
+      </div>
+      <div class="navigation-items-container">
+        <div class="navigation-item">
+          <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Announcements Icon" />
+          <a href="#manage-announcements">{% translate 'Manage Announcements' %}</a>
+        </div>
+        <div class="navigation-item">
+          <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Users Icon" />
+          <a href="#manage-users">{% translate 'Manage Users' %}</a>
+        </div>
+        <div class="navigation-item">
+          <img src="{% static 'images/core/gifs/right_hand.gif' %}" alt="Manage Storage Buckets Icon" />
+          <a href="#managestorage">{% translate 'Manage Storage Buckets' %}</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <p class="sidebar-credits">
+    {% translate "This website uses cookies and there's nothing you can do about it!" %}
+  </p>
 </div>
+
+{% block scripts %}
+  <script type="text/javascript">
+    function changeLanguage(language) {
+      document.cookie = `site_language=${language};path=/`
+      location.reload()
+    }
+  </script>
+{% endblock %}
 
 {% comment %} {% load static %}
 <div class="left-sidebar">
@@ -83,7 +235,17 @@
             
             
             
+            
+            
+            
+              
+              
             ユーザー名
+
+
+
+
+
 
 
 
@@ -91,7 +253,16 @@
             
             
             
+            
+            
+            
+              
+                  
             Username
+
+
+
+
 
 
 
@@ -106,7 +277,16 @@
             
             
             
+            
+            
+            
+              
+              
             パスワード
+
+
+
+
 
 
 
@@ -115,7 +295,16 @@
             
             
             
+            
+            
+            
+              
+              
             Password
+
+
+
+
 
 
 
@@ -311,13 +500,13 @@
           
           
           
-          
-          
-          
-          
-          
+            
           
           en
+
+
+
+
 
 
 
@@ -329,13 +518,13 @@
           
           
           
-          
-          
-          
-          
-          
+            
           
           ja
+
+
+
+
 
 
 
@@ -347,7 +536,18 @@
             
             
             
+            
+            
+            
+              
+              
             'en'
+
+
+
+
+
+
 
 
 
@@ -356,7 +556,18 @@
             
             
             
+            
+            
+            
+              
+              
             'ja'
+
+
+
+
+
+
 
 
 
@@ -383,13 +594,13 @@
           
           
           
-          
-          
-          
-          
-          
+            
           
           検索
+
+
+
+
 
 
 
@@ -401,13 +612,13 @@
           
           
           
-          
-          
-          
-          
-          
+            
           
           Search
+
+
+
+
 
 
 

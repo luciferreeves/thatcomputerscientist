@@ -162,3 +162,23 @@ img {
     text-align: center;
     border-top: 1px solid #fff;
 }
+
+/* Pamphlet Ads */
+.pamphlet-big {
+    width: 200px;
+    height: auto;
+}
+
+.pamphlet-banner {
+    width: 780px;
+    height: 100px;
+    padding: 4px;
+    border: 1px solid #fff;
+    margin: 8px 0px;
+}
+
+.pamphlet-button {
+    width: 88px;
+    height: 31px;
+    display: inline-block;
+}

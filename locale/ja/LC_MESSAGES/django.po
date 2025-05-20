@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-20 01:39+0000\n"
+"POT-Creation-Date: 2025-05-20 03:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,148 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-#: templates/_partials/left_sidebar.html:11
+
+#: templates/_partials/left_sidebar.html:18
 msgid "Username"
 msgstr "ユーザー名"
 
-#: templates/_partials/left_sidebar.html:12
+#: templates/_partials/left_sidebar.html:19
 msgid "Password"
 msgstr "パスワード"
 
-#: templates/_partials/left_sidebar.html:27
+#: templates/_partials/left_sidebar.html:34
 #, python-format
 msgid "Hello, %(username)s"
 msgstr "こんにちは、%(username)sさん"
 
-#: templates/_partials/left_sidebar.html:34
+#: templates/_partials/left_sidebar.html:41
 msgid "Journals"
 msgstr "ジャーナル"
 
-#: templates/_partials/left_sidebar.html:38
+#: templates/_partials/left_sidebar.html:45
 msgid "The Pagoda Realm"
 msgstr "パゴダレルム"
 
-#: templates/_partials/left_sidebar.html:42
+#: templates/_partials/left_sidebar.html:49
 msgid "My Page"
 msgstr "マイページ"
 
-#: templates/_partials/left_sidebar.html:46
+#: templates/_partials/left_sidebar.html:53
 msgid "Logout"
 msgstr "ログアウト"
+
+#: templates/_partials/left_sidebar.html:60
+msgid "Navigation"
+msgstr "ナビゲーション"
+
+#: templates/_partials/left_sidebar.html:65
+msgid "Home"
+msgstr "ホーム"
+
+#: templates/_partials/left_sidebar.html:69
+msgid "Journal of Random Thoughts"
+msgstr "ランダム思考のジャーナル"
+
+#: templates/_partials/left_sidebar.html:73
+msgid "Weblog"
+msgstr "ウェブログ"
+
+#: templates/_partials/left_sidebar.html:77
+msgid "Shrines"
+msgstr "神社"
+
+#: templates/_partials/left_sidebar.html:81
+msgid "Screenshots"
+msgstr "スクリーンショット"
+
+#: templates/_partials/left_sidebar.html:85
+msgid "Chatrooms"
+msgstr "チャットルーム"
+
+#: templates/_partials/left_sidebar.html:89
+msgid "Guestbook"
+msgstr "ゲストブック"
+
+#: templates/_partials/left_sidebar.html:93
+msgid "Site Preferences"
+msgstr "サイトの設定"
+
+#: templates/_partials/left_sidebar.html:98
+msgid "Register Account"
+msgstr "アカウント登録"
+
+#: templates/_partials/left_sidebar.html:101
+msgid "My Account"
+msgstr "マイアカウント"
+
+#: templates/_partials/left_sidebar.html:118
+msgid "Search"
+msgstr "検索"
+
+#: templates/_partials/left_sidebar.html:123
+msgid "The Good Stuff"
+msgstr "おすすめ"
+
+#: templates/_partials/left_sidebar.html:128
+msgid "Post Calendar"
+msgstr "ブログカレンダー"
+
+#: templates/_partials/left_sidebar.html:132
+msgid "Anime Streams"
+msgstr "アニメ配信"
+
+#: templates/_partials/left_sidebar.html:136
+msgid "The Matrix"
+msgstr "ザ・マトリックス"
+
+#: templates/_partials/left_sidebar.html:140
+msgid "RSS Feed"
+msgstr "RSSフィード"
+
+#: templates/_partials/left_sidebar.html:144
+msgid "Marketplace"
+msgstr "マーケットプレイス"
+
+#: templates/_partials/left_sidebar.html:148
+msgid "Discussions"
+msgstr "ディスカッション"
+
+#: templates/_partials/left_sidebar.html:155
+msgid "Site Spells"
+msgstr "サイトの魔法"
+
+#: templates/_partials/left_sidebar.html:161
+msgid "Withdraw Oneko"
+msgstr "おねこを引っ込める"
+
+#: templates/_partials/left_sidebar.html:164
+msgid "Summon Oneko"
+msgstr "おねこを召喚"
+
+#: templates/_partials/left_sidebar.html:169
+msgid "Harlem Shake"
+msgstr "ハーレムシェイク"
+
+#: templates/_partials/left_sidebar.html:173
+msgid "DVD Sitesaver"
+msgstr "DVDサイトセーバー"
+
+#: templates/_partials/left_sidebar.html:180
+msgid "Admin Area"
+msgstr "アドミンアレア"
+
+#: templates/_partials/left_sidebar.html:185
+msgid "Manage Announcements"
+msgstr "アナウンスメント管理"
+
+#: templates/_partials/left_sidebar.html:189
+msgid "Manage Users"
+msgstr "ユーザー管理"
+
+#: templates/_partials/left_sidebar.html:193
+msgid "Manage Storage Buckets"
+msgstr "ストレージバケット管理"
+
+#: templates/_partials/left_sidebar.html:199
+msgid "This website uses cookies and there's nothing you can do about it!"
+msgstr "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできません！"

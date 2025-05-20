@@ -1,0 +1,262 @@
+.right-sidebar {
+    position: relative;
+    left: 20px;
+}
+
+.left-sidebar {
+    position: relative;
+    top: -60px;
+}
+
+#login-area {
+    width: 200px;
+    height: 280px;
+    margin: auto;
+    background-repeat: no-repeat;
+    background-size: 200px 280px;
+    padding: 0;
+    border: 0;
+}
+
+/* Login Form */
+#login-form {
+    display: block;
+    position: relative;
+    top: 118px;
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"] {
+    display: block;
+    width: 144px;
+    margin: 5px auto;
+    padding: 5px 8px;
+    font-weight: bold;
+    color: #4a2e6f;
+    background: transparent;
+    border-radius: 4px;
+}
+
+#login-form input::placeholder {
+    color: #4a2e6f;
+    font-weight: normal;
+}
+
+#login-form input[type="submit"] {
+    position: absolute;
+    top: 96px;
+    left: 48px;
+    width: 106px;
+    height: 22px;
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+/* Autofill Override */
+#login-form input:-webkit-autofill,
+#login-form input:-webkit-autofill:hover,
+#login-form input:-webkit-autofill:focus,
+#login-form input:-webkit-autofill:active {
+    transition: background-color 1s ease-in 2000s;
+}
+
+/* Login Area Button Styles */
+#login-area>#register-now-button,
+#login-area>#forgot-password-button {
+    display: block;
+    height: 12px;
+    cursor: pointer;
+    border-radius: 2px;
+    position: absolute;
+    background: transparent;
+}
+
+#login-area>#register-now-button {
+    bottom: 23px;
+}
+
+#login-area>#forgot-password-button {
+    bottom: 85px;
+}
+
+html[lang='en'] #login-area {
+    background-image: url("../../images/core/backgrounds/login-area@2x.png");
+    background-image: url("../../images/core/backgrounds/login-area@2x.png");
+}
+
+html[lang='en'] #login-area>#register-now-button {
+    width: 50px;
+    right: 32px;
+}
+
+html[lang='en'] #login-area>#forgot-password-button {
+    width: 64px;
+    right: 21px;
+}
+
+html[lang='ja'] #login-area {
+    background-image: url("../../images/core/backgrounds/login-area_ja@3x.png");
+    background-image: url("../../images/core/backgrounds/login-area_ja@3x.png");
+}
+
+html[lang='ja'] #login-area>#register-now-button {
+    width: 76px;
+    right: 27px;
+}
+
+html[lang='ja'] #login-area>#forgot-password-button {
+    width: 75px;
+    right: 14px;
+}
+
+#user-area {
+    background: url("../../images/core/backgrounds/user-area.png") no-repeat;
+    background-size: 200px 250px;
+    width: 200px;
+    height: 196px;
+    max-height: 250px;
+    position: relative;
+}
+
+.left-sidebar-authenticated {
+    position: relative;
+    top: -30px;
+    left: -10px;
+}
+
+/* User Area */
+.user-items-container {
+    position: relative;
+    left: 78px;
+    margin-top: 20px;
+    border: 8px solid transparent;
+    padding: 4px;
+    border-image: url("../../images/core/backgrounds/user-area-border.jpg") 27 round;
+    width: 122px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    margin: 4px 0px;
+}
+
+.user-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.user-title {
+    font-size: 14px;
+    position: relative;
+    left: 78px;
+    top: 10px;
+}
+
+.user-avatar {
+    width: 72px;
+    height: 72px;
+    padding: 4px;
+    position: absolute;
+    bottom: 0;
+    border-radius: 4px;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+/* Navigation Links */
+.navigation-links {
+    margin: 24px 0px;
+}
+
+.navigation-title {
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.navigation-title {
+    filter: drop-shadow(2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0px 1px 1px #623795) drop-shadow(0px 1px 1px #623795);
+    color: #623795;
+}
+
+.navigation-title-container {
+    background-color: rgba(173, 128, 236, 0.35);
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+html[lang='en'] .navigation-title {
+    font-size: 18px;
+}
+
+html[lang='ja'] .navigation-title {
+    font-size: 14px;
+}
+
+.navigation-item {
+    display: flex;
+    align-items: center;
+    margin: 4px 0px;
+}
+
+.navigation-items-container {
+    background-color: #f4f1e90f;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.navigation-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+/* Sidebar Search Bar */
+#search-area {
+    width: 200px;
+    height: 88px;
+    background: url('../../images/core/backgrounds/search-area.png') no-repeat;
+    background-size: 200px 88px;
+    margin: auto;
+    padding: 0px;
+    border: 0px;
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+}
+
+#search-form {
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+}
+
+#search-form input[type=text] {
+    display: block;
+    width: 180px;
+    font-size: 12px;
+    background: transparent;
+    color: #231F20;
+    border-radius: 4px;
+}
+
+#search-form input::placeholder {
+    color: #524e4f;
+}
+
+/* Credits */
+.sidebar-credits {
+    border-top: 1px solid #fff;
+    padding: 8px 0;
+    margin-top: 8px;
+    text-align: center;
+}

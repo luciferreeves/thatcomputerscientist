@@ -221,8 +221,15 @@ class Post(TranslatableMixin, models.Model):
             soup = BeautifulSoup(self.body, "html.parser")
             excerpt = ""
             for paragraph in soup.find_all("p"):
-                paragraph = "<p>" + str(paragraph) + "</p>"
-                excerpt += str(paragraph)
+                p_content = paragraph.decode_contents()
+                p_soup = BeautifulSoup(p_content, "html.parser")
+
+                for img in p_soup.find_all("img"):
+                    img.decompose()
+
+                if p_soup.get_text().strip():
+                    filtered_p = f"<p>{p_soup.decode_contents()}</p>"
+                    excerpt += filtered_p
 
                 if len(excerpt) >= length:
                     break

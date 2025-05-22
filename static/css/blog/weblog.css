@@ -142,3 +142,26 @@
     word-wrap: break-word;
     white-space: pre-wrap;
 }
+
+/* Blockquote styles - Y2K Japanese inspired */
+.weblog-content blockquote {
+    margin: 12px 0;
+    padding: 8px 16px;
+    border-left: 4px solid #ff6dc6;
+    background: rgba(49, 27, 79, 0.5);
+    position: relative;
+    clear: both;
+}
+
+.weblog-content blockquote p {
+    margin: 5px 0;
+}
+
+.weblog-content blockquote cite {
+    display: block;
+    text-align: right;
+    margin-top: 8px;
+    font-size: 12px;
+    font-style: italic;
+    color: #777;
+}

@@ -1,0 +1,271 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+  <link type="text/css" rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
+  <style>
+    .collapsable p {
+      color: #8d8dff;
+      margin: 20px 0 15px 0;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(141, 141, 255, 0.5);
+      font-weight: 700;
+      text-shadow: 0 0 3px #000;
+    }
+    
+    .error-message {
+      color: #ff6b6b;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .success-message {
+      color: #6bff9e;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .crispy-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 12px;
+      background: rgba(49, 27, 79, 0.4);
+    }
+    
+    .crispy-table th,
+    .crispy-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(141, 141, 255, 0.3);
+    }
+    
+    .crispy-table th {
+      background: linear-gradient(to bottom, #6b3fa0 0%, #311b4f 100%);
+      font-weight: bold;
+    }
+    
+    .crispy-table tr {
+      transition: all 0.3s ease;
+    }
+    
+    .crispy-table tr:hover {
+      background-color: rgba(68, 68, 177, 0.15);
+    }
+    
+    .crispy-table tr:nth-child(even) {
+      background-color: rgba(49, 27, 79, 0.6);
+    }
+    
+    .table-image {
+      width: 64px;
+      height: 64px;
+      border-radius: 4px;
+    }
+    
+    .table-metadata p {
+      margin: 5px 0;
+      color: #dddddd;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 500px;
+    }
+    
+    .table-metadata strong {
+      color: #8d8dff;
+    }
+    
+    .table-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .table-actions a {
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-decoration: none;
+      text-align: center;
+      color: #ffffff;
+    }
+    
+    .edit-button {
+      background: rgba(141, 141, 255, 0.3);
+      border: 1px solid #8d8dff;
+    }
+    
+    .edit-button:hover {
+      background: rgba(141, 141, 255, 0.6);
+    }
+    
+    .delete-button {
+      background: rgba(255, 107, 107, 0.3);
+      border: 1px solid #ff6b6b;
+    }
+    
+    .delete-button:hover {
+      background: rgba(255, 107, 107, 0.6);
+    }
+    
+    .crispy-table tfoot {
+      background: linear-gradient(to top, rgba(107, 63, 160, 0.6), rgba(49, 27, 79, 0.6));
+    }
+    
+    .crispy-table tfoot p {
+      font-weight: bold;
+      color: #ffffff;
+      text-align: center;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h1 style="margin: 4px 0px;">{% translate 'Kawaii Beats Manager' %}</h1>
+  <hr />
+  <div class="collapsable {% if not auto_spotify_url %}collapsed{% endif %}">
+    <div class="collapsable-header {% if auto_spotify_url %}active{% endif %}">
+      <h2>{% translate 'Add Song' %}</h2>
+    </div>
+    <div class="collapsable-content">
+      <form method="POST" action="{% url 'administration:kawaiibeats' %}" class="crispy-forms">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="auto_spotify_url">{% translate 'Spotify URL' %}</label>
+          <input type="text" id="auto_spotify_url" name="auto_spotify_url" placeholder="{% translate 'Enter Spotify URL' %}" required value="{{ auto_spotify_url }}" />
+        </div>
+        <input type="submit" value="{% translate 'Request Song Metadata' %}" />
+      </form>
+      <p>Or you can add a song manually:</p>
+      <form method="POST" action="{% url 'administration:kawaiibeats' %}" class="crispy-forms">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="title">{% translate 'Title' %}</label>
+          <input type="text" id="title" name="title" placeholder="{% translate 'Enter Title' %}" required value="{{ song.title }}" />
+        </div>
+        <div class="form-group">
+          <label for="artists">{% translate 'Artists' %}</label>
+          <input type="text" id="artists" name="artists" placeholder="{% translate 'Enter Artists' %}" required value="{{ song.artists }}" />
+        </div>
+        <div class="form-group">
+          <label for="album">{% translate 'Album' %}</label>
+          <input type="text" id="album" name="album" placeholder="{% translate 'Enter Album' %}" required value="{{ song.album }}" />
+        </div>
+        <div class="form-group">
+          <label for="spotify_id">{% translate 'Spotify ID' %}</label>
+          <input type="text" id="spotify_id" name="spotify_id" placeholder="{% translate 'Enter Spotify ID' %}" required value="{{ song.spotify_id }}" />
+        </div>
+        <div class="form-group">
+          <label for="spotify_uri">{% translate 'Spotify URL' %}</label>
+          <input type="text" id="spotify_uri" name="spotify_uri" placeholder="{% translate 'Enter Spotify URL' %}" required value="{{ song.spotify_uri }}" />
+        </div>
+        <div class="form-group">
+          <label for="album_art_url">{% translate 'Album Art URL' %}</label>
+          <input type="text" id="album_art_url" name="album_art_url" placeholder="{% translate 'Enter Album Art URL' %}" required value="{{ song.album_art_url }}" />
+        </div>
+        <div class="form-group">
+          <label for="custom_album_art">{% translate 'Custom Album Art' %}</label>
+          <input type="text" id="custom_album_art" name="custom_album_art" placeholder="{% translate 'Enter Custom Album Art URL' %}" value="{{ song.custom_album_art }}" />
+        </div>
+        <div class="form-group">
+          <label for="duration_ms">{% translate 'Duration (ms)' %}</label>
+          <input type="number" id="duration_ms" name="duration_ms" placeholder="{% translate 'Enter Duration in milliseconds' %}" required value="{{ song.duration_ms }}" />
+        </div>
+        <div class="form-group">
+          <label for="explicit">{% translate 'Explicit' %}</label>
+          <input type="checkbox" id="explicit" name="explicit" {{ song.explicit|yesno:'checked,' }} />
+        </div>
+        <div class="form-group">
+          <label for="release_date">{% translate 'Release Date' %}</label>
+          <input type="date" id="release_date" name="release_date" required value="{{ song.release_date }}" />
+        </div>
+        <div class="form-group">
+          <label for="streaming_url">{% translate 'Streaming URL' %}</label>
+          <input type="text" id="streaming_url" name="streaming_url" placeholder="{% translate 'Enter Streaming URL' %}" value="{{ song.streaming_url }}" />
+        </div>
+        <input type="submit" value="{% translate 'Add Song' %}" />
+      </form>
+    </div>
+  </div>
+  {% if error %}
+    <div class="error-message">
+      <p>{{ error }}</p>
+    </div>
+  {% endif %}
+  {% if success %}
+    <div class="success-message">
+      <p>{{ success }}</p>
+    </div>
+  {% endif %}
+  <table class="crispy-table">
+    <thead>
+      <tr>
+        <th>
+          {% translate 'Album Art' %}
+        </th>
+        <th>
+          {% translate 'Metadata' %}
+        </th>
+        <th>
+          {% translate 'Actions' %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for song in songs %}
+        <tr>
+          <td>
+            {% if song.custom_album_art %}
+              <img src="{{ song.custom_album_art }}" alt="Custom Album Art" class="table-image" />
+            {% else %}
+              <img src="{{ song.album_art_url }}" alt="Album Art" class="table-image" />
+            {% endif %}
+          </td>
+          <td>
+            <div class="table-metadata">
+              <p>
+                <strong>{% translate 'Song' %}:</strong> {{ song.title }} &mdash; {{ song.album }} {{ song.explicit|yesno:'(Explicit),' }}
+              </p>
+              <p>
+                <strong>{% translate 'Artists' %}:</strong> {{ song.artists }}
+              </p>
+              <p>
+                <strong>{% translate 'Release Date' %}:</strong> {{ song.release_date }}
+              </p>
+            </div>
+          </td>
+          <td>
+            <div class="table-actions">
+              <a href="{% url 'admin:administration_songmetadata_change' song.id %}" class="edit-button">{% translate 'Edit' %}</a>
+              <a href="{% url 'admin:administration_songmetadata_delete' song.id %}" class="delete-button">{% translate 'Delete' %}</a>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3">
+            <p>
+              {% translate 'No songs found.' %}
+            </p>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3">
+          <p>
+            {% translate 'Total Songs' %}: {{ songs.count }}
+          </p>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static 'js/administration/forms.js' %}"></script>
+{% endblock %}

@@ -15,14 +15,29 @@
         /**
          * Creates a new Pamphlet instance
          * @param {Object} config - Configuration options
-         * @param {string} [config.server='/services/pamphlet'] - Server endpoint for pamphlet content
+         * @param {string} [config.server='https://shi.foo/services/pamphlet'] - Server endpoint for pamphlet content
          * @param {number} [config.refreshInterval=3600000] - Refresh interval in milliseconds (0 to disable)
          */
         constructor(config = {}) {
+            let refreshInterval = config.refreshInterval || 3600000;
+
+            // Ensure refresh interval is either 0 (disabled) or valid
+            if (refreshInterval > 0 && refreshInterval < 60000) {
+                console.warn('Pamphlet: Refresh interval must be at least 1 minute (60000ms). Setting to 60000ms.');
+                refreshInterval = 60000;
+            } else if (refreshInterval < 0) {
+                console.warn('Pamphlet: Refresh interval cannot be negative. Setting to 3600000ms.');
+                refreshInterval = 3600000;
+            } else if (isNaN(refreshInterval)) {
+                console.warn('Pamphlet: Refresh interval must be a number. Setting to 3600000ms.');
+                refreshInterval = 3600000;
+            }
+
+            // First spread the config object, then override with validated values
             this.config = {
-                server: config.server || '/services/pamphlet',
-                refreshInterval: config.refreshInterval || 3600000,
-                ...config
+                ...config,
+                server: config.server || 'https://shi.foo/services/pamphlet',
+                refreshInterval: refreshInterval
             };
 
             /** @type {Map<string, {element: HTMLElement, style: string}>} */

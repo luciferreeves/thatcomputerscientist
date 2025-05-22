@@ -1,0 +1,180 @@
+/* Administration Forms */
+
+.collapsable {
+    width: 780px;
+    margin: 12px auto;
+    background: rgba(49, 27, 79, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.collapsable-header {
+    background: linear-gradient(to bottom, #6b3fa0 0%, #311b4f 100%);
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.collapsable-header h2 {
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 16px;
+    text-shadow: 0 0 5px #df23c4;
+}
+
+.collapsable-header::after {
+    content: "▼";
+    transition: transform 0.3s ease;
+}
+
+.collapsable-header.active::after {
+    transform: rotate(180deg);
+}
+
+.collapsable-content {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+.collapsable.collapsed .collapsable-content {
+    display: none;
+}
+
+/* Form Styles */
+form.crispy-forms {
+    padding: 15px;
+    background-color: rgba(49, 27, 79, 0.5);
+    margin: 10px 0;
+    position: relative;
+    border: 1px solid #8d8dff;
+    border-radius: 4px;
+}
+
+.crispy-forms .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.crispy-forms .form-group>*:not(label) {
+    flex: 1;
+}
+
+/* Label Styles */
+.crispy-forms .form-group label {
+    font-weight: 700;
+    color: #8d8dff;
+    width: 20%;
+    text-align: left;
+}
+
+/* Input Styles */
+.crispy-forms .form-group input[type="text"],
+.crispy-forms .form-group input[type="password"],
+.crispy-forms .form-group input[type="number"],
+.crispy-forms .form-group input[type="url"],
+.crispy-forms .form-group input[type="date"],
+.crispy-forms .form-group select,
+.crispy-forms .form-group textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid rgba(141, 141, 255, 0.5);
+    background: rgba(0, 0, 0, 0.4);
+    color: #dddddd;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(223, 35, 196, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Special styles for date input */
+.crispy-forms .form-group input[type="date"] {
+    color-scheme: dark;
+}
+
+.crispy-forms .form-group input::placeholder {
+    color: rgba(222, 222, 222, 0.5);
+}
+
+.crispy-forms .form-group input:focus,
+.crispy-forms .form-group select:focus,
+.crispy-forms .form-group textarea:focus {
+    outline: none;
+    border-color: #df23c4;
+    box-shadow: 0 0 8px rgba(223, 35, 196, 0.4);
+}
+
+.crispy-forms .form-group select {
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+    position: relative;
+}
+
+.crispy-forms .form-group select::after {
+    content: "▼";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8d8dff;
+    pointer-events: none;
+}
+
+/* Checkbox Styles */
+.crispy-forms .form-group input[type="checkbox"] {
+    margin-right: 8px;
+    position: relative;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #8d8dff;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 5px rgba(223, 35, 196, 0.2);
+    flex: none;
+}
+
+.crispy-forms .form-group input[type="checkbox"]:checked {
+    background-color: rgba(68, 68, 177, 0.8);
+    position: relative;
+}
+
+.crispy-forms .form-group input[type="checkbox"]:checked:after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 3.5px;
+}
+
+/* Submit Button Styles */
+.crispy-forms input[type="submit"] {
+    background-color: rgba(68, 68, 177, 0.8);
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.crispy-forms input[type="submit"]:hover {
+    background-color: #df23c4;
+    box-shadow: 0 0 15px rgba(223, 35, 196, 0.7);
+    text-shadow: 0 0 3px #000;
+}
+
+.crispy-forms input[type="submit"]:active {
+    background-color: #8d8dff;
+    transform: scale(0.98);
+}

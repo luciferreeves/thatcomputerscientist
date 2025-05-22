@@ -22,16 +22,16 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # set n_connected_lc_users to 0 on startup
-import redis
+# import redis
 
-# r = redis.Redis(host='localhost', port=6379, db=0)
-r = redis.Redis(
-    host=os.getenv("REDIS_HOST"),
-    port=os.getenv("REDIS_PORT"),
-    password=os.getenv("REDIS_PASSWORD"),
-    db=0,
-)
-r.set("n_connected_lc_users", 0)
+# # r = redis.Redis(host='localhost', port=6379, db=0)
+# r = redis.Redis(
+#     host=os.getenv("REDIS_HOST"),
+#     port=os.getenv("REDIS_PORT"),
+#     password=os.getenv("REDIS_PASSWORD"),
+#     db=0,
+# )
+# r.set("n_connected_lc_users", 0)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -57,6 +57,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 ROOT_HOSTCONF = "thatcomputerscientist.hosts"
 ROOT_URLCONF = "thatcomputerscientist.urls"
 DEFAULT_HOST = "default"
+LOGIN_URL = "/"
 
 # Application definition
 
@@ -73,6 +74,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     # "sslserver",
     "thatcomputerscientist",
+    "administration",
     "haystack",
     "blog.apps.BlogConfig",
     "users",

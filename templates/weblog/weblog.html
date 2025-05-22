@@ -1,0 +1,10 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  <h1 class="section-title">{% translate 'Contemplations of Late' %}</h1>
+  <div class="weblogs">
+    {% include '_partials/weblog_list.html' with posts=posts %}
+  </div>
+{% endblock %}

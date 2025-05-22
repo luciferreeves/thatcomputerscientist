@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-20 06:47+0000\n"
+"POT-Creation-Date: 2025-05-22 05:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,8 +191,9 @@ msgid "Manage Users"
 msgstr "ユーザー管理"
 
 #: templates/_partials/left_sidebar.html:191
-msgid "Manage Song Streaming"
-msgstr "曲ストリーミング管理"
+#: templates/administration/kawaiibeats.html:127
+msgid "KawaiiBeats Manager"
+msgstr "KawaiiBeatsマネージャー"
 
 #: templates/_partials/left_sidebar.html:197
 msgid "This website uses cookies and there's nothing you can do about it!"
@@ -300,6 +301,135 @@ msgid_plural ""
 msgstr[0] ""
 "\n"
 "          %(comment_count)s コメント"
+
+#: templates/administration/kawaiibeats.html:131
+#: templates/administration/kawaiibeats.html:191
+msgid "Add Song"
+msgstr "楽曲を追加"
+
+#: templates/administration/kawaiibeats.html:137
+#: templates/administration/kawaiibeats.html:164
+msgid "Spotify URL"
+msgstr "SpotifyのURL"
+
+#: templates/administration/kawaiibeats.html:138
+#: templates/administration/kawaiibeats.html:165
+msgid "Enter Spotify URL"
+msgstr "SpotifyのURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:140
+msgid "Request Song Metadata"
+msgstr "楽曲のメタデータを取得"
+
+#: templates/administration/kawaiibeats.html:143
+msgid "Or you can add a song manually:"
+msgstr "または手動で楽曲を追加することもできます："
+
+#: templates/administration/kawaiibeats.html:148
+msgid "Title"
+msgstr "タイトル"
+
+#: templates/administration/kawaiibeats.html:149
+msgid "Enter Title"
+msgstr "タイトルを入力してください"
+
+#: templates/administration/kawaiibeats.html:152
+#: templates/administration/kawaiibeats.html:235
+msgid "Artists"
+msgstr "アーティスト"
+
+#: templates/administration/kawaiibeats.html:153
+msgid "Enter Artists"
+msgstr "アーティスト名を入力してください"
+
+#: templates/administration/kawaiibeats.html:156
+msgid "Album"
+msgstr "アルバム"
+
+#: templates/administration/kawaiibeats.html:157
+msgid "Enter Album"
+msgstr "アルバム名を入力してください"
+
+#: templates/administration/kawaiibeats.html:160
+msgid "Spotify ID"
+msgstr "Spotify ID"
+
+#: templates/administration/kawaiibeats.html:161
+msgid "Enter Spotify ID"
+msgstr "Spotify IDを入力してください"
+
+#: templates/administration/kawaiibeats.html:168
+msgid "Album Art URL"
+msgstr "アルバムアートのURL"
+
+#: templates/administration/kawaiibeats.html:169
+msgid "Enter Album Art URL"
+msgstr "アルバムアートのURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:172
+msgid "Custom Album Art"
+msgstr "カスタムアルバムアート"
+
+#: templates/administration/kawaiibeats.html:173
+msgid "Enter Custom Album Art URL"
+msgstr "カスタムアルバムアートのURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:176
+msgid "Duration (ms)"
+msgstr "再生時間（ミリ秒）"
+
+#: templates/administration/kawaiibeats.html:177
+msgid "Enter Duration in milliseconds"
+msgstr "再生時間をミリ秒で入力してください"
+
+#: templates/administration/kawaiibeats.html:180
+msgid "Explicit"
+msgstr "露骨な表現"
+
+#: templates/administration/kawaiibeats.html:184
+#: templates/administration/kawaiibeats.html:238
+msgid "Release Date"
+msgstr "リリース日"
+
+#: templates/administration/kawaiibeats.html:188
+msgid "Streaming URL"
+msgstr "ストリーミングURL"
+
+#: templates/administration/kawaiibeats.html:189
+msgid "Enter Streaming URL"
+msgstr "ストリーミングURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:209
+msgid "Album Art"
+msgstr "アルバムアート"
+
+#: templates/administration/kawaiibeats.html:212
+msgid "Metadata"
+msgstr "メタデータ"
+
+#: templates/administration/kawaiibeats.html:215
+msgid "Actions"
+msgstr "アクション"
+
+#: templates/administration/kawaiibeats.html:232
+msgid "Song"
+msgstr "楽曲"
+
+#: templates/administration/kawaiibeats.html:244
+msgid "Edit"
+msgstr "編集"
+
+#: templates/administration/kawaiibeats.html:245
+msgid "Delete"
+msgstr "削除"
+
+#: templates/administration/kawaiibeats.html:253
+msgid "No songs found."
+msgstr "楽曲が見つかりませんでした。"
+
+#: templates/administration/kawaiibeats.html:263
+msgid "Total Songs"
+msgstr "総楽曲数"
 
 #: templates/core/home.html:13
 #, python-format

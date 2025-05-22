@@ -4,7 +4,7 @@ from io import BytesIO
 import requests
 from captcha.image import ImageCaptcha
 from django.core.files.base import ContentFile
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 
@@ -79,28 +79,31 @@ def post_image(request, size, post_id):
 
 @csrf_exempt
 def get_image(request, post_id, image_name):
-    # get image from post_id
-    try:
-        post = Post.objects.get(id=post_id)
-    except:
-        return HttpResponse("No post found!", status=404)
-    pi = PostImage.objects.filter(post=post, name=image_name)
-    if not pi:
-        return HttpResponse("No image found!", status=404)
+    # temporary: get images from the main server
+    return HttpResponseRedirect(f"https://ignis.shi.foo/image/{post_id}/{image_name}")
 
-    # open image and return
-    image = pi[0].image
-    with open(image.path, "rb") as f:
-        image_file = f.read()
-        # convert to gif
-        image = Image.open(BytesIO(image_file))
-        # check image format
-        if image.format != "GIF":
-            image = image.convert("RGBA")
-            output = BytesIO()
-            image.save(output, format="GIF")
-            image_file = output.getvalue()
-        return HttpResponse(image_file, content_type="image/gif")
+    # # get image from post_id
+    # try:
+    #     post = Post.objects.get(id=post_id)
+    # except:
+    #     return HttpResponse("No post found!", status=404)
+    # pi = PostImage.objects.filter(post=post, name=image_name)
+    # if not pi:
+    #     return HttpResponse("No image found!", status=404)
+
+    # # open image and return
+    # image = pi[0].image
+    # with open(image.path, "rb") as f:
+    #     image_file = f.read()
+    #     # convert to gif
+    #     image = Image.open(BytesIO(image_file))
+    #     # check image format
+    #     if image.format != "GIF":
+    #         image = image.convert("RGBA")
+    #         output = BytesIO()
+    #         image.save(output, format="GIF")
+    #         image_file = output.getvalue()
+    #     return HttpResponse(image_file, content_type="image/gif")
 
 
 @csrf_exempt

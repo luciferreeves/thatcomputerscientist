@@ -1,0 +1,144 @@
+.weblog-image {
+    width: 780px;
+    height: 512px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0px auto;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.weblog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    position: relative;
+    top: 8px;
+}
+
+
+.weblog-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.post-actions {
+    padding-top: 4px;
+    border-top: 1px solid #dddddd;
+}
+
+.weblog-content {
+    margin: 8px 0px;
+}
+
+.weblog-content img {
+    shape-outside: margin-box;
+    width: auto;
+    height: auto;
+    max-width: 350px;
+    max-height: 350px;
+    border-radius: 8px;
+    overflow: hidden;
+    object-fit: cover;
+    position: relative;
+    top: 6px;
+    margin-bottom: 8px;
+}
+
+.weblog-content img:nth-of-type(odd) {
+    float: left;
+    margin-right: 12px;
+    margin-left: 0;
+}
+
+.weblog-content img:nth-of-type(even) {
+    float: right;
+    margin-left: 12px;
+    margin-right: 0;
+}
+
+.weblog-content img.block {
+    float: none;
+    margin: 0px auto;
+    display: block;
+    width: 780px;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.weblog-content h1,
+.weblog-content h2,
+.weblog-content h3 {
+    width: 100%;
+    text-transform: capitalize;
+}
+
+.weblog-content pre {
+    clear: both;
+    width: 100%;
+}
+
+.weblog-content p {
+    text-align: justify;
+    margin: 4px 0px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.weblog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0;
+}
+
+.weblog-content ul,
+.weblog-content ol {
+    margin: 8px 0;
+    padding: 0;
+    list-style-position: inside;
+    margin-left: 16px;
+}
+
+.weblog-content ul ul,
+.weblog-content ul ol,
+.weblog-content ol ul,
+.weblog-content ol ol {
+    margin: 4px 0;
+    margin-left: 24px;
+}
+
+.weblog-content ul li,
+.weblog-content ol li {
+    margin: 4px 0;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+.weblog-content pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 780px;
+    overflow-x: auto;
+}
+
+.weblog-content .highlight {
+    width: 100%;
+    max-width: 780px;
+}
+
+.weblog-content .highlight pre {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.weblog-content code {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}

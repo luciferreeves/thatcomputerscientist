@@ -139,7 +139,9 @@
         </div>
         <input type="submit" value="{% translate 'Request Song Metadata' %}" />
       </form>
-      <p>Or you can add a song manually:</p>
+      <p>
+        {% translate 'Or you can add a song manually:' %}
+      </p>
       <form method="POST" action="{% url 'administration:kawaiibeats' %}" class="crispy-forms">
         {% csrf_token %}
         <div class="form-group">

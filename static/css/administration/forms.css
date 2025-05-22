@@ -142,6 +142,7 @@ form.crispy-forms {
     outline: none;
     box-shadow: 0 0 5px rgba(223, 35, 196, 0.2);
     flex: none;
+    color: #ffffff;
 }
 
 .crispy-forms .form-group input[type="checkbox"]:checked {

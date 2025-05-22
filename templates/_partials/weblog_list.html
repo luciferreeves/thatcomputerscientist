@@ -10,7 +10,7 @@
         <img src="{{ post.image_url }}" alt="{{ post.title }}" />
       </div>
       <div class="post-content">
-        <h2><a href="#{{ post.slug }}">{{ post.title }}</a></h2>
+        <h2><a href="{% url 'weblog:post' post.slug %}">{{ post.title }}</a></h2>
         <div class="author-info">
           {% with authorprofile=post.author.userprofile_set.first %}
             <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif" class="post-profile-image" alt="{{ post.author.first_name }}'s Avatar" />
@@ -26,8 +26,8 @@
     </div>
     <div class="post-actions">
       <div class="post-links">
-        <a href="#{{ post.slug }}">{% translate 'Continue Reading' %}</a> |
-        <a href="#{{ post.slug }}#comments">
+        <a href="{% url 'weblog:post' post.slug %}">{% translate 'Continue Reading' %}</a> |
+        <a href="{% url 'weblog:post' post.slug %}#comments">
           {% blocktranslate count comment_count=post.comments.all|length %}
           {{ comment_count }} Comment{% plural %}
           {{ comment_count }} Comments{% endblocktranslate %}

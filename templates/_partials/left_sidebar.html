@@ -68,7 +68,7 @@
       </div>
       <div class="navigation-item">
         <img src="{% static 'images/core/icons/weblog.gif' %}" alt="Weblog Icon" />
-        <a href="#weblog">{% translate 'Weblog' %}</a>
+        <a href="{% url 'weblog:home' %}">{% translate 'Weblog' %}</a>
       </div>
       <div class="navigation-item">
         <img src="{% static 'images/core/icons/shrines.png' %}" alt="Shrines Icon" />
@@ -118,7 +118,7 @@
   </div>
   <div class="navigation-links">
     <div class="navigation-title-container">
-      <h1 class="navigation-title">{% translate 'The Good Stuff' %}</h1>
+      <h1 id="thegoodstuff" class="navigation-title">{% translate 'The Good Stuff' %}</h1>
     </div>
     <div class="navigation-items-container">
       <div class="navigation-item">

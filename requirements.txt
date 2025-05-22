@@ -1,5 +1,8 @@
 # v2 Updated Requirements
+bs4
 django
+pygments
+requests
 
 
 # django-redis

@@ -1,0 +1,68 @@
+{% extends '_layouts/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load tz %}
+
+{% block head %}
+  <link type="text/css" rel="stylesheet" href="{% static 'css/blog/weblog.css' %}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="weblog-container">
+    <div class="weblog-title-area">
+      <h1>{{ post.title }}</h1>
+      <div class="weblog-details">
+        <div class="author-info">
+          {% with authorprofile=post.author.userprofile_set.first %}
+            <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif" class="post-profile-image" alt="{{ post.author.first_name }}'s Avatar" />
+          {% endwith %}
+          <a href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a>
+          <span>{% translate 'posted in' %}</span>
+          <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
+          <span>{% translate 'on' %}</span>
+          <span style="margin-left: 4px;">{% localtime on %}{{ post.date|date:'M d, Y' }}{% endlocaltime %}</span>
+        </div>
+        <div class="post-info">
+          <span>{% translate 'Views' %}: {{ post.views }}</span>
+          <span>&emsp;|&emsp;</span>
+          <span>
+            {% blocktranslate count comment_count=post.comments.all|length %}
+            {{ comment_count }} Comment{% plural %}
+            {{ comment_count }} Comments{% endblocktranslate %}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="weblog-content">{{ post.first_paragraph|safe }}</div>
+    <div class="weblog-image">
+      <img src="{{ post.image_url }}" alt="{{ post.title }}" />
+    </div>
+    <div class="weblog-content" id="weblog-body-content">{{ post.body|safe }}</div>
+    <div class="post-actions">
+      <div class="post-tags" style="display: flex; flex-direction: row; align-items: center;gap: 4px;">
+        <span><strong>{% translate 'Tagged with' %}:</strong></span>{% for tag in post.tags.all %}
+          <a class="post-tag" href="#{{ tag.slug }}">{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="comments-section" id="comments">
+      <h2>{% translate 'Comments' %}</h2>
+      {% for comment in post.comments.all %}
+        {% if not comment.parent %}
+          {% include '_partials/post_comments.html' with comment=comment %}
+        {% endif %}
+      {% endfor %}
+      {% if post.comments.all|length == 0 %}
+        <p>
+          {% translate 'No comments yet.' %}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}

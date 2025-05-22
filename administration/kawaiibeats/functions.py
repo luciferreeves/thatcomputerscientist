@@ -9,6 +9,21 @@ def get_all_songs():
         return None
 
 
+def get_random_song(current_song=None):
+    if current_song:
+        current = SongMetadata.objects.filter(spotify_id=current_song).first()
+        if current:
+            next_song = (
+                SongMetadata.objects.filter(id__gt=current.id).order_by("id").first()
+            )
+            if next_song:
+                return next_song
+
+            return SongMetadata.objects.order_by("id").first()
+
+    return SongMetadata.objects.order_by("?").first()
+
+
 def create_or_update_song_metadata(song_data):
     try:
         song, created = SongMetadata.objects.update_or_create(

@@ -15,7 +15,7 @@ SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def home(request):
-    request.meta.title = "Kawaii Beats Manager"
+    request.meta.title = "KawaiiBeats Manager"
     template = "administration/kawaiibeats.html"
     context = {
         "songs": get_all_songs(),

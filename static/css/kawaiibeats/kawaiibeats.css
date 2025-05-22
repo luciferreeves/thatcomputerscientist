@@ -26,9 +26,9 @@
 /* Track Information */
 #song-title {
     position: absolute;
-    top: 25px;
-    left: 20px;
-    width: 160px;
+    top: 24px;
+    left: 24px;
+    width: 158px;
     font-weight: bold;
     text-align: center;
     white-space: nowrap;

@@ -4,31 +4,16 @@
  * @fileoverview Audio player implementation with artwork management and persistent state
  * @version 1.0.0
  */
-/** @type {string[]} Artwork collection for random assignment */
-const artworkCollection = [
-    "https://i.pinimg.com/enabled/564x/e2/5d/31/e25d3199f73c9453035727f8c7a70170.jpg",
-    "https://i.pinimg.com/enabled/564x/5f/ed/28/5fed282cff8d22ac857e2a489031d05a.jpg",
-    "https://i.pinimg.com/736x/05/a8/71/05a87162a78e2cad2ffe0a9eac6b4e2c.jpg",
-    "https://i.pinimg.com/736x/c6/ac/13/c6ac139ed02c9accd34dbb16d7466025.jpg",
-    "https://i.pinimg.com/736x/72/69/c3/7269c3d939764b024da9a6869dc59a0f.jpg",
-    "https://i.pinimg.com/enabled/564x/cc/5c/6f/cc5c6f1c8e053d791ae2b4300ef5c9fe.jpg",
-    "https://i.pinimg.com/enabled/564x/fa/0a/c2/fa0ac2b7145af1205c87350f7c735683.jpg",
-    "https://i.pinimg.com/enabled/564x/94/84/57/9484579fcbf7e768d6206b07fa44c2b9.jpg",
-    "https://i.pinimg.com/enabled/564x/fd/30/bf/fd30bf62f6409129ce6538f1b9ed7b8b.jpg",
-    "https://i.pinimg.com/enabled/564x/44/b2/11/44b21104b4e41736c99ee183127aab3d.jpg",
-    "https://i.pinimg.com/enabled/564x/f7/ce/56/f7ce5629aa91866020a559ef7e249f1c.jpg",
-    "https://i.pinimg.com/enabled/564x/7b/ac/36/7bac368ff9b5f702d9b727491f8d4ef0.jpg",
-    "https://i.pinimg.com/enabled/564x/39/1a/51/391a514a013f62ca9f25f47b4cbd7776.jpg",
-    "https://i.pinimg.com/enabled/564x/03/d2/96/03d2967de5d249f88155cab461e69f3a.jpg",
-];
 
 /**
  * @typedef {Object} Song
- * @property {string} id - Unique identifier for the song
+ * @property {string} id - Unique identifier for the song (spotify_id)
  * @property {string} title - Song title
  * @property {string} artist - Artist name
  * @property {string} album - Album name
- * @property {string} [artwork] - URL to artwork image
+ * @property {string} [album_art_url] - URL to album artwork image
+ * @property {string} [custom_album_art] - URL to custom album artwork image
+ * @property {string} [streaming_url] - URL to the audio stream
  */
 
 /**
@@ -45,7 +30,7 @@ const artworkCollection = [
  */
 
 // Configuration
-const STORE_LIMIT = artworkCollection.length;
+const STORE_LIMIT = 20;
 const SEEKBAR_CONFIG = {
     HEIGHT: 4,
     THUMB_RADIUS: 6,
@@ -58,69 +43,16 @@ const SEEKBAR_CONFIG = {
 };
 
 /**
- * Manages artwork selection and rotation for songs
- */
-class ArtworkManager {
-    /**
-     * @param {string[]} artworkCollection - Collection of artwork URLs
-     */
-    constructor(artworkCollection) {
-        this.collection = artworkCollection;
-        this.usedArtwork = new Set();
-        this.availableArtwork = [...artworkCollection];
-    }
-
-    /**
-     * @returns {string} Random unused artwork URL
-     */
-    getRandomArtwork() {
-        if (this.availableArtwork.length === 0) {
-            this.resetArtworkPool();
-        }
-        const randomIndex = Math.floor(Math.random() * this.availableArtwork.length);
-        const artwork = this.availableArtwork[randomIndex];
-        this.availableArtwork.splice(randomIndex, 1);
-        this.usedArtwork.add(artwork);
-        return artwork;
-    }
-
-    resetArtworkPool() {
-        this.availableArtwork = [...this.collection];
-        this.usedArtwork.clear();
-    }
-
-    /**
-     * @param {string} artwork - Artwork URL to release back to pool
-     */
-    releaseArtwork(artwork) {
-        if (this.usedArtwork.has(artwork)) {
-            this.usedArtwork.delete(artwork);
-            this.availableArtwork.push(artwork);
-        }
-    }
-}
-
-/**
  * Manages song queue and persistence
  */
 class SongStore {
     /**
      * @param {number} limit - Maximum number of songs to store
-     * @param {ArtworkManager} artworkManager - Artwork management instance
      */
-    constructor(limit, artworkManager) {
+    constructor(limit) {
         this.limit = limit;
-        this.artworkManager = artworkManager;
         this.songs = JSON.parse(localStorage.getItem('songStore')) || [];
         this.currentIndex = parseInt(localStorage.getItem('currentSongIndex')) || -1;
-        this.artworkCache = JSON.parse(localStorage.getItem('artworkCache')) || {};
-
-        // Restore artwork state
-        Object.values(this.artworkCache).forEach(artwork => {
-            this.artworkManager.usedArtwork.add(artwork);
-        });
-        this.artworkManager.availableArtwork = this.artworkManager.availableArtwork
-            .filter(artwork => !this.artworkManager.usedArtwork.has(artwork));
     }
 
     /**
@@ -130,41 +62,40 @@ class SongStore {
     async addSong(song) {
         if (!song) return null;
 
-        const artwork = this.artworkManager.getRandomArtwork();
-        this.artworkCache[song.id] = artwork;
-
         this.songs.push({
-            id: song.id,
+            id: song.spotify_id,
+            spotify_id: song.spotify_id,
             title: song.title,
             artist: song.artist,
-            album: song.album
+            album: song.album,
+            album_art_url: song.album_art_url,
+            custom_album_art: song.custom_album_art,
+            streaming_url: song.streaming_url
         });
 
         if (this.songs.length > this.limit) {
-            const removedSong = this.songs.shift();
-            const removedArtwork = this.artworkCache[removedSong.id];
-            this.artworkManager.releaseArtwork(removedArtwork);
-            delete this.artworkCache[removedSong.id];
+            this.songs.shift();
             if (this.currentIndex > -1) this.currentIndex--;
         }
 
         this.currentIndex = this.songs.length - 1;
         this.save();
 
-        return { ...song, artwork };
+        return song;
     }
 
     /**
+     * @param {string} [serverURL=''] - Base URL for server requests
      * @returns {Promise<Song|null>} Next song in queue or new song
      */
-    async getNext() {
+    async getNext(serverURL = '') {
         if (this.currentIndex < this.songs.length - 1) {
             this.currentIndex++;
             this.save();
-            return this._getSongWithArtwork(this.currentIndex);
+            return this.songs[this.currentIndex];
         }
         const nextSongId = this.songs[this.currentIndex]?.id;
-        const newSong = await this._fetchSong(nextSongId);
+        const newSong = await this._fetchSong(nextSongId, serverURL);
         return this.addSong(newSong);
     }
 
@@ -175,7 +106,7 @@ class SongStore {
         if (this.currentIndex > 0) {
             this.currentIndex--;
             this.save();
-            return this._getSongWithArtwork(this.currentIndex);
+            return this.songs[this.currentIndex];
         }
         return null;
     }
@@ -184,44 +115,51 @@ class SongStore {
      * @private
      * @param {string} [nextSongId] - ID of current song for continuity
      * @returns {Promise<Song|null>} Fetched song data
-     */
-    async _fetchSong(nextSongId = null) {
+     */    /**
+* @private
+* @param {string} [nextSongId] - ID of current song for continuity
+* @param {string} [serverURL=''] - Base URL for server requests
+* @returns {Promise<Song|null>} Fetched song data
+*/
+    async _fetchSong(nextSongId = null, serverURL = '') {
         try {
-            const url = nextSongId ?
-                `/services/stream/random-song?next=${nextSongId}` :
-                '/services/stream/random-song';
-            const response = await fetch(url);
-            return await response.json();
+            const endpoint = nextSongId ?
+                `${serverURL}/services/kawaiibeats?next=${nextSongId}` :
+                `${serverURL}/services/kawaiibeats`;
+            const response = await fetch(endpoint);
+            const song = await response.json();
+
+            if (song && song.spotify_id && !song.id) {
+                song.id = song.spotify_id;
+            }
+
+            return song;
         } catch (error) {
             console.error('Error fetching song:', error);
             return null;
         }
     }
 
-    /**
-     * @private
-     * @param {number} index - Index of song to retrieve
-     * @returns {Song|null} Song with artwork
-     */
-    _getSongWithArtwork(index) {
-        const song = this.songs[index];
-        return song ? { ...song, artwork: this.artworkCache[song.id] } : null;
-    }
-
     getCurrentSong() {
-        return this.currentIndex >= 0 ? this._getSongWithArtwork(this.currentIndex) : null;
+        return this.currentIndex >= 0 ? this.songs[this.currentIndex] : null;
     }
 
     getArtwork(songId) {
-        return this.artworkCache[songId];
+        const song = this.songs.find(s => s.id === songId);
+        return song ? (song.custom_album_art || song.album_art_url) : null;
     }
 
     save() {
         localStorage.setItem('songStore', JSON.stringify(this.songs));
         localStorage.setItem('currentSongIndex', this.currentIndex.toString());
-        localStorage.setItem('artworkCache', JSON.stringify(this.artworkCache));
     }
 }
+
+/**
+ * @typedef {Object} PlayerConfig
+ * @property {number} [storeLimit=20] - Maximum number of songs to store
+ * @property {string} [serverURL=''] - Base URL for server requests
+ */
 
 /**
  * Manages audio playback and visualization
@@ -229,11 +167,15 @@ class SongStore {
 class AudioPlayer {
     /**
      * @param {UIElements} elements - DOM elements
-     * @param {SongStore} songStore - Song management instance
+     * @param {PlayerConfig} [config={}] - Configuration options
      */
-    constructor(elements, songStore) {
+    constructor(elements, config = {}) {
         this.elements = elements;
-        this.songStore = songStore;
+        this.config = {
+            storeLimit: config.storeLimit || STORE_LIMIT,
+            serverURL: config.serverURL || 'https://shi.foo'
+        };
+        this.songStore = new SongStore(this.config.storeLimit);
         this.audioContext = null;
         this.sourceNode = null;
         this.analyzerNode = null;
@@ -442,7 +384,7 @@ class AudioPlayer {
             this.elements.songArtistAlbum.textContent =
                 `${this.currentSong.artist} - ${this.currentSong.album}`;
             this.elements.songCover.src =
-                this.currentSong.artwork || this.songStore.getArtwork(this.currentSong.id);
+                this.currentSong.custom_album_art || this.currentSong.album_art_url || '';
         }
     }
 
@@ -520,9 +462,12 @@ class AudioPlayer {
             this.audioContext.currentTime - this.startTime : this.pauseTime;
         const state = {
             songId: this.currentSong.id,
+            spotify_id: this.currentSong.spotify_id || this.currentSong.id,
             timeStamp: Math.min(currentTime, this.audioBuffer?.duration || 0),
             isPlaying: this.isPlaying,
-            artwork: this.elements.songCover.src,
+            album_art_url: this.currentSong.album_art_url,
+            custom_album_art: this.currentSong.custom_album_art,
+            streaming_url: this.currentSong.streaming_url,
             songTitle: this.currentSong.title,
             songArtist: this.currentSong.artist,
             songAlbum: this.currentSong.album
@@ -543,7 +488,7 @@ class AudioPlayer {
             this.stop();
 
             const nextSong = direction === 'next' ?
-                await this.songStore.getNext() :
+                await this.songStore.getNext(this.config.serverURL) :
                 await this.songStore.getPrevious();
 
             if (!nextSong && direction === 'previous') return;
@@ -551,7 +496,7 @@ class AudioPlayer {
             this.currentSong = nextSong;
             this.updateSongInfo();
 
-            await this.loadAudio(`/services/stream/song/${this.currentSong.id}`);
+            await this.loadAudio(this.currentSong.streaming_url);
             this.pauseTime = 0;
 
             if (wasPlaying) {
@@ -593,7 +538,11 @@ class AudioPlayer {
         this.elements.nextButton.addEventListener('click', () => this.loadNewSong(this.isPlaying, 'next'));
 
         this.elements.songCover.addEventListener('error', () => {
-            this.elements.songCover.src = this.songStore.getArtwork(this.currentSong.id);
+            if (this.currentSong.custom_album_art && this.elements.songCover.src !== this.currentSong.custom_album_art) {
+                this.elements.songCover.src = this.currentSong.custom_album_art;
+            } else if (this.currentSong.album_art_url && this.elements.songCover.src !== this.currentSong.album_art_url) {
+                this.elements.songCover.src = this.currentSong.album_art_url;
+            }
             this.saveState();
         });
 
@@ -698,14 +647,17 @@ class AudioPlayer {
                 const state = JSON.parse(savedState);
                 this.currentSong = {
                     id: state.songId,
+                    spotify_id: state.songId, // Use songId as spotify_id for consistency
                     title: state.songTitle,
                     artist: state.songArtist,
                     album: state.songAlbum,
-                    artwork: state.artwork
+                    album_art_url: state.album_art_url,
+                    custom_album_art: state.custom_album_art,
+                    streaming_url: state.streaming_url
                 };
 
                 this.updateSongInfo();
-                await this.loadAudio(`/services/stream/song/${state.songId}`);
+                await this.loadAudio(state.streaming_url);
                 this.pauseTime = state.timeStamp || 0;
 
                 if (state.isPlaying) {
@@ -723,21 +675,3 @@ class AudioPlayer {
         }
     }
 }
-
-// Initialize player
-const elements = {
-    playButton: document.getElementById('song-play'),
-    prevButton: document.getElementById('song-prev'),
-    nextButton: document.getElementById('song-next'),
-    timeElapsed: document.getElementById('song-time-elapsed'),
-    timeTotal: document.getElementById('song-time-total'),
-    songCover: document.getElementById('song-cover'),
-    songTitle: document.getElementById('song-title'),
-    songArtistAlbum: document.getElementById('song-artist-album'),
-    visualizer: document.getElementById('song-visualizer')
-};
-
-const artworkManager = new ArtworkManager(artworkCollection);
-const songStore = new SongStore(STORE_LIMIT, artworkManager);
-const player = new AudioPlayer(elements, songStore);
-player.init();

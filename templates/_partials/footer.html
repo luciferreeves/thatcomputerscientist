@@ -1,32 +1,31 @@
 {% load i18n %}
-
 <div class="footer-buttons">
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
 </div>
 <div class="footer-buttons">
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
-  <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
+    <span class="pamphlet pamphlet-button"></span>
 </div>
 <p class="footer-copyright">
-  <span>&copy; {% now 'Y' %}&nbsp;Shifoo.&nbsp;</span>{% blocktranslate %}Source code available on
-  <a href="https://github.com/luciferreeves/thatcomputerscientist" target="_blank">GitHub</a>. All rights reserved. Every pixel on this website is handcrafted with love and care.{% endblocktranslate %}
+    <span>&copy; {% now 'Y' %}&nbsp;Shifoo.&nbsp;</span>{% blocktranslate %}Source code available on
+    <a href="https://github.com/luciferreeves/thatcomputerscientist" target="_blank">GitHub</a>. All rights reserved. Every pixel on this website is handcrafted with love and care.{% endblocktranslate %}
 </p>
 <p class="footer-credits">
-  {% url 'core:home' as privacy_url %}
-  {% url 'core:home' as sitemap_url %}
-  {% blocktranslate %}
-  <strong>PS:</strong> The ads shown on this website are fake and purely for aesthetic purposes. I do not earn any money from them, neither clicking them will redirect you to any other website. If you have any questions, comments, or concerns about how this site operates and how your data is handled, please check out the
-  <a href="{{ privacy_url }}">Privacy Policy</a> page. View
-  <a href="{{ sitemap_url }}">Sitemap</a>.{% endblocktranslate %}
+    {% url 'core:home' as privacy_url %}
+    {% url 'core:home' as sitemap_url %}
+    {% blocktranslate %}
+    <strong>PS:</strong> The ads shown on this website are fake and purely for aesthetic purposes. I do not earn any money from them, neither clicking them will redirect you to any other website. If you have any questions, comments, or concerns about how this site operates and how your data is handled, please check out the
+    <a href="{{ privacy_url }}">Privacy Policy</a> page. View
+    <a href="{{ sitemap_url }}">Sitemap</a>.{% endblocktranslate %}
 </p>

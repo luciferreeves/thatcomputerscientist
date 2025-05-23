@@ -1,71 +1,127 @@
-{% extends '_layouts/base.html' %}
+{% extends "_layouts/base.html" %}
 {% load static %}
 {% load i18n %}
-
 {% block head %}
-  <link type="text/css" rel="stylesheet" href="{% static 'css/blog/weblog.css' %}" />
-{% endblock %}
-
+    <link type="text/css"
+          rel="stylesheet"
+          href="{% static 'css/blog/weblog.css' %}" />
+{% endblock head %}
 {% block content %}
-  <div class="weblog-title-banner">
-    <div class="overlay-bottom-radial"></div>
-    <div class="weblog-banner-content">
-      <h1>{% translate 'Contemplations of Late' %}</h1>
-      <form method="GET" action="{% url 'weblog:home' %}">
-        <label for="q">{% translate 'Keywords' %}:</label>
-        <input type="text" id="q" name="q" placeholder="{% translate 'Search weblog...' %}" value="{{ request.GET.q }}" />
-        <label for="category">{% translate 'Category' %}:</label>
-        <select id="category" name="category">
-          <option value="all">
-            {% translate 'All' %}
-          </option>
-          {% for category in categories %}
-            {% if category.is_selected %}
-              <option value="{{ category.slug }}" selected>{{ category.name }}</option>
-            {% else %}
-              <option value="{{ category.slug }}">{{ category.name }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-        <label for="sort">{% translate 'Sort by' %}:</label>
-        <select id="sort" name="sort">
-          {% for option in sort_options %}
-            {% if option.selected %}
-              <option value="{{ option.value }}" selected>
-                {% if option.label == 'Date' %}{% translate 'Date' %}{% endif %}
-                {% if option.label == 'Title' %}{% translate 'Title' %}{% endif %}
-                {% if option.label == 'Views' %}{% translate 'Views' %}{% endif %}
-                {% if option.label == 'Comments' %}{% translate 'Comments' %}{% endif %}
-              </option>
-            {% else %}
-              <option value="{{ option.value }}">
-                {% if option.label == 'Date' %}{% translate 'Date' %}{% endif %}
-                {% if option.label == 'Title' %}{% translate 'Title' %}{% endif %}
-                {% if option.label == 'Views' %}{% translate 'Views' %}{% endif %}
-                {% if option.label == 'Comments' %}{% translate 'Comments' %}{% endif %}
-              </option>
-            {% endif %}
-          {% endfor %}
-        </select>
-        <div class="order-toggle">
-          {% for order in order_options %}
-            {% if order.selected %}
-              <input type="radio" id="{{ order.value }}" name="order" value="{{ order.value }}" checked />
-            {% else %}
-              <input type="radio" id="{{ order.value }}" name="order" value="{{ order.value }}" />
-            {% endif %}
-            <label for="{{ order.value }}">{{ order.symbol }}</label>
-          {% endfor %}
+    <div class="weblog-title-banner">
+        <div class="overlay-bottom-radial"></div>
+        <div class="weblog-banner-content">
+            <h1>{% translate "Contemplations of Late" %}</h1>
+            <form method="get" action="{% url 'weblog:home' %}">
+                <label for="q">{% translate "Keywords" %}:</label>
+                <input type="text"
+                       id="q"
+                       name="q"
+                       placeholder="{% translate "Search weblog..." %}"
+                       value="{{ request.GET.q }}" />
+                <label for="category">{% translate "Category" %}:</label>
+                <select id="category" name="category">
+                    <option value="all">{% translate "All" %}</option>
+                    {% for category in categories %}
+                        {% if category.is_selected %}
+                            <option value="{{ category.slug }}" selected>{{ category.name }}</option>
+                        {% else %}
+                            <option value="{{ category.slug }}">{{ category.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <label for="sort">{% translate "Sort by" %}:</label>
+                <select id="sort" name="sort">
+                    {% for option in sort_options %}
+                        {% if option.selected %}
+                            <option value="{{ option.value }}" selected>
+                                {% if option.label == 'Date' %}
+                                    {% translate "Date" %}
+                                {% endif %}
+                                {% if option.label == 'Title' %}
+                                    {% translate "Title" %}
+                                {% endif %}
+                                {% if option.label == 'Views' %}
+                                    {% translate "Views" %}
+                                {% endif %}
+                                {% if option.label == 'Comments' %}
+                                    {% translate "Comments" %}
+                                {% endif %}
+                            </option>
+                        {% else %}
+                            <option value="{{ option.value }}">
+                                {% if option.label == 'Date' %}
+                                    {% translate "Date" %}
+                                {% endif %}
+                                {% if option.label == 'Title' %}
+                                    {% translate "Title" %}
+                                {% endif %}
+                                {% if option.label == 'Views' %}
+                                    {% translate "Views" %}
+                                {% endif %}
+                                {% if option.label == 'Comments' %}
+                                    {% translate "Comments" %}
+                                {% endif %}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <div class="order-toggle">
+                    {% for order in order_options %}
+                        {% if order.selected %}
+                            <input type="radio"
+                                   id="{{ order.value }}"
+                                   name="order"
+                                   value="{{ order.value }}"
+                                   checked />
+                        {% else %}
+                            <input type="radio"
+                                   id="{{ order.value }}"
+                                   name="order"
+                                   value="{{ order.value }}" />
+                        {% endif %}
+                        <label for="{{ order.value }}">{{ order.symbol }}</label>
+                    {% endfor %}
+                </div>
+                <button type="submit">{% translate "Filter" %}</button>
+            </form>
         </div>
-        <button type="submit">{% translate 'Filter' %}</button>
-      </form>
     </div>
-  </div>
-  <div class="weblogs">
-    {% include '_partials/weblog_list.html' with posts=posts %}
-  </div><
-{% endblock %}
+    <div class="weblogs">{% include "_partials/weblog_list.html" with posts=posts %}</div>
+    <div class="pagination-wrapper">
+        <div class="pagination">
+            {% if page.has_previous %}
+                <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page.previous_page_number }}"
+                   class="pagination-link">«</a>
+            {% else %}
+                <span class="pagination-link disabled">«</span>
+            {% endif %}
+            {% for page_number in paginator.page_range %}
+                {% if page_number == page.number %}
+                    <span class="pagination-link current">{{ page_number }}</span>
+                {% elif page_number == 1 or page_number == paginator.num_pages %}
+                    <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page_number }}"
+                       class="pagination-link">{{ page_number }}</a>
+                {% elif page_number >= page.number|add:-2 and page_number <= page.number|add:2 %}
+                    <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page_number }}"
+                       class="pagination-link">{{ page_number }}</a>
+                {% elif page_number == 2 and page.number > 4 %}
+                    <span class="pagination-ellipsis">...</span>
+                {% elif page_number == paginator.num_pages|add:-1 and page.number < paginator.num_pages|add:-3 %}
+                    <span class="pagination-ellipsis">...</span>
+                {% endif %}
+            {% endfor %}
+            {% if page.has_next %}
+                <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page.next_page_number }}"
+                   class="pagination-link">»</a>
+            {% else %}
+                <span class="pagination-link disabled">»</span>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
 {% block scripts %}
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
-{% endblock %}
+    <script id="MathJax-script"
+            async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
+{% endblock scripts %}

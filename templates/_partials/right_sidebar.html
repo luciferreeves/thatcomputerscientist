@@ -1,141 +1,131 @@
 {% load static %}
 {% load i18n %}
-
 <div class="right-sidebar">
-  <div class="kawaiibeats">
-    <p id="song-title">
-      {% translate 'Loading...' %}
-    </p>
-    <p id="song-artist-album">
-      {% translate 'Loading...' %}
-    </p>
-    <img onerror="this.src=getRandomArtwork()" id="song-cover" alt="Song Cover" />
-    <canvas id="song-visualizer" width="140" height="30"></canvas>
-    <div id="song-time">
-      <span id="song-time-elapsed">0:00</span>
-      <span id="song-time-total">0:00</span>
+    <div class="kawaiibeats">
+        <p id="song-title">{% translate 'Loading...' %}</p>
+        <p id="song-artist-album">{% translate 'Loading...' %}</p>
+        <img onerror="this.src=getRandomArtwork()"
+             id="song-cover"
+             alt="Song Cover" />
+        <canvas id="song-visualizer" width="140" height="30"></canvas>
+        <div id="song-time">
+            <span id="song-time-elapsed">0:00</span>
+            <span id="song-time-total">0:00</span>
+        </div>
+        <div id="song-controls">
+            <button id="song-prev">&lt;</button>
+            <button id="song-play">&#9658;</button>
+            <button id="song-next">&gt;</button>
+        </div>
     </div>
-    <div id="song-controls">
-      <button id="song-prev">&lt;</button>
-      <button id="song-play">&#9658;</button>
-      <button id="song-next">&gt;</button>
+    <div class="navigation-links">
+        <div class="navigation-title-container">
+            <h1 class="navigation-title">{% translate 'Serial Experiments: Shifoo' %}</h1>
+        </div>
+        <div class="navigation-items-container">
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/socialify.png' %}"
+                     alt="Socialify Icon" />
+                <a href="#socialify">{% translate 'Socialify' %}</a>
+            </div>
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/repositories.png' %}"
+                     alt="My Repositories Icon" />
+                <a href="#repositories">{% translate 'My Repositories' %}</a>
+            </div>
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/myanimelist.png' %}"
+                     alt="My Anime List Icon" />
+                <a href="#myanimelist">{% translate 'My Anime List' %}</a>
+            </div>
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/games.png' %}" alt="My Games Icon" />
+                <a href="#mygames">{% translate 'My Games' %}</a>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="navigation-links">
-    <div class="navigation-title-container">
-      <h1 class="navigation-title">{% translate 'Serial Experiments: Shifoo' %}</h1>
+    <div class="pamphlet pamphlet-big"></div>
+    {% if user.is_authenticated %}
+        <div class="user-stats-area">
+            <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif"
+                 class="stats-profile-image"
+                 alt="{{ user.first_name }}'s Avatar" />
+            <h2 class="stats-username">
+                <a href="#">{{ user.first_name }} {{ user.last_name }}</a>
+            </h2>
+            <p class="stats-bio">{{ user.profile.bio|linebreaksbr }}</p>
+            <div class="user-stats">
+                <p class="stat-name">{% translate 'XP' %}</p>
+                <p class="stat-value">{{ user.profile.experience }} / 1000</p>
+            </div>
+            <div class="user-stats">
+                <p class="stat-name">{% translate 'Level' %}</p>
+                <p class="stat-value">{{ user.profile.level }}</p>
+            </div>
+            <div class="user-stats">
+                <p class="stat-name">{% translate 'Balance' %}</p>
+                <p class="stat-value">
+                    <span>{{ user.profile.balance }}</span>
+                    <img src="{% static 'images/core/icons/coin.png' %}" alt="Coin Icon" />
+                </p>
+            </div>
+            <div class="user-stats">
+                <p class="stat-name">{% translate 'Journal Entries' %}</p>
+                <p class="stat-value">{{ user.profile.journal_entries }}</p>
+            </div>
+            <div class="user-stats">
+                <p class="stat-name">{% translate 'Journal Streak' %}</p>
+                <p class="stat-value">{{ user.profile.journal_streak }} days</p>
+            </div>
+            <div class="user-stats">
+                <p class="stat-name">{% translate 'Weblog Posts' %}</p>
+                <p class="stat-value">{{ user.profile.weblogs_created }}</p>
+            </div>
+            <div class="stat-links">
+                <a href="#">{% translate 'Dressing Room' %}</a>
+                <a href="#">{% translate 'Achievements' %}</a>
+                <a href="#">{% translate 'Weblog' %}</a>
+            </div>
+        </div>
+    {% endif %}
+    <div class="navigation-links">
+        <div class="navigation-title-container">
+            <h1 class="navigation-title">{% translate 'The Matrix' %}</h1>
+        </div>
+        <div class="navigation-items-container">
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/pamphlet.png' %}"
+                     alt="Pamphlet Icon" />
+                <a href="#pamphlet">{% translate 'Pamphlet' %}</a>
+            </div>
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/webring.png' %}" alt="Caravan Icon" />
+                <a href="#webring">{% translate 'Caravan' %}</a>
+            </div>
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/guestbook.png' %}"
+                     alt="Ledger Icon" />
+                <a href="#guestbookservice">{% translate 'Ledger' %}</a>
+            </div>
+            <div class="navigation-item">
+                <img src="{% static 'images/core/icons/census.png' %}" alt="Census Icon" />
+                <a href="#census">{% translate 'Census' %}</a>
+            </div>
+        </div>
     </div>
-    <div class="navigation-items-container">
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/socialify.png' %}" alt="Socialify Icon" />
-        <a href="#socialify">{% translate 'Socialify' %}</a>
-      </div>
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/repositories.png' %}" alt="My Repositories Icon" />
-        <a href="#repositories">{% translate 'My Repositories' %}</a>
-      </div>
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/myanimelist.png' %}" alt="My Anime List Icon" />
-        <a href="#myanimelist">{% translate 'My Anime List' %}</a>
-      </div>
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/games.png' %}" alt="My Games Icon" />
-        <a href="#mygames">{% translate 'My Games' %}</a>
-      </div>
+    <div class="sidebar-credits" id="censusContainer">
+        <div class="visitor-text">{% translate 'You are Visitor #' %}</div>
+        <div class="visitor-count">
+            <span class="visitor-count-item">0</span>
+            <span class="visitor-count-item">0</span>
+            <span class="visitor-count-item">6</span>
+            <span class="visitor-count-item">9</span>
+            <span class="visitor-count-item">4</span>
+            <span class="visitor-count-item">2</span>
+            <span class="visitor-count-item">0</span>
+        </div>
     </div>
-  </div>
-  <div class="pamphlet pamphlet-big"></div>
-
-  {% if user.is_authenticated %}
-    <div class="user-stats-area">
-      <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif" class="stats-profile-image" alt="{{ user.first_name }}'s Avatar" />
-      <h2 class="stats-username"><a href="#">{{ user.first_name }} {{ user.last_name }}</a></h2>
-      <p class="stats-bio">{{ user.profile.bio|linebreaksbr }}</p>
-      <div class="user-stats">
-        <p class="stat-name">
-          {% translate 'XP' %}
-        </p>
-        <p class="stat-value">{{ user.profile.experience }} / 1000</p>
-      </div>
-      <div class="user-stats">
-        <p class="stat-name">
-          {% translate 'Level' %}
-        </p>
-        <p class="stat-value">{{ user.profile.level }}</p>
-      </div>
-      <div class="user-stats">
-        <p class="stat-name">
-          {% translate 'Balance' %}
-        </p>
-        <p class="stat-value">
-          <span>{{ user.profile.balance }}</span>
-          <img src="{% static 'images/core/icons/coin.png' %}" alt="Coin Icon" />
-        </p>
-      </div>
-      <div class="user-stats">
-        <p class="stat-name">
-          {% translate 'Journal Entries' %}
-        </p>
-        <p class="stat-value">{{ user.profile.journal_entries }}</p>
-      </div>
-      <div class="user-stats">
-        <p class="stat-name">
-          {% translate 'Journal Streak' %}
-        </p>
-        <p class="stat-value">{{ user.profile.journal_streak }} days</p>
-      </div>
-      <div class="user-stats">
-        <p class="stat-name">
-          {% translate 'Weblog Posts' %}
-        </p>
-        <p class="stat-value">{{ user.profile.weblogs_created }}</p>
-      </div>
-      <div class="stat-links">
-        <a href="#">{% translate 'Dressing Room' %}</a>
-        <a href="#">{% translate 'Achievements' %}</a>
-        <a href="#">{% translate 'Weblog' %}</a>
-      </div>
-    </div>
-  {% endif %}
-  <div class="navigation-links">
-    <div class="navigation-title-container">
-      <h1 class="navigation-title">{% translate 'The Matrix' %}</h1>
-    </div>
-    <div class="navigation-items-container">
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/pamphlet.png' %}" alt="Pamphlet Icon" />
-        <a href="#pamphlet">{% translate 'Pamphlet' %}</a>
-      </div>
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/webring.png' %}" alt="Caravan Icon" />
-        <a href="#webring">{% translate 'Caravan' %}</a>
-      </div>
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/guestbook.png' %}" alt="Ledger Icon" />
-        <a href="#guestbookservice">{% translate 'Ledger' %}</a>
-      </div>
-      <div class="navigation-item">
-        <img src="{% static 'images/core/icons/census.png' %}" alt="Census Icon" />
-        <a href="#census">{% translate 'Census' %}</a>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar-credits" id="censusContainer">
-    <div class="visitor-text">
-      {% translate 'You are Visitor #' %}
-    </div>
-    <div class="visitor-count">
-      <span class="visitor-count-item">0</span>
-      <span class="visitor-count-item">0</span>
-      <span class="visitor-count-item">6</span>
-      <span class="visitor-count-item">9</span>
-      <span class="visitor-count-item">4</span>
-      <span class="visitor-count-item">2</span>
-      <span class="visitor-count-item">0</span>
-    </div>
-  </div>
 </div>
-
 {% block scripts %}
-  <script src="{% static 'js/kawaiibeats/kawaiiBeatsPlayer.js' %}"></script>
+    <script src="{% static 'js/kawaiibeats/kawaiiBeatsPlayer.js' %}"></script>
 {% endblock %}

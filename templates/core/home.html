@@ -1,78 +1,83 @@
 {% extends '_layouts/base.html' %}
 {% load static %}
 {% load i18n %}
-
 {% block head %}
-  <link type="text/css" rel="stylesheet" href="{% static 'css/core/home.css' %}" />
+    <link type="text/css"
+          rel="stylesheet"
+          href="{% static 'css/core/home.css' %}" />
 {% endblock %}
-
 {% block content %}
-  <div id="welcome">
-    {% url 'core:home' as bobby_profile_url %}
-    {% url 'core:home' as register_url %}
-    {% blocktrans %}
-    <p>
-      Welcome to the home of <strong>Shifoo</strong> (previously <i>That Computer Scientist</i>). My name is <a href="{{ bobby_profile_url }}">@bobby</a>, and this is my personal website. I aim to build a retro looking personal website, where I share my thoughts, ideas, and experiences through articles, and will showcase some cool nostalgic features and tools.
-    </p>
-    <p>Please note that I am continuously working on this site, and it is still under construction. So, not all features are available yet, and some features may not work as intended.</p>
-    <p>
-      There's also a some of <a href="#thegoodstuff">The Good Stuff</a> you can find in the sidebar, that you can play around with. I will be adding more in the not so distant future. Also, To participate around various sections of the site, you will need to <a href="{{ register_url }}">register</a> for an account. I hope you enjoy your stay here.
-    </p>
+    <div id="welcome">
+        {% url 'core:home' as bobby_profile_url %}
+        {% url 'core:home' as register_url %}
+        {% blocktrans %}
+      <p>
+        Welcome to the home of <strong>Shifoo</strong> (previously <i>That Computer Scientist</i>). My name is <a href="{{ bobby_profile_url }}">@bobby</a>, and this is my personal website. I aim to build a retro looking personal website, where I share my thoughts, ideas, and experiences through articles, and will showcase some cool nostalgic features and tools.
+      </p>
+      <p>Please note that I am continuously working on this site, and it is still under construction. So, not all features are available yet, and some features may not work as intended.</p>
+      <p>
+        There's also a some of <a href="#thegoodstuff">The Good Stuff</a> you can find in the sidebar, that you can play around with. I will be adding more in the not so distant future. Also, To participate around various sections of the site, you will need to <a href="{{ register_url }}">register</a> for an account. I hope you enjoy your stay here.
+      </p>
     {% endblocktrans %}
-    <div id="chatbox">
-      <div id="messages"></div>
-      <textarea id="chatbox-input" placeholder="{% translate 'Type your message here... (⏎ to send)' %}"></textarea>
+        <div id="chatbox">
+            <div id="messages"></div>
+            <textarea id="chatbox-input"
+                      placeholder="{% translate 'Type your message here... (⏎ to send)' %}"></textarea>
+        </div>
     </div>
-  </div>
-  <img src="{% static 'images/core/gifs/construction.gif' %}" id="uc" />
-  <div id="announcements">
-    <img src="{% static 'images/core/gifs/update.gif' %}" style="height: 14px; position: relative; top: 4px; left: 124px;" />
-    {% if announcements is not None %}
-      <div id="announcement-container">
-        <div id="announcementsMarquee">
-          {% for announcement in announcements %}
-            <div class="announcement">
-              <div class="announcement-icon">
-                {% if announcement.is_new %}
-                  <img src="{% static 'images/core/gifs/new_announcement.gif' %}" alt="{% translate 'New Announcement' %}" />
-                {% else %}
-                  <img src="{% static 'images/core/gifs/hand.gif' %}" alt="{% translate 'Announcement' %}" />
-                {% endif %}
-              </div>
-              <div class="announcement-content">
-                <u><strong>{{ announcement.created_at|date:'M d, Y' }}</strong></u>: {{ announcement.content|safe }}
-              </div>
+    <img src="{% static 'images/core/gifs/construction.gif' %}" id="uc" />
+    <div id="announcements">
+        <img src="{% static 'images/core/gifs/update.gif' %}"
+             style="height: 14px;
+                    position: relative;
+                    top: 4px;
+                    left: 124px" />
+        {% if announcements is not None %}
+            <div id="announcement-container">
+                <div id="announcementsMarquee">
+                    {% for announcement in announcements %}
+                        <div class="announcement">
+                            <div class="announcement-icon">
+                                {% if announcement.is_new %}
+                                    <img src="{% static 'images/core/gifs/new_announcement.gif' %}"
+                                         alt="{% translate 'New Announcement' %}" />
+                                {% else %}
+                                    <img src="{% static 'images/core/gifs/hand.gif' %}"
+                                         alt="{% translate 'Announcement' %}" />
+                                {% endif %}
+                            </div>
+                            <div class="announcement-content">
+                                <u><strong>{{ announcement.created_at|date:'M d, Y' }}</strong></u>: {{ announcement.content|safe }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %}
-  </div>
-  <div class="pamphlet pamphlet-banner"></div>
-  <h1 class="section-title">{% translate 'Contemplations of Late' %}</h1>
-  <div class="recent-weblogs">
-    {% include '_partials/weblog_list.html' with posts=recent_weblogs %}
-  </div>
-  <h1 class="section-title">{% translate 'Recent Weeb Degenerecy' %}</h1>
-  <div class="recent-anime">
-    {% for anime in recent_mal_activity.anime %}
-      <a class="anime" href="{{ anime.url }}" target="_blank">
-        <div class="anime-image">
-          <img src="{{ anime.image_url }}" alt="{{ anime.title }}" />
-        </div>
-        <div class="anime-content">
-          <h3>{{ anime.title }}</h3>
-          <div class="anime-details">
-            <span class="anime-status">{{ anime.status }}</span>
-            <span class="anime-episodes">{{ anime.episodes_seen }}/{{ anime.episodes_total }}</span>
-          </div>
-        </div>
-      </a>
-    {% endfor %}
-  </div>
-  <div class="pamphlet pamphlet-banner"></div>
+        {% endif %}
+    </div>
+    <div class="pamphlet pamphlet-banner"></div>
+    <h1 class="section-title">{% translate 'Contemplations of Late' %}</h1>
+    <div class="recent-weblogs">{% include '_partials/weblog_list.html' with posts=recent_weblogs %}</div>
+    <h1 class="section-title">{% translate 'Recent Weeb Degenerecy' %}</h1>
+    <div class="recent-anime">
+        {% for anime in recent_mal_activity.anime %}
+            <a class="anime" href="{{ anime.url }}" target="_blank">
+                <div class="anime-image">
+                    <img src="{{ anime.image_url }}" alt="{{ anime.title }}" />
+                </div>
+                <div class="anime-content">
+                    <h3>{{ anime.title }}</h3>
+                    <div class="anime-details">
+                        <span class="anime-status">{{ anime.status }}</span>
+                        <span class="anime-episodes">{{ anime.episodes_seen }}/{{ anime.episodes_total }}</span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="pamphlet pamphlet-banner"></div>
 {% endblock %}
 {% block scripts %}
-  <script type="text/javascript" src="{% static 'js/libs/marquee.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/core/home.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/marquee.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/core/home.js' %}"></script>
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-22 05:33+0000\n"
+"POT-Creation-Date: 2025-05-23 00:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -278,11 +278,11 @@ msgstr "センサス"
 msgid "You are Visitor #"
 msgstr "あんたは訪問者ナンバー"
 
-#: templates/_partials/weblog_list.html:19
+#: templates/_partials/weblog_list.html:19 templates/weblog/post.html:21
 msgid "posted in"
 msgstr "カテゴリー："
 
-#: templates/_partials/weblog_list.html:21
+#: templates/_partials/weblog_list.html:21 templates/weblog/post.html:23
 msgid "on"
 msgstr "投稿日："
 
@@ -326,6 +326,7 @@ msgid "Or you can add a song manually:"
 msgstr "または手動で楽曲を追加することもできます："
 
 #: templates/administration/kawaiibeats.html:148
+#: templates/weblog/weblog.html:36 templates/weblog/weblog.html:43
 msgid "Title"
 msgstr "タイトル"
 
@@ -486,10 +487,68 @@ msgstr "新しいアナウンスメント"
 msgid "Announcement"
 msgstr "アナウンスメント"
 
-#: templates/core/home.html:52
+#: templates/core/home.html:52 templates/weblog/weblog.html:13
 msgid "Contemplations of Late"
 msgstr "最近考えてること"
 
 #: templates/core/home.html:56
 msgid "Recent Weeb Degenerecy"
 msgstr "最近のオタク的堕落"
+
+#: templates/weblog/post.html:27 templates/weblog/weblog.html:37
+#: templates/weblog/weblog.html:44
+msgid "Views"
+msgstr "閲覧数"
+
+#: templates/weblog/post.html:30
+#, python-format
+msgid ""
+"\n"
+"            %(comment_count)s Comment"
+msgid_plural ""
+"\n"
+"            %(comment_count)s Comments"
+msgstr[0] ""
+"\n"
+"          %(comment_count)s コメント"
+
+#: templates/weblog/post.html:44
+msgid "Tagged with"
+msgstr "タグ"
+
+#: templates/weblog/post.html:50 templates/weblog/weblog.html:38
+#: templates/weblog/weblog.html:45
+msgid "Comments"
+msgstr "コメント"
+
+#: templates/weblog/post.html:58
+msgid "No comments yet."
+msgstr "まだコメントないよ。"
+
+#: templates/weblog/weblog.html:15
+msgid "Keywords"
+msgstr "キーワード"
+
+#: templates/weblog/weblog.html:16
+msgid "Search weblog..."
+msgstr "ウェブログを検索..."
+
+#: templates/weblog/weblog.html:17
+msgid "Category"
+msgstr "カテゴリー"
+
+#: templates/weblog/weblog.html:20
+msgid "All"
+msgstr "全て"
+
+#: templates/weblog/weblog.html:30
+msgid "Sort by"
+msgstr "ソート順"
+
+#: templates/weblog/weblog.html:35 templates/weblog/weblog.html:42
+msgid "Date"
+msgstr "日付"
+
+#: templates/weblog/weblog.html:60
+msgid "Filter"
+msgstr "フィルター"

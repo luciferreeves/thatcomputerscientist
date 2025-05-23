@@ -36,12 +36,12 @@ from django.urls import include, path
 
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
-    path("auth/", include("auth.urls", namespace="auth")),
-    path("admin/", include("administration.urls", namespace="administration")),
+    path("auth", include("auth.urls", namespace="auth")),
+    path("admin", include("administration.urls", namespace="administration")),
     path("admin/administration/", admin.site.urls),
-    path("ignis/", include("ignis.urls", namespace="ignis")),  # temp
-    path("weblog/", include("blog.urls", namespace="weblog")),
-    path("services/", include("services.urls", namespace="services")),
+    path("ignis", include("ignis.urls", namespace="ignis")),  # temp
+    path("weblog", include("blog.urls", namespace="weblog")),
+    path("services", include("services.urls", namespace="services")),
     # path('', include('blog.urls', namespace='blog')),
     # path('users', include('users.urls', namespace='users')),
     # path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),

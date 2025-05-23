@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from blog.functions import get_single_post, get_all_posts
+from blog.functions import get_single_post, get_posts, get_all_categories
 from internal.weblog_utilities import highlight_code
 
 
@@ -8,10 +8,54 @@ weblog_slug = "shifoo"
 
 
 def weblog(request):
-    request.meta.title = "Shifoo's Weblog"
-    posts = get_all_posts(weblog_slug, lang=request.LANGUAGE_CODE)
+    request.meta.title = (
+        "Shifooのウェブログ" if request.LANGUAGE_CODE == "ja" else "Shifoo's Weblog"
+    )
+
+    current_sort = request.GET.get("sort", "date")
+    current_sort_order = request.GET.get("order", "desc")
+    current_category = request.GET.get("category", "all")
+    search_query = request.GET.get("q", "")
+    page = request.GET.get("page", 1)
+
+    sort_options = [
+        {"value": "date", "label": "Date", "selected": current_sort == "date"},
+        {"value": "title", "label": "Title", "selected": current_sort == "title"},
+        {"value": "views", "label": "Views", "selected": current_sort == "views"},
+        {
+            "value": "comments",
+            "label": "Comments",
+            "selected": current_sort == "comments",
+        },
+    ]
+
+    order_options = [
+        {"value": "desc", "symbol": "↓", "selected": current_sort_order == "desc"},
+        {"value": "asc", "symbol": "↑", "selected": current_sort_order == "asc"},
+    ]
+
+    categories = get_all_categories(weblog_slug, lang=request.LANGUAGE_CODE)
+    for category in categories:
+        category.is_selected = current_category == category.slug
+
+    result = get_posts(
+        weblog_slug=weblog_slug,
+        lang=request.LANGUAGE_CODE,
+        query=search_query,
+        sort=current_sort,
+        order=current_sort_order,
+        category_slug=current_category,
+        page=page,
+        per_page=5,
+    )
+
     context = {
-        "posts": posts,
+        "posts": result["posts"],
+        "paginator": result["paginator"],
+        "page": result["page_objects"],
+        "categories": categories,
+        "sort_options": sort_options,
+        "order_options": order_options,
     }
 
     return render(request, "weblog/weblog.html", context)

@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
+from django.utils.translation import get_language
 
 UPLOAD_ROOT = "images/"
 LANGUAGE_CHOICES = [
@@ -185,6 +186,17 @@ class Tag(TranslatableMixin, models.Model):
 
     def get_name(self, language_code="en"):
         return self.translate("name", language_code)
+
+    @property
+    def translated_name(self):
+        language_code = get_language()
+        try:
+            translation = self.translations.filter(language=language_code).first()
+            if translation and translation.name:
+                return translation.name
+        except Exception:
+            pass
+        return self.name
 
 
 class Post(TranslatableMixin, models.Model):

@@ -139,20 +139,42 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "weblog", "created_at")
+    list_display = ("name", "japanese_name", "weblog", "created_at")
     list_filter = ("weblog",)
     search_fields = ("name", "description")
     prepopulated_fields = {"slug": ("name",)}
     inlines = [CategoryTranslationInline]
 
+    def japanese_name(self, obj):
+        try:
+            translation = obj.translations.filter(language="ja").first()
+            if translation:
+                return translation.name
+            return "-"
+        except Exception:
+            return "-"
+
+    japanese_name.short_description = "Name (Japanese)"
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ("name", "weblog", "created_at")
+    list_display = ("name", "japanese_name", "weblog", "created_at")
     list_filter = ("weblog",)
     search_fields = ("name", "description")
     prepopulated_fields = {"slug": ("name",)}
     inlines = [TagTranslationInline]
+
+    def japanese_name(self, obj):
+        try:
+            translation = obj.translations.filter(language="ja").first()
+            if translation:
+                return translation.name
+            return "-"
+        except Exception:
+            return "-"
+
+    japanese_name.short_description = "Name (Japanese)"
 
 
 @admin.register(Weblog)

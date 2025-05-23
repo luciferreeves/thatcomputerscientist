@@ -19,7 +19,7 @@
           <span>{% translate 'posted in' %}</span>
           <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
           <span>{% translate 'on' %}</span>
-          <span style="margin-left: 4px;">{% localtime on %}{{ post.date|date:'M d, Y' }}{% endlocaltime %}</span>
+          <span style="margin-left: 4px;">{% localtime on %}{{ post.date|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
         </div>
         <div class="post-exerpt">{{ post.excerpt|safe }}</div>
       </div>
@@ -35,7 +35,7 @@
       </div>
       <div class="post-tags">
         {% for tag in post.tags.all %}
-          <a class="post-tag" href="#{{ tag.slug }}">{{ tag.name }}</a>
+          <a class="post-tag" href="#{{ tag.slug }}">{{ tag.translated_name }}</a>
         {% endfor %}
       </div>
     </div>

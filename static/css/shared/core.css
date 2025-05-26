@@ -51,6 +51,8 @@ a:active {
     color: #df23c4;
 }
 
+
+
 button {
     background: #4444b1;
     color: #fff;
@@ -163,6 +165,38 @@ img {
     padding: 8px 0;
     text-align: center;
     border-top: 1px solid #fff;
+}
+
+/* Header Banner */
+.header-banner {
+    position: relative;
+    padding: 20px 0px;
+}
+
+/* Link Button Mimic a Link */
+.link-button {
+    color: #8d8dff;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: none;
+}
+
+.link-button:hover {
+    color: #df23c4;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.link-button:active {
+    color: #8d8dff;
+}
+
+.link-button:focus {
+    outline: none;
 }
 
 /* Pamphlet Ads */

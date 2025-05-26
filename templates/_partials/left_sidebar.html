@@ -15,13 +15,13 @@
                 <input type="text"
                        id="username"
                        name="username"
-                       placeholder="{% translate 'Username' %}"
+                       placeholder="{% translate "Username" %}"
                        autocomplete="off"
                        value="{{ request.GET.username }}" />
                 <input type="password"
                        id="password"
                        name="password"
-                       placeholder="{% translate 'Password' %}"
+                       placeholder="{% translate "Password" %}"
                        autocomplete="off" />
                 <input type="hidden"
                        name="next"
@@ -38,94 +38,94 @@
             </h2>
             <div class="user-avatar">
                 <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif"
-                     alt="{{ user.username }}'s avatar" />
+                     alt="{{ user.username }}'s avatar" width="72" height="72" />
             </div>
             <div class="user-items-container">
                 <div class="user-item">
-                    <img src="{% static 'images/core/icons/journals.png' %}"
+                    <img src="{% static 'images/core/icons/journals.png' %}" width="20" height="20"
                          alt="Journals Icon" />
-                    <a href="">{% translate 'Journals' %}</a>
+                    <a href="">{% translate "Journals" %}</a>
                 </div>
                 <div class="user-item">
-                    <img src="{% static 'images/core/icons/pagodarealm.png' %}"
+                    <img src="{% static 'images/core/icons/pagodarealm.png' %}" width="20" height="20"
                          alt="The Pagoda Realm Icon" />
-                    <a href="">{% translate 'The Pagoda Realm' %}</a>
+                    <a href="">{% translate "The Pagoda Realm" %}</a>
                 </div>
                 <div class="user-item">
-                    <img src="{% static 'images/core/icons/mypage.png' %}" alt="My Page Icon" />
-                    <a href="#mypage">{% translate 'My Page' %}</a>
+                    <img src="{% static 'images/core/icons/mypage.png' %}" width="20" height="20" alt="My Page Icon" />
+                    <a href="#mypage">{% translate "My Page" %}</a>
                 </div>
                 <div class="user-item">
-                    <img src="{% static 'images/core/icons/logout.png' %}" alt="Logout Icon" />
-                    <a href="{% url 'auth:logout' %}">{% translate 'Logout' %}</a>
+                    <img src="{% static 'images/core/icons/logout.png' %}" width="20" height="20" alt="Logout Icon" />
+                    <a href="{% url 'auth:logout' %}">{% translate "Logout" %}</a>
                 </div>
             </div>
         </div>
     {% endif %}
     <div class="navigation-links">
         <div class="navigation-title-container">
-            <h1 class="navigation-title">{% translate 'Navigation' %}</h1>
+            <h1 class="navigation-title">{% translate "Navigation" %}</h1>
         </div>
         <div class="navigation-items-container">
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/home.png' %}" alt="Home Icon" />
-                <a href="{% url 'core:home' %}">{% translate 'Home' %}</a>
+                <img src="{% static 'images/core/icons/home.png' %}" width="20" height="20" alt="Home Icon" />
+                <a href="{% url 'core:home' %}">{% translate "Home" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/journalofrandomthoughts.png' %}"
+                <img src="{% static 'images/core/icons/journalofrandomthoughts.png' %}" width="20" height="20"
                      alt="Journal of Random Thoughts Icon" />
-                <a href="#journal-of-random-thoughts">{% translate 'Journal of Random Thoughts' %}</a>
+                <a href="#journal-of-random-thoughts">{% translate "Journal of Random Thoughts" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/weblog.gif' %}" alt="Weblog Icon" />
-                <a href="{% url 'weblog:home' %}">{% translate 'Weblog' %}</a>
+                <img src="{% static 'images/core/icons/weblog.gif' %}" width="20" height="20" alt="Weblog Icon" />
+                <a href="{% url 'weblog:home' %}">{% translate "Weblog" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/shrines.png' %}" alt="Shrines Icon" />
-                <a href="#shrines">{% translate 'Shrines' %}</a>
+                <img src="{% static 'images/core/icons/shrines.png' %}" width="20" height="20" alt="Shrines Icon" />
+                <a href="#shrines">{% translate "Shrines" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/screenshots.png' %}"
+                <img src="{% static 'images/core/icons/screenshots.png' %}" width="20" height="20"
                      alt="Screenshots Icon" />
-                <a href="#screenshots">{% translate 'Screenshots' %}</a>
+                <a href="#screenshots">{% translate "Screenshots" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/chatrooms.png' %}"
+                <img src="{% static 'images/core/icons/chatrooms.png' %}" width="20" height="20"
                      alt="Chatrooms Icon" />
-                <a href="#chatrooms">{% translate 'Chatrooms' %}</a>
+                <a href="#chatrooms">{% translate "Chatrooms" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/guestbook.png' %}"
+                <img src="{% static 'images/core/icons/guestbook.png' %}" width="20" height="20"
                      alt="Guestbook Icon" />
-                <a href="#guestbook">{% translate 'Guestbook' %}</a>
+                <a href="#guestbook">{% translate "Guestbook" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/preferences.png' %}"
+                <img src="{% static 'images/core/icons/preferences.png' %}" width="20" height="20"
                      alt="Site Preferences Icon" />
-                <a href="#preferences">{% translate 'Site Preferences' %}</a>
+                <a href="#preferences">{% translate "Site Preferences" %}</a>
             </div>
             <div class="navigation-item">
                 {% if not user.is_authenticated %}
-                    <img src="{% static 'images/core/icons/registeraccount.png' %}"
+                    <img src="{% static 'images/core/icons/registeraccount.png' %}" width="20" height="20"
                          alt="Register Account Icon" />
-                    <a href="#register">{% translate 'Register Account' %}</a>
+                    <a href="#register">{% translate "Register Account" %}</a>
                 {% else %}
-                    <img src="{% static 'images/core/icons/useraccount.png' %}"
+                    <img src="{% static 'images/core/icons/useraccount.png' %}" width="20" height="20"
                          alt="My Account Icon" />
-                    <a href="#account">{% translate 'My Account' %}</a>
+                    <a href="#account">{% translate "My Account" %}</a>
                 {% endif %}
             </div>
             <div class="navigation-item {{ request.LANGUAGE_CODE }}">
-                <img src="{% static 'images/core/icons/changelanguage.png' %}"
+                <img src="{% static 'images/core/icons/changelanguage.png' %}" width="20" height="20"
                      alt="Change Language Icon" />
-                <a href="javascript:void(0);"
+                <button class="link-button"
                    onclick="changeLanguage('{{ request.ALT_LANGUAGE }}')">
                     {% if request.LANGUAGE_CODE == 'ja' %}
                         English (英語)
                     {% else %}
                         日本語 (Japanese)
                     {% endif %}
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -133,7 +133,7 @@
         <form action="#" method="get" id="search-form">
             <input type="text"
                    name="q"
-                   placeholder="{% translate 'Search' %}"
+                   placeholder="{% translate "Search" %}"
                    autocomplete="off"
                    value="{{ request.GET.q }}"
                    required />
@@ -141,90 +141,90 @@
     </div>
     <div class="navigation-links">
         <div class="navigation-title-container">
-            <h1 id="thegoodstuff" class="navigation-title">{% translate 'The Good Stuff' %}</h1>
+            <h1 id="thegoodstuff" class="navigation-title">{% translate "The Good Stuff" %}</h1>
         </div>
         <div class="navigation-items-container">
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/calendar.png' %}"
+                <img src="{% static 'images/core/icons/calendar.png' %}" width="20" height="20"
                      alt="Calendar Icon" />
-                <a href="#calendar">{% translate 'Post Calendar' %}</a>
+                <a href="#calendar">{% translate "Post Calendar" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/anime.png' %}" alt="Anime Icon" />
-                <a href="#anime">{% translate 'Anime Streams' %}</a>
+                <img src="{% static 'images/core/icons/anime.png' %}" width="20" height="20" alt="Anime Icon" />
+                <a href="#anime">{% translate "Anime Streams" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/matrix.png' %}"
+                <img src="{% static 'images/core/icons/matrix.png' %}" width="20" height="20"
                      alt="The Matrix Icon" />
-                <a href="#matrix">{% translate 'The Matrix' %}</a>
+                <a href="#matrix">{% translate "The Matrix" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/rss.png' %}" alt="RSS Icon" />
-                <a href="#rss">{% translate 'RSS Feed' %}</a>
+                <img src="{% static 'images/core/icons/rss.png' %}" width="20" height="20" alt="RSS Icon" />
+                <a href="#rss">{% translate "RSS Feed" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/marketplace.png' %}"
+                <img src="{% static 'images/core/icons/marketplace.png' %}" width="20" height="20"
                      alt="Marketplace Icon" />
-                <a href="#marketplace">{% translate 'Marketplace' %}</a>
+                <a href="#marketplace">{% translate "Marketplace" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/discussions.png' %}"
+                <img src="{% static 'images/core/icons/discussions.png' %}" width="20" height="20"
                      alt="Discussions Icon" />
-                <a href="#discussions">{% translate 'Discussions' %}</a>
+                <a href="#discussions">{% translate "Discussions" %}</a>
             </div>
         </div>
     </div>
     <div class="pamphlet pamphlet-big"></div>
     <div class="navigation-links">
         <div class="navigation-title-container">
-            <h1 class="navigation-title">{% translate 'Site Spells' %}</h1>
+            <h1 class="navigation-title">{% translate "Site Spells" %}</h1>
         </div>
         <div class="navigation-items-container">
             <div class="navigation-item">
                 {% if request.COOKIES.summonOneko == 'true' %}
-                    <img src="{% static 'images/core/icons/withdraw_oneko.gif' %}"
+                    <img src="{% static 'images/core/icons/withdraw_oneko.gif' %}" width="20" height="20"
                          alt="Withdraw Oneko Icon" />
-                    <a href="javascript:void(0);"
-                       onclick="document.cookie = 'summonOneko=false;path=/';location.reload();">{% translate 'Withdraw Oneko' %}</a>
+                    <button class="link-button"
+                         onclick="document.cookie = 'summonOneko=false;path=/';location.reload();">{% translate "Withdraw Oneko" %}</button>
                 {% else %}
-                    <img src="{% static 'images/core/icons/summon_oneko.gif' %}"
+                    <img src="{% static 'images/core/icons/summon_oneko.gif' %}" width="20" height="20"
                          alt="Summon Oneko Icon" />
-                    <a href="javascript:void(0);"
-                       onclick="document.cookie = 'summonOneko=true;path=/';location.reload();">{% translate 'Summon Oneko' %}</a>
+                    <button class="link-button"
+                         onclick="document.cookie = 'summonOneko=false;path=/';location.reload();">{% translate "Withdraw Oneko" %}</button>
                 {% endif %}
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/harlemshake.gif' %}"
+                <img src="{% static 'images/core/icons/harlemshake.gif' %}" width="20" height="20"
                      alt="Harlem Shake Icon" />
-                <a href="javascript:harlemShakeAndBake();">{% translate 'Harlem Shake' %}</a>
+                <button class="link-button" onclick="javascript:harlemShakeAndBake();">{% translate "Harlem Shake" %}</button>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/dvd.png' %}"
+                <img src="{% static 'images/core/icons/dvd.png' %}" width="20" height="20"
                      alt="DVD Sitesaver Icon" />
-                <a href="javascript:dvdSitesaver();">{% translate 'DVD Sitesaver' %}</a>
+                <button class="link-button" onclick="javascript:dvdSitesaver();">{% translate "DVD Sitesaver" %}</button>
             </div>
         </div>
     </div>
     {% if user.is_staff or user.is_superuser %}
         <div class="navigation-links">
             <div class="navigation-title-container">
-                <h1 class="navigation-title">{% translate 'Admin Area' %}</h1>
+                <h1 class="navigation-title">{% translate "Admin Area" %}</h1>
             </div>
             <div class="navigation-items-container">
                 <div class="navigation-item">
-                    <img src="{% static 'images/core/gifs/right_hand.gif' %}"
+                    <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
                          alt="Manage Announcements Icon" />
-                    <a href="#manage-announcements">{% translate 'Manage Announcements' %}</a>
+                    <a href="#manage-announcements">{% translate "Manage Announcements" %}</a>
                 </div>
                 <div class="navigation-item">
-                    <img src="{% static 'images/core/gifs/right_hand.gif' %}"
+                    <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
                          alt="Manage Users Icon" />
-                    <a href="#manage-users">{% translate 'Manage Users' %}</a>
+                    <a href="#manage-users">{% translate "Manage Users" %}</a>
                 </div>
                 <div class="navigation-item">
-                    <img src="{% static 'images/core/gifs/right_hand.gif' %}"
+                    <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
                          alt="KawaiiBeats Manager Icon" />
-                    <a href="{% url 'administration:kawaiibeats' %}">{% translate 'KawaiiBeats Manager' %}</a>
+                    <a href="{% url 'administration:kawaiibeats' %}">{% translate "KawaiiBeats Manager" %}</a>
                 </div>
             </div>
         </div>
@@ -238,4 +238,4 @@
       location.reload()
     }
     </script>
-{% endblock %}
+{% endblock scripts %}

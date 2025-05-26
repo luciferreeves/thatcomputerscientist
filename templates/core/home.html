@@ -1,11 +1,11 @@
-{% extends '_layouts/base.html' %}
+{% extends "_layouts/base.html" %}
 {% load static %}
 {% load i18n %}
 {% block head %}
     <link type="text/css"
           rel="stylesheet"
           href="{% static 'css/core/home.css' %}" />
-{% endblock %}
+{% endblock head %}
 {% block content %}
     <div id="welcome">
         {% url 'core:home' as bobby_profile_url %}
@@ -25,13 +25,13 @@
                       placeholder="{% translate 'Type your message here... (⏎ to send)' %}"></textarea>
         </div>
     </div>
-    <img src="{% static 'images/core/gifs/construction.gif' %}" id="uc" />
+    <img src="{% static 'images/core/gifs/construction.gif' %}" id="uc" width="780" height="24.5" alt="{% translate "Under Construction" %}" />
     <div id="announcements">
-        <img src="{% static 'images/core/gifs/update.gif' %}"
+        <img src="{% static 'images/core/gifs/update.gif' %}" height="14" width="70"
              style="height: 14px;
                     position: relative;
                     top: 4px;
-                    left: 124px" />
+                    left: 124px" alt="{% translate "Updates" %}" />
         {% if announcements is not None %}
             <div id="announcement-container">
                 <div id="announcementsMarquee">
@@ -40,10 +40,10 @@
                             <div class="announcement-icon">
                                 {% if announcement.is_new %}
                                     <img src="{% static 'images/core/gifs/new_announcement.gif' %}"
-                                         alt="{% translate 'New Announcement' %}" />
+                                         alt="{% translate "New Announcement" %}" width="30" height="14" />
                                 {% else %}
                                     <img src="{% static 'images/core/gifs/hand.gif' %}"
-                                         alt="{% translate 'Announcement' %}" />
+                                         alt="{% translate "Announcement" %}" width="30" height="14" />
                                 {% endif %}
                             </div>
                             <div class="announcement-content">
@@ -56,14 +56,14 @@
         {% endif %}
     </div>
     <div class="pamphlet pamphlet-banner"></div>
-    <h1 class="section-title">{% translate 'Contemplations of Late' %}</h1>
-    <div class="recent-weblogs">{% include '_partials/weblog_list.html' with posts=recent_weblogs %}</div>
-    <h1 class="section-title">{% translate 'Recent Weeb Degenerecy' %}</h1>
+    <h1 class="section-title">{% translate "Contemplations of Late" %}</h1>
+    <div class="recent-weblogs">{% include "_partials/weblog_list.html" with posts=recent_weblogs %}</div>
+    <h1 class="section-title">{% translate "Recent Weeb Degenerecy" %}</h1>
     <div class="recent-anime">
         {% for anime in recent_mal_activity.anime %}
             <a class="anime" href="{{ anime.url }}" target="_blank">
                 <div class="anime-image">
-                    <img src="{{ anime.image_url }}" alt="{{ anime.title }}" />
+                    <img src="{{ anime.image_url }}" alt="{{ anime.title }}" width="180" height="256" />
                 </div>
                 <div class="anime-content">
                     <h3>{{ anime.title }}</h3>
@@ -76,8 +76,8 @@
         {% endfor %}
     </div>
     <div class="pamphlet pamphlet-banner"></div>
-{% endblock %}
+{% endblock content %}
 {% block scripts %}
     <script type="text/javascript" src="{% static 'js/libs/marquee.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/core/home.js' %}"></script>
-{% endblock %}
+{% endblock scripts %}

@@ -8,7 +8,7 @@
     <div class="post">
         <div class="post-body">
             <div class="post-image">
-                <img src="{{ post.image_url }}" alt="{{ post.title }}" />
+                <img src="{{ post.image_url }}" alt="{{ post.title }}" width="350" height="230" />
             </div>
             <div class="post-content">
                 <h2>
@@ -18,20 +18,20 @@
                     {% with authorprofile=post.author.userprofile_set.first %}
                         <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif"
                              class="post-profile-image"
-                             alt="{{ post.author.first_name }}'s Avatar" />
+                             alt="{{ post.author.first_name }}'s Avatar" width="16" height="16" />
                     {% endwith %}
                     <a href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a>
-                    <span>{% translate 'posted in' %}</span>
+                    <span>{% translate "posted in" %}</span>
                     <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
-                    <span>{% translate 'on' %}</span>
-                    <span style="margin-left: 4px;">{% localtime on %}{{ post.date|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
+                    <span>{% translate "on" %}</span>
+                    <span>{% localtime on %}{{ post.date|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
                 </div>
                 <div class="post-exerpt">{{ post.excerpt|safe }}</div>
             </div>
         </div>
         <div class="post-actions">
             <div class="post-links">
-                <a href="{% url 'weblog:post' post.slug %}">{% translate 'Continue Reading' %}</a> |
+                <a href="{% url 'weblog:post' post.slug %}">{% translate "Continue Reading" %}</a> |
                 <a href="{% url 'weblog:post' post.slug %}#comments">
                     {% blocktranslate count comment_count=post.comments.all|length %}
             {{ comment_count }} Comment{% plural %}

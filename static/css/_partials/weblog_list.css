@@ -11,6 +11,10 @@
     margin: 4px 0px 8px 0px;
 }
 
+.author-info span:last-child {
+    margin-left: 4px;
+}
+
 .post-profile-image {
     width: 16px;
     height: 16px;

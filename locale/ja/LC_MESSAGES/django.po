@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 00:38+0000\n"
+"POT-Creation-Date: 2025-05-29 06:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: templates/_partials/footer.html:22
+#: templates/_partials/footer.html:21
 msgid ""
 "Source code available on\n"
-"  <a href=\"https://github.com/luciferreeves/thatcomputerscientist\" "
+"    <a href=\"https://github.com/luciferreeves/thatcomputerscientist\" "
 "target=\"_blank\">GitHub</a>. All rights reserved. Every pixel on this "
 "website is handcrafted with love and care."
 msgstr ""
@@ -30,17 +30,17 @@ msgstr ""
 "target=\"_blank\">GitHub</a>で見れるよ。全ての権利は留保。このサイトのピクセ"
 "ル全部が愛情とこだわりで手作りされてる。"
 
-#: templates/_partials/footer.html:28
+#: templates/_partials/footer.html:27
 #, python-format
 msgid ""
 "\n"
-"  <strong>PS:</strong> The ads shown on this website are fake and purely for "
-"aesthetic purposes. I do not earn any money from them, neither clicking them "
-"will redirect you to any other website. If you have any questions, comments, "
-"or concerns about how this site operates and how your data is handled, "
-"please check out the\n"
-"  <a href=\"%(privacy_url)s\">Privacy Policy</a> page. View\n"
-"  <a href=\"%(sitemap_url)s\">Sitemap</a>."
+"    <strong>PS:</strong> The ads shown on this website are fake and purely "
+"for aesthetic purposes. I do not earn any money from them, neither clicking "
+"them will redirect you to any other website. If you have any questions, "
+"comments, or concerns about how this site operates and how your data is "
+"handled, please check out the\n"
+"    <a href=\"%(privacy_url)s\">Privacy Policy</a> page. View\n"
+"    <a href=\"%(sitemap_url)s\">Sitemap</a>."
 msgstr ""
 "\n"
 "  <strong>おまけ:</strong> このサイトの広告は全部偽物で、見た目のためだけにあ"
@@ -51,170 +51,167 @@ msgstr ""
 "と\n"
 "  <a href=\"%(sitemap_url)s\">サイトマップ</a>も見れるよ。"
 
-#: templates/_partials/left_sidebar.html:16
+#: templates/_partials/left_sidebar.html:18
 msgid "Username"
 msgstr "ユーザー名"
 
-#: templates/_partials/left_sidebar.html:17
+#: templates/_partials/left_sidebar.html:24
 msgid "Password"
 msgstr "パスワード"
 
-#: templates/_partials/left_sidebar.html:32
+#: templates/_partials/left_sidebar.html:37
 #, python-format
 msgid "Hello, %(username)s"
 msgstr "こんにちは、%(username)sさん"
 
-#: templates/_partials/left_sidebar.html:39
+#: templates/_partials/left_sidebar.html:47
 msgid "Journals"
 msgstr "ジャーナル"
 
-#: templates/_partials/left_sidebar.html:43
+#: templates/_partials/left_sidebar.html:52
 msgid "The Pagoda Realm"
 msgstr "パゴダレルム"
 
-#: templates/_partials/left_sidebar.html:47
+#: templates/_partials/left_sidebar.html:56
 msgid "My Page"
 msgstr "マイページ"
 
-#: templates/_partials/left_sidebar.html:51
+#: templates/_partials/left_sidebar.html:60
 msgid "Logout"
 msgstr "ログアウト"
 
-#: templates/_partials/left_sidebar.html:58
+#: templates/_partials/left_sidebar.html:67
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: templates/_partials/left_sidebar.html:63
+#: templates/_partials/left_sidebar.html:72
 msgid "Home"
 msgstr "ホーム"
 
-#: templates/_partials/left_sidebar.html:67
+#: templates/_partials/left_sidebar.html:77
 msgid "Journal of Random Thoughts"
 msgstr "ランダム思考のジャーナル"
 
-#: templates/_partials/left_sidebar.html:71
-#: templates/_partials/right_sidebar.html:96
+#: templates/_partials/left_sidebar.html:81
+#: templates/_partials/right_sidebar.html:87
 msgid "Weblog"
 msgstr "ウェブログ"
 
-#: templates/_partials/left_sidebar.html:75
+#: templates/_partials/left_sidebar.html:85
 msgid "Shrines"
 msgstr "神社"
 
-#: templates/_partials/left_sidebar.html:79
+#: templates/_partials/left_sidebar.html:90
 msgid "Screenshots"
 msgstr "スクリーンショット"
 
-#: templates/_partials/left_sidebar.html:83
+#: templates/_partials/left_sidebar.html:95
 msgid "Chatrooms"
 msgstr "チャットルーム"
 
-#: templates/_partials/left_sidebar.html:87
+#: templates/_partials/left_sidebar.html:100
 msgid "Guestbook"
 msgstr "ゲストブック"
 
-#: templates/_partials/left_sidebar.html:91
+#: templates/_partials/left_sidebar.html:105
 msgid "Site Preferences"
 msgstr "サイトの設定"
 
-#: templates/_partials/left_sidebar.html:96
+#: templates/_partials/left_sidebar.html:111
 msgid "Register Account"
 msgstr "アカウント登録"
 
-#: templates/_partials/left_sidebar.html:99
+#: templates/_partials/left_sidebar.html:115
 msgid "My Account"
 msgstr "マイアカウント"
 
-#: templates/_partials/left_sidebar.html:116
+#: templates/_partials/left_sidebar.html:136
 msgid "Search"
 msgstr "検索"
 
-#: templates/_partials/left_sidebar.html:121
+#: templates/_partials/left_sidebar.html:144
 msgid "The Good Stuff"
 msgstr "おすすめ"
 
-#: templates/_partials/left_sidebar.html:126
+#: templates/_partials/left_sidebar.html:150
 msgid "Post Calendar"
 msgstr "ブログカレンダー"
 
-#: templates/_partials/left_sidebar.html:130
+#: templates/_partials/left_sidebar.html:154
 msgid "Anime Streams"
 msgstr "アニメ配信"
 
-#: templates/_partials/left_sidebar.html:134
-#: templates/_partials/right_sidebar.html:102
+#: templates/_partials/left_sidebar.html:159
+#: templates/_partials/right_sidebar.html:93
 msgid "The Matrix"
 msgstr "ザ・マトリックス"
 
-#: templates/_partials/left_sidebar.html:138
+#: templates/_partials/left_sidebar.html:163
 msgid "RSS Feed"
 msgstr "RSSフィード"
 
-#: templates/_partials/left_sidebar.html:142
+#: templates/_partials/left_sidebar.html:168
 msgid "Marketplace"
 msgstr "マーケットプレイス"
 
-#: templates/_partials/left_sidebar.html:146
+#: templates/_partials/left_sidebar.html:173
 msgid "Discussions"
 msgstr "ディスカッション"
 
-#: templates/_partials/left_sidebar.html:153
+#: templates/_partials/left_sidebar.html:180
 msgid "Site Spells"
 msgstr "サイトの魔法"
 
-#: templates/_partials/left_sidebar.html:159
+#: templates/_partials/left_sidebar.html:188
+#: templates/_partials/left_sidebar.html:193
 msgid "Withdraw Oneko"
 msgstr "おねこを引っ込める"
 
-#: templates/_partials/left_sidebar.html:162
-msgid "Summon Oneko"
-msgstr "おねこを召喚"
-
-#: templates/_partials/left_sidebar.html:167
+#: templates/_partials/left_sidebar.html:199
 msgid "Harlem Shake"
 msgstr "ハーレムシェイク"
 
-#: templates/_partials/left_sidebar.html:171
+#: templates/_partials/left_sidebar.html:204
 msgid "DVD Sitesaver"
 msgstr "DVDサイトセーバー"
 
-#: templates/_partials/left_sidebar.html:178
+#: templates/_partials/left_sidebar.html:211
 msgid "Admin Area"
 msgstr "アドミンアレア"
 
-#: templates/_partials/left_sidebar.html:183
+#: templates/_partials/left_sidebar.html:217
 msgid "Manage Announcements"
 msgstr "アナウンスメント管理"
 
-#: templates/_partials/left_sidebar.html:187
+#: templates/_partials/left_sidebar.html:222
 msgid "Manage Users"
 msgstr "ユーザー管理"
 
-#: templates/_partials/left_sidebar.html:191
-#: templates/administration/kawaiibeats.html:127
+#: templates/_partials/left_sidebar.html:227
+#: templates/administration/kawaiibeats.html:131
 msgid "KawaiiBeats Manager"
 msgstr "KawaiiBeatsマネージャー"
 
-#: templates/_partials/left_sidebar.html:197
+#: templates/_partials/left_sidebar.html:232
 msgid "This website uses cookies and there's nothing you can do about it!"
 msgstr ""
 "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできませ"
 "ん！"
 
-#: templates/_partials/right_sidebar.html:7
-#: templates/_partials/right_sidebar.html:10
+#: templates/_partials/right_sidebar.html:5
+#: templates/_partials/right_sidebar.html:6
 msgid "Loading..."
 msgstr "ロード中..."
 
-#: templates/_partials/right_sidebar.html:26
+#: templates/_partials/right_sidebar.html:23
 msgid "Serial Experiments: Shifoo"
 msgstr "シリアルエクスペリメンツ：シフー"
 
-#: templates/_partials/right_sidebar.html:31
+#: templates/_partials/right_sidebar.html:29
 msgid "Socialify"
 msgstr "ソーシャリファイ"
 
-#: templates/_partials/right_sidebar.html:35
+#: templates/_partials/right_sidebar.html:34
 msgid "My Repositories"
 msgstr "マイリポジトリ"
 
@@ -226,7 +223,7 @@ msgstr "マイアニメリスト"
 msgid "My Games"
 msgstr "マイゲーム"
 
-#: templates/_partials/right_sidebar.html:56
+#: templates/_partials/right_sidebar.html:58
 msgid "XP"
 msgstr "XP"
 
@@ -234,201 +231,201 @@ msgstr "XP"
 msgid "Level"
 msgstr "レベル"
 
-#: templates/_partials/right_sidebar.html:68
+#: templates/_partials/right_sidebar.html:66
 msgid "Balance"
 msgstr "バランス"
 
-#: templates/_partials/right_sidebar.html:77
+#: templates/_partials/right_sidebar.html:73
 msgid "Journal Entries"
 msgstr "ジャーナルエントリ"
 
-#: templates/_partials/right_sidebar.html:83
+#: templates/_partials/right_sidebar.html:77
 msgid "Journal Streak"
 msgstr "ジャーナルストリーク"
 
-#: templates/_partials/right_sidebar.html:89
+#: templates/_partials/right_sidebar.html:81
 msgid "Weblog Posts"
 msgstr "ウェブログポスト"
 
-#: templates/_partials/right_sidebar.html:94
+#: templates/_partials/right_sidebar.html:85
 msgid "Dressing Room"
 msgstr "ドレッシングルーム"
 
-#: templates/_partials/right_sidebar.html:95
+#: templates/_partials/right_sidebar.html:86
 msgid "Achievements"
 msgstr "実績"
 
-#: templates/_partials/right_sidebar.html:107
+#: templates/_partials/right_sidebar.html:99
 msgid "Pamphlet"
 msgstr "パンフレット"
 
-#: templates/_partials/right_sidebar.html:111
+#: templates/_partials/right_sidebar.html:103
 msgid "Caravan"
 msgstr "キャラバン"
 
-#: templates/_partials/right_sidebar.html:115
+#: templates/_partials/right_sidebar.html:108
 msgid "Ledger"
 msgstr "レジャー"
 
-#: templates/_partials/right_sidebar.html:119
+#: templates/_partials/right_sidebar.html:112
 msgid "Census"
 msgstr "センサス"
 
-#: templates/_partials/right_sidebar.html:125
+#: templates/_partials/right_sidebar.html:117
 msgid "You are Visitor #"
 msgstr "あんたは訪問者ナンバー"
 
-#: templates/_partials/weblog_list.html:19 templates/weblog/post.html:21
+#: templates/_partials/weblog_list.html:20 templates/weblog/post.html:25
 msgid "posted in"
 msgstr "カテゴリー："
 
-#: templates/_partials/weblog_list.html:21 templates/weblog/post.html:23
+#: templates/_partials/weblog_list.html:22 templates/weblog/post.html:27
 msgid "on"
 msgstr "投稿日："
 
-#: templates/_partials/weblog_list.html:29
+#: templates/_partials/weblog_list.html:34
 msgid "Continue Reading"
 msgstr "続きを読む"
 
-#: templates/_partials/weblog_list.html:31
+#: templates/_partials/weblog_list.html:36
 #, python-format
 msgid ""
 "\n"
-"          %(comment_count)s Comment"
+"            %(comment_count)s Comment"
 msgid_plural ""
 "\n"
-"          %(comment_count)s Comments"
+"            %(comment_count)s Comments"
 msgstr[0] ""
 "\n"
 "          %(comment_count)s コメント"
 
-#: templates/administration/kawaiibeats.html:131
-#: templates/administration/kawaiibeats.html:191
+#: templates/administration/kawaiibeats.html:135
+#: templates/administration/kawaiibeats.html:252
 msgid "Add Song"
 msgstr "楽曲を追加"
 
-#: templates/administration/kawaiibeats.html:137
-#: templates/administration/kawaiibeats.html:164
+#: templates/administration/kawaiibeats.html:143
+#: templates/administration/kawaiibeats.html:195
 msgid "Spotify URL"
 msgstr "SpotifyのURL"
 
-#: templates/administration/kawaiibeats.html:138
-#: templates/administration/kawaiibeats.html:165
+#: templates/administration/kawaiibeats.html:147
+#: templates/administration/kawaiibeats.html:199
 msgid "Enter Spotify URL"
 msgstr "SpotifyのURLを入力してください"
 
-#: templates/administration/kawaiibeats.html:140
+#: templates/administration/kawaiibeats.html:151
 msgid "Request Song Metadata"
 msgstr "楽曲のメタデータを取得"
 
-#: templates/administration/kawaiibeats.html:143
+#: templates/administration/kawaiibeats.html:153
 msgid "Or you can add a song manually:"
 msgstr "または手動で楽曲を追加することもできます："
 
-#: templates/administration/kawaiibeats.html:148
-#: templates/weblog/weblog.html:36 templates/weblog/weblog.html:43
+#: templates/administration/kawaiibeats.html:159
+#: templates/weblog/weblog.html:41 templates/weblog/weblog.html:56
 msgid "Title"
 msgstr "タイトル"
 
-#: templates/administration/kawaiibeats.html:149
+#: templates/administration/kawaiibeats.html:163
 msgid "Enter Title"
 msgstr "タイトルを入力してください"
 
-#: templates/administration/kawaiibeats.html:152
-#: templates/administration/kawaiibeats.html:235
+#: templates/administration/kawaiibeats.html:168
+#: templates/administration/kawaiibeats.html:292
 msgid "Artists"
 msgstr "アーティスト"
 
-#: templates/administration/kawaiibeats.html:153
+#: templates/administration/kawaiibeats.html:172
 msgid "Enter Artists"
 msgstr "アーティスト名を入力してください"
 
-#: templates/administration/kawaiibeats.html:156
+#: templates/administration/kawaiibeats.html:177
 msgid "Album"
 msgstr "アルバム"
 
-#: templates/administration/kawaiibeats.html:157
+#: templates/administration/kawaiibeats.html:181
 msgid "Enter Album"
 msgstr "アルバム名を入力してください"
 
-#: templates/administration/kawaiibeats.html:160
+#: templates/administration/kawaiibeats.html:186
 msgid "Spotify ID"
 msgstr "Spotify ID"
 
-#: templates/administration/kawaiibeats.html:161
+#: templates/administration/kawaiibeats.html:190
 msgid "Enter Spotify ID"
 msgstr "Spotify IDを入力してください"
 
-#: templates/administration/kawaiibeats.html:168
+#: templates/administration/kawaiibeats.html:204
 msgid "Album Art URL"
 msgstr "アルバムアートのURL"
 
-#: templates/administration/kawaiibeats.html:169
+#: templates/administration/kawaiibeats.html:208
 msgid "Enter Album Art URL"
 msgstr "アルバムアートのURLを入力してください"
 
-#: templates/administration/kawaiibeats.html:172
+#: templates/administration/kawaiibeats.html:213
 msgid "Custom Album Art"
 msgstr "カスタムアルバムアート"
 
-#: templates/administration/kawaiibeats.html:173
+#: templates/administration/kawaiibeats.html:217
 msgid "Enter Custom Album Art URL"
 msgstr "カスタムアルバムアートのURLを入力してください"
 
-#: templates/administration/kawaiibeats.html:176
+#: templates/administration/kawaiibeats.html:221
 msgid "Duration (ms)"
 msgstr "再生時間（ミリ秒）"
 
-#: templates/administration/kawaiibeats.html:177
+#: templates/administration/kawaiibeats.html:225
 msgid "Enter Duration in milliseconds"
 msgstr "再生時間をミリ秒で入力してください"
 
-#: templates/administration/kawaiibeats.html:180
+#: templates/administration/kawaiibeats.html:230
 msgid "Explicit"
 msgstr "露骨な表現"
 
-#: templates/administration/kawaiibeats.html:184
-#: templates/administration/kawaiibeats.html:238
+#: templates/administration/kawaiibeats.html:237
+#: templates/administration/kawaiibeats.html:295
 msgid "Release Date"
 msgstr "リリース日"
 
-#: templates/administration/kawaiibeats.html:188
+#: templates/administration/kawaiibeats.html:245
 msgid "Streaming URL"
 msgstr "ストリーミングURL"
 
-#: templates/administration/kawaiibeats.html:189
+#: templates/administration/kawaiibeats.html:249
 msgid "Enter Streaming URL"
 msgstr "ストリーミングURLを入力してください"
 
-#: templates/administration/kawaiibeats.html:209
+#: templates/administration/kawaiibeats.html:269
 msgid "Album Art"
 msgstr "アルバムアート"
 
-#: templates/administration/kawaiibeats.html:212
+#: templates/administration/kawaiibeats.html:270
 msgid "Metadata"
 msgstr "メタデータ"
 
-#: templates/administration/kawaiibeats.html:215
+#: templates/administration/kawaiibeats.html:271
 msgid "Actions"
 msgstr "アクション"
 
-#: templates/administration/kawaiibeats.html:232
+#: templates/administration/kawaiibeats.html:289
 msgid "Song"
 msgstr "楽曲"
 
-#: templates/administration/kawaiibeats.html:244
+#: templates/administration/kawaiibeats.html:302
 msgid "Edit"
 msgstr "編集"
 
-#: templates/administration/kawaiibeats.html:245
+#: templates/administration/kawaiibeats.html:304
 msgid "Delete"
 msgstr "削除"
 
-#: templates/administration/kawaiibeats.html:253
+#: templates/administration/kawaiibeats.html:311
 msgid "No songs found."
 msgstr "楽曲が見つかりませんでした。"
 
-#: templates/administration/kawaiibeats.html:263
+#: templates/administration/kawaiibeats.html:319
 msgid "Total Songs"
 msgstr "総楽曲数"
 
@@ -436,25 +433,25 @@ msgstr "総楽曲数"
 #, python-format
 msgid ""
 "\n"
-"    <p>\n"
-"      Welcome to the home of <strong>Shifoo</strong> (previously <i>That "
+"      <p>\n"
+"        Welcome to the home of <strong>Shifoo</strong> (previously <i>That "
 "Computer Scientist</i>). My name is <a "
 "href=\"%(bobby_profile_url)s\">@bobby</a>, and this is my personal website. "
 "I aim to build a retro looking personal website, where I share my thoughts, "
 "ideas, and experiences through articles, and will showcase some cool "
 "nostalgic features and tools.\n"
-"    </p>\n"
-"    <p>Please note that I am continuously working on this site, and it is "
+"      </p>\n"
+"      <p>Please note that I am continuously working on this site, and it is "
 "still under construction. So, not all features are available yet, and some "
 "features may not work as intended.</p>\n"
-"    <p>\n"
-"      There's also a some of <a href=\"#thegoodstuff\">The Good Stuff</a> "
+"      <p>\n"
+"        There's also a some of <a href=\"#thegoodstuff\">The Good Stuff</a> "
 "you can find in the sidebar, that you can play around with. I will be adding "
 "more in the not so distant future. Also, To participate around various "
 "sections of the site, you will need to <a "
 "href=\"%(register_url)s\">register</a> for an account. I hope you enjoy your "
 "stay here.\n"
-"    </p>\n"
+"      </p>\n"
 "    "
 msgstr ""
 "\n"
@@ -475,53 +472,67 @@ msgstr ""
 "    </p>\n"
 "    "
 
-#: templates/core/home.html:24
+#: templates/core/home.html:25
 msgid "Type your message here... (⏎ to send)"
 msgstr "ここにメッセージを入力...（⏎で送信）"
 
-#: templates/core/home.html:37
+#: templates/core/home.html:28
+msgid "Under Construction"
+msgstr ""
+
+#: templates/core/home.html:34
+msgid "Updates"
+msgstr ""
+
+#: templates/core/home.html:43
 msgid "New Announcement"
 msgstr "新しいアナウンスメント"
 
-#: templates/core/home.html:39
+#: templates/core/home.html:46
 msgid "Announcement"
 msgstr "アナウンスメント"
 
-#: templates/core/home.html:52 templates/weblog/weblog.html:13
+#: templates/core/home.html:59 templates/weblog/weblog.html:13
 msgid "Contemplations of Late"
 msgstr "最近考えてること"
 
-#: templates/core/home.html:56
+#: templates/core/home.html:61
 msgid "Recent Weeb Degenerecy"
 msgstr "最近のオタク的堕落"
 
-#: templates/weblog/post.html:27 templates/weblog/weblog.html:37
-#: templates/weblog/weblog.html:44
+#: templates/weblog/post.html:31 templates/weblog/weblog.html:44
+#: templates/weblog/weblog.html:59
 msgid "Views"
 msgstr "閲覧数"
 
-#: templates/weblog/post.html:30
-#, python-format
+#: templates/weblog/post.html:34
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "            %(comment_count)s Comment"
+#| msgid_plural ""
+#| "\n"
+#| "            %(comment_count)s Comments"
 msgid ""
 "\n"
-"            %(comment_count)s Comment"
+"              %(comment_count)s Comment"
 msgid_plural ""
 "\n"
-"            %(comment_count)s Comments"
+"              %(comment_count)s Comments"
 msgstr[0] ""
 "\n"
 "          %(comment_count)s コメント"
 
-#: templates/weblog/post.html:44
+#: templates/weblog/post.html:48
 msgid "Tagged with"
 msgstr "タグ"
 
-#: templates/weblog/post.html:50 templates/weblog/weblog.html:38
-#: templates/weblog/weblog.html:45
+#: templates/weblog/post.html:53 templates/weblog/weblog.html:47
+#: templates/weblog/weblog.html:62
 msgid "Comments"
 msgstr "コメント"
 
-#: templates/weblog/post.html:58
+#: templates/weblog/post.html:60
 msgid "No comments yet."
 msgstr "まだコメントないよ。"
 
@@ -529,26 +540,26 @@ msgstr "まだコメントないよ。"
 msgid "Keywords"
 msgstr "キーワード"
 
-#: templates/weblog/weblog.html:16
+#: templates/weblog/weblog.html:19
 msgid "Search weblog..."
 msgstr "ウェブログを検索..."
 
-#: templates/weblog/weblog.html:17
+#: templates/weblog/weblog.html:21
 msgid "Category"
 msgstr "カテゴリー"
 
-#: templates/weblog/weblog.html:20
+#: templates/weblog/weblog.html:23
 msgid "All"
 msgstr "全て"
 
-#: templates/weblog/weblog.html:30
+#: templates/weblog/weblog.html:32
 msgid "Sort by"
 msgstr "ソート順"
 
-#: templates/weblog/weblog.html:35 templates/weblog/weblog.html:42
+#: templates/weblog/weblog.html:38 templates/weblog/weblog.html:53
 msgid "Date"
 msgstr "日付"
 
-#: templates/weblog/weblog.html:60
+#: templates/weblog/weblog.html:85
 msgid "Filter"
 msgstr "フィルター"

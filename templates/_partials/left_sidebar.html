@@ -36,10 +36,10 @@
             <h2 class="user-title">
                 {% blocktranslate with username=user.username %}Hello, {{ username }}{% endblocktranslate %}
             </h2>
-            <div class="user-avatar">
+            {% comment %} <div class="user-avatar">
                 <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif"
                      alt="{{ user.username }}'s avatar" width="72" height="72" />
-            </div>
+            </div> {% endcomment %}
             <div class="user-items-container">
                 <div class="user-item">
                     <img src="{% static 'images/core/icons/journals.png' %}" width="20" height="20"
@@ -62,7 +62,7 @@
             </div>
         </div>
     {% endif %}
-    <div class="navigation-links">
+    <div class="navigation-links" {% if user.is_authenticated %}style="margin-top: 64px"{% endif %}>
         <div class="navigation-title-container">
             <h1 class="navigation-title">{% translate "Navigation" %}</h1>
         </div>
@@ -76,9 +76,31 @@
                      alt="Journal of Random Thoughts Icon" />
                 <a href="#journal-of-random-thoughts">{% translate "Journal of Random Thoughts" %}</a>
             </div>
-            <div class="navigation-item">
+            <div class="navigation-item weblog-sidebar-container">
                 <img src="{% static 'images/core/icons/weblog.gif' %}" width="20" height="20" alt="Weblog Icon" />
                 <a href="{% url 'weblog:home' %}">{% translate "Weblog" %}</a>
+                <div class="weblog-sidebar-hovered">
+                    <div class="hovercard-item">
+                        <img src="{% static 'images/core/icons/weblog_internal.png' %}" width="20" height="20"
+                             alt="Weblog Internal Icon" />
+                        <a href="{% url 'weblog:home' %}">{% translate "Weblog" %}</a>
+                    </div>
+                    <div class="hovercard-item">
+                        <img src="{% static 'images/core/icons/categories.gif' %}" width="20" height="20"
+                             alt="Categories Icon" />
+                        <a href="{% url 'weblog:home' %}#categories">{% translate "Categories" %}</a>
+                    </div>
+                    <div class="hovercard-item">
+                        <img src="{% static 'images/core/icons/tags.gif' %}" width="20" height="20"
+                             alt="Tags Icon" />
+                        <a href="{% url 'weblog:home' %}#tags">{% translate "Tags" %}</a>
+                    </div>
+                    <div class="hovercard-item">
+                        <img src="{% static 'images/core/icons/archives.gif' %}" width="20" height="20"
+                             alt="Archives Icon" />
+                        <a href="{% url 'weblog:home' %}#archives">{% translate "Archives" %}</a>
+                    </div>
+                </div>
             </div>
             <div class="navigation-item">
                 <img src="{% static 'images/core/icons/shrines.png' %}" width="20" height="20" alt="Shrines Icon" />

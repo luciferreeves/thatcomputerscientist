@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 06:45+0000\n"
+"POT-Creation-Date: 2025-05-29 09:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,106 +93,119 @@ msgid "Journal of Random Thoughts"
 msgstr "ランダム思考のジャーナル"
 
 #: templates/_partials/left_sidebar.html:81
+#: templates/_partials/left_sidebar.html:86
 #: templates/_partials/right_sidebar.html:87
 msgid "Weblog"
 msgstr "ウェブログ"
 
-#: templates/_partials/left_sidebar.html:85
+#: templates/_partials/left_sidebar.html:91
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: templates/_partials/left_sidebar.html:96
+msgid "Tags"
+msgstr "タグ"
+
+#: templates/_partials/left_sidebar.html:101
+msgid "Archives"
+msgstr "アーカイブ"
+
+#: templates/_partials/left_sidebar.html:107
 msgid "Shrines"
 msgstr "神社"
 
-#: templates/_partials/left_sidebar.html:90
+#: templates/_partials/left_sidebar.html:112
 msgid "Screenshots"
 msgstr "スクリーンショット"
 
-#: templates/_partials/left_sidebar.html:95
+#: templates/_partials/left_sidebar.html:117
 msgid "Chatrooms"
 msgstr "チャットルーム"
 
-#: templates/_partials/left_sidebar.html:100
+#: templates/_partials/left_sidebar.html:122
 msgid "Guestbook"
 msgstr "ゲストブック"
 
-#: templates/_partials/left_sidebar.html:105
+#: templates/_partials/left_sidebar.html:127
 msgid "Site Preferences"
 msgstr "サイトの設定"
 
-#: templates/_partials/left_sidebar.html:111
+#: templates/_partials/left_sidebar.html:133
 msgid "Register Account"
 msgstr "アカウント登録"
 
-#: templates/_partials/left_sidebar.html:115
+#: templates/_partials/left_sidebar.html:137
 msgid "My Account"
 msgstr "マイアカウント"
 
-#: templates/_partials/left_sidebar.html:136
+#: templates/_partials/left_sidebar.html:158
 msgid "Search"
 msgstr "検索"
 
-#: templates/_partials/left_sidebar.html:144
+#: templates/_partials/left_sidebar.html:166
 msgid "The Good Stuff"
 msgstr "おすすめ"
 
-#: templates/_partials/left_sidebar.html:150
+#: templates/_partials/left_sidebar.html:172
 msgid "Post Calendar"
 msgstr "ブログカレンダー"
 
-#: templates/_partials/left_sidebar.html:154
+#: templates/_partials/left_sidebar.html:176
 msgid "Anime Streams"
 msgstr "アニメ配信"
 
-#: templates/_partials/left_sidebar.html:159
+#: templates/_partials/left_sidebar.html:181
 #: templates/_partials/right_sidebar.html:93
 msgid "The Matrix"
 msgstr "ザ・マトリックス"
 
-#: templates/_partials/left_sidebar.html:163
+#: templates/_partials/left_sidebar.html:185
 msgid "RSS Feed"
 msgstr "RSSフィード"
 
-#: templates/_partials/left_sidebar.html:168
+#: templates/_partials/left_sidebar.html:190
 msgid "Marketplace"
 msgstr "マーケットプレイス"
 
-#: templates/_partials/left_sidebar.html:173
+#: templates/_partials/left_sidebar.html:195
 msgid "Discussions"
 msgstr "ディスカッション"
 
-#: templates/_partials/left_sidebar.html:180
+#: templates/_partials/left_sidebar.html:202
 msgid "Site Spells"
 msgstr "サイトの魔法"
 
-#: templates/_partials/left_sidebar.html:188
-#: templates/_partials/left_sidebar.html:193
+#: templates/_partials/left_sidebar.html:210
+#: templates/_partials/left_sidebar.html:215
 msgid "Withdraw Oneko"
 msgstr "おねこを引っ込める"
 
-#: templates/_partials/left_sidebar.html:199
+#: templates/_partials/left_sidebar.html:221
 msgid "Harlem Shake"
 msgstr "ハーレムシェイク"
 
-#: templates/_partials/left_sidebar.html:204
+#: templates/_partials/left_sidebar.html:226
 msgid "DVD Sitesaver"
 msgstr "DVDサイトセーバー"
 
-#: templates/_partials/left_sidebar.html:211
+#: templates/_partials/left_sidebar.html:233
 msgid "Admin Area"
 msgstr "アドミンアレア"
 
-#: templates/_partials/left_sidebar.html:217
+#: templates/_partials/left_sidebar.html:239
 msgid "Manage Announcements"
 msgstr "アナウンスメント管理"
 
-#: templates/_partials/left_sidebar.html:222
+#: templates/_partials/left_sidebar.html:244
 msgid "Manage Users"
 msgstr "ユーザー管理"
 
-#: templates/_partials/left_sidebar.html:227
+#: templates/_partials/left_sidebar.html:249
 #: templates/administration/kawaiibeats.html:131
 msgid "KawaiiBeats Manager"
 msgstr "KawaiiBeatsマネージャー"
 
-#: templates/_partials/left_sidebar.html:232
+#: templates/_partials/left_sidebar.html:254
 msgid "This website uses cookies and there's nothing you can do about it!"
 msgstr ""
 "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできませ"

@@ -59,6 +59,11 @@ a:active {
     color: #9ae4f1;
 }
 
+#body-wrapper {
+    position: relative;
+    z-index: 0;
+}
+
 button {
     background: #4444b1;
     color: #fff;

@@ -15,6 +15,26 @@
     margin-left: 4px;
 }
 
+.author-info a,
+.post-actions a:not(.post-tag) {
+    color: #96b5ff !important;
+}
+
+.author-info a:hover,
+.post-actions a:hover:not(.post-tag) {
+    color: #ff96ff !important;
+}
+
+.post-exerpt a,
+.weblog-content a {
+    color: #f6cc95 !important;
+}
+
+.post-exerpt a:hover,
+.weblog-content a:hover {
+    color: #ffb95c !important;
+}
+
 .post-profile-image {
     width: 16px;
     height: 16px;

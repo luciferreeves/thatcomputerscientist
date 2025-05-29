@@ -21,8 +21,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #dddddd;
+}
+
+.weblog-title-area {
+    padding: 16px 0 4px 0;
 }
 
 .post-actions {
@@ -142,7 +144,6 @@
     white-space: pre-wrap;
 }
 
-/* Blockquote styles - Y2K Japanese inspired */
 .weblog-content blockquote {
     margin: 12px 0;
     padding: 8px 16px;
@@ -170,4 +171,8 @@
     flex-direction: row;
     align-items: center;
     gap: 4px;
+}
+
+pre::-webkit-scrollbar {
+    display: none;
 }

@@ -51,7 +51,13 @@ a:active {
     color: #df23c4;
 }
 
+#main-content a {
+    color: #95f695;
+}
 
+#main-content a:hover {
+    color: #9ae4f1;
+}
 
 button {
     background: #4444b1;

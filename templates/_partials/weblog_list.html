@@ -7,25 +7,25 @@
 {% for post in posts %}
     <div class="post">
         <div class="post-body">
+            <h2>
+                <a style="color: {{ post.color }};" href="{% url 'weblog:post' post.slug %}">{{ post.title }}</a>
+            </h2>
+            <div class="author-info">
+                {% with authorprofile=post.author.userprofile_set.first %}
+                    <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif"
+                         class="post-profile-image"
+                         alt="{{ post.author.first_name }}'s Avatar" width="16" height="16" />
+                {% endwith %}
+                <a href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a>
+                <span>{% translate "posted in" %}</span>
+                <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
+                <span>{% translate "on" %}</span>
+                <span>{% localtime on %}{{ post.date|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
+            </div>
             <div class="post-image">
                 <img src="{{ post.image_url }}" alt="{{ post.title }}" width="350" height="230" />
             </div>
             <div class="post-content">
-                <h2>
-                    <a href="{% url 'weblog:post' post.slug %}">{{ post.title }}</a>
-                </h2>
-                <div class="author-info">
-                    {% with authorprofile=post.author.userprofile_set.first %}
-                        <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif"
-                             class="post-profile-image"
-                             alt="{{ post.author.first_name }}'s Avatar" width="16" height="16" />
-                    {% endwith %}
-                    <a href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a>
-                    <span>{% translate "posted in" %}</span>
-                    <a href="#{{ post.category.slug }}">{{ post.category.name }}</a>
-                    <span>{% translate "on" %}</span>
-                    <span>{% localtime on %}{{ post.date|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
-                </div>
                 <div class="post-exerpt">{{ post.excerpt|safe }}</div>
             </div>
         </div>

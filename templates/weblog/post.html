@@ -13,7 +13,7 @@
 {% block content %}
     <div class="weblog-container">
         <div class="weblog-title-area">
-            <h1>{{ post.title }}</h1>
+            <h1 style="color: {{ post.color }}">{{ post.title }}</h1>
             <div class="weblog-details">
                 <div class="author-info">
                     {% with authorprofile=post.author.userprofile_set.first %}
@@ -42,7 +42,7 @@
         <div class="weblog-image">
             <img src="{{ post.image_url }}" alt="{{ post.title }}" width="780" height="512" />
         </div>
-        <div class="weblog-content" id="weblog-body-content">{{ post.body|safe }}</div>
+        <div class="weblog-content" id="weblog-body-content">{{ post.processed_body|safe }}</div>
         <div class="post-actions">
             <div class="post-tags">
                 <span><strong>{% translate "Tagged with" %}:</strong></span>

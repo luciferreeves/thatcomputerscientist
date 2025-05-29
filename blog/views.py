@@ -1,7 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
 from blog.functions import get_single_post, get_posts, get_all_categories
-from internal.weblog_utilities import highlight_code
 
 
 weblog_slug = "shifoo"
@@ -68,8 +67,6 @@ def post(request, slug):
         request.meta.title = post.title
         request.meta.description = post.excerpt
         request.meta.image = post.image_url
-
-        post.body = highlight_code(post.get_processed_body())
 
         context = {"post": post}
 

@@ -1,6 +1,7 @@
 from blog.models import Post, Category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Count
+from internal.weblog_utilities import highlight_code, get_post_color
 
 
 def get_posts(
@@ -56,6 +57,9 @@ def get_posts(
         paginated_posts = paginator.page(paginator.num_pages)
         page = paginator.num_pages
 
+    for post in paginated_posts:
+        post.color = get_post_color(post)
+
     return {
         "posts": paginated_posts.object_list,
         "paginator": paginator,
@@ -87,20 +91,11 @@ def get_single_post(weblog_slug, post_slug, lang="en"):
         .first()
     )
     if post:
+        post.color = get_post_color(post)
+        post.body = highlight_code(post.body)
+
         return post.translate(lang)
     return None
-
-
-# def get_all_posts(weblog_slug, lang="en"):
-#     queryset = (
-#         Post.objects.filter(weblog__slug=weblog_slug, is_public=True)
-#         .prefetch_related(
-#             "tags", "translations", "category__translations", "tags__translations"
-#         )
-#         .order_by("-date")
-#     )
-
-#     return Post.translate_queryset(queryset, lang)
 
 
 def get_all_categories(weblog_slug, lang="en"):
@@ -111,15 +106,3 @@ def get_all_categories(weblog_slug, lang="en"):
     )
 
     return Category.translate_queryset(queryset, lang)
-
-
-def get_recent_posts(lang="en", amount=3, author_username="bobby"):
-    queryset = (
-        Post.objects.filter(is_public=True, author__username=author_username)
-        .prefetch_related(
-            "tags", "translations", "category__translations", "tags__translations"
-        )
-        .order_by("-date")[:amount]
-    )
-
-    return Post.translate_queryset(queryset, lang)

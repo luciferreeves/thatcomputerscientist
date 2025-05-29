@@ -11,10 +11,8 @@ from pygments.token import Comment
 class ShifooHighlight(Style):
     """Custom Vim style with modified comment colors"""
 
-    # Inherit all styles from VimStyle
     styles = dict(VimStyle.styles)
 
-    # Override comment styles using proper token types
     styles.update(
         {Comment: "#666666", Comment.Preproc: "#666666", Comment.Special: "#666666"}
     )
@@ -53,3 +51,60 @@ def highlight_code(html_content):
         pre.append(BeautifulSoup(highlighted, "html.parser"))
 
     return str(soup)
+
+
+def get_post_color(post):
+    colors = [
+        "#FF8B8B",  # salmon
+        "#75D151",  # lime green
+        "#AD8CFF",  # lavender
+        "#FFAA5E",  # peach
+        "#87CEFA",  # light sky blue
+        "#FFB3BA",  # pastel red
+        "#42D6A4",  # mint green
+        "#C774E8",  # purple
+        "#FFDE59",  # yellow
+        "#94D0FF",  # baby blue
+        "#FF9AA2",  # salmon pink
+        "#CAFFBF",  # light lime
+        "#BDB2FF",  # pastel purple
+        "#F7EA00",  # bright yellow
+        "#FFD1DC",  # bubble gum pink
+        "#54F2F2",  # cyan
+        "#FFA8B8",  # coral pink
+        "#90EE90",  # light green
+        "#FF6AD5",  # bright pink
+        "#C1E7E3",  # pastel teal
+        "#8795E8",  # periwinkle
+        "#FFDFBA",  # pastel orange
+        "#4ADEDE",  # teal
+        "#FB91D1",  # hot pink
+        "#AFF8D8",  # mint
+        "#FFF9B0",  # pastel yellow
+        "#B5D8FF",  # pastel blue
+        "#FCF6BD",  # light yellow
+        "#D5AAFF",  # light purple
+        "#9EE7FF",  # baby blue
+        "#DCBEFF",  # light lavender
+        "#E0BBE4",  # lavender
+    ]
+
+    slug = post.slug
+
+    # Polynomial rolling hash algorithm
+    hash_value = 0
+    p_base = len(slug) + 31  # Base derived from slug length and a prime
+
+    for i, char in enumerate(slug):
+        # Each character contributes based on position and value
+        char_value = ord(char)
+        position_factor = i + 1
+
+        # Add character contribution to hash
+        hash_value += char_value * position_factor * p_base + char_value
+
+        # Mix the bits to improve distribution
+        hash_value = ((hash_value << 5) + hash_value) + char_value
+
+    color_index = abs(hash_value) % len(colors)
+    return colors[color_index]

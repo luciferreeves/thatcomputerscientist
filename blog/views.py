@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from blog.functions import get_single_post, get_posts, get_all_categories
+from blog.functions import get_single_post, get_posts, get_categories
 
 
 weblog_slug = "shifoo"
@@ -33,7 +33,7 @@ def weblog(request):
         {"value": "asc", "symbol": "↑", "selected": current_sort_order == "asc"},
     ]
 
-    categories = get_all_categories(weblog_slug, lang=request.LANGUAGE_CODE)
+    categories = get_categories(weblog_slug, lang=request.LANGUAGE_CODE)
     for category in categories:
         category.is_selected = current_category == category.slug
 
@@ -58,6 +58,22 @@ def weblog(request):
     }
 
     return render(request, "weblog/weblog.html", context)
+
+
+def categories(request):
+    request.meta.title = (
+        "Shifooのウェブログ - カテゴリ"
+        if request.LANGUAGE_CODE == "ja"
+        else "Shifoo's Weblog - Categories"
+    )
+
+    categories = get_categories(weblog_slug, lang=request.LANGUAGE_CODE)
+
+    context = {
+        "categories": categories,
+    }
+
+    return render(request, "weblog/categories.html", context)
 
 
 def post(request, slug):

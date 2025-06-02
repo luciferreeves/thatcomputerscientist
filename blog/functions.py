@@ -98,10 +98,11 @@ def get_single_post(weblog_slug, post_slug, lang="en"):
     return None
 
 
-def get_all_categories(weblog_slug, lang="en"):
+def get_categories(weblog_slug, lang="en"):
     queryset = (
         Category.objects.filter(weblog__slug=weblog_slug)
         .prefetch_related("translations")
+        .annotate(post_count=Count("post", filter=Q(post__is_public=True)))
         .order_by("name")
     )
 

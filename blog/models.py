@@ -169,6 +169,7 @@ class Tag(TranslatableMixin, models.Model):
     weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=50)
     slug = models.SlugField()
+    image = models.URLField(blank=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

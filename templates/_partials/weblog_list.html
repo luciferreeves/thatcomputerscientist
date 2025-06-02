@@ -39,7 +39,9 @@
                 </a>
             </div>
             <div class="post-tags">
-                {% for tag in post.tags.all %}<a class="post-tag" href="#{{ tag.slug }}">{{ tag.translated_name }}</a>{% endfor %}
+                {% for tag in post.tags.all %}
+                    <a class="post-tag" href="{% url 'weblog:home' %}?{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}tag={{ tag.slug }}">{{ tag.translated_name }}</a>
+                {% endfor %}
             </div>
         </div>
     </div>

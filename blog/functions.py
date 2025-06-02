@@ -1,4 +1,4 @@
-from blog.models import Post, Category
+from blog.models import Post, Category, Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Count
 from internal.weblog_utilities import highlight_code, get_post_color
@@ -11,6 +11,7 @@ def get_posts(
     sort="date",
     order="asc",
     category_slug="all",
+    tag_slug="all",
     page=1,
     per_page=10,
 ):
@@ -27,6 +28,9 @@ def get_posts(
 
     if category_slug != "all":
         queryset = queryset.filter(category__slug=category_slug)
+
+    if tag_slug != "all":
+        queryset = queryset.filter(tags__slug=tag_slug)
 
     sort_mapping = {
         "date": "date",
@@ -107,3 +111,14 @@ def get_categories(weblog_slug, lang="en"):
     )
 
     return Category.translate_queryset(queryset, lang)
+
+
+def get_tags(weblog_slug, lang="en"):
+    queryset = (
+        Tag.objects.filter(weblog__slug=weblog_slug)
+        .prefetch_related("translations")
+        .annotate(post_count=Count("post", filter=Q(post__is_public=True)))
+        .order_by("name")
+    )
+
+    return Tag.translate_queryset(queryset, lang)

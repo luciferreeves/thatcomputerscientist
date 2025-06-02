@@ -8,6 +8,7 @@ app_name = "blog"
 urlpatterns = [
     path("", views.weblog, name="home"),
     path("/categories", views.categories, name="categories"),
+    path("/tags", views.tags, name="tags"),
     path("/<str:slug>", views.post, name="post"),
 ]
 

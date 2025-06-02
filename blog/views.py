@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from blog.functions import get_single_post, get_posts, get_categories
+from blog.functions import get_single_post, get_posts, get_categories, get_tags
 
 
 weblog_slug = "shifoo"
@@ -14,6 +14,7 @@ def weblog(request):
     current_sort = request.GET.get("sort", "date")
     current_sort_order = request.GET.get("order", "desc")
     current_category = request.GET.get("category", "all")
+    current_tag = request.GET.get("tag", "all")
     search_query = request.GET.get("q", "")
     page = request.GET.get("page", 1)
 
@@ -44,6 +45,7 @@ def weblog(request):
         sort=current_sort,
         order=current_sort_order,
         category_slug=current_category,
+        tag_slug=current_tag,
         page=page,
         per_page=5,
     )
@@ -74,6 +76,23 @@ def categories(request):
     }
 
     return render(request, "weblog/categories.html", context)
+
+
+def tags(request):
+    request.meta.title = (
+        "Shifooのウェブログ - タグ"
+        if request.LANGUAGE_CODE == "ja"
+        else "Shifoo's Weblog - Tags"
+    )
+
+    tags = get_tags(weblog_slug, lang=request.LANGUAGE_CODE)
+    tags = sorted(tags, key=lambda x: x.post_count, reverse=True)
+
+    context = {
+        "tags": tags,
+    }
+
+    return render(request, "weblog/tags.html", context)
 
 
 def post(request, slug):

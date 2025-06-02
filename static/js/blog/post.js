@@ -27,12 +27,12 @@ function initializeImageLayout() {
 
             if (index % 2 === 0) {
                 imgWrapper.style.float = 'left';
-                imgWrapper.style.marginRight = '20px';
-                imgWrapper.style.marginBottom = '15px';
+                imgWrapper.style.marginRight = '11px';
+                imgWrapper.style.marginBottom = '11px';
             } else {
                 imgWrapper.style.float = 'right';
-                imgWrapper.style.marginLeft = '20px';
-                imgWrapper.style.marginBottom = '15px';
+                imgWrapper.style.marginLeft = '11px';
+                imgWrapper.style.marginBottom = '11px';
             }
 
             img.parentNode.insertBefore(imgWrapper, img);

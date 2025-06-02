@@ -52,13 +52,13 @@
 
 .weblog-content img:nth-of-type(odd) {
     float: left;
-    margin-right: 12px;
+    /* margin-right: 12px; */
     margin-left: 0;
 }
 
 .weblog-content img:nth-of-type(even) {
     float: right;
-    margin-left: 12px;
+    /* margin-left: 12px; */
     margin-right: 0;
 }
 

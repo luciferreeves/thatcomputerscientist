@@ -1,0 +1,63 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load tz %}
+{% block head %}
+    <link type="text/css"
+          rel="stylesheet"
+          href="{% static 'css/blog/subpage.css' %}" />
+    <style>
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+        }
+        .list-item img {
+            margin-right: 10px;
+        }
+        .list-item a:hover {
+            color: #007bff;
+        }
+    </style>
+{% endblock head %}
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <span class="title-glitch" data-text="{% translate "Archives" %}">{% translate "Archives" %}</span>
+        </h1>
+        <div class="page-subtitle">
+            {% translate "Browse weblog archives" %}
+        </div>
+        
+        <div class="bg-elements">
+            <div class="bg-grid"></div>
+            <div class="floating-shapes">
+                <div class="bg-shape bg-shape-1"></div>
+                <div class="bg-shape bg-shape-2"></div>
+                <div class="bg-shape bg-shape-3"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content-list">
+        {% for archive in archives %}
+            <div class="list-item">
+                <img src="{% static 'images/core/icons/archives.gif' %}" width="20" height="20" alt="Archives Icon" />
+                <a href="{% url 'weblog:home' %}?year={{ archive.year }}&month={{ archive.month }}">
+                    <span>{% localtime on %}{{ archive.date|date:'YEAR_MONTH_FORMAT' }}{% endlocaltime %}</span>
+                </a>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <h3>{% translate "No archives found" %}</h3>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

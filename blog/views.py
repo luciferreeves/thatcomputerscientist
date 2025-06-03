@@ -1,6 +1,12 @@
 from django.http import Http404
 from django.shortcuts import render
-from blog.functions import get_single_post, get_posts, get_categories, get_tags
+from blog.functions import (
+    get_single_post,
+    get_posts,
+    get_categories,
+    get_tags,
+    get_archives,
+)
 
 
 weblog_slug = "shifoo"
@@ -17,6 +23,8 @@ def weblog(request):
     current_tag = request.GET.get("tag", "all")
     search_query = request.GET.get("q", "")
     page = request.GET.get("page", 1)
+    year = request.GET.get("year")
+    month = request.GET.get("month")
 
     sort_options = [
         {"value": "date", "label": "Date", "selected": current_sort == "date"},
@@ -46,6 +54,8 @@ def weblog(request):
         order=current_sort_order,
         category_slug=current_category,
         tag_slug=current_tag,
+        year=year,
+        month=month,
         page=page,
         per_page=5,
     )
@@ -93,6 +103,22 @@ def tags(request):
     }
 
     return render(request, "weblog/tags.html", context)
+
+
+def archives(request):
+    request.meta.title = (
+        "Shifooのウェブログ - アーカイブ"
+        if request.LANGUAGE_CODE == "ja"
+        else "Shifoo's Weblog - Archives"
+    )
+
+    archives = get_archives(weblog_slug)
+
+    context = {
+        "archives": archives,
+    }
+
+    return render(request, "weblog/archives.html", context)
 
 
 def post(request, slug):

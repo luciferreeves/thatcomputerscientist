@@ -7,6 +7,7 @@ from . import views
 app_name = "blog"
 urlpatterns = [
     path("", views.weblog, name="home"),
+    path("/archives", views.archives, name="archives"),
     path("/categories", views.categories, name="categories"),
     path("/tags", views.tags, name="tags"),
     path("/<str:slug>", views.post, name="post"),

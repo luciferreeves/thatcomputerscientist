@@ -281,16 +281,14 @@ html[lang='ja'] .navigation-title {
 
 .weblog-sidebar-container {
     position: relative;
-    /* Extend the container to cover the hovercard area */
-    padding-right: 95px;
-    margin-right: -95px;
+    overflow: visible;
 }
 
 .weblog-sidebar-hovered {
     position: absolute;
     width: 180px;
     top: -14px;
-    right: -85px;
+    left: 200px;
     border: 2px solid #AD8CFF;
     background: linear-gradient(135deg, rgba(244, 183, 255, 0.95) 0%, rgba(173, 128, 236, 0.95) 100%);
     padding: 6px 8px;

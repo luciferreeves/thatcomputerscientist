@@ -90,7 +90,7 @@
     <div class="pagination-wrapper">
         <div class="pagination">
             {% if page.has_previous %}
-                <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page.previous_page_number }}"
+                <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}{% if request.GET.tag %}tag={{ request.GET.tag }}&{% endif %}{% if request.GET.year %}year={{ request.GET.year }}&{% endif %}{% if request.GET.month %}month={{ request.GET.month }}&{% endif %}page={{ page.previous_page_number }}"
                    class="pagination-link">«</a>
             {% else %}
                 <span class="pagination-link disabled">«</span>
@@ -99,10 +99,10 @@
                 {% if page_number == page.number %}
                     <span class="pagination-link current">{{ page_number }}</span>
                 {% elif page_number == 1 or page_number == paginator.num_pages %}
-                    <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page_number }}"
+                    <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}{% if request.GET.tag %}tag={{ request.GET.tag }}&{% endif %}{% if request.GET.year %}year={{ request.GET.year }}&{% endif %}{% if request.GET.month %}month={{ request.GET.month }}&{% endif %}page={{ page_number }}"
                        class="pagination-link">{{ page_number }}</a>
                 {% elif page_number >= page.number|add:-2 and page_number <= page.number|add:2 %}
-                    <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page_number }}"
+                    <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}{% if request.GET.tag %}tag={{ request.GET.tag }}&{% endif %}{% if request.GET.year %}year={{ request.GET.year }}&{% endif %}{% if request.GET.month %}month={{ request.GET.month }}&{% endif %}page={{ page_number }}"
                        class="pagination-link">{{ page_number }}</a>
                 {% elif page_number == 2 and page.number > 4 %}
                     <span class="pagination-ellipsis">...</span>
@@ -111,7 +111,7 @@
                 {% endif %}
             {% endfor %}
             {% if page.has_next %}
-                <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}page={{ page.next_page_number }}"
+                <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}{% if request.GET.order %}order={{ request.GET.order }}&{% endif %}{% if request.GET.tag %}tag={{ request.GET.tag }}&{% endif %}{% if request.GET.year %}year={{ request.GET.year }}&{% endif %}{% if request.GET.month %}month={{ request.GET.month }}&{% endif %}page={{ page.next_page_number }}"
                    class="pagination-link">»</a>
             {% else %}
                 <span class="pagination-link disabled">»</span>

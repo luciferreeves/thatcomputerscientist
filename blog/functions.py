@@ -12,6 +12,8 @@ def get_posts(
     order="asc",
     category_slug="all",
     tag_slug="all",
+    year=None,
+    month=None,
     page=1,
     per_page=10,
 ):
@@ -31,6 +33,13 @@ def get_posts(
 
     if tag_slug != "all":
         queryset = queryset.filter(tags__slug=tag_slug)
+
+    if year and month:
+        queryset = queryset.filter(date__year=year, date__month=month)
+    elif year:
+        queryset = queryset.filter(date__year=year)
+    elif month:
+        queryset = queryset.filter(date__month=month)
 
     sort_mapping = {
         "date": "date",
@@ -122,3 +131,21 @@ def get_tags(weblog_slug, lang="en"):
     )
 
     return Tag.translate_queryset(queryset, lang)
+
+
+def get_archives(weblog_slug):
+    queryset = Post.objects.filter(weblog__slug=weblog_slug, is_public=True).dates(
+        "date", "month", order="DESC"
+    )
+
+    archives = []
+    for date in queryset:
+        archives.append(
+            {
+                "pretty": date.strftime("%B %Y"),
+                "date": date,
+                "month": date.strftime("%m"),
+                "year": date.strftime("%Y"),
+            }
+        )
+    return archives

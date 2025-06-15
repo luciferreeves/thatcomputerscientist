@@ -34,8 +34,7 @@ sitemaps = {
 handler404 = 'thatcomputerscientist.error_handler.custom_404'
 
 def robots_txt(request):
-    content = """
-User-agent: *
+    content = """User-agent: *
 Crawl-delay: 5
 Disallow: /repositories/*/
 Allow: /repositories/$

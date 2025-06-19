@@ -56,13 +56,18 @@
                     <a href="#mypage">{% translate "My Page" %}</a>
                 </div>
                 <div class="user-item">
+                    <img src="{% static 'images/core/icons/messages.png' %}" width="20" height="20"
+                         alt="Messages Icon" />
+                    <a href="#messages">{% translate "Messages" %}</a>
+                </div>
+                <div class="user-item">
                     <img src="{% static 'images/core/icons/logout.png' %}" width="20" height="20" alt="Logout Icon" />
                     <a href="{% url 'auth:logout' %}">{% translate "Logout" %}</a>
                 </div>
             </div>
         </div>
     {% endif %}
-    <div class="navigation-links" {% if user.is_authenticated %}style="margin-top: 64px"{% endif %}>
+    <div class="navigation-links" {% if user.is_authenticated %}style="margin-top: 42px"{% endif %}>
         <div class="navigation-title-container">
             <h1 class="navigation-title">{% translate "Navigation" %}</h1>
         </div>

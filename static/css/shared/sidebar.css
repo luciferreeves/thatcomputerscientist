@@ -121,13 +121,7 @@ html[lang='ja'] #login-area>#forgot-password-button {
 }
 
 #user-area {
-    /* background: url("../../images/core/backgrounds/user-area.png") no-repeat;
-    background-size: 200px 250px; */
-    width: 200px;
-    height: 196px;
-    max-height: 250px;
     position: relative;
-    right: 4px;
 }
 
 .left-sidebar-authenticated {
@@ -138,36 +132,31 @@ html[lang='ja'] #login-area>#forgot-password-button {
 
 /* User Area */
 .user-items-container {
+    width: 200px;
+    height: 224px;
     position: relative;
-    left: 0px;
-    margin-top: 0px;
-    background-image: url("../../images/core/backgrounds/user-area.gif");
-    width: 220px;
-    height: 220px;
+    top: 20px;
+    background: url("../../images/core/backgrounds/user-area.png") no-repeat;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: 8px;
+    border-radius: 0px 0px 4px 4px;
 }
 
 .user-item {
-    background-color: black;
     display: flex;
     align-items: center;
-    margin: 0px 0px;
-    gap: 3px;
+    gap: 4px;
     position: relative;
-    width: 106px;
-    top: 93px;
-    left: 56px;
+    width: 132px;
+    top: 28px;
+    left: 62px;
     padding: 2px 0;
-    font-size: 9px;
 }
 
 .user-item img {
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
+    width: 20px;
+    height: 20px;
 }
 
 .user-title {

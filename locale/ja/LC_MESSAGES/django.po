@@ -591,12 +591,10 @@ msgid_plural "%(post_count)s posts"
 msgstr[0] "%(post_count)s ポスト"
 
 #: templates/weblog/tags.html:134
-#, fuzzy
 msgid "No tags found"
 msgstr "タグが見つかりません"
 
 #: templates/weblog/tags.html:139
-#, fuzzy
 msgid "Tip: Hover over each polaroid to bring it to the front!"
 msgstr "ヒント：各ポラロイドの上にカーソルを合わせると前面に表示されます！"
 

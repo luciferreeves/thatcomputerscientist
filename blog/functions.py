@@ -134,18 +134,28 @@ def get_tags(weblog_slug, lang="en"):
 
 
 def get_archives(weblog_slug):
+    from django.db.models import Count
+
     queryset = Post.objects.filter(weblog__slug=weblog_slug, is_public=True).dates(
         "date", "month", order="DESC"
     )
 
     archives = []
     for date in queryset:
+        post_count = Post.objects.filter(
+            weblog__slug=weblog_slug,
+            is_public=True,
+            date__year=date.year,
+            date__month=date.month,
+        ).count()
+
         archives.append(
             {
                 "pretty": date.strftime("%B %Y"),
                 "date": date,
                 "month": date.strftime("%m"),
                 "year": date.strftime("%Y"),
+                "post_count": post_count,
             }
         )
     return archives

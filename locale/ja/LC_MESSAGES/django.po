@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-03 00:34+0000\n"
+"POT-Creation-Date: 2025-06-19 02:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,11 +102,11 @@ msgstr "ウェブログ"
 msgid "Categories"
 msgstr "カテゴリー"
 
-#: templates/_partials/left_sidebar.html:97 templates/weblog/tags.html:13
+#: templates/_partials/left_sidebar.html:97 templates/weblog/tags.html:108
 msgid "Tags"
 msgstr "タグ"
 
-#: templates/_partials/left_sidebar.html:102 templates/weblog/archives.html:32
+#: templates/_partials/left_sidebar.html:102 templates/weblog/archives.html:75
 msgid "Archives"
 msgstr "アーカイブ"
 
@@ -513,11 +513,17 @@ msgstr "最近考えてること"
 msgid "Recent Weeb Degenerecy"
 msgstr "最近のオタク的堕落"
 
-#: templates/weblog/archives.html:35
+#: templates/weblog/archives.html:78
 msgid "Browse weblog archives"
 msgstr "ウェブログのアーカイブを閲覧"
 
-#: templates/weblog/archives.html:57
+#: templates/weblog/archives.html:97
+#, python-format
+msgid "%(post_count)s Post"
+msgid_plural "%(post_count)s Posts"
+msgstr[0] "%(post_count)s ポスト"
+
+#: templates/weblog/archives.html:101
 msgid "No archives found"
 msgstr "アーカイブが見つかりません"
 
@@ -525,7 +531,7 @@ msgstr "アーカイブが見つかりません"
 msgid "Browse weblog posts by category"
 msgstr "ウェブログのカテゴリーで記事を閲覧"
 
-#: templates/weblog/categories.html:38 templates/weblog/tags.html:38
+#: templates/weblog/categories.html:38
 #, fuzzy, python-format
 msgid ""
 "\n"
@@ -538,7 +544,7 @@ msgstr[0] ""
 "\n"
 "          %(post_count)s ポスト"
 
-#: templates/weblog/categories.html:49 templates/weblog/tags.html:49
+#: templates/weblog/categories.html:49
 msgid "No categories found"
 msgstr "カテゴリーが見つかりません"
 
@@ -572,9 +578,27 @@ msgstr "コメント"
 msgid "No comments yet."
 msgstr "まだコメントないよ。"
 
-#: templates/weblog/tags.html:16
+#: templates/weblog/tags.html:110
 msgid "Browse weblog posts by tag"
 msgstr "ウェブログのタグで記事を閲覧"
+
+#: templates/weblog/tags.html:128
+#, fuzzy, python-format
+#| msgid "%(post_count)s Post"
+#| msgid_plural "%(post_count)s Posts"
+msgid "%(post_count)s post"
+msgid_plural "%(post_count)s posts"
+msgstr[0] "%(post_count)s ポスト"
+
+#: templates/weblog/tags.html:134
+#, fuzzy
+msgid "No tags found"
+msgstr "タグが見つかりません"
+
+#: templates/weblog/tags.html:139
+#, fuzzy
+msgid "Tip: Hover over each polaroid to bring it to the front!"
+msgstr "ヒント：各ポラロイドの上にカーソルを合わせると前面に表示されます！"
 
 #: templates/weblog/weblog.html:15
 msgid "Keywords"

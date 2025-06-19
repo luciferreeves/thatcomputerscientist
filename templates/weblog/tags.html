@@ -2,20 +2,112 @@
 {% load static %}
 {% load i18n %}
 {% block head %}
-    <link type="text/css"
-          rel="stylesheet"
-          href="{% static 'css/blog/subpage.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/subpage.css' %}" />
+    <style>
+        .tags-page .content-grid {
+            display: block;
+            position: relative;
+            min-height: 500px;
+            padding: 0;
+            overflow: visible;
+            width: 100%;
+            max-width: 780px;
+            margin: 0;
+        }
+
+        .tags-page .polaroid {
+            position: absolute;
+            width: 200px;
+            height: 240px;
+            background: #fef9e7;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 2px;
+        }
+
+        .tags-page .polaroid:hover {
+            transform: rotate(0deg) scale(1.1) !important;
+            z-index: 1000 !important;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .tags-page .polaroid-photo {
+            width: 100%;
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+            border-radius: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tags-page .polaroid-photo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 182, 193, 0.3) 0%, rgba(173, 216, 230, 0.3) 25%, rgba(221, 160, 221, 0.3) 50%, rgba(255, 218, 185, 0.3) 75%, rgba(144, 238, 144, 0.3) 100%);
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+
+        .tags-page .polaroid-label {
+            position: absolute;
+            bottom: 6px;
+            left: 12px;
+            right: 12px;
+            text-align: center;
+        }
+
+        .tags-page .tag-name {
+            font-family: 'SweetFairy', sans-serif;
+            font-size: 16px;
+            color: #6b46c1;
+            margin: 0 0 4px 0;
+            transform: rotate(-1deg);
+        }
+
+        .tags-page .tag-count {
+            font-family: 'SweetFairy', sans-serif;
+            font-size: 12px;
+            color: #ec4899;
+            margin: 0;
+            transform: rotate(1deg);
+        }
+
+        .tags-page .polaroid:nth-child(odd) .tag-name { color: #059669; }
+        .tags-page .polaroid:nth-child(odd) .tag-count { color: #0ea5e9; }
+        .tags-page .polaroid:nth-child(3n) .tag-name { color: #dc2626; }
+        .tags-page .polaroid:nth-child(3n) .tag-count { color: #7c3aed; }
+
+        .tags-page .empty-state {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .tags-page .empty-state h3 {
+            font-family: 'SweetFairy', sans-serif;
+            color: #6b46c1;
+            font-size: 24px;
+        }
+    </style>
 {% endblock head %}
 {% block content %}
-<div class="page-container">
+<div class="page-container tags-page">
     <div class="page-header">
         <h1 class="page-title">
             <span class="title-glitch" data-text="{% translate "Tags" %}">{% translate "Tags" %}</span>
         </h1>
-        <div class="page-subtitle">
-            {% translate "Browse weblog posts by tag" %}
-        </div>
-        
+        <div class="page-subtitle">{% translate "Browse weblog posts by tag" %}</div>
         <div class="bg-elements">
             <div class="bg-grid"></div>
             <div class="floating-shapes">
@@ -28,28 +120,58 @@
     
     <div class="content-grid">
         {% for tag in tags %}
-            <a href="{% url 'blog:home' %}?tag={{ tag.slug }}" class="content-card" data-tag="{{ tag.slug }}" style="background-image: url('{{ tag.image }}');">
-                <div class="card-inner">
-                    <div class="card-overlay"></div>
-                    <div class="card-info">
-                        <h3 class="card-title">{{ tag.name }}</h3>
-                        <div class="card-meta">
-                            <span class="item-count">
-                                {% blocktranslate count post_count=tag.post_count %}
-                                    {{ post_count }} Post{% plural %}
-                                    {{ post_count }} Posts
-                                {% endblocktranslate %}
-                            </span>
-                        </div>
+            <a href="{% url 'blog:home' %}?tag={{ tag.slug }}" class="polaroid">
+                <div class="polaroid-photo" style="background-image: url('{{ tag.image }}');"></div>
+                <div class="polaroid-label">
+                    <h3 class="tag-name">{{ tag.name }}</h3>
+                    <div class="tag-count">
+                        {% blocktranslate count post_count=tag.post_count %}{{ post_count }} post{% plural %}{{ post_count }} posts{% endblocktranslate %}
                     </div>
                 </div>
             </a>
         {% empty %}
             <div class="empty-state">
-                <h3>{% translate "No categories found" %}</h3>
+                <h3>{% translate "No tags found" %}</h3>
             </div>
         {% endfor %}
     </div>
+    <hr />
+    <p>{% translate "Tip: Hover over each polaroid to bring it to the front!" %}.</p>
 </div>
-
 {% endblock content %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const polaroids = document.querySelectorAll('.tags-page .polaroid');
+    if (!polaroids.length) return;
+    
+    const positions = [
+        { x: 0, y: 0 }, { x: 160, y: 30 }, { x: 320, y: 15 }, { x: 480, y: 45 }, { x: 580, y: 20 },
+        { x: 80, y: 200 }, { x: 240, y: 220 }, { x: 400, y: 190 }, { x: 560, y: 230 },
+        { x: 20, y: 400 }, { x: 180, y: 380 }, { x: 340, y: 420 }, { x: 500, y: 390 }, { x: 580, y: 410 },
+        { x: 100, y: 600 }, { x: 260, y: 580 }, { x: 420, y: 620 }, { x: 580, y: 590 },
+        { x: 40, y: 800 }, { x: 200, y: 780 }, { x: 360, y: 820 }, { x: 520, y: 790 },
+        { x: 120, y: 1000 }, { x: 280, y: 980 }, { x: 440, y: 1020 }, { x: 580, y: 990 },
+        { x: 60, y: 1200 }, { x: 220, y: 1180 }, { x: 380, y: 1220 }, { x: 540, y: 1190 }
+    ];
+    
+    let maxY = 0;
+    polaroids.forEach((polaroid, i) => {
+        const pos = positions[i % 30];
+        const group = Math.floor(i / 30);
+        const seed = Math.sin(456 + i) * 10000 - Math.floor(Math.sin(456 + i) * 10000);
+        const finalY = pos.y + group * 1400;
+        
+        polaroid.style.position = 'absolute';
+        polaroid.style.left = pos.x + 'px';
+        polaroid.style.top = finalY + 'px';
+        polaroid.style.transform = `rotate(${(seed - 0.5) * 12}deg)`;
+        polaroid.style.zIndex = Math.floor(seed * 10) + 1 + group * 15;
+        
+        maxY = Math.max(maxY, finalY + 240);
+    });
+    
+    document.querySelector('.tags-page .content-grid').style.minHeight = (maxY + 50) + 'px';
+});
+</script>
+{% endblock scripts %}

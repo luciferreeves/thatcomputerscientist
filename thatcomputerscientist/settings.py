@@ -81,7 +81,6 @@ INSTALLED_APPS = [
     # "userpages",
     # "blog_admin",
     # "dev_status",
-    "announcements",
     "ignis",
     # "chat",
 ]

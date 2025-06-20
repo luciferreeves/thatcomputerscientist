@@ -1,6 +1,15 @@
 from django.contrib import admin
+from django import forms
 
 from administration.kawaiibeats.models import SongMetadata
+from administration.annoucements.models import Announcement, AnnouncementTranslation
+
+
+# This class is for the announcement translation inline
+class AnnouncementTranslationInline(admin.StackedInline):
+    model = AnnouncementTranslation
+    extra = 1
+    fields = ("language", "content")
 
 
 @admin.register(SongMetadata)
@@ -43,3 +52,31 @@ class SongMetadataAdmin(admin.ModelAdmin):
         if obj:
             request._obj_ = obj
         return obj
+
+
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = (
+        "content_preview",
+        "author",
+        "is_public",
+        "is_new",
+        "created_at",
+        "updated_at",
+    )
+    list_filter = ("is_public", "is_new", "created_at")
+    search_fields = ("content",)
+    inlines = [AnnouncementTranslationInline]
+    date_hierarchy = "created_at"
+
+    fieldsets = (
+        (None, {"fields": ("content", "author")}),
+        ("Status", {"fields": ("is_public", "is_new")}),
+        ("Timestamps", {"fields": ("created_at", "updated_at")}),
+    )
+    readonly_fields = ("updated_at",)
+
+    def content_preview(self, obj):
+        return obj.content[:50] + "..." if len(obj.content) > 50 else obj.content
+
+    content_preview.short_description = "Content"

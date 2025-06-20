@@ -126,7 +126,7 @@ msgstr "マイページ"
 
 #: templates/_partials/left_sidebar.html:62
 msgid "Messages"
-msgstr ""
+msgstr "メッセージ"
 
 #: templates/_partials/left_sidebar.html:66
 msgid "Logout"

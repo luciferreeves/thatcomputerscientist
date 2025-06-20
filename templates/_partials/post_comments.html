@@ -1,0 +1,73 @@
+{% load static %}
+{% load i18n %}
+{% load tz %}
+{% load vote_filters %}
+{% load comment_render %}
+{% load time_filters %}
+
+<div class="single-comment" id="comment-{{ comment.id }}">
+    <div class="voter">
+        <form action="{% if user.is_authenticated %}{% url 'weblog:post' post.slug %}{% else %}javascript:alert('{% translate "Please register or log in to upvote comments." %}');{% endif %}" method="post">
+           {% csrf_token %}
+           {% if user.is_authenticated %}
+               <input type="hidden" name="mode" value="upvote">
+               <input type="hidden" name="comment_id" value="{{ comment.id }}">
+           {% endif %}
+            <button type="submit" class="upvote-button{% if not user.is_authenticated %} disabled{% elif comment|user_vote:user == 1 %} voted{% endif %}">
+                <img src="{% static 'images/core/icons/upvote.png' %}" alt="Upvote" width="16" height="16" />
+            </button>
+        </form>
+        <span>{{ comment.vote_score }}</span>
+        <form action="{% if user.is_authenticated %}{% url 'weblog:post' post.slug %}{% else %}javascript:alert('{% translate "Please register or log in to downvote comments." %}');{% endif %}" method="post">
+           {% csrf_token %}
+           {% if user.is_authenticated %}
+               <input type="hidden" name="mode" value="downvote">
+               <input type="hidden" name="comment_id" value="{{ comment.id }}">
+           {% endif %}
+            <button type="submit" class="downvote-button{% if not user.is_authenticated %} disabled{% elif comment|user_vote:user == -1 %} voted{% endif %}">
+                <img src="{% static 'images/core/icons/downvote.png' %}" alt="Downvote" width="16" height="16" />
+            </button>
+        </form>
+    </div>
+    <div class="comment-area">
+        <div class="comment-avatar">
+            {% if comment.user %}
+                {% with comment.user.userprofile_set.first as userprofile %}
+                    <img src="{% static "images/avatars/" %}{{ userprofile.avatar_url }}.gif" alt="{{ comment.user.username }}'s avatar" width="48" height="48" />
+                {% endwith %}
+            {% else %}
+                <img src="{% static "images/avatars/" %}{{ comment.anonymous_user.avatar }}.gif" alt="Anonymous avatar" width="48" height="48" />
+            {% endif %}
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <div class="comment-header-left">
+                    {% if comment.user %}
+                        <a href="#">@{{ comment.user.username }}</a>
+                        <span class="comment-author-pill pill-registered">{% translate "Registered" %}</span>
+                    {% else %}
+                        <span class="anonymous-comment-user">@{{ comment.anonymous_user.name }}</span>
+                        <span class="comment-author-pill pill-anonymous">{% translate "Anonymous" %}</span>
+                    {% endif %}
+                </div>
+                <div class="comment-header-right">
+                    <span>{{ comment.created_at|translated_timesince }} {% translate "ago" %}</span>
+                    {% if comment.edited %}
+                        <span>({% translate "edited" %})</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="comment-text">
+                {{ comment.body|render_comment|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if comment.replies.all %}
+    <div class="comment-replies">
+        {% for reply in comment.replies.all %}
+            {% include "_partials/post_comments.html" with comment=reply %}
+        {% endfor %}
+    </div>
+{% endif %}

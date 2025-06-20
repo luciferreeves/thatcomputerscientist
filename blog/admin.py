@@ -4,6 +4,7 @@ from .models import (
     AnonymousCommentUser,
     Category,
     Comment,
+    CommentVote,
     Post,
     Tag,
     Weblog,
@@ -240,3 +241,11 @@ class AnonymousCommentUserAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "created_at")
     search_fields = ("name", "email")
     readonly_fields = ("created_at",)
+
+
+@admin.register(CommentVote)
+class CommentVoteAdmin(admin.ModelAdmin):
+    list_display = ("comment", "user", "vote_type", "created_at")
+    list_filter = ("vote_type", "created_at")
+    search_fields = ("comment__body", "user__username")
+    readonly_fields = ("created_at", "updated_at")

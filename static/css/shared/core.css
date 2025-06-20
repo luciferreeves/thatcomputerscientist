@@ -14,7 +14,7 @@ html {
     background-color: #000;
     color: #fff;
     min-width: 1200px;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
 }
 
 body {
@@ -25,7 +25,9 @@ body {
 
 body,
 textarea,
-input {
+input,
+select,
+select option {
     font-family: 'Mali', sans-serif;
     font-size: 12px;
     font-weight: 400;

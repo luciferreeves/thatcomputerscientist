@@ -50,7 +50,23 @@
             </div>
         </div>
         <div class="comments-section" id="comments">
-            <h2>{% translate "Comments" %}</h2>
+            <div class="comment-section-header">
+                <h2>{% translate "Comments" %}</h2>
+                <form action="{% url 'weblog:post' post.slug %}#comments" method="get">
+                    <label for="comment-sort">{% translate "Sort by" %}:</label>
+                    <select id="comment-sort" name="comment_sort" onchange="this.form.submit()">
+                        <option value="best" {% if request.GET.comment_sort == 'best' %}selected{% endif %}>
+                            {% translate "Best" %}
+                        </option>
+                        <option value="newest" {% if request.GET.comment_sort == 'newest' %}selected{% endif %}>
+                            {% translate "Newest" %}
+                        </option>
+                        <option value="oldest" {% if request.GET.comment_sort == 'oldest' %}selected{% endif %}>
+                            {% translate "Oldest" %}
+                        </option>
+                    </select>
+                </form>
+            </div>
             {% for comment in post.comments.all %}
                 {% if not comment.parent %}
                     {% include "_partials/post_comments.html" with comment=comment %}

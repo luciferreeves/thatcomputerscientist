@@ -324,6 +324,59 @@ class Comment(models.Model):
     edited_at = models.DateTimeField(blank=True, null=True)
     level = models.IntegerField(default=0)
 
+    @property
+    def vote_score(self):
+        """Calculate the net vote score (upvotes - downvotes)"""
+        return self.upvotes - self.downvotes
+
+    def get_user_vote(self, user):
+        """Get the current vote type for a specific user, or None if no vote"""
+        if not user.is_authenticated:
+            return None
+        try:
+            vote = self.votes.get(user=user)
+            return vote.vote_type
+        except CommentVote.DoesNotExist:
+            return None
+
+    def toggle_vote(self, user, vote_type):
+        """
+        Toggle a user's vote on this comment.
+        vote_type: 1 for upvote, -1 for downvote
+        Returns: (action_taken, new_vote_type)
+        action_taken: 'added', 'removed', 'changed'
+        new_vote_type: 1, -1, or None
+        """
+        if not user.is_authenticated:
+            return None, None
+
+        try:
+            existing_vote = self.votes.get(user=user)
+            if existing_vote.vote_type == vote_type:
+                # Same vote type - remove the vote
+                existing_vote.delete()
+                self._update_vote_counts()
+                return "removed", None
+            else:
+                # Different vote type - change the vote
+                existing_vote.vote_type = vote_type
+                existing_vote.save()
+                self._update_vote_counts()
+                return "changed", vote_type
+        except CommentVote.DoesNotExist:
+            # No existing vote - create new vote
+            CommentVote.objects.create(comment=self, user=user, vote_type=vote_type)
+            self._update_vote_counts()
+            return "added", vote_type
+
+    def _update_vote_counts(self):
+        """Update the upvotes and downvotes counts based on CommentVote records"""
+        upvotes = self.votes.filter(vote_type=1).count()
+        downvotes = self.votes.filter(vote_type=-1).count()
+        self.upvotes = upvotes
+        self.downvotes = downvotes
+        self.save(update_fields=["upvotes", "downvotes"])
+
     class Meta:
         ordering = ["created_at"]
         indexes = [
@@ -338,3 +391,34 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.post.title} - {self.body[:50]}..."
+
+    def has_user_upvoted(self, user):
+        """Check if user has upvoted this comment"""
+        return self.get_user_vote(user) == 1
+
+    def has_user_downvoted(self, user):
+        """Check if user has downvoted this comment"""
+        return self.get_user_vote(user) == -1
+
+
+class CommentVote(models.Model):
+    VOTE_CHOICES = [
+        (1, "Upvote"),
+        (-1, "Downvote"),
+    ]
+
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="votes")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vote_type = models.IntegerField(choices=VOTE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ["comment", "user"]  # One vote per user per comment
+        indexes = [
+            models.Index(fields=["comment", "vote_type"]),
+        ]
+
+    def __str__(self):
+        vote_str = "upvote" if self.vote_type == 1 else "downvote"
+        return f"{self.user.username} {vote_str} on comment {self.comment.id}"

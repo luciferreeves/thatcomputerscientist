@@ -27,9 +27,9 @@ echo -e "${PURPLE}   ᕕ(⌐■_■)ᕗ ${GREEN}Locale generation tool ${YELLOW}
 LANG_CODE="ja"
 
 generate_messages() {
-  echo -e "\n${BOLD}${YELLOW}Generating translation messages for ${LANG_CODE} (HTML templates only)...${NC}\n"
+  echo -e "\n${BOLD}${YELLOW}Generating translation messages for ${LANG_CODE} (HTML templates and Python files)...${NC}\n"
   
-  python manage.py makemessages -l ${LANG_CODE} -e html \
+  python manage.py makemessages -l ${LANG_CODE} -e html,py \
     --ignore="templates.old/*" \
     --ignore="venv/*"
   

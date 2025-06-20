@@ -1,5 +1,8 @@
 import html
+import os
+import requests
 from bs4 import BeautifulSoup
+from django.core.cache import cache
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name, guess_lexer
 from pygments.formatters import HtmlFormatter
@@ -7,6 +10,8 @@ from pygments.styles.vim import VimStyle
 from pygments.style import Style
 from pygments.token import Comment
 from internal.utils import calculate_polynomial_hash
+
+LINK_SAFETY_API_KEY = os.getenv("GOOGLE_SAFE_BROWSING_API_KEY")
 
 
 class ShifooHighlight(Style):
@@ -95,3 +100,36 @@ def get_post_color(post):
     hash_value = calculate_polynomial_hash(slug)
     color_index = hash_value % len(colors)
     return colors[color_index]
+
+
+def check_link_safety(link):
+    if not LINK_SAFETY_API_KEY:
+        return True
+
+    cached = cache.get(f"link_safety:{link}")
+    if cached is not None:
+        return cached
+
+    payload = {
+        "threatInfo": {
+            "threatTypes": [
+                "MALWARE",
+                "SOCIAL_ENGINEERING",
+                "UNWANTED_SOFTWARE",
+                "POTENTIALLY_HARMFUL_APPLICATION",
+            ],
+            "platformTypes": ["ANY_PLATFORM"],
+            "threatEntryTypes": ["URL"],
+            "threatEntries": [{"url": link}],
+        }
+    }
+
+    headers = {"Content-Type": "application/json"}
+    params = {"key": LINK_SAFETY_API_KEY, "alt": "json"}
+    api_url = "https://safebrowsing.googleapis.com/v4/threatMatches:find"
+    response = requests.post(api_url, params=params, headers=headers, json=payload)
+    if response.status_code == 200:
+        matches = response.json().get("matches", [])
+        return len(matches) == 0
+    else:
+        return True

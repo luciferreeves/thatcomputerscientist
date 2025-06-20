@@ -1,22 +1,28 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib import messages
+from django.db.models import F
 from blog.functions import (
     get_single_post,
     get_posts,
     get_categories,
     get_tags,
     get_archives,
+    handle_comment_vote,
 )
+from internal.utils import build_redirect_url
 
 
 weblog_slug = "shifoo"
 
 
 def weblog(request):
-    request.meta.title = (
-        "Shifooのウェブログ" if request.LANGUAGE_CODE == "ja" else "Shifoo's Weblog"
-    )
+    title_map = {
+        "ja": "Shifooのウェブログ",
+        "en": "Shifoo's Weblog",
+    }
 
+    request.meta.title = title_map.get(request.LANGUAGE_CODE)
     current_sort = request.GET.get("sort", "date")
     current_sort_order = request.GET.get("order", "desc")
     current_category = request.GET.get("category", "all")
@@ -73,12 +79,12 @@ def weblog(request):
 
 
 def categories(request):
-    request.meta.title = (
-        "Shifooのウェブログ - カテゴリ"
-        if request.LANGUAGE_CODE == "ja"
-        else "Shifoo's Weblog - Categories"
-    )
+    title_map = {
+        "ja": "Shifooのウェブログ - カテゴリ",
+        "en": "Shifoo's Weblog - Categories",
+    }
 
+    request.meta.title = title_map.get(request.LANGUAGE_CODE)
     categories = get_categories(weblog_slug, lang=request.LANGUAGE_CODE)
 
     context = {
@@ -89,12 +95,12 @@ def categories(request):
 
 
 def tags(request):
-    request.meta.title = (
-        "Shifooのウェブログ - タグ"
-        if request.LANGUAGE_CODE == "ja"
-        else "Shifoo's Weblog - Tags"
-    )
+    title_map = {
+        "ja": "Shifooのウェブログ - タグ",
+        "en": "Shifoo's Weblog - Tags",
+    }
 
+    request.meta.title = title_map.get(request.LANGUAGE_CODE)
     tags = get_tags(weblog_slug, lang=request.LANGUAGE_CODE)
     tags = sorted(tags, key=lambda x: x.post_count, reverse=True)
 
@@ -122,18 +128,35 @@ def archives(request):
 
 
 def post(request, slug):
-    post = get_single_post(weblog_slug, slug, lang=request.LANGUAGE_CODE)
+    comment_sort = request.GET.get("comment_sort", "best")
+    post = get_single_post(
+        weblog_slug, slug, lang=request.LANGUAGE_CODE, comment_sort=comment_sort
+    )
+    redirect_url = build_redirect_url(request)
 
-    if post:
-        request.meta.title = post.title
-        request.meta.description = post.excerpt
-        request.meta.image = post.image_url
-
-        context = {"post": post}
-
-        return render(request, "weblog/post.html", context)
-    else:
+    if not post:
         raise Http404("Post not found")
+
+    if request.method == "POST":
+        mode = request.POST.get("mode")
+
+        if mode in ["upvote", "downvote"]:
+
+            if not request.user.is_authenticated:
+                return HttpResponseRedirect(redirect_url)
+
+            comment_id = request.POST.get("comment_id")
+            vote_type = 1 if mode == "upvote" else -1
+            handle_comment_vote(comment_id, request.user, vote_type)
+
+            redirect_url += f"#comment-{comment_id}"
+            return HttpResponseRedirect(redirect_url)
+
+    request.meta.title = post.title
+    request.meta.description = post.excerpt
+    request.meta.image = post.image_url
+
+    return render(request, "weblog/post.html", {"post": post})
 
 
 # import hashlib

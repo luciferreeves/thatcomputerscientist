@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 02:41+0000\n"
+"POT-Creation-Date: 2025-06-20 03:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: blog/templatetags/time_filters.py:14
+msgid "minute"
+msgstr "分"
+
+#: blog/templatetags/time_filters.py:15
+msgid "minutes"
+msgstr "分"
+
+#: blog/templatetags/time_filters.py:16
+msgid "hour"
+msgstr "時間"
+
+#: blog/templatetags/time_filters.py:17
+msgid "hours"
+msgstr "時間"
+
+#: blog/templatetags/time_filters.py:18
+msgid "day"
+msgstr "日"
+
+#: blog/templatetags/time_filters.py:19
+msgid "days"
+msgstr "日"
+
+#: blog/templatetags/time_filters.py:20
+msgid "week"
+msgstr "週間"
+
+#: blog/templatetags/time_filters.py:21
+msgid "weeks"
+msgstr "週間"
+
+#: blog/templatetags/time_filters.py:22
+msgid "month"
+msgstr "ヶ月"
+
+#: blog/templatetags/time_filters.py:23
+msgid "months"
+msgstr "ヶ月"
+
+#: blog/templatetags/time_filters.py:24
+msgid "year"
+msgstr "年"
+
+#: blog/templatetags/time_filters.py:25
+msgid "years"
+msgstr "年"
 
 #: templates/_partials/footer.html:21
 msgid ""
@@ -76,140 +124,170 @@ msgstr "パゴダレルム"
 msgid "My Page"
 msgstr "マイページ"
 
-#: templates/_partials/left_sidebar.html:61
+#: templates/_partials/left_sidebar.html:62
+msgid "Messages"
+msgstr ""
+
+#: templates/_partials/left_sidebar.html:66
 msgid "Logout"
 msgstr "ログアウト"
 
-#: templates/_partials/left_sidebar.html:68
+#: templates/_partials/left_sidebar.html:73
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: templates/_partials/left_sidebar.html:73
+#: templates/_partials/left_sidebar.html:78
 msgid "Home"
 msgstr "ホーム"
 
-#: templates/_partials/left_sidebar.html:78
+#: templates/_partials/left_sidebar.html:83
 msgid "Journal of Random Thoughts"
 msgstr "ランダム思考のジャーナル"
 
-#: templates/_partials/left_sidebar.html:82
 #: templates/_partials/left_sidebar.html:87
+#: templates/_partials/left_sidebar.html:92
 #: templates/_partials/right_sidebar.html:87
 msgid "Weblog"
 msgstr "ウェブログ"
 
-#: templates/_partials/left_sidebar.html:92 templates/weblog/categories.html:13
+#: templates/_partials/left_sidebar.html:97 templates/weblog/categories.html:13
 msgid "Categories"
 msgstr "カテゴリー"
 
-#: templates/_partials/left_sidebar.html:97 templates/weblog/tags.html:108
+#: templates/_partials/left_sidebar.html:102 templates/weblog/tags.html:108
 msgid "Tags"
 msgstr "タグ"
 
-#: templates/_partials/left_sidebar.html:102 templates/weblog/archives.html:75
+#: templates/_partials/left_sidebar.html:107 templates/weblog/archives.html:75
 msgid "Archives"
 msgstr "アーカイブ"
 
-#: templates/_partials/left_sidebar.html:108
+#: templates/_partials/left_sidebar.html:113
 msgid "Shrines"
 msgstr "神社"
 
-#: templates/_partials/left_sidebar.html:113
+#: templates/_partials/left_sidebar.html:118
 msgid "Screenshots"
 msgstr "スクリーンショット"
 
-#: templates/_partials/left_sidebar.html:118
+#: templates/_partials/left_sidebar.html:123
 msgid "Chatrooms"
 msgstr "チャットルーム"
 
-#: templates/_partials/left_sidebar.html:123
+#: templates/_partials/left_sidebar.html:128
 msgid "Guestbook"
 msgstr "ゲストブック"
 
-#: templates/_partials/left_sidebar.html:128
+#: templates/_partials/left_sidebar.html:133
 msgid "Site Preferences"
 msgstr "サイトの設定"
 
-#: templates/_partials/left_sidebar.html:134
+#: templates/_partials/left_sidebar.html:139
 msgid "Register Account"
 msgstr "アカウント登録"
 
-#: templates/_partials/left_sidebar.html:138
+#: templates/_partials/left_sidebar.html:143
 msgid "My Account"
 msgstr "マイアカウント"
 
-#: templates/_partials/left_sidebar.html:159
+#: templates/_partials/left_sidebar.html:164
 msgid "Search"
 msgstr "検索"
 
-#: templates/_partials/left_sidebar.html:167
+#: templates/_partials/left_sidebar.html:172
 msgid "The Good Stuff"
 msgstr "おすすめ"
 
-#: templates/_partials/left_sidebar.html:173
+#: templates/_partials/left_sidebar.html:178
 msgid "Post Calendar"
 msgstr "ブログカレンダー"
 
-#: templates/_partials/left_sidebar.html:177
+#: templates/_partials/left_sidebar.html:182
 msgid "Anime Streams"
 msgstr "アニメ配信"
 
-#: templates/_partials/left_sidebar.html:182
+#: templates/_partials/left_sidebar.html:187
 #: templates/_partials/right_sidebar.html:93
 msgid "The Matrix"
 msgstr "ザ・マトリックス"
 
-#: templates/_partials/left_sidebar.html:186
+#: templates/_partials/left_sidebar.html:191
 msgid "RSS Feed"
 msgstr "RSSフィード"
 
-#: templates/_partials/left_sidebar.html:191
+#: templates/_partials/left_sidebar.html:196
 msgid "Marketplace"
 msgstr "マーケットプレイス"
 
-#: templates/_partials/left_sidebar.html:196
+#: templates/_partials/left_sidebar.html:201
 msgid "Discussions"
 msgstr "ディスカッション"
 
-#: templates/_partials/left_sidebar.html:203
+#: templates/_partials/left_sidebar.html:208
 msgid "Site Spells"
 msgstr "サイトの魔法"
 
-#: templates/_partials/left_sidebar.html:211
 #: templates/_partials/left_sidebar.html:216
+#: templates/_partials/left_sidebar.html:221
 msgid "Withdraw Oneko"
 msgstr "おねこを引っ込める"
 
-#: templates/_partials/left_sidebar.html:222
+#: templates/_partials/left_sidebar.html:227
 msgid "Harlem Shake"
 msgstr "ハーレムシェイク"
 
-#: templates/_partials/left_sidebar.html:227
+#: templates/_partials/left_sidebar.html:232
 msgid "DVD Sitesaver"
 msgstr "DVDサイトセーバー"
 
-#: templates/_partials/left_sidebar.html:234
+#: templates/_partials/left_sidebar.html:239
 msgid "Admin Area"
 msgstr "アドミンアレア"
 
-#: templates/_partials/left_sidebar.html:240
+#: templates/_partials/left_sidebar.html:245
 msgid "Manage Announcements"
 msgstr "アナウンスメント管理"
 
-#: templates/_partials/left_sidebar.html:245
+#: templates/_partials/left_sidebar.html:250
 msgid "Manage Users"
 msgstr "ユーザー管理"
 
-#: templates/_partials/left_sidebar.html:250
+#: templates/_partials/left_sidebar.html:255
 #: templates/administration/kawaiibeats.html:131
 msgid "KawaiiBeats Manager"
 msgstr "KawaiiBeatsマネージャー"
 
-#: templates/_partials/left_sidebar.html:255
+#: templates/_partials/left_sidebar.html:260
 msgid "This website uses cookies and there's nothing you can do about it!"
 msgstr ""
 "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできませ"
 "ん！"
+
+#: templates/_partials/post_comments.html:10
+msgid "Please register or log in to upvote comments."
+msgstr ""
+"コメントをアップボートするには、アカウント登録またはログインしてください。"
+
+#: templates/_partials/post_comments.html:21
+msgid "Please register or log in to downvote comments."
+msgstr ""
+"コメントをダウンボートするには、アカウント登録またはログインしてください。"
+
+#: templates/_partials/post_comments.html:47
+msgid "Registered"
+msgstr "登録済み"
+
+#: templates/_partials/post_comments.html:50
+msgid "Anonymous"
+msgstr "匿名"
+
+#: templates/_partials/post_comments.html:54
+msgid "ago"
+msgstr "前"
+
+#: templates/_partials/post_comments.html:56
+msgid "edited"
+msgstr "編集済み"
 
 #: templates/_partials/right_sidebar.html:5
 #: templates/_partials/right_sidebar.html:6
@@ -569,12 +647,28 @@ msgstr[0] ""
 msgid "Tagged with"
 msgstr "タグ"
 
-#: templates/weblog/post.html:53 templates/weblog/weblog.html:47
+#: templates/weblog/post.html:54 templates/weblog/weblog.html:47
 #: templates/weblog/weblog.html:62
 msgid "Comments"
 msgstr "コメント"
 
-#: templates/weblog/post.html:60
+#: templates/weblog/post.html:56 templates/weblog/weblog.html:32
+msgid "Sort by"
+msgstr "ソート順"
+
+#: templates/weblog/post.html:59
+msgid "Best"
+msgstr "最高"
+
+#: templates/weblog/post.html:62
+msgid "Newest"
+msgstr "最新"
+
+#: templates/weblog/post.html:65
+msgid "Oldest"
+msgstr "最古"
+
+#: templates/weblog/post.html:76
 msgid "No comments yet."
 msgstr "まだコメントないよ。"
 
@@ -614,10 +708,6 @@ msgstr "カテゴリー"
 msgid "All"
 msgstr "全て"
 
-#: templates/weblog/weblog.html:32
-msgid "Sort by"
-msgstr "ソート順"
-
 #: templates/weblog/weblog.html:38 templates/weblog/weblog.html:53
 msgid "Date"
 msgstr "日付"
@@ -625,3 +715,11 @@ msgstr "日付"
 #: templates/weblog/weblog.html:85
 msgid "Filter"
 msgstr "フィルター"
+
+#: thatcomputerscientist/settings.py:233
+msgid "English"
+msgstr "英語"
+
+#: thatcomputerscientist/settings.py:233
+msgid "Japanese"
+msgstr "日本語"

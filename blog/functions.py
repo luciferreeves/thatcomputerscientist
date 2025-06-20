@@ -1,6 +1,6 @@
-from blog.models import Post, Category, Tag
+from blog.models import Post, Category, Tag, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Q, Count
+from django.db.models import Q, Count, F, Prefetch
 from internal.weblog_utilities import highlight_code, get_post_color
 
 
@@ -94,20 +94,50 @@ def get_posts(
     }
 
 
-def get_single_post(weblog_slug, post_slug, lang="en"):
+def get_single_post(weblog_slug, post_slug, lang="en", comment_sort="best"):
+    if comment_sort == "best":
+        comments_order = ["-score", "-created_at"]
+        comments_annotation = {"score": F("upvotes") - F("downvotes")}
+    elif comment_sort == "newest":
+        comments_order = ["-created_at"]
+        comments_annotation = {}
+    elif comment_sort == "oldest":
+        comments_order = ["created_at"]
+        comments_annotation = {}
+    else:
+        comments_order = ["-score", "-created_at"]
+        comments_annotation = {"score": F("upvotes") - F("downvotes")}
+
+    prefetch_comments = Prefetch(
+        "comments",
+        queryset=(
+            Comment.objects.select_related("user", "anonymous_user")
+            .annotate(**comments_annotation)
+            .order_by(*comments_order)
+            if comments_annotation
+            else Comment.objects.select_related("user", "anonymous_user").order_by(
+                *comments_order
+            )
+        ),
+    )
+
     post = (
         Post.objects.select_related("category")
         .filter(weblog__slug=weblog_slug, slug=post_slug, is_public=True)
         .prefetch_related(
-            "tags", "translations", "category__translations", "tags__translations"
+            "tags",
+            "translations",
+            "category__translations",
+            "tags__translations",
+            prefetch_comments,
         )
         .first()
     )
     if post:
         post.color = get_post_color(post)
+        post = post.translate(lang)
         post.body = highlight_code(post.body)
-
-        return post.translate(lang)
+        return post
     return None
 
 
@@ -159,3 +189,12 @@ def get_archives(weblog_slug):
             }
         )
     return archives
+
+
+def handle_comment_vote(comment_id, user, vote_type):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        comment.toggle_vote(user, vote_type)
+        return True, None
+    except Comment.DoesNotExist:
+        return False, "Comment not found."

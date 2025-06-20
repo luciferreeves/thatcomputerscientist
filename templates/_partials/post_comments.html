@@ -7,7 +7,7 @@
 
 <div class="single-comment" id="comment-{{ comment.id }}">
     <div class="voter">
-        <form action="{% if user.is_authenticated %}{% url 'weblog:post' post.slug %}{% else %}javascript:alert('{% translate "Please register or log in to upvote comments." %}');{% endif %}" method="post">
+        <form action="{% if user.is_authenticated %}{% url 'weblog:post' post.slug %}{% else %}javascript:presentAlert('{% translate "Please register or log in to upvote comments." %}');{% endif %}" method="post">
            {% csrf_token %}
            {% if user.is_authenticated %}
                <input type="hidden" name="mode" value="upvote">
@@ -18,7 +18,7 @@
             </button>
         </form>
         <span>{{ comment.vote_score }}</span>
-        <form action="{% if user.is_authenticated %}{% url 'weblog:post' post.slug %}{% else %}javascript:alert('{% translate "Please register or log in to downvote comments." %}');{% endif %}" method="post">
+        <form action="{% if user.is_authenticated %}{% url 'weblog:post' post.slug %}{% else %}javascript:presentAlert('{% translate "Please register or log in to downvote comments." %}');{% endif %}" method="post">
            {% csrf_token %}
            {% if user.is_authenticated %}
                <input type="hidden" name="mode" value="downvote">

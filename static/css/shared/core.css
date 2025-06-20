@@ -1,4 +1,5 @@
 /* Core CSS - Shared Styles */
+@import url('./alert.css');
 
 /* Reset CSS */
 * {

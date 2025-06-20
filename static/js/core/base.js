@@ -21,3 +21,35 @@ const player = new AudioPlayer(elements, {
     serverURL: window.location.origin,
 });
 player.init();
+
+function presentAlert(message, duration = 6000) {
+    const alertEl = document.getElementById('global-alert');
+    const textEl = alertEl.querySelector('.hologram-text');
+
+    if (alertEl.classList.contains('show') || alertEl.classList.contains('hide')) {
+        alertEl.classList.remove('show', 'hide');
+        clearTimeout(alertEl.hideTimeout);
+        clearTimeout(alertEl.removeTimeout);
+    }
+
+    textEl.textContent = message.toUpperCase();
+
+    void alertEl.offsetWidth;
+
+    requestAnimationFrame(() => {
+        alertEl.classList.add('show');
+    });
+
+    const animationTimeIn = 1300;
+    const visibleDuration = duration;
+    const animationTimeOut = 1300;
+
+    alertEl.hideTimeout = setTimeout(() => {
+        alertEl.classList.add('hide');
+        alertEl.classList.remove('show');
+
+        alertEl.removeTimeout = setTimeout(() => {
+            alertEl.classList.remove('hide');
+        }, animationTimeOut + 200);
+    }, animationTimeIn + visibleDuration);
+}

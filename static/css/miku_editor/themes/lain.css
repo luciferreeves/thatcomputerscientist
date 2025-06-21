@@ -1,0 +1,148 @@
+.miku-editor-container {
+    background: #000000;
+    border: 1px solid #C4748D;
+    color: #AD717B;
+    border-radius: 0;
+    font-family: 'Courier New', 'Monaco', monospace;
+}
+
+.miku-editor-line-numbers {
+    background: #000000;
+    color: #85474B;
+    border-right: 1px solid #C4748D;
+    font-family: 'Courier New', monospace;
+}
+
+.miku-editor-main {
+    background: #000000;
+}
+
+.miku-editor-input {
+    caret-color: #D4758C;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: #340000;
+    border-radius: 0;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #C4748D;
+    border-radius: 0;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #D4758C;
+}
+
+.miku-editor-syntax-highlight {
+    color: #AD717B;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: #340000;
+    border: 1px solid #C4748D;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(196, 116, 141, 0.3);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: #340000;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #C4748D;
+    border-radius: 0;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid #6D2F36;
+    color: #AD717B;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: #6D2F36;
+    color: #D4758C;
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: inherit;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #85474B;
+}
+
+.miku-editor-container:focus-within {
+    border-color: #D4758C;
+    box-shadow: 0 0 4px rgba(212, 117, 140, 0.5);
+}
+
+.miku-syntax-html-tag {
+    color: #D4758C;
+}
+
+.miku-syntax-html-attribute {
+    color: #C3B193;
+}
+
+.miku-syntax-html-string {
+    color: #C4748D;
+}
+
+.miku-syntax-html-comment {
+    color: #85474B;
+    font-style: italic;
+}
+
+.miku-syntax-css-selector {
+    color: #D4758C;
+}
+
+.miku-syntax-css-property {
+    color: #C3B193;
+}
+
+.miku-syntax-css-value {
+    color: #C4748D;
+}
+
+.miku-syntax-css-comment {
+    color: #85474B;
+    font-style: italic;
+}
+
+.miku-syntax-js-keyword {
+    color: #D4758C;
+}
+
+.miku-syntax-js-string {
+    color: #C4748D;
+}
+
+.miku-syntax-js-comment {
+    color: #85474B;
+    font-style: italic;
+}
+
+.miku-syntax-js-number {
+    color: #C3B193;
+}
+
+.miku-syntax-js-function {
+    color: #AD717B;
+}

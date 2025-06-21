@@ -1,0 +1,139 @@
+.miku-editor-container {
+    background: #000;
+    border: 1px solid #8d8dff;
+    color: #fff;
+}
+
+.miku-editor-line-numbers {
+    background: rgba(15, 10, 25, 0.9);
+    color: #AD8CFF;
+    border-right: 1px solid rgba(173, 140, 255, 0.4);
+}
+
+.miku-editor-main {
+    background: #000;
+}
+
+.miku-editor-input {
+    caret-color: #df23c4;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: rgba(15, 10, 25, 0.9);
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #df23c4;
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #AD8CFF;
+}
+
+.miku-editor-syntax-highlight {
+    color: #fff;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: rgba(30, 20, 50, 0.95);
+    border: 1px solid rgba(173, 140, 255, 0.7);
+    box-shadow: 0 3px 5px -2px rgba(136, 87, 210, 0.6);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: rgba(30, 20, 50, 0.95);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #df23c4;
+    border-radius: 3px;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid rgba(173, 140, 255, 0.2);
+    color: #fff;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: rgba(173, 140, 255, 0.18);
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: #fff;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #8d8dff;
+}
+
+.miku-editor-container:focus-within {
+    border-color: #df23c4;
+}
+
+.miku-syntax-html-tag {
+    color: #8d8dff;
+}
+
+.miku-syntax-html-attribute {
+    color: #AD8CFF;
+}
+
+.miku-syntax-html-string {
+    color: #95f695;
+}
+
+.miku-syntax-html-comment {
+    color: #9ae4f1;
+}
+
+.miku-syntax-css-selector {
+    color: #df23c4;
+}
+
+.miku-syntax-css-property {
+    color: #8d8dff;
+}
+
+.miku-syntax-css-value {
+    color: #95f695;
+}
+
+.miku-syntax-css-comment {
+    color: #9ae4f1;
+}
+
+.miku-syntax-js-keyword {
+    color: #df23c4;
+}
+
+.miku-syntax-js-string {
+    color: #95f695;
+}
+
+.miku-syntax-js-comment {
+    color: #9ae4f1;
+}
+
+.miku-syntax-js-number {
+    color: #AD8CFF;
+}
+
+.miku-syntax-js-function {
+    color: #8d8dff;
+}

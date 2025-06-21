@@ -1,0 +1,37 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku_editor/miku.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku_editor/themes/vintage.css' %}">
+<style>
+    #miku-editor {
+        height: 800px;
+        position: relative;
+        margin: 20px auto;
+    }
+
+    /* .miku-editor-input {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .miku-editor-syntax-highlight {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }*/
+</style>
+{% endblock head %}
+{% block content %}
+<div id="miku-editor"></div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/miku_editor/miku.js' %}"></script>
+<script type="text/javascript">
+    const editorInstance = new Miku('#miku-editor', {
+        placeholder: "Compose your announcement here...",
+    });
+</script>
+{% endblock scripts %}

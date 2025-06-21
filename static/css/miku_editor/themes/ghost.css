@@ -1,0 +1,148 @@
+.miku-editor-container {
+    background: #000000;
+    border: 1px solid #00FFFF;
+    color: #00FFFF;
+    border-radius: 0;
+    font-family: 'Courier New', 'Monaco', monospace;
+}
+
+.miku-editor-line-numbers {
+    background: #000000;
+    color: #004444;
+    border-right: 1px solid #00FFFF;
+    font-family: 'Courier New', monospace;
+}
+
+.miku-editor-main {
+    background: #000000;
+}
+
+.miku-editor-input {
+    caret-color: #00FFFF;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: #001111;
+    border-radius: 0;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+    border-radius: 0;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #33FFFF;
+}
+
+.miku-editor-syntax-highlight {
+    color: #00FFFF;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: #000000;
+    border: 1px solid #00FFFF;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0, 255, 255, 0.3);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+    border-radius: 0;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid #002222;
+    color: #00FFFF;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: #001111;
+    color: #00FF00;
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: inherit;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #004444;
+}
+
+.miku-editor-container:focus-within {
+    border-color: #00FF00;
+    box-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
+}
+
+.miku-syntax-html-tag {
+    color: #00FF00;
+}
+
+.miku-syntax-html-attribute {
+    color: #00FFFF;
+}
+
+.miku-syntax-html-string {
+    color: #00FF00;
+}
+
+.miku-syntax-html-comment {
+    color: #004444;
+    font-style: italic;
+}
+
+.miku-syntax-css-selector {
+    color: #00FF00;
+}
+
+.miku-syntax-css-property {
+    color: #00FFFF;
+}
+
+.miku-syntax-css-value {
+    color: #00FF00;
+}
+
+.miku-syntax-css-comment {
+    color: #004444;
+    font-style: italic;
+}
+
+.miku-syntax-js-keyword {
+    color: #00FF00;
+}
+
+.miku-syntax-js-string {
+    color: #00FF00;
+}
+
+.miku-syntax-js-comment {
+    color: #004444;
+    font-style: italic;
+}
+
+.miku-syntax-js-number {
+    color: #00FFFF;
+}
+
+.miku-syntax-js-function {
+    color: #00FF00;
+}

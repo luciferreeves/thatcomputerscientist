@@ -1,0 +1,145 @@
+.miku-editor-container {
+    background: #0a0e14;
+    border: none;
+    color: #b3b1ad;
+    border-radius: 0;
+}
+
+.miku-editor-line-numbers {
+    background: #0a0e14;
+    color: #4d5566;
+    border-right: none;
+}
+
+.miku-editor-main {
+    background: #0a0e14;
+}
+
+.miku-editor-input {
+    caret-color: #ffb454;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: #1a1f29;
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #36a3d9;
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #5ccfe6;
+}
+
+.miku-editor-syntax-highlight {
+    color: #b3b1ad;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: #0f131a;
+    border: 1px solid #1a1f29;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: #0f131a;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #36a3d9;
+    border-radius: 3px;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid #1a1f29;
+    color: #b3b1ad;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: #1a1f29;
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: inherit;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #4d5566;
+}
+
+.miku-editor-container:focus-within {
+    border: none;
+    outline: none;
+}
+
+.miku-syntax-html-tag {
+    color: #5ccfe6;
+}
+
+.miku-syntax-html-attribute {
+    color: #ffb454;
+}
+
+.miku-syntax-html-string {
+    color: #bae67e;
+}
+
+.miku-syntax-html-comment {
+    color: #5c6773;
+    font-style: italic;
+}
+
+.miku-syntax-css-selector {
+    color: #5ccfe6;
+}
+
+.miku-syntax-css-property {
+    color: #5ccfe6;
+}
+
+.miku-syntax-css-value {
+    color: #f28779;
+}
+
+.miku-syntax-css-comment {
+    color: #5c6773;
+    font-style: italic;
+}
+
+.miku-syntax-js-keyword {
+    color: #d4bfff;
+}
+
+.miku-syntax-js-string {
+    color: #bae67e;
+}
+
+.miku-syntax-js-comment {
+    color: #5c6773;
+    font-style: italic;
+}
+
+.miku-syntax-js-number {
+    color: #f29e74;
+}
+
+.miku-syntax-js-function {
+    color: #5ccfe6;
+}

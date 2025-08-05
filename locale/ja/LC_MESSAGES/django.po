@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-20 03:43+0000\n"
+"POT-Creation-Date: 2025-08-05 08:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,63 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: blog/templatetags/time_filters.py:14
+#: blog/templatetags/time_filters.py:18
 msgid "minute"
 msgstr "分"
 
-#: blog/templatetags/time_filters.py:15
+#: blog/templatetags/time_filters.py:19
 msgid "minutes"
 msgstr "分"
 
-#: blog/templatetags/time_filters.py:16
+#: blog/templatetags/time_filters.py:20
 msgid "hour"
 msgstr "時間"
 
-#: blog/templatetags/time_filters.py:17
+#: blog/templatetags/time_filters.py:21
 msgid "hours"
 msgstr "時間"
 
-#: blog/templatetags/time_filters.py:18
+#: blog/templatetags/time_filters.py:22
 msgid "day"
 msgstr "日"
 
-#: blog/templatetags/time_filters.py:19
+#: blog/templatetags/time_filters.py:23
 msgid "days"
 msgstr "日"
 
-#: blog/templatetags/time_filters.py:20
+#: blog/templatetags/time_filters.py:24
 msgid "week"
 msgstr "週間"
 
-#: blog/templatetags/time_filters.py:21
+#: blog/templatetags/time_filters.py:25
 msgid "weeks"
 msgstr "週間"
 
-#: blog/templatetags/time_filters.py:22
+#: blog/templatetags/time_filters.py:26
 msgid "month"
 msgstr "ヶ月"
 
-#: blog/templatetags/time_filters.py:23
+#: blog/templatetags/time_filters.py:27
 msgid "months"
 msgstr "ヶ月"
 
-#: blog/templatetags/time_filters.py:24
+#: blog/templatetags/time_filters.py:28
 msgid "year"
 msgstr "年"
 
-#: blog/templatetags/time_filters.py:25
+#: blog/templatetags/time_filters.py:29
 msgid "years"
 msgstr "年"
 
-#: templates/_partials/footer.html:21
+#: templates/_partials/footer.html:22
+#, python-format
 msgid ""
-"Source code available on\n"
-"    <a href=\"https://github.com/luciferreeves/thatcomputerscientist\" "
+"Source code available on <a href=\"%(github_url)s\" "
 "target=\"_blank\">GitHub</a>. All rights reserved. Every pixel on this "
 "website is handcrafted with love and care."
 msgstr ""
 "ソースコードは\n"
-"  <a href=\"https://github.com/luciferreeves/thatcomputerscientist\" "
+"  <a href=\"%(github_url)s\" "
 "target=\"_blank\">GitHub</a>で見れるよ。全ての権利は留保。このサイトのピクセ"
 "ル全部が愛情とこだわりで手作りされてる。"
 
@@ -610,7 +610,7 @@ msgid "Browse weblog posts by category"
 msgstr "ウェブログのカテゴリーで記事を閲覧"
 
 #: templates/weblog/categories.html:38
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "                                    %(post_count)s Post"
@@ -632,7 +632,7 @@ msgid "Views"
 msgstr "閲覧数"
 
 #: templates/weblog/post.html:34
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "              %(comment_count)s Comment"
@@ -677,9 +677,7 @@ msgid "Browse weblog posts by tag"
 msgstr "ウェブログのタグで記事を閲覧"
 
 #: templates/weblog/tags.html:128
-#, fuzzy, python-format
-#| msgid "%(post_count)s Post"
-#| msgid_plural "%(post_count)s Posts"
+#, python-format
 msgid "%(post_count)s post"
 msgid_plural "%(post_count)s posts"
 msgstr[0] "%(post_count)s ポスト"
@@ -716,10 +714,10 @@ msgstr "日付"
 msgid "Filter"
 msgstr "フィルター"
 
-#: thatcomputerscientist/settings.py:233
+#: thatcomputerscientist/settings.py:232
 msgid "English"
 msgstr "英語"
 
-#: thatcomputerscientist/settings.py:233
+#: thatcomputerscientist/settings.py:232
 msgid "Japanese"
 msgstr "日本語"

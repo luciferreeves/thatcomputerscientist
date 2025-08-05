@@ -133,3 +133,10 @@ def check_link_safety(link):
         return len(matches) == 0
     else:
         return True
+
+
+def strip_html_tags(html_content):
+    if not html_content:
+        return html_content
+    soup = BeautifulSoup(html_content, "html.parser")
+    return soup.get_text(separator=" ", strip=True)

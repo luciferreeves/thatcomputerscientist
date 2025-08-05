@@ -18,8 +18,8 @@
     <span class="pamphlet pamphlet-button"></span>
 </div>
 <p class="footer-copyright">
-    <span>© {% now "Y" %} Shifoo. </span>{% blocktranslate %}Source code available on
-    <a href="https://github.com/luciferreeves/thatcomputerscientist" target="_blank">GitHub</a>. All rights reserved. Every pixel on this website is handcrafted with love and care.{% endblocktranslate %}
+    <span>© {% now "Y" %} Shifoo. </span>
+    {% blocktranslate with github_url="https://github.com/luciferreeves/thatcomputerscientist" %}Source code available on <a href="{{ github_url }}" target="_blank">GitHub</a>. All rights reserved. Every pixel on this website is handcrafted with love and care.{% endblocktranslate %}
 </p>
 <p class="footer-credits">
     {% url 'core:home' as privacy_url %}

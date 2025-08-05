@@ -11,6 +11,7 @@ from blog.functions import (
     handle_comment_vote,
 )
 from internal.utils import build_redirect_url
+from internal.weblog_utilities import strip_html_tags
 
 
 weblog_slug = "shifoo"
@@ -153,7 +154,7 @@ def post(request, slug):
             return HttpResponseRedirect(redirect_url)
 
     request.meta.title = post.title
-    request.meta.description = post.excerpt
+    request.meta.description = strip_html_tags(post.excerpt)
     request.meta.image = post.image_url
 
     return render(request, "weblog/post.html", {"post": post})

@@ -1,0 +1,302 @@
+.single-comment {
+    display: flex;
+    margin: 16px 0;
+    gap: 8px;
+    align-items: start;
+}
+
+.voter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.voter span {
+    font-size: 14px;
+    color: #AD8CFF;
+    font-weight: bold;
+}
+
+.voter form button[type="submit"] {
+    background: transparent;
+    padding: 0;
+}
+
+.upvote-button {
+    position: relative;
+    top: 5px;
+}
+
+.upvote-button.disabled,
+.downvote-button.disabled {
+    opacity: 0.5;
+    filter: grayscale(100%) brightness(0.7);
+    cursor: not-allowed;
+}
+
+.upvote-button.disabled:hover,
+.downvote-button.disabled:hover {
+    opacity: 0.5;
+    transform: none;
+}
+
+.upvote-button.voted,
+.downvote-button.voted {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.upvote-button.voted img,
+.downvote-button.voted img {
+    filter: grayscale(50%) brightness(0.8);
+}
+
+.comment-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 48px;
+}
+
+.comment-area {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 12px;
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.comment-header-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.comment-header-left a {
+    color: #ff96c4;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.comment-header-left a:hover {
+    text-decoration: underline;
+}
+
+.anonymous-comment-user {
+    color: #54F2F2;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.anonymous-comment-user:hover {
+    text-decoration: underline;
+}
+
+.comment-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+}
+
+.timesince {
+    color: #aaa;
+}
+
+.comment-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.comment-text p {
+    text-align: justify;
+    line-height: 1.5;
+    margin: 4px 0;
+}
+
+.comment-replies {
+    margin-left: 36px;
+    border-left: 2px solid #AD8CFF;
+    padding-left: 12px;
+    margin-top: 12px;
+}
+
+.comment-author-pill {
+    display: inline-block;
+    padding: 1px 5px;
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 6px;
+    letter-spacing: 0.2px;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+.pill-registered {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    border: 1px solid #e74c3c;
+    box-shadow: 0 0 2px rgba(231, 76, 60, 0.4);
+}
+
+.pill-anonymous {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: #fff;
+    border: 1px solid #9b59b6;
+    box-shadow: 0 0 2px rgba(155, 89, 182, 0.4);
+}
+
+.miku-editor-container {
+    height: 256px;
+}
+
+/* Override TinyMiku editor styles for word wrapping */
+.miku-editor-container .miku-editor-input {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+.miku-editor-container .miku-editor-syntax-highlight {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+.comment-edit-area {
+    display: none;
+}
+
+.comment-reply-area {
+    display: none;
+    margin-top: 12px;
+    margin-left: 24px;
+    padding-left: 12px;
+    border-left: 2px solid rgba(173, 140, 255, 0.3);
+}
+
+.comment-reply-actions {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.comment-action-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.delete-comment-form {
+    display: inline;
+}
+
+.delete-comment-form .delete-comment-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.comment-action-link-button {
+    font-weight: bold;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.edit-comment-button {
+    color: #1fa88f;
+}
+
+.edit-comment-button:hover {
+    color: #009980;
+    text-decoration: underline;
+}
+
+.reply-comment-button {
+    color: #288ab1;
+}
+
+.reply-comment-button:hover {
+    color: #0580a3;
+    text-decoration: underline;
+}
+
+.delete-comment-button {
+    color: #c44061;
+}
+
+.delete-comment-button:hover {
+    color: #e6265a;
+    text-decoration: underline;
+}
+
+.comment-edit-actions {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.comment-edit-action-button {
+    padding: 6px 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    font-size: 11px;
+}
+
+.save-comment-button {
+    background: #2d5aa0;
+    border: 1px solid #000;
+}
+
+.save-comment-button:hover {
+    background: #3d6bb0;
+}
+
+.cancel-save-comment-button {
+    background: #5a3d99;
+    border: 1px solid #000;
+}
+
+.cancel-save-comment-button:hover {
+    background: #6b4bb3;
+}
+
+.new-comment-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.comment-submit-button {
+    background: #2d5aa0;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-05 08:35+0000\n"
+"POT-Creation-Date: 2025-08-11 10:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,9 +74,8 @@ msgid ""
 "website is handcrafted with love and care."
 msgstr ""
 "ソースコードは\n"
-"  <a href=\"%(github_url)s\" "
-"target=\"_blank\">GitHub</a>で見れるよ。全ての権利は留保。このサイトのピクセ"
-"ル全部が愛情とこだわりで手作りされてる。"
+"  <a href=\"%(github_url)s\" target=\"_blank\">GitHub</a>で見れるよ。全ての権"
+"利は留保。このサイトのピクセル全部が愛情とこだわりで手作りされてる。"
 
 #: templates/_partials/footer.html:27
 #, python-format
@@ -268,18 +267,10 @@ msgid "Please register or log in to upvote comments."
 msgstr ""
 "コメントをアップボートするには、アカウント登録またはログインしてください。"
 
-#: templates/_partials/post_comments.html:21
+#: templates/_partials/post_comments.html:22
 msgid "Please register or log in to downvote comments."
 msgstr ""
 "コメントをダウンボートするには、アカウント登録またはログインしてください。"
-
-#: templates/_partials/post_comments.html:47
-msgid "Registered"
-msgstr "登録済み"
-
-#: templates/_partials/post_comments.html:50
-msgid "Anonymous"
-msgstr "匿名"
 
 #: templates/_partials/post_comments.html:54
 msgid "ago"
@@ -288,6 +279,44 @@ msgstr "前"
 #: templates/_partials/post_comments.html:56
 msgid "edited"
 msgstr "編集済み"
+
+#: templates/_partials/post_comments.html:59
+msgid "Registered"
+msgstr "登録済み"
+
+#: templates/_partials/post_comments.html:61
+msgid "Anonymous"
+msgstr "匿名"
+
+#: templates/_partials/post_comments.html:78
+msgid "Save"
+msgstr "保存"
+
+#: templates/_partials/post_comments.html:79
+#: templates/_partials/post_comments.html:112 templates/weblog/post.html:134
+#: templates/weblog/post.html:147
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: templates/_partials/post_comments.html:86
+#: templates/_partials/post_comments.html:111 templates/weblog/post.html:144
+msgid "Reply"
+msgstr "返信"
+
+#: templates/_partials/post_comments.html:89
+#: templates/administration/kawaiibeats.html:302 templates/weblog/post.html:130
+msgid "Edit"
+msgstr "編集"
+
+#: templates/_partials/post_comments.html:92
+msgid ""
+"Are you sure you want to delete this comment? This action cannot be undone."
+msgstr "このコメントを削除してもよろしいですか? この操作は元に戻せません。"
+
+#: templates/_partials/post_comments.html:97
+#: templates/administration/kawaiibeats.html:304
+msgid "Delete"
+msgstr "削除"
 
 #: templates/_partials/right_sidebar.html:5
 #: templates/_partials/right_sidebar.html:6
@@ -366,19 +395,19 @@ msgstr "センサス"
 msgid "You are Visitor #"
 msgstr "あんたは訪問者ナンバー"
 
-#: templates/_partials/weblog_list.html:20 templates/weblog/post.html:25
+#: templates/_partials/weblog_list.html:18 templates/weblog/post.html:24
 msgid "posted in"
 msgstr "カテゴリー："
 
-#: templates/_partials/weblog_list.html:22 templates/weblog/post.html:27
+#: templates/_partials/weblog_list.html:20 templates/weblog/post.html:26
 msgid "on"
 msgstr "投稿日："
 
-#: templates/_partials/weblog_list.html:34
+#: templates/_partials/weblog_list.html:32
 msgid "Continue Reading"
 msgstr "続きを読む"
 
-#: templates/_partials/weblog_list.html:36
+#: templates/_partials/weblog_list.html:34
 #, python-format
 msgid ""
 "\n"
@@ -504,14 +533,6 @@ msgstr "アクション"
 msgid "Song"
 msgstr "楽曲"
 
-#: templates/administration/kawaiibeats.html:302
-msgid "Edit"
-msgstr "編集"
-
-#: templates/administration/kawaiibeats.html:304
-msgid "Delete"
-msgstr "削除"
-
 #: templates/administration/kawaiibeats.html:311
 msgid "No songs found."
 msgstr "楽曲が見つかりませんでした。"
@@ -569,11 +590,11 @@ msgstr "ここにメッセージを入力...（⏎で送信）"
 
 #: templates/core/home.html:28
 msgid "Under Construction"
-msgstr ""
+msgstr "工事中"
 
 #: templates/core/home.html:34
 msgid "Updates"
-msgstr ""
+msgstr "アップデート"
 
 #: templates/core/home.html:43
 msgid "New Announcement"
@@ -626,12 +647,12 @@ msgstr[0] ""
 msgid "No categories found"
 msgstr "カテゴリーが見つかりません"
 
-#: templates/weblog/post.html:31 templates/weblog/weblog.html:44
+#: templates/weblog/post.html:30 templates/weblog/weblog.html:44
 #: templates/weblog/weblog.html:59
 msgid "Views"
 msgstr "閲覧数"
 
-#: templates/weblog/post.html:34
+#: templates/weblog/post.html:33
 #, python-format
 msgid ""
 "\n"
@@ -643,34 +664,58 @@ msgstr[0] ""
 "\n"
 "          %(comment_count)s コメント"
 
-#: templates/weblog/post.html:48
+#: templates/weblog/post.html:47
 msgid "Tagged with"
 msgstr "タグ"
 
-#: templates/weblog/post.html:54 templates/weblog/weblog.html:47
+#: templates/weblog/post.html:53 templates/weblog/weblog.html:47
 #: templates/weblog/weblog.html:62
 msgid "Comments"
 msgstr "コメント"
 
-#: templates/weblog/post.html:56 templates/weblog/weblog.html:32
+#: templates/weblog/post.html:55 templates/weblog/weblog.html:32
 msgid "Sort by"
 msgstr "ソート順"
 
-#: templates/weblog/post.html:59
+#: templates/weblog/post.html:58
 msgid "Best"
 msgstr "最高"
 
-#: templates/weblog/post.html:62
+#: templates/weblog/post.html:61
 msgid "Newest"
 msgstr "最新"
 
-#: templates/weblog/post.html:65
+#: templates/weblog/post.html:64
 msgid "Oldest"
 msgstr "最古"
 
-#: templates/weblog/post.html:76
+#: templates/weblog/post.html:75
 msgid "No comments yet."
 msgstr "まだコメントないよ。"
+
+#: templates/weblog/post.html:78
+msgid "Leave a Comment"
+msgstr "コメントを残す"
+
+#: templates/weblog/post.html:87
+msgid "Submit Comment"
+msgstr "コメントを送信"
+
+#: templates/weblog/post.html:91
+msgid "Please log in to comment."
+msgstr "コメントするにはログインしてください。"
+
+#: templates/weblog/post.html:102
+msgid "Your comment was detected as spam and was not posted."
+msgstr "あなたのコメントはスパムと判断され、投稿されませんでした。"
+
+#: templates/weblog/post.html:117
+msgid "Write a comment..."
+msgstr "コメントを書く..."
+
+#: templates/weblog/post.html:160
+msgid "Please enter some content before saving."
+msgstr "保存する前に何か内容を入力してください。"
 
 #: templates/weblog/tags.html:110
 msgid "Browse weblog posts by tag"

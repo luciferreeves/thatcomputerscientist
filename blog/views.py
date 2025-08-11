@@ -1,17 +1,22 @@
+from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib import messages
-from django.db.models import F
 from blog.functions import (
+    add_comment,
+    delete_comment,
     get_single_post,
     get_posts,
     get_categories,
     get_tags,
     get_archives,
     handle_comment_vote,
+    update_comment,
 )
 from internal.utils import build_redirect_url
-from internal.weblog_utilities import strip_html_tags
+from internal.weblog_utilities import strip_html_tags, check_comment_spam
+
+#
+# from django.db.models import F
 
 
 weblog_slug = "shifoo"
@@ -140,17 +145,107 @@ def post(request, slug):
 
     if request.method == "POST":
         mode = request.POST.get("mode")
+        next_url = request.POST.get("next", "")
+        if next_url:
+            redirect_url += next_url
 
         if mode in ["upvote", "downvote"]:
-
             if not request.user.is_authenticated:
                 return HttpResponseRedirect(redirect_url)
 
             comment_id = request.POST.get("comment_id")
             vote_type = 1 if mode == "upvote" else -1
-            handle_comment_vote(comment_id, request.user, vote_type)
+            handle_comment_vote(
+                comment_id=comment_id, user=request.user, vote_type=vote_type
+            )
 
-            redirect_url += f"#comment-{comment_id}"
+            return HttpResponseRedirect(redirect_url)
+
+        if mode == "comment":
+            if not request.user.is_authenticated:
+                return HttpResponseRedirect(redirect_url)
+
+            comment_body = request.POST.get("body")
+
+            if comment_body.strip() == "":
+                return HttpResponseRedirect(redirect_url)
+
+            if check_comment_spam(post, comment_body):
+                messages.error(
+                    request,
+                    "Your comment was detected as spam and was not posted.",
+                    extra_tags="commentSpam",
+                )
+                return HttpResponseRedirect(redirect_url)
+
+            success, comment = add_comment(
+                post=post,
+                user=request.user,
+                body=comment_body,
+            )
+
+            if success:
+                redirect_url = build_redirect_url(request) + f"#comment-{comment.id}"
+                return HttpResponseRedirect(redirect_url)
+
+        if mode == "edit":
+            if not request.user.is_authenticated:
+                return HttpResponseRedirect(redirect_url)
+
+            comment_id = request.POST.get("comment_id")
+            comment_body = request.POST.get("body")
+
+            if comment_body.strip() == "":
+                return HttpResponseRedirect(redirect_url)
+
+            if check_comment_spam(post, comment_body):
+                messages.error(
+                    request,
+                    "Your comment was detected as spam and was not posted.",
+                    extra_tags="commentSpam",
+                )
+                return HttpResponseRedirect(redirect_url)
+
+            update_comment(comment_id=comment_id, user=request.user, body=comment_body)
+
+            return HttpResponseRedirect(redirect_url)
+
+        if mode == "reply":
+            if not request.user.is_authenticated:
+                return HttpResponseRedirect(redirect_url)
+
+            parent_comment_id = request.POST.get("parent_comment_id")
+            comment_body = request.POST.get("body")
+
+            if comment_body.strip() == "":
+                return HttpResponseRedirect(redirect_url)
+
+            if check_comment_spam(post, comment_body):
+                messages.error(
+                    request,
+                    "Your comment was detected as spam and was not posted.",
+                    extra_tags="commentSpam",
+                )
+                return HttpResponseRedirect(redirect_url)
+
+            success, reply = add_comment(
+                post=post,
+                user=request.user,
+                body=comment_body,
+                parent=parent_comment_id,
+            )
+
+            if success:
+                redirect_url = build_redirect_url(request) + f"#comment-{reply.id}"
+                return HttpResponseRedirect(redirect_url)
+
+        if mode == "delete":
+            if not request.user.is_authenticated:
+                return HttpResponseRedirect(redirect_url)
+
+            comment_id = request.POST.get("comment_id")
+            delete_comment(comment_id=comment_id, user=request.user)
+
             return HttpResponseRedirect(redirect_url)
 
     request.meta.title = post.title

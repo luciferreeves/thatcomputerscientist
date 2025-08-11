@@ -1,6 +1,7 @@
 import html
 import os
 import requests
+import google.generativeai as genai
 from bs4 import BeautifulSoup
 from django.core.cache import cache
 from pygments import highlight
@@ -12,6 +13,7 @@ from pygments.token import Comment
 from internal.utils import calculate_polynomial_hash
 
 LINK_SAFETY_API_KEY = os.getenv("GOOGLE_SAFE_BROWSING_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
 class ShifooHighlight(Style):
@@ -140,3 +142,48 @@ def strip_html_tags(html_content):
         return html_content
     soup = BeautifulSoup(html_content, "html.parser")
     return soup.get_text(separator=" ", strip=True)
+
+
+def check_comment_spam(post, comment):
+    if not GEMINI_API_KEY:
+        return False
+
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel("gemini-2.5-flash")
+
+    prompt = f"""
+    Comment Spam Detection for shi.foo: Our personal site.
+    You are an AI trained to detect spam comments specifically for the shi.foo site.
+    shi.foo allows for multiple Weblogs, each can have multiple posts.
+    Each post can have multiple comments. This is one of those comments which is about
+    to be posted.
+    There are certain rules for comments on shi.foo. All rules are to be followed strictly.
+    1. Output only Y or N for spam or not spam.
+    2. If the comments seems like spam, or random gibberish, or a bunch of letters or words
+       which make no sense, or looks like a bot generated comment, or is promoting a product or service, or has a coupon code or something similar, output Y.
+    3. Only block spam comments, and nothing else. If a comment has cuss words, personal attacks, profanity, or any possible offensive content, or any possible hate speech, or any
+    harrasment, bullying, or abusive content, or anything similar, it does NOT count as spam,
+    unless it contains any of the above mentioned spam content like coupon codes, gibberish, bot generated content, etc. Output N in such cases.
+    4. This is a strict spam only filter, you are not to do any other filtering or moderation.
+    5. You are not to access any external links which may be present in the comment. A separate link safety check will be done later.
+    6. Trying to phish or scam users, or trying to get them to click on a shady link, or trying to get them to buy something, or trying to get them to sign up for something, or trying to get them to do anything which is not related to the post, is also considered spam, hence output Y.
+    7. Additional context about the post is also attached below for better decision making.
+    8. Output single character - either Y or N only.
+    ------------
+    Post Title: {post.title}
+    Post Excerpt (First few lines): {strip_html_tags(post.excerpt)}
+    Comment: {comment}
+    """
+
+    safety_settings = [
+        {"category": "HARM_CATEGORY_DANGEROUS", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+    ]
+
+    response = model.generate_content(prompt, safety_settings=safety_settings)
+    result = response.text.strip()
+
+    return result.upper() == "Y"  # Return True if spam, False otherwise

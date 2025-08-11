@@ -3,12 +3,11 @@
 {% load i18n %}
 {% load tz %}
 {% block head %}
-    <link type="text/css"
-          rel="stylesheet"
-          href="{% static 'css/blog/post.css' %}" />
-    <link type="text/css"
-          rel="stylesheet"
-          href="{% static 'css/_partials/weblog_list.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/miku_editor/miku.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/miku_editor/themes/vintage.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/post_comments.css' %}" />
 {% endblock head %}
 {% block content %}
     <div class="weblog-container">
@@ -75,13 +74,98 @@
             {% if post.comments.all|length == 0 %}
                 <p>{% translate "No comments yet." %}</p>
             {% endif %}
+            <div class="new-comment-area">
+                <h3>{% translate "Leave a Comment" %}</h3>
+                {% if user.is_authenticated %}
+                    <div class="comment-form">
+                        <form action="{% url 'weblog:post' post.slug %}" method="post" onsubmit="return submitCommentForm('new', 'comment')">
+                            {% csrf_token %}
+                            <input type="hidden" name="mode" value="comment">
+                            <input type="hidden" name="next" value="#comments">
+                            <input type="hidden" name="body" id="comment-body-new">
+                            <div class="miku-comment-editor" id="miku-comment-editor-new"></div>
+                            <button type="submit" class="comment-submit-button">{% translate "Submit Comment" %}</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <p>{% translate "Please log in to comment." %}</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock content %}
 {% block scripts %}
+    {% for message in messages %}
+        {% if 'commentSpam' in message.tags %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    alert("{% translate 'Your comment was detected as spam and was not posted.' %}");
+                });
+            </script>
+        {% endif %}
+    {% endfor %}
     <script id="MathJax-script"
             async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/miku_editor/tinymiku.js' %}"></script>
+    <script type="text/javascript">
+        document.querySelectorAll('.miku-comment-editor').forEach(function (editorElement) {
+            const editorId = editorElement.id;
+            const mikuInstance = new TinyMiku('#' + editorId, {
+                placeholder: "{% translate 'Write a comment...' %}",
+            });
+            editorElement.mikuInstance = mikuInstance;
+        });
+
+        function editComment(commentId) {
+            const textArea = document.getElementById(`comment-text-${commentId}`);
+            const editButton = document.querySelector(`.edit-comment-button[onclick*="${commentId}"]`);
+            const editArea = document.getElementById(`edit-comment-${commentId}`);
+            
+            if (editArea.style.display === 'block') {
+                editArea.style.display = 'none';
+                textArea.style.display = 'block';
+                editButton.innerText = "{% translate 'Edit' %}";
+            } else {
+                editArea.style.display = 'block';
+                textArea.style.display = 'none';
+                editButton.innerText = "{% translate 'Cancel' %}";
+            }
+        }
+
+        function replyToComment(commentId) {
+            const replyArea = document.getElementById(`reply-comment-${commentId}`);
+            const replyButton = document.querySelector(`.reply-comment-button[onclick*="${commentId}"]`);
+            
+            if (replyArea.style.display === 'block') {
+                replyArea.style.display = 'none';
+                replyButton.innerText = "{% translate 'Reply' %}";
+            } else {
+                replyArea.style.display = 'block';
+                replyButton.innerText = "{% translate 'Cancel' %}";
+            }
+        }
+
+        function submitCommentForm(commentId, formType) {
+            const editorElement = document.getElementById(`miku-${formType}-editor-${commentId}`);
+            const hiddenInput = document.getElementById(`${formType}-body-${commentId}`);
+            
+            if (editorElement && editorElement.mikuInstance) {
+                const content = editorElement.mikuInstance.getContent();
+                const textContent = content.replace(/<[^>]*>/g, '').trim();
+                
+                if (!textContent) {
+                    const message = "{% translate 'Please enter some content before saving.' %}";
+                    alert(message);
+                    return false;
+                }
+                
+                hiddenInput.value = content;
+            }
+            
+            return true;
+        }
+    </script>
 {% endblock scripts %}

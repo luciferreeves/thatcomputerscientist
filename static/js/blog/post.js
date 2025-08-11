@@ -148,13 +148,3 @@ function setupLightbox() {
         document.body.style.overflow = ''; // Re-enable scrolling
     }
 }
-
-function showReplyForm(commentId) {
-    const replyForm = document.getElementById(`reply-form-${commentId}`);
-    if (replyForm) replyForm.style.display = 'block';
-}
-
-function hideReplyForm(commentId) {
-    const replyForm = document.getElementById(`reply-form-${commentId}`);
-    if (replyForm) replyForm.style.display = 'none';
-}

@@ -197,6 +197,8 @@
         }
 
         createEditor() {
+            const existingContent = this.container.textContent || this.container.innerText || '';
+
             this.container.className = 'miku-editor-container';
             this.container.innerHTML = `
                 <div class="miku-editor-wrapper">
@@ -207,7 +209,7 @@
                             id="mikuEditor" 
                             placeholder="${this.options.placeholder}"
                             spellcheck="false"
-                        ></textarea>
+                        >${existingContent}</textarea>
                     </div>
                 </div>
                 <div class="miku-editor-autocomplete-dropdown" id="mikuAutocompleteDropdown"></div>
@@ -472,7 +474,7 @@
 
             const quotePairs = {
                 '"': '"',
-                "'": "'"
+                // "'": "'"
             };
 
             const key = e.key;
@@ -604,6 +606,10 @@
             this.dropdown.style.display = 'none';
             this.selectedIndex = -1;
             this.suggestions = [];
+        }
+
+        getContent() {
+            return this.editor.value;
         }
     }
 

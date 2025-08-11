@@ -198,3 +198,50 @@ def handle_comment_vote(comment_id, user, vote_type):
         return True, None
     except Comment.DoesNotExist:
         return False, "Comment not found."
+
+
+def add_comment(post, user, body, parent=None):
+    try:
+        if parent:
+            parent_comment = Comment.objects.get(id=parent)
+            comment = Comment.objects.create(
+                user=user,
+                body=body,
+                post=post,
+                parent=parent_comment,
+            )
+        else:
+            comment = Comment.objects.create(
+                user=user,
+                body=body,
+                post=post,
+            )
+        return True, comment
+    except Exception as e:
+        return False, str(e)
+
+
+def update_comment(comment_id, user, body):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        if comment.user != user:
+            return False, "You do not have permission to edit this comment."
+        if comment.body == body:
+            return True, "No changes made to the comment."
+        comment.body = body
+        comment.edited = True
+        comment.save()
+        return True, "Comment updated successfully."
+    except Comment.DoesNotExist:
+        return False, "Comment not found."
+
+
+def delete_comment(comment_id, user):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        if comment.user != user and not user.is_superuser:
+            return False, "You do not have permission to delete this comment."
+        comment.delete()
+        return True, "Comment deleted successfully."
+    except Comment.DoesNotExist:
+        return False, "Comment not found."

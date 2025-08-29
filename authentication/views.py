@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.shortcuts import redirect
-from .functions import email_verified
+from authentication.functions import email_verified
 
 
 def login(request):

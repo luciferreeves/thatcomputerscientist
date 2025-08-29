@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django import forms
 from .models import (
-    AnonymousCommentUser,
     Category,
     Comment,
     CommentVote,
@@ -79,7 +78,7 @@ class PostAdmin(admin.ModelAdmin):
                 )
             elif obj.anonymous_user:
                 return mark_safe(
-                    f'<a href="/admin/advanced/blog/anonymouscommentuser/{obj.anonymous_user.id}/">'
+                    f'<a href="/admin/advanced/authentication/anonymouscommentuser/{obj.anonymous_user.id}/">'
                     f"Anonymous: {obj.anonymous_user.name}</a>"
                 )
             return "None"
@@ -234,13 +233,6 @@ class CommentAdmin(admin.ModelAdmin):
         return obj.user.username if obj.user else obj.anonymous_user.name
 
     get_author.short_description = "Author"
-
-
-@admin.register(AnonymousCommentUser)
-class AnonymousCommentUserAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "created_at")
-    search_fields = ("name", "email")
-    readonly_fields = ("created_at",)
 
 
 @admin.register(CommentVote)

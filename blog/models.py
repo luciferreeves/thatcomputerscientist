@@ -285,33 +285,16 @@ class Post(TranslatableMixin, models.Model):
         return instance
 
 
-class AnonymousCommentUser(models.Model):
-    name = models.CharField(max_length=32)
-    email = models.CharField(max_length=32, unique=True)
-    token = models.CharField(max_length=128, unique=True)
-    avatar = models.URLField(max_length=200, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    @classmethod
-    def get_or_create(cls, email, token, avatar=""):
-        email_hash = hashlib.md5(email.encode("utf-8")).hexdigest()
-        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
-        obj, created = cls.objects.get_or_create(
-            email_hash=email_hash, defaults={"token_hash": token_hash, "avatar": avatar}
-        )
-        return obj
-
-    def __str__(self):
-        return f"{self.name} ({self.email[:8]})"
-
-
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True
     )
     anonymous_user = models.ForeignKey(
-        AnonymousCommentUser, on_delete=models.CASCADE, blank=True, null=True
+        "authentication.AnonymousCommentUser",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     parent = models.ForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True, related_name="replies"
@@ -418,6 +401,8 @@ class CommentVote(models.Model):
         indexes = [
             models.Index(fields=["comment", "vote_type"]),
         ]
+        verbose_name = "Comment Vote"
+        verbose_name_plural = "Comment Votes"
 
     def __str__(self):
         vote_str = "upvote" if self.vote_type == 1 else "downvote"

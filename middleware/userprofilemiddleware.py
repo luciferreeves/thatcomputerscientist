@@ -1,5 +1,6 @@
 from django.utils.deprecation import MiddlewareMixin
-from users.models import UserProfile
+from authentication.models import UserProfile
+
 
 class UserProfileMiddleware(MiddlewareMixin):
     def process_request(self, request):

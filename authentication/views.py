@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.shortcuts import redirect
-from users.functions import email_verified
+from .functions import email_verified
+
 
 def login(request):
     next = request.POST.get("next", "core:home").strip()
@@ -21,7 +22,9 @@ def login(request):
                 auth_login(request, user)
                 return redirect(next)
             else:
-                messages.error(request, "ErrorEmailNotVerified", extra_tags="LoginError")
+                messages.error(
+                    request, "ErrorEmailNotVerified", extra_tags="LoginError"
+                )
                 return redirect(f"{next}?username={username}")
         else:
             messages.error(request, "ErrorInvalidCredentials", extra_tags="LoginError")
@@ -30,5 +33,5 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    referer = request.META.get('HTTP_REFERER', '/')
+    referer = request.META.get("HTTP_REFERER", "/")
     return redirect(referer)

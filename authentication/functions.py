@@ -1,4 +1,5 @@
-from users.models import UserProfile
+from .models import UserProfile
+
 
 def email_verified(user):
     profile = UserProfile.objects.get(user=user)
@@ -6,4 +7,3 @@ def email_verified(user):
         return True
     else:
         return False
-        

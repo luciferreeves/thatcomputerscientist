@@ -77,7 +77,6 @@ INSTALLED_APPS = [
     "administration",
     "haystack",
     "blog",
-    "users",
 ]
 
 SITE_ID = 1

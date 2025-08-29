@@ -57,7 +57,7 @@ form.crispy-forms {
     margin-bottom: 15px;
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .crispy-forms .form-group>*:not(label) {
@@ -78,8 +78,7 @@ form.crispy-forms {
 .crispy-forms .form-group input[type="number"],
 .crispy-forms .form-group input[type="url"],
 .crispy-forms .form-group input[type="date"],
-.crispy-forms .form-group select,
-.crispy-forms .form-group textarea {
+.crispy-forms .form-group select {
     width: 100%;
     padding: 8px 10px;
     border: 1px solid rgba(141, 141, 255, 0.5);
@@ -100,8 +99,7 @@ form.crispy-forms {
 }
 
 .crispy-forms .form-group input:focus,
-.crispy-forms .form-group select:focus,
-.crispy-forms .form-group textarea:focus {
+.crispy-forms .form-group select:focus {
     outline: none;
     border-color: #df23c4;
     box-shadow: 0 0 8px rgba(223, 35, 196, 0.4);
@@ -154,7 +152,7 @@ form.crispy-forms {
     content: '✓';
     position: absolute;
     top: -2px;
-    left: 3.5px;
+    left: 2.5px;
 }
 
 /* Submit Button Styles */

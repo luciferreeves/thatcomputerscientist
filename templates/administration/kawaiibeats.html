@@ -2,130 +2,8 @@
 {% load static %}
 {% load i18n %}
 {% block head %}
-    <link type="text/css"
-          rel="stylesheet"
-          href="{% static 'css/administration/forms.css' %}" />
-    <style>
-    .content-title {
-      margin: 4px 0px;
-    }
-
-    .collapsable p {
-      color: #8d8dff;
-      margin: 20px 0 15px 0;
-      padding-bottom: 5px;
-      border-bottom: 1px dashed rgba(141, 141, 255, 0.5);
-      font-weight: 700;
-      text-shadow: 0 0 3px #000;
-    }
-
-    .error-message {
-      color: #ff6b6b;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .success-message {
-      color: #6bff9e;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .crispy-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 12px;
-      background: rgba(49, 27, 79, 0.4);
-    }
-
-    .crispy-table th,
-    .crispy-table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid rgba(141, 141, 255, 0.3);
-    }
-
-    .crispy-table th {
-      background: linear-gradient(to bottom, #6b3fa0 0%, #311b4f 100%);
-      font-weight: bold;
-    }
-
-    .crispy-table tr {
-      transition: all 0.3s ease;
-    }
-
-    .crispy-table tr:hover {
-      background-color: rgba(68, 68, 177, 0.15);
-    }
-
-    .crispy-table tr:nth-child(even) {
-      background-color: rgba(49, 27, 79, 0.6);
-    }
-
-    .table-image {
-      width: 64px;
-      height: 64px;
-      border-radius: 4px;
-    }
-
-    .table-metadata p {
-      margin: 5px 0;
-      color: #dddddd;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 500px;
-    }
-
-    .table-metadata strong {
-      color: #8d8dff;
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .table-actions a {
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-weight: bold;
-      text-decoration: none;
-      text-align: center;
-      color: #ffffff;
-    }
-
-    .edit-button {
-      background: rgba(141, 141, 255, 0.3);
-      border: 1px solid #8d8dff;
-    }
-
-    .edit-button:hover {
-      background: rgba(141, 141, 255, 0.6);
-    }
-
-    .delete-button {
-      background: rgba(255, 107, 107, 0.3);
-      border: 1px solid #ff6b6b;
-    }
-
-    .delete-button:hover {
-      background: rgba(255, 107, 107, 0.6);
-    }
-
-    .crispy-table tfoot {
-      background: linear-gradient(to top, rgba(107, 63, 160, 0.6), rgba(49, 27, 79, 0.6));
-    }
-
-    .crispy-table tfoot p {
-      font-weight: bold;
-      color: #ffffff;
-      text-align: center;
-    }
-    </style>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
 {% endblock head %}
 {% block content %}
     <h1 class="content-title">{% translate "KawaiiBeats Manager" %}</h1>
@@ -323,6 +201,5 @@
     </table>
 {% endblock content %}
 {% block scripts %}
-    <script type="text/javascript"
-            src="{% static 'js/administration/forms.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/administration/forms.js' %}"></script>
 {% endblock scripts %}

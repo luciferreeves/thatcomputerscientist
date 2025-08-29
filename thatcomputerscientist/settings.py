@@ -72,17 +72,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
-    # "sslserver",
     "thatcomputerscientist",
+    "authentication",
     "administration",
     "haystack",
-    "blog.apps.BlogConfig",
+    "blog",
     "users",
-    # "userpages",
-    # "blog_admin",
-    # "dev_status",
-    "ignis",
-    # "chat",
 ]
 
 SITE_ID = 1
@@ -113,11 +108,6 @@ MIDDLEWARE = [
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
     "middleware.i18nmiddleware.I18NMiddleware",
     "middleware.userprofilemiddleware.UserProfileMiddleware",
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
-    # "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
-    # "middleware.ignismiddleware.IgnisMiddleware",
-    # "middleware.uuidmiddleware.UserUUIDMiddleware",
-    # "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
 LOCALE_PATHS = [

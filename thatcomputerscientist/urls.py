@@ -47,18 +47,11 @@ Allow: /repositories/$
 
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
-    path("auth", include("auth.urls", namespace="auth")),
+    path("auth", include("authentication.urls", namespace="auth")),
     path("admin", include("administration.urls", namespace="administration")),
     path("admin/administration/", admin.site.urls),
-    path("ignis", include("ignis.urls", namespace="ignis")),  # temp
     path("weblog", include("blog.urls", namespace="weblog")),
     path("services", include("services.urls", namespace="services")),
-    # path('', include('blog.urls', namespace='blog')),
-    # path('users', include('users.urls', namespace='users')),
-    # path('blog-admin', include('blog_admin.urls', namespace='blog-admin')),
-    # path('repositories', include(('dev_status.urls', 'dev_status'), namespace='dev_status')),
-    # path('ignis', include(('ignis.urls', 'ignis'), namespace='ignis')),
-    # path('admin/', admin.site.urls),
     # path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path("robots.txt", robots_txt),
 ]

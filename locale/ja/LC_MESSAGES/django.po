@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-18 13:59+0000\n"
+"POT-Creation-Date: 2025-09-18 21:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -301,19 +301,19 @@ msgstr "保存"
 #: templates/_partials/post_comments.html:112
 #: templates/administration/announcements.html:140
 #: templates/administration/announcements.html:170
-#: templates/weblog/post.html:184 templates/weblog/post.html:197
+#: templates/weblog/post.html:175 templates/weblog/post.html:188
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: templates/_partials/post_comments.html:86
-#: templates/_partials/post_comments.html:111 templates/weblog/post.html:194
+#: templates/_partials/post_comments.html:111 templates/weblog/post.html:185
 msgid "Reply"
 msgstr "返信"
 
 #: templates/_partials/post_comments.html:89
 #: templates/administration/announcements.html:112
 #: templates/administration/announcements.html:167
-#: templates/administration/kawaiibeats.html:180 templates/weblog/post.html:180
+#: templates/administration/kawaiibeats.html:180 templates/weblog/post.html:171
 msgid "Edit"
 msgstr "編集"
 
@@ -490,7 +490,7 @@ msgid "No announcements found."
 msgstr "楽曲が見つかりませんでした。"
 
 #: templates/administration/announcements.html:193
-#: templates/weblog/post.html:210
+#: templates/weblog/post.html:201
 msgid "Please enter some content before saving."
 msgstr "保存する前に何か内容を入力してください。"
 
@@ -774,8 +774,11 @@ msgid ""
 "strong>, our intelligent comment editor. As you type, the editor will "
 "automatically suggest available formatting options to help you create rich, "
 "expressive comments."
-msgstr "このウェブサイトは、インテリジェントなコメントエディタである<strong>TinyMiku</strong>"
-"によって動作するカスタムマークアップ構文を使用しています。入力すると、エディタが利用可能なフォーマットオプションを自動的に提案し、リッチで表現力豊かなコメントの作成を支援します。"
+msgstr ""
+"このウェブサイトは、インテリジェントなコメントエディタである"
+"<strong>TinyMiku</strong>によって動作するカスタムマークアップ構文を使用してい"
+"ます。入力すると、エディタが利用可能なフォーマットオプションを自動的に提案"
+"し、リッチで表現力豊かなコメントの作成を支援します。"
 
 #: templates/weblog/post.html:78
 msgid "Text Formatting"
@@ -784,7 +787,6 @@ msgstr "テキストフォーマット"
 #: templates/weblog/post.html:80
 msgid "bold text"
 msgstr "太字テキスト"
-
 
 #: templates/weblog/post.html:81
 msgid "italic text"
@@ -818,7 +820,9 @@ msgstr "コードスニペット"
 msgid ""
 "Add syntax-highlighted code by wrapping it in triple backticks with a "
 "language identifier:"
-msgstr "言語識別子を付けて三重バックティックで囲むことで、シンタックスハイライトされたコードを追加できます："
+msgstr ""
+"言語識別子を付けて三重バックティックで囲むことで、シンタックスハイライトされ"
+"たコードを追加できます："
 
 #: templates/weblog/post.html:103
 msgid "Renders as:"
@@ -831,7 +835,13 @@ msgid ""
 "class=\"language-tag\">javascript</span>, <span class=\"language-tag\">java</"
 "span>, <span class=\"language-tag\">cpp</span>, <span class=\"language-"
 "tag\">go</span>, <span class=\"language-tag\">rust</span> and many others."
-msgstr "すべてのプログラミング言語がサポートされています。フォーマットはlang-[language]を使用します。例としては、<span class=\"language-tag\">python</span>、<span class=\"language-tag\">javascript</span>、<span class=\"language-tag\">java</span>、<span class=\"language-tag\">cpp</span>、<span class=\"language-tag\">go</span>、<span class=\"language-tag\">rust</span>などがあります。"
+msgstr ""
+"すべてのプログラミング言語がサポートされています。フォーマットはlang-"
+"[language]を使用します。例としては、<span class=\"language-tag\">python</"
+"span>、<span class=\"language-tag\">javascript</span>、<span "
+"class=\"language-tag\">java</span>、<span class=\"language-tag\">cpp</span>、"
+"<span class=\"language-tag\">go</span>、<span class=\"language-tag\">rust</"
+"span>などがあります。"
 
 #: templates/weblog/post.html:113
 msgid "Links & URLs"
@@ -841,7 +851,9 @@ msgstr "リンクとURL"
 msgid ""
 "URLs are automatically converted to clickable links. Just paste any valid "
 "web address and it will become interactive."
-msgstr "URLは自動的にクリック可能なリンクに変換されます。有効なウェブアドレスを貼り付けるだけで、インタラクティブになります。"
+msgstr ""
+"URLは自動的にクリック可能なリンクに変換されます。有効なウェブアドレスを貼り付"
+"けるだけで、インタラクティブになります。"
 
 #: templates/weblog/post.html:125
 msgid "No comments yet."
@@ -859,11 +871,7 @@ msgstr "コメントを送信"
 msgid "Please log in to comment."
 msgstr "コメントするにはログインしてください。"
 
-#: templates/weblog/post.html:152
-msgid "Your comment was detected as spam and was not posted."
-msgstr "あなたのコメントはスパムと判断され、投稿されませんでした。"
-
-#: templates/weblog/post.html:167
+#: templates/weblog/post.html:158
 msgid "Write a comment..."
 msgstr "コメントを書く..."
 
@@ -909,10 +917,10 @@ msgstr "日付"
 msgid "Filter"
 msgstr "フィルター"
 
-#: thatcomputerscientist/settings.py:221
+#: thatcomputerscientist/settings.py:196
 msgid "English"
 msgstr "英語"
 
-#: thatcomputerscientist/settings.py:221
+#: thatcomputerscientist/settings.py:196
 msgid "Japanese"
 msgstr "日本語"

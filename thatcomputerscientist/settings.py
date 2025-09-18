@@ -75,24 +75,11 @@ INSTALLED_APPS = [
     "thatcomputerscientist",
     "authentication",
     "administration",
-    "haystack",
     "blog",
 ]
 
 SITE_ID = 1
 APPEND_SLASH = False
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "haystack.backends.simple_backend.SimpleEngine",
-    },
-}
-
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": [
-#         "rest_framework.authentication.BasicAuthentication",
-#         "rest_framework.authentication.SessionAuthentication",
-#     ]
-# }
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
@@ -113,13 +100,6 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
 
-# CONFIGURED_SUBDOMAINS = {
-#     "": "thatcomputerscientist",
-#     "*": "userpages",
-# }
-
-# ROOT_URLCONF = "thatcomputerscientist.urls"
-
 AUTHENTICATION_BACKENDS = ["thatcomputerscientist.backends.CaseInsensitiveModelBackend"]
 
 TEMPLATES = [
@@ -133,8 +113,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # "blog.context_processors.categories",
-                # "blog.context_processors.archives",
                 # "middleware.uuidmiddleware.userTrackingContextProcessor",
             ],
         },
@@ -145,9 +123,6 @@ TEMPLATES = [
 ASGI_APPLICATION = "thatcomputerscientist.asgi.application"
 
 CHANNEL_LAYERS = {
-    # "default": {
-    #     "BACKEND": "channels.layers.InMemoryChannelLayer"
-    # }
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
@@ -236,7 +211,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_USE_TLS = True
-# EMAIL_HOST = os.getenv('MAIL_HOST')
 EMAIL_HOST = os.getenv("ORACLE_SMTP_HOST")
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv("EMAIL_USER")
@@ -244,3 +218,29 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 USERNAME_SMTP = os.getenv("ORACLE_SMTP_USER")
 PASSWORD_SMTP = os.getenv("ORACLE_SMTP_PASSWORD")
+
+# Celery Configuration
+redis_password = os.getenv("REDIS_PASSWORD")
+redis_host = os.getenv("REDIS_HOST")
+redis_port = os.getenv("REDIS_PORT")
+
+if redis_password:
+    CELERY_BROKER_URL = f"redis://:{redis_password}@{redis_host}:{redis_port}/0"
+    CELERY_RESULT_BACKEND = f"redis://:{redis_password}@{redis_host}:{redis_port}/0"
+else:
+    CELERY_BROKER_URL = f"redis://{redis_host}:{redis_port}/0"
+    CELERY_RESULT_BACKEND = f"redis://{redis_host}:{redis_port}/0"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+CELERY_BEAT_SCHEDULE = {
+    "process-pending-and-spam-comments": {
+        "task": "jobs.comments.process_pending_and_spam_comments",
+        "schedule": 3600.0,
+    },
+    "delete-inactive-users": {
+        "task": "jobs.users.delete_inactive_users",
+        "schedule": 3600.0,
+    },
+}

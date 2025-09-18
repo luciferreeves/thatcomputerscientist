@@ -9,9 +9,6 @@ def login(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
 
-    print("Next:", next)
-    print("Username:", username)
-    print("Password:", password)
     if username == "" or password == "" or username is None or password is None:
         messages.error(request, "ErrorEmptyFields", extra_tags="LoginError")
         return redirect(f"{next}?username={username}" if username else next)

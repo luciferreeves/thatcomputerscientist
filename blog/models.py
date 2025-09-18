@@ -1,7 +1,7 @@
-import hashlib
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import get_language
 
@@ -14,6 +14,12 @@ LANGUAGE_CHOICES = [
     ("de", "German"),
     ("zh", "Chinese"),
     ("ko", "Korean"),
+]
+
+SPAM_STATUS_CHOICES = [
+    ("pending", "Pending Review"),
+    ("approved", "Approved"),
+    ("spam", "Marked as Spam"),
 ]
 
 
@@ -302,6 +308,10 @@ class Comment(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     body = models.TextField()
+    spam_status = models.CharField(
+        max_length=10, choices=SPAM_STATUS_CHOICES, default="pending", db_index=True
+    )
+    spam_checked_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     edited = models.BooleanField(default=False)
     edited_at = models.DateTimeField(blank=True, null=True)
@@ -382,6 +392,12 @@ class Comment(models.Model):
     def has_user_downvoted(self, user):
         """Check if user has downvoted this comment"""
         return self.get_user_vote(user) == -1
+
+    def approve_comment(self):
+        """Approve comment and set check timestamp"""
+        self.spam_status = "approved"
+        self.spam_checked_at = timezone.now()
+        self.save(update_fields=["spam_status", "spam_checked_at"])
 
 
 class CommentVote(models.Model):

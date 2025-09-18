@@ -202,6 +202,8 @@ def handle_comment_vote(comment_id, user, vote_type):
 
 def add_comment(post, user, body, parent=None):
     try:
+        spam_status = "approved" if (user.is_superuser) else "pending"
+
         if parent:
             parent_comment = Comment.objects.get(id=parent)
             comment = Comment.objects.create(
@@ -209,12 +211,14 @@ def add_comment(post, user, body, parent=None):
                 body=body,
                 post=post,
                 parent=parent_comment,
+                spam_status=spam_status,
             )
         else:
             comment = Comment.objects.create(
                 user=user,
                 body=body,
                 post=post,
+                spam_status=spam_status,
             )
         return True, comment
     except Exception as e:
@@ -230,6 +234,8 @@ def update_comment(comment_id, user, body):
             return True, "No changes made to the comment."
         comment.body = body
         comment.edited = True
+        comment.spam_status = "approved" if (user.is_superuser) else "pending"
+        comment.spam_checked_at = None
         comment.save()
         return True, "Comment updated successfully."
     except Comment.DoesNotExist:

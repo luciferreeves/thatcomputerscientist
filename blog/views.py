@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from blog.functions import (
@@ -13,7 +12,8 @@ from blog.functions import (
     update_comment,
 )
 from internal.utils import build_redirect_url
-from internal.weblog_utilities import strip_html_tags, check_comment_spam
+from internal.weblog_utilities import strip_html_tags
+from jobs.comments import check_comment_spam_async
 
 #
 # from django.db.models import F
@@ -170,14 +170,6 @@ def post(request, slug):
             if comment_body.strip() == "":
                 return HttpResponseRedirect(redirect_url)
 
-            if check_comment_spam(post, comment_body):
-                messages.error(
-                    request,
-                    "Your comment was detected as spam and was not posted.",
-                    extra_tags="commentSpam",
-                )
-                return HttpResponseRedirect(redirect_url)
-
             success, comment = add_comment(
                 post=post,
                 user=request.user,
@@ -185,6 +177,7 @@ def post(request, slug):
             )
 
             if success:
+                check_comment_spam_async.delay(comment.id)
                 redirect_url = build_redirect_url(request) + f"#comment-{comment.id}"
                 return HttpResponseRedirect(redirect_url)
 
@@ -198,15 +191,9 @@ def post(request, slug):
             if comment_body.strip() == "":
                 return HttpResponseRedirect(redirect_url)
 
-            if check_comment_spam(post, comment_body):
-                messages.error(
-                    request,
-                    "Your comment was detected as spam and was not posted.",
-                    extra_tags="commentSpam",
-                )
-                return HttpResponseRedirect(redirect_url)
-
             update_comment(comment_id=comment_id, user=request.user, body=comment_body)
+
+            check_comment_spam_async.delay(comment_id)
 
             return HttpResponseRedirect(redirect_url)
 
@@ -220,14 +207,6 @@ def post(request, slug):
             if comment_body.strip() == "":
                 return HttpResponseRedirect(redirect_url)
 
-            if check_comment_spam(post, comment_body):
-                messages.error(
-                    request,
-                    "Your comment was detected as spam and was not posted.",
-                    extra_tags="commentSpam",
-                )
-                return HttpResponseRedirect(redirect_url)
-
             success, reply = add_comment(
                 post=post,
                 user=request.user,
@@ -236,6 +215,7 @@ def post(request, slug):
             )
 
             if success:
+                check_comment_spam_async.delay(reply.id)
                 redirect_url = build_redirect_url(request) + f"#comment-{reply.id}"
                 return HttpResponseRedirect(redirect_url)
 

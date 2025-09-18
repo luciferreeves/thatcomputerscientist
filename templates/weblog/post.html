@@ -145,15 +145,6 @@ def hello_world():
     </div>
 {% endblock content %}
 {% block scripts %}
-    {% for message in messages %}
-        {% if 'commentSpam' in message.tags %}
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    alert("{% translate 'Your comment was detected as spam and was not posted.' %}");
-                });
-            </script>
-        {% endif %}
-    {% endfor %}
     <script id="MathJax-script"
             async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

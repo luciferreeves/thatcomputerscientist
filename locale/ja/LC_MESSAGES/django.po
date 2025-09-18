@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 10:03+0000\n"
+"POT-Creation-Date: 2025-09-18 13:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,11 +252,15 @@ msgid "Manage Users"
 msgstr "ユーザー管理"
 
 #: templates/_partials/left_sidebar.html:255
-#: templates/administration/kawaiibeats.html:131
+#: templates/administration/kawaiibeats.html:9
 msgid "KawaiiBeats Manager"
 msgstr "KawaiiBeatsマネージャー"
 
 #: templates/_partials/left_sidebar.html:260
+msgid "Site Administration"
+msgstr "サイト管理"
+
+#: templates/_partials/left_sidebar.html:265
 msgid "This website uses cookies and there's nothing you can do about it!"
 msgstr ""
 "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできませ"
@@ -289,22 +293,27 @@ msgid "Anonymous"
 msgstr "匿名"
 
 #: templates/_partials/post_comments.html:78
+#: templates/administration/announcements.html:139
 msgid "Save"
 msgstr "保存"
 
 #: templates/_partials/post_comments.html:79
-#: templates/_partials/post_comments.html:112 templates/weblog/post.html:134
-#: templates/weblog/post.html:147
+#: templates/_partials/post_comments.html:112
+#: templates/administration/announcements.html:140
+#: templates/administration/announcements.html:170
+#: templates/weblog/post.html:184 templates/weblog/post.html:197
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: templates/_partials/post_comments.html:86
-#: templates/_partials/post_comments.html:111 templates/weblog/post.html:144
+#: templates/_partials/post_comments.html:111 templates/weblog/post.html:194
 msgid "Reply"
 msgstr "返信"
 
 #: templates/_partials/post_comments.html:89
-#: templates/administration/kawaiibeats.html:302 templates/weblog/post.html:130
+#: templates/administration/announcements.html:112
+#: templates/administration/announcements.html:167
+#: templates/administration/kawaiibeats.html:180 templates/weblog/post.html:180
 msgid "Edit"
 msgstr "編集"
 
@@ -314,7 +323,8 @@ msgid ""
 msgstr "このコメントを削除してもよろしいですか? この操作は元に戻せません。"
 
 #: templates/_partials/post_comments.html:97
-#: templates/administration/kawaiibeats.html:304
+#: templates/administration/announcements.html:113
+#: templates/administration/kawaiibeats.html:182
 msgid "Delete"
 msgstr "削除"
 
@@ -419,125 +429,190 @@ msgstr[0] ""
 "\n"
 "          %(comment_count)s コメント"
 
-#: templates/administration/kawaiibeats.html:135
-#: templates/administration/kawaiibeats.html:252
-msgid "Add Song"
-msgstr "楽曲を追加"
+#: templates/administration/announcements.html:65
+msgid "Announcement Manager"
+msgstr "アナウンスメント"
 
-#: templates/administration/kawaiibeats.html:143
-#: templates/administration/kawaiibeats.html:195
-msgid "Spotify URL"
-msgstr "SpotifyのURL"
+#: templates/administration/announcements.html:69
+msgid "Create New Announcement"
+msgstr "新しいアナウンスメント"
 
-#: templates/administration/kawaiibeats.html:147
-#: templates/administration/kawaiibeats.html:199
-msgid "Enter Spotify URL"
-msgstr "SpotifyのURLを入力してください"
+#: templates/administration/announcements.html:75
+#: templates/administration/announcements.html:126
+msgid "Announcement Content"
+msgstr "アナウンスメント"
 
-#: templates/administration/kawaiibeats.html:151
-msgid "Request Song Metadata"
-msgstr "楽曲のメタデータを取得"
+#: templates/administration/announcements.html:80
+#: templates/administration/announcements.html:131
+msgid "Is this a new announcement?"
+msgstr "新しいアナウンスメント"
 
-#: templates/administration/kawaiibeats.html:153
-msgid "Or you can add a song manually:"
-msgstr "または手動で楽曲を追加することもできます："
+#: templates/administration/announcements.html:84
+#: templates/administration/announcements.html:135
+msgid "Is this announcement public?"
+msgstr "このアナウンスメントは公開されますか？"
 
-#: templates/administration/kawaiibeats.html:159
-#: templates/weblog/weblog.html:41 templates/weblog/weblog.html:56
-msgid "Title"
-msgstr "タイトル"
+#: templates/administration/announcements.html:87
+msgid "Create Announcement"
+msgstr "新しいアナウンスメント"
 
-#: templates/administration/kawaiibeats.html:163
-msgid "Enter Title"
-msgstr "タイトルを入力してください"
+#: templates/administration/announcements.html:94
+msgid "Content"
+msgstr "内容"
 
-#: templates/administration/kawaiibeats.html:168
-#: templates/administration/kawaiibeats.html:292
-msgid "Artists"
-msgstr "アーティスト"
+#: templates/administration/announcements.html:95
+msgid "Author"
+msgstr "著者"
 
-#: templates/administration/kawaiibeats.html:172
-msgid "Enter Artists"
-msgstr "アーティスト名を入力してください"
+#: templates/administration/announcements.html:96
+msgid "Is New"
+msgstr "新しい"
 
-#: templates/administration/kawaiibeats.html:177
-msgid "Album"
-msgstr "アルバム"
+#: templates/administration/announcements.html:97
+msgid "Is Public"
+msgstr "公開"
 
-#: templates/administration/kawaiibeats.html:181
-msgid "Enter Album"
-msgstr "アルバム名を入力してください"
+#: templates/administration/announcements.html:98
+msgid "Created At"
+msgstr "作成日時"
 
-#: templates/administration/kawaiibeats.html:186
-msgid "Spotify ID"
-msgstr "Spotify ID"
-
-#: templates/administration/kawaiibeats.html:190
-msgid "Enter Spotify ID"
-msgstr "Spotify IDを入力してください"
-
-#: templates/administration/kawaiibeats.html:204
-msgid "Album Art URL"
-msgstr "アルバムアートのURL"
-
-#: templates/administration/kawaiibeats.html:208
-msgid "Enter Album Art URL"
-msgstr "アルバムアートのURLを入力してください"
-
-#: templates/administration/kawaiibeats.html:213
-msgid "Custom Album Art"
-msgstr "カスタムアルバムアート"
-
-#: templates/administration/kawaiibeats.html:217
-msgid "Enter Custom Album Art URL"
-msgstr "カスタムアルバムアートのURLを入力してください"
-
-#: templates/administration/kawaiibeats.html:221
-msgid "Duration (ms)"
-msgstr "再生時間（ミリ秒）"
-
-#: templates/administration/kawaiibeats.html:225
-msgid "Enter Duration in milliseconds"
-msgstr "再生時間をミリ秒で入力してください"
-
-#: templates/administration/kawaiibeats.html:230
-msgid "Explicit"
-msgstr "露骨な表現"
-
-#: templates/administration/kawaiibeats.html:237
-#: templates/administration/kawaiibeats.html:295
-msgid "Release Date"
-msgstr "リリース日"
-
-#: templates/administration/kawaiibeats.html:245
-msgid "Streaming URL"
-msgstr "ストリーミングURL"
-
-#: templates/administration/kawaiibeats.html:249
-msgid "Enter Streaming URL"
-msgstr "ストリーミングURLを入力してください"
-
-#: templates/administration/kawaiibeats.html:269
-msgid "Album Art"
-msgstr "アルバムアート"
-
-#: templates/administration/kawaiibeats.html:270
-msgid "Metadata"
-msgstr "メタデータ"
-
-#: templates/administration/kawaiibeats.html:271
+#: templates/administration/announcements.html:99
+#: templates/administration/kawaiibeats.html:149
 msgid "Actions"
 msgstr "アクション"
 
-#: templates/administration/kawaiibeats.html:289
+#: templates/administration/announcements.html:141
+msgid "Advanced Edit"
+msgstr "高度な編集"
+
+#: templates/administration/announcements.html:147
+msgid "No announcements found."
+msgstr "楽曲が見つかりませんでした。"
+
+#: templates/administration/announcements.html:193
+#: templates/weblog/post.html:210
+msgid "Please enter some content before saving."
+msgstr "保存する前に何か内容を入力してください。"
+
+#: templates/administration/announcements.html:208
+msgid "Please enter some content before creating the announcement."
+msgstr "保存する前に何か内容を入力してください。"
+
+#: templates/administration/kawaiibeats.html:13
+#: templates/administration/kawaiibeats.html:130
+msgid "Add Song"
+msgstr "楽曲を追加"
+
+#: templates/administration/kawaiibeats.html:21
+#: templates/administration/kawaiibeats.html:73
+msgid "Spotify URL"
+msgstr "SpotifyのURL"
+
+#: templates/administration/kawaiibeats.html:25
+#: templates/administration/kawaiibeats.html:77
+msgid "Enter Spotify URL"
+msgstr "SpotifyのURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:29
+msgid "Request Song Metadata"
+msgstr "楽曲のメタデータを取得"
+
+#: templates/administration/kawaiibeats.html:31
+msgid "Or you can add a song manually:"
+msgstr "または手動で楽曲を追加することもできます："
+
+#: templates/administration/kawaiibeats.html:37 templates/weblog/weblog.html:41
+#: templates/weblog/weblog.html:56
+msgid "Title"
+msgstr "タイトル"
+
+#: templates/administration/kawaiibeats.html:41
+msgid "Enter Title"
+msgstr "タイトルを入力してください"
+
+#: templates/administration/kawaiibeats.html:46
+#: templates/administration/kawaiibeats.html:170
+msgid "Artists"
+msgstr "アーティスト"
+
+#: templates/administration/kawaiibeats.html:50
+msgid "Enter Artists"
+msgstr "アーティスト名を入力してください"
+
+#: templates/administration/kawaiibeats.html:55
+msgid "Album"
+msgstr "アルバム"
+
+#: templates/administration/kawaiibeats.html:59
+msgid "Enter Album"
+msgstr "アルバム名を入力してください"
+
+#: templates/administration/kawaiibeats.html:64
+msgid "Spotify ID"
+msgstr "Spotify ID"
+
+#: templates/administration/kawaiibeats.html:68
+msgid "Enter Spotify ID"
+msgstr "Spotify IDを入力してください"
+
+#: templates/administration/kawaiibeats.html:82
+msgid "Album Art URL"
+msgstr "アルバムアートのURL"
+
+#: templates/administration/kawaiibeats.html:86
+msgid "Enter Album Art URL"
+msgstr "アルバムアートのURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:91
+msgid "Custom Album Art"
+msgstr "カスタムアルバムアート"
+
+#: templates/administration/kawaiibeats.html:95
+msgid "Enter Custom Album Art URL"
+msgstr "カスタムアルバムアートのURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:99
+msgid "Duration (ms)"
+msgstr "再生時間（ミリ秒）"
+
+#: templates/administration/kawaiibeats.html:103
+msgid "Enter Duration in milliseconds"
+msgstr "再生時間をミリ秒で入力してください"
+
+#: templates/administration/kawaiibeats.html:108
+msgid "Explicit"
+msgstr "露骨な表現"
+
+#: templates/administration/kawaiibeats.html:115
+#: templates/administration/kawaiibeats.html:173
+msgid "Release Date"
+msgstr "リリース日"
+
+#: templates/administration/kawaiibeats.html:123
+msgid "Streaming URL"
+msgstr "ストリーミングURL"
+
+#: templates/administration/kawaiibeats.html:127
+msgid "Enter Streaming URL"
+msgstr "ストリーミングURLを入力してください"
+
+#: templates/administration/kawaiibeats.html:147
+msgid "Album Art"
+msgstr "アルバムアート"
+
+#: templates/administration/kawaiibeats.html:148
+msgid "Metadata"
+msgstr "メタデータ"
+
+#: templates/administration/kawaiibeats.html:167
 msgid "Song"
 msgstr "楽曲"
 
-#: templates/administration/kawaiibeats.html:311
+#: templates/administration/kawaiibeats.html:189
 msgid "No songs found."
 msgstr "楽曲が見つかりませんでした。"
 
-#: templates/administration/kawaiibeats.html:319
+#: templates/administration/kawaiibeats.html:197
 msgid "Total Songs"
 msgstr "総楽曲数"
 
@@ -689,33 +764,108 @@ msgstr "最新"
 msgid "Oldest"
 msgstr "最古"
 
-#: templates/weblog/post.html:75
+#: templates/weblog/post.html:71
+msgid "Markup Guide for Comments"
+msgstr "コメントのマークアップガイド"
+
+#: templates/weblog/post.html:74
+msgid ""
+"This website uses a custom markup syntax powered by <strong>TinyMiku</"
+"strong>, our intelligent comment editor. As you type, the editor will "
+"automatically suggest available formatting options to help you create rich, "
+"expressive comments."
+msgstr "このウェブサイトは、インテリジェントなコメントエディタである<strong>TinyMiku</strong>"
+"によって動作するカスタムマークアップ構文を使用しています。入力すると、エディタが利用可能なフォーマットオプションを自動的に提案し、リッチで表現力豊かなコメントの作成を支援します。"
+
+#: templates/weblog/post.html:78
+msgid "Text Formatting"
+msgstr "テキストフォーマット"
+
+#: templates/weblog/post.html:80
+msgid "bold text"
+msgstr "太字テキスト"
+
+
+#: templates/weblog/post.html:81
+msgid "italic text"
+msgstr "斜体テキスト"
+
+#: templates/weblog/post.html:82
+msgid "strikethrough"
+msgstr "取り消し線"
+
+#: templates/weblog/post.html:87
+msgid "Mathematical Expressions"
+msgstr "数学的表現"
+
+#: templates/weblog/post.html:88
+msgid "Support for LaTeX mathematical notation:"
+msgstr "LaTeXの数学記法をサポート："
+
+#: templates/weblog/post.html:90
+msgid "Inline math expressions"
+msgstr "インライン数式"
+
+#: templates/weblog/post.html:91
+msgid "Block math expressions"
+msgstr "ブロック数式"
+
+#: templates/weblog/post.html:96
+msgid "Code Snippets"
+msgstr "コードスニペット"
+
+#: templates/weblog/post.html:97
+msgid ""
+"Add syntax-highlighted code by wrapping it in triple backticks with a "
+"language identifier:"
+msgstr "言語識別子を付けて三重バックティックで囲むことで、シンタックスハイライトされたコードを追加できます："
+
+#: templates/weblog/post.html:103
+msgid "Renders as:"
+msgstr "次のように表示されます："
+
+#: templates/weblog/post.html:109
+msgid ""
+"All programming languages are supported. Use the format: lang-[language]. "
+"Examples include <span class=\"language-tag\">python</span>, <span "
+"class=\"language-tag\">javascript</span>, <span class=\"language-tag\">java</"
+"span>, <span class=\"language-tag\">cpp</span>, <span class=\"language-"
+"tag\">go</span>, <span class=\"language-tag\">rust</span> and many others."
+msgstr "すべてのプログラミング言語がサポートされています。フォーマットはlang-[language]を使用します。例としては、<span class=\"language-tag\">python</span>、<span class=\"language-tag\">javascript</span>、<span class=\"language-tag\">java</span>、<span class=\"language-tag\">cpp</span>、<span class=\"language-tag\">go</span>、<span class=\"language-tag\">rust</span>などがあります。"
+
+#: templates/weblog/post.html:113
+msgid "Links & URLs"
+msgstr "リンクとURL"
+
+#: templates/weblog/post.html:114
+msgid ""
+"URLs are automatically converted to clickable links. Just paste any valid "
+"web address and it will become interactive."
+msgstr "URLは自動的にクリック可能なリンクに変換されます。有効なウェブアドレスを貼り付けるだけで、インタラクティブになります。"
+
+#: templates/weblog/post.html:125
 msgid "No comments yet."
 msgstr "まだコメントないよ。"
 
-#: templates/weblog/post.html:78
+#: templates/weblog/post.html:128
 msgid "Leave a Comment"
 msgstr "コメントを残す"
 
-#: templates/weblog/post.html:87
+#: templates/weblog/post.html:137
 msgid "Submit Comment"
 msgstr "コメントを送信"
 
-#: templates/weblog/post.html:91
+#: templates/weblog/post.html:141
 msgid "Please log in to comment."
 msgstr "コメントするにはログインしてください。"
 
-#: templates/weblog/post.html:102
+#: templates/weblog/post.html:152
 msgid "Your comment was detected as spam and was not posted."
 msgstr "あなたのコメントはスパムと判断され、投稿されませんでした。"
 
-#: templates/weblog/post.html:117
+#: templates/weblog/post.html:167
 msgid "Write a comment..."
 msgstr "コメントを書く..."
-
-#: templates/weblog/post.html:160
-msgid "Please enter some content before saving."
-msgstr "保存する前に何か内容を入力してください。"
 
 #: templates/weblog/tags.html:110
 msgid "Browse weblog posts by tag"
@@ -759,10 +909,10 @@ msgstr "日付"
 msgid "Filter"
 msgstr "フィルター"
 
-#: thatcomputerscientist/settings.py:232
+#: thatcomputerscientist/settings.py:221
 msgid "English"
 msgstr "英語"
 
-#: thatcomputerscientist/settings.py:232
+#: thatcomputerscientist/settings.py:221
 msgid "Japanese"
 msgstr "日本語"

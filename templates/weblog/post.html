@@ -66,6 +66,56 @@
                     </select>
                 </form>
             </div>
+            <blockquote>
+                <details>
+                    <summary>{% translate "Markup Guide for Comments" %}</summary>
+                    
+                    <div class="guide-intro">
+                        <p>{% translate "This website uses a custom markup syntax powered by <strong>TinyMiku</strong>, our intelligent comment editor. As you type, the editor will automatically suggest available formatting options to help you create rich, expressive comments." %}</p>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Text Formatting" %}</h4>
+                        <ul class="formatting-list">
+                            <li><code>**bold text**</code> → <strong>{% translate "bold text" %}</strong></li>
+                            <li><code>__italic text__</code> → <em>{% translate "italic text" %}</em></li>
+                            <li><code>~~strikethrough~~</code> → <del>{% translate "strikethrough" %}</del></li>
+                        </ul>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Mathematical Expressions" %}</h4>
+                        <p class="guide-description">{% translate "Support for LaTeX mathematical notation:" %}</p>
+                        <ul class="formatting-list">
+                            <li><code>$E = mc^2$</code> → {% translate "Inline math expressions" %}</li>
+                            <li><code>$$\int_0^1 x^2 dx$$</code> → {% translate "Block math expressions" %}</li>
+                        </ul>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Code Snippets" %}</h4>
+                        <p class="guide-description">{% translate "Add syntax-highlighted code by wrapping it in triple backticks with a language identifier:" %}</p>
+                        <div class="code-example">
+                            <pre class="example-code">```lang-python
+def hello_world():
+    print("Hello, world!")
+```</pre>
+                            <p class="example-label">{% translate "Renders as:" %}</p>
+                            <pre data-language="python"><div class="highlight"><pre><span></span><code><span style="color: #CDCD00">def</span><span style="color: #CCC"> hello_world():</span>
+    <span style="color: #CD00CD">print</span><span style="color: #CCC">(</span><span style="color: #CD0000">"Hello, world!"</span><span style="color: #CCC">)</span>
+</code></pre></div>
+</pre>
+                        </div>
+                        <p class="supported-languages">{% blocktranslate %}All programming languages are supported. Use the format: lang-[language]. Examples include <span class="language-tag">python</span>, <span class="language-tag">javascript</span>, <span class="language-tag">java</span>, <span class="language-tag">cpp</span>, <span class="language-tag">go</span>, <span class="language-tag">rust</span> and many others.{% endblocktranslate %}</p>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Links & URLs" %}</h4>
+                        <p class="guide-description">{% translate "URLs are automatically converted to clickable links. Just paste any valid web address and it will become interactive." %}</p>
+                    </div>
+
+                </details>
+            </blockquote>
             {% for comment in post.comments.all %}
                 {% if not comment.parent %}
                     {% include "_partials/post_comments.html" with comment=comment %}

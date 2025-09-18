@@ -253,6 +253,11 @@
                          alt="KawaiiBeats Manager Icon" />
                     <a href="{% url 'administration:kawaiibeats' %}">{% translate "KawaiiBeats Manager" %}</a>
                 </div>
+                <div class="navigation-item">
+                    <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
+                         alt="Site Administration Icon" />
+                    <a href="{% url 'admin:index' %}">{% translate "Site Administration" %}</a>
+                </div>
             </div>
         </div>
     {% endif %}

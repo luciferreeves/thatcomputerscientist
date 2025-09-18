@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "authentication",
     "administration",
     "blog",
+    "services",
 ]
 
 SITE_ID = 1

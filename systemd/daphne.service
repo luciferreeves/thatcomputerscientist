@@ -1,0 +1,17 @@
+[Unit]
+Description=That Computer Scientist Daphne Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Restart=always
+RestartSec=5
+KillMode=mixed
+KillSignal=SIGKILL
+TimeoutStopSec=5
+WorkingDirectory=/home/ubuntu/thatcomputerscientist
+ExecStart=/home/ubuntu/thatcomputerscientist/venv/bin/daphne -b 127.0.0.1 -p 8080 --websocket_timeout 600 -t 300 --proxy-headers --ping-interval 10 --ping-timeout 30 thatcomputerscientist.asgi:application
+
+[Install]
+WantedBy=multi-user.target

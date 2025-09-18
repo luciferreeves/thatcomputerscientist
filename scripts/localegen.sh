@@ -67,22 +67,28 @@ compile_messages() {
   echo -e "\n${GREEN}✓ Translation messages compilation complete!${NC}\n"
 }
 
-echo -e "${BOLD}${CYAN}What do you want to do?${NC}"
-echo -e "  ${GREEN}g${NC} - Generate translation messages"
-echo -e "  ${BLUE}c${NC} - Compile translation messages"
-echo -n -e "${YELLOW}Choose an option ${NC}[${GREEN}g${NC}]: "
-read -n 1 action
-echo ""
+if [[ "$1" == "-g" ]]; then
+  generate_messages
+elif [[ "$1" == "-c" ]]; then
+  compile_messages
+else
+  echo -e "${BOLD}${CYAN}What do you want to do?${NC}"
+  echo -e "  ${GREEN}g${NC} - Generate translation messages"
+  echo -e "  ${BLUE}c${NC} - Compile translation messages"
+  echo -n -e "${YELLOW}Choose an option ${NC}[${GREEN}g${NC}]: "
+  read -n 1 action
+  echo ""
 
-case "$action" in
-  "g"|"")
-    generate_messages
-    ;;
-  "c")
-    compile_messages
-    ;;
-  *)
-    echo -e "\n${RED}Error: Invalid option. Use 'g' for generate or 'c' for compile.${NC}"
-    exit 1
-    ;;
-esac
+  case "$action" in
+    "g"|"")
+      generate_messages
+      ;;
+    "c")
+      compile_messages
+      ;;
+    *)
+      echo -e "\n${RED}Error: Invalid option. Use 'g' for generate or 'c' for compile.${NC}"
+      exit 1
+      ;;
+  esac
+fi

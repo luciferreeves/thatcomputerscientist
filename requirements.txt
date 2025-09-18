@@ -1,10 +1,19 @@
 # v2 Updated Requirements
 bs4
+celery
+channels
+channels_redis
+daphne
 django
+django-celery-beat
+google-generativeai
 pygments
+python-dotenv
+redis
 requests
 
 
+# Original Requirements (to be deleted later)
 # django-redis
 # python-dotenv
 # gunicorn

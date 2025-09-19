@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-18 21:42+0000\n"
+"POT-Creation-Date: 2025-09-19 21:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -301,7 +301,8 @@ msgstr "保存"
 #: templates/_partials/post_comments.html:112
 #: templates/administration/announcements.html:140
 #: templates/administration/announcements.html:170
-#: templates/weblog/post.html:175 templates/weblog/post.html:188
+#: templates/journals/new.html:103 templates/weblog/post.html:175
+#: templates/weblog/post.html:188
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -325,6 +326,7 @@ msgstr "このコメントを削除してもよろしいですか? この操作�
 #: templates/_partials/post_comments.html:97
 #: templates/administration/announcements.html:113
 #: templates/administration/kawaiibeats.html:182
+#: templates/journals/journals.html:65
 msgid "Delete"
 msgstr "削除"
 
@@ -687,6 +689,156 @@ msgstr "最近考えてること"
 msgid "Recent Weeb Degenerecy"
 msgstr "最近のオタク的堕落"
 
+#: templates/journals/journals.html:14
+msgid "My Journals"
+msgstr "マイジャーナル"
+
+#: templates/journals/journals.html:15
+msgid "Digital notebooks for your thoughts and ideas"
+msgstr "あなたの考えやアイデアのためのデジタルノート"
+
+#: templates/journals/journals.html:20 templates/journals/new.html:14
+msgid "New Journal"
+msgstr "新しいジャーナル"
+
+#: templates/journals/journals.html:29
+msgid "Total Journals"
+msgstr "総ジャーナル数"
+
+#: templates/journals/journals.html:33
+msgid "Private Journals"
+msgstr "プライベートジャーナル"
+
+#: templates/journals/journals.html:37
+msgid "Total Entries"
+msgstr "総エントリ数"
+
+#: templates/journals/journals.html:49
+msgid "Private"
+msgstr "非公開"
+
+#: templates/journals/journals.html:51
+msgid "Public"
+msgstr "公開"
+
+#: templates/journals/journals.html:57
+msgid "Entry"
+msgstr "エントリ"
+
+#: templates/journals/journals.html:57
+msgid "Entries"
+msgstr "エントリ"
+
+#: templates/journals/journals.html:60
+msgid "More options"
+msgstr "その他のオプション"
+
+#: templates/journals/journals.html:62 templates/journals/journals.html:82
+msgid "New Entry"
+msgstr "新しいエントリ"
+
+#: templates/journals/journals.html:63
+msgid "View Journal"
+msgstr "ジャーナルを見る"
+
+#: templates/journals/journals.html:64
+msgid "Settings"
+msgstr "設定"
+
+#: templates/journals/journals.html:76
+msgid "No description provided"
+msgstr "説明が提供されていません"
+
+#: templates/journals/journals.html:89
+msgid "Created"
+msgstr "作成日"
+
+#: templates/journals/journals.html:97
+msgid "Updated"
+msgstr "更新日"
+
+#: templates/journals/journals.html:109
+msgid "No Journals Yet"
+msgstr "まだジャーナルがありません"
+
+#: templates/journals/journals.html:110
+msgid "Start your digital journaling journey by creating your first journal."
+msgstr "デジタルジャーナリングの旅を始めるには、最初のジャーナルを作成してください。"
+
+#: templates/journals/journals.html:112
+msgid "Create Your First Journal"
+msgstr "最初のジャーナルを作成"
+
+#: templates/journals/journals.html:124
+msgid "Previous"
+msgstr "前へ"
+
+#: templates/journals/journals.html:136
+msgid "Next"
+msgstr "次へ"
+
+#: templates/journals/new.html:15
+msgid "Create a new digital notebook for your thoughts"
+msgstr "あなたの考えのための新しいデジタルノートを作成"
+
+#: templates/journals/new.html:20
+msgid "Back to Journals"
+msgstr "ジャーナルに戻る"
+
+#: templates/journals/new.html:43
+msgid "Journal Name"
+msgstr "ジャーナル名"
+
+#: templates/journals/new.html:49
+msgid "Enter a name for your journal"
+msgstr "ジャーナルの名前を入力してください"
+
+#: templates/journals/new.html:54
+msgid "A clear, descriptive name for your journal"
+msgstr "あなたのジャーナルのための明確で説明的な名前"
+
+#: templates/journals/new.html:58
+msgid "URL Slug"
+msgstr "URLスラッグ"
+
+#: templates/journals/new.html:64
+msgid "journal-url-name"
+msgstr "journal-url-name"
+
+#: templates/journals/new.html:69
+msgid ""
+"Optional: Custom URL for your journal (lowercase letters, numbers, hyphens "
+"only)"
+msgstr "オプション：ジャーナル用のカスタムURL（小文字、数字、ハイフンのみ）"
+
+#: templates/journals/new.html:73
+msgid "Description"
+msgstr "説明"
+
+#: templates/journals/new.html:79
+msgid "Describe what this journal is about..."
+msgstr "このジャーナルが何についてのものか説明してください..."
+
+#: templates/journals/new.html:82
+msgid "Optional: A brief description of your journal's purpose or theme"
+msgstr "オプション：あなたのジャーナルの目的やテーマの簡単な説明"
+
+#: templates/journals/new.html:90
+msgid "Private Journal"
+msgstr "プライベートジャーナル"
+
+#: templates/journals/new.html:93
+msgid "Private journals are only visible to you and people you share them with"
+msgstr "プライベートジャーナルは、あなたとあなたが共有する人にのみ表示されます"
+
+#: templates/journals/new.html:100
+msgid "Create Journal"
+msgstr "ジャーナルを作成"
+
+#: templates/journals/new.html:145
+msgid "Please enter a journal name"
+msgstr "ジャーナル名を入力してください"
+
 #: templates/weblog/archives.html:78
 msgid "Browse weblog archives"
 msgstr "ウェブログのアーカイブを閲覧"
@@ -917,10 +1069,10 @@ msgstr "日付"
 msgid "Filter"
 msgstr "フィルター"
 
-#: thatcomputerscientist/settings.py:196
+#: thatcomputerscientist/settings.py:197
 msgid "English"
 msgstr "英語"
 
-#: thatcomputerscientist/settings.py:196
+#: thatcomputerscientist/settings.py:197
 msgid "Japanese"
 msgstr "日本語"

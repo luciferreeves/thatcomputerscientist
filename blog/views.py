@@ -15,9 +15,6 @@ from internal.utils import build_redirect_url
 from internal.weblog_utilities import strip_html_tags
 from jobs.comments import check_comment_spam_async
 
-#
-# from django.db.models import F
-
 
 weblog_slug = "shifoo"
 

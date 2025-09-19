@@ -1,0 +1,152 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">{% trans "New Journal" %}</h1>
+                <p class="page-subtitle">{% trans "Create a new digital notebook for your thoughts" %}</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'services:journals:journals' %}" class="back-btn">
+                    <span class="btn-icon">←</span>
+                    <span class="btn-text">{% trans "Back to Journals" %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form method="post" class="journal-form">
+            {% csrf_token %}
+            
+            {% if messages %}
+                <div class="form-messages">
+                    {% for message in messages %}
+                        <div class="form-error">
+                            <span class="error-icon">⚠</span>
+                            <span class="error-text">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="name" class="form-label">{% trans "Journal Name" %}</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        class="form-input" 
+                        placeholder="{% trans "Enter a name for your journal" %}"
+                        required
+                        maxlength="100"
+                        value="{{ formdata.name|default:'' }}"
+                    >
+                    <div class="form-hint">{% trans "A clear, descriptive name for your journal" %}</div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="slug" class="form-label">{% trans "URL Slug" %}</label>
+                    <input 
+                        type="text" 
+                        id="slug" 
+                        name="slug" 
+                        class="form-input" 
+                        placeholder="{% trans "journal-url-name" %}"
+                        pattern="[a-z0-9-]+"
+                        maxlength="50"
+                        value="{{ formdata.slug|default:'' }}"
+                    >
+                    <div class="form-hint">{% trans "Optional: Custom URL for your journal (lowercase letters, numbers, hyphens only)" %}</div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="description" class="form-label">{% trans "Description" %}</label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        class="form-textarea" 
+                        rows="4"
+                        placeholder="{% trans "Describe what this journal is about..." %}"
+                        maxlength="500"
+                        >{{ formdata.description|default:'' }}</textarea>
+                    <div class="form-hint">{% trans "Optional: A brief description of your journal's purpose or theme" %}</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="private" name="private" class="form-checkbox" {% if formdata.private %}checked{% endif %}>
+                        <label for="private" class="checkbox-label">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">{% trans "Private Journal" %}</span>
+                        </label>
+                    </div>
+                    <div class="form-hint">{% trans "Private journals are only visible to you and people you share them with" %}</div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">
+                    <span class="btn-icon">✓</span>
+                    <span class="btn-text">{% trans "Create Journal" %}</span>
+                </button>
+                <a href="{% url 'services:journals:journals' %}" class="cancel-btn">
+                    {% trans "Cancel" %}
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nameInput = document.getElementById('name');
+    const slugInput = document.getElementById('slug');
+    
+    if (nameInput && slugInput) {
+        nameInput.addEventListener('input', function() {
+            if (!slugInput.value || slugInput.dataset.autoGenerated === 'true') {
+                const slug = this.value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '')
+                    .substring(0, 50);
+                
+                slugInput.value = slug;
+                slugInput.dataset.autoGenerated = 'true';
+            }
+        });
+        
+        slugInput.addEventListener('input', function() {
+            this.dataset.autoGenerated = 'false';
+        });
+    }
+    
+    const form = document.querySelector('.journal-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const nameValue = nameInput.value.trim();
+            if (!nameValue) {
+                e.preventDefault();
+                nameInput.focus();
+                alert('{% trans "Please enter a journal name" %}');
+                return false;
+            }
+        });
+    }
+});
+</script>
+{% endblock scripts %}

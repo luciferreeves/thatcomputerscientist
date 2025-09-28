@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from core.translations import LANGUAGE_CHOICES
 from services.journals.functions import (
     create_journal,
     get_user_journals,
+    get_single_user_journal,
     get_user_journal_stats,
+    update_journal_settings,
+    delete_journal,
 )
 
 
@@ -40,6 +44,51 @@ def journals(request):
     }
 
     return render(request, "journals/journals.html", context)
+
+
+@login_required
+def journal(request, slug):
+    success, journal = get_single_user_journal(
+        request.user, slug, lang=request.LANGUAGE_CODE
+    )
+
+    if not success:
+        messages.error(request, "Journal not found.")
+        return redirect("services:journals:journals")
+
+    request.meta.title = journal.name
+    tab = request.GET.get("tab", "settings")
+
+    if request.GET.get("action") == "delete":
+        delete_success, delete_message = delete_journal(request.user, journal)
+        if delete_success:
+            messages.success(request, "Journal deleted successfully.")
+        else:
+            messages.error(request, delete_message)
+        return redirect("services:journals:journals")
+
+    if request.method == "POST" and tab == "settings":
+        update_success, update_message = update_journal_settings(
+            request.user, journal, request.POST
+        )
+        if update_success:
+            messages.success(request, "Journal settings updated successfully.")
+        else:
+            messages.error(request, update_message)
+        return redirect("services:journals:journal", slug=journal.slug)
+
+    match tab:
+        case "settings":
+            template_name = "journals/settings.html"
+        case _:
+            template_name = "journals/journal.html"
+
+    context = {
+        "journal": journal,
+        "languages": LANGUAGE_CHOICES,
+    }
+
+    return render(request, template_name, context)
 
 
 @login_required

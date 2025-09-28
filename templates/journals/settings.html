@@ -1,0 +1,495 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/settings.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/codemirror/miku.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/codemirror/themes/vintage.css' %}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/css-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/comment/comment.min.js"></script>
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">{{ journal.name }}</h1>
+                <p class="page-subtitle">/{{ journal.slug }}
+                    {% if journal.private %}
+                        <span class="privacy-badge private">{% trans "Private" %}</span>
+                    {% else %}
+                        <span class="privacy-badge public">{% trans "Public" %}</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-actions">
+                <a href="{% url "services:journals:journals" %}" class="back-btn">{% trans "Back to Journals" %}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="journal-tabs">
+        <a href="{% url "services:journals:journal" journal.slug %}" class="tab-btn">
+            {% trans "New Entry" %}
+        </a>
+        <a href="{% url "services:journals:journal" journal.slug %}?tab=entries" 
+           class="tab-btn {% if request.GET.tab == "entries" %}active{% endif %}">
+            {% trans "Entries" %} ({{ journal.entries_count|default:0 }})
+        </a>
+        <a href="{% url "services:journals:journal" journal.slug %}?tab=settings" 
+           class="tab-btn {% if request.GET.tab == "settings" or not request.GET.tab %}active{% endif %}">
+            {% trans "Settings" %}
+        </a>
+        <a href="#" class="tab-btn">{% trans "View Journal" %}</a>
+    </div>
+
+    <div class="settings-main">
+
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">
+                            {% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}
+                        </span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="form-container">
+            {% csrf_token %}
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Basic Information" %}</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name" class="form-label">{% trans "Journal Name" %}</label>
+                        <input type="text" 
+                               id="name" 
+                               name="name" 
+                               class="form-input" 
+                               value="{{ journal.name }}"
+                               placeholder="{% trans "Enter journal name" %}"
+                               required
+                               maxlength="255">
+                        <div class="form-hint">{% trans "A descriptive name for your journal" %}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slug" class="form-label">{% trans "URL Slug" %}</label>
+                        <div class="slug-input-group">
+                            <span class="slug-prefix">/journals/</span>
+                            <input type="text" 
+                                   id="slug" 
+                                   name="slug" 
+                                   class="form-input slug-input" 
+                                   value="{{ journal.slug }}"
+                                   placeholder="{% trans "url-slug" %}"
+                                   required
+                                   maxlength="50">
+                        </div>
+                        <div class="form-hint">{% trans "URL-friendly version of the name" %}</div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="description" class="form-label">{% trans "Description" %}</label>
+                        <textarea id="description" 
+                                  name="description" 
+                                  class="form-textarea" 
+                                  rows="4"
+                                  placeholder="{% trans 'Describe what this journal is about...' %}">{{ journal.description }}</textarea>
+                        <div class="form-hint">{% trans "Brief description of your journal's purpose" %}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Privacy & Sharing" %}</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" 
+                                   id="private" 
+                                   name="private" 
+                                   class="form-checkbox"
+                                   {% if journal.private %}checked{% endif %}>
+                            <label for="private" class="checkbox-label">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-text">
+                                    <strong>{% trans "Private Journal" %}</strong>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-hint">{% trans "Private journals are only visible to you and users you explicitly share them with" %}</div>
+                    </div>
+
+                    {% if journal.private %}
+                    <div class="form-group">
+                        <label for="shared_users" class="form-label">{% trans "Shared with Users" %}</label>
+                        <div class="shared-users-container">
+                            <input type="text" 
+                                   id="shared_users" 
+                                   name="shared_users" 
+                                   class="form-input" 
+                                   placeholder="{% trans "Enter username to share with..." %}">
+                            <button type="button" class="create-btn" id="add-user-btn">+ {% trans "Add" %}</button>
+                        </div>
+                        <div class="shared-users-list">
+                            {% for user in journal.shared_with.all %}
+                                <span class="user-badge">
+                                    {{ user.username }} 
+                                    <button type="button" class="remove-user-btn" data-username="{{ user.username }}">×</button>
+                                    <input type="hidden" name="add_shared_user" value="{{ user.username }}">
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-hint">{% trans "Users who can access this private journal" %}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Custom Styling" %}</h2>
+                
+                <div class="form-group full-width">
+                    <label for="custom_css" class="form-label">{% trans "Custom CSS" %}</label>
+                    <div class="editor-container">
+                        <textarea id="custom_css" name="custom_css" style="display: none;">{{ journal.custom_css }}</textarea>
+                        <div id="code-editor"></div>
+                    </div>
+                    <div class="form-hint">{% trans "Custom CSS to style your journal" %}</div>
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Translations" %}</h2>
+                
+                <div class="translations-container">
+                    {% for translation in journal.translations.all %}
+                        <div class="journal-card translation-row">
+                            <div class="translation-fields">
+                                <select name="translation_language_{{ translation.id }}" class="form-input">
+                                    <option value="">{% trans "Select Language" %}</option>
+                                    {% for lang_code, lang_name in languages %}
+                                        <option value="{{ lang_code }}" {% if translation.language == lang_code %}selected{% endif %}>{{ lang_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                
+                                <input type="text" 
+                                       name="translation_name_{{ translation.id }}" 
+                                       class="form-input" 
+                                       value="{{ translation.name }}"
+                                       placeholder="{% trans "Name" %}">
+                                
+                                <textarea name="translation_description_{{ translation.id }}" 
+                                          class="form-textarea" 
+                                          rows="2"
+                                          placeholder="{% trans "Description" %}">{{ translation.description }}</textarea>
+                                
+                                <button type="button" class="action-btn remove-translation-btn">×</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <button type="button" class="create-btn" id="add-translation-btn">+ {% trans "Add Translation" %}</button>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit" class="create-btn">
+                    {% trans "Save Changes" %}
+                </button>
+                <button type="button" class="cancel-btn" id="delete-journal-btn" onclick="confirmDelete()">
+                    {% trans "Delete Journal" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+document.getElementById('name').addEventListener('input', function() {
+    const slug = this.value
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+        .substring(0, 50);
+    
+    document.getElementById('slug').value = slug;
+});
+
+function confirmDelete() {
+    if (confirm('{% trans "Are you sure you want to delete this journal? This action cannot be undone." %}')) {
+        window.location.href = '{% url "services:journals:journal" journal.slug %}?action=delete';
+    }
+}
+
+let translationCounter = 0;
+
+document.getElementById('add-translation-btn').addEventListener('click', function() {
+    const container = document.querySelector('.translations-container');
+    const languages = [
+        {% for lang_code, lang_name in languages %}
+            {code: '{{ lang_code }}', name: '{{ lang_name }}'},
+        {% endfor %}
+    ];
+    
+    const existingLanguages = new Set();
+    container.querySelectorAll('select[name^="translation_language_"]').forEach(select => {
+        if (select.value) {
+            existingLanguages.add(select.value);
+        }
+    });
+    
+    const newRow = document.createElement('div');
+    newRow.className = 'journal-card translation-row';
+    newRow.innerHTML = `
+        <div class="translation-fields">
+            <select name="translation_language_new_${translationCounter}" class="form-input">
+                <option value="">{% trans "Select Language" %}</option>
+                ${languages.map(lang => 
+                    `<option value="${lang.code}" ${existingLanguages.has(lang.code) ? 'disabled' : ''}>${lang.name}</option>`
+                ).join('')}
+            </select>
+            <input type="text" 
+                   name="translation_name_new_${translationCounter}" 
+                   class="form-input" 
+                   placeholder="{% trans "Name" %}">
+            <textarea name="translation_description_new_${translationCounter}" 
+                      class="form-textarea" 
+                      rows="2"
+                      placeholder="{% trans "Description" %}"></textarea>
+            <button type="button" class="action-btn remove-translation-btn">×</button>
+        </div>
+    `;
+    
+    container.appendChild(newRow);
+    translationCounter++;
+    updateLanguageDropdowns();
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-translation-btn')) {
+        const row = e.target.closest('.translation-row');
+        const select = row.querySelector('select[name^="translation_language_"]');
+        
+        if (select.name.includes('_new_')) {
+            row.remove();
+        } else {
+            const translationId = select.name.replace('translation_language_', '');
+            const deleteInput = document.createElement('input');
+            deleteInput.type = 'hidden';
+            deleteInput.name = `delete_translation_${translationId}`;
+            deleteInput.value = 'true';
+            row.appendChild(deleteInput);
+            row.style.display = 'none';
+        }
+        updateLanguageDropdowns();
+    }
+});
+
+function updateLanguageDropdowns() {
+    const allSelects = document.querySelectorAll('select[name^="translation_language_"]');
+    const selectedLanguages = new Set();
+    
+    allSelects.forEach(select => {
+        if (select.value && select.closest('.translation-row').style.display !== 'none') {
+            selectedLanguages.add(select.value);
+        }
+    });
+    
+    allSelects.forEach(select => {
+        const currentValue = select.value;
+        Array.from(select.options).forEach(option => {
+            if (option.value && option.value !== currentValue) {
+                option.disabled = selectedLanguages.has(option.value);
+            }
+        });
+    });
+}
+
+document.addEventListener('change', function(e) {
+    if (e.target.name && e.target.name.startsWith('translation_language_')) {
+        updateLanguageDropdowns();
+    }
+});
+
+const addUserBtn = document.getElementById('add-user-btn');
+if (addUserBtn) {
+    addUserBtn.addEventListener('click', function() {
+        const input = document.getElementById('shared_users');
+        const username = input.value.trim();
+        
+        if (!username) {
+            return;
+        }
+        
+        const existingUsers = Array.from(document.querySelectorAll('.user-badge')).map(badge => 
+            badge.textContent.trim().replace('×', '').trim()
+        );
+        
+        if (existingUsers.includes(username)) {
+            input.value = '';
+            return;
+        }
+        
+        const usersList = document.querySelector('.shared-users-list');
+        const userBadge = document.createElement('span');
+        userBadge.className = 'user-badge';
+        userBadge.innerHTML = `
+            ${username} 
+            <button type="button" class="remove-user-btn" data-username="${username}">×</button>
+            <input type="hidden" name="add_shared_user" value="${username}">
+        `;
+        usersList.appendChild(userBadge);
+        input.value = '';
+    });
+}
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-user-btn')) {
+        e.target.closest('.user-badge').remove();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateLanguageDropdowns();
+    
+    const editor = CodeMirror(document.getElementById('code-editor'), {
+        value: document.getElementById('custom_css').value,
+        mode: 'css',
+        theme: 'vintage',
+        lineNumbers: true,
+        lineWrapping: true,
+        matchBrackets: true,
+        indentUnit: 4,
+        tabSize: 4,
+        autoCloseBrackets: true,
+        showHint: true,
+        hintOptions: {
+            completeSingle: false,
+        },
+        extraKeys: {
+            'Ctrl-/': 'toggleComment',
+            'Cmd-/': 'toggleComment',
+            'Ctrl-Space': 'autocomplete',
+            'Cmd-Space': 'autocomplete',
+            'Tab': function(cm) {
+                if (cm.somethingSelected()) {
+                    cm.indentSelection('add');
+                } else {
+                    cm.replaceSelection('    ', 'end');
+                }
+            }
+        }
+    });
+    
+    editor.on('inputRead', function(cm, change) {
+        if (change.text[0] && /[a-zA-Z]/.test(change.text[0])) {
+            cm.showHint();
+        }
+    });
+    
+    function showErrorMessage(message) {
+        const existingMessages = document.querySelector('.form-messages');
+        if (existingMessages) {
+            existingMessages.remove();
+        }
+        
+        const messagesDiv = document.createElement('div');
+        messagesDiv.className = 'form-messages';
+        messagesDiv.innerHTML = `
+            <div class="form-message error">
+                <span class="message-icon">⚠️</span>
+                <span class="message-text">${message}</span>
+            </div>
+        `;
+        
+        const settingsMain = document.querySelector('.settings-main');
+        settingsMain.insertBefore(messagesDiv, settingsMain.firstChild);
+        messagesDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    async function validateCSS(css) {
+        if (!css.trim()) return { valid: true, errors: [] };
+        
+        try {
+            const formData = new FormData();
+            formData.append('text', css);
+            formData.append('output', 'json');
+            formData.append('profile', 'css3svg');
+            
+            const response = await fetch('https://jigsaw.w3.org/css-validator/validator', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+
+            console.log(result)
+            
+            if (result.cssvalidation && result.cssvalidation.errors && result.cssvalidation.errors.length > 0) {
+                const errors = result.cssvalidation.errors.map(error => 
+                    `Line ${error.line}: ${error.message}`
+                );
+                return { valid: false, errors };
+            }
+            
+            return { valid: true, errors: [] };
+        } catch (error) {
+            return { valid: true, errors: [] };
+        }
+    }
+    
+    const form = document.querySelector('form.form-container');
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            const cssValue = editor.getValue();
+            document.getElementById('custom_css').value = cssValue;
+            
+            if (cssValue.trim()) {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="validation-spinner"></span>Validating CSS...';
+                
+                const validation = await validateCSS(cssValue);
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                
+                if (!validation.valid) {
+                    showErrorMessage('CSS Validation Errors:<br><br>' + validation.errors.join('<br>'));
+                    return false;
+                } else {
+                    form.submit();
+                }
+            }
+        });
+    }
+    
+    editor.on('change', function() {
+        document.getElementById('custom_css').value = editor.getValue();
+    });
+});
+</script>
+{% endblock scripts %}

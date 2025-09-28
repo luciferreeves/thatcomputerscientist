@@ -5,8 +5,8 @@
 {% block head %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
 <link type="text/css" rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku_editor/miku.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku_editor/themes/vintage.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}">
 <style>
     .miku-editor-container {
         height: 400px;
@@ -152,7 +152,7 @@
 {% endblock content %}
 {% block scripts %}
     <script type="text/javascript" src="{% static 'js/administration/forms.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/miku_editor/miku.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/miku/miku.js' %}"></script>
     <script type="text/javascript">
         const editorInstance = new Miku('#miku-editor', {
             placeholder: "Compose your announcement here...",

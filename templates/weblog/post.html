@@ -5,8 +5,8 @@
 {% block head %}
     <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/miku_editor/miku.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/miku_editor/themes/vintage.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/post_comments.css' %}" />
 {% endblock head %}
 {% block content %}
@@ -150,7 +150,7 @@ def hello_world():
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/miku_editor/tinymiku.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/miku/tinymiku.js' %}"></script>
     <script type="text/javascript">
         document.querySelectorAll('.miku-comment-editor').forEach(function (editorElement) {
             const editorId = editorElement.id;

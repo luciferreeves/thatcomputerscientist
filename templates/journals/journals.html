@@ -61,15 +61,15 @@
                             <div class="dropdown-content">
                                 <a href="#" class="dropdown-item">{% trans "New Entry" %}</a>
                                 <a href="#" class="dropdown-item">{% trans "View Journal" %}</a>
-                                <a href="#" class="dropdown-item">{% trans "Settings" %}</a>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings" class="dropdown-item">{% trans "Settings" %}</a>
                                 <a href="#" class="dropdown-item delete">{% trans "Delete" %}</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                                <div class="card-content">
-                    <h3 class="journal-title">{{ journal.name }}</h3>
+                <div class="card-content">
+                    <a href="{% url 'services:journals:journal' journal.slug %}" class="journal-title">{{ journal.name }}</a>
                     {% if journal.description %}
                         <p class="journal-description">{{ journal.description|truncatechars:200 }}</p>
                     {% else %}
@@ -127,7 +127,7 @@
             
             <div class="page-info">
                 <span class="page-current">{{ journals.number }}</span>
-                <span class="page-separator">of</span>
+                <span class="page-separator">/</span>
                 <span class="page-total">{{ journals.paginator.num_pages }}</span>
             </div>
             

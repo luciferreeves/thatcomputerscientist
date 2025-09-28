@@ -1,0 +1,41 @@
+{% load i18n %}
+
+<aside class="journal-sidebar">
+    <div class="sidebar-header">
+        <h3 class="sidebar-title">{{ journal.name|truncatechars:25 }}</h3>
+        <div class="sidebar-meta">
+            <span>/{{ journal.slug }}</span>
+            {% if journal.private %}
+                <span class="privacy-badge">{% trans "Private" %}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <ul class="sidebar-nav">
+        <li>
+            <a href="{% url "services:journals:journal" journal.slug %}?tab=entries" 
+               {% if request.GET.tab == "entries" %}class="active"{% endif %}>
+                {% trans "Entries" %} ({{ journal.entries_count|default:0 }})
+            </a>
+        </li>
+        <li>
+            <a href="{% url "services:journals:journal" journal.slug %}?tab=settings" 
+               {% if request.GET.tab == "settings" or not request.GET.tab %}class="active"{% endif %}>
+                {% trans "Settings" %}
+            </a>
+        </li>
+        <li>
+            <a href="{% url "services:journals:journal" journal.slug %}?tab=view" 
+               {% if request.GET.tab == "view" %}class="active"{% endif %}>
+                {% trans "View Journal" %}
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-actions">
+        <a href="#" class="sidebar-btn">{% trans "New Entry" %}</a>
+        <a href="#" class="sidebar-btn danger" onclick="confirmDelete()">{% trans "Delete Journal" %}</a>
+    </div>
+
+    <a href="{% url "services:journals:journals" %}" class="sidebar-back">{% trans "Back to Journals" %}</a>
+</aside>

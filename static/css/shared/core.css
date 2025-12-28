@@ -28,6 +28,7 @@ body,
 textarea,
 input,
 select,
+button,
 select option {
     font-family: 'Mali', sans-serif;
     font-size: 12px;

@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from administration.annoucements.functions import get_announcements
 from blog.functions import get_posts
 from internal.mal_wrapper import get_mal_recent_activity
+import requests
+import os
 
 
 def home(request):
@@ -18,3 +21,19 @@ def home(request):
         )["posts"],
     }
     return render(request, "core/home.html", context)
+
+
+def ignis_wrapper_temp(request, path):
+    ignis_endpoint = os.getenv("IGNIS_CACHE_ENDPOINT", "shi.foo")
+    url = f"https://{ignis_endpoint}/ignis/{path}"
+
+    try:
+        response = requests.get(url, timeout=10)
+        return HttpResponse(
+            response.content,
+            content_type=response.headers.get(
+                "Content-Type", "application/octet-stream"
+            ),
+        )
+    except requests.RequestException:
+        return HttpResponse("Error fetching resource", status=502)

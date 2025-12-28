@@ -31,7 +31,9 @@ generate_messages() {
   
   python manage.py makemessages -l ${LANG_CODE} -e html,py \
     --ignore="templates.old/*" \
-    --ignore="venv/*"
+    --ignore="venv/*" \
+    --ignore="env/*" \
+    --ignore=".venv/*"
   
   echo -e "\n${GREEN}✓ Translation message files successfully generated!${NC}"
   echo -e "${BLUE}You can now edit the .po files in locale/${LANG_CODE}/LC_MESSAGES/${NC}\n"

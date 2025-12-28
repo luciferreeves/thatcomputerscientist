@@ -71,7 +71,7 @@ def get_posts(
         page = paginator.num_pages
 
     for post in paginated_posts:
-        post.color = get_post_color(post)
+        post.color = get_post_color(post.slug)
 
     return {
         "posts": paginated_posts.object_list,
@@ -134,7 +134,7 @@ def get_single_post(weblog_slug, post_slug, lang="en", comment_sort="best"):
         .first()
     )
     if post:
-        post.color = get_post_color(post)
+        post.color = get_post_color(post.slug)
         post = post.translate(lang)
         post.body = highlight_code(post.body)
         return post

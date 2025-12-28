@@ -58,10 +58,16 @@ def highlight_code(html_content):
         pre.clear()
         pre.append(BeautifulSoup(highlighted, "html.parser"))
 
+    h2_blocks = soup.find_all("h2")
+    for h2 in h2_blocks:
+        text = h2.get_text()
+        color = get_post_color(text)
+        h2["style"] = f"color: {color};"
+
     return str(soup)
 
 
-def get_post_color(post):
+def get_post_color(slug):
     colors = [
         "#FF8B8B",  # salmon
         "#75D151",  # lime green
@@ -96,8 +102,6 @@ def get_post_color(post):
         "#DCBEFF",  # light lavender
         "#E0BBE4",  # lavender
     ]
-
-    slug = post.slug
 
     hash_value = calculate_polynomial_hash(slug)
     color_index = hash_value % len(colors)
@@ -186,9 +190,7 @@ def check_comment_spam(post, comment):
     response = client.models.generate_content(
         model=model,
         contents=prompt,
-        config=genai.types.GenerateContentConfig(
-            safety_settings=safety_settings
-        )
+        config=genai.types.GenerateContentConfig(safety_settings=safety_settings),
     )
     result = response.text.strip()
 

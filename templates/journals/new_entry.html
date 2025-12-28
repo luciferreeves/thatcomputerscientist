@@ -1,0 +1,13 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/journals/journals.css" %}" />
+{% endblock head %}
+
+{% block content %}
+  <div class="journals-page">
+    {% include "_partials/journal_header.html" with journal=journal %}
+  </div>
+{% endblock content %}

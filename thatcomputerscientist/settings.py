@@ -83,7 +83,6 @@ SITE_ID = 1
 APPEND_SLASH = False
 
 MIDDLEWARE = [
-    "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",

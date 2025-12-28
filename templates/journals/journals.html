@@ -59,10 +59,10 @@
                         <div class="dropdown">
                             <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">⋯</button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item">{% trans "New Entry" %}</a>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="dropdown-item">{% trans "New Entry" %}</a>
                                 <a href="#" class="dropdown-item">{% trans "View Journal" %}</a>
                                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings" class="dropdown-item">{% trans "Settings" %}</a>
-                                <a href="#" class="dropdown-item delete">{% trans "Delete" %}</a>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings#delete-journal-btn" class="dropdown-item delete">{% trans "Delete" %}</a>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
 
                 <div class="card-footer">
                     <div class="card-footer-left">
-                        <button class="new-entry-btn" title="{% trans "New Entry" %}">+ {% trans "New Entry" %}</button>
+                        <a class="new-entry-btn" title="{% trans "New Entry" %}" href="{% url 'services:journals:journal' journal.slug %}?tab=new">+ {% trans "New Entry" %}</a>
                     </div>
                     <div class="journal-dates">
                         <div class="date-container">
@@ -144,31 +144,6 @@
 {% endblock content %}
 
 {% block scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Dropdown click functionality
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('dropdown-trigger') || e.target.closest('.dropdown-trigger')) {
-            e.preventDefault();
-            const dropdown = e.target.closest('.dropdown');
-            const content = dropdown.querySelector('.dropdown-content');
-            
-            // Close all other dropdowns
-            document.querySelectorAll('.dropdown-content').forEach(function(dc) {
-                if (dc !== content) {
-                    dc.classList.remove('show');
-                }
-            });
-            
-            // Toggle current dropdown
-            content.classList.toggle('show');
-        } else if (!e.target.closest('.dropdown')) {
-            // Close all dropdowns when clicking outside
-            document.querySelectorAll('.dropdown-content').forEach(function(dc) {
-                dc.classList.remove('show');
-            });
-        }
-    });
-});
-</script>
+<script src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/journals/journals.js' %}"></script>
 {% endblock scripts %}

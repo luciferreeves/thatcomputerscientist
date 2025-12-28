@@ -80,6 +80,10 @@ def journal(request, slug):
     match tab:
         case "settings":
             template_name = "journals/settings.html"
+        case "entries":
+            template_name = "journals/entries.html"
+        case "new":
+            template_name = "journals/new_entry.html"
         case _:
             template_name = "journals/journal.html"
 
@@ -114,4 +118,4 @@ def new_journal(request):
             messages.error(request, result)
             return render(request, "journals/new.html", {"formdata": request.POST})
 
-    return render(request, "journals/new.html")
+    return render(request, "journals/new_journal.html")

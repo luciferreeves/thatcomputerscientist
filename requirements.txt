@@ -6,8 +6,10 @@ channels_redis
 daphne
 django
 django-celery-beat
-google-generativeai
+django-redis
+google-genai
 pygments
+pillow
 python-dotenv
 redis
 requests

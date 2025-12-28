@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="page-header">
+  <div class="header-content">
+    <div class="title-section">
+      <h1 class="page-title">{{ journal.name }}</h1>
+      <p class="page-subtitle">
+        /{{ journal.slug }}
+        {% if journal.private %}
+          <span class="privacy-badge private">{% trans "Private" %}</span>
+        {% else %}
+          <span class="privacy-badge public">{% trans "Public" %}</span>
+        {% endif %}
+      </p>
+    </div>
+    <div class="card-actions">
+      <a href="{% url "services:journals:journals" %}" class="back-btn">{% trans "Back to Journals" %}</a>
+    </div>
+  </div>
+</div>
+
+<div class="journal-tabs">
+  <a href="{% url "services:journals:journal" journal.slug %}?tab=new" class="tab-btn {% if request.GET.tab == "new" %}active{% endif %}">{% trans "New Entry" %}</a>
+  <a href="{% url "services:journals:journal" journal.slug %}?tab=entries" class="tab-btn {% if request.GET.tab == "entries" %}active{% endif %}">{% trans "Entries" %}({{ journal.entries_count|default:0 }})</a>
+  <a href="{% url "services:journals:journal" journal.slug %}?tab=settings" class="tab-btn {% if request.GET.tab == "settings" or not request.GET.tab %}active{% endif %}">{% trans "Settings" %}</a>
+  <a href="#" class="tab-btn">{% trans "View Journal" %}</a>
+</div>

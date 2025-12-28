@@ -1,7 +1,7 @@
 import html
 import os
 import requests
-import google.generativeai as genai
+from google import genai
 from bs4 import BeautifulSoup
 from django.core.cache import cache
 from pygments import highlight
@@ -148,8 +148,8 @@ def check_comment_spam(post, comment):
     if not GEMINI_API_KEY:
         return False
 
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash")
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    model = "gemini-flash-latest"
 
     prompt = f"""
     Comment Spam Detection for shi.foo: Our personal site.
@@ -183,7 +183,13 @@ def check_comment_spam(post, comment):
         {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
     ]
 
-    response = model.generate_content(prompt, safety_settings=safety_settings)
+    response = client.models.generate_content(
+        model=model,
+        contents=prompt,
+        config=genai.types.GenerateContentConfig(
+            safety_settings=safety_settings
+        )
+    )
     result = response.text.strip()
 
     return result.upper() == "Y"  # Return True if spam, False otherwise

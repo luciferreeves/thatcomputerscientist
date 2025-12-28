@@ -56,4 +56,5 @@ urlpatterns = [
     path("robots.txt", robots_txt),
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG and settings.STATIC_URL:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

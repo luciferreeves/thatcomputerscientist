@@ -17,38 +17,7 @@
 
 {% block content %}
 <div class="journals-page">
-    <div class="page-header">
-        <div class="header-content">
-            <div class="title-section">
-                <h1 class="page-title">{{ journal.name }}</h1>
-                <p class="page-subtitle">/{{ journal.slug }}
-                    {% if journal.private %}
-                        <span class="privacy-badge private">{% trans "Private" %}</span>
-                    {% else %}
-                        <span class="privacy-badge public">{% trans "Public" %}</span>
-                    {% endif %}
-                </p>
-            </div>
-            <div class="card-actions">
-                <a href="{% url "services:journals:journals" %}" class="back-btn">{% trans "Back to Journals" %}</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="journal-tabs">
-        <a href="{% url "services:journals:journal" journal.slug %}" class="tab-btn">
-            {% trans "New Entry" %}
-        </a>
-        <a href="{% url "services:journals:journal" journal.slug %}?tab=entries" 
-           class="tab-btn {% if request.GET.tab == "entries" %}active{% endif %}">
-            {% trans "Entries" %} ({{ journal.entries_count|default:0 }})
-        </a>
-        <a href="{% url "services:journals:journal" journal.slug %}?tab=settings" 
-           class="tab-btn {% if request.GET.tab == "settings" or not request.GET.tab %}active{% endif %}">
-            {% trans "Settings" %}
-        </a>
-        <a href="#" class="tab-btn">{% trans "View Journal" %}</a>
-    </div>
+    {% include "_partials/journal_header.html" with journal=journal %}
 
     <div class="settings-main">
 
@@ -222,67 +191,11 @@
 
 {% block scripts %}
 <script>
-document.getElementById('name').addEventListener('input', function() {
-    const slug = this.value
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '')
-        .substring(0, 50);
-    
-    document.getElementById('slug').value = slug;
-});
-
 function confirmDelete() {
     if (confirm('{% trans "Are you sure you want to delete this journal? This action cannot be undone." %}')) {
         window.location.href = '{% url "services:journals:journal" journal.slug %}?action=delete';
     }
 }
-
-let translationCounter = 0;
-
-document.getElementById('add-translation-btn').addEventListener('click', function() {
-    const container = document.querySelector('.translations-container');
-    const languages = [
-        {% for lang_code, lang_name in languages %}
-            {code: '{{ lang_code }}', name: '{{ lang_name }}'},
-        {% endfor %}
-    ];
-    
-    const existingLanguages = new Set();
-    container.querySelectorAll('select[name^="translation_language_"]').forEach(select => {
-        if (select.value) {
-            existingLanguages.add(select.value);
-        }
-    });
-    
-    const newRow = document.createElement('div');
-    newRow.className = 'journal-card translation-row';
-    newRow.innerHTML = `
-        <div class="translation-fields">
-            <select name="translation_language_new_${translationCounter}" class="form-input">
-                <option value="">{% trans "Select Language" %}</option>
-                ${languages.map(lang => 
-                    `<option value="${lang.code}" ${existingLanguages.has(lang.code) ? 'disabled' : ''}>${lang.name}</option>`
-                ).join('')}
-            </select>
-            <input type="text" 
-                   name="translation_name_new_${translationCounter}" 
-                   class="form-input" 
-                   placeholder="{% trans "Name" %}">
-            <textarea name="translation_description_new_${translationCounter}" 
-                      class="form-textarea" 
-                      rows="2"
-                      placeholder="{% trans "Description" %}"></textarea>
-            <button type="button" class="action-btn remove-translation-btn">×</button>
-        </div>
-    `;
-    
-    container.appendChild(newRow);
-    translationCounter++;
-    updateLanguageDropdowns();
-});
 
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('remove-translation-btn')) {
@@ -487,9 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    editor.on('change', function() {
-        document.getElementById('custom_css').value = editor.getValue();
-    });
-});
 </script>
+<script src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/journals/settings.js' %}"></script>
 {% endblock scripts %}

@@ -1,7 +1,13 @@
 import requests
+from internal.cache import cache
 
 
 def get_mal_recent_activity(username):
+    cache_key = f"mal_recent_activity:{username}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
     url = f"https://api.jikan.moe/v4/users/{username}/userupdates"
     response = requests.get(url)
     if response.status_code == 200:
@@ -40,6 +46,8 @@ def get_mal_recent_activity(username):
                 }
             )
 
-        return {"anime": anime, "manga": manga}
+        result = {"anime": anime, "manga": manga}
+        cache.set(cache_key, result, ex=3 * 60 * 60)  # 3 hours
+        return result
     else:
         return None

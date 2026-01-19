@@ -1,30 +1,36 @@
 {% load static %}
 <div class="header-banner">
-    {% if request.LANGUAGE_CODE == 'ja' %}
-        <img draggable="false"
-             src="{% static 'images/core/images/title_banner_ja@3x.png' %}"
-             alt="Shifoo Title Banner"
-             class="title-banner"
-             width="1200"
-             height="400"
-             loading="lazy" />
-    {% else %}
-        <img draggable="false"
-             src="{% static 'images/core/images/title_banner@3x.png' %}"
-             alt="Shifoo Title Banner"
-             class="title-banner"
-             width="1200"
-             height="400"
-             loading="lazy" />
-    {% endif %}
-    <img draggable="false"
-         src="{% static 'images/core/images/neko_sitting@2x.png' %}"
-         alt="Picture of Neko Boy Sitting on the Divider Line"
-         width="188"
-         height="333"
-         style="position: absolute;
+  {% if request.LANGUAGE_CODE == 'ja' %}
+  <img
+    draggable="false"
+    src="{% static 'images/core/images/title_banner_ja@3x.png' %}"
+    alt="Shifoo Title Banner"
+    class="title-banner"
+    width="1200"
+    height="400"
+    loading="lazy"
+  />
+  {% else %}
+  <img
+    draggable="false"
+    src="{% static 'images/core/images/title_banner@3x.png' %}"
+    alt="Shifoo Title Banner"
+    class="title-banner"
+    width="1200"
+    height="400"
+    loading="lazy"
+  />
+  {% endif %}
+  <img
+    draggable="false"
+    src="{% static 'images/core/images/neko_sitting@2x.png' %}"
+    alt="Picture of Neko Boy Sitting on the Divider Line"
+    width="188"
+    height="333"
+    style="position: absolute;
                 bottom: -41px;
-                z-index: 1;
+                z-index: 3;
                 right: {% if request.LANGUAGE_CODE == 'ja' %} -16px {% else %} 0px {% endif %}"
-         loading="lazy" />
+    loading="lazy"
+  />
 </div>

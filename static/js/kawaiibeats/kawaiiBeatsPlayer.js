@@ -33,12 +33,14 @@
 const STORE_LIMIT = 20;
 const SEEKBAR_CONFIG = {
     HEIGHT: 4,
-    THUMB_RADIUS: 6,
-    HOVER_RADIUS: 8,
+    THUMB_RADIUS: 5,
+    HOVER_RADIUS: 7,
     COLORS: {
-        BASE: 'rgba(255, 255, 255, 0.5)',
-        PROGRESS: 'rgba(255, 255, 255, 1)',
-        HOVER: 'rgba(255, 255, 255, 0.8)'
+        BASE: '#333',
+        PROGRESS: '#ff3333',
+        GROOVE: '#111',
+        THUMB: '#666',
+        THUMB_INNER: '#999'
     }
 };
 
@@ -179,6 +181,7 @@ class AudioPlayer {
         this.audioContext = null;
         this.sourceNode = null;
         this.analyzerNode = null;
+        this.gainNode = null;
         this.audioBuffer = null;
         this.startTime = 0;
         this.pauseTime = 0;
@@ -186,9 +189,14 @@ class AudioPlayer {
         this.isLoading = true;
         this.isDragging = false;
         this.currentSong = null;
+        this.volumeDial = document.querySelector('.volume-dial');
+        this.dialIndicator = document.querySelector('.dial-indicator');
+        this.volumeLevel = parseInt(localStorage.getItem('volumeLevel')) || 3;
+        this.volume = this.volumeLevel / 6;
 
         this.setupSeekbar();
         this.bindMethods();
+        this.setupVolumeControl();
     }
 
     /**
@@ -198,8 +206,7 @@ class AudioPlayer {
         this.seekbarCanvas = document.createElement('canvas');
         this.seekbarCanvas.id = 'custom-seekbar';
         this.seekbarCanvas.width = 140;
-        this.seekbarCanvas.height = 20;
-        this.seekbarCanvas.style.cssText = 'position: absolute; left: 30px; top: 220px; cursor: pointer; z-index: 1;';
+        this.seekbarCanvas.height = 16;
         document.getElementById('song-time').parentNode.insertBefore(
             this.seekbarCanvas,
             document.getElementById('song-time')
@@ -255,6 +262,79 @@ class AudioPlayer {
     }
 
     /**
+     * @private
+     */
+    setupVolumeControl() {
+        this.updateDialPosition();
+        let lastLevel = this.volumeLevel;
+
+        const handleVolumeChange = (e) => {
+            const rect = this.volumeDial.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Calculate angle from center
+            const deltaX = e.clientX - centerX;
+            const deltaY = e.clientY - centerY;
+            let angle = Math.atan2(deltaX, -deltaY) * (180 / Math.PI);
+
+            // Normalize to -180 to 180
+            while (angle < -180) angle += 360;
+            while (angle > 180) angle -= 360;
+
+            // Handle the dead zone at the bottom (between 135° and -135°)
+            // If angle is in the bottom half (> 135 or < -135), clamp to nearest edge
+            if (angle > 135 && angle <= 180) {
+                angle = 135;
+            } else if (angle < -135 && angle >= -180) {
+                angle = -135;
+            } else if (angle > 135 || angle < -135) {
+                // In the dead zone - don't update
+                return;
+            }
+
+            // Map angle to level (0-6)
+            // -135° = level 0, 0° = level 3, 135° = level 6
+            const normalizedAngle = angle + 135; // 0 to 270
+            const newLevel = Math.round((normalizedAngle / 270) * 6);
+
+            // Only update if level changed (one position at a time)
+            if (newLevel !== lastLevel) {
+                this.volumeLevel = newLevel;
+                lastLevel = newLevel;
+                this.volume = this.volumeLevel / 6;
+
+                if (this.gainNode) {
+                    this.gainNode.gain.value = this.volume;
+                }
+                localStorage.setItem('volumeLevel', this.volumeLevel.toString());
+                this.updateDialPosition();
+            }
+        };
+
+        this.volumeDial.addEventListener('mousedown', (e) => {
+            handleVolumeChange(e);
+            const onMouseMove = (e) => handleVolumeChange(e);
+            const onMouseUp = () => {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+    }
+
+    /**
+     * @private
+     */
+    updateDialPosition() {
+        // Rotate dial indicator based on volume level (0-6)
+        // Level 0 = -135°, Level 3 = 0°, Level 6 = 135°
+        const angle = -135 + (this.volumeLevel / 6) * 270;
+        this.dialIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+    }
+
+    /**
      * Initializes audio context and event listeners
      */
     async init() {
@@ -272,7 +352,10 @@ class AudioPlayer {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         this.analyzerNode = this.audioContext.createAnalyser();
         this.analyzerNode.fftSize = 256;
-        this.analyzerNode.connect(this.audioContext.destination);
+        this.gainNode = this.audioContext.createGain();
+        this.gainNode.gain.value = this.volume;
+        this.gainNode.connect(this.audioContext.destination);
+        this.analyzerNode.connect(this.gainNode);
     }
 
     /**
@@ -357,7 +440,7 @@ class AudioPlayer {
      * @private
      */
     updateUI() {
-        this.elements.playButton.innerHTML = this.isPlaying ? "&#10074;&#10074;" : "&#9658;";
+        this.elements.playButton.innerHTML = this.isPlaying ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clip-rule="evenodd" /></svg>` : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" /></svg>`;
         this.drawVisualizer();
         this.updateTimeDisplay();
         this.drawSeekbar();
@@ -385,6 +468,41 @@ class AudioPlayer {
                 `${this.currentSong.artist} - ${this.currentSong.album}`;
             this.elements.songCover.src =
                 this.currentSong.custom_album_art || this.currentSong.album_art_url || '';
+
+            this.updateTextScroll();
+        }
+    }
+
+    /**
+     * @private
+     */
+    updateTextScroll() {
+        this.updateElementScroll(this.elements.songTitle, 102);
+        this.updateElementScroll(this.elements.songArtistAlbum, 104);
+    }
+
+    /**
+     * @private
+     */
+    updateElementScroll(element, containerWidth) {
+        element.style.animation = 'none';
+        element.style.paddingLeft = '0';
+
+        void element.offsetWidth;
+
+        const textWidth = element.scrollWidth;
+
+        if (textWidth > containerWidth) {
+            element.classList.remove('no-scroll');
+
+            const scrollDistance = -(textWidth - containerWidth);
+            element.style.setProperty('--kb-scroll-distance', `${scrollDistance}px`);
+
+            const duration = Math.max(24, (textWidth / 10));
+            element.style.animation = `kb-text-scroll ${duration}s ease-in-out infinite`;
+        } else {
+            element.classList.add('no-scroll');
+            element.style.animation = 'none';
         }
     }
 
@@ -401,21 +519,27 @@ class AudioPlayer {
 
         ctx.clearRect(0, 0, width, height);
 
-        // Background bar
-        ctx.fillStyle = SEEKBAR_CONFIG.COLORS.BASE;
-        ctx.fillRect(0, centerY - SEEKBAR_CONFIG.HEIGHT / 2, width, SEEKBAR_CONFIG.HEIGHT);
+        ctx.fillStyle = SEEKBAR_CONFIG.COLORS.GROOVE;
+        ctx.fillRect(0, centerY - 2, width, 4);
+        ctx.strokeStyle = '#222';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(0, centerY - 2, width, 4);
 
-        // Progress bar
         const currentTime = this.isPlaying ?
             this.audioContext.currentTime - this.startTime : this.pauseTime;
         const progress = (currentTime / this.audioBuffer.duration) * width;
 
         ctx.fillStyle = SEEKBAR_CONFIG.COLORS.PROGRESS;
-        ctx.fillRect(0, centerY - SEEKBAR_CONFIG.HEIGHT / 2, progress, SEEKBAR_CONFIG.HEIGHT);
+        ctx.fillRect(1, centerY - 1, progress - 1, 2);
 
-        // Thumb
+        ctx.fillStyle = SEEKBAR_CONFIG.COLORS.THUMB;
         ctx.beginPath();
         ctx.arc(progress, centerY, SEEKBAR_CONFIG.THUMB_RADIUS, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = SEEKBAR_CONFIG.COLORS.THUMB_INNER;
+        ctx.beginPath();
+        ctx.arc(progress, centerY - 1, 2, 0, Math.PI * 2);
         ctx.fill();
     }
 
@@ -442,7 +566,8 @@ class AudioPlayer {
 
             for (let i = 0; i < bufferLength; i++) {
                 const barHeight = (dataArray[i] / 255) * this.elements.visualizer.height;
-                ctx.fillStyle = `rgb(${dataArray[i]}, 50, 255)`;
+                const hue = (i / bufferLength) * 360;
+                ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
                 ctx.fillRect(x, this.elements.visualizer.height - barHeight, barWidth, barHeight);
                 x += barWidth + 1;
             }

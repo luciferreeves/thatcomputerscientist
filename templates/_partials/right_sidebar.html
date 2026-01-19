@@ -1,131 +1,235 @@
-{% load static %}
-{% load i18n %}
+{% load static %} {% load i18n %}
 <div class="right-sidebar">
-    <div class="kawaiibeats">
-        <p id="song-title">{% translate "Loading..." %}</p>
-        <p id="song-artist-album">{% translate "Loading..." %}</p>
-        <img onerror="this.src=getRandomArtwork()"
-             id="song-cover"
-             alt="Song Cover" width="140" height="140" />
-        <canvas id="song-visualizer" width="140" height="30"></canvas>
-        <div id="song-time">
-            <span id="song-time-elapsed">0:00</span>
-            <span id="song-time-total">0:00</span>
-        </div>
-        <div id="song-controls">
-            <button id="song-prev">&lt;</button>
-            <button id="song-play">▶</button>
-            <button id="song-next">&gt;</button>
-        </div>
+  <div class="kawaiibeats">
+    <div class="retro-panel"></div>
+    <div class="volume-dial-container">
+      <div class="volume-dial">
+        <div class="dial-indicator"></div>
+      </div>
+      <div class="dial-ticks">
+        <div class="dial-tick" style="transform: rotate(-135deg)"></div>
+        <div class="dial-tick" style="transform: rotate(-90deg)"></div>
+        <div class="dial-tick" style="transform: rotate(-45deg)"></div>
+        <div class="dial-tick" style="transform: rotate(0deg)"></div>
+        <div class="dial-tick" style="transform: rotate(45deg)"></div>
+        <div class="dial-tick" style="transform: rotate(90deg)"></div>
+        <div class="dial-tick" style="transform: rotate(135deg)"></div>
+      </div>
     </div>
-    <div class="navigation-links">
-        <div class="navigation-title-container">
-            <h1 class="navigation-title">{% translate "Serial Experiments: Shifoo" %}</h1>
-        </div>
-        <div class="navigation-items-container">
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/socialify.png' %}" width="20" height="20"
-                     alt="Socialify Icon" />
-                <a href="#socialify">{% translate "Socialify" %}</a>
-            </div>
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/repositories.png' %}" width="20" height="20"
-                     alt="My Repositories Icon" />
-                <a href="#repositories">{% translate "My Repositories" %}</a>
-            </div>
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/myanimelist.png' %}" width="20" height="20"
-                     alt="My Anime List Icon" />
-                <a href="#myanimelist">{% translate "My Anime List" %}</a>
-            </div>
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/games.png' %}" width="20" height="20" alt="My Games Icon" />
-                <a href="#mygames">{% translate "My Games" %}</a>
-            </div>
-        </div>
+    <div id="song-title-container">
+      <p id="song-title">{% translate "Loading..." %}</p>
     </div>
-    <div class="pamphlet pamphlet-big"></div>
-    {% if user.is_authenticated %}
-        <div class="user-stats-area">
-            <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif"
-                 class="stats-profile-image"
-                 alt="{{ user.first_name }}'s Avatar" width="120" height="120" />
-            <h2 class="stats-username">
-                <a href="#">{{ user.first_name }} {{ user.last_name }}</a>
-            </h2>
-            <p class="stats-bio">{{ user.profile.bio|linebreaksbr }}</p>
-            <div class="user-stats">
-                <p class="stat-name">{% translate "XP" %}</p>
-                <p class="stat-value">{{ user.profile.experience }} / 1000</p>
-            </div>
-            <div class="user-stats">
-                <p class="stat-name">{% translate "Level" %}</p>
-                <p class="stat-value">{{ user.profile.level }}</p>
-            </div>
-            <div class="user-stats">
-                <p class="stat-name">{% translate "Balance" %}</p>
-                <p class="stat-value">
-                    <span>{{ user.profile.balance }}</span>
-                    <img src="{% static 'images/core/icons/coin.png' %}" width="20" height="20" alt="Coin Icon" />
-                </p>
-            </div>
-            <div class="user-stats">
-                <p class="stat-name">{% translate "Journal Entries" %}</p>
-                <p class="stat-value">{{ user.profile.journal_entries }}</p>
-            </div>
-            <div class="user-stats">
-                <p class="stat-name">{% translate "Journal Streak" %}</p>
-                <p class="stat-value">{{ user.profile.journal_streak }} days</p>
-            </div>
-            <div class="user-stats">
-                <p class="stat-name">{% translate "Weblog Posts" %}</p>
-                <p class="stat-value">{{ user.profile.weblogs_created }}</p>
-            </div>
-            <div class="stat-links">
-                <a href="#">{% translate "Dressing Room" %}</a>
-                <a href="#">{% translate "Achievements" %}</a>
-                <a href="#">{% translate "Weblog" %}</a>
-            </div>
-        </div>
-    {% endif %}
-    <div class="navigation-links">
-        <div class="navigation-title-container">
-            <h1 class="navigation-title">{% translate "The Matrix" %}</h1>
-        </div>
-        <div class="navigation-items-container">
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/pamphlet.png' %}" width="20" height="20"
-                     alt="Pamphlet Icon" />
-                <a href="#pamphlet">{% translate "Pamphlet" %}</a>
-            </div>
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/webring.png' %}" width="20" height="20" alt="Caravan Icon" />
-                <a href="#webring">{% translate "Caravan" %}</a>
-            </div>
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/guestbook.png' %}" width="20" height="20"
-                     alt="Ledger Icon" />
-                <a href="#guestbookservice">{% translate "Ledger" %}</a>
-            </div>
-            <div class="navigation-item">
-                <img src="{% static 'images/core/icons/census.png' %}" width="20" height="20" alt="Census Icon" />
-                <a href="#census">{% translate "Census" %}</a>
-            </div>
-        </div>
+    <div id="song-artist-album-container">
+      <p id="song-artist-album">{% translate "Loading..." %}</p>
     </div>
-    <div class="sidebar-credits" id="censusContainer">
-        <div class="visitor-text">{% translate "You are Visitor #" %}</div>
-        <div class="visitor-count">
-            <span class="visitor-count-item">0</span>
-            <span class="visitor-count-item">0</span>
-            <span class="visitor-count-item">6</span>
-            <span class="visitor-count-item">9</span>
-            <span class="visitor-count-item">4</span>
-            <span class="visitor-count-item">2</span>
-            <span class="visitor-count-item">0</span>
-        </div>
+    <div class="album-window">
+      <img
+        onerror="this.src = getRandomArtwork()"
+        id="song-cover"
+        alt="Song Cover"
+        width="140"
+        height="140"
+      />
     </div>
+    <div id="song-time">
+      <span id="song-time-elapsed">0:00</span>
+      <span id="song-time-total">0:00</span>
+    </div>
+    <div id="song-controls">
+      <button id="song-prev">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z"
+          />
+        </svg>
+      </button>
+      <button id="song-play">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="size-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+      <button id="song-next">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="size-6"
+        >
+          <path
+            d="M5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256l-7.108-4.061C13.555 6.346 12 7.249 12 8.689v2.34L5.055 7.061Z"
+          />
+        </svg>
+      </button>
+    </div>
+    <canvas id="song-visualizer" width="140" height="30"></canvas>
+  </div>
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">
+        {% translate "Serial Experiments: Shifoo" %}
+      </h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/socialify.png' %}"
+          width="20"
+          height="20"
+          alt="Socialify Icon"
+        />
+        <a href="#socialify">{% translate "Socialify" %}</a>
+      </div>
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/repositories.png' %}"
+          width="20"
+          height="20"
+          alt="My Repositories Icon"
+        />
+        <a href="#repositories">{% translate "My Repositories" %}</a>
+      </div>
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/myanimelist.png' %}"
+          width="20"
+          height="20"
+          alt="My Anime List Icon"
+        />
+        <a href="#myanimelist">{% translate "My Anime List" %}</a>
+      </div>
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/games.png' %}"
+          width="20"
+          height="20"
+          alt="My Games Icon"
+        />
+        <a href="#mygames">{% translate "My Games" %}</a>
+      </div>
+    </div>
+  </div>
+  <div class="pamphlet pamphlet-big"></div>
+  {% if user.is_authenticated %}
+  <div class="user-stats-area">
+    <img
+      src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif"
+      class="stats-profile-image"
+      alt="{{ user.first_name }}'s Avatar"
+      width="120"
+      height="120"
+    />
+    <h2 class="stats-username">
+      <a href="#">{{ user.first_name }} {{ user.last_name }}</a>
+    </h2>
+    <p class="stats-bio">{{ user.profile.bio|linebreaksbr }}</p>
+    <div class="user-stats">
+      <p class="stat-name">{% translate "XP" %}</p>
+      <p class="stat-value">{{ user.profile.experience }} / 1000</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% translate "Level" %}</p>
+      <p class="stat-value">{{ user.profile.level }}</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% translate "Balance" %}</p>
+      <p class="stat-value">
+        <span>{{ user.profile.balance }}</span>
+        <img
+          src="{% static 'images/core/icons/coin.png' %}"
+          width="20"
+          height="20"
+          alt="Coin Icon"
+        />
+      </p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% translate "Journal Entries" %}</p>
+      <p class="stat-value">{{ user.profile.journal_entries }}</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% translate "Journal Streak" %}</p>
+      <p class="stat-value">{{ user.profile.journal_streak }} days</p>
+    </div>
+    <div class="user-stats">
+      <p class="stat-name">{% translate "Weblog Posts" %}</p>
+      <p class="stat-value">{{ user.profile.weblogs_created }}</p>
+    </div>
+    <div class="stat-links">
+      <a href="#">{% translate "Dressing Room" %}</a>
+      <a href="#">{% translate "Achievements" %}</a>
+      <a href="#">{% translate "Weblog" %}</a>
+    </div>
+  </div>
+  {% endif %}
+  <div class="navigation-links">
+    <div class="navigation-title-container">
+      <h1 class="navigation-title">{% translate "The Matrix" %}</h1>
+    </div>
+    <div class="navigation-items-container">
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/pamphlet.png' %}"
+          width="20"
+          height="20"
+          alt="Pamphlet Icon"
+        />
+        <a href="#pamphlet">{% translate "Pamphlet" %}</a>
+      </div>
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/webring.png' %}"
+          width="20"
+          height="20"
+          alt="Caravan Icon"
+        />
+        <a href="#webring">{% translate "Caravan" %}</a>
+      </div>
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/guestbook.png' %}"
+          width="20"
+          height="20"
+          alt="Ledger Icon"
+        />
+        <a href="#guestbookservice">{% translate "Ledger" %}</a>
+      </div>
+      <div class="navigation-item">
+        <img
+          src="{% static 'images/core/icons/census.png' %}"
+          width="20"
+          height="20"
+          alt="Census Icon"
+        />
+        <a href="#census">{% translate "Census" %}</a>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-credits" id="censusContainer">
+    <div class="visitor-text">{% translate "You are Visitor #" %}</div>
+    <div class="visitor-count">
+      <span class="visitor-count-item">0</span>
+      <span class="visitor-count-item">0</span>
+      <span class="visitor-count-item">6</span>
+      <span class="visitor-count-item">9</span>
+      <span class="visitor-count-item">4</span>
+      <span class="visitor-count-item">2</span>
+      <span class="visitor-count-item">0</span>
+    </div>
+  </div>
 </div>
 {% block scripts %}
-    <script src="{% static 'js/kawaiibeats/kawaiiBeatsPlayer.js' %}"></script>
+<script src="{% static 'js/kawaiibeats/kawaiiBeatsPlayer.js' %}"></script>
 {% endblock scripts %}

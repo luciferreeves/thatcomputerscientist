@@ -94,3 +94,11 @@
   src: url('../../fonts/Mali/Mali-BoldItalic.ttf') format('truetype');
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'ComicCode';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../../fonts/COCOLGR.otf') format('opentype');
+  font-display: swap;
+}

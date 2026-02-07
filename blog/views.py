@@ -7,6 +7,7 @@ from blog.functions import (
     get_posts,
     get_categories,
     get_tags,
+    get_tag_by_slug,
     get_archives,
     handle_comment_vote,
     update_comment,
@@ -55,6 +56,8 @@ def weblog(request):
     for category in categories:
         category.is_selected = current_category == category.slug
 
+    tag = get_tag_by_slug(current_tag, lang=request.LANGUAGE_CODE)
+
     result = get_posts(
         weblog_slug=weblog_slug,
         lang=request.LANGUAGE_CODE,
@@ -74,6 +77,7 @@ def weblog(request):
         "paginator": result["paginator"],
         "page": result["page_objects"],
         "categories": categories,
+        "tag": tag,
         "sort_options": sort_options,
         "order_options": order_options,
     }

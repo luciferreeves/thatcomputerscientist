@@ -191,3 +191,12 @@ input[type="radio"][name="order"]:checked+label {
 input[type="radio"][name="order"]+label:hover {
   background: rgba(223, 35, 196, 0.7);
 }
+
+.weblog-tag-info {
+  width: 100%;
+  margin: 16px auto 0px auto;
+  padding: 8px;
+  background: linear-gradient(135deg, rgba(68, 68, 177, 0.15) 0%, rgba(223, 35, 196, 0.15) 100%);
+  border: 1px solid #8d8dff;
+  border-radius: 4px;
+}

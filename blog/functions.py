@@ -163,6 +163,18 @@ def get_tags(weblog_slug, lang="en"):
     return Tag.translate_queryset(queryset, lang)
 
 
+def get_tag_by_slug(tag_slug, lang="en"):
+    tag = (
+        Tag.objects.filter(slug=tag_slug)
+        .prefetch_related("translations")
+        .annotate(post_count=Count("post", filter=Q(post__is_public=True)))
+        .first()
+    )
+    if tag:
+        return tag.translate(lang)
+    return None
+
+
 def get_archives(weblog_slug):
     from django.db.models import Count
 

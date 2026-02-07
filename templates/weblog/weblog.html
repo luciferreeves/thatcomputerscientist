@@ -86,6 +86,14 @@
             </form>
         </div>
     </div>
+    {% if tag is not None %}
+        {% url "weblog:home" as home_url %}
+        {% url "weblog:tags" as tags_url %}
+        <p class="weblog-tag-info">
+            {% blocktranslate with count=tag.post_count name=tag.name slug=tag.slug home=home_url tags=tags_url %}
+            Showing {{ count }} posts tagged with <a href="{{ home }}?tag={{ slug }}">{{ name }}</a>. You may also choose to see the complete <a href="{{ home }}">weblog</a> or <a href="{{ tags }}">explore all tags</a>.{% endblocktranslate %}
+        </p>
+    {% endif %}
     <div class="weblogs">{% include "_partials/weblog_list.html" with posts=posts %}</div>
     <div class="pagination-wrapper">
         <div class="pagination">

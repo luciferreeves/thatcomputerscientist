@@ -10,8 +10,7 @@ class I18NMiddleware(MiddlewareMixin):
         else:
             activate("en")
         request.LANGUAGE_CODE = language
-        request.ALT_LANGUAGE = "ja" if language == "en" else "en"    
-    
+        request.ALT_LANGUAGE = "ja" if language == "en" else "en"
 
     def process_response(self, request, response):
         if not request.COOKIES.get("site_language"):

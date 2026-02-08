@@ -3,11 +3,70 @@
 {% load i18n %}
 
 {% block head %}
-  <link type="text/css" rel="stylesheet" href="{% static "css/journals/journals.css" %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}">
 {% endblock head %}
 
 {% block content %}
-  <div class="journals-page">
+<div class="journals-page">
     {% include "_partials/journal_header.html" with journal=journal %}
-  </div>
+    
+    <div class="new-entry-form-container">
+        <form method="POST" id="entry-form" class="journal-form">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="entry-title" class="form-label">{% trans "Entry Title" %}</label>
+                    <input 
+                        type="text" 
+                        id="entry-title" 
+                        name="title" 
+                        class="form-input" 
+                        placeholder="{% trans "Give your entry a title..." %}"
+                        required
+                    />
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="entry-content" class="form-label">{% trans "Content" %}</label>
+                    <div id="editor-container"></div>
+                    <input type="hidden" id="entry-content" name="content" />
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    <span class="btn-icon">✓</span>
+                    <span class="btn-text">{% trans "Save Entry" %}</span>
+                </button>
+                <button type="button" class="btn-secondary" onclick="window.history.back()">
+                    <span class="btn-text">{% trans "Cancel" %}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/miku/fancymiku.js' %}"></script>
+<script>
+    let editor = new FancyMiku('#editor-container', {
+        height: '600px',
+        placeholder: '{% trans "Start writing your entry..." %}'
+    });
+    
+    document.getElementById('entry-form').addEventListener('submit', (e) => {
+        const content = editor.getContent();
+        document.getElementById('entry-content').value = content;
+        
+        if (!content || content.trim() === '<p><br></p>' || content.trim() === '') {
+            e.preventDefault();
+            alert('{% trans "Please write some content for your entry." %}');
+            return false;
+        }
+    });
+</script>
+{% endblock scripts %}

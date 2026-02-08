@@ -146,3 +146,105 @@
 .miku-syntax-js-function {
     color: #00FF00;
 }
+
+.miku-container {
+    background: #000000;
+    border: 1px solid #00FFFF;
+}
+
+.miku-toolbar {
+    background: #000000;
+    border-bottom: 1px solid #00FFFF;
+}
+
+.miku-btn {
+    color: #00FFFF;
+    background: transparent;
+    border: 1px solid #004444;
+}
+
+.miku-btn:hover {
+    background: #001111;
+    border-color: #00FFFF;
+}
+
+.miku-content,
+.miku-source {
+    background: #000000;
+    color: #00FFFF;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3,
+.miku-content a {
+    color: #00FFFF;
+}
+
+.miku-link-edit {
+    background: #001111;
+    color: #00FFFF;
+}
+
+.miku-content img {
+    border-color: #004444;
+}
+
+.miku-content blockquote {
+    border-left-color: #00FFFF;
+    background: #001111;
+}
+
+.miku-content code {
+    background: #001111;
+    color: #00FFFF;
+    border-color: #004444;
+}
+
+.miku-code-wrapper,
+.miku-content pre {
+    border-color: #004444;
+    background: #001111;
+}
+
+.miku-code-lang {
+    background: #000000;
+    color: #00FFFF;
+    border-color: #00FFFF;
+}
+
+.miku-popup {
+    background: #000000;
+    border: 1px solid #00FFFF;
+}
+
+.miku-popup-header,
+.miku-popup-footer {
+    background: #000000;
+    border-color: #00FFFF;
+    color: #00FFFF;
+}
+
+.miku-popup-field label,
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    color: #00FFFF;
+    background: #001111;
+    border-color: #00FFFF;
+}
+
+.miku-btn-primary {
+    background: #00FFFF;
+    color: #000000;
+}
+
+.miku-btn-secondary {
+    background: transparent;
+    color: #00FFFF;
+    border: 1px solid #00FFFF;
+}

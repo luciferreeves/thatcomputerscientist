@@ -140,3 +140,109 @@
 .miku-syntax-js-function {
     color: #8d8dff;
 }
+
+.miku-container {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.miku-toolbar {
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.miku-btn {
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.miku-btn:hover {
+    background: rgba(141, 141, 255, 0.2);
+    border-color: #8d8dff;
+    color: #8d8dff;
+}
+
+.miku-content,
+.miku-source {
+    background: transparent;
+    color: #ffffff;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3,
+.miku-content a {
+    color: #8d8dff;
+}
+
+.miku-link-edit {
+    background: rgba(0, 0, 0, 0.4);
+    color: #8d8dff;
+}
+
+.miku-content img {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.miku-content blockquote {
+    border-left-color: #8d8dff;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.miku-content code {
+    background: rgba(0, 0, 0, 0.4);
+    color: #8d8dff;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.miku-code-wrapper,
+.miku-content pre {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.miku-code-lang {
+    background: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    border-color: rgba(141, 141, 255, 0.3);
+}
+
+.miku-popup {
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(141, 141, 255, 0.3);
+}
+
+.miku-popup-header,
+.miku-popup-footer {
+    background: rgba(0, 0, 0, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #8d8dff;
+}
+
+.miku-popup-field label {
+    color: #ffffff;
+}
+
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(141, 141, 255, 0.3);
+    color: #ffffff;
+}
+
+.miku-btn-primary {
+    background: #8d8dff;
+    color: #000000;
+}
+
+.miku-btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}

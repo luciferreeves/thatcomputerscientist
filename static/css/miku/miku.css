@@ -229,3 +229,367 @@
     color: #9b59b6;
     font-weight: 600;
 }
+
+.miku-container {
+    position: relative;
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: 'Mali', sans-serif;
+    background: #0a0a0a;
+    border: 2px solid #333;
+}
+
+.miku-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 10px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #333;
+}
+
+.miku-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 6px 10px;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #e8e8e8;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Mali', sans-serif;
+}
+
+.miku-btn:hover {
+    background: #3a3a3a;
+    border-color: #666;
+}
+
+.miku-btn-special {
+    background: #333;
+    border-color: #555;
+}
+
+.miku-toolbar-separator {
+    width: 1px;
+    height: 24px;
+    background: #444;
+    margin: 4px 2px;
+}
+
+.miku-content,
+.miku-source {
+    padding: 16px;
+    background: #0f0f0f;
+    color: #e8e8e8;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 300px;
+    outline: none;
+}
+
+.miku-source {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: #0a0a0a;
+    border: none;
+    resize: none;
+    width: 100%;
+    padding: 16px;
+    color: #e8e8e8;
+}
+
+.miku-content::-webkit-scrollbar,
+.miku-source::-webkit-scrollbar {
+    width: 8px;
+}
+
+.miku-content::-webkit-scrollbar-track,
+.miku-source::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 4px;
+}
+
+.miku-content:empty:before,
+.miku-content:has(p:only-child:empty):before {
+    content: attr(data-placeholder);
+    color: #666;
+    pointer-events: none;
+    position: absolute;
+}
+
+.miku-content p {
+    margin: 4px 0;
+    text-align: justify;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3 {
+    margin: 16px 0 8px 0;
+    color: #4ecdc4;
+    font-weight: 600;
+}
+
+.miku-content h1 {
+    font-size: 24px;
+}
+
+.miku-content h2 {
+    font-size: 20px;
+}
+
+.miku-content h3 {
+    font-size: 16px;
+}
+
+.miku-content strong,
+.miku-content b {
+    font-weight: 700;
+    color: #ff6b6b;
+}
+
+.miku-content em,
+.miku-content i {
+    font-style: italic;
+    color: #f39c12;
+}
+
+.miku-content u {
+    text-decoration: underline;
+}
+
+.miku-content s {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.miku-content a {
+    color: #45b7d1;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.miku-link-edit {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 2px 6px;
+    background: #333;
+    color: #4ecdc4;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.miku-content img {
+    max-width: 350px;
+    max-height: 350px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin: 6px 12px 8px 0;
+    cursor: pointer;
+}
+
+.miku-content img:nth-of-type(odd) {
+    float: left;
+    margin-right: 12px;
+}
+
+.miku-content img:nth-of-type(even) {
+    float: right;
+    margin-left: 12px;
+}
+
+.miku-content img.block {
+    float: none;
+    display: block;
+    margin: 16px auto;
+    max-width: 100%;
+    max-height: 500px;
+    width: auto;
+}
+
+.miku-content a img {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.miku-content a img:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+
+.miku-content blockquote {
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-left: 4px solid #4ecdc4;
+    background: rgba(78, 205, 196, 0.1);
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+}
+
+.miku-content code {
+    background: #1a1a1a;
+    color: #4ecdc4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    border: 1px solid #333;
+}
+
+.miku-code-wrapper {
+    position: relative;
+    margin: 16px 0;
+    border: 1px solid #333;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.miku-code-lang {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #1a1a1a;
+    color: #4ecdc4;
+    padding: 4px 8px;
+    border: 1px solid #333;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.miku-content pre {
+    margin: 0;
+    padding: 40px 12px 12px 12px;
+    background: #0a0a0a;
+    overflow-x: auto;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #e8e8e8;
+}
+
+.miku-content pre code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+
+.miku-popup {
+    position: fixed;
+    width: 400px;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    font-family: 'Mali', sans-serif;
+}
+
+.miku-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #2a2a2a;
+    border-bottom: 1px solid #333;
+    color: #e8e8e8;
+    font-weight: 600;
+}
+
+.miku-popup-close {
+    background: none;
+    border: none;
+    color: #e8e8e8;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+}
+
+.miku-popup-body {
+    padding: 16px;
+}
+
+.miku-popup-field {
+    margin-bottom: 12px;
+}
+
+.miku-popup-field label {
+    display: block;
+    color: #4ecdc4;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    width: 100%;
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 8px;
+    color: #e8e8e8;
+    font-family: 'Mali', sans-serif;
+    font-size: 13px;
+}
+
+.miku-popup-field input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+.miku-popup-footer {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 12px 16px;
+    background: #2a2a2a;
+    border-top: 1px solid #333;
+}
+
+.miku-btn-primary,
+.miku-btn-secondary {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Mali', sans-serif;
+    font-size: 13px;
+}
+
+.miku-btn-primary {
+    background: #4ecdc4;
+    border: 1px solid #4ecdc4;
+    color: #000;
+}
+
+.miku-btn-primary:hover {
+    background: #5fd3ca;
+}
+
+.miku-btn-secondary {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: #e8e8e8;
+}
+
+.miku-btn-secondary:hover {
+    background: #3a3a3a;
+}

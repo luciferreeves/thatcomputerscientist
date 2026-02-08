@@ -137,3 +137,141 @@
 .miku-syntax-js-function {
     color: #8d8dff;
 }
+
+.miku-container {
+    background: #000;
+    border-color: #8d8dff;
+}
+
+.miku-toolbar {
+    background: rgba(15, 10, 25, 0.9);
+    border-bottom-color: rgba(173, 140, 255, 0.4);
+}
+
+.miku-btn {
+    background: rgba(68, 68, 177, 0.3);
+    border-color: rgba(141, 141, 255, 0.4);
+    color: #7ee8c7;
+}
+
+.miku-btn:hover {
+    background: rgba(223, 35, 196, 0.5);
+    border-color: #df23c4;
+    color: #ffffff;
+}
+
+.miku-content,
+.miku-source {
+    background: #000;
+    color: #fff;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #df23c4;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3 {
+    color: #7ee8c7;
+    text-shadow: 0 0 4px rgba(126, 232, 199, 0.3);
+}
+
+.miku-content strong,
+.miku-content b {
+    color: #96b5ff;
+}
+
+.miku-content em,
+.miku-content i {
+    color: #ff96c4;
+}
+
+.miku-content a {
+    color: #df23c4;
+    text-shadow: 0 0 4px rgba(223, 35, 196, 0.3);
+}
+
+.miku-link-edit {
+    background: rgba(68, 68, 177, 0.8);
+    color: #7ee8c7;
+}
+
+.miku-content img {
+    border-color: rgba(141, 141, 255, 0.3);
+    box-shadow: 0 0 8px rgba(141, 141, 255, 0.2);
+}
+
+.miku-content blockquote {
+    border-left-color: #8d8dff;
+    background: rgba(141, 141, 255, 0.1);
+    color: #96b5ff;
+}
+
+.miku-content code {
+    background: rgba(0, 0, 0, 0.4);
+    color: #54f2f2;
+    border-color: rgba(84, 242, 242, 0.3);
+}
+
+.miku-code-wrapper,
+.miku-content pre {
+    border-color: rgba(141, 141, 255, 0.3);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.miku-code-lang {
+    background: rgba(141, 141, 255, 0.3);
+    color: #7ee8c7;
+    border-color: rgba(141, 141, 255, 0.5);
+}
+
+.miku-popup {
+    background: rgba(30, 20, 50, 0.95);
+    border-color: rgba(173, 140, 255, 0.7);
+    box-shadow: 0 8px 24px rgba(136, 87, 210, 0.6);
+}
+
+.miku-popup-header {
+    background: rgba(50, 30, 80, 0.95);
+    border-bottom-color: rgba(173, 140, 255, 0.5);
+}
+
+.miku-popup-field label {
+    color: #7ee8c7;
+}
+
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(141, 141, 255, 0.4);
+    color: #fff;
+}
+
+.miku-popup-footer {
+    background: rgba(50, 30, 80, 0.95);
+    border-top-color: rgba(173, 140, 255, 0.5);
+}
+
+.miku-btn-primary {
+    background: rgba(68, 68, 177, 0.85);
+    border-color: #8d8dff;
+    color: #fff;
+}
+
+.miku-btn-primary:hover {
+    background: #df23c4;
+    border-color: #df23c4;
+}
+
+.miku-btn-secondary {
+    background: rgba(68, 68, 177, 0.3);
+    border-color: rgba(141, 141, 255, 0.4);
+    color: #96b5ff;
+}
+
+.miku-btn-secondary:hover {
+    background: rgba(150, 181, 255, 0.2);
+    color: #ffffff;
+}

@@ -13,6 +13,20 @@
     {% include "_partials/journal_header.html" with journal=journal %}
     
     <div class="new-entry-form-container">
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">
+                            {% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}
+                        </span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        
         <form method="POST" id="entry-form" class="journal-form">
             {% csrf_token %}
             

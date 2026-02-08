@@ -43,6 +43,31 @@ def create_journal(user, name, description="", private=False, slug=None):
         return False, "Slug is not available."
 
 
+def create_journal_entry(journal, title, content, slug=None):
+    try:
+        title = title.strip()
+        if not title:
+            return False, "Entry title is required."
+
+        if slug:
+            slug = slug.strip()
+        else:
+            slug = slugify(title)
+
+        if journal.entries.filter(slug=slug).exists():
+            return False, "Slug is not available."
+
+        entry = journal.entries.create(
+            title=title,
+            content=content.strip(),
+            slug=slug,
+        )
+        return True, entry
+
+    except Exception as e:
+        return False, "Slug is not available."
+
+
 def get_user_journals(user, page=1, per_page=10, lang="en"):
     try:
         journals = (
@@ -70,6 +95,18 @@ def get_user_journals(user, page=1, per_page=10, lang="en"):
 
 
 def get_single_user_journal(user, slug, lang="en"):
+    try:
+        journal = Journal.objects.filter(owner=user, slug=slug).first()
+
+        if not journal:
+            return False, "Journal not found."
+        translated_journal = Journal.translate_instance(journal, lang)
+        return True, translated_journal
+    except Exception as e:
+        return False, str(e)
+
+
+def get_full_single_user_journal(user, slug, lang="en"):
     try:
         journal = (
             Journal.objects.filter(owner=user, slug=slug)

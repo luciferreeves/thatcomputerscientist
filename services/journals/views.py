@@ -4,8 +4,10 @@ from django.contrib.auth.decorators import login_required
 from core.translations import LANGUAGE_CHOICES
 from services.journals.functions import (
     create_journal,
+    create_journal_entry,
     get_user_journals,
     get_single_user_journal,
+    get_full_single_user_journal,
     get_user_journal_stats,
     update_journal_settings,
     delete_journal,
@@ -48,7 +50,7 @@ def journals(request):
 
 @login_required
 def journal(request, slug):
-    success, journal = get_single_user_journal(
+    success, journal = get_full_single_user_journal(
         request.user, slug, lang=request.LANGUAGE_CODE
     )
 
@@ -66,6 +68,21 @@ def journal(request, slug):
         else:
             messages.error(request, delete_message)
         return redirect("services:journals:journals")
+
+    if request.method == "POST" and tab == "new":
+        entry_title = request.POST.get("title", "")
+        entry_content = request.POST.get("content", "")
+
+        create_success, create_message = create_journal_entry(
+            journal, entry_title, entry_content
+        )
+
+        if create_success:
+            messages.success(request, "Journal entry created successfully.")
+            return redirect(f"/services/journals/{journal.slug}?tab=entries")
+        else:
+            messages.error(request, create_message)
+            return redirect(f"{request.path}?tab=new")
 
     if request.method == "POST" and tab == "settings":
         update_success, update_message = update_journal_settings(

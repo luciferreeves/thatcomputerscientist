@@ -55,10 +55,12 @@
             </div>
         {% endif %}
     </div>
+    <h2 class="section-title">{% translate "From The Journal of Random Thoughts" %}<span class="latest-pill">Latest</span></h2>
+    <div class="recent-journal-entries">{% include "_partials/journal_entries.html" with journal=recent_journal %}</div>
     <div class="pamphlet pamphlet-banner"></div>
-    <h1 class="section-title">{% translate "Contemplations of Late" %}</h1>
+    <h2 class="section-title">{% translate "Contemplations of Late" %}</h2>
     <div class="recent-weblogs">{% include "_partials/weblog_list.html" with posts=recent_weblogs %}</div>
-    <h1 class="section-title">{% translate "Recent Weeb Degenerecy" %}</h1>
+    <h2 class="section-title">{% translate "Recent Weeb Degenerecy" %}</h2>
     <div class="recent-anime">
         {% for anime in recent_mal_activity.anime %}
             <a class="anime" href="{{ anime.url }}" target="_blank">

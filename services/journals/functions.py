@@ -1,7 +1,7 @@
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Count
-from services.journals.models import Journal
+from django.db.models import Count, Prefetch
+from services.journals.models import Journal, JournalEntry
 from services.journals.constants import RESERVED_JOURNAL_SLUGS, RESERVED_JOURNAL_NAMES
 
 
@@ -106,6 +106,34 @@ def get_single_user_journal(user, slug, lang="en"):
 
         if not journal:
             return False, "Journal not found."
+
+        return True, journal.translate(lang)
+    except Exception as e:
+        return False, str(e)
+
+
+def get_latest_journal_entry(user, slug, lang="en"):
+    try:
+        journal = (
+            Journal.objects.filter(owner=user, slug=slug)
+            .select_related("owner")
+            .prefetch_related("translations", "shared_with")
+            .annotate(entries_count=Count("entries"))
+            .first()
+        )
+
+        if not journal:
+            return False, "Journal not found."
+
+        journal = journal.translate(lang)
+        latest_entry = (
+            JournalEntry.objects.filter(journal=journal).order_by("-created_at").first()
+        )
+
+        if latest_entry:
+            journal._prefetched_objects_cache["entries"] = [latest_entry]
+        else:
+            journal._prefetched_objects_cache["entries"] = []
 
         return True, journal
     except Exception as e:

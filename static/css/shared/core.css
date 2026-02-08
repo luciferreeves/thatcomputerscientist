@@ -244,4 +244,8 @@ img {
 /* Text Formatting */
 .section-title {
     margin: 16px 0px;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #8d8dff;
+    font-size: 24px;
 }

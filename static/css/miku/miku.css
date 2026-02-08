@@ -253,17 +253,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 32px;
-    height: 32px;
-    padding: 6px 10px;
+    padding: 6px 8px;
     background: #2a2a2a;
     border: 1px solid #444;
     border-radius: 4px;
     color: #e8e8e8;
-    font-size: 12px;
-    font-weight: 600;
     cursor: pointer;
-    font-family: 'Mali', sans-serif;
+}
+
+.miku-btn .size-6 {
+    width: 16px;
+    height: 16px;
 }
 
 .miku-btn:hover {
@@ -461,14 +461,11 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    background: #1a1a1a;
     color: #4ecdc4;
     padding: 4px 8px;
     border: 1px solid #333;
     border-radius: 3px;
     font-size: 11px;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    z-index: 10;
     cursor: pointer;
 }
 
@@ -576,7 +573,6 @@
 
 .miku-btn-primary {
     background: #4ecdc4;
-    border: 1px solid #4ecdc4;
     color: #000;
 }
 
@@ -586,7 +582,6 @@
 
 .miku-btn-secondary {
     background: #2a2a2a;
-    border: 1px solid #444;
     color: #e8e8e8;
 }
 

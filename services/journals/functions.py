@@ -22,7 +22,7 @@ def create_journal(user, name, description="", private=False, slug=None):
 
         if name.lower() in [n.lower() for n in RESERVED_JOURNAL_NAMES]:
             if not user.is_superuser:
-                return False, "Slug is not available."
+                return False, "Journal Name is not available."
 
         if Journal.objects.filter(owner=user, slug=slug).exists():
             return False, "Slug is not available."

@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     initializeImageLayout();
     setupLightbox();
-    configureMathJax();
 });
 
 function initializeImageLayout() {

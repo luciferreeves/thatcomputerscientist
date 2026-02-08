@@ -52,13 +52,13 @@
 
 .weblog-content img:nth-of-type(odd) {
     float: left;
-    /* margin-right: 12px; */
+    margin-right: 12px;
     margin-left: 0;
 }
 
 .weblog-content img:nth-of-type(even) {
     float: right;
-    /* margin-left: 12px; */
+    margin-left: 12px;
     margin-right: 0;
 }
 
@@ -136,6 +136,14 @@
     max-width: 780px;
 }
 
+.weblog-content a {
+    color: #f6cc95 !important;
+}
+
+.weblog-content a:hover {
+    color: #ffb95c !important;
+}
+
 .weblog-content .highlight pre {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -179,130 +187,4 @@
 
 pre::-webkit-scrollbar {
     display: none;
-}
-
-.comment-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 16px 0;
-}
-
-select[id="comment-sort"] {
-    border: 2px solid #AD8CFF;
-    background: linear-gradient(135deg, rgba(244, 183, 255, 0.95) 0%, rgba(173, 128, 236, 0.95) 100%);
-    padding: 4px 8px;
-    box-shadow: 2px 2px 0 #FFB3BA,
-        4px 4px 0 #54F2F2,
-        0px 0px 15px rgba(173, 140, 255, 0.5);
-    border-radius: 6px;
-    color: #4A0080;
-    font-weight: bold;
-}
-
-select[id="comment-sort"] option {
-    background-color: rgba(255, 255, 255, 0.5);
-    color: #4A0080;
-}
-
-.comments-section summary {
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
-
-.comments-section details[open] summary {
-    margin-bottom: 16px;
-}
-
-/* Markup Guide Styling */
-.comments-section .guide-intro p {
-    margin: 0 0 12px 0;
-}
-
-.comments-section .guide-section {
-    margin-bottom: 16px;
-}
-
-.comments-section .guide-section:last-child {
-    margin-bottom: 0;
-}
-
-.comments-section .guide-section h4 {
-    color: #ff96c4;
-    font-weight: bold;
-    margin: 0 0 8px 0;
-}
-
-.comments-section .guide-description {
-    margin: 0 0 8px 0;
-}
-
-.comments-section .formatting-list {
-    margin: 8px 0;
-    padding-left: 20px;
-    list-style-type: none;
-}
-
-.comments-section .formatting-list li {
-    margin: 6px 0;
-    position: relative;
-}
-
-.comments-section .formatting-list li:before {
-    content: "→";
-    position: absolute;
-    left: -16px;
-    color: #AD8CFF;
-    font-weight: bold;
-}
-
-.comments-section .formatting-list code {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    color: #54F2F2;
-    border: 1px solid rgba(84, 242, 242, 0.3);
-}
-
-.comments-section .code-example {
-    margin: 12px 0;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    padding: 12px;
-    border: 1px solid rgba(255, 150, 196, 0.2);
-}
-
-.comments-section .example-code,
-.comments-section .code-example pre[data-language] {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid #333;
-    border-radius: 4px;
-    padding: 8px 8px 0px 8px;
-    margin: 0;
-    overflow-x: auto;
-}
-
-.comments-section .example-label {
-    margin: 8px 0 4px 0;
-    font-weight: bold;
-    color: #AD8CFF;
-}
-
-.comments-section .supported-languages {
-    margin: 12px 0 0 0;
-}
-
-.comments-section .language-tag {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    color: #54F2F2;
-    border: 1px solid rgba(84, 242, 242, 0.2);
 }

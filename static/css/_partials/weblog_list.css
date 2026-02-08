@@ -25,13 +25,11 @@
     color: #ff96ff !important;
 }
 
-.post-exerpt a,
-.weblog-content a {
+.post-exerpt a {
     color: #f6cc95 !important;
 }
 
-.post-exerpt a:hover,
-.weblog-content a:hover {
+.post-exerpt a:hover {
     color: #ffb95c !important;
 }
 

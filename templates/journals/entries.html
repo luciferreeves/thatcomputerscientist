@@ -1,8 +1,30 @@
 {% extends "_layouts/base.html" %} {% load static %} {% load i18n %} {% block head %}
   <link type="text/css" rel="stylesheet" href="{% static "css/journals/journals.css" %}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
 {% endblock head %} 
 {% block content %}
   <div class="journals-page">
     {% include "_partials/journal_header.html" with journal=journal %}
+
+    <div class="journal-entries">
+      {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">
+                            {% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}
+                        </span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="journal-entries-main">{% include "_partials/journal_entries.html" with journal=journal %}</div>
+    </div>
   </div>
 {% endblock content %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+{% endblock scripts %}
+
+

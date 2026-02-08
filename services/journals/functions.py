@@ -96,18 +96,6 @@ def get_user_journals(user, page=1, per_page=10, lang="en"):
 
 def get_single_user_journal(user, slug, lang="en"):
     try:
-        journal = Journal.objects.filter(owner=user, slug=slug).first()
-
-        if not journal:
-            return False, "Journal not found."
-        translated_journal = Journal.translate_instance(journal, lang)
-        return True, translated_journal
-    except Exception as e:
-        return False, str(e)
-
-
-def get_full_single_user_journal(user, slug, lang="en"):
-    try:
         journal = (
             Journal.objects.filter(owner=user, slug=slug)
             .select_related("owner")

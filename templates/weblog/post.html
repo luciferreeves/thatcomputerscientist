@@ -4,6 +4,7 @@
 {% load tz %}
 {% block head %}
     <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/comments.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}">
@@ -149,6 +150,11 @@ def hello_world():
             async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            configureMathJax();
+        });
+    </script>
     <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/miku/tinymiku.js' %}"></script>
     <script type="text/javascript">

@@ -7,7 +7,6 @@ from services.journals.functions import (
     create_journal_entry,
     get_user_journals,
     get_single_user_journal,
-    get_full_single_user_journal,
     get_user_journal_stats,
     update_journal_settings,
     delete_journal,
@@ -50,7 +49,7 @@ def journals(request):
 
 @login_required
 def journal(request, slug):
-    success, journal = get_full_single_user_journal(
+    success, journal = get_single_user_journal(
         request.user, slug, lang=request.LANGUAGE_CODE
     )
 
@@ -59,7 +58,7 @@ def journal(request, slug):
         return redirect("services:journals:journals")
 
     request.meta.title = journal.name
-    tab = request.GET.get("tab", "settings")
+    tab = request.GET.get("tab", "entries")
 
     if request.GET.get("action") == "delete":
         delete_success, delete_message = delete_journal(request.user, journal)

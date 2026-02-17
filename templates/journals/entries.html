@@ -4,7 +4,7 @@
 {% endblock head %} 
 {% block content %}
   <div class="journals-page">
-    {% include "_partials/journal_header.html" with journal=journal %}
+    {% include "journals/_partials/journal_header.html" with journal=journal %}
 
     <div class="journal-entries">
       {% if messages %}
@@ -19,10 +19,12 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <div class="journal-entries-main">{% include "_partials/journal_entries.html" with journal=journal %}</div>
+        <div class="journal-entries-main">{% include "journals/_partials/journal_entries.html" with journal=journal service_page=True %}</div>
     </div>
   </div>
 {% endblock content %}
 {% block scripts %}
 <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/journals/common.js' %}"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { initDropdowns(); });</script>
 {% endblock scripts %}

@@ -1,0 +1,59 @@
+{% load tz %}
+{% load static %}
+{% load i18n %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
+{% for entry in journal.entries.all %}
+    <div class="entry-container">
+        <div class="torn-top">
+            <svg viewBox="0 0 20 20" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="dogEarGradient-{{ forloop.counter }}" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" class="dog-ear-gradient-stop-start" />
+                        <stop offset="55%" class="dog-ear-gradient-stop-middle" />
+                        <stop offset="100%" class="dog-ear-gradient-stop-end" />
+                    </linearGradient>
+                </defs>
+                
+                <polygon points="20,0 20,20 0,20" 
+                         fill="url(#dogEarGradient-{{ forloop.counter }})"
+                         stroke="#14228b"
+                         stroke-width="0.8"/>
+            </svg>
+        </div>
+        <div class="header">
+            <div class="header-title">{{ entry.title }}</div>
+            <div class="header-dots"></div>
+            {% if service_page %}
+            <div class="dropdown">
+                <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">{% trans "Edit" %}</a>
+                    <a href="#" class="dropdown-item">{% trans "Translations" %}</a>
+                    <a href="#" class="dropdown-item">{% trans "Settings" %}</a>
+                    <a href="#" class="dropdown-item delete">{% trans "Delete" %}</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="weblog-content">{{ entry.content|safe }}</div>
+        <div class="journal-entry-details">
+            <span>{% translate "Posted in" %}</span>
+            <a href="#{{ journal.slug }}">{{ journal.name }}</a>
+            <span>{% translate "on" %}</span>
+            <span>{% localtime on %}{{ entry.created_at|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
+        </div>
+    </div>
+{% empty %}
+    <div class="empty-state">
+        <h3>{% trans "No Entries Yet" %}</h3>
+        <p>{% trans "Start your digital journaling journey by creating your first journal entry." %}</p>
+        <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="empty-action-btn">
+            {% trans "Create Your First Entry" %}
+        </a>
+    </div>
+{% endfor %}

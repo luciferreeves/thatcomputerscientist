@@ -1,0 +1,186 @@
+.dog-ear-gradient-stop-start {
+    stop-color: #C8D5F0;
+    stop-opacity: 1;
+}
+
+.dog-ear-gradient-stop-middle {
+    stop-color: #B0C4E8;
+    stop-opacity: 1;
+}
+
+.dog-ear-gradient-stop-end {
+    stop-color: #9AB0D8;
+    stop-opacity: 1;
+}
+
+.entry-container {
+    background: #dee8ff;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    clip-path: polygon(
+        20px 0%, 100% 0%, 100% 96%,
+        99% 98%, 98% 96%, 97% 98.5%, 96% 97%, 95% 98%, 94% 96.5%, 93% 98%,
+        92% 97%, 91% 98.5%, 90% 97%, 89% 98%, 88% 96.5%, 87% 98%, 86% 97%,
+        85% 98.5%, 84% 97%, 83% 98%, 82% 96.5%, 81% 98%, 80% 97%, 79% 98.5%,
+        78% 97%, 77% 98%, 76% 96.5%, 75% 98%, 74% 97%, 73% 98.5%, 72% 97%,
+        71% 98%, 70% 96.5%, 69% 98%, 68% 97%, 67% 98.5%, 66% 97%, 65% 98%,
+        64% 96.5%, 63% 98%, 62% 97%, 61% 98.5%, 60% 97%, 59% 98%, 58% 96.5%,
+        57% 98%, 56% 97%, 55% 98.5%, 54% 97%, 53% 98%, 52% 96.5%, 51% 98%,
+        50% 97%, 49% 98.5%, 48% 97%, 47% 98%, 46% 96.5%, 45% 98%, 44% 97%,
+        43% 98.5%, 42% 97%, 41% 98%, 40% 96.5%, 39% 98%, 38% 97%, 37% 98.5%,
+        36% 97%, 35% 98%, 34% 96.5%, 33% 98%, 32% 97%, 31% 98.5%, 30% 97%,
+        29% 98%, 28% 96.5%, 27% 98%, 26% 97%, 25% 98.5%, 24% 97%, 23% 98%,
+        22% 96.5%, 21% 98%, 20% 97%, 19% 98.5%, 18% 97%, 17% 98%, 16% 96.5%,
+        15% 98%, 14% 97%, 13% 98.5%, 12% 97%, 11% 98%, 10% 96.5%, 9% 98%,
+        8% 97%, 7% 98.5%, 6% 97%, 5% 98%, 4% 96.5%, 3% 98%, 2% 97%, 1% 98.5%,
+        0% 97%, 0% 20px
+    );
+    margin-bottom: 16px;
+}
+
+.entry-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 50%, transparent 100%);
+    z-index: 1;
+}
+
+.torn-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    overflow: visible;
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+}
+
+.torn-top svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.entry-container .header {
+    background: linear-gradient(to bottom, #b3baf5 0%, #9699ed 50%, #7a87e5 100%);
+    padding: 8px 12px 8px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title {
+    filter: drop-shadow(2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0px 1px 1px #14228b) drop-shadow(0px 1px 1px #14228b);
+    color: #14228b;
+    font-size: 20px;
+    font-family: 'SweetFairy';
+    white-space: nowrap;
+}
+
+.header-dots {
+    flex: 1;
+    margin-left: 12px;
+    height: 24px;
+    background-image: radial-gradient(circle, #14228b 2px, transparent 2px);
+    background-size: 8px 8px;
+    background-position: 0 0;
+    opacity: 0.7;
+}
+
+.weblog-content {
+    background: #dee8ff;
+    color: #000;
+    margin: 0;
+    padding: 8px 16px;
+}
+
+.weblog-content a,
+.weblog-content a:visited,
+.weblog-content a:hover,
+.journal-entry-details a,
+.journal-entry-details a:visited,
+.journal-entry-details a:hover {
+    color: #2251bd !important;
+}
+
+.entry-container .dropdown {
+    margin-left: 8px;
+}
+
+.entry-container .dropdown-trigger {
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    color: #14228b;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.entry-container .dropdown-trigger svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.entry-container .dropdown-trigger:hover {
+    background: #e8eeff;
+}
+
+.entry-container .dropdown-content {
+    background: #dee8ff;
+    border: 1px solid #9ab0d8;
+    box-shadow: 0 4px 12px rgba(20, 34, 139, 0.15);
+}
+
+.entry-container .dropdown-item {
+    color: #14228b !important;
+}
+
+.entry-container .dropdown-item:hover {
+    background: rgba(20, 34, 139, 0.08) !important;
+    color: #14228b !important;
+}
+
+.entry-container .dropdown-item.delete {
+    color: #c0392b !important;
+}
+
+.entry-container .dropdown-item.delete:hover {
+    background: rgba(192, 57, 43, 0.08) !important;
+    color: #c0392b !important;
+}
+
+.journal-entry-details {
+    background: #dee8ff;
+    padding: 8px 16px 24px 16px;
+    font-size: 13px;
+    color: #333;
+    border-top: 2px solid transparent;
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            #2f148b 0px,
+            #2f148b 4px,
+            transparent 4px,
+            transparent 8px,
+            #2f148b 8px,
+            #2f148b 12px,
+            transparent 12px,
+            transparent 16px
+        );
+    background-size: 100% 2px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}

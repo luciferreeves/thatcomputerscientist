@@ -94,7 +94,7 @@
             Showing {{ count }} posts tagged with <a href="{{ home }}?tag={{ slug }}">{{ name }}</a>. You may also choose to see the complete <a href="{{ home }}">weblog</a> or <a href="{{ tags }}">explore all tags</a>.{% endblocktranslate %}
         </p>
     {% endif %}
-    <div class="weblogs">{% include "_partials/weblog_list.html" with posts=posts %}</div>
+    <div class="weblogs">{% include "weblog/_partials/weblog_list.html" with posts=posts %}</div>
     <div class="pagination-wrapper">
         <div class="pagination">
             {% if page.has_previous %}

@@ -121,7 +121,7 @@
 {% if comment.replies.all %}
     <div class="comment-replies">
         {% for reply in comment.replies.all %}
-            {% include "_partials/post_comments.html" with comment=reply %}
+            {% include "weblog/_partials/post_comments.html" with comment=reply %}
         {% endfor %}
     </div>
 {% endif %}

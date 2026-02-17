@@ -119,7 +119,7 @@ def hello_world():
             </blockquote>
             {% for comment in post.comments.all %}
                 {% if not comment.parent %}
-                    {% include "_partials/post_comments.html" with comment=comment %}
+                    {% include "weblog/_partials/post_comments.html" with comment=comment %}
                 {% endif %}
             {% endfor %}
             {% if post.comments.all|length == 0 %}

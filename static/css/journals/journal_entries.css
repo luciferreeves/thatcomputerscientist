@@ -1,16 +1,26 @@
-.entry-container {
+.entries-page {
     background: #dee8ff;
     position: relative;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
     clip-path: polygon(20px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 20px);
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='t' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.15 0.05' numOctaves='5' seed='2' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='4' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Crect x='-40' y='-40' width='280' height='237' fill='white' filter='url(%23t)'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='t' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.15 0.05' numOctaves='5' seed='2' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='4' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Crect x='-40' y='-40' width='280' height='237' fill='white' filter='url(%23t)'/%3E%3C/svg%3E");
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
+    -webkit-mask-image:
+        linear-gradient(to top, transparent 16px, white 16px),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='t' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.005' numOctaves='4' seed='256' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='16' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Crect x='-60' y='-60' width='1800' height='90' fill='white' filter='url(%23t)'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%, 100% 40px;
+    -webkit-mask-position: top, bottom;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-composite: source-over;
+    mask-image:
+        linear-gradient(to top, transparent 16px, white 16px),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 40' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='t' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.005' numOctaves='4' seed='256' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='16' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Crect x='-60' y='-60' width='1800' height='90' fill='white' filter='url(%23t)'/%3E%3C/svg%3E");
+    mask-size: 100% 100%, 100% 40px;
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    mask-composite: add;
     margin-bottom: 16px;
 }
 
-.entry-container::before {
+.entries-page::before {
     content: '';
     position: absolute;
     top: 0;
@@ -21,10 +31,10 @@
     clip-path: polygon(100% 0, 100% 100%, 0 100%);
     z-index: 2;
     pointer-events: none;
-    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
 }
 
-.entry-container::after {
+.entries-page::after {
     content: '';
     position: absolute;
     top: 0;
@@ -142,8 +152,7 @@
     color: #333;
     border-top: 2px solid transparent;
     background-image:
-        repeating-linear-gradient(
-            90deg,
+        repeating-linear-gradient(90deg,
             #2f148b 0px,
             #2f148b 4px,
             transparent 4px,
@@ -151,8 +160,7 @@
             #2f148b 8px,
             #2f148b 12px,
             transparent 12px,
-            transparent 16px
-        );
+            transparent 16px);
     background-size: 100% 2px;
     background-position: 0 0;
     background-repeat: no-repeat;

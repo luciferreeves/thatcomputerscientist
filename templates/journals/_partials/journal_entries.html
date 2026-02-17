@@ -3,7 +3,10 @@
 {% load i18n %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
 <link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
-{% for entry in journal.entries.all %}
+{% with entries=journal.entries.all %}
+{% if entries %}
+<div class="entries-page">
+    {% for entry in entries %}
     <div class="entry-container">
         <div class="header">
             <div class="header-title">{{ entry.title }}</div>
@@ -31,12 +34,15 @@
             <span>{% localtime on %}{{ entry.created_at|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
         </div>
     </div>
-{% empty %}
-    <div class="empty-state">
-        <h3>{% trans "No Entries Yet" %}</h3>
-        <p>{% trans "Start your digital journaling journey by creating your first journal entry." %}</p>
-        <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="empty-action-btn">
-            {% trans "Create Your First Entry" %}
-        </a>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>{% trans "No Entries Yet" %}</h3>
+    <p>{% trans "Start your digital journaling journey by creating your first journal entry." %}</p>
+    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="empty-action-btn">
+        {% trans "Create Your First Entry" %}
+    </a>
+</div>
+{% endif %}
+{% endwith %}

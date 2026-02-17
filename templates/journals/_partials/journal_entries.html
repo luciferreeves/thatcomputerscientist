@@ -5,25 +5,8 @@
 <link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
 {% for entry in journal.entries.all %}
     <div class="entry-container">
-        <div class="torn-top">
-            <svg viewBox="0 0 20 20" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="dogEarGradient-{{ forloop.counter }}" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" class="dog-ear-gradient-stop-start" />
-                        <stop offset="55%" class="dog-ear-gradient-stop-middle" />
-                        <stop offset="100%" class="dog-ear-gradient-stop-end" />
-                    </linearGradient>
-                </defs>
-                
-                <polygon points="20,0 20,20 0,20" 
-                         fill="url(#dogEarGradient-{{ forloop.counter }})"
-                         stroke="#14228b"
-                         stroke-width="0.8"/>
-            </svg>
-        </div>
         <div class="header">
             <div class="header-title">{{ entry.title }}</div>
-            <div class="header-dots"></div>
             {% if service_page %}
             <div class="dropdown">
                 <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">

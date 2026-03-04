@@ -36,10 +36,6 @@
             <h2 class="user-title">
                 {% blocktranslate with username=user.username %}Hello, {{ username }}{% endblocktranslate %}
             </h2>
-            {% comment %} <div class="user-avatar">
-                <img src="{% static 'images/avatars/' %}{{ user.profile.avatar_url }}.gif"
-                     alt="{{ user.username }}'s avatar" width="72" height="72" />
-            </div> {% endcomment %}
             <div class="user-items-container">
                 <div class="user-item">
                     <img src="{% static 'images/core/icons/journals.png' %}" width="20" height="20"
@@ -47,18 +43,18 @@
                     <a href="{% url "services:journals:journals" %}">{% translate "Journals" %}</a>
                 </div>
                 <div class="user-item">
-                    <img src="{% static 'images/core/icons/pagodarealm.png' %}" width="20" height="20"
-                         alt="The Pagoda Realm Icon" />
-                    <a href="">{% translate "The Pagoda Realm" %}</a>
-                </div>
-                <div class="user-item">
                     <img src="{% static 'images/core/icons/mypage.png' %}" width="20" height="20" alt="My Page Icon" />
                     <a href="#mypage">{% translate "My Page" %}</a>
                 </div>
                 <div class="user-item">
                     <img src="{% static 'images/core/icons/messages.png' %}" width="20" height="20"
-                         alt="Messages Icon" />
+                    alt="Messages Icon" />
                     <a href="#messages">{% translate "Messages" %}</a>
+                </div>
+                <div class="user-item">
+                    <img src="{% static 'images/core/icons/preferences.png' %}" width="20" height="20"
+                        alt="Site Preferences Icon" />
+                    <a href="#preferences">{% translate "Site Preferences" %}</a>
                 </div>
                 <div class="user-item">
                     <img src="{% static 'images/core/icons/logout.png' %}" width="20" height="20" alt="Logout Icon" />
@@ -127,9 +123,9 @@
                 <a href="#guestbook">{% translate "Guestbook" %}</a>
             </div>
             <div class="navigation-item">
-                <img src="{% static 'images/core/icons/preferences.png' %}" width="20" height="20"
-                     alt="Site Preferences Icon" />
-                <a href="#preferences">{% translate "Site Preferences" %}</a>
+                <img src="{% static 'images/core/icons/pagodarealm.png' %}" width="20" height="20"
+                        alt="The Pagoda Realm Icon" />
+                <a href="">{% translate "The Pagoda Realm" %}</a>
             </div>
             <div class="navigation-item">
                 {% if not user.is_authenticated %}

@@ -1,5 +1,5 @@
 .entries-page {
-    background: #dee8ff;
+    background: linear-gradient(135deg, transparent 14.14px, #dee8ff 14.14px);
     position: relative;
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
     clip-path: polygon(20px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 20px);
@@ -17,7 +17,7 @@
     mask-position: top, bottom;
     mask-repeat: no-repeat;
     mask-composite: add;
-    margin-bottom: 16px;
+    padding-bottom: 16px;
 }
 
 .entries-page::before {
@@ -27,11 +27,10 @@
     left: 0;
     width: 20px;
     height: 20px;
-    background: #14228b;
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
-    z-index: 2;
+    background: linear-gradient(to bottom right, #1a1a30, #2a2a44);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    z-index: -1;
     pointer-events: none;
-    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
 }
 
 .entries-page::after {
@@ -39,11 +38,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #C8D5F0 0%, #B0C4E8 55%, #9AB0D8 100%);
-    clip-path: polygon(calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - 1px), 1px calc(100% - 1px));
-    z-index: 3;
+    width: 50px;
+    height: 50px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cdefs%3E%3CradialGradient id='s' cx='14' cy='14' r='28' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%23000000' stop-opacity='0.35'/%3E%3Cstop offset='30%25' stop-color='%23000000' stop-opacity='0.18'/%3E%3Cstop offset='60%25' stop-color='%23000000' stop-opacity='0.06'/%3E%3Cstop offset='100%25' stop-color='%23000000' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='f' x1='10' y1='10' x2='20' y2='20' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%23e8ecff'/%3E%3Cstop offset='25%25' stop-color='%23b5b9cd'/%3E%3Cstop offset='55%25' stop-color='%23c2c6da'/%3E%3Cstop offset='100%25' stop-color='%23bfc3d5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='14' cy='14' r='28' fill='url(%23s)'/%3E%3Cpath d='M 20 0 L 20 20 L 0 20 Z' fill='url(%23f)'/%3E%3Cpath d='M 19 1 L 1 19' stroke='%23fff' stroke-opacity='0.3' stroke-width='0.7' fill='none'/%3E%3C/svg%3E") no-repeat;
+    background-size: 50px 50px;
+    z-index: 10;
     pointer-events: none;
 }
 
@@ -147,7 +146,7 @@
 
 .journal-entry-details {
     background: #dee8ff;
-    padding: 8px 16px 24px 16px;
+    padding: 8px 16px;
     font-size: 13px;
     color: #333;
     border-top: 2px solid transparent;

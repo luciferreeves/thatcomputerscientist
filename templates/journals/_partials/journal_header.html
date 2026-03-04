@@ -23,5 +23,5 @@
   <a href="{% url "services:journals:journal" journal.slug %}?tab=new" class="tab-btn {% if request.GET.tab == "new" %}active{% endif %}">{% trans "New Entry" %}</a>
   <a href="{% url "services:journals:journal" journal.slug %}?tab=entries" class="tab-btn {% if request.GET.tab == "entries" or not request.GET.tab %}active{% endif %}">{% trans "Entries" %}({{ journal.entries_count|default:0 }})</a>
   <a href="{% url "services:journals:journal" journal.slug %}?tab=settings" class="tab-btn {% if request.GET.tab == "settings" %}active{% endif %}">{% trans "Settings" %}</a>
-  <a href="#" class="tab-btn">{% trans "View Journal" %}</a>
+  <a href="{% url 'core:journal' journal.slug %}" class="tab-btn">{% trans "View Journal" %}</a>
 </div>

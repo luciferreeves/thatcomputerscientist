@@ -323,6 +323,49 @@ def update_journal_entry(user, journal, entry_slug, post_data):
         return False, f"Error updating entry: {str(e)}"
 
 
+def get_journal(slug, user=None, page=1, per_page=5, lang="en"):
+    try:
+        journal = (
+            Journal.objects.filter(slug=slug)
+            .select_related("owner")
+            .prefetch_related("translations", "shared_with")
+            .annotate(entries_count=Count("entries"))
+            .first()
+        )
+
+        if not journal:
+            return False, None, None
+
+        if not journal.is_accessible_by(user):
+            return False, None, None
+
+        journal = journal.translate(lang)
+
+        entries_qs = (
+            JournalEntry.objects.filter(journal=journal)
+            .prefetch_related("translations")
+            .order_by("-created_at")
+        )
+
+        paginator = Paginator(entries_qs, per_page)
+
+        try:
+            entries_page = paginator.page(page)
+        except PageNotAnInteger:
+            entries_page = paginator.page(1)
+        except EmptyPage:
+            entries_page = paginator.page(paginator.num_pages)
+
+        for entry in entries_page:
+            entry.translate(lang)
+
+        journal._prefetched_objects_cache["entries"] = list(entries_page)
+
+        return True, journal, entries_page
+    except Exception as e:
+        return False, None, None
+
+
 def delete_journal_entry(user, journal, entry_slug):
     try:
         if journal.owner != user:

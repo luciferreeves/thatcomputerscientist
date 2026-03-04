@@ -60,7 +60,7 @@
                             <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">⋯</button>
                             <div class="dropdown-content">
                                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="dropdown-item">{% trans "New Entry" %}</a>
-                                <a href="#" class="dropdown-item">{% trans "View Journal" %}</a>
+                                <a href="{% url 'core:journal' journal.slug %}" class="dropdown-item">{% trans "View Journal" %}</a>
                                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings" class="dropdown-item">{% trans "Settings" %}</a>
                                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings#delete-journal-btn" class="dropdown-item delete">{% trans "Delete" %}</a>
                             </div>

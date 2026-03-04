@@ -28,7 +28,7 @@
         <div class="weblog-content">{{ entry.content|safe }}</div>
         <div class="journal-entry-details">
             <span>{% translate "Posted in" %}</span>
-            <a href="#{{ journal.slug }}">{{ journal.name }}</a>
+            <a href="{% url 'core:journal' journal.slug %}">{{ journal.name }}</a>
             <span>{% translate "on" %}</span>
             <span>{% localtime on %}{{ entry.created_at|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
         </div>

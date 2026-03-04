@@ -1,0 +1,57 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">{{ journal.name }}</h1>
+                {% if journal.description %}
+                <p class="page-subtitle">{{ journal.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="journal-entries">
+        <div class="journal-entries-main">{% include "journals/_partials/journal_entries.html" with journal=journal %}</div>
+    </div>
+
+    {% if entries.has_other_pages %}
+    <div class="pagination-wrapper">
+        <nav class="pagination">
+            {% if entries.has_previous %}
+                <a href="?page={{ entries.previous_page_number }}" class="page-btn">
+                    <span class="btn-icon">‹</span>
+                    <span class="btn-text">{% trans "Previous" %}</span>
+                </a>
+            {% endif %}
+
+            <div class="page-info">
+                <span class="page-current">{{ entries.number }}</span>
+                <span class="page-separator">/</span>
+                <span class="page-total">{{ entries.paginator.num_pages }}</span>
+            </div>
+
+            {% if entries.has_next %}
+                <a href="?page={{ entries.next_page_number }}" class="page-btn">
+                    <span class="btn-text">{% trans "Next" %}</span>
+                    <span class="btn-icon">›</span>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+{% endblock scripts %}

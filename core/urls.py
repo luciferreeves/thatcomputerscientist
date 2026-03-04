@@ -4,5 +4,7 @@ from . import views
 app_name = "core"
 urlpatterns = [
     path("", views.home, name="home"),
+    path("journal", views.journal, name="journal_default"),
+    path("journal/<slug:slug>", views.journal, name="journal"),
     path("ignis/<path:path>", views.ignis_wrapper_temp, name="ignis_wrapper"),
 ]

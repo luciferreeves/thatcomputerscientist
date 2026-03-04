@@ -7,7 +7,8 @@ from internal.mal_wrapper import get_mal_recent_activity
 import requests
 import os
 
-from services.journals.functions import get_latest_journal_entry
+from django.http import Http404
+from services.journals.functions import get_latest_journal_entry, get_journal
 
 
 def home(request):
@@ -34,6 +35,26 @@ def home(request):
     }
 
     return render(request, "core/home.html", context)
+
+
+def journal(request, slug="journal-of-random-thoughts"):
+    page = request.GET.get("page", 1)
+
+    success, journal_obj, entries = get_journal(
+        slug, user=request.user, page=page, lang=request.LANGUAGE_CODE
+    )
+
+    if not success:
+        raise Http404
+
+    request.meta.title = journal_obj.name
+
+    context = {
+        "journal": journal_obj,
+        "entries": entries,
+    }
+
+    return render(request, "journals/journal_view.html", context)
 
 
 def ignis_wrapper_temp(request, path):

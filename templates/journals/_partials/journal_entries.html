@@ -38,10 +38,14 @@
 {% else %}
 <div class="empty-state">
     <h3>{% trans "No Entries Yet" %}</h3>
+    {% if service_page %}
     <p>{% trans "Start your digital journaling journey by creating your first journal entry." %}</p>
     <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="empty-action-btn">
         {% trans "Create Your First Entry" %}
     </a>
+    {% else %}
+    <p>{% trans "This journal doesn't have any entries yet. Check back later!" %}</p>
+    {% endif %}
 </div>
 {% endif %}
 {% endwith %}

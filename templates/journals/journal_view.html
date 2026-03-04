@@ -9,19 +9,21 @@
 
 {% block content %}
 <div class="journals-page">
-    <div class="page-header">
-        <div class="header-content">
-            <div class="title-section">
-                <h1 class="page-title">{{ journal.name }}</h1>
-                {% if journal.description %}
-                <p class="page-subtitle">{{ journal.description }}</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-
     <div class="journal-entries">
-        <div class="journal-entries-main">{% include "journals/_partials/journal_entries.html" with journal=journal %}</div>
+        <div class="journal-entries-main" id="journal-entries-host">
+            <template id="journal-entries-template">
+                {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+                <div class="journal-view-header">
+                    <div class="journal-view-header-content">
+                        <h1 class="journal-view-title">{{ journal.name }}</h1>
+                        {% if journal.description %}
+                        <p class="journal-view-subtitle">{{ journal.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% include "journals/_partials/journal_entries.html" with journal=journal %}
+            </template>
+        </div>
     </div>
 
     {% if entries.has_other_pages %}
@@ -54,4 +56,62 @@
 
 {% block scripts %}
 <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+<script>
+(function() {
+    var host = document.getElementById('journal-entries-host');
+    var template = document.getElementById('journal-entries-template');
+    var shadow = host.attachShadow({ mode: 'open' });
+
+    // Import base stylesheets into shadow DOM
+    var baseStyles = [
+        '{% static "css/blog/post.css" %}',
+        '{% static "css/journals/journal_entries.css" %}',
+        '{% static "css/journals/journal_view.css" %}'
+    ];
+    baseStyles.forEach(function(href) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = href;
+        shadow.appendChild(link);
+    });
+
+    // Extract external URLs from custom CSS before rendering
+    var customStyle = template.content.querySelector('style');
+    var preloads = [];
+    if (customStyle) {
+        var matches = customStyle.textContent.match(/url\(['"]?(https?:\/\/[^'")]+)['"]?\)/g);
+        if (matches) {
+            matches.forEach(function(u) {
+                var href = u.replace(/url\(['"]?|['"]?\)/g, '');
+                preloads.push(new Promise(function(resolve) {
+                    var img = new Image();
+                    img.referrerPolicy = 'no-referrer';
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                    img.src = href;
+                }));
+            });
+        }
+    }
+
+    function render() {
+        shadow.appendChild(template.content.cloneNode(true));
+
+        // Run image float script inside shadow DOM
+        shadow.querySelectorAll('.entry-container .weblog-content').forEach(function(content) {
+            content.querySelectorAll('img').forEach(function(img, i) {
+                img.classList.add(i % 2 === 0 ? 'float-left' : 'float-right');
+            });
+        });
+    }
+
+    // Preload images without referrer, then render so CSS uses cached copies
+    if (preloads.length > 0) {
+        Promise.all(preloads).then(render);
+    } else {
+        render();
+    }
+})();
+</script>
 {% endblock scripts %}

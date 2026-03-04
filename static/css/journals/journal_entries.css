@@ -181,3 +181,23 @@
     background-position: 0 0;
     background-repeat: no-repeat;
 }
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px dashed rgba(141, 141, 255, 0.2);
+    border-radius: 12px;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.empty-state p {
+    color: #96b5ff;
+    margin: 0;
+    opacity: 0.8;
+}

@@ -74,20 +74,37 @@
     opacity: 0.7;
 }
 
-.weblog-content {
+.entry-container + .entry-container {
+    border-top: 3px solid #b3baf5;
+}
+
+.entry-container .weblog-content {
     background: #dee8ff;
     color: #000;
     margin: 0;
     padding: 8px 16px;
+    overflow: hidden;
 }
 
-.weblog-content a,
-.weblog-content a:visited,
-.weblog-content a:hover,
+.entry-container .weblog-content a,
+.entry-container .weblog-content a:visited,
+.entry-container .weblog-content a:hover,
 .journal-entry-details a,
 .journal-entry-details a:visited,
 .journal-entry-details a:hover {
     color: #2251bd !important;
+}
+
+.entry-container .weblog-content img.float-left {
+    float: left;
+    margin-right: 12px;
+    margin-left: 0;
+}
+
+.entry-container .weblog-content img.float-right {
+    float: right;
+    margin-left: 12px;
+    margin-right: 0;
 }
 
 .entry-container .dropdown {

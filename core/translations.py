@@ -1,14 +1,14 @@
 from django.db import models
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy as _
 
 LANGUAGE_CHOICES = [
-    ("en", "English"),
-    ("ja", "Japanese"),
-    ("es", "Spanish"),
-    ("fr", "French"),
-    ("de", "German"),
-    ("zh", "Chinese"),
-    ("ko", "Korean"),
+    ("en", _("English")),
+    ("ja", _("Japanese")),
+    ("es", _("Spanish")),
+    ("fr", _("French")),
+    ("de", _("German")),
+    ("zh", _("Chinese")),
+    ("ko", _("Korean")),
 ]
 
 

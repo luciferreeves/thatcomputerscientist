@@ -18,7 +18,14 @@
                 <p class="page-subtitle">/{{ entry.slug }}</p>
             </div>
             <div class="card-actions">
-                <a href="{% url 'services:journals:journal' journal.slug %}?tab=entries" class="back-btn">{% trans "Back to" %} {{ journal.name }}</a>
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=entries" class="back-btn">
+                    {% if request.LANGUAGE_CODE == 'ja' %}
+                        {{ journal.name }} {% trans "Back to" %}
+                    {% else %}
+                        {% trans "Back to" %} {{ journal.name }}
+                    {% endif %}
+
+                </a>
             </div>
         </div>
     </div>

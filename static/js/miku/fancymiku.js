@@ -224,15 +224,15 @@
 
         toggleSource() {
             if (this.isSourceMode) {
+                this.isSourceMode = false;
                 this.setContent(this.sourceArea.value);
                 this.editableArea.style.display = 'block';
                 this.sourceArea.style.display = 'none';
-                this.isSourceMode = false;
             } else {
                 this.sourceArea.value = this.getContent();
+                this.isSourceMode = true;
                 this.editableArea.style.display = 'none';
                 this.sourceArea.style.display = 'block';
-                this.isSourceMode = true;
             }
         }
 

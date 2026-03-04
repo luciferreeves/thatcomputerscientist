@@ -19,8 +19,8 @@
                 </button>
                 <div class="dropdown-content">
                     <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="dropdown-item">{% trans "Edit" %}</a>
-                    <a href="#" class="dropdown-item">{% trans "Settings" %}</a>
-                    <a href="#" class="dropdown-item delete">{% trans "Delete" %}</a>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings&entry={{ entry.slug }}" class="dropdown-item">{% trans "Settings" %}</a>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings&entry={{ entry.slug }}#delete-entry-btn" class="dropdown-item delete">{% trans "Delete" %}</a>
                 </div>
             </div>
             {% endif %}
@@ -45,3 +45,10 @@
 </div>
 {% endif %}
 {% endwith %}
+<script>
+document.querySelectorAll('.entry-container .weblog-content').forEach(function(content) {
+    content.querySelectorAll('img').forEach(function(img, i) {
+        img.classList.add(i % 2 === 0 ? 'float-left' : 'float-right');
+    });
+});
+</script>

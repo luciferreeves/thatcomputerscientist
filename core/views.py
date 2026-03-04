@@ -18,6 +18,7 @@ def home(request):
         user=get_user_from_username("bobby"),
         slug="journal-of-random-thoughts",
         lang=request.LANGUAGE_CODE,
+        count=3,
     )
 
     context = {

@@ -112,7 +112,7 @@ def get_single_user_journal(user, slug, lang="en"):
         return False, str(e)
 
 
-def get_latest_journal_entry(user, slug, lang="en"):
+def get_latest_journal_entry(user, slug, lang="en", count=1):
     try:
         journal = (
             Journal.objects.filter(owner=user, slug=slug)
@@ -126,14 +126,16 @@ def get_latest_journal_entry(user, slug, lang="en"):
             return False, "Journal not found."
 
         journal = journal.translate(lang)
-        latest_entry = (
-            JournalEntry.objects.filter(journal=journal).order_by("-created_at").first()
+        entries = list(
+            JournalEntry.objects.filter(journal=journal)
+            .prefetch_related("translations")
+            .order_by("-created_at")[:count]
         )
 
-        if latest_entry:
-            journal._prefetched_objects_cache["entries"] = [latest_entry]
-        else:
-            journal._prefetched_objects_cache["entries"] = []
+        for entry in entries:
+            entry.translate(lang)
+
+        journal._prefetched_objects_cache["entries"] = entries
 
         return True, journal
     except Exception as e:

@@ -107,6 +107,14 @@
     margin-right: 0;
 }
 
+.entry-container .weblog-content a:has(img) {
+    pointer-events: none;
+}
+
+.entry-container .weblog-content img {
+    pointer-events: none;
+}
+
 .entry-container .dropdown {
     order: 2;
     margin-left: 8px;

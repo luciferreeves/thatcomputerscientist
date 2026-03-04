@@ -21,6 +21,20 @@
                         {% endif %}
                     </div>
                 </div>
+                {% with owner_profile=journal.owner.userprofile_set.first %}
+                <div class="journal-owner">
+                    {% if owner_profile.avatar_url %}
+                    <img src="{% static 'images/avatars/' %}{{ owner_profile.avatar_url }}.gif" alt="{{ journal.owner.first_name }}" class="journal-owner-avatar" width="40" height="40" />
+                    {% endif %}
+                    <div class="journal-owner-info">
+                        <a href="#" class="journal-owner-name">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+                        <span class="journal-owner-handle">@{{ journal.owner.username }}</span>
+                        {% if owner_profile.bio %}
+                        <p class="journal-owner-bio">{{ owner_profile.bio|linebreaksbr }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endwith %}
                 {% include "journals/_partials/journal_entries.html" with journal=journal %}
             </template>
         </div>

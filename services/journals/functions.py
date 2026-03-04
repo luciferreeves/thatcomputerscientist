@@ -328,7 +328,7 @@ def get_journal(slug, user=None, page=1, per_page=5, lang="en"):
         journal = (
             Journal.objects.filter(slug=slug)
             .select_related("owner")
-            .prefetch_related("translations", "shared_with")
+            .prefetch_related("translations", "shared_with", "owner__userprofile_set")
             .annotate(entries_count=Count("entries"))
             .first()
         )

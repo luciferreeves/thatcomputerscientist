@@ -133,6 +133,24 @@ select.form-input option {
     margin-left: 5px;
 }
 
+.translation-row {
+    margin-bottom: 10px;
+}
+
+.remove-translation-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.remove-translation-btn:hover {
+    color: #ffffff;
+}
+
 .user-badge {
     background: rgba(150, 181, 255, 0.1);
     border: 1px solid rgba(150, 181, 255, 0.3);

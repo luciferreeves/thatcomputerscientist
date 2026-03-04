@@ -18,8 +18,7 @@
                     </svg>
                 </button>
                 <div class="dropdown-content">
-                    <a href="#" class="dropdown-item">{% trans "Edit" %}</a>
-                    <a href="#" class="dropdown-item">{% trans "Translations" %}</a>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="dropdown-item">{% trans "Edit" %}</a>
                     <a href="#" class="dropdown-item">{% trans "Settings" %}</a>
                     <a href="#" class="dropdown-item delete">{% trans "Delete" %}</a>
                 </div>

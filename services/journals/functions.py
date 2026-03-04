@@ -247,6 +247,98 @@ def update_journal_settings(user, journal, post_data):
         return False, f"Error updating journal settings: {str(e)}"
 
 
+def update_journal_entry(user, journal, entry_slug, post_data):
+    try:
+        from services.journals.models import JournalEntryTranslation
+
+        if journal.owner != user:
+            return False, "You don't have permission to edit this entry."
+
+        entry = journal.entries.filter(slug=entry_slug).first()
+        if not entry:
+            return False, "Entry not found."
+
+        title = post_data.get("title", "").strip()
+        content = post_data.get("content", "").strip()
+
+        if not title:
+            return False, "Entry title is required."
+
+        if not content:
+            return False, "Entry content is required."
+
+        entry.title = title
+        entry.content = content
+
+        new_slug = post_data.get("slug", "").strip()
+        if new_slug and new_slug != entry.slug:
+            if journal.entries.filter(slug=new_slug).exclude(id=entry.id).exists():
+                return False, "Slug is not available."
+            entry.slug = new_slug
+
+        entry.save()
+
+        # Handle translation deletions and updates
+        for translation in entry.translations.all():
+            lang_key = f"translation_language_{translation.id}"
+            title_key = f"translation_title_{translation.id}"
+            content_key = f"translation_content_{translation.id}"
+            delete_key = f"delete_translation_{translation.id}"
+
+            if delete_key in post_data:
+                translation.delete()
+                continue
+
+            if lang_key in post_data and post_data[lang_key]:
+                translation.language = post_data[lang_key]
+                translation.title = post_data.get(title_key, "").strip()
+                translation.content = post_data.get(content_key, "").strip()
+                translation.save()
+
+        # Handle new translations
+        used_languages = set(entry.translations.values_list("language", flat=True))
+
+        for key, value in post_data.items():
+            if key.startswith("translation_language_new_") and value:
+                if value in used_languages:
+                    continue
+
+                translation_id = key.replace("translation_language_new_", "")
+                title_key = f"translation_title_new_{translation_id}"
+                content_key = f"translation_content_new_{translation_id}"
+
+                JournalEntryTranslation.objects.create(
+                    journal_entry=entry,
+                    language=value,
+                    title=post_data.get(title_key, "").strip(),
+                    content=post_data.get(content_key, "").strip(),
+                )
+                used_languages.add(value)
+
+        return True, "Entry updated successfully."
+
+    except Exception as e:
+        return False, f"Error updating entry: {str(e)}"
+
+
+def delete_journal_entry(user, journal, entry_slug):
+    try:
+        if journal.owner != user:
+            return False, "You don't have permission to delete this entry."
+
+        entry = journal.entries.filter(slug=entry_slug).first()
+        if not entry:
+            return False, "Entry not found."
+
+        entry_title = entry.title
+        entry.delete()
+
+        return True, f'Entry "{entry_title}" has been deleted.'
+
+    except Exception as e:
+        return False, f"Error deleting entry: {str(e)}"
+
+
 def delete_journal(user, journal):
     try:
         if journal.owner != user:

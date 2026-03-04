@@ -9,7 +9,9 @@ from services.journals.functions import (
     get_single_user_journal,
     get_user_journal_stats,
     update_journal_settings,
+    update_journal_entry,
     delete_journal,
+    delete_journal_entry,
 )
 
 
@@ -59,14 +61,26 @@ def journal(request, slug):
 
     request.meta.title = journal.name
     tab = request.GET.get("tab", "entries")
+    entry_slug = request.GET.get("entry", "")
+    is_entry_context = tab in ("edit", "settings") and entry_slug
 
-    if request.GET.get("action") == "delete":
+    if request.GET.get("action") == "delete" and not is_entry_context:
         delete_success, delete_message = delete_journal(request.user, journal)
         if delete_success:
             messages.success(request, "Journal deleted successfully.")
         else:
             messages.error(request, delete_message)
         return redirect("services:journals:journals")
+
+    if is_entry_context and request.GET.get("action") == "delete":
+        del_success, del_message = delete_journal_entry(
+            request.user, journal, entry_slug
+        )
+        if del_success:
+            messages.success(request, del_message)
+        else:
+            messages.error(request, del_message)
+        return redirect(f"/services/journals/{journal.slug}?tab=entries")
 
     if request.method == "POST" and tab == "new":
         entry_title = request.POST.get("title", "")
@@ -83,7 +97,7 @@ def journal(request, slug):
             messages.error(request, create_message)
             return redirect(f"{request.path}?tab=new")
 
-    if request.method == "POST" and tab == "settings":
+    if request.method == "POST" and tab == "settings" and not is_entry_context:
         update_success, update_message = update_journal_settings(
             request.user, journal, request.POST
         )
@@ -93,20 +107,41 @@ def journal(request, slug):
             messages.error(request, update_message)
         return redirect("services:journals:journal", slug=journal.slug)
 
-    match tab:
-        case "settings":
-            template_name = "journals/settings.html"
-        case "entries":
-            template_name = "journals/entries.html"
-        case "new":
-            template_name = "journals/new_entry.html"
-        case _:
-            template_name = "journals/journal.html"
+    if request.method == "POST" and is_entry_context:
+        update_success, update_message = update_journal_entry(
+            request.user, journal, entry_slug, request.POST
+        )
+        if update_success:
+            messages.success(request, update_message)
+            return redirect(f"/services/journals/{journal.slug}?tab=entries")
+        else:
+            messages.error(request, update_message)
+            return redirect(f"{request.path}?tab=edit&entry={entry_slug}")
 
     context = {
         "journal": journal,
         "languages": LANGUAGE_CHOICES,
     }
+
+    if is_entry_context:
+        entry = journal.entries.prefetch_related("translations").filter(slug=entry_slug).first()
+        if not entry:
+            messages.error(request, "Entry not found.")
+            return redirect(f"/services/journals/{journal.slug}?tab=entries")
+        context["entry"] = entry
+
+    if is_entry_context:
+        template_name = "journals/edit_entry.html"
+    else:
+        match tab:
+            case "settings":
+                template_name = "journals/settings.html"
+            case "entries":
+                template_name = "journals/entries.html"
+            case "new":
+                template_name = "journals/new_entry.html"
+            case _:
+                template_name = "journals/journal.html"
 
     return render(request, template_name, context)
 

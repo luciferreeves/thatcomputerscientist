@@ -90,42 +90,14 @@
         shadow.appendChild(link);
     });
 
-    // Extract external URLs from custom CSS before rendering
-    var customStyle = template.content.querySelector('style');
-    var preloads = [];
-    if (customStyle) {
-        var matches = customStyle.textContent.match(/url\(['"]?(https?:\/\/[^'")]+)['"]?\)/g);
-        if (matches) {
-            matches.forEach(function(u) {
-                var href = u.replace(/url\(['"]?|['"]?\)/g, '');
-                preloads.push(new Promise(function(resolve) {
-                    var img = new Image();
-                    img.referrerPolicy = 'no-referrer';
-                    img.onload = resolve;
-                    img.onerror = resolve;
-                    img.src = href;
-                }));
-            });
-        }
-    }
+    shadow.appendChild(template.content.cloneNode(true));
 
-    function render() {
-        shadow.appendChild(template.content.cloneNode(true));
-
-        // Run image float script inside shadow DOM
-        shadow.querySelectorAll('.entry-container .weblog-content').forEach(function(content) {
-            content.querySelectorAll('img').forEach(function(img, i) {
-                img.classList.add(i % 2 === 0 ? 'float-left' : 'float-right');
-            });
+    // Run image float script inside shadow DOM
+    shadow.querySelectorAll('.entry-container .weblog-content').forEach(function(content) {
+        content.querySelectorAll('img').forEach(function(img, i) {
+            img.classList.add(i % 2 === 0 ? 'float-left' : 'float-right');
         });
-    }
-
-    // Preload images without referrer, then render so CSS uses cached copies
-    if (preloads.length > 0) {
-        Promise.all(preloads).then(render);
-    } else {
-        render();
-    }
+    });
 })();
 </script>
 {% endblock scripts %}

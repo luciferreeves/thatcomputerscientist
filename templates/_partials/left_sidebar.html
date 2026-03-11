@@ -48,8 +48,8 @@
                 </div>
                 <div class="user-item">
                     <img src="{% static 'images/core/icons/messages.png' %}" width="20" height="20"
-                    alt="Messages Icon" />
-                    <a href="#messages">{% translate "Messages" %}</a>
+                    alt="Letters Icon" />
+                    <a href="{% url 'core:letters:inbox' %}">{% translate "Letters" %}{% if unread_letter_count %}<span class="sidebar-unread-badge">{{ unread_letter_count }}</span>{% endif %}</a>
                 </div>
                 <div class="user-item">
                     <img src="{% static 'images/core/icons/preferences.png' %}" width="20" height="20"

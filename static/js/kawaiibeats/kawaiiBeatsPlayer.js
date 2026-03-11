@@ -182,9 +182,9 @@ class AudioPlayer {
         this.sourceNode = null;
         this.analyzerNode = null;
         this.gainNode = null;
-        this.audioBuffer = null;
-        this.startTime = 0;
-        this.pauseTime = 0;
+        this.audio = new Audio();
+        this.audio.crossOrigin = 'anonymous';
+        this.audio.preload = 'auto';
         this.isPlaying = false;
         this.isLoading = true;
         this.isDragging = false;
@@ -218,18 +218,19 @@ class AudioPlayer {
      */
     bindMethods() {
         this.handleSeek = (position) => {
-            if (!this.audioBuffer) return;
-            const seekTime = (position / this.seekbarCanvas.width) * this.audioBuffer.duration;
+            if (!this.audio.duration) return;
+            const seekTime = (position / this.seekbarCanvas.width) * this.audio.duration;
             this.seek(seekTime);
         };
 
         this.handlePlayPause = () => {
             if (this.isLoading) return;
             if (this.isPlaying) {
-                this.stop();
-                this.pauseTime = this.audioContext.currentTime - this.startTime;
+                this.audio.pause();
+                this.isPlaying = false;
+                this.updateUI();
             } else {
-                this.play(this.pauseTime);
+                this.play(this.audio.currentTime);
             }
             this.saveState();
         };
@@ -248,13 +249,6 @@ class AudioPlayer {
         };
 
         this.update = () => {
-            if (this.audioBuffer && this.isPlaying) {
-                const currentTime = this.audioContext.currentTime - this.startTime;
-                if (currentTime >= this.audioBuffer.duration) {
-                    this.loadNewSong(true, 'next');
-                    return;
-                }
-            }
             this.updateTimeDisplay();
             this.drawSeekbar();
             requestAnimationFrame(this.update);
@@ -304,6 +298,7 @@ class AudioPlayer {
                 lastLevel = newLevel;
                 this.volume = this.volumeLevel / 6;
 
+                this.audio.volume = this.volume;
                 if (this.gainNode) {
                     this.gainNode.gain.value = this.volume;
                 }
@@ -339,6 +334,7 @@ class AudioPlayer {
      */
     async init() {
         await this.initAudioContext();
+        this.setupAudioEvents();
         this.setupEventListeners();
         await this.restoreState();
         setInterval(() => this.saveState(), 500);
@@ -356,26 +352,69 @@ class AudioPlayer {
         this.gainNode.gain.value = this.volume;
         this.gainNode.connect(this.audioContext.destination);
         this.analyzerNode.connect(this.gainNode);
+
+        this.sourceNode = this.audioContext.createMediaElementSource(this.audio);
+        this.sourceNode.connect(this.analyzerNode);
+        this.audio.volume = this.volume;
+    }
+
+    /**
+     * @private
+     */
+    setupAudioEvents() {
+        this.audio.addEventListener('canplay', () => {
+            if (this.isLoading) {
+                this.isLoading = false;
+                this.updateControls();
+            }
+        });
+
+        this.audio.addEventListener('ended', async () => {
+            await this.loadNewSong(true, 'next');
+        });
+
+        this.audio.addEventListener('error', (e) => {
+            console.error('Audio streaming error:', e);
+            this.isLoading = false;
+            this.updateControls();
+        });
     }
 
     /**
      * @private
      * @param {string} url - Audio file URL
      */
-    async loadAudio(url) {
+    async loadAudio(url, startTime = 0) {
         this.isLoading = true;
         this.updateControls();
-        try {
-            const response = await fetch(url);
-            const arrayBuffer = await response.arrayBuffer();
-            this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-            this.elements.timeTotal.textContent = this.formatTime(this.audioBuffer.duration);
-        } catch (error) {
-            console.error('Error loading audio:', error);
-        } finally {
-            this.isLoading = false;
-            this.updateControls();
-        }
+
+        return new Promise((resolve) => {
+            const onCanPlay = () => {
+                this.audio.removeEventListener('canplay', onCanPlay);
+                this.audio.removeEventListener('error', onError);
+                this.isLoading = false;
+                this.updateControls();
+                if (startTime > 0) {
+                    this.audio.currentTime = startTime;
+                }
+                this.elements.timeTotal.textContent = this.formatTime(this.audio.duration || 0);
+                resolve();
+            };
+
+            const onError = () => {
+                this.audio.removeEventListener('canplay', onCanPlay);
+                this.audio.removeEventListener('error', onError);
+                console.error('Error loading audio');
+                this.isLoading = false;
+                this.updateControls();
+                resolve();
+            };
+
+            this.audio.addEventListener('canplay', onCanPlay);
+            this.audio.addEventListener('error', onError);
+            this.audio.src = url;
+            this.audio.load();
+        });
     }
 
     /**
@@ -383,24 +422,17 @@ class AudioPlayer {
      * @param {number} [offset=0] - Start offset in seconds
      */
     play(offset = 0) {
-        if (!this.audioBuffer) return;
-        if (this.isPlaying) this.stop();
+        if (!this.audio.src) return;
 
-        offset = Math.min(Math.max(0, offset), this.audioBuffer.duration);
+        if (this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
 
-        this.sourceNode = this.audioContext.createBufferSource();
-        this.sourceNode.buffer = this.audioBuffer;
-        this.sourceNode.connect(this.analyzerNode);
+        if (offset > 0 && isFinite(this.audio.duration)) {
+            this.audio.currentTime = Math.min(Math.max(0, offset), this.audio.duration);
+        }
 
-        this.sourceNode.onended = async () => {
-            const currentTime = this.audioContext.currentTime - this.startTime;
-            if (currentTime >= this.audioBuffer.duration - 0.1) {
-                await this.loadNewSong(true, 'next');
-            }
-        };
-
-        this.sourceNode.start(0, offset);
-        this.startTime = this.audioContext.currentTime - offset;
+        this.audio.play();
         this.isPlaying = true;
         this.updateUI();
     }
@@ -410,12 +442,9 @@ class AudioPlayer {
      * @private
      */
     stop() {
-        if (this.sourceNode) {
-            this.sourceNode.stop();
-            this.sourceNode = null;
-            this.isPlaying = false;
-            this.updateUI();
-        }
+        this.audio.pause();
+        this.isPlaying = false;
+        this.updateUI();
     }
 
     /**
@@ -424,13 +453,8 @@ class AudioPlayer {
      * @param {number} time - Time in seconds to seek to
      */
     seek(time) {
-        if (!this.audioBuffer) return;
-        const wasPlaying = this.isPlaying;
-        this.stop();
-        this.pauseTime = time;
-        if (wasPlaying) {
-            this.play(this.pauseTime);
-        }
+        if (!this.audio.duration) return;
+        this.audio.currentTime = Math.min(Math.max(0, time), this.audio.duration);
         this.drawSeekbar();
         this.saveState();
     }
@@ -454,7 +478,11 @@ class AudioPlayer {
         this.elements.playButton.disabled = this.isLoading;
         this.elements.prevButton.disabled = this.isLoading;
         this.elements.nextButton.disabled = this.isLoading;
-        if (this.isLoading) this.stop();
+        if (this.isLoading) {
+            this.audio.pause();
+            this.isPlaying = false;
+            this.updateUI();
+        }
     }
 
     /**
@@ -511,7 +539,7 @@ class AudioPlayer {
      * @private
      */
     drawSeekbar() {
-        if (!this.audioBuffer) return;
+        if (!this.audio.duration) return;
 
         const ctx = this.seekbarCanvas.getContext('2d');
         const { width, height } = this.seekbarCanvas;
@@ -525,9 +553,7 @@ class AudioPlayer {
         ctx.lineWidth = 1;
         ctx.strokeRect(0, centerY - 2, width, 4);
 
-        const currentTime = this.isPlaying ?
-            this.audioContext.currentTime - this.startTime : this.pauseTime;
-        const progress = (currentTime / this.audioBuffer.duration) * width;
+        const progress = (this.audio.currentTime / this.audio.duration) * width;
 
         ctx.fillStyle = SEEKBAR_CONFIG.COLORS.PROGRESS;
         ctx.fillRect(1, centerY - 1, progress - 1, 2);
@@ -583,12 +609,10 @@ class AudioPlayer {
     saveState() {
         if (!this.currentSong) return;
 
-        const currentTime = this.isPlaying ?
-            this.audioContext.currentTime - this.startTime : this.pauseTime;
         const state = {
             songId: this.currentSong.id,
             spotify_id: this.currentSong.spotify_id || this.currentSong.id,
-            timeStamp: Math.min(currentTime, this.audioBuffer?.duration || 0),
+            timeStamp: Math.min(this.audio.currentTime, this.audio.duration || 0),
             isPlaying: this.isPlaying,
             album_art_url: this.currentSong.album_art_url,
             custom_album_art: this.currentSong.custom_album_art,
@@ -622,7 +646,6 @@ class AudioPlayer {
             this.updateSongInfo();
 
             await this.loadAudio(this.currentSong.streaming_url);
-            this.pauseTime = 0;
 
             if (wasPlaying) {
                 this.play(0);
@@ -681,8 +704,8 @@ class AudioPlayer {
      * @param {number} position - Position in pixels on seekbar
      */
     handleSeek(position) {
-        if (!this.audioBuffer) return;
-        const seekTime = (position / this.seekbarCanvas.width) * this.audioBuffer.duration;
+        if (!this.audio.duration) return;
+        const seekTime = (position / this.seekbarCanvas.width) * this.audio.duration;
         this.seek(seekTime);
     }
 
@@ -693,11 +716,13 @@ class AudioPlayer {
     handlePlayPause() {
         if (this.isLoading) return;
         if (this.isPlaying) {
-            this.stop();
-            this.pauseTime = this.audioContext.currentTime - this.startTime;
+            this.audio.pause();
+            this.isPlaying = false;
         } else {
-            this.play(this.pauseTime);
+            this.audio.play();
+            this.isPlaying = true;
         }
+        this.updateUI();
         this.saveState();
     }
 
@@ -724,11 +749,9 @@ class AudioPlayer {
      * @private
      */
     updateTimeDisplay() {
-        if (!this.audioBuffer) return;
-        const currentTime = this.isPlaying ?
-            this.audioContext.currentTime - this.startTime : this.pauseTime;
-        this.elements.timeElapsed.textContent = this.formatTime(currentTime);
-        this.elements.timeTotal.textContent = this.formatTime(this.audioBuffer.duration);
+        if (!this.audio.duration) return;
+        this.elements.timeElapsed.textContent = this.formatTime(this.audio.currentTime);
+        this.elements.timeTotal.textContent = this.formatTime(this.audio.duration);
     }
 
     /**
@@ -748,14 +771,6 @@ class AudioPlayer {
      * @private
      */
     update() {
-        if (this.audioBuffer && this.isPlaying) {
-            const currentTime = this.audioContext.currentTime - this.startTime;
-            if (currentTime >= this.audioBuffer.duration) {
-                this.loadNewSong(true, 'next');
-                return;
-            }
-        }
-
         this.updateTimeDisplay();
         this.drawSeekbar();
         requestAnimationFrame(this.update);
@@ -772,7 +787,7 @@ class AudioPlayer {
                 const state = JSON.parse(savedState);
                 this.currentSong = {
                     id: state.songId,
-                    spotify_id: state.songId, // Use songId as spotify_id for consistency
+                    spotify_id: state.songId,
                     title: state.songTitle,
                     artist: state.songArtist,
                     album: state.songAlbum,
@@ -782,11 +797,10 @@ class AudioPlayer {
                 };
 
                 this.updateSongInfo();
-                await this.loadAudio(state.streaming_url);
-                this.pauseTime = state.timeStamp || 0;
+                await this.loadAudio(state.streaming_url, state.timeStamp || 0);
 
                 if (state.isPlaying) {
-                    setTimeout(() => this.play(this.pauseTime), 100);
+                    setTimeout(() => this.play(state.timeStamp || 0), 100);
                 } else {
                     this.drawSeekbar();
                     this.updateTimeDisplay();

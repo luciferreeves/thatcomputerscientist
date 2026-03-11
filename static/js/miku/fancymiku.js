@@ -693,17 +693,84 @@
             const range = selection.getRangeAt(0);
             range.deleteContents();
 
-            const lines = text.split('\n');
-            lines.forEach((line, index) => {
-                const p = document.createElement('p');
-                p.textContent = line || '\u00A0';
-                range.insertNode(p);
+            const node = range.startContainer;
+            const parentBlock = node.nodeType === Node.TEXT_NODE
+                ? node.parentElement.closest('p, h1, h2, h3, h4, h5, h6, blockquote')
+                : node.closest('p, h1, h2, h3, h4, h5, h6, blockquote');
 
-                if (index < lines.length - 1) {
-                    range.setStartAfter(p);
-                    range.setEndAfter(p);
+            const lines = text.split('\n');
+
+            if (parentBlock && parentBlock !== this.editableArea) {
+                const afterText = range.startContainer.nodeType === Node.TEXT_NODE
+                    ? range.startContainer.textContent.slice(range.startOffset)
+                    : '';
+                if (range.startContainer.nodeType === Node.TEXT_NODE) {
+                    range.startContainer.textContent = range.startContainer.textContent.slice(0, range.startOffset);
                 }
-            });
+
+                let insertAfter = parentBlock;
+
+                if (lines.length === 1) {
+                    const textNode = document.createTextNode(lines[0]);
+                    if (range.startContainer.nodeType === Node.TEXT_NODE) {
+                        range.startContainer.parentNode.insertBefore(textNode, range.startContainer.nextSibling);
+                    } else {
+                        range.insertNode(textNode);
+                    }
+                    if (afterText) {
+                        const afterNode = document.createTextNode(afterText);
+                        textNode.parentNode.insertBefore(afterNode, textNode.nextSibling);
+                    }
+                    const newRange = document.createRange();
+                    newRange.setStartAfter(textNode);
+                    newRange.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(newRange);
+                    return;
+                }
+
+                parentBlock.textContent = (parentBlock.textContent.slice(0, range.startOffset) || '') ;
+                const firstTextNode = document.createTextNode(lines[0]);
+                parentBlock.appendChild(firstTextNode);
+                if (!parentBlock.textContent.trim()) parentBlock.innerHTML = '<br>';
+
+                for (let i = 1; i < lines.length; i++) {
+                    const p = document.createElement('p');
+                    if (i === lines.length - 1 && afterText) {
+                        p.textContent = (lines[i] || '') + afterText;
+                    } else {
+                        p.textContent = lines[i] || '\u00A0';
+                    }
+                    insertAfter.insertAdjacentElement('afterend', p);
+                    insertAfter = p;
+                }
+
+                const newRange = document.createRange();
+                newRange.selectNodeContents(insertAfter);
+                newRange.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(newRange);
+            } else {
+                let lastNode = null;
+                lines.forEach((line) => {
+                    const p = document.createElement('p');
+                    p.textContent = line || '\u00A0';
+                    if (lastNode) {
+                        lastNode.insertAdjacentElement('afterend', p);
+                    } else {
+                        range.insertNode(p);
+                    }
+                    lastNode = p;
+                });
+
+                if (lastNode) {
+                    const newRange = document.createRange();
+                    newRange.selectNodeContents(lastNode);
+                    newRange.collapse(false);
+                    selection.removeAllRanges();
+                    selection.addRange(newRange);
+                }
+            }
         }
 
         closePopup() {

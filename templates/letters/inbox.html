@@ -1,0 +1,86 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="letters-page">
+    {% if messages %}
+        <div class="form-messages">
+            {% for message in messages %}
+                <div class="form-message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if conversations %}
+    <div class="film-header">
+        <h1>{% trans "Letters" %}</h1>
+        <a href="{% url 'core:letters:compose' %}" class="film-compose">+ {% trans "New Letter" %}</a>
+    </div>
+
+    <div class="film-gate">
+        <div class="sprocket-rail top-rail"></div>
+        <div class="film-track">
+            {% for conv in conversations %}
+            <a href="{% url 'core:letters:conversation' username=conv.other_user.username %}" class="film-frame {% if conv.unread_count > 0 %}frame-hot{% endif %}">
+                <span class="frame-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                <div class="frame-window">
+                    <div class="frame-who">
+                        {% with profile=conv.other_user.userprofile_set.first %}
+                            {% if profile and profile.avatar_url %}
+                                <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ conv.other_user.username }}" class="frame-avatar" />
+                            {% else %}
+                                <div class="frame-avatar-letter">{{ conv.other_user.username|first|upper }}</div>
+                            {% endif %}
+                        {% endwith %}
+                        <span class="frame-name">{{ conv.other_user.username }}</span>
+                        {% if conv.unread_count > 0 %}
+                            <span class="frame-badge">{{ conv.unread_count }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="frame-dialogue">
+                        {% if conv.last_letter %}
+                            <span class="frame-speaker">{% if conv.last_letter.sender == request.user %}{% trans "You" %}{% else %}{{ conv.last_letter.sender.username }}{% endif %}:</span>
+                            {{ conv.last_letter.content|striptags|truncatechars:90 }}
+                        {% else %}
+                            {% trans "No letters yet" %}
+                        {% endif %}
+                    </div>
+                    <div class="frame-when">
+                        {% if conv.last_letter %}{{ conv.last_letter.created_at|date:"M d, H:i" }}{% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="sprocket-rail bottom-rail"></div>
+    </div>
+
+    {% if conversations.has_other_pages %}
+    <nav class="letters-pagination">
+        {% if conversations.has_previous %}
+            <a href="?page={{ conversations.previous_page_number }}" class="page-btn">« {% trans "Prev" %}</a>
+        {% endif %}
+        <span class="page-info">
+            <span class="page-current">{{ conversations.number }}</span>/{{ conversations.paginator.num_pages }}
+        </span>
+        {% if conversations.has_next %}
+            <a href="?page={{ conversations.next_page_number }}" class="page-btn">{% trans "Next" %} »</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="letters-empty">
+        <div class="letters-empty-icon">✉</div>
+        <h3>{% trans "No Conversations Yet" %}</h3>
+        <p>{% trans "Send your first letter to start a conversation." %}</p>
+        <a href="{% url 'core:letters:compose' %}" class="letters-empty-action">{% trans "Write a Letter" %}</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

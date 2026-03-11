@@ -27,7 +27,7 @@ def home(request):
             announcement_id = request.POST.get("announcement_id")
             update_announcement(announcement_id, content, is_new, is_public)
         else:
-            create_announcement(content, is_new, is_public)
+            create_announcement(content, is_new, is_public, author=request.user)
 
     context = {
         "announcements": get_announcements(request.LANGUAGE_CODE),

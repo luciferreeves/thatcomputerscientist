@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "administration",
     "blog",
     "services",
+    "core",
 ]
 
 SITE_ID = 1
@@ -113,6 +114,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.letters.context_processors.unread_letter_count",
             ],
         },
     },
@@ -243,3 +245,8 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 3600.0,
     },
 }
+
+# Letters
+LETTERS_MAX_LENGTH = 5000
+LETTERS_INBOX_PER_PAGE = 20
+LETTERS_BATCH_SIZE = 30

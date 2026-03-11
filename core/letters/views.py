@@ -1,0 +1,133 @@
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+from core.letters.functions import (
+    get_user_inbox,
+    get_conversation_letters,
+    get_or_create_conversation,
+    send_letter,
+    find_user_by_username,
+)
+
+
+@login_required
+def inbox(request):
+    title_map = {"en": "Letters", "ja": "レター"}
+    request.meta.title = title_map.get(request.LANGUAGE_CODE)
+
+    page = request.GET.get("page", 1)
+    success, inbox_result = get_user_inbox(request.user, page)
+
+    context = {
+        "conversations": inbox_result if success else None,
+    }
+    return render(request, "letters/inbox.html", context)
+
+
+@login_required
+def conversation(request, username):
+    if request.method == "POST":
+        content = request.POST.get("content", "")
+
+        success, result = find_user_by_username(username)
+        if not success:
+            messages.error(request, result)
+            return redirect("core:letters:inbox")
+
+        conv_success, conv = get_or_create_conversation(request.user, result)
+        if not conv_success:
+            messages.error(request, conv)
+            return redirect("core:letters:inbox")
+
+        send_success, send_result = send_letter(request.user, conv, content)
+        if not send_success:
+            messages.error(request, send_result)
+
+        return redirect("core:letters:conversation", username=username)
+
+    success, conv, letter_data = get_conversation_letters(request.user, username)
+
+    if not success:
+        messages.error(request, conv)
+        return redirect("core:letters:inbox")
+
+    request.meta.title = f"Letters - @{conv.other_user.username}"
+
+    context = {
+        "conversation": conv,
+        "letters": letter_data["letters"],
+        "has_more": letter_data["has_more"],
+        "other_user": conv.other_user,
+    }
+    return render(request, "letters/conversation.html", context)
+
+
+@login_required
+def conversation_older(request, username):
+    before_id = request.GET.get("before")
+    if not before_id:
+        return JsonResponse({"letters": [], "has_more": False})
+
+    success, conv, letter_data = get_conversation_letters(
+        request.user, username, before_id=int(before_id)
+    )
+
+    if not success:
+        return JsonResponse({"error": conv}, status=404)
+
+    letters_html = []
+    for letter in letter_data["letters"]:
+        letters_html.append({
+            "id": letter.pk,
+            "sender": letter.sender.username,
+            "content": letter.content,
+            "created_at": letter.created_at.isoformat(),
+            "is_own": letter.sender == request.user,
+        })
+
+    return JsonResponse({
+        "letters": letters_html,
+        "has_more": letter_data["has_more"],
+    })
+
+
+@login_required
+def compose(request, username=None):
+    title_map = {"en": "New Letter", "ja": "新しいレター"}
+    request.meta.title = title_map.get(request.LANGUAGE_CODE)
+
+    recipient = None
+    if username:
+        success, result = find_user_by_username(username)
+        if success:
+            recipient = result
+        else:
+            messages.error(request, result)
+
+    if request.method == "POST":
+        recipient_username = request.POST.get("recipient", "")
+        content = request.POST.get("content", "")
+
+        success, recipient_user = find_user_by_username(recipient_username)
+        if not success:
+            messages.error(request, recipient_user)
+            return render(request, "letters/compose.html", {"formdata": request.POST})
+
+        conv_success, conv = get_or_create_conversation(request.user, recipient_user)
+        if not conv_success:
+            messages.error(request, conv)
+            return render(request, "letters/compose.html", {"formdata": request.POST})
+
+        send_success, send_result = send_letter(request.user, conv, content)
+        if not send_success:
+            messages.error(request, send_result)
+            return render(request, "letters/compose.html", {"formdata": request.POST})
+
+        return redirect("core:letters:conversation", username=recipient_user.username)
+
+    context = {
+        "recipient": recipient,
+    }
+    return render(request, "letters/compose.html", context)

@@ -23,7 +23,7 @@ def update_announcement(announcement_id, content, is_new, is_public):
         return False
 
 
-def create_announcement(content, is_new, is_public):
-    announcement = Announcement(content=content, is_new=is_new, is_public=is_public)
+def create_announcement(content, is_new, is_public, author=None):
+    announcement = Announcement(content=content, is_new=is_new, is_public=is_public, author=author)
     announcement.save()
     return True

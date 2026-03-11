@@ -1,0 +1,1023 @@
+.letters-page {
+  padding: 12px 0;
+  color: #fff;
+}
+
+.letters-page .form-messages {
+  padding: 8px 16px;
+}
+
+.letters-page .form-message {
+  padding: 8px 12px;
+  font-size: 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+
+.letters-page .form-message.error {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}
+
+.letters-page .form-message.success {
+  background: rgba(102, 187, 106, 0.1);
+  border: 1px solid rgba(102, 187, 106, 0.2);
+  color: #66bb6a;
+}
+
+.film-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 4px 16px 14px;
+}
+
+.film-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-family: "SweetFairy", "Mali", sans-serif;
+  color: #df23c4;
+  text-shadow: 0 0 20px rgba(223, 35, 196, 0.3);
+  letter-spacing: 2px;
+}
+
+.film-compose {
+  padding: 5px 14px;
+  background: transparent;
+  color: #9ae4f1 !important;
+  text-decoration: none !important;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(154, 228, 241, 0.3);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s;
+}
+
+.film-compose:hover {
+  background: rgba(154, 228, 241, 0.08);
+  border-color: #9ae4f1;
+  color: #fff !important;
+  text-decoration: none !important;
+  box-shadow: 0 0 12px rgba(154, 228, 241, 0.15);
+}
+
+.film-gate {
+  position: relative;
+  margin: 0 6px;
+}
+
+.sprocket-rail {
+  height: 18px;
+  background: #0c0c14;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(141, 141, 255, 0.1);
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 20px,
+    rgba(141, 141, 255, 0.08) 20px,
+    rgba(141, 141, 255, 0.08) 21px
+  );
+}
+
+.sprocket-rail::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 12px;
+  right: 12px;
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(141, 141, 255, 0.12) 0px,
+    rgba(141, 141, 255, 0.12) 8px,
+    transparent 8px,
+    transparent 14px,
+    rgba(141, 141, 255, 0.12) 14px,
+    rgba(141, 141, 255, 0.12) 22px,
+    transparent 22px,
+    transparent 40px
+  );
+  border-radius: 1px;
+}
+
+.top-rail {
+  border-bottom: 2px solid rgba(141, 141, 255, 0.2);
+}
+
+.bottom-rail {
+  border-top: 2px solid rgba(141, 141, 255, 0.2);
+}
+
+.film-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  background: #08080f;
+  border-left: 1px solid rgba(141, 141, 255, 0.1);
+  border-right: 1px solid rgba(141, 141, 255, 0.1);
+  position: relative;
+}
+
+.film-track::-webkit-scrollbar {
+  display: none;
+}
+
+.film-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 8, 15, 0.6) 0%, transparent 60px),
+    linear-gradient(270deg, rgba(8, 8, 15, 0.6) 0%, transparent 60px);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.film-frame {
+  flex: 0 0 220px;
+  min-height: 240px;
+  scroll-snap-align: start;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: #fff;
+  border-right: 3px solid #0c0c14;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.film-frame:first-child {
+  border-left: 3px solid #0c0c14;
+}
+
+.film-frame:hover {
+  background: rgba(141, 141, 255, 0.04);
+}
+
+.film-frame:hover .frame-window {
+  border-color: rgba(141, 141, 255, 0.25);
+}
+
+.frame-hot {
+  background: rgba(223, 35, 196, 0.025);
+}
+
+.frame-hot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(223, 35, 196, 0.008) 2px,
+    rgba(223, 35, 196, 0.008) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.frame-hot:hover {
+  background: rgba(223, 35, 196, 0.05);
+}
+
+.frame-number {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 8px;
+  font-family: "Courier New", monospace;
+  color: rgba(141, 141, 255, 0.2);
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
+.frame-hot .frame-number {
+  color: rgba(223, 35, 196, 0.25);
+}
+
+.frame-window {
+  flex: 1;
+  margin: 8px 10px;
+  padding: 12px;
+  border: 1px solid rgba(141, 141, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.2s;
+}
+
+.frame-hot .frame-window {
+  border-color: rgba(223, 35, 196, 0.12);
+}
+
+.frame-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.frame-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(141, 141, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.frame-hot .frame-avatar {
+  border-color: rgba(223, 35, 196, 0.35);
+}
+
+.frame-avatar-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #8d8dff;
+  background: rgba(141, 141, 255, 0.08);
+  border: 1.5px solid rgba(141, 141, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.frame-hot .frame-avatar-letter {
+  color: #df23c4;
+  background: rgba(223, 35, 196, 0.08);
+  border-color: rgba(223, 35, 196, 0.25);
+}
+
+.frame-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8d8dff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.frame-hot .frame-name {
+  color: #df23c4;
+  text-shadow: 0 0 10px rgba(223, 35, 196, 0.2);
+}
+
+.frame-badge {
+  background: #df23c4;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  min-width: 14px;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(223, 35, 196, 0.35);
+  flex-shrink: 0;
+}
+
+.frame-dialogue {
+  flex: 1;
+  font-size: 11px;
+  color: #8a8aa8;
+  line-height: 1.55;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.frame-hot .frame-dialogue {
+  color: #a8a8c4;
+}
+
+.frame-speaker {
+  color: #6a7a9b;
+  font-size: 10px;
+}
+
+.frame-hot .frame-speaker {
+  color: rgba(223, 35, 196, 0.5);
+}
+
+.frame-when {
+  font-size: 9px;
+  color: #4a5a70;
+  font-family: "Courier New", monospace;
+  margin-top: 8px;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .film-frame {
+    flex: 0 0 180px;
+    min-height: 200px;
+  }
+}
+
+.letters-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.letters-empty-icon {
+  font-size: 40px;
+  margin-bottom: 14px;
+  opacity: 0.25;
+}
+
+.letters-empty h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #df23c4;
+  margin: 0 0 8px;
+}
+
+.letters-empty p {
+  color: #6a7a9b;
+  font-size: 12px;
+  margin: 0 0 20px;
+}
+
+.letters-empty-action {
+  display: inline-block;
+  padding: 8px 20px;
+  background: transparent;
+  color: #9ae4f1 !important;
+  text-decoration: none !important;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(154, 228, 241, 0.3);
+  transition: all 0.25s;
+}
+
+.letters-empty-action:hover {
+  background: rgba(154, 228, 241, 0.08);
+  border-color: #9ae4f1;
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.letters-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  font-size: 12px;
+}
+
+.page-btn {
+  color: #8d8dff !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+
+.page-btn:hover {
+  color: #df23c4 !important;
+  text-decoration: none !important;
+}
+
+.page-info {
+  color: #6a7a9b;
+}
+
+.page-current {
+  color: #8d8dff;
+}
+
+.console-viewport {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  aspect-ratio: 970 / 1385;
+  margin: 0 auto;
+}
+
+.console-frame-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("/static/images/core/backgrounds/letter-frame.png") no-repeat
+    top center / 100% 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.console-portrait {
+  position: absolute;
+  left: 11.1%;
+  top: 4.5%;
+  width: 12.5%;
+  height: 6.8%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.console-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-letter {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #9ae4f1;
+  background: rgba(154, 228, 241, 0.06);
+  text-shadow: 0 0 10px rgba(154, 228, 241, 0.4);
+}
+
+.console-nameplate {
+  position: absolute;
+  left: 225px;
+  top: 52px;
+  width: 219px;
+  height: 32px;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(80, 232, 144, 0.2);
+  box-shadow:
+    inset 0 1px 4px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(80, 232, 144, 0.06);
+}
+
+.console-back {
+  color: #e0fff0 !important;
+  text-decoration: none !important;
+  font-size: 10px;
+  font-family: "Courier New", monospace;
+  white-space: nowrap;
+  transition: color 0.2s;
+  padding-right: 8px;
+  margin-right: 8px;
+  border-right: 1px solid rgba(80, 232, 144, 0.25);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 6px rgba(80, 232, 144, 0.5);
+  margin-top: 4px;
+}
+
+.console-back:hover {
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.nameplate-sep {
+  display: none;
+}
+
+.console-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #50e890;
+  font-family: "Courier New", monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 8px rgba(80, 232, 144, 0.6);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.console-screen {
+  position: absolute;
+  left: 17.8%;
+  top: 13.7%;
+  width: 64.2%;
+  height: 57%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 8px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(141, 141, 255, 0.3) transparent;
+  background: transparent;
+  border-radius: 20px;
+}
+
+
+.console-screen::-webkit-scrollbar {
+  width: 3px;
+}
+
+.console-screen::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.console-screen::-webkit-scrollbar-thumb {
+  background: rgba(141, 141, 255, 0.25);
+}
+
+.letters-list {
+  width: 100%;
+  min-height: 100%;
+  border-collapse: collapse;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  position: relative;
+  z-index: 1;
+}
+
+.load-older {
+  text-align: center;
+  padding: 6px 0 10px;
+}
+
+.load-older-btn {
+  background: none;
+  border: none;
+  color: #8d8dff;
+  padding: 4px 0;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  transition: color 0.2s;
+  letter-spacing: 1px;
+}
+
+.load-older-btn:hover {
+  color: #9ae4f1;
+}
+
+.letter-note {
+  vertical-align: top;
+}
+
+.letter-gutter {
+  vertical-align: top;
+  white-space: nowrap;
+  padding: 4px 8px 4px 0;
+  width: 1%;
+  text-align: right;
+  border-right: 1px solid rgb(224, 168, 128, 0.5);
+  font-family: "Courier New", monospace;
+}
+
+.letter-sender {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "Courier New", monospace;
+  color: #e8c060;
+  text-shadow: 0 0 6px rgba(232, 192, 96, 0.35);
+}
+
+.letter-note.from-self .letter-sender {
+  color: #d08070;
+  text-shadow: 0 0 6px rgba(208, 128, 112, 0.35);
+}
+
+.letter-stamp {
+  font-size: 9px;
+  color: #66ffaa;
+  font-weight: 700;
+  font-family: "Courier New", monospace;
+  text-shadow: 0 0 5px rgba(102, 255, 170, 0.3);
+}
+
+.letter-body {
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 11px;
+  padding: 4px 0 4px 8px;
+  font-family: "Courier New", monospace;
+  vertical-align: top;
+}
+
+.letter-body p {
+  margin: 0 0 4px 0;
+}
+
+.letter-body p:last-child {
+  margin-bottom: 0;
+}
+
+.letter-body img {
+  max-width: 100%;
+  border-radius: 0;
+  margin: 4px 0;
+}
+
+.letter-body h1 { font-size: 14px; }
+.letter-body h2 { font-size: 12px; }
+.letter-body h3 { font-size: 11px; }
+
+.letter-body ul,
+.letter-body ol {
+  margin: 3px 0;
+  padding-left: 16px;
+}
+
+.letter-body li {
+  margin-bottom: 2px;
+}
+
+.letter-note.from-other .letter-body {
+  color: #00FDFF;
+  text-shadow: 0 0 8px rgba(0, 253, 255, 0.5);
+}
+
+.letter-note.from-other .letter-body a {
+  color: #00FFD0 !important;
+  text-decoration: underline !important;
+  text-decoration-color: #00FFD0;
+  text-shadow: 0 0 8px rgba(0, 255, 208, 0.5);
+}
+
+.letter-note.from-other .letter-body a:hover {
+  color: #50FFE0 !important;
+}
+
+.letter-note.from-other .letter-body strong {
+  color: #70FFFF;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(112, 255, 255, 0.6);
+}
+
+.letter-note.from-other .letter-body em {
+  color: #00C8D0;
+  font-style: italic;
+  text-shadow: 0 0 6px rgba(0, 200, 208, 0.4);
+}
+
+.letter-note.from-other .letter-body u {
+  color: #00E0E8;
+  text-decoration-color: #00B0B8;
+}
+
+.letter-note.from-other .letter-body s {
+  color: #007E80;
+  text-decoration-color: #005E60;
+}
+
+.letter-note.from-other .letter-body h1,
+.letter-note.from-other .letter-body h2,
+.letter-note.from-other .letter-body h3 {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  margin: 6px 0 3px 0;
+  color: #80FFFF;
+  text-shadow: 0 0 12px rgba(128, 255, 255, 0.6);
+}
+
+.letter-note.from-other .letter-body li::marker {
+  color: #009098;
+}
+
+.letter-note.from-other .letter-body code {
+  background: rgba(0, 253, 255, 0.08);
+  padding: 1px 3px;
+  font-size: 0.9em;
+  font-family: "Courier New", monospace;
+  color: #00E8D0;
+  text-shadow: 0 0 6px rgba(0, 232, 208, 0.4);
+}
+
+.letter-note.from-other .letter-body pre {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 6px;
+  overflow-x: auto;
+  font-size: 10px;
+  margin: 3px 0;
+  border-left: 2px solid #009098;
+  color: #00D8E0;
+  text-shadow: 0 0 6px rgba(0, 216, 224, 0.35);
+}
+
+.letter-note.from-other .letter-body blockquote {
+  border-left: 2px solid #009098;
+  padding-left: 6px;
+  margin: 3px 0;
+  color: #00B8C0;
+  text-shadow: 0 0 6px rgba(0, 184, 192, 0.35);
+}
+
+.letter-note.from-other .letter-body hr {
+  border: none;
+  border-top: 1px solid #009098;
+  margin: 6px 0;
+}
+
+.letter-note.from-self .letter-body {
+  color: #FFEC8B;
+  text-shadow: 0 0 8px rgba(255, 236, 139, 0.45);
+}
+
+.letter-note.from-self .letter-body a {
+  color: #FFD460 !important;
+  text-decoration: underline !important;
+  text-decoration-color: #FFD460;
+  text-shadow: 0 0 8px rgba(255, 212, 96, 0.45);
+}
+
+.letter-note.from-self .letter-body a:hover {
+  color: #FFE090 !important;
+}
+
+.letter-note.from-self .letter-body strong {
+  color: #FFF2B0;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 242, 176, 0.55);
+}
+
+.letter-note.from-self .letter-body em {
+  color: #D4C470;
+  font-style: italic;
+  text-shadow: 0 0 6px rgba(212, 196, 112, 0.4);
+}
+
+.letter-note.from-self .letter-body u {
+  color: #E8D680;
+  text-decoration-color: #C0B060;
+}
+
+.letter-note.from-self .letter-body s {
+  color: #807848;
+  text-decoration-color: #605830;
+}
+
+.letter-note.from-self .letter-body h1,
+.letter-note.from-self .letter-body h2,
+.letter-note.from-self .letter-body h3 {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  margin: 6px 0 3px 0;
+  color: #FFF4C0;
+  text-shadow: 0 0 12px rgba(255, 244, 192, 0.55);
+}
+
+.letter-note.from-self .letter-body li::marker {
+  color: #908050;
+}
+
+.letter-note.from-self .letter-body code {
+  background: rgba(255, 236, 139, 0.08);
+  padding: 1px 3px;
+  font-size: 0.9em;
+  font-family: "Courier New", monospace;
+  color: #F0DC70;
+  text-shadow: 0 0 6px rgba(240, 220, 112, 0.4);
+}
+
+.letter-note.from-self .letter-body pre {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 6px;
+  overflow-x: auto;
+  font-size: 10px;
+  margin: 3px 0;
+  border-left: 2px solid #908050;
+  color: #E0D078;
+  text-shadow: 0 0 6px rgba(224, 208, 120, 0.35);
+}
+
+.letter-note.from-self .letter-body blockquote {
+  border-left: 2px solid #908050;
+  padding-left: 6px;
+  margin: 3px 0;
+  color: #C8B868;
+  text-shadow: 0 0 6px rgba(200, 184, 104, 0.35);
+}
+
+.letter-note.from-self .letter-body hr {
+  border: none;
+  border-top: 1px solid #908050;
+  margin: 6px 0;
+}
+
+.empty-conversation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty-conversation p {
+  color: #8d8dff;
+  font-style: italic;
+  font-size: 11px;
+  font-family: "Courier New", monospace;
+  padding: 16px 20px;
+  text-shadow: 0 0 8px rgba(141, 141, 255, 0.4);
+}
+
+.console-input {
+  position: absolute;
+  left: 21.5%;
+  top: 78.8%;
+  width: 56.8%;
+  height: 11.4%;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.console-reply-form {
+  height: 100%;
+  display: flex;
+  gap: 4px;
+}
+
+.console-reply-form textarea {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(141, 141, 255, 0.1);
+  color: #9ae4f1;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 8px 10px;
+  resize: none;
+  outline: none;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(141, 141, 255, 0.15) transparent;
+  transition: border-color 0.2s;
+}
+
+.console-reply-form textarea:focus {
+  border-color: rgba(154, 228, 241, 0.3);
+}
+
+.console-reply-form textarea::placeholder {
+  color: #3a4a60;
+  font-style: italic;
+}
+
+.console-send-btn {
+  padding: 0 14px;
+  background: transparent;
+  color: #df23c4;
+  border: 1px solid rgba(223, 35, 196, 0.25);
+  border-radius: 0;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  transition: all 0.25s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  align-self: stretch;
+}
+
+.console-send-btn:hover {
+  background: rgba(223, 35, 196, 0.08);
+  border-color: #df23c4;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(223, 35, 196, 0.15);
+}
+
+@media (max-width: 600px) {
+  .console-screen {
+    padding: 6px 8px;
+  }
+
+  .letter-body {
+    font-size: 10px;
+  }
+}
+
+.compose-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 14px;
+  border-bottom: 1px solid rgba(223, 35, 196, 0.1);
+  margin-bottom: 16px;
+}
+
+.compose-toolbar h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: #df23c4;
+  text-shadow: 0 0 16px rgba(223, 35, 196, 0.2);
+}
+
+.compose-body {
+  padding: 24px 20px;
+  max-width: 640px;
+  background: rgba(223, 35, 196, 0.015);
+  border: 1px solid rgba(223, 35, 196, 0.06);
+  border-radius: 8px;
+  margin: 0 16px;
+}
+
+.compose-field {
+  margin-bottom: 18px;
+}
+
+.compose-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #df23c4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.compose-field .recipient-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(223, 35, 196, 0.15);
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.compose-field .recipient-input:focus {
+  border-color: #df23c4;
+  background: rgba(223, 35, 196, 0.04);
+  box-shadow: 0 0 12px rgba(223, 35, 196, 0.08);
+}
+
+.compose-field .recipient-input::placeholder {
+  color: #5a6a80;
+}
+
+.compose-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.compose-cancel {
+  color: #6a7a9b !important;
+  text-decoration: none !important;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+
+.compose-cancel:hover {
+  color: #df23c4 !important;
+  text-decoration: none !important;
+}
+
+.compose-send-btn {
+  padding: 8px 24px;
+  background: transparent;
+  color: #df23c4;
+  border: 1px solid rgba(223, 35, 196, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.25s;
+}
+
+.compose-send-btn:hover {
+  background: rgba(223, 35, 196, 0.08);
+  border-color: #df23c4;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(223, 35, 196, 0.15);
+}
+
+.sidebar-unread-badge {
+  background: #df23c4;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 8px;
+  margin-left: 3px;
+  display: inline-block;
+  min-width: 14px;
+  text-align: center;
+  vertical-align: middle;
+  box-shadow: 0 0 6px rgba(223, 35, 196, 0.3);
+}

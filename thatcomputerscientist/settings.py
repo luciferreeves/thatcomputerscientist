@@ -63,21 +63,22 @@ LOGIN_URL = "/"
 
 INSTALLED_APPS = [
     "daphne",
-    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "django.contrib.sites",
+    "django.contrib.sessions",
     "django.contrib.sitemaps",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
+    "channels",
+    "storages",
     "thatcomputerscientist",
-    "authentication",
     "administration",
+    "authentication",
     "blog",
-    "services",
     "core",
+    "services",
 ]
 
 SITE_ID = 1
@@ -245,6 +246,14 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 3600.0,
     },
 }
+
+# Storage (MINIO)
+MINIO_UPLOAD_ENDPOINT = os.getenv("MINIO_UPLOAD_ENDPOINT")
+MINIO_ACCESS_ENDPOINT = os.getenv("MINIO_ACCESS_ENDPOINT")
+MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY")
+MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY")
+MINIO_BUCKET = os.getenv("MINIO_BUCKET")
+MINIO_USE_SSL = os.getenv("MINIO_USE_SSL", "true").lower() == "true"
 
 # Letters
 LETTERS_MAX_LENGTH = 5000

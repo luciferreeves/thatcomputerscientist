@@ -246,3 +246,66 @@
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+.markmiku-toolbar {
+    background: rgba(0, 0, 0, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.markmiku-btn {
+    color: #888888;
+}
+
+.markmiku-btn:hover {
+    color: #8d8dff;
+    background: rgba(141, 141, 255, 0.2);
+}
+
+.markmiku-btn-send {
+    color: #8d8dff;
+}
+
+.markmiku-btn-send:hover {
+    color: #ffffff;
+    background: rgba(141, 141, 255, 0.15);
+}
+
+.markmiku-emoji-picker {
+    background: rgba(0, 0, 0, 0.95);
+    border-color: rgba(141, 141, 255, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.markmiku-emoji-search {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}
+
+.markmiku-emoji-item:hover {
+    background: rgba(141, 141, 255, 0.2);
+}
+
+.markmiku-emoji-empty {
+    color: #888888;
+}
+
+.markmiku-syntax-italic {
+    color: #cccccc;
+}
+
+.markmiku-syntax-emoji {
+    color: #8d8dff;
+}
+
+.markmiku-syntax-spoiler {
+    background: rgba(255, 255, 255, 0.08);
+}

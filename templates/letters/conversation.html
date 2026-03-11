@@ -4,6 +4,8 @@
 
 {% block head %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}" />
 {% endblock head %}
 
 {% block content %}
@@ -22,7 +24,7 @@
         <div class="console-portrait">
             {% with profile=other_user.userprofile_set.first %}
                 {% if profile and profile.avatar_url %}
-                    <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ other_user.username }}" />
+                    <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ other_user.username }}" width="64" height="64" />
                 {% else %}
                     <div class="portrait-letter">{{ other_user.username|first|upper }}</div>
                 {% endif %}
@@ -42,29 +44,22 @@
             {% endif %}
 
             <table class="letters-list" id="letters-list">
-                {% for letter in letters %}
-                <tr class="letter-note {% if letter.sender == request.user %}from-self{% else %}from-other{% endif %}" data-letter-id="{{ letter.pk }}">
-                    <td class="letter-gutter">
-                        <div class="letter-stamp">{{ letter.created_at|date:"H:i" }}</div>
-                        <div class="letter-sender">{% if letter.sender == request.user %}{% trans "You" %}{% else %}{{ letter.sender.username }}{% endif %}</div>
-                    </td>
-                    <td class="letter-body">{{ letter.content|safe }}</td>
-                </tr>
-                {% empty %}
+                {% include "letters/_partials/letter_rows.html" %}
+                {% if not letters %}
                 <tr class="empty-conversation">
                     <td colspan="2">
                         <p>{% trans "No letters yet. Write the first one!" %}</p>
                     </td>
                 </tr>
-                {% endfor %}
+                {% endif %}
             </table>
         </div>
 
         <div class="console-input">
             <form method="post" id="reply-form" class="console-reply-form">
                 {% csrf_token %}
-                <textarea id="reply-textarea" name="content" placeholder="{% trans 'Write your letter...' %}" rows="3"></textarea>
-                <button type="submit" class="console-send-btn">{% trans "SEND" %}</button>
+                <input type="hidden" name="content" id="reply-content" />
+                <div id="markmiku-editor"></div>
             </form>
         </div>
     </div>
@@ -72,26 +67,25 @@
 {% endblock content %}
 
 {% block scripts %}
+<script type="text/javascript" src="{% static 'js/miku/markmiku.js' %}"></script>
 <script>
 (function() {
     var form = document.getElementById('reply-form');
-    var textarea = document.getElementById('reply-textarea');
+    var hiddenInput = document.getElementById('reply-content');
 
-    form.addEventListener('submit', function(e) {
-        var content = textarea.value.trim();
-        if (!content) {
-            e.preventDefault();
-            return false;
+    var editor = new MarkMiku('#markmiku-editor', {
+        placeholder: '{% trans "Write your letter..." %}',
+        emojis: {{ emoji_data_json }},
+        onSend: function(html) {
+            if (!html.trim()) return;
+            hiddenInput.value = html;
+            form.submit();
         }
-        textarea.value = content.split('\n').map(function(line) {
-            return '<p>' + line.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>';
-        }).join('');
     });
 
-    textarea.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            form.dispatchEvent(new Event('submit', { cancelable: true }));
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('markmiku-spoiler')) {
+            e.target.classList.toggle('revealed');
         }
     });
 
@@ -115,30 +109,26 @@
         var prevHeight = container.scrollHeight;
 
         fetch('{% url "core:letters:conversation_older" username="__USERNAME__" %}'.replace('__USERNAME__', username) + '?before=' + oldestId)
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                if (data.letters && data.letters.length > 0) {
-                    var list = document.getElementById('letters-list');
-                    var fragment = document.createDocumentFragment();
+            .then(function(r) { return r.text(); })
+            .then(function(html) {
+                var temp = document.createElement('table');
+                temp.innerHTML = html;
 
-                    data.letters.forEach(function(letter) {
-                        var tr = document.createElement('tr');
-                        tr.className = 'letter-note ' + (letter.is_own ? 'from-self' : 'from-other');
-                        tr.dataset.letterId = letter.id;
-                        tr.innerHTML = '<td class="letter-gutter">' +
-                            '<div class="letter-stamp">' + formatDate(letter.created_at) + '</div>' +
-                            '<div class="letter-sender">' + (letter.is_own ? '{% trans "You" %}' : letter.sender) + '</div>' +
-                        '</td>' +
-                        '<td class="letter-body">' + letter.content + '</td>';
-                        fragment.appendChild(tr);
-                    });
+                var wrapper = temp.querySelector('tbody[data-has-more]');
+                if (!wrapper) { loading = false; return; }
 
-                    list.insertBefore(fragment, list.firstChild);
-                    container.dataset.oldestId = data.letters[0].id;
+                var rows = wrapper.querySelectorAll('tr.letter-note');
+                if (rows.length > 0) {
+                    var tbody = document.getElementById('letters-list').querySelector('tbody');
+                    var firstChild = tbody.firstChild;
+                    for (var i = 0; i < rows.length; i++) {
+                        tbody.insertBefore(rows[i], firstChild);
+                    }
+                    container.dataset.oldestId = wrapper.dataset.oldestId;
                     container.scrollTop = container.scrollHeight - prevHeight;
                 }
 
-                hasMore = data.has_more;
+                hasMore = wrapper.dataset.hasMore === 'true';
                 var loadOlderDiv = document.getElementById('load-older');
                 if (!hasMore && loadOlderDiv) {
                     loadOlderDiv.remove();
@@ -154,12 +144,6 @@
                 var btn = document.getElementById('load-older-btn');
                 if (btn) btn.textContent = '{% trans "Load older letters" %}';
             });
-    }
-
-    function formatDate(isoString) {
-        var d = new Date(isoString);
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getHours() + ':' + d.getMinutes().toString().padStart(2, '0');
     }
 
     container.addEventListener('scroll', function() {

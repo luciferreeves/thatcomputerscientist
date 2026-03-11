@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django import forms
 
-from administration.kawaiibeats.models import SongMetadata
 from administration.annoucements.models import Announcement, AnnouncementTranslation
+from administration.emojis.models import Emoji
+from administration.kawaiibeats.models import SongMetadata
 
 
 # This class is for the announcement translation inline
@@ -80,3 +81,19 @@ class AnnouncementAdmin(admin.ModelAdmin):
         return obj.content[:50] + "..." if len(obj.content) > 50 else obj.content
 
     content_preview.short_description = "Content"
+
+
+@admin.register(Emoji)
+class EmojiAdmin(admin.ModelAdmin):
+    list_display = ("name", "emoji_preview", "created_at")
+    search_fields = ("name",)
+    ordering = ("name",)
+    list_per_page = 50
+
+    def emoji_preview(self, obj):
+        if obj.image:
+            from django.utils.html import format_html
+            return format_html('<img src="{}" width="24" height="24" />', obj.image.url)
+        return "-"
+
+    emoji_preview.short_description = "Preview"

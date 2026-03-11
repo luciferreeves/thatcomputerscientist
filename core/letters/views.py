@@ -1,7 +1,11 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.utils.safestring import mark_safe
+
+from administration.emojis.functions import get_emoji_data
 
 from core.letters.functions import (
     get_user_inbox,
@@ -55,11 +59,14 @@ def conversation(request, username):
 
     request.meta.title = f"Letters - @{conv.other_user.username}"
 
+    emoji_data = get_emoji_data()
+
     context = {
         "conversation": conv,
         "letters": letter_data["letters"],
         "has_more": letter_data["has_more"],
         "other_user": conv.other_user,
+        "emoji_data_json": mark_safe(json.dumps(emoji_data)),
     }
     return render(request, "letters/conversation.html", context)
 
@@ -68,66 +75,22 @@ def conversation(request, username):
 def conversation_older(request, username):
     before_id = request.GET.get("before")
     if not before_id:
-        return JsonResponse({"letters": [], "has_more": False})
+        return render(request, "letters/_partials/letter_rows.html", {
+            "letters": [],
+            "has_more": False,
+        })
 
     success, conv, letter_data = get_conversation_letters(
         request.user, username, before_id=int(before_id)
     )
 
     if not success:
-        return JsonResponse({"error": conv}, status=404)
-
-    letters_html = []
-    for letter in letter_data["letters"]:
-        letters_html.append({
-            "id": letter.pk,
-            "sender": letter.sender.username,
-            "content": letter.content,
-            "created_at": letter.created_at.isoformat(),
-            "is_own": letter.sender == request.user,
+        return render(request, "letters/_partials/letter_rows.html", {
+            "letters": [],
+            "has_more": False,
         })
 
-    return JsonResponse({
-        "letters": letters_html,
+    return render(request, "letters/_partials/letter_rows.html", {
+        "letters": letter_data["letters"],
         "has_more": letter_data["has_more"],
     })
-
-
-@login_required
-def compose(request, username=None):
-    title_map = {"en": "New Letter", "ja": "新しいレター"}
-    request.meta.title = title_map.get(request.LANGUAGE_CODE)
-
-    recipient = None
-    if username:
-        success, result = find_user_by_username(username)
-        if success:
-            recipient = result
-        else:
-            messages.error(request, result)
-
-    if request.method == "POST":
-        recipient_username = request.POST.get("recipient", "")
-        content = request.POST.get("content", "")
-
-        success, recipient_user = find_user_by_username(recipient_username)
-        if not success:
-            messages.error(request, recipient_user)
-            return render(request, "letters/compose.html", {"formdata": request.POST})
-
-        conv_success, conv = get_or_create_conversation(request.user, recipient_user)
-        if not conv_success:
-            messages.error(request, conv)
-            return render(request, "letters/compose.html", {"formdata": request.POST})
-
-        send_success, send_result = send_letter(request.user, conv, content)
-        if not send_success:
-            messages.error(request, send_result)
-            return render(request, "letters/compose.html", {"formdata": request.POST})
-
-        return redirect("core:letters:conversation", username=recipient_user.username)
-
-    context = {
-        "recipient": recipient,
-    }
-    return render(request, "letters/compose.html", context)

@@ -13,6 +13,8 @@ pillow
 python-dotenv
 redis
 requests
+django-storages
+boto3
 
 
 # Original Requirements (to be deleted later)

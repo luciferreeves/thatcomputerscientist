@@ -93,7 +93,9 @@ def get_conversation_letters(user, other_username, before_id=None):
     )
 
     if not conversation:
-        return False, "Conversation not found.", None
+        conversation = Conversation(participant_one=p1, participant_two=p2)
+        conversation.other_user = other_user
+        return True, conversation, {"letters": [], "has_more": False}
 
     Letter.objects.filter(
         conversation=conversation,

@@ -42,27 +42,6 @@
   letter-spacing: 2px;
 }
 
-.film-compose {
-  padding: 5px 14px;
-  background: transparent;
-  color: #9ae4f1 !important;
-  text-decoration: none !important;
-  font-size: 12px;
-  font-weight: 600;
-  border: 1px solid rgba(154, 228, 241, 0.3);
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.25s;
-}
-
-.film-compose:hover {
-  background: rgba(154, 228, 241, 0.08);
-  border-color: #9ae4f1;
-  color: #fff !important;
-  text-decoration: none !important;
-  box-shadow: 0 0 12px rgba(154, 228, 241, 0.15);
-}
-
 .film-gate {
   position: relative;
   margin: 0 6px;
@@ -351,25 +330,6 @@
   margin: 0 0 20px;
 }
 
-.letters-empty-action {
-  display: inline-block;
-  padding: 8px 20px;
-  background: transparent;
-  color: #9ae4f1 !important;
-  text-decoration: none !important;
-  font-size: 12px;
-  font-weight: 600;
-  border: 1px solid rgba(154, 228, 241, 0.3);
-  transition: all 0.25s;
-}
-
-.letters-empty-action:hover {
-  background: rgba(154, 228, 241, 0.08);
-  border-color: #9ae4f1;
-  color: #fff !important;
-  text-decoration: none !important;
-}
-
 .letters-pagination {
   display: flex;
   justify-content: center;
@@ -522,7 +482,6 @@
   border-radius: 20px;
 }
 
-
 .console-screen::-webkit-scrollbar {
   width: 3px;
 }
@@ -537,7 +496,6 @@
 
 .letters-list {
   width: 100%;
-  min-height: 100%;
   border-collapse: collapse;
   font-family: "Courier New", monospace;
   font-size: 11px;
@@ -568,6 +526,16 @@
 
 .letter-note {
   vertical-align: top;
+}
+
+.letter-note + .letter-note {
+  border-top: 1px solid rgba(141, 141, 255, 0.06);
+}
+
+.letter-note .letter-gutter,
+.letter-note .letter-body {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .letter-gutter {
@@ -625,9 +593,15 @@
   margin: 4px 0;
 }
 
-.letter-body h1 { font-size: 14px; }
-.letter-body h2 { font-size: 12px; }
-.letter-body h3 { font-size: 11px; }
+.letter-body h1 {
+  font-size: 14px;
+}
+.letter-body h2 {
+  font-size: 12px;
+}
+.letter-body h3 {
+  font-size: 11px;
+}
 
 .letter-body ul,
 .letter-body ol {
@@ -640,41 +614,41 @@
 }
 
 .letter-note.from-other .letter-body {
-  color: #00FDFF;
+  color: #00fdff;
   text-shadow: 0 0 8px rgba(0, 253, 255, 0.5);
 }
 
 .letter-note.from-other .letter-body a {
-  color: #00FFD0 !important;
+  color: #00ffd0 !important;
   text-decoration: underline !important;
-  text-decoration-color: #00FFD0;
+  text-decoration-color: #00ffd0;
   text-shadow: 0 0 8px rgba(0, 255, 208, 0.5);
 }
 
 .letter-note.from-other .letter-body a:hover {
-  color: #50FFE0 !important;
+  color: #50ffe0 !important;
 }
 
 .letter-note.from-other .letter-body strong {
-  color: #70FFFF;
+  color: #70ffff;
   font-weight: 700;
   text-shadow: 0 0 10px rgba(112, 255, 255, 0.6);
 }
 
 .letter-note.from-other .letter-body em {
-  color: #00C8D0;
+  color: #00c8d0;
   font-style: italic;
   text-shadow: 0 0 6px rgba(0, 200, 208, 0.4);
 }
 
 .letter-note.from-other .letter-body u {
-  color: #00E0E8;
-  text-decoration-color: #00B0B8;
+  color: #00e0e8;
+  text-decoration-color: #00b0b8;
 }
 
 .letter-note.from-other .letter-body s {
-  color: #007E80;
-  text-decoration-color: #005E60;
+  color: #007e80;
+  text-decoration-color: #005e60;
 }
 
 .letter-note.from-other .letter-body h1,
@@ -683,7 +657,7 @@
   font-family: "Courier New", monospace;
   font-weight: 700;
   margin: 6px 0 3px 0;
-  color: #80FFFF;
+  color: #80ffff;
   text-shadow: 0 0 12px rgba(128, 255, 255, 0.6);
 }
 
@@ -696,7 +670,7 @@
   padding: 1px 3px;
   font-size: 0.9em;
   font-family: "Courier New", monospace;
-  color: #00E8D0;
+  color: #00e8d0;
   text-shadow: 0 0 6px rgba(0, 232, 208, 0.4);
 }
 
@@ -707,7 +681,7 @@
   font-size: 10px;
   margin: 3px 0;
   border-left: 2px solid #009098;
-  color: #00D8E0;
+  color: #00d8e0;
   text-shadow: 0 0 6px rgba(0, 216, 224, 0.35);
 }
 
@@ -715,7 +689,7 @@
   border-left: 2px solid #009098;
   padding-left: 6px;
   margin: 3px 0;
-  color: #00B8C0;
+  color: #00b8c0;
   text-shadow: 0 0 6px rgba(0, 184, 192, 0.35);
 }
 
@@ -726,36 +700,36 @@
 }
 
 .letter-note.from-self .letter-body {
-  color: #FFEC8B;
+  color: #ffec8b;
   text-shadow: 0 0 8px rgba(255, 236, 139, 0.45);
 }
 
 .letter-note.from-self .letter-body a {
-  color: #FFD460 !important;
+  color: #ffd460 !important;
   text-decoration: underline !important;
-  text-decoration-color: #FFD460;
+  text-decoration-color: #ffd460;
   text-shadow: 0 0 8px rgba(255, 212, 96, 0.45);
 }
 
 .letter-note.from-self .letter-body a:hover {
-  color: #FFE090 !important;
+  color: #ffe090 !important;
 }
 
 .letter-note.from-self .letter-body strong {
-  color: #FFF2B0;
+  color: #fff2b0;
   font-weight: 700;
   text-shadow: 0 0 10px rgba(255, 242, 176, 0.55);
 }
 
 .letter-note.from-self .letter-body em {
-  color: #D4C470;
+  color: #d4c470;
   font-style: italic;
   text-shadow: 0 0 6px rgba(212, 196, 112, 0.4);
 }
 
 .letter-note.from-self .letter-body u {
-  color: #E8D680;
-  text-decoration-color: #C0B060;
+  color: #e8d680;
+  text-decoration-color: #c0b060;
 }
 
 .letter-note.from-self .letter-body s {
@@ -769,7 +743,7 @@
   font-family: "Courier New", monospace;
   font-weight: 700;
   margin: 6px 0 3px 0;
-  color: #FFF4C0;
+  color: #fff4c0;
   text-shadow: 0 0 12px rgba(255, 244, 192, 0.55);
 }
 
@@ -782,7 +756,7 @@
   padding: 1px 3px;
   font-size: 0.9em;
   font-family: "Courier New", monospace;
-  color: #F0DC70;
+  color: #f0dc70;
   text-shadow: 0 0 6px rgba(240, 220, 112, 0.4);
 }
 
@@ -793,7 +767,7 @@
   font-size: 10px;
   margin: 3px 0;
   border-left: 2px solid #908050;
-  color: #E0D078;
+  color: #e0d078;
   text-shadow: 0 0 6px rgba(224, 208, 120, 0.35);
 }
 
@@ -801,7 +775,7 @@
   border-left: 2px solid #908050;
   padding-left: 6px;
   margin: 3px 0;
-  color: #C8B868;
+  color: #c8b868;
   text-shadow: 0 0 6px rgba(200, 184, 104, 0.35);
 }
 
@@ -811,11 +785,51 @@
   margin: 6px 0;
 }
 
+.letter-body .markmiku-emoji {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin: 0 1px;
+  display: inline;
+}
+
+.letter-note.from-other .letter-body .markmiku-spoiler {
+  background: #006870;
+  color: transparent;
+  border-radius: 3px;
+  padding: 0 4px;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+
+.letter-note.from-other .letter-body .markmiku-spoiler.revealed {
+  background: rgba(0, 104, 112, 0.3);
+  color: #00e8d0;
+  text-shadow: 0 0 6px rgba(0, 232, 208, 0.4);
+}
+
+.letter-note.from-self .letter-body .markmiku-spoiler {
+  background: #807040;
+  color: transparent;
+  border-radius: 3px;
+  padding: 0 4px;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+
+.letter-note.from-self .letter-body .markmiku-spoiler.revealed {
+  background: rgba(128, 112, 64, 0.3);
+  color: #ffec8b;
+  text-shadow: 0 0 6px rgba(255, 236, 139, 0.4);
+}
+
 .empty-conversation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  text-align: center;
 }
 
 .empty-conversation p {
@@ -836,62 +850,55 @@
   box-sizing: border-box;
   overflow: hidden;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
 }
 
 .console-reply-form {
-  height: 100%;
-  display: flex;
-  gap: 4px;
-}
-
-.console-reply-form textarea {
   flex: 1;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(141, 141, 255, 0.1);
-  color: #9ae4f1;
-  font-family: "Courier New", monospace;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.console-reply-form .miku-editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.console-reply-form .miku-editor-wrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+.console-reply-form .miku-editor-main {
+  height: 100%;
+}
+
+.console-reply-form .miku-editor-input,
+.console-reply-form .miku-editor-syntax-highlight {
+  min-height: unset;
+  max-height: unset;
+  height: 100%;
   font-size: 11px;
-  line-height: 1.4;
-  padding: 8px 10px;
-  resize: none;
-  outline: none;
-  box-sizing: border-box;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(141, 141, 255, 0.15) transparent;
-  transition: border-color 0.2s;
 }
 
-.console-reply-form textarea:focus {
-  border-color: rgba(154, 228, 241, 0.3);
+.console-reply-form .markmiku-toolbar {
+  flex-shrink: 0;
+  padding: 2px 6px;
 }
 
-.console-reply-form textarea::placeholder {
-  color: #3a4a60;
-  font-style: italic;
+.console-reply-form .markmiku-btn {
+  padding: 2px 4px;
 }
 
-.console-send-btn {
-  padding: 0 14px;
-  background: transparent;
-  color: #df23c4;
-  border: 1px solid rgba(223, 35, 196, 0.25);
-  border-radius: 0;
-  cursor: pointer;
-  font-family: "Courier New", monospace;
-  font-size: 9px;
-  font-weight: 700;
-  transition: all 0.25s;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  align-self: stretch;
-}
-
-.console-send-btn:hover {
-  background: rgba(223, 35, 196, 0.08);
-  border-color: #df23c4;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(223, 35, 196, 0.15);
+.console-reply-form .markmiku-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 @media (max-width: 600px) {
@@ -904,107 +911,14 @@
   }
 }
 
-.compose-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 16px 14px;
-  border-bottom: 1px solid rgba(223, 35, 196, 0.1);
-  margin-bottom: 16px;
-}
-
-.compose-toolbar h1 {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0;
-  color: #df23c4;
-  text-shadow: 0 0 16px rgba(223, 35, 196, 0.2);
-}
-
-.compose-body {
-  padding: 24px 20px;
-  max-width: 640px;
-  background: rgba(223, 35, 196, 0.015);
-  border: 1px solid rgba(223, 35, 196, 0.06);
-  border-radius: 8px;
-  margin: 0 16px;
-}
-
-.compose-field {
-  margin-bottom: 18px;
-}
-
-.compose-field label {
-  display: block;
+.markmiku-autocomplete .miku-editor-autocomplete-item {
+  padding: 6px 10px;
   font-size: 11px;
-  font-weight: 700;
-  color: #df23c4;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
 }
 
-.compose-field .recipient-input {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(223, 35, 196, 0.15);
-  border-radius: 4px;
-  padding: 8px 12px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 13px;
-  outline: none;
-  box-sizing: border-box;
-  transition: all 0.2s;
-}
-
-.compose-field .recipient-input:focus {
-  border-color: #df23c4;
-  background: rgba(223, 35, 196, 0.04);
-  box-shadow: 0 0 12px rgba(223, 35, 196, 0.08);
-}
-
-.compose-field .recipient-input::placeholder {
-  color: #5a6a80;
-}
-
-.compose-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-}
-
-.compose-cancel {
-  color: #6a7a9b !important;
-  text-decoration: none !important;
-  font-size: 12px;
-  transition: color 0.2s;
-}
-
-.compose-cancel:hover {
-  color: #df23c4 !important;
-  text-decoration: none !important;
-}
-
-.compose-send-btn {
-  padding: 8px 24px;
-  background: transparent;
-  color: #df23c4;
-  border: 1px solid rgba(223, 35, 196, 0.3);
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.25s;
-}
-
-.compose-send-btn:hover {
-  background: rgba(223, 35, 196, 0.08);
-  border-color: #df23c4;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(223, 35, 196, 0.15);
+.markmiku-autocomplete .markmiku-autocomplete-emoji-preview {
+  width: 18px;
+  height: 18px;
 }
 
 .sidebar-unread-badge {

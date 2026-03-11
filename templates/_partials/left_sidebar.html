@@ -236,18 +236,23 @@
             <div class="navigation-items-container">
                 <div class="navigation-item">
                     <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
-                         alt="Manage Announcements Icon" />
-                    <a href="{% url "administration:announcements" %}">{% translate "Manage Announcements" %}</a>
+                         alt="Announcements Manager Icon" />
+                    <a href="{% url "administration:announcements" %}">{% translate "Announcement Manager" %}</a>
                 </div>
                 <div class="navigation-item">
                     <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
-                         alt="Manage Users Icon" />
-                    <a href="#manage-users">{% translate "Manage Users" %}</a>
+                         alt="Emoji Manager Icon" />
+                    <a href="{% url 'administration:emojis' %}">{% translate "Emoji Manager" %}</a>
                 </div>
                 <div class="navigation-item">
                     <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
                          alt="KawaiiBeats Manager Icon" />
                     <a href="{% url 'administration:kawaiibeats' %}">{% translate "KawaiiBeats Manager" %}</a>
+                </div>
+                <div class="navigation-item">
+                    <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"
+                         alt="Users Manager Icon" />
+                    <a href="#manage-users">{% translate "User Manager" %}</a>
                 </div>
                 <div class="navigation-item">
                     <img src="{% static 'images/core/gifs/right_hand.gif' %}" width="20" height="20"

@@ -253,3 +253,66 @@
     color: #AD717B;
     border: 1px solid #C4748D;
 }
+
+.markmiku-toolbar {
+    background: #000000;
+    border-top-color: #C4748D;
+}
+
+.markmiku-btn {
+    color: #85474B;
+}
+
+.markmiku-btn:hover {
+    color: #D4758C;
+    background: #340000;
+}
+
+.markmiku-btn-send {
+    color: #C4748D;
+}
+
+.markmiku-btn-send:hover {
+    color: #D4758C;
+    background: rgba(196, 116, 141, 0.1);
+}
+
+.markmiku-emoji-picker {
+    background: #000000;
+    border-color: #C4748D;
+    box-shadow: 0 4px 16px rgba(196, 116, 141, 0.3);
+}
+
+.markmiku-emoji-search {
+    background: #340000;
+    border-bottom-color: #C4748D;
+    color: #AD717B;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-thumb {
+    background: #C4748D;
+}
+
+.markmiku-emoji-item:hover {
+    background: #340000;
+}
+
+.markmiku-emoji-empty {
+    color: #85474B;
+}
+
+.markmiku-syntax-italic {
+    color: #D4758C;
+}
+
+.markmiku-syntax-emoji {
+    color: #C3B193;
+}
+
+.markmiku-syntax-spoiler {
+    background: rgba(196, 116, 141, 0.08);
+}

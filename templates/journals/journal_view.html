@@ -69,35 +69,9 @@
 {% endblock content %}
 
 {% block scripts %}
-<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
-<script>
-(function() {
-    var host = document.getElementById('journal-entries-host');
-    var template = document.getElementById('journal-entries-template');
-    var shadow = host.attachShadow({ mode: 'open' });
-
-    // Import base stylesheets into shadow DOM
-    var baseStyles = [
-        '{% static "css/blog/post.css" %}',
-        '{% static "css/journals/journal_entries.css" %}',
-        '{% static "css/journals/journal_view.css" %}'
-    ];
-    baseStyles.forEach(function(href) {
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = href;
-        shadow.appendChild(link);
-    });
-
-    shadow.appendChild(template.content.cloneNode(true));
-
-    // Run image float script inside shadow DOM
-    shadow.querySelectorAll('.entry-container .weblog-content').forEach(function(content) {
-        content.querySelectorAll('img').forEach(function(img, i) {
-            img.classList.add(i % 2 === 0 ? 'float-left' : 'float-right');
-        });
-    });
-})();
+<script type="application/json" id="journal-view-config">
+["{% static 'css/blog/post.css' %}", "{% static 'css/journals/journal_entries.css' %}", "{% static 'css/journals/journal_view.css' %}"]
 </script>
+<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/journals/journal_view.js' %}"></script>
 {% endblock scripts %}

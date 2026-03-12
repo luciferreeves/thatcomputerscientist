@@ -248,6 +248,21 @@ function initSettingsSlugGeneration() {
     }
 }
 
+function initDeleteJournal() {
+    var configEl = document.getElementById('journal-settings-config');
+    if (!configEl) return;
+
+    var config = JSON.parse(configEl.textContent);
+    var deleteBtn = document.getElementById('delete-journal-btn');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', function() {
+            if (confirm(config.confirmDelete)) {
+                window.location.href = config.deleteUrl;
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     updateLanguageDropdowns();
     initTranslationManagement();
@@ -255,4 +270,5 @@ document.addEventListener('DOMContentLoaded', function () {
     initCodeMirror();
     initFormSubmission();
     initSettingsSlugGeneration();
+    initDeleteJournal();
 });

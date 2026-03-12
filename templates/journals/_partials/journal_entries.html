@@ -49,10 +49,4 @@
 </div>
 {% endif %}
 {% endwith %}
-<script>
-document.querySelectorAll('.entry-container .weblog-content').forEach(function(content) {
-    content.querySelectorAll('img').forEach(function(img, i) {
-        img.classList.add(i % 2 === 0 ? 'float-left' : 'float-right');
-    });
-});
-</script>
+<script type="text/javascript" src="{% static 'js/journals/image_float.js' %}"></script>

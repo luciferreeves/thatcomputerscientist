@@ -11,9 +11,6 @@ from administration.emojis.functions import get_emoji_data
 from core.letters.functions import (
     get_user_inbox,
     get_conversation_letters,
-    get_or_create_conversation,
-    send_letter,
-    find_user_by_username,
 )
 
 
@@ -33,25 +30,6 @@ def inbox(request):
 
 @login_required
 def conversation(request, username):
-    if request.method == "POST":
-        content = request.POST.get("content", "")
-
-        success, result = find_user_by_username(username)
-        if not success:
-            messages.error(request, result)
-            return redirect("core:letters:inbox")
-
-        conv_success, conv = get_or_create_conversation(request.user, result)
-        if not conv_success:
-            messages.error(request, conv)
-            return redirect("core:letters:inbox")
-
-        send_success, send_result = send_letter(request.user, conv, content)
-        if not send_success:
-            messages.error(request, send_result)
-
-        return redirect("core:letters:conversation", username=username)
-
     success, conv, letter_data = get_conversation_letters(request.user, username)
 
     if not success:

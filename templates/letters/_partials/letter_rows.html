@@ -13,7 +13,7 @@
             {% for att in letter.attachments.all %}
             <a href="{{ att.file.url }}" target="_blank" class="letter-attachment{% if att.content_type|slice:':5' == 'image' %} letter-attachment-image{% endif %}">
                 {% if att.content_type|slice:":5" == "image" %}
-                <img src="{{ att.file.url }}" alt="{{ att.original_name }}" width="200" height="150" />
+                <img src="{{ att.file.url }}" alt="{{ att.original_name }}" />
                 {% else %}
                 <span class="letter-attachment-file">{{ att.original_name }}</span>
                 {% endif %}

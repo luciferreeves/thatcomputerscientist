@@ -1,13 +1,14 @@
-import json
-
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 from core.letters.functions import (
     find_user_by_username,
+    get_conversation_by_users,
+    get_letter_attachments,
+    has_pending_attachments,
+    mark_letters_read,
     send_letter,
 )
-from core.letters.models import Conversation
 
 
 class ConversationConsumer(AsyncJsonWebsocketConsumer):
@@ -45,12 +46,21 @@ class ConversationConsumer(AsyncJsonWebsocketConsumer):
 
     async def _handle_send(self, content):
         text = content.get("content", "").strip()
-        if not text:
+        has_attachments = await database_sync_to_async(has_pending_attachments)(
+            self.user, self.conversation
+        )
+
+        if not text and not has_attachments:
             return
 
-        letter = await self._send_letter(text)
-        if not letter:
+        letter = await database_sync_to_async(send_letter)(
+            self.user, self.conversation, text
+        )
+        if not letter[0]:
             return
+
+        letter = letter[1]
+        attachments = await database_sync_to_async(get_letter_attachments)(letter)
 
         await self.channel_layer.group_send(
             self.room_group,
@@ -60,11 +70,14 @@ class ConversationConsumer(AsyncJsonWebsocketConsumer):
                 "sender": self.user.username,
                 "content": letter.content,
                 "created_at": letter.created_at.isoformat(),
+                "attachments": attachments,
             },
         )
 
     async def _handle_read(self):
-        await self._mark_read()
+        await database_sync_to_async(mark_letters_read)(
+            self.user, self.conversation
+        )
         await self.channel_layer.group_send(
             self.room_group,
             {
@@ -83,6 +96,7 @@ class ConversationConsumer(AsyncJsonWebsocketConsumer):
                 "sender": event["sender"],
                 "content": event["content"],
                 "created_at": event["created_at"],
+                "attachments": event.get("attachments", []),
             }
         )
 
@@ -102,32 +116,4 @@ class ConversationConsumer(AsyncJsonWebsocketConsumer):
         if not success:
             return None
 
-        other_user = result
-        if self.user == other_user:
-            return None
-
-        p1, p2 = (
-            (self.user, other_user)
-            if self.user.pk < other_user.pk
-            else (other_user, self.user)
-        )
-
-        return Conversation.objects.filter(
-            participant_one=p1, participant_two=p2
-        ).first()
-
-    @database_sync_to_async
-    def _send_letter(self, text):
-        success, result = send_letter(self.user, self.conversation, text)
-        if not success:
-            return None
-        return result
-
-    @database_sync_to_async
-    def _mark_read(self):
-        from core.letters.models import Letter
-
-        Letter.objects.filter(
-            conversation=self.conversation,
-            is_read=False,
-        ).exclude(sender=self.user).update(is_read=True)
+        return get_conversation_by_users(self.user, result)

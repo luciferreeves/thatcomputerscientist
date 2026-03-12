@@ -194,3 +194,39 @@ def link_attachments_to_letter(user, conversation, letter):
         uploader=user,
         letter__isnull=True,
     ).update(letter=letter)
+
+
+def get_conversation_by_users(user, other_user):
+    if user == other_user:
+        return None
+
+    p1, p2 = (user, other_user) if user.pk < other_user.pk else (other_user, user)
+    return Conversation.objects.filter(
+        participant_one=p1, participant_two=p2
+    ).first()
+
+
+def has_pending_attachments(user, conversation):
+    return LetterAttachment.objects.filter(
+        conversation=conversation,
+        uploader=user,
+        letter__isnull=True,
+    ).exists()
+
+
+def get_letter_attachments(letter):
+    return [
+        {
+            "url": att.file.url,
+            "original_name": att.original_name,
+            "content_type": att.content_type,
+        }
+        for att in letter.attachments.all()
+    ]
+
+
+def mark_letters_read(user, conversation):
+    Letter.objects.filter(
+        conversation=conversation,
+        is_read=False,
+    ).exclude(sender=user).update(is_read=True)

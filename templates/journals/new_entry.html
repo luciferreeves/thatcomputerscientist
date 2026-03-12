@@ -65,22 +65,12 @@
 {% endblock content %}
 
 {% block scripts %}
-<script src="{% static 'js/miku/fancymiku.js' %}"></script>
-<script>
-    let editor = new FancyMiku('#editor-container', {
-        height: '600px',
-        placeholder: '{% trans "Start writing your entry..." %}'
-    });
-    
-    document.getElementById('entry-form').addEventListener('submit', (e) => {
-        const content = editor.getContent();
-        document.getElementById('entry-content').value = content;
-        
-        if (!content || content.trim() === '<p><br></p>' || content.trim() === '') {
-            e.preventDefault();
-            alert('{% trans "Please write some content for your entry." %}');
-            return false;
-        }
-    });
+<script type="application/json" id="new-entry-config">
+{
+    "placeholder": "{% trans 'Start writing your entry...' %}",
+    "alertEmpty": "{% trans 'Please write some content for your entry.' %}"
+}
 </script>
+<script src="{% static 'js/miku/fancymiku.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/journals/new_entry.js' %}"></script>
 {% endblock scripts %}

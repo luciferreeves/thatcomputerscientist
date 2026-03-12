@@ -78,7 +78,10 @@ def get_user_inbox(user, page=1):
 
     for conv in page_obj:
         conv.last_letter = (
-            conv.letters.select_related("sender").order_by("-created_at").first()
+            conv.letters.select_related("sender")
+            .prefetch_related("attachments")
+            .order_by("-created_at")
+            .first()
         )
         conv.other_user = conv.get_other_participant(user)
 

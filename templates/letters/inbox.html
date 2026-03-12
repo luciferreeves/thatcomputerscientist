@@ -7,75 +7,87 @@
 {% endblock head %}
 
 {% block content %}
-<div class="letters-page">
+<div class="signal-deck">
+    <div class="deck-frame-mid"></div>
     {% if messages %}
-        <div class="form-messages">
+        <div class="deck-messages">
             {% for message in messages %}
-                <div class="form-message {{ message.tags }}">{{ message }}</div>
+                <div class="deck-msg {{ message.tags }}">{{ message }}</div>
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if conversations %}
-    <div class="film-header">
-        <h1>{% trans "Letters" %}</h1>
+    <div class="deck-header">
+        <div class="deck-header-left">
+            <h1 class="deck-title">{% trans "Letters" %}</h1>
+        </div>
+        <div class="deck-header-right">
+            {% if unread_letter_count %}
+                <span class="deck-header-unread">{{ unread_letter_count }} {% trans "UNREAD" %}</span>
+            {% endif %}
+            {% if conversations %}
+                <span class="deck-header-count">{{ conversations.paginator.count }} {% trans "TOTAL" %}</span>
+            {% endif %}
+        </div>
     </div>
 
-    <div class="film-gate">
-        <div class="sprocket-rail top-rail"></div>
-        <div class="film-track">
-            {% for conv in conversations %}
-            <a href="{% url 'core:letters:conversation' username=conv.other_user.username %}" class="film-frame {% if conv.unread_count > 0 %}frame-hot{% endif %}">
-                <span class="frame-number">{{ forloop.counter|stringformat:"02d" }}</span>
-                <div class="frame-window">
-                    <div class="frame-who">
-                        {% with profile=conv.other_user.userprofile_set.first %}
-                            {% if profile and profile.avatar_url %}
-                                <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ conv.other_user.username }}" class="frame-avatar" width="32" height="32" />
-                            {% else %}
-                                <div class="frame-avatar-letter">{{ conv.other_user.username|first|upper }}</div>
-                            {% endif %}
-                        {% endwith %}
-                        <span class="frame-name">{{ conv.other_user.username }}</span>
-                        {% if conv.unread_count > 0 %}
-                            <span class="frame-badge">{{ conv.unread_count }}</span>
+    {% if conversations %}
+    <div class="deck-list">
+        {% for conv in conversations %}
+        <a href="{% url 'core:letters:conversation' username=conv.other_user.username %}" class="deck-channel {% if conv.unread_count > 0 %}channel-active{% endif %}">
+            <div class="channel-accent"></div>
+            <div class="channel-avatar-wrap">
+                {% with profile=conv.other_user.userprofile_set.first %}
+                    {% if profile and profile.avatar_url %}
+                        <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ conv.other_user.username }}" class="channel-avatar" width="36" height="36" />
+                    {% else %}
+                        <div class="channel-avatar-letter">{{ conv.other_user.username|first|upper }}</div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="channel-info">
+                <span class="channel-name">{{ conv.other_user.username }}</span>
+                <div class="channel-preview">
+                    {% if conv.last_letter %}
+                        <span class="channel-sender">{% if conv.last_letter.sender == request.user %}{% trans "You" %}{% else %}{{ conv.last_letter.sender.username }}{% endif %}:</span>
+                        {% if conv.last_letter.content|striptags %}
+                            {{ conv.last_letter.content|truncatechars_html:80|safe }}
+                        {% elif conv.last_letter.attachments.count %}
+                            <span class="channel-empty-msg">{{ conv.last_letter.attachments.count }} {% trans "attachment" %}{{ conv.last_letter.attachments.count|pluralize }}</span>
                         {% endif %}
-                    </div>
-                    <div class="frame-dialogue">
-                        {% if conv.last_letter %}
-                            <span class="frame-speaker">{% if conv.last_letter.sender == request.user %}{% trans "You" %}{% else %}{{ conv.last_letter.sender.username }}{% endif %}:</span>
-                            {{ conv.last_letter.content|striptags|truncatechars:90 }}
-                        {% else %}
-                            {% trans "No letters yet" %}
-                        {% endif %}
-                    </div>
-                    <div class="frame-when">
-                        {% if conv.last_letter %}{{ conv.last_letter.created_at|date:"M d, H:i" }}{% endif %}
-                    </div>
+                    {% else %}
+                        <span class="channel-empty-msg">{% trans "No letters yet" %}</span>
+                    {% endif %}
                 </div>
-            </a>
-            {% endfor %}
-        </div>
-        <div class="sprocket-rail bottom-rail"></div>
+            </div>
+            <div class="channel-meta">
+                <span class="channel-time">
+                    {% if conv.last_letter %}{{ conv.last_letter.created_at|timesince }}{% endif %}
+                </span>
+                {% if conv.unread_count > 0 %}
+                    <span class="channel-badge">{{ conv.unread_count }}</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
     </div>
 
     {% if conversations.has_other_pages %}
-    <nav class="letters-pagination">
+    <nav class="deck-pagination">
         {% if conversations.has_previous %}
-            <a href="?page={{ conversations.previous_page_number }}" class="page-btn">« {% trans "Prev" %}</a>
+            <a href="?page={{ conversations.previous_page_number }}" class="deck-page-btn">« {% trans "PREV" %}</a>
         {% endif %}
-        <span class="page-info">
-            <span class="page-current">{{ conversations.number }}</span>/{{ conversations.paginator.num_pages }}
+        <span class="deck-page-info">
+            <span class="deck-page-current">{{ conversations.number }}</span> / {{ conversations.paginator.num_pages }}
         </span>
         {% if conversations.has_next %}
-            <a href="?page={{ conversations.next_page_number }}" class="page-btn">{% trans "Next" %} »</a>
+            <a href="?page={{ conversations.next_page_number }}" class="deck-page-btn">{% trans "NEXT" %} »</a>
         {% endif %}
     </nav>
     {% endif %}
 
     {% else %}
-    <div class="letters-empty">
-        <div class="letters-empty-icon">✉</div>
+    <div class="deck-empty">
         <h3>{% trans "No Conversations Yet" %}</h3>
         <p>{% trans "Visit a user's page and send them a letter to start a conversation." %}</p>
     </div>

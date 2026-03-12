@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from core.translations import LANGUAGE_CHOICES
@@ -105,7 +106,9 @@ def journal(request, slug):
             messages.success(request, "Journal settings updated successfully.")
         else:
             messages.error(request, update_message)
-        return redirect("services:journals:journal", slug=journal.slug)
+        return redirect(
+            f'{reverse("services:journals:journal", kwargs={"slug": journal.slug})}?tab=settings'
+        )
 
     if request.method == "POST" and is_entry_context:
         update_success, update_message = update_journal_entry(
@@ -124,7 +127,11 @@ def journal(request, slug):
     }
 
     if is_entry_context:
-        entry = journal.entries.prefetch_related("translations").filter(slug=entry_slug).first()
+        entry = (
+            journal.entries.prefetch_related("translations")
+            .filter(slug=entry_slug)
+            .first()
+        )
         if not entry:
             messages.error(request, "Entry not found.")
             return redirect(f"/services/journals/{journal.slug}?tab=entries")

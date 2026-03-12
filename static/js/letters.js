@@ -29,9 +29,10 @@
     connectSocket();
 
     function appendLetter(data) {
-        var tbody = document.getElementById('letters-list').querySelector('tbody');
+        var table = document.getElementById('letters-list');
+        var tbody = table.querySelector('tbody');
 
-        var empty = tbody.querySelector('.empty-conversation');
+        var empty = table.querySelector('.empty-conversation');
         if (empty) empty.remove();
 
         var isSelf = data.sender === currentUser;

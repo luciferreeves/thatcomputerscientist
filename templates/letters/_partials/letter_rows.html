@@ -6,7 +6,22 @@
         <div class="letter-stamp">{{ letter.created_at|date:"H:i" }}</div>
         <div class="letter-sender">{% if letter.sender == request.user %}{% trans "You" %}{% else %}{{ letter.sender.username }}{% endif %}</div>
     </td>
-    <td class="letter-body">{{ letter.content|safe }}</td>
+    <td class="letter-body">
+        {{ letter.content|safe }}
+        {% if letter.attachments.all %}
+        <div class="letter-attachments">
+            {% for att in letter.attachments.all %}
+            <a href="{{ att.file.url }}" target="_blank" class="letter-attachment{% if att.content_type|slice:':5' == 'image' %} letter-attachment-image{% endif %}">
+                {% if att.content_type|slice:":5" == "image" %}
+                <img src="{{ att.file.url }}" alt="{{ att.original_name }}" />
+                {% else %}
+                <span class="letter-attachment-file">{{ att.original_name }}</span>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </td>
 </tr>
 {% endfor %}
 </tbody>

@@ -299,13 +299,6 @@
   text-align: right;
 }
 
-@media (max-width: 600px) {
-  .film-frame {
-    flex: 0 0 180px;
-    min-height: 200px;
-  }
-}
-
 .letters-empty {
   text-align: center;
   padding: 60px 20px;
@@ -870,6 +863,11 @@
   box-shadow: none;
 }
 
+.console-reply-form .markmiku-body {
+  flex: 1;
+  min-height: 0;
+}
+
 .console-reply-form .miku-editor-wrapper {
   flex: 1;
   min-height: 0;
@@ -901,16 +899,6 @@
   height: 14px;
 }
 
-@media (max-width: 600px) {
-  .console-screen {
-    padding: 6px 8px;
-  }
-
-  .letter-body {
-    font-size: 10px;
-  }
-}
-
 .markmiku-autocomplete .miku-editor-autocomplete-item {
   padding: 6px 10px;
   font-size: 11px;
@@ -919,6 +907,61 @@
 .markmiku-autocomplete .markmiku-autocomplete-emoji-preview {
   width: 18px;
   height: 18px;
+}
+
+.letter-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.letter-attachment {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.letter-attachment-image img {
+  max-width: 200px;
+  max-height: 150px;
+  border-radius: 4px;
+  border: 1px solid rgba(141, 141, 255, 0.15);
+  object-fit: cover;
+}
+
+.letter-attachment-image img:hover {
+  border-color: rgba(141, 141, 255, 0.4);
+}
+
+.letter-attachment-file {
+  display: inline-block;
+  padding: 3px 8px;
+  background: rgba(141, 141, 255, 0.08);
+  border: 1px solid rgba(141, 141, 255, 0.15);
+  border-radius: 3px;
+  font-size: 10px;
+  color: #8d8dff;
+  text-shadow: 0 0 6px rgba(141, 141, 255, 0.3);
+}
+
+.letter-attachment-file:hover {
+  background: rgba(141, 141, 255, 0.15);
+  border-color: rgba(141, 141, 255, 0.3);
+}
+
+.console-reply-form .markmiku-attach-sidebar {
+  width: 56px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.console-reply-form .markmiku-attach-thumb {
+  width: 50px;
+  height: 50px;
+}
+
+.console-reply-form .markmiku-attach-ext {
+  font-size: 9px;
 }
 
 .sidebar-unread-badge {

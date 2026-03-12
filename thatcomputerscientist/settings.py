@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "storages",
     "thatcomputerscientist",
     "administration",
+    "api",
     "authentication",
     "blog",
     "core",
@@ -259,3 +260,5 @@ MINIO_USE_SSL = os.getenv("MINIO_USE_SSL", "true").lower() == "true"
 LETTERS_MAX_LENGTH = 5000
 LETTERS_INBOX_PER_PAGE = 20
 LETTERS_BATCH_SIZE = 30
+LETTERS_MAX_ATTACHMENTS = 8
+LETTERS_MAX_ATTACHMENT_SIZE = 32 * 1024 * 1024

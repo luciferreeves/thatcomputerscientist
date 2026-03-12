@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Max, Count
 
-from core.letters.models import Conversation, Letter
+from core.letters.models import Conversation, Letter, LetterAttachment
 
 
 def get_or_create_conversation(user_a, user_b):
@@ -21,11 +21,18 @@ def get_or_create_conversation(user_a, user_b):
 
 def send_letter(sender, conversation, content):
     content = content.strip()
-    if not content:
-        return False, "Letter content is required."
 
     if sender not in (conversation.participant_one, conversation.participant_two):
         return False, "You are not a participant in this conversation."
+
+    has_attachments = LetterAttachment.objects.filter(
+        conversation=conversation,
+        uploader=sender,
+        letter__isnull=True,
+    ).exists()
+
+    if not content and not has_attachments:
+        return False, "Letter content is required."
 
     letter = Letter.objects.create(
         conversation=conversation,
@@ -33,6 +40,7 @@ def send_letter(sender, conversation, content):
         content=content,
     )
 
+    link_attachments_to_letter(sender, conversation, letter)
     conversation.save(update_fields=["updated_at"])
 
     return True, letter
@@ -102,7 +110,7 @@ def get_conversation_letters(user, other_username, before_id=None):
         is_read=False,
     ).exclude(sender=user).update(is_read=True)
 
-    letters_qs = conversation.letters.select_related("sender")
+    letters_qs = conversation.letters.select_related("sender").prefetch_related("attachments")
 
     if before_id:
         letters_qs = letters_qs.filter(pk__lt=before_id)
@@ -133,3 +141,53 @@ def find_user_by_username(username):
     if not user:
         return False, "User not found."
     return True, user
+
+
+def upload_attachment(user, conversation, file):
+    if user not in (conversation.participant_one, conversation.participant_two):
+        return False, "You are not a participant in this conversation."
+
+    if file.size > settings.LETTERS_MAX_ATTACHMENT_SIZE:
+        return False, "File too large."
+
+    pending_count = LetterAttachment.objects.filter(
+        conversation=conversation,
+        uploader=user,
+        letter__isnull=True,
+    ).count()
+
+    if pending_count >= settings.LETTERS_MAX_ATTACHMENTS:
+        return False, "Too many attachments."
+
+    attachment = LetterAttachment.objects.create(
+        uploader=user,
+        conversation=conversation,
+        file=file,
+        original_name=file.name,
+        file_size=file.size,
+        content_type=file.content_type or "application/octet-stream",
+    )
+
+    return True, attachment
+
+
+def remove_attachment(user, attachment_id):
+    attachment = LetterAttachment.objects.filter(
+        pk=attachment_id,
+        uploader=user,
+        letter__isnull=True,
+    ).first()
+
+    if not attachment:
+        return False, "Attachment not found."
+
+    attachment.delete()
+    return True, None
+
+
+def link_attachments_to_letter(user, conversation, letter):
+    LetterAttachment.objects.filter(
+        conversation=conversation,
+        uploader=user,
+        letter__isnull=True,
+    ).update(letter=letter)

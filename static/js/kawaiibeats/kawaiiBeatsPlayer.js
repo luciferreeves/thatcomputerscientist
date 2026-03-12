@@ -126,8 +126,8 @@ class SongStore {
     async _fetchSong(nextSongId = null, serverURL = '') {
         try {
             const endpoint = nextSongId ?
-                `${serverURL}/services/kawaiibeats?next=${nextSongId}` :
-                `${serverURL}/services/kawaiibeats`;
+                `${serverURL}/api/kawaiibeats/random?next=${nextSongId}` :
+                `${serverURL}/api/kawaiibeats/random`;
             const response = await fetch(endpoint);
             const song = await response.json();
 

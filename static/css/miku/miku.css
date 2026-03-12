@@ -797,3 +797,122 @@
     margin: 0 1px;
     object-fit: contain;
 }
+
+.markmiku-body {
+    display: flex;
+    height: 100%;
+}
+
+.markmiku-editor-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+}
+
+.markmiku-attach-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    width: 72px;
+    flex-shrink: 0;
+    border-left: 1px solid #333;
+    background: #141414;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar {
+    width: 3px;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 2px;
+}
+
+.markmiku-attach-thumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    flex-shrink: 0;
+}
+
+.markmiku-attach-thumb.uploading {
+    opacity: 0.6;
+}
+
+.markmiku-attach-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.markmiku-attach-ext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.markmiku-attach-progress-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+.markmiku-attach-progress-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(78, 205, 196, 0.25);
+    border-top: 2px solid #4ecdc4;
+    transition: height 0.15s ease;
+    box-sizing: border-box;
+}
+
+.markmiku-attach-remove {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 3px;
+    line-height: 1;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.markmiku-attach-thumb:hover .markmiku-attach-remove {
+    opacity: 1;
+}
+
+.markmiku-attach-remove:hover {
+    color: #ff6b6b;
+}

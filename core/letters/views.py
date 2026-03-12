@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings as django_settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -67,6 +68,8 @@ def conversation(request, username):
         "has_more": letter_data["has_more"],
         "other_user": conv.other_user,
         "emoji_data_json": mark_safe(json.dumps(emoji_data)),
+        "max_attachments": django_settings.LETTERS_MAX_ATTACHMENTS,
+        "max_attachment_size": django_settings.LETTERS_MAX_ATTACHMENT_SIZE,
     }
     return render(request, "letters/conversation.html", context)
 

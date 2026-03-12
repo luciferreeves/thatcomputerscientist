@@ -311,3 +311,30 @@
 .markmiku-syntax-spoiler {
     background: rgba(0, 255, 255, 0.08);
 }
+
+.markmiku-attach-sidebar {
+    background: rgba(0, 0, 0, 0.3);
+    border-left-color: rgba(0, 255, 255, 0.1);
+}
+
+.markmiku-attach-thumb {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(0, 255, 255, 0.15);
+}
+
+.markmiku-attach-ext {
+    color: #aaa;
+}
+
+.markmiku-attach-progress-fill {
+    background: rgba(0, 255, 255, 0.25);
+    border-top-color: #00FFFF;
+}
+
+.markmiku-attach-remove:hover {
+    color: #00FFFF;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+}

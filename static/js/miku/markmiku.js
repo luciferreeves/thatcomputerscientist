@@ -342,7 +342,12 @@
             this.options = {
                 placeholder: options.placeholder || 'Write a message...',
                 onSend: options.onSend || null,
-                emojis: options.emojis || []
+                emojis: options.emojis || [],
+                attachmentUploadUrl: options.attachmentUploadUrl || null,
+                attachmentRemoveUrl: options.attachmentRemoveUrl || null,
+                csrfToken: options.csrfToken || '',
+                maxAttachments: options.maxAttachments || 8,
+                maxAttachmentSize: options.maxAttachmentSize || 33554432
             };
 
             this.highlighter = new MarkMikuHighlighter();
@@ -353,6 +358,9 @@
             this.autocompleteItems = [];
             this.autocompleteIndex = -1;
             this.autocompletePrefix = '';
+
+            this.attachments = [];
+            this.uploading = 0;
 
             this.init();
         }
@@ -366,6 +374,13 @@
         createEditor() {
             this.container.innerHTML = '';
             this.container.className = 'miku-editor-container markmiku-container';
+
+            // Horizontal split: editor column | attachment sidebar
+            var body = document.createElement('div');
+            body.className = 'markmiku-body';
+
+            var editorCol = document.createElement('div');
+            editorCol.className = 'markmiku-editor-col';
 
             var wrapper = document.createElement('div');
             wrapper.className = 'miku-editor-wrapper';
@@ -385,16 +400,23 @@
             main.appendChild(this.syntaxHighlight);
             main.appendChild(this.editorEl);
             wrapper.appendChild(main);
-            this.container.appendChild(wrapper);
+            editorCol.appendChild(wrapper);
 
             // Toolbar
             var toolbar = document.createElement('div');
             toolbar.className = 'markmiku-toolbar';
 
+            // Hidden file input
+            this.fileInput = document.createElement('input');
+            this.fileInput.type = 'file';
+            this.fileInput.multiple = true;
+            this.fileInput.style.display = 'none';
+            this.container.appendChild(this.fileInput);
+
             var attachBtn = document.createElement('button');
             attachBtn.type = 'button';
             attachBtn.className = 'markmiku-btn markmiku-btn-attach';
-            attachBtn.disabled = true;
+            attachBtn.disabled = !this.options.attachmentUploadUrl;
             attachBtn.title = 'Attach file';
             attachBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>';
 
@@ -417,7 +439,16 @@
             toolbar.appendChild(emojiBtn);
             toolbar.appendChild(spacer);
             toolbar.appendChild(sendBtn);
-            this.container.appendChild(toolbar);
+            editorCol.appendChild(toolbar);
+
+            // Attachment sidebar
+            this.attachmentSidebar = document.createElement('div');
+            this.attachmentSidebar.className = 'markmiku-attach-sidebar';
+            this.attachmentSidebar.style.display = 'none';
+
+            body.appendChild(editorCol);
+            body.appendChild(this.attachmentSidebar);
+            this.container.appendChild(body);
 
             // Autocomplete dropdown
             this.dropdown = document.createElement('div');
@@ -427,6 +458,7 @@
 
             this.sendBtn = sendBtn;
             this.emojiBtn = emojiBtn;
+            this.attachBtn = attachBtn;
         }
 
         bindEvents() {
@@ -453,6 +485,18 @@
 
             this.emojiBtn.addEventListener('click', function () {
                 self.emojiPicker.toggle(self.emojiBtn);
+            });
+
+            this.attachBtn.addEventListener('click', function () {
+                self.fileInput.click();
+            });
+
+            this.fileInput.addEventListener('change', function () {
+                var files = Array.prototype.slice.call(self.fileInput.files);
+                self.fileInput.value = '';
+                for (var i = 0; i < files.length; i++) {
+                    self.uploadFile(files[i]);
+                }
             });
 
             document.addEventListener('click', function (e) {
@@ -652,15 +696,141 @@
             // Shift+Enter: default newline behavior (no preventDefault)
         }
 
+        uploadFile(file) {
+            var self = this;
+
+            if (this.attachments.length >= this.options.maxAttachments) return;
+            if (file.size > this.options.maxAttachmentSize) return;
+
+            var tempId = 'tmp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+            var entry = { tempId: tempId, name: file.name, size: file.size, progress: 0, id: null, url: null, xhr: null };
+            this.attachments.push(entry);
+            this.uploading++;
+            this.renderAttachments();
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            var xhr = new XMLHttpRequest();
+            entry.xhr = xhr;
+
+            xhr.upload.addEventListener('progress', function (e) {
+                if (e.lengthComputable) {
+                    entry.progress = Math.round((e.loaded / e.total) * 100);
+                    self.renderAttachments();
+                }
+            });
+
+            xhr.addEventListener('load', function () {
+                self.uploading--;
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    entry.id = data.id;
+                    entry.url = data.url;
+                    entry.progress = 100;
+                } else {
+                    self.attachments = self.attachments.filter(function (a) { return a.tempId !== tempId; });
+                }
+                self.renderAttachments();
+            });
+
+            xhr.addEventListener('error', function () {
+                self.uploading--;
+                self.attachments = self.attachments.filter(function (a) { return a.tempId !== tempId; });
+                self.renderAttachments();
+            });
+
+            xhr.open('POST', this.options.attachmentUploadUrl);
+            xhr.setRequestHeader('X-CSRFToken', this.options.csrfToken);
+            xhr.send(formData);
+        }
+
+        removeAttachment(tempId) {
+            var self = this;
+            var entry = this.attachments.find(function (a) { return a.tempId === tempId; });
+            if (!entry) return;
+            if (entry.progress < 100) return;
+
+            if (entry.id && this.options.attachmentRemoveUrl) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', this.options.attachmentRemoveUrl.replace('0', entry.id));
+                xhr.setRequestHeader('X-CSRFToken', this.options.csrfToken);
+                xhr.send();
+            }
+
+            this.attachments = this.attachments.filter(function (a) { return a.tempId !== tempId; });
+            this.renderAttachments();
+        }
+
+        renderAttachments() {
+            var self = this;
+            var sidebar = this.attachmentSidebar;
+            sidebar.innerHTML = '';
+
+            this.attachBtn.disabled = !this.options.attachmentUploadUrl ||
+                this.attachments.length >= this.options.maxAttachments;
+
+            if (this.attachments.length === 0) {
+                sidebar.style.display = 'none';
+                return;
+            }
+
+            sidebar.style.display = 'flex';
+
+            for (var i = 0; i < this.attachments.length; i++) {
+                var a = this.attachments[i];
+                var item = document.createElement('div');
+                item.className = 'markmiku-attach-thumb';
+                if (a.progress < 100) item.className += ' uploading';
+
+                var isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(a.name);
+                var inner = '';
+
+                if (isImage && a.url) {
+                    inner = '<img src="' + a.url + '" alt="" title="' + this.escapeHtml(a.name) + '" />';
+                } else {
+                    var ext = a.name.split('.').pop().toUpperCase();
+                    if (ext.length > 4) ext = ext.substring(0, 4);
+                    inner = '<span class="markmiku-attach-ext" title="' + this.escapeHtml(a.name) + '">' + ext + '</span>';
+                }
+
+                if (a.progress < 100) {
+                    inner += '<div class="markmiku-attach-progress-track"><div class="markmiku-attach-progress-fill" style="height:' + a.progress + '%"></div></div>';
+                }
+
+                if (a.progress >= 100) {
+                    inner += '<button type="button" class="markmiku-attach-remove" data-id="' + a.tempId + '">&times;</button>';
+                }
+                item.innerHTML = inner;
+                sidebar.appendChild(item);
+            }
+
+            var removeBtns = sidebar.querySelectorAll('.markmiku-attach-remove');
+            for (var j = 0; j < removeBtns.length; j++) {
+                removeBtns[j].addEventListener('click', function () {
+                    self.removeAttachment(this.getAttribute('data-id'));
+                });
+            }
+        }
+
+        getAttachmentIds() {
+            return this.attachments
+                .filter(function (a) { return a.id; })
+                .map(function (a) { return a.id; });
+        }
+
         send() {
             var raw = this.editorEl.value.trim();
-            if (!raw) return;
+            if (!raw && this.attachments.length === 0) return;
+            if (this.uploading > 0) return;
 
-            var html = this.markdownToHtml(raw);
+            var html = raw ? this.markdownToHtml(raw) : '';
             if (this.options.onSend) {
-                this.options.onSend(html);
+                this.options.onSend(html, this.getAttachmentIds());
             }
             this.editorEl.value = '';
+            this.attachments = [];
+            this.renderAttachments();
             this.autoResize();
             this.updateSyntaxHighlighting();
         }

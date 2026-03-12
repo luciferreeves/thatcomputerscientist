@@ -76,8 +76,12 @@
     var editor = new MarkMiku('#markmiku-editor', {
         placeholder: '{% trans "Write your letter..." %}',
         emojis: {{ emoji_data_json }},
+        attachmentUploadUrl: '{% url "api:letters:attachment_upload" username=other_user.username %}',
+        attachmentRemoveUrl: '{% url "api:letters:attachment_remove" attachment_id=0 %}',
+        csrfToken: '{{ csrf_token }}',
+        maxAttachments: {{ max_attachments }},
+        maxAttachmentSize: {{ max_attachment_size }},
         onSend: function(html) {
-            if (!html.trim()) return;
             hiddenInput.value = html;
             form.submit();
         }

@@ -1,5 +1,6 @@
-from administration.kawaiibeats.functions import get_random_song
 from django.http import JsonResponse
+
+from administration.kawaiibeats.functions import get_random_song
 
 
 def random_song(request):

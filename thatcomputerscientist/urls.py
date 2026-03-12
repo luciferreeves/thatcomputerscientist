@@ -47,6 +47,7 @@ Allow: /repositories/$
 
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
+    path("api/", include("api.urls", namespace="api")),
     path("auth", include("authentication.urls", namespace="auth")),
     path("admin", include("administration.urls", namespace="administration")),
     path("admin/administration/", admin.site.urls),

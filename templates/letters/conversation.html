@@ -56,11 +56,9 @@
         </div>
 
         <div class="console-input">
-            <form method="post" id="reply-form" class="console-reply-form">
-                {% csrf_token %}
-                <input type="hidden" name="content" id="reply-content" />
+            <div class="console-reply-form">
                 <div id="markmiku-editor"></div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -70,8 +68,59 @@
 <script type="text/javascript" src="{% static 'js/miku/markmiku.js' %}"></script>
 <script>
 (function() {
-    var form = document.getElementById('reply-form');
-    var hiddenInput = document.getElementById('reply-content');
+    var wsProtocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+    var wsUrl = wsProtocol + location.host + '/ws/letters/{{ other_user.username }}/';
+    var socket = null;
+
+    function connectSocket() {
+        socket = new WebSocket(wsUrl);
+        socket.onopen = function() {};
+        socket.onclose = function() {
+            setTimeout(connectSocket, 3000);
+        };
+        socket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            if (data.type === 'letter.new') {
+                appendLetter(data);
+            }
+        };
+    }
+    connectSocket();
+
+    function appendLetter(data) {
+        var container = document.getElementById('letters-container');
+        var tbody = document.getElementById('letters-list').querySelector('tbody');
+
+        var empty = tbody.querySelector('.empty-conversation');
+        if (empty) empty.remove();
+
+        var isSelf = data.sender === '{{ request.user.username }}';
+        var tr = document.createElement('tr');
+        tr.className = 'letter-note ' + (isSelf ? 'from-self' : 'from-other');
+        tr.dataset.letterId = data.letter_id;
+
+        var time = new Date(data.created_at);
+        var hours = String(time.getHours()).padStart(2, '0');
+        var mins = String(time.getMinutes()).padStart(2, '0');
+
+        tr.innerHTML =
+            '<td class="letter-gutter">' +
+                '<div class="letter-stamp">' + hours + ':' + mins + '</div>' +
+                '<div class="letter-sender">' + (isSelf ? '{% trans "You" %}' : data.sender) + '</div>' +
+            '</td>' +
+            '<td class="letter-body">' + data.content + '</td>';
+
+        tbody.appendChild(tr);
+
+        var atBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+        if (atBottom || isSelf) {
+            container.scrollTop = container.scrollHeight;
+        }
+
+        if (!isSelf && document.hasFocus()) {
+            socket.send(JSON.stringify({ type: 'letter.read' }));
+        }
+    }
 
     var editor = new MarkMiku('#markmiku-editor', {
         placeholder: '{% trans "Write your letter..." %}',
@@ -82,8 +131,7 @@
         maxAttachments: {{ max_attachments }},
         maxAttachmentSize: {{ max_attachment_size }},
         onSend: function(html) {
-            hiddenInput.value = html;
-            form.submit();
+            socket.send(JSON.stringify({ type: 'letter.send', content: html }));
         }
     });
 

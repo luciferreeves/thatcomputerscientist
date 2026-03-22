@@ -1,6 +1,7 @@
 {% load tz %}
 {% load static %}
 {% load i18n %}
+{% load cleanview %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
 <link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
 {% with entries=journal.entries.all %}
@@ -25,7 +26,7 @@
             </div>
             {% endif %}
         </div>
-        <div class="weblog-content">{{ entry.content|safe }}</div>
+        <div class="weblog-content">{{ entry.content|cleanview }}</div>
         <div class="journal-entry-details">
             <span>{% translate "Posted in" %}</span>
             <a href="{% url 'core:journal' journal.slug %}">{{ journal.name }}</a>
@@ -37,14 +38,14 @@
 </div>
 {% else %}
 <div class="empty-state">
-    <h3>{% trans "No Entries Yet" %}</h3>
+    <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
     {% if service_page %}
-    <p>{% trans "Start your digital journaling journey by creating your first journal entry." %}</p>
+    <p>{% trans "Start your digital journaling journey by creating your first" %} {{ journal.entry_label|lower }}.</p>
     <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="empty-action-btn">
-        {% trans "Create Your First Entry" %}
+        {% trans "Create Your First" %} {{ journal.entry_label }}
     </a>
     {% else %}
-    <p>{% trans "This journal doesn't have any entries yet. Check back later!" %}</p>
+    <p>{% trans "This journal doesn't have any" %} {{ journal.entry_label_plural|lower }} {% trans "yet. Check back later!" %}</p>
     {% endif %}
 </div>
 {% endif %}

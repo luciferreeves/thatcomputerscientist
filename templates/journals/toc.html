@@ -1,0 +1,106 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
+    <div class="tab-content">
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="section-header">
+            <h2 class="section-title">{% trans "Table of Contents" %}</h2>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=toc" class="create-btn">
+                <span class="btn-icon">+</span>
+                <span class="btn-text">{% trans "New" %} {{ journal.entry_label }}</span>
+            </a>
+        </div>
+
+        {% if toc_volumes %}
+        <div class="toc-container">
+            {% for volume in toc_volumes %}
+            <div class="toc-volume">
+                <div class="toc-volume-header">
+                    <span class="toc-volume-order">{% trans "Vol." %} {{ volume.order }}</span>
+                    <h3 class="toc-volume-title">{{ volume.title }}</h3>
+                    <span class="toc-volume-count">{{ volume.entries_count }} {% if volume.entries_count == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&volume={{ volume.id }}&from=toc" class="toc-add-btn" title="{% trans 'Add' %} {{ journal.entry_label|lower }}">+</a>
+                </div>
+                {% if volume.description %}
+                <p class="toc-volume-description">{{ volume.description }}</p>
+                {% endif %}
+                {% if volume.entries.all %}
+                <div class="toc-chapters">
+                    {% for entry in volume.entries.all %}
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="toc-chapter">
+                        <span class="toc-chapter-order">{{ forloop.counter }}</span>
+                        <span class="toc-chapter-title">{{ entry.title }}</span>
+                        {% if entry.is_draft %}
+                        <span class="toc-draft-badge">{% trans "Draft" %}</span>
+                        {% endif %}
+                        {% if entry.word_count %}
+                        <span class="toc-word-count">{{ entry.word_count }} {% trans "words" %}</span>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if toc_unassigned %}
+        <div class="toc-unassigned">
+            <div class="toc-volume-header">
+                <h3 class="toc-volume-title">{% if toc_volumes %}{% trans "Unassigned" %}{% else %}{% trans "All" %} {{ journal.entry_label_plural }}{% endif %}</h3>
+                <span class="toc-volume-count">{{ toc_unassigned|length }} {% if toc_unassigned|length == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
+            </div>
+            <div class="toc-chapters">
+                {% for entry in toc_unassigned %}
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="toc-chapter">
+                    <span class="toc-chapter-order">{{ forloop.counter }}</span>
+                    <span class="toc-chapter-title">{{ entry.title }}</span>
+                    {% if entry.is_draft %}
+                    <span class="toc-draft-badge">{% trans "Draft" %}</span>
+                    {% endif %}
+                    {% if entry.word_count %}
+                    <span class="toc-word-count">{{ entry.word_count }} {% trans "words" %}</span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if not toc_volumes and not toc_unassigned %}
+        <div class="empty-state">
+            <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
+            <p>{% trans "Start writing and organize them into volumes." %}</p>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=toc" class="empty-action-btn">
+                {% trans "Create Your First" %} {{ journal.entry_label }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/journals/common.js' %}"></script>
+{% endblock scripts %}

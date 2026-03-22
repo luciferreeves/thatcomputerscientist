@@ -15,6 +15,7 @@ redis
 requests
 django-storages
 boto3
+django-stubs
 
 
 # Original Requirements (to be deleted later)

@@ -1,0 +1,81 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/books/characters.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="bk">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="bk-char-header">
+        <a href="{% url 'core:journal' journal.slug %}" class="bk-char-book-link">{{ journal.name }}</a>
+        <span class="bk-char-header-sep">//</span>
+        <span class="bk-char-header-label">{% trans "characters" %}</span>
+    </div>
+
+    <div class="bk-char-profile">
+        {% if character.image %}
+        <img class="bk-char-img" src="{{ character.image.url }}" alt="{{ character.name }}" />
+        {% else %}
+        <div class="bk-char-initial">{{ character.name|first }}</div>
+        {% endif %}
+        <div class="bk-char-info">
+            <div class="bk-char-role">{{ character.role }}</div>
+            <div class="bk-char-name">{{ character.name }}</div>
+            {% if character.bio %}<div class="bk-char-bio">{{ character.bio }}</div>{% endif %}
+        </div>
+    </div>
+
+    {% if relationships %}
+    <div class="bk-data-section">
+        <div class="bk-data-head">{% trans "relationships" %}</div>
+        {% for rel in relationships %}
+        {% if rel.from_character.id == character.id %}
+        <a href="{% url 'core:journal' journal.slug %}?character={{ rel.to_character.id }}" class="bk-rel-row">
+            {% if rel.to_character.image %}
+            <img class="bk-rel-avatar" src="{{ rel.to_character.image.url }}" alt="{{ rel.to_character.name }}" />
+            {% else %}
+            <div class="bk-rel-initial">{{ rel.to_character.name|first }}</div>
+            {% endif %}
+            <div class="bk-rel-info">
+                <span class="bk-rel-name">{{ rel.to_character.name }}</span>
+                <span class="bk-rel-label">{{ rel.label }}</span>
+            </div>
+        </a>
+        {% else %}
+        <a href="{% url 'core:journal' journal.slug %}?character={{ rel.from_character.id }}" class="bk-rel-row">
+            {% if rel.from_character.image %}
+            <img class="bk-rel-avatar" src="{{ rel.from_character.image.url }}" alt="{{ rel.from_character.name }}" />
+            {% else %}
+            <div class="bk-rel-initial">{{ rel.from_character.name|first }}</div>
+            {% endif %}
+            <div class="bk-rel-info">
+                <span class="bk-rel-name">{{ rel.from_character.name }}</span>
+                <span class="bk-rel-label">{{ rel.label }}</span>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if appearances %}
+    <div class="bk-data-section">
+        <div class="bk-data-head">{% trans "appears in" %}</div>
+        {% for appearance in appearances %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ appearance.entry.slug }}" class="bk-app-row">
+            <span class="bk-app-ch">{{ appearance.entry.order }}.</span>
+            <span class="bk-app-title">{{ appearance.entry.title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="bk-back">
+        <a href="{% url 'core:journal' journal.slug %}">&laquo; {{ journal.name }}</a>
+    </div>
+</div>
+{% endblock content %}

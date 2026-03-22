@@ -1,0 +1,65 @@
+{% load tz %}
+{% load static %}
+{% load i18n %}
+{% with entries=journal.entries.all %}
+{% if entries %}
+<div class="stories-grid">
+    {% for entry in entries %}
+    <div class="story-card">
+        {% if entry.thumbnail %}
+        <div class="story-cover">
+            <img src="{{ entry.thumbnail.url }}" alt="{{ entry.title }}" />
+        </div>
+        {% else %}
+        <div class="story-cover story-cover-empty">
+            <span class="story-cover-icon">&#9997;</span>
+        </div>
+        {% endif %}
+        <div class="story-body">
+            <h3 class="story-title">{{ entry.title }}</h3>
+            <div class="story-meta">
+                {% if entry.genre %}
+                <span class="story-genre">{{ entry.genre }}</span>
+                {% endif %}
+                {% if entry.tone %}
+                <span class="story-tone">{{ entry.tone }}</span>
+                {% endif %}
+                {% if entry.is_draft %}
+                <span class="story-draft">{% trans "Draft" %}</span>
+                {% endif %}
+            </div>
+            {% if entry.summary %}
+            <p class="story-summary">{{ entry.summary|truncatechars:100 }}</p>
+            {% endif %}
+            <div class="story-footer">
+                <span class="story-word-count">{{ entry.word_count }} {% trans "words" %}</span>
+                {% if entry.character_appearances.count %}
+                <span class="story-characters">{{ entry.character_appearances.count }} {% trans "characters" %}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% if service_page %}
+        <div class="story-actions">
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="action-btn">{% trans "Edit" %}</a>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings&entry={{ entry.slug }}" class="action-btn">{% trans "Settings" %}</a>
+        </div>
+        {% else %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="story-read-link">{% trans "Read" %} &rarr;</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
+    {% if service_page %}
+    <p>{% trans "Start your digital journaling journey by creating your first" %} {{ journal.entry_label|lower }}.</p>
+    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="empty-action-btn">
+        {% trans "Create Your First" %} {{ journal.entry_label }}
+    </a>
+    {% else %}
+    <p>{% trans "This journal doesn't have any" %} {{ journal.entry_label_plural|lower }} {% trans "yet. Check back later!" %}</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endwith %}

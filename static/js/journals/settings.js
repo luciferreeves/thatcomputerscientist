@@ -264,6 +264,8 @@ function initDeleteJournal() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    initCustomSelects();
+    initFileInputs();
     updateLanguageDropdowns();
     initTranslationManagement();
     initUserSharing();

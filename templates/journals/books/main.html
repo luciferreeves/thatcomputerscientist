@@ -1,0 +1,140 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/books/main.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="bk">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="bk-top">
+        <h1>{{ journal.name }}</h1>
+        <div class="bk-meta">
+            {% trans "by" %} <a href="#">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+            {% if journal.genre %} &middot; <a href="#">{{ journal.get_genre_display }}</a>{% endif %}
+            {% if journal.status %} &middot; <span class="bk-st-{{ journal.status }}">{{ journal.get_status_display }}</span>{% endif %}
+        </div>
+    </div>
+
+    <div class="bk-stats-bar">
+        <div class="bk-stat"><b>{{ book_stats.published_count }}</b> {% trans "chapters" %}</div>
+        {% if book_stats.volume_count %}<div class="bk-stat"><b>{{ book_stats.volume_count }}</b> {% trans "volumes" %}</div>{% endif %}
+        <div class="bk-stat"><b>{{ book_stats.total_word_count|default:"0" }}</b> {% trans "words" %}</div>
+        {% if book_stats.character_count %}<div class="bk-stat"><b>{{ book_stats.character_count }}</b> {% trans "characters" %}</div>{% endif %}
+        <div class="bk-stat">{{ journal.created_at|date:"M Y" }}</div>
+    </div>
+
+    <div class="bk-body">
+        <div class="bk-sidebar">
+            {% if journal.cover_image %}
+            <img class="bk-cover" src="{{ journal.cover_image.url }}" alt="{{ journal.name }}" />
+            {% else %}
+            <div class="bk-no-cover">&#9671;</div>
+            {% endif %}
+
+            {% if book_stats.first_entry %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ book_stats.first_entry.slug }}" class="bk-start">&#9733; {% trans "Start Reading" %}</a>
+            {% endif %}
+
+            {% if journal.description %}
+            <div class="bk-desc">{{ journal.description }}</div>
+            {% endif %}
+
+            {% if tags %}
+            <div class="bk-tags">{% for tag in tags %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+            {% endif %}
+
+            {% if characters %}
+            <div class="bk-sidebar-label">{% trans "Characters" %}</div>
+            <div class="bk-cast-list">
+                {% for character in characters %}
+                <a href="{% url 'core:journal' journal.slug %}?character={{ character.id }}" class="bk-cast-chip">
+                    {% if character.image %}
+                    <img class="bk-cast-avatar" src="{{ character.image.url }}" alt="{{ character.name }}" />
+                    {% else %}
+                    <div class="bk-cast-initial">{{ character.name|first }}</div>
+                    {% endif %}
+                    {{ character.name }}
+                    {% if character.role %}<span class="bk-cast-role">{{ character.role }}</span>{% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if owner_profile %}
+            <div class="bk-author">
+                {% if owner_profile.avatar_url %}<img class="bk-author-pic" src="{% static 'images/avatars/' %}{{ owner_profile.avatar_url }}.gif" alt="" />{% endif %}
+                <div class="bk-author-info">
+                    <a href="#" class="bk-author-name">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+                    {% if owner_profile.bio %}<div class="bk-author-bio">{{ owner_profile.bio }}</div>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="bk-main">
+            {% for volume in volumes_with_entries %}
+            <div class="bk-vol">
+                <div class="bk-vol-head">
+                    {% if volume.cover_image %}<img class="bk-vol-cover" src="{{ volume.cover_image.url }}" alt="{{ volume.title }}" />{% endif %}
+                    <div class="bk-vol-info">
+                        <div class="bk-vol-title-row">
+                            <div class="bk-vol-title">{{ volume.title }}</div>
+                            {% if volume.entries_count %}<div class="bk-vol-count">{{ volume.entries_count }} {% trans "chapters" %}</div>{% endif %}
+                        </div>
+                        {% if volume.description %}<div class="bk-vol-desc">{{ volume.description }}</div>{% endif %}
+                    </div>
+                </div>
+                {% for entry in volume.entries.all %}
+                <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="bk-ch" data-slug="{{ entry.slug }}">
+                    {% if entry.thumbnail %}<img class="bk-ch-thumb" src="{{ entry.thumbnail.url }}" alt="" />{% endif %}
+                    <span class="bk-ch-n">{{ forloop.counter }}.</span>
+                    <span class="bk-ch-name">{{ entry.title }}</span>
+                    {% if entry.word_count %}<span class="bk-ch-wc">{{ entry.word_count }} {% trans "words" %}</span>{% endif %}
+                </a>
+                {% empty %}
+                <div class="bk-nil">{% trans "No chapters yet." %}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            {% for entry in unassigned_entries %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="bk-ch" data-slug="{{ entry.slug }}">
+                {% if entry.thumbnail %}<img class="bk-ch-thumb" src="{{ entry.thumbnail.url }}" alt="" />{% endif %}
+                <span class="bk-ch-n">{{ forloop.counter }}.</span>
+                <span class="bk-ch-name">{{ entry.title }}</span>
+                {% if entry.word_count %}<span class="bk-ch-wc">{{ entry.word_count }} {% trans "words" %}</span>{% endif %}
+            </a>
+            {% endfor %}
+
+            {% if not volumes_with_entries and not unassigned_entries %}
+            <div class="bk-nil">{% trans "No chapters yet." %}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        var slug = localStorage.getItem("book_{{ journal.slug }}");
+        if (!slug) return;
+        var chs = document.querySelectorAll(".bk-ch[data-slug]");
+        for (var i = 0; i < chs.length; i++) {
+            if (chs[i].dataset.slug === slug) {
+                chs[i].classList.add("bk-ch-current");
+                break;
+            }
+        }
+        var btn = document.querySelector(".bk-start");
+        if (btn) {
+            var base = btn.href.split("?entry=")[0];
+            btn.href = base + "?entry=" + slug;
+            btn.textContent = "\u2605 {% trans 'Continue Reading' %}";
+        }
+    } catch(e) {}
+})();
+</script>
+{% endblock content %}

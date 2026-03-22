@@ -33,7 +33,29 @@ function initNewJournalForm() {
     }
 }
 
+function initModeSelector() {
+    var modeSelect = document.getElementById('mode');
+    var genreGroup = document.getElementById('genre-group');
+    var statusGroup = document.getElementById('status-group');
+
+    if (!modeSelect) return;
+
+    var genreModes = ['book', 'light_novel'];
+    var statusModes = ['book', 'light_novel'];
+
+    function updateVisibility() {
+        var mode = modeSelect.value;
+        genreGroup.classList.toggle('hidden', genreModes.indexOf(mode) === -1);
+        statusGroup.classList.toggle('hidden', statusModes.indexOf(mode) === -1);
+    }
+
+    modeSelect.addEventListener('change', updateVisibility);
+    updateVisibility();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    initCustomSelects();
     initSlugGeneration();
     initNewJournalForm();
+    initModeSelector();
 });

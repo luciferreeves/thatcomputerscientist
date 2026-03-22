@@ -1,0 +1,55 @@
+{% load tz %}
+{% load static %}
+{% load i18n %}
+{% with entries=journal.entries.all %}
+{% if entries %}
+<div class="poetry-collection">
+    {% for entry in entries %}
+    <div class="poem-card">
+        <div class="poem-header">
+            <h3 class="poem-title">{{ entry.title }}</h3>
+            {% if entry.is_draft %}<span class="poem-badge poem-draft">{% trans "Draft" %}</span>{% endif %}
+        </div>
+        <div class="poem-meta">
+            {% if entry.form %}<span class="poem-badge poem-form">{{ entry.get_form_display }}</span>{% endif %}
+            {% if entry.mood %}<span class="poem-badge poem-mood">{{ entry.get_mood_display }}</span>{% endif %}
+        </div>
+        {% if entry.tags.exists %}
+        <div class="poem-tags">
+            {% for tag in entry.tags.all %}
+            <span class="poem-tag">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if entry.content %}
+        <div class="poem-preview">{{ entry.content|striptags|truncatechars:160 }}</div>
+        {% endif %}
+        <div class="poem-footer">
+            <span class="poem-word-count">{{ entry.verse_count }} {% trans "verses" %} · {{ entry.word_count }} {% trans "words" %}</span>
+            <span class="poem-date">{% localtime on %}{{ entry.created_at|date:'M j, Y' }}{% endlocaltime %}</span>
+        </div>
+        {% if service_page %}
+        <div class="poem-actions">
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="action-btn">{% trans "Edit" %}</a>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings&entry={{ entry.slug }}" class="action-btn">{% trans "Settings" %}</a>
+        </div>
+        {% else %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="poem-read-link">{% trans "Read" %} &rarr;</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
+    {% if service_page %}
+    <p>{% trans "Start your digital journaling journey by creating your first" %} {{ journal.entry_label|lower }}.</p>
+    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="empty-action-btn">
+        {% trans "Create Your First" %} {{ journal.entry_label }}
+    </a>
+    {% else %}
+    <p>{% trans "This journal doesn't have any" %} {{ journal.entry_label_plural|lower }} {% trans "yet. Check back later!" %}</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endwith %}

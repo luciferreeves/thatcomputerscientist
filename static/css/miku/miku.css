@@ -439,6 +439,38 @@
     font-style: italic;
 }
 
+.miku-content ul,
+.miku-content ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.miku-content ul {
+    list-style-type: disc;
+}
+
+.miku-content ol {
+    list-style-type: decimal;
+}
+
+.miku-content li {
+    margin: 4px 0;
+    line-height: 1.5;
+}
+
+.miku-content li > ul,
+.miku-content li > ol {
+    margin: 2px 0;
+}
+
+.miku-content li > ul {
+    list-style-type: circle;
+}
+
+.miku-content li > ul > li > ul {
+    list-style-type: square;
+}
+
 .miku-content code {
     background: #1a1a1a;
     color: #4ecdc4;

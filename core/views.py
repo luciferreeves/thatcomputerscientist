@@ -1,22 +1,36 @@
+from __future__ import annotations
+
+import os
+from typing import cast
+
+import requests
+from django.contrib.auth.models import AbstractUser
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.template import TemplateDoesNotExist
+from django.template.loader import get_template
+
 from administration.annoucements.functions import get_announcements
 from authentication.functions import get_user_from_username
 from blog.functions import get_posts
 from internal.mal_wrapper import get_mal_recent_activity
-import requests
-import os
+from services.journals.functions import (
+    get_latest_journal_entry,
+    get_journal,
+    get_book_view_data,
+    get_public_entry,
+    get_public_character,
+    get_entry_chapter_list,
+)
 
-from django.http import Http404
-from services.journals.functions import get_latest_journal_entry, get_journal
 
 
-def home(request):
+def home(request: HttpRequest) -> HttpResponse:
     title_map = {"en": "Home", "ja": "ホーム"}
     request.meta.title = title_map.get(request.LANGUAGE_CODE)
 
     success, recent_journal = get_latest_journal_entry(
-        user=get_user_from_username("bobby"),
+        user=cast(AbstractUser, get_user_from_username("bobby")),
         slug="journal-of-random-thoughts",
         lang=request.LANGUAGE_CODE,
         count=3,
@@ -37,11 +51,14 @@ def home(request):
     return render(request, "core/home.html", context)
 
 
-def journal(request, slug="journal-of-random-thoughts"):
-    page = request.GET.get("page", 1)
+def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> HttpResponse:
+    page = int(request.GET.get("page", 1))
+    entry_slug = request.GET.get("entry")
+    character_id = request.GET.get("character")
 
+    user = cast(AbstractUser, request.user) if request.user.is_authenticated else None
     success, journal_obj, entries = get_journal(
-        slug, user=request.user, page=page, lang=request.LANGUAGE_CODE
+        slug, user=user, page=page, lang=request.LANGUAGE_CODE
     )
 
     if not success:
@@ -49,15 +66,87 @@ def journal(request, slug="journal-of-random-thoughts"):
 
     request.meta.title = journal_obj.name
 
+    is_owner = request.user.is_authenticated and journal_obj.owner == request.user
+    mode: str = journal_obj.mode
+    is_book_mode = mode in ("book", "light_novel")
+    owner_profile = journal_obj.owner.userprofile_set.first()
+
+    if character_id and is_book_mode:
+        found, character, relationships, appearances = get_public_character(
+            journal_obj, int(character_id),
+        )
+        if not found or character is None:
+            raise Http404
+
+        request.meta.title = f"{character.name} - {journal_obj.name}"
+
+        context: dict[str, object] = {
+            "journal": journal_obj,
+            "character": character,
+            "relationships": relationships,
+            "appearances": appearances,
+            "owner_profile": owner_profile,
+        }
+
+        return render(request, "journals/books/characters.html", context)
+
+    if entry_slug:
+        found, entry_obj, prev_entry, next_entry, chapter_number = get_public_entry(
+            journal_obj, entry_slug, is_owner=is_owner, lang=request.LANGUAGE_CODE,
+        )
+        if not found or entry_obj is None:
+            raise Http404
+
+        request.meta.title = f"{entry_obj.title} - {journal_obj.name}"
+
+        context = {
+            "journal": journal_obj,
+            "entry": entry_obj,
+            "prev_entry": prev_entry,
+            "next_entry": next_entry,
+            "chapter_number": chapter_number,
+            "owner_profile": owner_profile,
+        }
+
+        if is_book_mode:
+            vols, unassigned = get_entry_chapter_list(journal_obj)
+            context["volumes_with_entries"] = vols
+            context["unassigned_entries"] = unassigned
+
+        if is_book_mode:
+            template = "journals/books/entry.html"
+        else:
+            entry_template = f"journals/modes/{mode}/entry_read.html"
+            try:
+                get_template(entry_template)
+                template = entry_template
+            except TemplateDoesNotExist:
+                template = "journals/entry_read.html"
+
+        return render(request, template, context)
+
     context = {
         "journal": journal_obj,
         "entries": entries,
+        "owner_profile": owner_profile,
     }
 
-    return render(request, "journals/journal_view.html", context)
+    if is_book_mode:
+        context.update(get_book_view_data(journal_obj, is_owner=is_owner))
+        template = "journals/books/main.html"
+    else:
+        template = "journals/journal_view.html"
+        mode_template = f"journals/modes/{mode}/journal_view.html"
+        try:
+            get_template(mode_template)
+            template = mode_template
+        except TemplateDoesNotExist:
+            pass
+
+    return render(request, template, context)
 
 
-def ignis_wrapper_temp(request, path):
+def ignis_wrapper_temp(request: HttpRequest, path: str) -> HttpResponse:
     ignis_endpoint = os.getenv("IGNIS_CACHE_ENDPOINT", "shi.foo")
     url = f"https://{ignis_endpoint}/ignis/{path}"
 

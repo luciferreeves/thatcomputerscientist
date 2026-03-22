@@ -75,6 +75,10 @@
                 blockquote: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg>`,
                 codeblock: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>`,
                 inlinecode: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>`,
+                ul: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>`,
+                ol: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.242 5.992h12m-12 6.003h12m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99" /></svg>`,
+                indent: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75h8.25M12 12h8.25m-8.25 5.25h8.25M3.75 6.75 7.5 10.5l-3.75 3.75" /></svg>`,
+                outdent: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75h8.25M12 12h8.25m-8.25 5.25h8.25M7.5 6.75 3.75 10.5 7.5 14.25" /></svg>`,
                 source: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>`
             }
 
@@ -90,6 +94,11 @@
                 { separator: true },
                 { icon: icons.link, title: 'Insert Link', command: 'link' },
                 { icon: icons.image, title: 'Insert Image', command: 'image' },
+                { separator: true },
+                { icon: icons.ul, title: 'Bullet List', command: 'insertUnorderedList' },
+                { icon: icons.ol, title: 'Numbered List', command: 'insertOrderedList' },
+                { icon: icons.indent, title: 'Indent', command: 'indent' },
+                { icon: icons.outdent, title: 'Outdent', command: 'outdent' },
                 { separator: true },
                 { icon: icons.blockquote, title: 'Blockquote', command: 'blockquote' },
                 { icon: icons.codeblock, title: 'Code Block', command: 'codeblock' },
@@ -208,6 +217,18 @@
                 case 'image':
                     this.showImagePopup();
                     return;
+                case 'insertUnorderedList':
+                    document.execCommand('insertUnorderedList', false, null);
+                    break;
+                case 'insertOrderedList':
+                    document.execCommand('insertOrderedList', false, null);
+                    break;
+                case 'indent':
+                    this.handleIndent(true);
+                    break;
+                case 'outdent':
+                    this.handleIndent(false);
+                    break;
                 case 'blockquote':
                     this.insertBlockquote();
                     break;
@@ -373,6 +394,19 @@
                     document.execCommand('insertText', false, '    ');
                 }
                 return;
+            }
+
+            if (e.key === 'Tab') {
+                const li = parent.closest('li');
+                if (li) {
+                    e.preventDefault();
+                    if (e.shiftKey) {
+                        document.execCommand('outdent', false, null);
+                    } else {
+                        document.execCommand('indent', false, null);
+                    }
+                    return;
+                }
             }
 
             if (e.key === 'Enter') {
@@ -557,6 +591,28 @@
             };
 
             popup.querySelector('#image-url').focus();
+        }
+
+        handleIndent(increase) {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+
+            const range = selection.getRangeAt(0);
+            const node = range.startContainer;
+            const parent = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+
+            if (parent.closest('li')) {
+                document.execCommand(increase ? 'indent' : 'outdent', false, null);
+                return;
+            }
+
+            const block = parent.closest('p, h1, h2, h3, h4, h5, h6');
+            if (block) {
+                const current = parseInt(block.style.marginLeft || '0', 10);
+                const step = 24;
+                const newMargin = increase ? current + step : Math.max(0, current - step);
+                block.style.marginLeft = newMargin > 0 ? newMargin + 'px' : '';
+            }
         }
 
         insertBlockquote() {

@@ -50,16 +50,19 @@
                         {% else %}
                             <span class="privacy-badge public">{% trans "Public" %}</span>
                         {% endif %}
+                        {% if journal.mode != "default" %}
+                            <span class="mode-badge mode-{{ journal.mode }}">{{ journal.get_mode_display }}</span>
+                        {% endif %}
                     </div>
                     <div class="card-actions">
                         <span class="entries-count">
-                            {{ journal.entries_count|default:0 }} 
-                            {% if journal.entries_count == 1 %}{% trans "Entry" %}{% else %}{% trans "Entries" %}{% endif %}
+                            {{ journal.entries_count|default:0 }}
+                            {% if journal.entries_count == 1 %}{{ journal.entry_label }}{% else %}{{ journal.entry_label_plural }}{% endif %}
                         </span>
                         <div class="dropdown">
                             <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">⋯</button>
                             <div class="dropdown-content">
-                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="dropdown-item">{% trans "New Entry" %}</a>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="dropdown-item">{% trans "New" %} {{ journal.entry_label }}</a>
                                 <a href="{% url 'core:journal' journal.slug %}" class="dropdown-item">{% trans "View Journal" %}</a>
                                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings" class="dropdown-item">{% trans "Settings" %}</a>
                                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings#delete-journal-btn" class="dropdown-item delete">{% trans "Delete" %}</a>
@@ -79,7 +82,7 @@
 
                 <div class="card-footer">
                     <div class="card-footer-left">
-                        <a class="new-entry-btn" title="{% trans "New Entry" %}" href="{% url 'services:journals:journal' journal.slug %}?tab=new">+ {% trans "New Entry" %}</a>
+                        <a class="new-entry-btn" title="{% trans "New" %} {{ journal.entry_label }}" href="{% url 'services:journals:journal' journal.slug %}?tab=new">+ {% trans "New" %} {{ journal.entry_label }}</a>
                     </div>
                     <div class="journal-dates">
                         <div class="date-container">

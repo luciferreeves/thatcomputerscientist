@@ -1,0 +1,56 @@
+{% load tz %}
+{% load static %}
+{% load i18n %}
+{% with entries=journal.entries.all %}
+{% if entries %}
+<div class="diary-timeline">
+    {% for entry in entries %}
+    <div class="diary-entry">
+        <div class="diary-date-col">
+            <span class="diary-day">{{ entry.entry_date|date:'d' }}</span>
+            <span class="diary-month">{{ entry.entry_date|date:'M' }}</span>
+            <span class="diary-year">{{ entry.entry_date|date:'Y' }}</span>
+        </div>
+        <div class="diary-body">
+            <div class="diary-header">
+                <h3 class="diary-title">{{ entry.title }}</h3>
+                {% if entry.mood %}
+                <span class="diary-mood">{{ entry.get_mood_display }}</span>
+                {% endif %}
+            </div>
+            {% if entry.content %}
+            <div class="diary-preview">{{ entry.content|striptags|truncatechars:200 }}</div>
+            {% endif %}
+            {% if entry.tags.exists %}
+            <div class="diary-tags">
+                {% for tag in entry.tags.all %}
+                <span class="diary-tag">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="diary-footer">
+                <span class="diary-word-count">{{ entry.word_count }} {% trans "words" %}</span>
+                {% if service_page %}
+                <div class="diary-actions">
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="action-btn">{% trans "Edit" %}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
+    {% if service_page %}
+    <p>{% trans "Start your digital journaling journey by creating your first" %} {{ journal.entry_label|lower }}.</p>
+    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="empty-action-btn">
+        {% trans "Create Your First" %} {{ journal.entry_label }}
+    </a>
+    {% else %}
+    <p>{% trans "This journal doesn't have any" %} {{ journal.entry_label_plural|lower }} {% trans "yet. Check back later!" %}</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endwith %}

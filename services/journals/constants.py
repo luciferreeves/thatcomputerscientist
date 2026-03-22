@@ -1,3 +1,103 @@
+MODE_CHOICES = [
+    ("default", "Default"),
+    ("book", "Book"),
+    ("light_novel", "Light Novel"),
+    ("short_stories", "Short Stories"),
+    ("diary", "Diary"),
+    ("poetry", "Poetry"),
+]
+
+STATUS_CHOICES = [
+    ("ongoing", "Ongoing"),
+    ("completed", "Completed"),
+    ("hiatus", "Hiatus"),
+]
+
+GENRE_CHOICES = [
+    ("fantasy", "Fantasy"),
+    ("sci_fi", "Sci-Fi"),
+    ("romance", "Romance"),
+    ("horror", "Horror"),
+    ("mystery", "Mystery"),
+    ("thriller", "Thriller"),
+    ("comedy", "Comedy"),
+    ("drama", "Drama"),
+    ("slice_of_life", "Slice of Life"),
+    ("action", "Action"),
+    ("adventure", "Adventure"),
+    ("historical", "Historical"),
+    ("isekai", "Isekai"),
+    ("mecha", "Mecha"),
+    ("supernatural", "Supernatural"),
+    ("psychological", "Psychological"),
+    ("tragedy", "Tragedy"),
+    ("ecchi", "Ecchi"),
+    ("harem", "Harem"),
+    ("mahou_shoujo", "Mahou Shoujo"),
+    ("cyberpunk", "Cyberpunk"),
+    ("dystopian", "Dystopian"),
+    ("noir", "Noir"),
+    ("satire", "Satire"),
+]
+
+TONE_CHOICES = [
+    ("dark", "Dark"),
+    ("light", "Light"),
+    ("comedic", "Comedic"),
+    ("serious", "Serious"),
+    ("melancholic", "Melancholic"),
+    ("whimsical", "Whimsical"),
+    ("gritty", "Gritty"),
+    ("surreal", "Surreal"),
+    ("wholesome", "Wholesome"),
+    ("bittersweet", "Bittersweet"),
+    ("absurdist", "Absurdist"),
+    ("noir", "Noir"),
+    ("dreamy", "Dreamy"),
+    ("tense", "Tense"),
+]
+
+FORM_CHOICES = [
+    ("free_verse", "Free Verse"),
+    ("haiku", "Haiku"),
+    ("tanka", "Tanka"),
+    ("sonnet", "Sonnet"),
+    ("limerick", "Limerick"),
+    ("ballad", "Ballad"),
+    ("ode", "Ode"),
+    ("elegy", "Elegy"),
+    ("ghazal", "Ghazal"),
+    ("villanelle", "Villanelle"),
+    ("acrostic", "Acrostic"),
+    ("prose_poetry", "Prose Poetry"),
+    ("concrete", "Concrete"),
+    ("renga", "Renga"),
+    ("spoken_word", "Spoken Word"),
+]
+
+MOOD_CHOICES = [
+    ("happy", "Happy"),
+    ("sad", "Sad"),
+    ("anxious", "Anxious"),
+    ("calm", "Calm"),
+    ("angry", "Angry"),
+    ("grateful", "Grateful"),
+    ("tired", "Tired"),
+    ("excited", "Excited"),
+    ("reflective", "Reflective"),
+    ("nostalgic", "Nostalgic"),
+    ("hopeful", "Hopeful"),
+    ("stressed", "Stressed"),
+    ("content", "Content"),
+    ("lonely", "Lonely"),
+    ("inspired", "Inspired"),
+    ("melancholic", "Melancholic"),
+    ("peaceful", "Peaceful"),
+    ("frustrated", "Frustrated"),
+    ("numb", "Numb"),
+    ("curious", "Curious"),
+]
+
 RESERVED_JOURNAL_SLUGS = [
     "new",
     "news",

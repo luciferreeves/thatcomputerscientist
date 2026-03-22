@@ -4,56 +4,217 @@
 
 {% block head %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}" />
 {% endblock head %}
 
 {% block content %}
 <div class="journals-page">
-    {% include "journals/_partials/journal_header.html" with journal=journal %}
-    
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
     <div class="new-entry-form-container">
         {% if messages %}
             <div class="form-messages">
                 {% for message in messages %}
                     <div class="form-message {{ message.tags }}">
-                        <span class="message-icon">
-                            {% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}
-                        </span>
+                        <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
                         <span class="message-text">{{ message }}</span>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
 
-        
-        <form method="post" id="entry-form" class="journal-form">
+        <form method="post" id="entry-form" class="journal-form" enctype="multipart/form-data">
             {% csrf_token %}
-            
+            {% if request.GET.from %}<input type="hidden" name="from" value="{{ request.GET.from }}" />{% endif %}
+
             <div class="form-grid">
+                {% if journal.mode != "diary" %}
                 <div class="form-group full-width">
-                    <label for="entry-title" class="form-label">{% trans "Entry Title" %}</label>
-                    <input 
-                        type="text" 
-                        id="entry-title" 
-                        name="title" 
-                        class="form-input" 
-                        placeholder="{% trans "Give your entry a title..." %}"
-                        required
-                    />
+                    <label for="entry-title" class="form-label">{{ journal.entry_label }} {% trans "Title" %}</label>
+                    <input type="text" id="entry-title" name="title" class="form-input" placeholder="{% trans 'Give your' %} {{ journal.entry_label|lower }} {% trans 'a title...' %}" required />
                 </div>
-                
+                {% endif %}
+
+                {% if journal.mode == "diary" %}
+                <div class="form-group">
+                    <label for="entry-title" class="form-label">{% trans "Title" %}</label>
+                    <input type="text" id="entry-title" name="title" class="form-input" placeholder="{% trans 'Optional — auto-generated from date' %}" />
+                </div>
+                <div class="form-group">
+                    <label for="entry-date" class="form-label">{% trans "Date" %}</label>
+                    <input type="date" id="entry-date" name="entry_date" class="form-input" value="{{ selected_entry_date|default:'' }}" />
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "book" or journal.mode == "light_novel" %}
+                <div class="form-group">
+                    <label for="entry-volume" class="form-label">{% trans "Volume" %}</label>
+                    <select id="entry-volume" name="volume" class="form-input">
+                        <option value="">{% trans "No volume" %}</option>
+                        {% for volume in volumes %}
+                        <option value="{{ volume.id }}" {% if selected_volume and selected_volume == volume.id|stringformat:"d" %}selected{% endif %}>{{ volume.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "poetry" %}
+                <div class="form-group">
+                    <label for="entry-form" class="form-label">{% trans "Form" %}</label>
+                    <select id="entry-form" name="form" class="form-input">
+                        <option value="">{% trans "Select form..." %}</option>
+                        {% for value, label in form_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "short_stories" %}
+                <div class="form-group">
+                    <label for="entry-genre" class="form-label">{% trans "Genre" %}</label>
+                    <select id="entry-genre" name="genre" class="form-input">
+                        <option value="">{% trans "Select genre..." %}</option>
+                        {% for value, label in genre_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="entry-tone" class="form-label">{% trans "Tone" %}</label>
+                    <select id="entry-tone" name="tone" class="form-input">
+                        <option value="">{% trans "Select tone..." %}</option>
+                        {% for value, label in tone_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "diary" or journal.mode == "poetry" %}
+                <div class="form-group">
+                    <label for="entry-mood" class="form-label">{% trans "Mood" %}</label>
+                    <select id="entry-mood" name="mood" class="form-input">
+                        <option value="">{% trans "Select mood..." %}</option>
+                        {% for value, label in mood_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "short_stories" or journal.mode == "book" or journal.mode == "light_novel" %}
+                <div class="form-group full-width">
+                    <label for="entry-summary" class="form-label">{% trans "Summary" %}</label>
+                    <textarea id="entry-summary" name="summary" class="form-textarea" rows="2" placeholder="{% trans 'Brief summary or blurb...' %}"></textarea>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "short_stories" %}
+                <div class="form-group">
+                    <label for="entry-thumbnail" class="form-label">{% trans "Thumbnail" %}</label>
+                    <input type="file" id="entry-thumbnail" name="thumbnail" class="form-input" accept="image/*" />
+                </div>
+                {% endif %}
+
+                {% if journal.mode != "diary" %}
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="entry-draft" name="is_draft" class="form-checkbox" checked />
+                        <label for="entry-draft" class="checkbox-label">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">{% trans "Draft" %}</span>
+                        </label>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "book" or journal.mode == "light_novel" or journal.mode == "short_stories" %}
+                <div class="form-group full-width">
+                    <label class="form-label">{% trans "Characters" %}</label>
+                    <div class="tags-picker" id="characters-picker">
+                        {% for character in characters %}
+                        <label class="tag-pick">
+                            <input type="checkbox" name="character_ids" value="{{ character.id }}" />
+                            <span class="tag-pick-label">{{ character.name }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="action-btn" id="toggle-quick-character">{% trans "Quick Create" %}</button>
+                    <div class="inline-form hidden" id="quick-character-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Name" %}</label>
+                                <input type="text" class="form-input" id="new-character-name" placeholder="{% trans 'Character name...' %}" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Role" %}</label>
+                                <select class="form-input" id="new-character-role">
+                                    <option value="Supporting">{% trans "Supporting" %}</option>
+                                    <option value="Protagonist">{% trans "Protagonist" %}</option>
+                                    <option value="Main Character">{% trans "Main Character" %}</option>
+                                    <option value="Antagonist">{% trans "Antagonist" %}</option>
+                                    <option value="Minor">{% trans "Minor" %}</option>
+                                    <option value="Narrator">{% trans "Narrator" %}</option>
+                                    <option value="Love Interest">{% trans "Love Interest" %}</option>
+                                    <option value="Mentor">{% trans "Mentor" %}</option>
+                                    <option value="Rival">{% trans "Rival" %}</option>
+                                    <option value="Comic Relief">{% trans "Comic Relief" %}</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">{% trans "Bio" %}</label>
+                                <textarea class="form-textarea" id="new-character-bio" rows="2" placeholder="{% trans 'Character backstory...' %}"></textarea>
+                            </div>
+                        </div>
+                        <div class="inline-form-actions">
+                            <button type="button" class="action-btn" id="add-character-btn">{% trans "Add Character" %}</button>
+                            <button type="button" class="cancel-btn" id="cancel-quick-character">{% trans "Cancel" %}</button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if journal.mode == "short_stories" or journal.mode == "poetry" %}
+                <div class="form-group full-width">
+                    <label class="form-label">{% trans "Tags" %}</label>
+                    <div class="tags-picker" id="tags-picker">
+                        {% for tag in tags %}
+                        <label class="tag-pick">
+                            <input type="checkbox" name="tags" value="{{ tag.id }}" />
+                            <span class="tag-pick-label">{{ tag.name }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="action-btn" id="toggle-quick-tag">{% trans "Quick Add" %}</button>
+                    <div class="inline-form hidden" id="quick-tag-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Tag Name" %}</label>
+                                <input type="text" class="form-input" id="new-tag-name" placeholder="{% trans 'Tag name...' %}" />
+                            </div>
+                        </div>
+                        <div class="inline-form-actions">
+                            <button type="button" class="action-btn" id="add-tag-btn">{% trans "Add Tag" %}</button>
+                            <button type="button" class="cancel-btn" id="cancel-quick-tag">{% trans "Cancel" %}</button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
                 <div class="form-group full-width">
                     <label for="entry-content" class="form-label">{% trans "Content" %}</label>
                     <div id="editor-container"></div>
                     <input type="hidden" id="entry-content" name="content" />
                 </div>
             </div>
-            
+
             <div class="form-actions">
                 <button type="submit" class="create-btn">
                     <span class="btn-icon">✓</span>
-                    <span class="btn-text">{% trans "Save Entry" %}</span>
+                    <span class="btn-text">{% trans "Save" %} {{ journal.entry_label }}</span>
                 </button>
                 <button type="button" class="cancel-btn" onclick="window.history.back()">
                     <span class="btn-text">{% trans "Cancel" %}</span>
@@ -67,10 +228,11 @@
 {% block scripts %}
 <script type="application/json" id="new-entry-config">
 {
-    "placeholder": "{% trans 'Start writing your entry...' %}",
-    "alertEmpty": "{% trans 'Please write some content for your entry.' %}"
+    "placeholder": "{% trans 'Start writing your' %} {{ journal.entry_label|lower }}...",
+    "alertEmpty": "{% trans 'Please write some content for your' %} {{ journal.entry_label|lower }}."
 }
 </script>
+<script src="{% static 'js/journals/common.js' %}"></script>
 <script src="{% static 'js/miku/fancymiku.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/journals/new_entry.js' %}"></script>
 {% endblock scripts %}

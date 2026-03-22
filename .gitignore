@@ -142,6 +142,11 @@ image_downloader.ipynb
 
 dump.rdb
 
+.claude
+.vscode
+.playwright*
+
 # credentials JSON files
 credentials-*.json
+credentials.jsonc
 SSL

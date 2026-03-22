@@ -1,0 +1,92 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/books/entry.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="bk">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="bk-top">
+        <div class="bk-ch-num">{{ chapter_number|default:entry.order }}</div>
+        <div class="bk-top-info">
+            <h1>{{ entry.title }}</h1>
+            <div class="bk-meta">
+                <a href="{% url 'core:journal' journal.slug %}">{{ journal.name }}</a>{% if entry.volume and entry.volume.title != journal.name %} <span class="bk-meta-sep">//</span> {{ entry.volume.title }}{% endif %}
+            </div>
+            {% if entry.summary %}<div class="bk-ch-summary">{{ entry.summary }}</div>{% endif %}
+        </div>
+    </div>
+
+    <div class="bk-stats-bar">
+        {% if entry.volume and volumes_with_entries|length > 1 %}<div class="bk-stat">{% trans "volume" %} <b>{{ entry.volume.order }}</b></div>{% endif %}
+        <div class="bk-stat">{% trans "chapter" %} <b>{% firstof chapter_number entry.order %}</b></div>
+        {% if entry.word_count %}<div class="bk-stat"><b>{{ entry.word_count }}</b> {% trans "words" %}</div>{% endif %}
+        {% if entry.created_at %}<div class="bk-stat">{{ entry.created_at|date:"d M Y" }}</div>{% endif %}
+        <div class="bk-stat">{% trans "by" %} <a href="{% url 'core:journal' journal.slug %}"><b>{% firstof journal.owner.get_full_name journal.owner.username %}</b></a></div>
+        <div class="bk-stat bk-stat-sel">
+            <button class="bk-ch-toggle" onclick="var s=document.querySelector('.bk-ch-select');var o=s.classList.toggle('bk-ch-open');this.classList.toggle('bk-ch-toggle-on',o);this.querySelector('.bk-ch-arrow').textContent=o?'\u25B4':'\u25BE';if(o){var a=s.querySelector('.bk-ch-active');if(a){s.scrollTop=a.offsetTop-s.offsetHeight/2+a.offsetHeight/2}}">{% trans "chapters" %} <span class="bk-ch-arrow">&#9662;</span></button>
+        </div>
+    </div>
+
+    <div class="bk-ch-select">
+        {% for volume in volumes_with_entries %}
+        <div class="bk-ch-vol-label">{{ volume.title }}</div>
+        {% for ch in volume.entries.all %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ ch.slug }}" class="bk-ch-item{% if ch.slug == entry.slug %} bk-ch-active{% endif %}">
+            <span class="bk-ch-item-n">{{ forloop.counter }}.</span>
+            <span class="bk-ch-item-name">{{ ch.title }}</span>
+        </a>
+        {% endfor %}
+        {% endfor %}
+        {% for ch in unassigned_entries %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ ch.slug }}" class="bk-ch-item{% if ch.slug == entry.slug %} bk-ch-active{% endif %}">
+            <span class="bk-ch-item-n">{{ forloop.counter }}.</span>
+            <span class="bk-ch-item-name">{{ ch.title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="bk-content">
+        {{ entry.content|cleanview }}
+    </div>
+
+    {% if entry.tags.all %}
+    <div class="bk-end-tags">{% for tag in entry.tags.all %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+    {% endif %}
+
+    <div class="bk-nav">
+        {% if prev_entry %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ prev_entry.slug }}" class="bk-nav-item bk-nav-prev">
+            <span class="bk-nav-label">&laquo; {% trans "previous" %}</span>
+            <span class="bk-nav-title">{{ prev_entry.title }}</span>
+        </a>
+        {% else %}
+        <div class="bk-nav-item"></div>
+        {% endif %}
+        <a href="{% url 'core:journal' journal.slug %}" class="bk-nav-item bk-nav-toc">
+            <span class="bk-nav-label">{{ journal.name }}</span>
+            <span class="bk-nav-title">{% trans "Table of Contents" %}</span>
+        </a>
+        {% if next_entry %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ next_entry.slug }}" class="bk-nav-item bk-nav-next">
+            <span class="bk-nav-label">{% trans "next" %} &raquo;</span>
+            <span class="bk-nav-title">{{ next_entry.title }}</span>
+        </a>
+        {% else %}
+        <div class="bk-nav-item"></div>
+        {% endif %}
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        localStorage.setItem("book_{{ journal.slug }}", "{{ entry.slug }}");
+    } catch(e) {}
+})();
+</script>
+{% endblock content %}

@@ -34,7 +34,7 @@
             </div>
         {% endif %}
 
-        <form method="post" class="form-container">
+        <form method="post" enctype="multipart/form-data" class="form-container">
             {% csrf_token %}
 
             <section class="journal-card">
@@ -79,6 +79,56 @@
                                   placeholder="{% trans 'Describe what this journal is about...' %}">{{ journal.description }}</textarea>
                         <div class="form-hint">{% trans "Brief description of your journal's purpose" %}</div>
                     </div>
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Mode & Classification" %}</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Mode" %}</label>
+                        <input type="text" class="form-input" value="{{ journal.get_mode_display }}" disabled>
+                        <div class="form-hint">{% trans "Mode is locked after creation" %}</div>
+                    </div>
+
+                    {% if journal.mode == "book" or journal.mode == "light_novel" %}
+                    <div class="form-group">
+                        <label for="status" class="form-label">{% trans "Status" %}</label>
+                        <select id="status" name="status" class="form-input">
+                            {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if journal.status == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-hint">{% trans "Current writing status" %}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if journal.mode == "book" or journal.mode == "light_novel" %}
+                    <div class="form-group">
+                        <label for="genre" class="form-label">{% trans "Genre" %}</label>
+                        <select id="genre" name="genre" class="form-input">
+                            <option value="">{% trans "— Select Genre —" %}</option>
+                            {% for value, label in genre_choices %}
+                            <option value="{{ value }}" {% if journal.genre == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-hint">{% trans "Primary genre of your work" %}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if journal.mode != "default" and journal.mode != "diary" %}
+                    <div class="form-group full-width">
+                        <label for="cover_image" class="form-label">{% trans "Cover Image" %}</label>
+                        {% if journal.cover_image %}
+                        <div class="current-cover">
+                            <img src="{{ journal.cover_image.url }}" alt="{% trans 'Current cover' %}" class="cover-preview">
+                        </div>
+                        {% endif %}
+                        <input type="file" id="cover_image" name="cover_image" class="form-input" accept="image/*">
+                        <div class="form-hint">{% trans "Upload a new image to replace the current cover" %}</div>
+                    </div>
+                    {% endif %}
                 </div>
             </section>
 

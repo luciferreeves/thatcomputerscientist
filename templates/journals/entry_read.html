@@ -1,0 +1,62 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    <div class="journal-entries">
+        <div class="journal-entries-main" id="journal-entries-host">
+            <template id="journal-entries-template">
+                {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+                <div class="entries-page">
+                    <div class="entry-container">
+                        <div class="header">
+                            <div class="header-title">{{ entry.title }}</div>
+                        </div>
+                        <div class="weblog-content">{{ entry.content|cleanview }}</div>
+                        <div class="journal-entry-details">
+                            <span>{% trans "Posted in" %}</span>
+                            <a href="{% url 'core:journal' journal.slug %}">{{ journal.name }}</a>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <div class="pagination-wrapper">
+        <nav class="pagination">
+            {% if prev_entry %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ prev_entry.slug }}" class="page-btn">
+                <span class="btn-icon">&#8249;</span>
+                <span class="btn-text">{% trans "Previous" %}</span>
+            </a>
+            {% endif %}
+            <a href="{% url 'core:journal' journal.slug %}" class="page-btn">
+                <span class="btn-text">{% trans "Back" %}</span>
+            </a>
+            {% if next_entry %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ next_entry.slug }}" class="page-btn">
+                <span class="btn-text">{% trans "Next" %}</span>
+                <span class="btn-icon">&#8250;</span>
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="application/json" id="journal-view-config">
+["{% static 'css/blog/post.css' %}", "{% static 'css/journals/journal_entries.css' %}", "{% static 'css/journals/journal_view.css' %}"]
+</script>
+<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/journals/journal_view.js' %}"></script>
+{% endblock scripts %}

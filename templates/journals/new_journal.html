@@ -62,7 +62,7 @@
                         name="slug" 
                         class="form-input" 
                         placeholder="{% trans "journal-url-name" %}"
-                        pattern="[a-z0-9-]+"
+                        pattern="[a-z0-9\-]+"
                         maxlength="50"
                         value="{{ formdata.slug|default:'' }}"
                     >
@@ -80,6 +80,35 @@
                         maxlength="500"
                         >{{ formdata.description|default:'' }}</textarea>
                     <div class="form-hint">{% trans "Optional: A brief description of your journal's purpose or theme" %}</div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="mode" class="form-label">{% trans "Mode" %}</label>
+                    <select id="mode" name="mode" class="form-input">
+                        {% for value, label in mode_choices %}
+                        <option value="{{ value }}" {% if formdata.mode == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-hint">{% trans "Choose the type of journal. This cannot be changed later." %}</div>
+                </div>
+
+                <div class="form-group full-width hidden" id="genre-group">
+                    <label for="genre" class="form-label">{% trans "Genre" %}</label>
+                    <select id="genre" name="genre" class="form-input">
+                        <option value="">{% trans "— Select Genre —" %}</option>
+                        {% for value, label in genre_choices %}
+                        <option value="{{ value }}" {% if formdata.genre == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group full-width hidden" id="status-group">
+                    <label for="status" class="form-label">{% trans "Status" %}</label>
+                    <select id="status" name="status" class="form-input">
+                        {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if formdata.status == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-group">

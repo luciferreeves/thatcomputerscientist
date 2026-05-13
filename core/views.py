@@ -23,6 +23,8 @@ from services.journals.functions import (
     get_entry_chapter_list,
     get_short_stories_view_data,
     get_short_stories_entry_data,
+    get_poetry_view_data,
+    get_poetry_entry_data,
 )
 
 
@@ -59,6 +61,8 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     character_id = request.GET.get("character")
     genre_filter = request.GET.get("genre", "")
     tone_filter = request.GET.get("tone", "")
+    form_filter = request.GET.get("form", "")
+    mood_filter = request.GET.get("mood", "")
 
     user = cast(AbstractUser, request.user) if request.user.is_authenticated else None
     success, journal_obj, entries = get_journal(
@@ -121,11 +125,15 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
 
         if mode == "short_stories":
             context.update(get_short_stories_entry_data(journal_obj, entry_obj, is_owner=is_owner))
+        elif mode == "poetry":
+            context.update(get_poetry_entry_data(journal_obj, entry_obj, is_owner=is_owner))
 
         if is_book_mode:
             template = "journals/books/entry.html"
         elif mode == "short_stories":
             template = "journals/short_stories/entry.html"
+        elif mode == "poetry":
+            template = "journals/poetry/entry.html"
         else:
             entry_template = f"journals/modes/{mode}/entry_read.html"
             try:
@@ -148,6 +156,9 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     elif mode == "short_stories":
         context.update(get_short_stories_view_data(journal_obj, is_owner=is_owner, genre=genre_filter, tone=tone_filter))
         template = "journals/short_stories/main.html"
+    elif mode == "poetry":
+        context.update(get_poetry_view_data(journal_obj, is_owner=is_owner, form=form_filter, mood=mood_filter, page=page))
+        template = "journals/poetry/main.html"
     else:
         template = "journals/journal_view.html"
         mode_template = f"journals/modes/{mode}/journal_view.html"

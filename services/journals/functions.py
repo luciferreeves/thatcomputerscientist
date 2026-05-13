@@ -10,7 +10,14 @@ from django.http import QueryDict
 from django.utils import timezone
 from django.utils.text import slugify
 
-from services.journals.constants import GENRE_CHOICES, TONE_CHOICES, RESERVED_JOURNAL_NAMES, RESERVED_JOURNAL_SLUGS
+from services.journals.constants import (
+    FORM_CHOICES,
+    GENRE_CHOICES,
+    MOOD_CHOICES,
+    RESERVED_JOURNAL_NAMES,
+    RESERVED_JOURNAL_SLUGS,
+    TONE_CHOICES,
+)
 from services.journals.models import (
     Character,
     CharacterAppearance,
@@ -1078,6 +1085,73 @@ def get_short_stories_view_data(
             "total_word_count": total_words,
             "character_count": characters.count(),
         },
+    }
+
+
+def get_poetry_view_data(
+    journal: Journal, is_owner: bool = False, form: str = "", mood: str = "", page: int = 1, per_page: int = 5,
+) -> dict[str, Any]:
+    entry_qs = JournalEntry.objects.filter(journal=journal).order_by("order")
+    if not is_owner:
+        entry_qs = entry_qs.filter(is_draft=False)
+
+    form_counts: dict[str, int] = {}
+    for f in entry_qs.exclude(form="").values_list("form", flat=True):
+        form_counts[f] = form_counts.get(f, 0) + 1
+
+    form_labels = dict(FORM_CHOICES)
+    available_forms = [
+        {"value": f, "label": form_labels.get(f, f), "count": c}
+        for f, c in form_counts.items()
+    ]
+
+    mood_counts: dict[str, int] = {}
+    for m in entry_qs.exclude(mood="").values_list("mood", flat=True):
+        mood_counts[m] = mood_counts.get(m, 0) + 1
+
+    mood_labels = dict(MOOD_CHOICES)
+    available_moods = [
+        {"value": m, "label": mood_labels.get(m, m), "count": c}
+        for m, c in mood_counts.items()
+    ]
+
+    filtered_entries = entry_qs
+    if form and form in form_counts:
+        filtered_entries = filtered_entries.filter(form=form)
+    if mood and mood in mood_counts:
+        filtered_entries = filtered_entries.filter(mood=mood)
+
+    paginator = Paginator(filtered_entries, per_page)
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
+    total_count = entry_qs.filter(is_draft=False).count() if is_owner else entry_qs.count()
+
+    return {
+        "pe_entries": page_obj.object_list,
+        "pe_jump_entries": filtered_entries,
+        "pe_page": page_obj,
+        "available_forms": available_forms,
+        "active_form": form if form in form_counts else "",
+        "available_moods": available_moods,
+        "active_mood": mood if mood in mood_counts else "",
+        "pe_stats": {
+            "published_count": total_count,
+        },
+    }
+
+
+def get_poetry_entry_data(journal: Journal, entry: JournalEntry, is_owner: bool = False) -> dict[str, Any]:
+    all_entries = JournalEntry.objects.filter(journal=journal).order_by("order")
+    if not is_owner:
+        all_entries = all_entries.filter(is_draft=False)
+
+    return {
+        "all_entries": all_entries,
     }
 
 

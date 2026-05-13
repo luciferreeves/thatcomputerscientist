@@ -180,11 +180,16 @@ def check_comment_spam(post, comment):
     """
 
     safety_settings = [
-        {"category": "HARM_CATEGORY_DANGEROUS", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+        genai.types.SafetySetting(
+            category=cat,
+            threshold=genai.types.HarmBlockThreshold.BLOCK_NONE,
+        )
+        for cat in (
+            genai.types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+            genai.types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            genai.types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+            genai.types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        )
     ]
 
     response = client.models.generate_content(
@@ -192,6 +197,6 @@ def check_comment_spam(post, comment):
         contents=prompt,
         config=genai.types.GenerateContentConfig(safety_settings=safety_settings),
     )
-    result = response.text.strip()
+    result = (response.text or "").strip()
 
     return result.upper() == "Y"  # Return True if spam, False otherwise

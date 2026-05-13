@@ -14,6 +14,7 @@ from administration.annoucements.functions import get_announcements
 from authentication.functions import get_user_from_username
 from blog.functions import get_posts
 from internal.mal_wrapper import get_mal_recent_activity
+from internal.steam_wrapper import get_steam_screenshots
 from services.journals.functions import (
     get_latest_journal_entry,
     get_journal,
@@ -54,6 +55,14 @@ def home(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "core/home.html", context)
+
+
+def screenshots(request: HttpRequest) -> HttpResponse:
+    title_map = {"en": "Screenshots", "ja": "スクリーンショット"}
+    request.meta.title = title_map.get(request.LANGUAGE_CODE)
+
+    shots = get_steam_screenshots(os.getenv("STEAM_USERNAME", ""))
+    return render(request, "core/screenshots.html", {"shots": shots})
 
 
 def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> HttpResponse:

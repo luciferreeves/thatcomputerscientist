@@ -21,6 +21,8 @@ from services.journals.functions import (
     get_public_entry,
     get_public_character,
     get_entry_chapter_list,
+    get_short_stories_view_data,
+    get_short_stories_entry_data,
 )
 
 
@@ -33,7 +35,7 @@ def home(request: HttpRequest) -> HttpResponse:
         user=cast(AbstractUser, get_user_from_username("bobby")),
         slug="journal-of-random-thoughts",
         lang=request.LANGUAGE_CODE,
-        count=3,
+        count=1,
     )
 
     context = {
@@ -55,6 +57,8 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     page = int(request.GET.get("page", 1))
     entry_slug = request.GET.get("entry")
     character_id = request.GET.get("character")
+    genre_filter = request.GET.get("genre", "")
+    tone_filter = request.GET.get("tone", "")
 
     user = cast(AbstractUser, request.user) if request.user.is_authenticated else None
     success, journal_obj, entries = get_journal(
@@ -71,7 +75,7 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     is_book_mode = mode in ("book", "light_novel")
     owner_profile = journal_obj.owner.userprofile_set.first()
 
-    if character_id and is_book_mode:
+    if character_id and mode in ("book", "light_novel", "short_stories"):
         found, character, relationships, appearances = get_public_character(
             journal_obj, int(character_id),
         )
@@ -88,6 +92,8 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
             "owner_profile": owner_profile,
         }
 
+        if mode == "short_stories":
+            return render(request, "journals/short_stories/characters.html", context)
         return render(request, "journals/books/characters.html", context)
 
     if entry_slug:
@@ -113,8 +119,13 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
             context["volumes_with_entries"] = vols
             context["unassigned_entries"] = unassigned
 
+        if mode == "short_stories":
+            context.update(get_short_stories_entry_data(journal_obj, entry_obj, is_owner=is_owner))
+
         if is_book_mode:
             template = "journals/books/entry.html"
+        elif mode == "short_stories":
+            template = "journals/short_stories/entry.html"
         else:
             entry_template = f"journals/modes/{mode}/entry_read.html"
             try:
@@ -134,6 +145,9 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     if is_book_mode:
         context.update(get_book_view_data(journal_obj, is_owner=is_owner))
         template = "journals/books/main.html"
+    elif mode == "short_stories":
+        context.update(get_short_stories_view_data(journal_obj, is_owner=is_owner, genre=genre_filter, tone=tone_filter))
+        template = "journals/short_stories/main.html"
     else:
         template = "journals/journal_view.html"
         mode_template = f"journals/modes/{mode}/journal_view.html"

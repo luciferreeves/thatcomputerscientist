@@ -10,7 +10,7 @@ from django.http import QueryDict
 from django.utils import timezone
 from django.utils.text import slugify
 
-from services.journals.constants import RESERVED_JOURNAL_NAMES, RESERVED_JOURNAL_SLUGS
+from services.journals.constants import GENRE_CHOICES, TONE_CHOICES, RESERVED_JOURNAL_NAMES, RESERVED_JOURNAL_SLUGS
 from services.journals.models import (
     Character,
     CharacterAppearance,
@@ -948,7 +948,7 @@ def get_entry_navigation(
     journal: Journal, entry: JournalEntry
 ) -> tuple[JournalEntry | None, JournalEntry | None]:
     qs = JournalEntry.objects.filter(journal=journal, is_draft=False)
-    if journal.mode in ("book", "light_novel"):
+    if journal.mode in ("book", "light_novel", "short_stories"):
         prev_entry = qs.filter(order__lt=entry.order).order_by("-order").first()
         next_entry = qs.filter(order__gt=entry.order).order_by("order").first()
     elif journal.mode == "diary":
@@ -1023,6 +1023,76 @@ def get_book_view_data(journal: Journal, is_owner: bool = False) -> dict[str, An
         "characters": characters,
         "tags": tags,
         "book_stats": stats,
+    }
+
+
+def get_short_stories_view_data(
+    journal: Journal, is_owner: bool = False, genre: str = "", tone: str = "",
+) -> dict[str, Any]:
+    from django.db.models import Sum
+
+    entry_qs = JournalEntry.objects.filter(journal=journal).order_by("order")
+    if not is_owner:
+        entry_qs = entry_qs.filter(is_draft=False)
+
+    total_words = entry_qs.aggregate(total=Sum("word_count"))["total"] or 0
+    characters = Character.objects.filter(journal=journal).order_by("order")
+    tags = journal.entry_tags.all()
+
+    genre_counts: dict[str, int] = {}
+    for g in entry_qs.exclude(genre="").values_list("genre", flat=True):
+        genre_counts[g] = genre_counts.get(g, 0) + 1
+
+    genre_labels = dict(GENRE_CHOICES)
+    available_genres = [
+        {"value": g, "label": genre_labels.get(g, g), "count": c}
+        for g, c in genre_counts.items()
+    ]
+
+    tone_counts: dict[str, int] = {}
+    for t in entry_qs.exclude(tone="").values_list("tone", flat=True):
+        tone_counts[t] = tone_counts.get(t, 0) + 1
+
+    tone_labels = dict(TONE_CHOICES)
+    available_tones = [
+        {"value": t, "label": tone_labels.get(t, t), "count": c}
+        for t, c in tone_counts.items()
+    ]
+
+    filtered_entries = entry_qs
+    if genre and genre in genre_counts:
+        filtered_entries = filtered_entries.filter(genre=genre)
+    if tone and tone in tone_counts:
+        filtered_entries = filtered_entries.filter(tone=tone)
+
+    return {
+        "characters": characters,
+        "tags": tags,
+        "ss_entries": filtered_entries,
+        "available_genres": available_genres,
+        "active_genre": genre if genre in genre_counts else "",
+        "available_tones": available_tones,
+        "active_tone": tone if tone in tone_counts else "",
+        "ss_stats": {
+            "published_count": entry_qs.filter(is_draft=False).count() if is_owner else entry_qs.count(),
+            "total_word_count": total_words,
+            "character_count": characters.count(),
+        },
+    }
+
+
+def get_short_stories_entry_data(journal: Journal, entry: JournalEntry, is_owner: bool = False) -> dict[str, Any]:
+    all_entries = JournalEntry.objects.filter(journal=journal).order_by("order")
+    if not is_owner:
+        all_entries = all_entries.filter(is_draft=False)
+
+    entry_characters = Character.objects.filter(
+        appearances__entry=entry,
+    ).order_by("order")
+
+    return {
+        "all_entries": all_entries,
+        "entry_characters": entry_characters,
     }
 
 

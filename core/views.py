@@ -25,6 +25,7 @@ from services.journals.functions import (
     get_short_stories_entry_data,
     get_poetry_view_data,
     get_poetry_entry_data,
+    get_diary_view_data,
 )
 
 
@@ -63,6 +64,8 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     tone_filter = request.GET.get("tone", "")
     form_filter = request.GET.get("form", "")
     mood_filter = request.GET.get("mood", "")
+    year_filter = request.GET.get("year", "")
+    month_filter = request.GET.get("month", "")
 
     user = cast(AbstractUser, request.user) if request.user.is_authenticated else None
     success, journal_obj, entries = get_journal(
@@ -100,7 +103,7 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
             return render(request, "journals/short_stories/characters.html", context)
         return render(request, "journals/books/characters.html", context)
 
-    if entry_slug:
+    if entry_slug and mode != "diary":
         found, entry_obj, prev_entry, next_entry, chapter_number = get_public_entry(
             journal_obj, entry_slug, is_owner=is_owner, lang=request.LANGUAGE_CODE,
         )
@@ -159,6 +162,24 @@ def journal(request: HttpRequest, slug: str = "journal-of-random-thoughts") -> H
     elif mode == "poetry":
         context.update(get_poetry_view_data(journal_obj, is_owner=is_owner, form=form_filter, mood=mood_filter, page=page))
         template = "journals/poetry/main.html"
+    elif mode == "diary":
+        try:
+            year_int = int(year_filter) if year_filter else None
+            month_int = int(month_filter) if month_filter else None
+        except ValueError:
+            year_int = None
+            month_int = None
+        selected_entry = None
+        if entry_slug:
+            from services.journals.models import JournalEntry as _JE
+            entry_obj = _JE.objects.filter(journal=journal_obj, slug=entry_slug).first()
+            if entry_obj and (is_owner or not entry_obj.is_draft):
+                entry_obj.translate(request.LANGUAGE_CODE)
+                selected_entry = entry_obj
+                context["selected_entry"] = entry_obj
+                request.meta.title = f"{entry_obj.title} - {journal_obj.name}"
+        context.update(get_diary_view_data(journal_obj, is_owner=is_owner, year=year_int, month=month_int, current_entry=selected_entry, mood=mood_filter))
+        template = "journals/diary/main.html"
     else:
         template = "journals/journal_view.html"
         mode_template = f"journals/modes/{mode}/journal_view.html"

@@ -1182,12 +1182,13 @@ def get_journal_toc(journal: Journal) -> tuple[Any, Any]:
     return volumes, unassigned
 
 
-def get_diary_calendar(journal: Journal, year: int, month: int) -> dict[str, Any]:
+def get_diary_calendar(journal: Journal, year: int, month: int, mood_filter: str = "") -> dict[str, Any]:
     import calendar
 
-    entries = journal.entries.filter(
-        entry_date__year=year, entry_date__month=month,
-    ).values_list("entry_date", "title", "slug", "mood")
+    qs = JournalEntry.objects.filter(
+        journal=journal, entry_date__year=year, entry_date__month=month,
+    )
+    entries = qs.values_list("entry_date", "title", "slug", "mood")
     cal = calendar.Calendar(firstweekday=0)
     days = list(cal.itermonthdays2(year, month))
     entries_by_day: dict[int, dict[str, Any]] = {}
@@ -1195,10 +1196,103 @@ def get_diary_calendar(journal: Journal, year: int, month: int) -> dict[str, Any
         entries_by_day[entry_date.day] = {
             "title": title, "slug": slug, "mood": mood, "date": entry_date,
         }
+    weeks: list[list[dict[str, Any]]] = []
+    week: list[dict[str, Any]] = []
+    for day, weekday in days:
+        cell = {"day": day, "weekday": weekday}
+        if day != 0 and day in entries_by_day:
+            entry = entries_by_day[day]
+            cell["entry"] = entry
+            if mood_filter and entry["mood"] != mood_filter:
+                cell["dimmed"] = True
+        week.append(cell)
+        if len(week) == 7:
+            weeks.append(week)
+            week = []
+    if week:
+        weeks.append(week)
     return {
         "year": year,
         "month": month,
         "month_name": calendar.month_name[month],
         "days": days,
+        "weeks": weeks,
         "entries": entries_by_day,
+    }
+
+
+def get_diary_view_data(
+    journal: Journal, is_owner: bool = False, year: int | None = None, month: int | None = None, current_entry: JournalEntry | None = None, mood: str = "",
+) -> dict[str, Any]:
+    from datetime import date as _date
+
+    today = _date.today()
+
+    qs = JournalEntry.objects.filter(journal=journal)
+    if not is_owner:
+        qs = qs.filter(is_draft=False)
+
+    latest = qs.exclude(entry_date__isnull=True).order_by("-entry_date").first()
+
+    mood_counts: dict[str, int] = {}
+    for m in qs.exclude(mood="").values_list("mood", flat=True):
+        mood_counts[m] = mood_counts.get(m, 0) + 1
+
+    mood_labels = dict(MOOD_CHOICES)
+    available_moods = [
+        {"value": m, "label": mood_labels.get(m, m), "count": c}
+        for m, c in mood_counts.items()
+    ]
+
+    active_mood = mood if mood in mood_counts else ""
+
+    if active_mood and not current_entry:
+        anchor_entry = qs.exclude(entry_date__isnull=True).filter(mood=active_mood).order_by("-entry_date").first() or latest
+    else:
+        anchor_entry = current_entry or latest
+    anchor_date = anchor_entry.entry_date if anchor_entry and anchor_entry.entry_date else today
+
+    if year is None:
+        year = anchor_date.year
+    if month is None:
+        month = anchor_date.month
+    if month < 1 or month > 12:
+        month = anchor_date.month
+
+    cal = get_diary_calendar(journal, year, month, mood_filter=active_mood)
+
+    prev_year, prev_month = (year - 1, 12) if month == 1 else (year, month - 1)
+    next_year, next_month = (year + 1, 1) if month == 12 else (year, month + 1)
+
+    first_date = qs.exclude(entry_date__isnull=True).order_by("entry_date").values_list("entry_date", flat=True).first()
+    total = qs.count()
+    tags = journal.entry_tags.all()
+
+    nav_qs = qs.exclude(entry_date__isnull=True)
+    if active_mood:
+        nav_qs = nav_qs.filter(mood=active_mood)
+    prev_entry = None
+    next_entry = None
+    if anchor_entry and anchor_entry.entry_date:
+        prev_entry = nav_qs.filter(entry_date__lt=anchor_entry.entry_date).order_by("-entry_date").first()
+        next_entry = nav_qs.filter(entry_date__gt=anchor_entry.entry_date).order_by("entry_date").first()
+
+    return {
+        "calendar": cal,
+        "prev_year": prev_year, "prev_month": prev_month,
+        "next_year": next_year, "next_month": next_month,
+        "today": today,
+        "anchor_date": anchor_date,
+        "dy_anchor_entry": anchor_entry,
+        "dy_tags": tags,
+        "dy_prev_entry": prev_entry,
+        "dy_next_entry": next_entry,
+        "available_moods": available_moods,
+        "active_mood": active_mood,
+        "dy_stats": {
+            "entry_count": total,
+            "first_date": first_date,
+            "latest_date": latest.entry_date if latest else None,
+            "latest_entry": latest,
+        },
     }

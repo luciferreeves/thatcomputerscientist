@@ -1,0 +1,648 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Share+Tech+Mono&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.dy {
+    max-width: 780px;
+    margin: 10px auto 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    color: #c8d0dc;
+    background: #0a0a0a;
+}
+
+.dy-top {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #0a1228 0%, #0d0d18 50%, #0a1830 100%);
+    border-bottom: 1px solid #1a2240;
+}
+
+.dy h1 {
+    font-family: 'Krona One', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #fff 0%, #c8d8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dy-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: #6878a0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#main-content .dy-meta a,
+#main-content .dy-meta a:link,
+#main-content .dy-meta a:visited {
+    color: #98b0d8;
+    text-decoration: none;
+}
+
+#main-content .dy-meta a:hover {
+    color: #c8d8f0;
+}
+
+.dy-stats-bar {
+    display: flex;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #88a0c4;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #0a1228 0%, #0d0d18 50%, #0a1830 100%);
+    border-bottom: 1px solid #1a2240;
+}
+
+.dy-stat {
+    flex: 1;
+    padding: 6px 8px;
+    text-align: center;
+    border-right: 1px solid #1a2240;
+}
+
+.dy-stat:last-child { border-right: none; }
+
+.dy-stat b {
+    color: #c8d8f0;
+    font-weight: normal;
+}
+
+.dy-body {
+    display: flex;
+    min-height: 400px;
+}
+
+.dy-sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    border-right: 1px solid #1a2240;
+    padding: 14px;
+    background: linear-gradient(180deg, #0a1228 0%, #0a0a0a 100%);
+}
+
+#main-content .dy-start,
+#main-content .dy-start:link,
+#main-content .dy-start:visited,
+#main-content .dy-start:hover {
+    display: block;
+    font-family: 'Krona One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, #5a8ad4 0%, #2a4878 100%);
+    padding: 8px 0;
+    margin-bottom: 10px;
+}
+
+#main-content .dy-start:hover {
+    opacity: 0.85;
+}
+
+.dy-desc {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #98a8c0;
+    margin-bottom: 10px;
+}
+
+.dy-sidebar-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #98b0d8;
+    padding: 6px 0 4px;
+    border-top: 1px solid #1a2240;
+    margin-top: 4px;
+}
+
+.dy-mini-cal {
+    margin-bottom: 10px;
+}
+
+.dy-mini-monthbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    background: rgba(90, 138, 212, 0.06);
+    border: 1px solid #1a2240;
+}
+
+#main-content .dy-mini-nav,
+#main-content .dy-mini-nav:link,
+#main-content .dy-mini-nav:visited {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    text-decoration: none;
+    color: #98b0d8;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .dy-mini-nav:hover {
+    color: #c8d8f0;
+    background: rgba(90, 138, 212, 0.14);
+}
+
+.dy-mini-monthtitle {
+    flex: 1;
+    text-align: center;
+    padding: 4px 6px;
+    border-left: 1px solid #1a2240;
+    border-right: 1px solid #1a2240;
+}
+
+.dy-mini-month {
+    font-family: 'Krona One', sans-serif;
+    font-size: 11px;
+    color: #c8d8f0;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+.dy-mini-year {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: #6878a0;
+    letter-spacing: 2px;
+}
+
+#main-content .dy-mini-today,
+#main-content .dy-mini-today:link,
+#main-content .dy-mini-today:visited {
+    display: block;
+    text-align: center;
+    padding: 4px 6px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #5a8ad4;
+    background: rgba(90, 138, 212, 0.06);
+    border: 1px dashed #5a8ad4;
+}
+
+#main-content .dy-mini-today:hover {
+    color: #c8d8f0;
+    background: rgba(90, 138, 212, 0.18);
+}
+
+.dy-mini-grid-head {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 2px;
+}
+
+.dy-mini-grid-head span {
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: #4a5870;
+    padding: 2px 0;
+    letter-spacing: 0;
+}
+
+.dy-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.dy-mini-cell {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #4a5870;
+    background: transparent;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.12s;
+}
+
+.dy-mini-cell-empty { background: transparent; }
+
+#main-content .dy-mini-cell-has,
+#main-content .dy-mini-cell-has:link,
+#main-content .dy-mini-cell-has:visited {
+    color: #c8d8f0;
+    background: rgba(90, 138, 212, 0.14);
+    border-color: rgba(90, 138, 212, 0.3);
+    font-weight: 600;
+}
+
+#main-content .dy-mini-cell-has:hover {
+    background: rgba(90, 138, 212, 0.30);
+    border-color: #5a8ad4;
+    color: #fff;
+}
+
+#main-content .dy-mini-cell-current,
+#main-content .dy-mini-cell-current:link,
+#main-content .dy-mini-cell-current:visited {
+    background: #5a8ad4 !important;
+    border-color: #5a8ad4 !important;
+    color: #0a0a0a !important;
+}
+
+#main-content .dy-mini-cell-dim,
+#main-content .dy-mini-cell-dim:link,
+#main-content .dy-mini-cell-dim:visited {
+    background: rgba(90, 138, 212, 0.04);
+    border-color: rgba(90, 138, 212, 0.08);
+    color: #3a4458;
+    font-weight: normal;
+    opacity: 0.4;
+}
+
+#main-content .dy-mini-cell-dim:hover {
+    background: rgba(90, 138, 212, 0.10);
+    color: #6878a0;
+    opacity: 0.7;
+    border-color: rgba(90, 138, 212, 0.2);
+}
+
+.dy-fdrop {
+    position: relative;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.dy-fdrop-toggle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #c8d8f0;
+    background: rgba(90, 138, 212, 0.06);
+    border: 1px solid #1a2240;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.dy-fdrop-toggle:hover,
+.dy-fdrop-toggle-on,
+.dy-fdrop-toggle:focus-visible {
+    border-color: #5a8ad4;
+    background: rgba(90, 138, 212, 0.14);
+    color: #c8d8f0;
+    outline: none;
+}
+
+.dy-fdrop-arrow {
+    color: #5a8ad4;
+    font-size: 10px;
+}
+
+.dy-fdrop-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 2px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: #0a1228;
+    border: 1px solid #1a2240;
+    z-index: 10;
+    scrollbar-width: thin;
+    scrollbar-color: #1a3848 #0a1228;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dy-fdrop-menu::-webkit-scrollbar { width: 4px; }
+.dy-fdrop-menu::-webkit-scrollbar-track { background: #0a1228; }
+.dy-fdrop-menu::-webkit-scrollbar-thumb { background: #1a3848; border-radius: 2px; }
+
+.dy-fdrop-open { display: block; }
+
+#main-content .dy-fdrop-item,
+#main-content .dy-fdrop-item:link,
+#main-content .dy-fdrop-item:visited {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 5px 14px;
+    text-decoration: none;
+    color: #98a8c0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #14182c;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .dy-fdrop-item:nth-child(even) {
+    background: rgba(90, 138, 212, 0.025);
+}
+
+#main-content .dy-fdrop-item:hover {
+    background: rgba(90, 138, 212, 0.10);
+    color: #c8d8f0;
+}
+
+.dy-fdrop-item em {
+    font-style: normal;
+    color: #4a5870;
+    font-size: 10px;
+}
+
+#main-content .dy-fdrop-item.dy-fdrop-active {
+    background: rgba(90, 138, 212, 0.14);
+    color: #c8d8f0;
+    border-left: 3px solid #5a8ad4;
+    padding-left: 11px;
+}
+
+.dy-tags {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+#main-content .dy-tags a,
+#main-content .dy-tags a:link,
+#main-content .dy-tags a:visited {
+    color: #6878a0;
+    text-decoration: none;
+}
+
+#main-content .dy-tags a:hover {
+    color: #c8d8f0;
+}
+
+.dy-author {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0 0;
+    border-top: 1px solid #1a2240;
+    margin-top: 8px;
+}
+
+.dy-author-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dy-author-info {
+    flex: 1;
+    min-width: 0;
+}
+
+#main-content .dy-author-name,
+#main-content .dy-author-name:link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #98b0d8;
+    text-decoration: none;
+    display: block;
+}
+
+#main-content .dy-author-name:hover {
+    color: #c8d8f0;
+}
+
+.dy-author-bio {
+    font-size: 10px;
+    line-height: 1.5;
+    color: #586878;
+    margin-top: 2px;
+    white-space: pre-line;
+}
+
+.dy-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.dy-entry {
+    padding: 22px 24px 28px;
+}
+
+.dy-entry-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.dy-entry-date {
+    color: #5a8ad4;
+}
+
+.dy-entry-mood {
+    color: #98b0d8;
+    background: rgba(90, 138, 212, 0.08);
+    border: 1px solid #1a2240;
+    padding: 2px 10px;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.dy-entry-title {
+    font-family: 'Krona One', sans-serif;
+    font-size: 28px;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 18px;
+    background: linear-gradient(90deg, #fff 0%, #c8d8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dy-entry-content {
+    font-size: 14px;
+    line-height: 1.85;
+    color: #c8d0dc;
+}
+
+.dy-entry-content p {
+    margin: 0 0 1em;
+}
+
+.dy-entry-content h1,
+.dy-entry-content h2,
+.dy-entry-content h3,
+.dy-entry-content h4,
+.dy-entry-content h5,
+.dy-entry-content h6 {
+    font-family: 'Krona One', sans-serif;
+    color: #c8d8f0;
+    margin: 1.4em 0 0.4em;
+    line-height: 1.3;
+}
+
+.dy-entry-content h2 { font-size: 18px; }
+.dy-entry-content h3 { font-size: 16px; }
+
+.dy-entry-content blockquote {
+    margin: 1em 0;
+    padding: 8px 14px;
+    border-left: 3px solid #5a8ad4;
+    color: #98b0d8;
+    background: rgba(90, 138, 212, 0.04);
+    font-style: italic;
+}
+
+.dy-entry-content img {
+    max-width: 100%;
+    border: 1px solid #1a2240;
+    margin: 1em 0;
+}
+
+#main-content .dy-entry-content a,
+#main-content .dy-entry-content a:link,
+#main-content .dy-entry-content a:visited {
+    color: #98b0d8;
+    text-decoration: underline;
+    text-decoration-color: rgba(152, 176, 216, 0.3);
+    text-underline-offset: 2px;
+}
+
+#main-content .dy-entry-content a:hover {
+    color: #c8d8f0;
+}
+
+.dy-entry-tags {
+    margin-top: 18px;
+    padding-top: 10px;
+    border-top: 1px dashed #1a2240;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+}
+
+#main-content .dy-entry-tags a,
+#main-content .dy-entry-tags a:link,
+#main-content .dy-entry-tags a:visited {
+    color: #6878a0;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#main-content .dy-entry-tags a:hover {
+    color: #c8d8f0;
+}
+
+.dy-entry-foot {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #1a2240;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #4a5870;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dy-entry-foot b {
+    color: #98b0d8;
+    font-weight: normal;
+    margin-right: 4px;
+}
+
+.dy-nil {
+    padding: 32px 16px;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #4a5870;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.dy-nav {
+    display: flex;
+    border-top: 1px solid #1a2240;
+}
+
+.dy-nav-item {
+    flex: 1;
+    border-right: 1px solid #1a2240;
+}
+
+.dy-nav-item:last-child {
+    border-right: none;
+}
+
+#main-content .dy-nav-prev,
+#main-content .dy-nav-prev:link,
+#main-content .dy-nav-prev:visited,
+#main-content .dy-nav-next,
+#main-content .dy-nav-next:link,
+#main-content .dy-nav-next:visited {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #0a1228 0%, #0a0a0a 100%);
+    transition: background 0.12s;
+}
+
+#main-content .dy-nav-prev:hover,
+#main-content .dy-nav-next:hover {
+    background: rgba(90, 138, 212, 0.10);
+    color: #c8d8f0;
+}
+
+.dy-nav-next {
+    text-align: right;
+}
+
+.dy-nav-label {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #5a8ad4;
+    margin-bottom: 2px;
+}
+
+.dy-nav-date {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #6878a0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.dy-nav-title {
+    display: block;
+    font-family: 'Krona One', sans-serif;
+    font-size: 12px;
+    color: #c8d8f0;
+}

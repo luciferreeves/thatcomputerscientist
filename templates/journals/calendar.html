@@ -32,7 +32,7 @@
             {% else %}
                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=calendar&year={{ y }}&month={{ m|add:"-1" }}" class="calendar-nav-btn">‹</a>
             {% endif %}
-            <h2 class="calendar-month-title">{{ calendar.month_name }} {{ calendar.year }}</h2>
+            <h2 class="calendar-month-title">{{ calendar.month_date|date:"F" }} {{ calendar.year }}</h2>
             {% if m == 12 %}
                 <a href="{% url 'services:journals:journal' journal.slug %}?tab=calendar&year={{ y|add:"1" }}&month=1" class="calendar-nav-btn">›</a>
             {% else %}

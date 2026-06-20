@@ -58,7 +58,7 @@
                     <div class="bk-cast-initial">{{ character.name|first }}</div>
                     {% endif %}
                     {{ character.name }}
-                    {% if character.role %}<span class="bk-cast-role">{{ character.role }}</span>{% endif %}
+                    {% if character.role %}<span class="bk-cast-role">{% translate character.role %}</span>{% endif %}
                 </a>
                 {% endfor %}
             </div>

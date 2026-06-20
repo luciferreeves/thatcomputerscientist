@@ -23,7 +23,7 @@
         <div class="bk-char-initial">{{ character.name|first }}</div>
         {% endif %}
         <div class="bk-char-info">
-            <div class="bk-char-role">{{ character.role }}</div>
+            <div class="bk-char-role">{% if character.role %}{% translate character.role %}{% endif %}</div>
             <div class="bk-char-name">{{ character.name }}</div>
             {% if character.bio %}<div class="bk-char-bio">{{ character.bio }}</div>{% endif %}
         </div>

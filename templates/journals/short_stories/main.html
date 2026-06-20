@@ -57,7 +57,7 @@
                     <div class="ss-cast-initial">{{ character.name|first }}</div>
                     {% endif %}
                     {{ character.name }}
-                    {% if character.role %}<span class="ss-cast-role">{{ character.role }}</span>{% endif %}
+                    {% if character.role %}<span class="ss-cast-role">{% translate character.role %}</span>{% endif %}
                 </a>
                 {% endfor %}
             </div>

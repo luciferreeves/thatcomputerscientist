@@ -39,7 +39,7 @@
                     <span class="toc-volume-order">{% trans "Vol." %} {{ volume.order }}</span>
                     <h3 class="toc-volume-title">{{ volume.title }}</h3>
                     <span class="toc-volume-count">{{ volume.entries_count }} {% if volume.entries_count == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
-                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&volume={{ volume.id }}&from=toc" class="toc-add-btn" title="{% trans 'Add' %} {{ journal.entry_label|lower }}">+</a>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&volume={{ volume.id }}&from=toc" class="toc-add-btn" title="{% blocktranslate with label=journal.entry_label|lower %}Add {{ label }}{% endblocktranslate %}">+</a>
                 </div>
                 {% if volume.description %}
                 <p class="toc-volume-description">{{ volume.description }}</p>
@@ -90,10 +90,10 @@
 
         {% if not toc_volumes and not toc_unassigned %}
         <div class="empty-state">
-            <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
+            <h3>{% blocktranslate with label=journal.entry_label_plural %}No {{ label }} Yet{% endblocktranslate %}</h3>
             <p>{% trans "Start writing and organize them into volumes." %}</p>
             <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=toc" class="empty-action-btn">
-                {% trans "Create Your First" %} {{ journal.entry_label }}
+                {% blocktranslate with label=journal.entry_label %}Create Your First {{ label }}{% endblocktranslate %}
             </a>
         </div>
         {% endif %}

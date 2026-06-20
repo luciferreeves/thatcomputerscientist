@@ -23,7 +23,7 @@
         <div class="ss-char-initial">{{ character.name|first }}</div>
         {% endif %}
         <div class="ss-char-info">
-            <div class="ss-char-role">{{ character.role }}</div>
+            <div class="ss-char-role">{% if character.role %}{% translate character.role %}{% endif %}</div>
             <div class="ss-char-name">{{ character.name }}</div>
             {% if character.bio %}<div class="ss-char-bio">{{ character.bio }}</div>{% endif %}
         </div>

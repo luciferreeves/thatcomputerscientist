@@ -55,7 +55,7 @@
                     <h3 class="volume-section-title">{{ volume.title }}</h3>
                     <div class="volume-section-actions">
                         <span class="item-count">{{ volume.entries.count }} {% if volume.entries.count == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
-                        <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&volume={{ volume.id }}&from=entries" class="toc-add-btn" title="{% trans 'Add' %} {{ journal.entry_label|lower }}">+</a>
+                        <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&volume={{ volume.id }}&from=entries" class="toc-add-btn" title="{% blocktranslate with label=journal.entry_label|lower %}Add {{ label }}{% endblocktranslate %}">+</a>
                     </div>
                 </div>
                 <div class="items-list reorderable-list" data-volume="{{ volume.id }}">
@@ -129,10 +129,10 @@
         </form>
         {% else %}
         <div class="empty-state">
-            <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
-            <p>{% trans "Start your digital journaling journey by creating your first" %} {{ journal.entry_label|lower }}.</p>
+            <h3>{% blocktranslate with label=journal.entry_label_plural %}No {{ label }} Yet{% endblocktranslate %}</h3>
+            <p>{% blocktranslate with label=journal.entry_label|lower %}Start your digital journaling journey by creating your first {{ label }}.{% endblocktranslate %}</p>
             <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="empty-action-btn">
-                {% trans "Create Your First" %} {{ journal.entry_label }}
+                {% blocktranslate with label=journal.entry_label %}Create Your First {{ label }}{% endblocktranslate %}
             </a>
         </div>
         {% endif %}

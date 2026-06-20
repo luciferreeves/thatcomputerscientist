@@ -214,7 +214,7 @@
             <div class="form-actions">
                 <button type="submit" class="create-btn">
                     <span class="btn-icon">✓</span>
-                    <span class="btn-text">{% trans "Save" %} {{ journal.entry_label }}</span>
+                    <span class="btn-text">{% blocktranslate with label=journal.entry_label %}Save {{ label }}{% endblocktranslate %}</span>
                 </button>
                 <button type="button" class="cancel-btn" onclick="window.history.back()">
                     <span class="btn-text">{% trans "Cancel" %}</span>

@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-04 13:27+0000\n"
+"POT-Creation-Date: 2026-06-20 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,6 +38,7 @@ msgid "day"
 msgstr "日"
 
 #: blog/templatetags/time_filters.py:23
+#: templates/_partials/right_sidebar.html:164
 msgid "days"
 msgstr "日"
 
@@ -66,12 +66,12 @@ msgstr "年"
 msgid "years"
 msgstr "年"
 
-#: core/translations.py:5 templates/journals/edit_entry.html:50
-#: thatcomputerscientist/settings.py:195
+#: core/translations.py:5 templates/journals/edit_entry.html:51
+#: thatcomputerscientist/settings.py:206
 msgid "English"
 msgstr "英語"
 
-#: core/translations.py:6 thatcomputerscientist/settings.py:195
+#: core/translations.py:6 thatcomputerscientist/settings.py:206
 msgid "Japanese"
 msgstr "日本語"
 
@@ -94,6 +94,362 @@ msgstr "中国語"
 #: core/translations.py:11
 msgid "Korean"
 msgstr "韓国語"
+
+#: services/journals/constants.py:4
+msgid "Default"
+msgstr "デフォルト"
+
+#: services/journals/constants.py:5
+msgid "Book"
+msgstr "本"
+
+#: services/journals/constants.py:6
+msgid "Light Novel"
+msgstr "ライトノベル"
+
+#: services/journals/constants.py:7
+#: templates/journals/short_stories/main.html:17
+msgid "Short Stories"
+msgstr "短編"
+
+#: services/journals/constants.py:8 templates/journals/diary/main.html:18
+msgid "Diary"
+msgstr "日記"
+
+#: services/journals/constants.py:9
+msgid "Poetry"
+msgstr "詩"
+
+#: services/journals/constants.py:13
+msgid "Ongoing"
+msgstr "連載中"
+
+#: services/journals/constants.py:14
+msgid "Completed"
+msgstr "完結"
+
+#: services/journals/constants.py:15
+msgid "Hiatus"
+msgstr "休載"
+
+#: services/journals/constants.py:19
+msgid "Fantasy"
+msgstr "ファンタジー"
+
+#: services/journals/constants.py:20
+msgid "Sci-Fi"
+msgstr "SF"
+
+#: services/journals/constants.py:21
+msgid "Romance"
+msgstr "ロマンス"
+
+#: services/journals/constants.py:22
+msgid "Horror"
+msgstr "ホラー"
+
+#: services/journals/constants.py:23
+msgid "Mystery"
+msgstr "ミステリー"
+
+#: services/journals/constants.py:24
+msgid "Thriller"
+msgstr "スリラー"
+
+#: services/journals/constants.py:25
+msgid "Comedy"
+msgstr "コメディ"
+
+#: services/journals/constants.py:26
+msgid "Drama"
+msgstr "ドラマ"
+
+#: services/journals/constants.py:27
+msgid "Slice of Life"
+msgstr "日常"
+
+#: services/journals/constants.py:28
+msgid "Action"
+msgstr "アクション"
+
+#: services/journals/constants.py:29
+msgid "Adventure"
+msgstr "冒険"
+
+#: services/journals/constants.py:30
+msgid "Historical"
+msgstr "歴史"
+
+#: services/journals/constants.py:31
+msgid "Isekai"
+msgstr "異世界"
+
+#: services/journals/constants.py:32
+msgid "Mecha"
+msgstr "メカ"
+
+#: services/journals/constants.py:33
+msgid "Supernatural"
+msgstr "超自然"
+
+#: services/journals/constants.py:34
+msgid "Psychological"
+msgstr "心理"
+
+#: services/journals/constants.py:35
+msgid "Tragedy"
+msgstr "悲劇"
+
+#: services/journals/constants.py:36
+msgid "Ecchi"
+msgstr "エッチ"
+
+#: services/journals/constants.py:37
+msgid "Harem"
+msgstr "ハーレム"
+
+#: services/journals/constants.py:38
+msgid "Mahou Shoujo"
+msgstr "魔法少女"
+
+#: services/journals/constants.py:39
+msgid "Cyberpunk"
+msgstr "サイバーパンク"
+
+#: services/journals/constants.py:40
+msgid "Dystopian"
+msgstr "ディストピア"
+
+#: services/journals/constants.py:41 services/journals/constants.py:57
+msgid "Noir"
+msgstr "ノワール"
+
+#: services/journals/constants.py:42
+msgid "Satire"
+msgstr "風刺"
+
+#: services/journals/constants.py:46
+msgid "Dark"
+msgstr "ダーク"
+
+#: services/journals/constants.py:47
+msgid "Light"
+msgstr "ライト"
+
+#: services/journals/constants.py:48
+msgid "Comedic"
+msgstr "コミカル"
+
+#: services/journals/constants.py:49
+msgid "Serious"
+msgstr "シリアス"
+
+#: services/journals/constants.py:50 services/journals/constants.py:96
+msgid "Melancholic"
+msgstr "メランコリック"
+
+#: services/journals/constants.py:51
+msgid "Whimsical"
+msgstr "気まぐれ"
+
+#: services/journals/constants.py:52
+msgid "Gritty"
+msgstr "硬派"
+
+#: services/journals/constants.py:53
+msgid "Surreal"
+msgstr "シュール"
+
+#: services/journals/constants.py:54
+msgid "Wholesome"
+msgstr "ほのぼの"
+
+#: services/journals/constants.py:55
+msgid "Bittersweet"
+msgstr "ほろ苦い"
+
+#: services/journals/constants.py:56
+msgid "Absurdist"
+msgstr "不条理"
+
+#: services/journals/constants.py:58
+msgid "Dreamy"
+msgstr "夢見心地"
+
+#: services/journals/constants.py:59
+msgid "Tense"
+msgstr "緊迫"
+
+#: services/journals/constants.py:63
+msgid "Free Verse"
+msgstr "自由詩"
+
+#: services/journals/constants.py:64
+msgid "Haiku"
+msgstr "俳句"
+
+#: services/journals/constants.py:65
+msgid "Tanka"
+msgstr "短歌"
+
+#: services/journals/constants.py:66
+msgid "Sonnet"
+msgstr "ソネット"
+
+#: services/journals/constants.py:67
+msgid "Limerick"
+msgstr "リメリック"
+
+#: services/journals/constants.py:68
+msgid "Ballad"
+msgstr "バラッド"
+
+#: services/journals/constants.py:69
+msgid "Ode"
+msgstr "頌歌"
+
+#: services/journals/constants.py:70
+msgid "Elegy"
+msgstr "哀歌"
+
+#: services/journals/constants.py:71
+msgid "Ghazal"
+msgstr "ガザル"
+
+#: services/journals/constants.py:72
+msgid "Villanelle"
+msgstr "ヴィラネル"
+
+#: services/journals/constants.py:73
+msgid "Acrostic"
+msgstr "アクロスティック"
+
+#: services/journals/constants.py:74
+msgid "Prose Poetry"
+msgstr "散文詩"
+
+#: services/journals/constants.py:75
+msgid "Concrete"
+msgstr "視覚詩"
+
+#: services/journals/constants.py:76
+msgid "Renga"
+msgstr "連歌"
+
+#: services/journals/constants.py:77
+msgid "Spoken Word"
+msgstr "スポークンワード"
+
+#: services/journals/constants.py:81
+msgid "Happy"
+msgstr "嬉しい"
+
+#: services/journals/constants.py:82
+msgid "Sad"
+msgstr "悲しい"
+
+#: services/journals/constants.py:83
+msgid "Anxious"
+msgstr "不安"
+
+#: services/journals/constants.py:84
+msgid "Calm"
+msgstr "穏やか"
+
+#: services/journals/constants.py:85
+msgid "Angry"
+msgstr "怒り"
+
+#: services/journals/constants.py:86
+msgid "Grateful"
+msgstr "感謝"
+
+#: services/journals/constants.py:87
+msgid "Tired"
+msgstr "疲れ"
+
+#: services/journals/constants.py:88
+msgid "Excited"
+msgstr "興奮"
+
+#: services/journals/constants.py:89
+msgid "Reflective"
+msgstr "内省的"
+
+#: services/journals/constants.py:90
+msgid "Nostalgic"
+msgstr "ノスタルジック"
+
+#: services/journals/constants.py:91
+msgid "Hopeful"
+msgstr "希望"
+
+#: services/journals/constants.py:92
+msgid "Stressed"
+msgstr "ストレス"
+
+#: services/journals/constants.py:93
+#: templates/administration/announcements.html:94
+#: templates/journals/edit_entry.html:84 templates/journals/new_entry.html:208
+msgid "Content"
+msgstr "内容"
+
+#: services/journals/constants.py:94
+msgid "Lonely"
+msgstr "孤独"
+
+#: services/journals/constants.py:95
+msgid "Inspired"
+msgstr "ひらめき"
+
+#: services/journals/constants.py:97
+msgid "Peaceful"
+msgstr "平穏"
+
+#: services/journals/constants.py:98
+msgid "Frustrated"
+msgstr "苛立ち"
+
+#: services/journals/constants.py:99
+msgid "Numb"
+msgstr "無感覚"
+
+#: services/journals/constants.py:100
+msgid "Curious"
+msgstr "好奇心"
+
+#: services/journals/models.py:139 services/journals/models.py:140
+msgid "Chapter"
+msgstr "章"
+
+#: services/journals/models.py:141
+msgid "Story"
+msgstr "ストーリー"
+
+#: services/journals/models.py:142
+msgid "Poem"
+msgstr "詩"
+
+#: services/journals/models.py:143 services/journals/models.py:145
+msgid "Entry"
+msgstr "エントリ"
+
+#: services/journals/models.py:150 services/journals/models.py:151
+msgid "Chapters"
+msgstr "章"
+
+#: services/journals/models.py:152
+#: templates/journals/short_stories/main.html:98
+msgid "Stories"
+msgstr "ストーリー"
+
+#: services/journals/models.py:153 templates/journals/poetry/main.html:18
+msgid "Poems"
+msgstr "詩"
+
+#: services/journals/models.py:154 services/journals/models.py:156
+msgid "Entries"
+msgstr "エントリ"
 
 #: templates/_partials/footer.html:22
 #, python-format
@@ -148,9 +504,9 @@ msgstr "ジャーナル"
 msgid "My Page"
 msgstr "マイページ"
 
-#: templates/_partials/left_sidebar.html:52
-msgid "Messages"
-msgstr "メッセージ"
+#: templates/_partials/left_sidebar.html:52 templates/letters/inbox.html:22
+msgid "Letters"
+msgstr "手紙"
 
 #: templates/_partials/left_sidebar.html:57
 msgid "Site Preferences"
@@ -182,7 +538,11 @@ msgstr "ウェブログ"
 msgid "Categories"
 msgstr "カテゴリー"
 
-#: templates/_partials/left_sidebar.html:97 templates/weblog/tags.html:108
+#: templates/_partials/left_sidebar.html:97
+#: templates/journals/_partials/journal_header.html:46
+#: templates/journals/diary/main.html:85 templates/journals/edit_entry.html:268
+#: templates/journals/new_entry.html:182 templates/journals/tags.html:27
+#: templates/weblog/tags.html:108
 msgid "Tags"
 msgstr "タグ"
 
@@ -226,22 +586,22 @@ msgstr "検索"
 msgid "The Good Stuff"
 msgstr "おすすめ"
 
-#: templates/_partials/left_sidebar.html:173
+#: templates/_partials/left_sidebar.html:172
+msgid "Discover"
+msgstr "探す"
+
+#: templates/_partials/left_sidebar.html:177
 msgid "Post Calendar"
 msgstr "ブログカレンダー"
 
-#: templates/_partials/left_sidebar.html:177
+#: templates/_partials/left_sidebar.html:181
 msgid "Anime Streams"
 msgstr "アニメ配信"
 
-#: templates/_partials/left_sidebar.html:182
+#: templates/_partials/left_sidebar.html:186
 #: templates/_partials/right_sidebar.html:179
 msgid "The Matrix"
 msgstr "ザ・マトリックス"
-
-#: templates/_partials/left_sidebar.html:186
-msgid "RSS Feed"
-msgstr "RSSフィード"
 
 #: templates/_partials/left_sidebar.html:191
 msgid "Marketplace"
@@ -273,12 +633,14 @@ msgid "Admin Area"
 msgstr "アドミンアレア"
 
 #: templates/_partials/left_sidebar.html:240
-msgid "Manage Announcements"
-msgstr "アナウンスメント管理"
+#: templates/administration/announcements.html:65
+msgid "Announcement Manager"
+msgstr "アナウンスメント"
 
 #: templates/_partials/left_sidebar.html:245
-msgid "Manage Users"
-msgstr "ユーザー管理"
+#: templates/administration/emojis.html:11
+msgid "Emoji Manager"
+msgstr "絵文字管理"
 
 #: templates/_partials/left_sidebar.html:250
 #: templates/administration/kawaiibeats.html:9
@@ -286,10 +648,14 @@ msgid "KawaiiBeats Manager"
 msgstr "KawaiiBeatsマネージャー"
 
 #: templates/_partials/left_sidebar.html:255
+msgid "User Manager"
+msgstr "ユーザー管理"
+
+#: templates/_partials/left_sidebar.html:260
 msgid "Site Administration"
 msgstr "サイト管理"
 
-#: templates/_partials/left_sidebar.html:260
+#: templates/_partials/left_sidebar.html:265
 msgid "This website uses cookies and there's nothing you can do about it!"
 msgstr ""
 "このウェブサイトはクッキーを使用しており、あなたはそれについて何もできませ"
@@ -297,6 +663,7 @@ msgstr ""
 
 #: templates/_partials/right_sidebar.html:20
 #: templates/_partials/right_sidebar.html:23
+#: templates/letters/conversation.html:45
 msgid "Loading..."
 msgstr "ロード中..."
 
@@ -372,37 +739,28 @@ msgstr "センサス"
 msgid "You are Visitor #"
 msgstr "あんたは訪問者ナンバー"
 
-#: templates/administration/announcements.html:65
-msgid "Announcement Manager"
-msgstr "アナウンスメント"
-
 #: templates/administration/announcements.html:69
 msgid "Create New Announcement"
 msgstr "新しいアナウンスメント"
 
 #: templates/administration/announcements.html:75
-#: templates/administration/announcements.html:126
+#: templates/administration/announcements.html:127
 msgid "Announcement Content"
 msgstr "アナウンスメント"
 
 #: templates/administration/announcements.html:80
-#: templates/administration/announcements.html:131
+#: templates/administration/announcements.html:132
 msgid "Is this a new announcement?"
 msgstr "新しいアナウンスメント"
 
 #: templates/administration/announcements.html:84
-#: templates/administration/announcements.html:135
+#: templates/administration/announcements.html:136
 msgid "Is this announcement public?"
 msgstr "このアナウンスメントは公開されますか？"
 
 #: templates/administration/announcements.html:87
 msgid "Create Announcement"
 msgstr "新しいアナウンスメント"
-
-#: templates/administration/announcements.html:94
-#: templates/journals/edit_entry.html:83 templates/journals/new_entry.html:47
-msgid "Content"
-msgstr "内容"
 
 #: templates/administration/announcements.html:95
 msgid "Author"
@@ -425,53 +783,98 @@ msgstr "作成日時"
 msgid "Actions"
 msgstr "アクション"
 
-#: templates/administration/announcements.html:112
-#: templates/administration/announcements.html:167
+#: templates/administration/announcements.html:103
+msgid "Yes,No"
+msgstr "はい,いいえ"
+
+#: templates/administration/announcements.html:113
+#: templates/administration/announcements.html:168
 #: templates/administration/kawaiibeats.html:180
-#: templates/journals/_partials/journal_entries.html:21
+#: templates/journals/_partials/diary_entries.html:35
+#: templates/journals/_partials/journal_entries.html:22
+#: templates/journals/_partials/poetry_entries.html:33
+#: templates/journals/_partials/short_story_entries.html:43
+#: templates/journals/characters.html:96 templates/journals/entries.html:74
+#: templates/journals/entries.html:112 templates/journals/volumes.html:81
 #: templates/weblog/_partials/post_comments.html:89
 #: templates/weblog/post.html:177
 msgid "Edit"
 msgstr "編集"
 
-#: templates/administration/announcements.html:113
+#: templates/administration/announcements.html:114
 #: templates/administration/kawaiibeats.html:182
-#: templates/journals/_partials/journal_entries.html:23
-#: templates/journals/journals.html:65
+#: templates/journals/_partials/journal_entries.html:24
+#: templates/journals/characters.html:97 templates/journals/journals.html:68
+#: templates/journals/volumes.html:82
 #: templates/weblog/_partials/post_comments.html:97
 msgid "Delete"
 msgstr "削除"
 
-#: templates/administration/announcements.html:139
+#: templates/administration/announcements.html:140
+#: templates/journals/characters.html:152
 #: templates/weblog/_partials/post_comments.html:78
 msgid "Save"
 msgstr "保存"
 
-#: templates/administration/announcements.html:140
-#: templates/administration/announcements.html:170
-#: templates/journals/new_entry.html:59 templates/journals/new_journal.html:103
+#: templates/administration/announcements.html:141
+#: templates/administration/announcements.html:171
+#: templates/journals/characters.html:65 templates/journals/characters.html:104
+#: templates/journals/characters.html:153
+#: templates/journals/edit_entry.html:260
+#: templates/journals/edit_entry.html:287 templates/journals/entries.html:127
+#: templates/journals/new_entry.html:174 templates/journals/new_entry.html:201
+#: templates/journals/new_entry.html:220
+#: templates/journals/new_journal.html:132 templates/journals/volumes.html:57
+#: templates/journals/volumes.html:94
 #: templates/weblog/_partials/post_comments.html:79
 #: templates/weblog/_partials/post_comments.html:112
 #: templates/weblog/post.html:181 templates/weblog/post.html:194
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: templates/administration/announcements.html:141
+#: templates/administration/announcements.html:142
 msgid "Advanced Edit"
 msgstr "高度な編集"
 
-#: templates/administration/announcements.html:147
+#: templates/administration/announcements.html:148
 msgid "No announcements found."
 msgstr "楽曲が見つかりませんでした。"
 
-#: templates/administration/announcements.html:193
+#: templates/administration/announcements.html:194
 #: templates/weblog/post.html:207
 msgid "Please enter some content before saving."
 msgstr "保存する前に何か内容を入力してください。"
 
-#: templates/administration/announcements.html:208
+#: templates/administration/announcements.html:209
 msgid "Please enter some content before creating the announcement."
 msgstr "保存する前に何か内容を入力してください。"
+
+#: templates/administration/emojis.html:14
+msgid "emojis"
+msgstr "絵文字"
+
+#: templates/administration/emojis.html:32
+#: templates/journals/characters.html:39 templates/journals/edit_entry.html:235
+#: templates/journals/new_entry.html:149 templates/journals/settings.html:213
+msgid "Name"
+msgstr "名前"
+
+#: templates/administration/emojis.html:34
+msgid "lowercase, numbers, underscores"
+msgstr "小文字・数字・アンダースコア"
+
+#: templates/administration/emojis.html:37
+#: templates/journals/characters.html:59
+msgid "Image"
+msgstr "画像"
+
+#: templates/administration/emojis.html:40
+msgid "Upload"
+msgstr "アップロード"
+
+#: templates/administration/emojis.html:65
+msgid "No emojis yet. Upload one above."
+msgstr "まだ絵文字がねぇ。上からアップしな。"
 
 #: templates/administration/kawaiibeats.html:13
 #: templates/administration/kawaiibeats.html:130
@@ -496,8 +899,10 @@ msgstr "楽曲のメタデータを取得"
 msgid "Or you can add a song manually:"
 msgstr "または手動で楽曲を追加することもできます："
 
-#: templates/administration/kawaiibeats.html:37 templates/weblog/weblog.html:41
-#: templates/weblog/weblog.html:56
+#: templates/administration/kawaiibeats.html:37
+#: templates/journals/edit_entry.html:72 templates/journals/new_entry.html:35
+#: templates/journals/new_entry.html:42 templates/journals/volumes.html:39
+#: templates/weblog/weblog.html:41 templates/weblog/weblog.html:56
 msgid "Title"
 msgstr "タイトル"
 
@@ -654,50 +1059,113 @@ msgstr "新しいアナウンスメント"
 msgid "Announcement"
 msgstr "アナウンスメント"
 
-#: templates/core/home.html:58
+#: templates/core/home.html:59
 msgid "From The Journal of Random Thoughts"
 msgstr "ランダム思考のジャーナルから"
 
-#: templates/core/home.html:61 templates/weblog/weblog.html:13
+#: templates/core/home.html:62 templates/weblog/weblog.html:13
 msgid "Contemplations of Late"
 msgstr "最近考えてること"
 
-#: templates/core/home.html:63
+#: templates/core/home.html:64
 msgid "Recent Weeb Degenerecy"
 msgstr "最近のオタク的堕落"
 
-#: templates/journals/_partials/journal_entries.html:15
-#: templates/journals/journals.html:60
+#: templates/core/screenshots.html:13
+msgid "no signal"
+msgstr "電波ねぇ"
+
+#: templates/core/screenshots.html:18
+msgid ""
+"\n"
+"        press\n"
+"        <span class=\"scr-arrow\" id=\"scr-prev\" role=\"button\" "
+"tabindex=\"0\">←</span>\n"
+"        or\n"
+"        <span class=\"scr-arrow\" id=\"scr-next\" role=\"button\" "
+"tabindex=\"0\">→</span>\n"
+"        to change picture\n"
+"    "
+msgstr ""
+"\n"
+"        <span class=\"scr-arrow\" id=\"scr-prev\" role=\"button\" "
+"tabindex=\"0\">←</span>\n"
+"        か\n"
+"        <span class=\"scr-arrow\" id=\"scr-next\" role=\"button\" "
+"tabindex=\"0\">→</span>\n"
+"        を押して画像を切り替えろ\n"
+"    "
+
+#: templates/journals/_partials/diary_entries.html:32
+#: templates/journals/_partials/poetry_entries.html:28
+#: templates/journals/_partials/short_story_entries.html:35
+#: templates/journals/books/entry.html:28 templates/journals/books/main.html:25
+#: templates/journals/books/main.html:96 templates/journals/books/main.html:109
+#: templates/journals/entries.html:73 templates/journals/entries.html:111
+#: templates/journals/short_stories/entry.html:29
+#: templates/journals/short_stories/main.html:24
+#: templates/journals/short_stories/main.html:116
+#: templates/journals/toc.html:57 templates/journals/toc.html:83
+msgid "words"
+msgstr "語"
+
+#: templates/journals/_partials/diary_entries.html:45
+#: templates/journals/_partials/journal_entries.html:41
+#: templates/journals/_partials/poetry_entries.html:44
+#: templates/journals/_partials/short_story_entries.html:54
+#: templates/journals/entries.html:132 templates/journals/toc.html:93
+#, python-format
+msgid "No %(label)s Yet"
+msgstr "まだ%(label)sがねぇ"
+
+#: templates/journals/_partials/diary_entries.html:47
+#: templates/journals/_partials/journal_entries.html:43
+#: templates/journals/_partials/poetry_entries.html:46
+#: templates/journals/_partials/short_story_entries.html:56
+#: templates/journals/entries.html:133
+#, python-format
+msgid "Start your digital journaling journey by creating your first %(label)s."
+msgstr "%(label)sを作って、デジタル日記の旅を始めな。"
+
+#: templates/journals/_partials/diary_entries.html:49
+#: templates/journals/_partials/journal_entries.html:45
+#: templates/journals/_partials/poetry_entries.html:48
+#: templates/journals/_partials/short_story_entries.html:58
+#: templates/journals/entries.html:135 templates/journals/toc.html:96
+#, python-format
+msgid "Create Your First %(label)s"
+msgstr "最初の%(label)sを作る"
+
+#: templates/journals/_partials/diary_entries.html:52
+#: templates/journals/_partials/journal_entries.html:48
+#: templates/journals/_partials/poetry_entries.html:51
+#: templates/journals/_partials/short_story_entries.html:61
+#, python-format
+msgid "This journal doesn't have any %(label)s yet. Check back later!"
+msgstr "このジャーナルにはまだ%(label)sがねぇ。また後で来な！"
+
+#: templates/journals/_partials/journal_entries.html:16
+#: templates/journals/journals.html:63
 msgid "More options"
 msgstr "その他のオプション"
 
-#: templates/journals/_partials/journal_entries.html:22
-#: templates/journals/_partials/journal_header.html:25
-#: templates/journals/edit_entry.html:65 templates/journals/journals.html:64
+#: templates/journals/_partials/journal_entries.html:23
+#: templates/journals/_partials/journal_header.html:47
+#: templates/journals/_partials/poetry_entries.html:34
+#: templates/journals/_partials/short_story_entries.html:44
+#: templates/journals/edit_entry.html:66 templates/journals/journals.html:67
 msgid "Settings"
 msgstr "設定"
 
-#: templates/journals/_partials/journal_entries.html:30
+#: templates/journals/_partials/journal_entries.html:31
+#: templates/journals/entry_read.html:25
 msgid "Posted in"
 msgstr "カテゴリー："
 
-#: templates/journals/_partials/journal_entries.html:32
+#: templates/journals/_partials/journal_entries.html:33
 #: templates/weblog/_partials/weblog_list.html:20 templates/weblog/post.html:27
 msgid "on"
 msgstr "投稿日："
-
-#: templates/journals/_partials/journal_entries.html:40
-msgid "No Entries Yet"
-msgstr "まだエントリーなし"
-
-#: templates/journals/_partials/journal_entries.html:41
-msgid ""
-"Start your digital journaling journey by creating your first journal entry."
-msgstr "最初のジャーナルエントリーを作成してデジタルジャーナルの旅を始めよう。"
-
-#: templates/journals/_partials/journal_entries.html:43
-msgid "Create Your First Entry"
-msgstr "最初のエントリーを作成"
 
 #: templates/journals/_partials/journal_header.html:10
 #: templates/journals/journals.html:49
@@ -709,94 +1177,577 @@ msgstr "非公開"
 msgid "Public"
 msgstr "公開"
 
-#: templates/journals/_partials/journal_header.html:17
+#: templates/journals/_partials/journal_header.html:25
 #: templates/journals/new_journal.html:20
 msgid "Back to Journals"
 msgstr "ジャーナルに戻る"
 
-#: templates/journals/_partials/journal_header.html:23
-#: templates/journals/journals.html:62 templates/journals/journals.html:82
-msgid "New Entry"
-msgstr "新しいエントリ"
+#: templates/journals/_partials/journal_header.html:34
+#: templates/journals/books/entry.html:73 templates/journals/toc.html:27
+msgid "Table of Contents"
+msgstr "目次"
 
-#: templates/journals/_partials/journal_header.html:24
-#: templates/journals/journals.html:57
-msgid "Entries"
-msgstr "エントリ"
+#: templates/journals/_partials/journal_header.html:35
+#: templates/journals/volumes.html:27
+msgid "Volumes"
+msgstr "巻"
 
-#: templates/journals/_partials/journal_header.html:26
-#: templates/journals/journals.html:63
-msgid "View Journal"
-msgstr "ジャーナルを見る"
+#: templates/journals/_partials/journal_header.html:39
+#: templates/journals/books/main.html:51 templates/journals/characters.html:27
+#: templates/journals/edit_entry.html:222 templates/journals/new_entry.html:136
+#: templates/journals/short_stories/main.html:50
+msgid "Characters"
+msgstr "キャラ"
 
-#: templates/journals/edit_entry.html:23 templates/journals/edit_entry.html:25
+#: templates/journals/_partials/journal_header.html:43
+#: templates/journals/diary/main.html:39
+msgid "Calendar"
+msgstr "カレンダー"
+
+#: templates/journals/_partials/journal_header.html:48
+msgid "View"
+msgstr "見る"
+
+#: templates/journals/_partials/poetry_entries.html:11
+#: templates/journals/_partials/short_story_entries.html:28
+#: templates/journals/edit_entry.html:214 templates/journals/entries.html:70
+#: templates/journals/entries.html:108 templates/journals/new_entry.html:128
+#: templates/journals/toc.html:54 templates/journals/toc.html:80
+msgid "Draft"
+msgstr "下書き"
+
+#: templates/journals/_partials/poetry_entries.html:28
+#: templates/journals/poetry/entry.html:24
+#: templates/journals/poetry/main.html:114
+msgid "verses"
+msgstr "連"
+
+#: templates/journals/_partials/poetry_entries.html:37
+#: templates/journals/_partials/short_story_entries.html:47
+msgid "Read"
+msgstr "読む"
+
+#: templates/journals/_partials/short_story_entries.html:37
+#: templates/journals/books/characters.html:16
+#: templates/journals/books/main.html:26
+#: templates/journals/short_stories/characters.html:16
+#: templates/journals/short_stories/main.html:25
+msgid "characters"
+msgstr "キャラ"
+
+#: templates/journals/books/characters.html:34
+#: templates/journals/short_stories/characters.html:34
+msgid "relationships"
+msgstr "関係"
+
+#: templates/journals/books/characters.html:67
+#: templates/journals/short_stories/characters.html:67
+msgid "appears in"
+msgstr "登場箇所"
+
+#: templates/journals/books/entry.html:26
+msgid "volume"
+msgstr "巻"
+
+#: templates/journals/books/entry.html:27
+msgid "chapter"
+msgstr "章"
+
+#: templates/journals/books/entry.html:30 templates/journals/books/main.html:16
+#: templates/journals/diary/main.html:17 templates/journals/poetry/main.html:17
+#: templates/journals/short_stories/entry.html:31
+#: templates/journals/short_stories/main.html:16
+msgid "by"
+msgstr "作："
+
+#: templates/journals/books/entry.html:32 templates/journals/books/main.html:23
+#: templates/journals/books/main.html:86
+msgid "chapters"
+msgstr "章"
+
+#: templates/journals/books/entry.html:65
+#: templates/journals/diary/main.html:121
+#: templates/journals/poetry/entry.html:60
+#: templates/journals/short_stories/entry.html:77
+msgid "previous"
+msgstr "前"
+
+#: templates/journals/books/entry.html:77
+#: templates/journals/diary/main.html:130
+#: templates/journals/poetry/entry.html:72
+#: templates/journals/poetry/main.html:131
+#: templates/journals/poetry/main.html:133
+#: templates/journals/short_stories/entry.html:89
+msgid "next"
+msgstr "次"
+
+#: templates/journals/books/main.html:24
+msgid "volumes"
+msgstr "巻"
+
+#: templates/journals/books/main.html:39 templates/journals/poetry/main.html:38
+#: templates/journals/short_stories/main.html:38
+msgid "Start Reading"
+msgstr "読み始める"
+
+#: templates/journals/books/main.html:99 templates/journals/books/main.html:114
+msgid "No chapters yet."
+msgstr "まだ章がねぇ。"
+
+#: templates/journals/books/main.html:135
+#: templates/journals/poetry/main.html:156
+#: templates/journals/short_stories/main.html:141
+#: templates/weblog/_partials/weblog_list.html:32
+msgid "Continue Reading"
+msgstr "続きを読む"
+
+#: templates/journals/calendar.html:46
+msgid "Mon"
+msgstr "月"
+
+#: templates/journals/calendar.html:47
+msgid "Tue"
+msgstr "火"
+
+#: templates/journals/calendar.html:48
+msgid "Wed"
+msgstr "水"
+
+#: templates/journals/calendar.html:49
+msgid "Thu"
+msgstr "木"
+
+#: templates/journals/calendar.html:50
+msgid "Fri"
+msgstr "金"
+
+#: templates/journals/calendar.html:51
+msgid "Sat"
+msgstr "土"
+
+#: templates/journals/calendar.html:52
+msgid "Sun"
+msgstr "日"
+
+#: templates/journals/characters.html:30
+msgid "New Character"
+msgstr "新規キャラ"
+
+#: templates/journals/characters.html:40 templates/journals/edit_entry.html:236
+#: templates/journals/new_entry.html:150
+msgid "Character name..."
+msgstr "キャラ名…"
+
+#: templates/journals/characters.html:43 templates/journals/edit_entry.html:239
+#: templates/journals/new_entry.html:153
+msgid "Role"
+msgstr "役割"
+
+#: templates/journals/characters.html:45
+msgid "Select role..."
+msgstr "役割を選択…"
+
+#: templates/journals/characters.html:46
+msgid "Main"
+msgstr "主役"
+
+#: templates/journals/characters.html:47 templates/journals/edit_entry.html:241
+#: templates/journals/new_entry.html:155
+msgid "Supporting"
+msgstr "脇役"
+
+#: templates/journals/characters.html:48
+msgid "Recurring"
+msgstr "準レギュラー"
+
+#: templates/journals/characters.html:49 templates/journals/edit_entry.html:245
+#: templates/journals/new_entry.html:159
+msgid "Minor"
+msgstr "端役"
+
+#: templates/journals/characters.html:50
+msgid "Cameo"
+msgstr "カメオ"
+
+#: templates/journals/characters.html:51 templates/journals/edit_entry.html:246
+#: templates/journals/new_entry.html:160
+msgid "Narrator"
+msgstr "語り手"
+
+#: templates/journals/characters.html:55 templates/journals/edit_entry.html:254
+#: templates/journals/new_entry.html:168
+msgid "Bio"
+msgstr "プロフィール"
+
+#: templates/journals/characters.html:56
+msgid "Character backstory and details..."
+msgstr "キャラの背景や詳細…"
+
+#: templates/journals/characters.html:64
+msgid "Save Character"
+msgstr "キャラを保存"
+
+#: templates/journals/characters.html:79 templates/journals/entries.html:65
+#: templates/journals/entries.html:103 templates/journals/volumes.html:70
+msgid "Drag to reorder"
+msgstr "ドラッグして並び替え"
+
+#: templates/journals/characters.html:97
+msgid "Delete this character?"
+msgstr "このキャラを削除する？"
+
+#: templates/journals/characters.html:103 templates/journals/entries.html:126
+#: templates/journals/volumes.html:93
+msgid "Save Order"
+msgstr "並び順を保存"
+
+#: templates/journals/characters.html:109
+msgid "No Characters Yet"
+msgstr "まだキャラがいねぇ"
+
+#: templates/journals/characters.html:110
+msgid "Add characters to track the cast of your story."
+msgstr "キャラを追加して、物語の登場人物を管理しな。"
+
+#: templates/journals/characters.html:116
+msgid "Relationships"
+msgstr "関係"
+
+#: templates/journals/characters.html:119
+msgid "Add Relationship"
+msgstr "関係を追加"
+
+#: templates/journals/characters.html:129
+msgid "From"
+msgstr "誰から"
+
+#: templates/journals/characters.html:131
+#: templates/journals/characters.html:140
+msgid "Select character..."
+msgstr "キャラを選択…"
+
+#: templates/journals/characters.html:138
+msgid "To"
+msgstr "誰へ"
+
+#: templates/journals/characters.html:147
+msgid "Relationship"
+msgstr "関係"
+
+#: templates/journals/characters.html:148
+msgid "e.g. Sibling, Rival, Friend..."
+msgstr "例：兄弟、ライバル、友達…"
+
+#: templates/journals/characters.html:166
+msgid "Remove this relationship?"
+msgstr "この関係を消す？"
+
+#: templates/journals/diary/main.html:24
+msgid "entries"
+msgstr "エントリー"
+
+#: templates/journals/diary/main.html:25
+msgid "first"
+msgstr "最初"
+
+#: templates/journals/diary/main.html:26
+msgid "latest"
+msgstr "最新"
+
+#: templates/journals/diary/main.html:32
+msgid "Latest Entry"
+msgstr "最新のエントリー"
+
+#: templates/journals/diary/main.html:42
+msgid "previous month"
+msgstr "前の月"
+
+#: templates/journals/diary/main.html:47
+msgid "next month"
+msgstr "次の月"
+
+#: templates/journals/diary/main.html:50
+msgid "back to entry"
+msgstr "エントリーに戻る"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_mon"
+msgid "M"
+msgstr "月"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_tue"
+msgid "T"
+msgstr "火"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_wed"
+msgid "W"
+msgstr "水"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_thu"
+msgid "T"
+msgstr "木"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_fri"
+msgid "F"
+msgstr "金"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_sat"
+msgid "S"
+msgstr "土"
+
+#: templates/journals/diary/main.html:53
+msgctxt "weekday_initial_sun"
+msgid "S"
+msgstr "日"
+
+#: templates/journals/diary/main.html:71 templates/journals/edit_entry.html:179
+#: templates/journals/new_entry.html:98 templates/journals/poetry/main.html:85
+msgid "Mood"
+msgstr "気分"
+
+#: templates/journals/diary/main.html:74 templates/journals/diary/main.html:78
+#: templates/journals/poetry/main.html:88
+#: templates/journals/poetry/main.html:92
+msgid "all moods"
+msgstr "すべての気分"
+
+#: templates/journals/diary/main.html:114
+msgid "WORDS"
+msgstr "語"
+
+#: templates/journals/diary/main.html:139
+msgid "No entries yet."
+msgstr "まだエントリーがねぇ。"
+
+#: templates/journals/edit_entry.html:24 templates/journals/edit_entry.html:26
 msgid "Back to"
 msgstr "に戻る"
 
-#: templates/journals/edit_entry.html:54 templates/journals/edit_entry.html:252
+#: templates/journals/edit_entry.html:55 templates/journals/edit_entry.html:314
 msgid "Remove translation"
 msgstr "翻訳を削除"
 
-#: templates/journals/edit_entry.html:58
+#: templates/journals/edit_entry.html:59
 msgid "Add language"
 msgstr "言語を追加"
 
-#: templates/journals/edit_entry.html:71 templates/journals/new_entry.html:35
-msgid "Entry Title"
-msgstr "エントリータイトル"
+#: templates/journals/edit_entry.html:79 templates/journals/new_entry.html:36
+msgid "Give your"
+msgstr "あんたの"
 
-#: templates/journals/edit_entry.html:78 templates/journals/new_entry.html:41
-msgid "Give your entry a title..."
-msgstr "エントリーにタイトルをつけて..."
+#: templates/journals/edit_entry.html:79 templates/journals/new_entry.html:36
+msgid "a title..."
+msgstr "にタイトルをつけな…"
 
-#: templates/journals/edit_entry.html:95 templates/journals/edit_entry.html:265
+#: templates/journals/edit_entry.html:96 templates/journals/edit_entry.html:315
 msgid "Translated Title"
 msgstr "翻訳されたタイトル"
 
-#: templates/journals/edit_entry.html:96 templates/journals/edit_entry.html:266
+#: templates/journals/edit_entry.html:97
 msgid "Translated title"
 msgstr "翻訳されたタイトル"
 
-#: templates/journals/edit_entry.html:99 templates/journals/edit_entry.html:269
+#: templates/journals/edit_entry.html:100
+#: templates/journals/edit_entry.html:316
 msgid "Translated Content"
 msgstr "翻訳されたコンテンツ"
 
-#: templates/journals/edit_entry.html:109
-#, fuzzy
-#| msgid "URL Slug"
+#: templates/journals/edit_entry.html:111
 msgid "Slug"
 msgstr "URLスラッグ"
 
-#: templates/journals/edit_entry.html:118
-#, fuzzy
-#| msgid "url-slug"
+#: templates/journals/edit_entry.html:120
 msgid "entry-slug"
-msgstr "url-slug"
+msgstr "entry-slug"
 
-#: templates/journals/edit_entry.html:127 templates/journals/settings.html:181
+#: templates/journals/edit_entry.html:127 templates/journals/new_entry.html:46
+#: templates/weblog/weblog.html:38 templates/weblog/weblog.html:53
+msgid "Date"
+msgstr "日付"
+
+#: templates/journals/edit_entry.html:134 templates/journals/new_entry.html:53
+msgid "Volume"
+msgstr "巻"
+
+#: templates/journals/edit_entry.html:136 templates/journals/new_entry.html:55
+msgid "No volume"
+msgstr "巻なし"
+
+#: templates/journals/edit_entry.html:146 templates/journals/new_entry.html:65
+#: templates/journals/poetry/main.html:72
+msgid "Form"
+msgstr "形式"
+
+#: templates/journals/edit_entry.html:148 templates/journals/new_entry.html:67
+msgid "Select form..."
+msgstr "形式を選択…"
+
+#: templates/journals/edit_entry.html:158 templates/journals/new_entry.html:77
+#: templates/journals/new_journal.html:96 templates/journals/settings.html:109
+#: templates/journals/short_stories/main.html:82
+msgid "Genre"
+msgstr "ジャンル"
+
+#: templates/journals/edit_entry.html:160 templates/journals/new_entry.html:79
+msgid "Select genre..."
+msgstr "ジャンルを選択…"
+
+#: templates/journals/edit_entry.html:167 templates/journals/new_entry.html:86
+#: templates/journals/short_stories/main.html:89
+msgid "Tone"
+msgstr "トーン"
+
+#: templates/journals/edit_entry.html:169 templates/journals/new_entry.html:88
+msgid "Select tone..."
+msgstr "トーンを選択…"
+
+#: templates/journals/edit_entry.html:181 templates/journals/new_entry.html:100
+msgid "Select mood..."
+msgstr "気分を選択…"
+
+#: templates/journals/edit_entry.html:191 templates/journals/new_entry.html:110
+msgid "Summary"
+msgstr "あらすじ"
+
+#: templates/journals/edit_entry.html:192 templates/journals/new_entry.html:111
+msgid "Brief summary or blurb..."
+msgstr "短いあらすじや紹介文…"
+
+#: templates/journals/edit_entry.html:198 templates/journals/new_entry.html:117
+msgid "Thumbnail"
+msgstr "サムネイル"
+
+#: templates/journals/edit_entry.html:201
+msgid "Current thumbnail"
+msgstr "現在のサムネイル"
+
+#: templates/journals/edit_entry.html:231 templates/journals/new_entry.html:145
+msgid "Quick Create"
+msgstr "クイック作成"
+
+#: templates/journals/edit_entry.html:242 templates/journals/new_entry.html:156
+msgid "Protagonist"
+msgstr "主人公"
+
+#: templates/journals/edit_entry.html:243 templates/journals/new_entry.html:157
+msgid "Main Character"
+msgstr "主人公"
+
+#: templates/journals/edit_entry.html:244 templates/journals/new_entry.html:158
+msgid "Antagonist"
+msgstr "敵役"
+
+#: templates/journals/edit_entry.html:247 templates/journals/new_entry.html:161
+msgid "Love Interest"
+msgstr "恋愛相手"
+
+#: templates/journals/edit_entry.html:248 templates/journals/new_entry.html:162
+msgid "Mentor"
+msgstr "師匠"
+
+#: templates/journals/edit_entry.html:249 templates/journals/new_entry.html:163
+msgid "Rival"
+msgstr "ライバル"
+
+#: templates/journals/edit_entry.html:250 templates/journals/new_entry.html:164
+msgid "Comic Relief"
+msgstr "お笑い担当"
+
+#: templates/journals/edit_entry.html:255 templates/journals/new_entry.html:169
+msgid "Character backstory..."
+msgstr "キャラの背景…"
+
+#: templates/journals/edit_entry.html:259 templates/journals/new_entry.html:173
+msgid "Add Character"
+msgstr "キャラを追加"
+
+#: templates/journals/edit_entry.html:277 templates/journals/new_entry.html:191
+msgid "Quick Add"
+msgstr "クイック追加"
+
+#: templates/journals/edit_entry.html:281 templates/journals/new_entry.html:195
+msgid "Tag Name"
+msgstr "タグ名"
+
+#: templates/journals/edit_entry.html:282 templates/journals/new_entry.html:196
+msgid "Tag name..."
+msgstr "タグ名…"
+
+#: templates/journals/edit_entry.html:286 templates/journals/new_entry.html:200
+msgid "Add Tag"
+msgstr "タグを追加"
+
+#: templates/journals/edit_entry.html:298 templates/journals/settings.html:231
 msgid "Save Changes"
 msgstr "変更を保存"
 
-#: templates/journals/edit_entry.html:130
-msgid "Delete Entry"
-msgstr "エントリーを削除"
+#: templates/journals/edit_entry.html:301
+#, python-format
+msgid "Delete %(label)s"
+msgstr "%(label)sを削除"
 
-#: templates/journals/edit_entry.html:151 templates/journals/new_entry.html:72
-msgid "Start writing your entry..."
-msgstr "エントリーを書き始めて..."
+#: templates/journals/edit_entry.html:312 templates/journals/new_entry.html:231
+msgid "Start writing your"
+msgstr "書き始めな、あんたの"
 
-#: templates/journals/edit_entry.html:159
-#: templates/journals/edit_entry.html:280
+#: templates/journals/edit_entry.html:313
 msgid "Write translated content..."
 msgstr "翻訳されたコンテンツを書いて..."
 
-#: templates/journals/edit_entry.html:312 templates/journals/new_entry.html:81
-msgid "Please write some content for your entry."
-msgstr "エントリーの内容を書いてくれ。"
+#: templates/journals/edit_entry.html:317 templates/journals/new_entry.html:232
+msgid "Please write some content for your"
+msgstr "中身をちゃんと書けよ、あんたの"
 
-#: templates/journals/edit_entry.html:327
-msgid "Are you sure you want to delete this entry? This cannot be undone."
-msgstr "本当にこのエントリーを削除するか？これは元に戻せないぞ。"
+#: templates/journals/edit_entry.html:318
+msgid "Are you sure you want to delete this"
+msgstr "本当にこの"
+
+#: templates/journals/edit_entry.html:318
+msgid "This cannot be undone."
+msgstr "これは元に戻せねぇぞ。"
+
+#: templates/journals/entries.html:40 templates/journals/entries.html:145
+#: templates/journals/journals.html:65 templates/journals/journals.html:85
+#: templates/journals/toc.html:30
+msgid "New"
+msgstr "新規"
+
+#: templates/journals/entries.html:58 templates/journals/toc.html:42
+#, python-format
+msgid "Add %(label)s"
+msgstr "%(label)sを追加"
+
+#: templates/journals/entries.html:84
+msgid "No chapters in this volume yet."
+msgstr "この巻にはまだ章がねぇ。"
+
+#: templates/journals/entries.html:94 templates/journals/toc.html:71
+msgid "Unassigned"
+msgstr "未割り当て"
+
+#: templates/journals/entries.html:94 templates/journals/toc.html:71
+#: templates/weblog/weblog.html:23
+msgid "All"
+msgstr "全て"
+
+#: templates/journals/entry_read.html:39
+#: templates/journals/journal_view.html:49 templates/journals/journals.html:127
+msgid "Previous"
+msgstr "前へ"
+
+#: templates/journals/entry_read.html:43
+msgid "Back"
+msgstr "戻る"
+
+#: templates/journals/entry_read.html:47
+#: templates/journals/journal_view.html:61 templates/journals/journals.html:139
+msgid "Next"
+msgstr "次へ"
 
 #: templates/journals/journals.html:14
 msgid "My Journals"
@@ -822,46 +1773,43 @@ msgstr "プライベートジャーナル"
 msgid "Total Entries"
 msgstr "総エントリ数"
 
-#: templates/journals/journals.html:57
-msgid "Entry"
-msgstr "エントリ"
+#: templates/journals/journals.html:66
+msgid "View Journal"
+msgstr "ジャーナルを見る"
 
-#: templates/journals/journals.html:76
+#: templates/journals/journals.html:79
 msgid "No description provided"
 msgstr "説明が提供されていません"
 
-#: templates/journals/journals.html:89
+#: templates/journals/journals.html:92
 msgid "Created"
 msgstr "作成日"
 
-#: templates/journals/journals.html:97
+#: templates/journals/journals.html:100
 msgid "Updated"
 msgstr "更新日"
 
-#: templates/journals/journals.html:109
+#: templates/journals/journals.html:112
 msgid "No Journals Yet"
 msgstr "まだジャーナルがありません"
 
-#: templates/journals/journals.html:110
+#: templates/journals/journals.html:113
 msgid "Start your digital journaling journey by creating your first journal."
 msgstr ""
 "デジタルジャーナリングの旅を始めるには、最初のジャーナルを作成してください。"
 
-#: templates/journals/journals.html:112
+#: templates/journals/journals.html:115
 msgid "Create Your First Journal"
 msgstr "最初のジャーナルを作成"
 
-#: templates/journals/journals.html:124
-msgid "Previous"
-msgstr "前へ"
+#: templates/journals/new_entry.html:43
+msgid "Optional — auto-generated from date"
+msgstr "任意 — 日付から自動生成"
 
-#: templates/journals/journals.html:136
-msgid "Next"
-msgstr "次へ"
-
-#: templates/journals/new_entry.html:56
-msgid "Save Entry"
-msgstr "エントリーを保存"
+#: templates/journals/new_entry.html:217
+#, python-format
+msgid "Save %(label)s"
+msgstr "%(label)sを保存"
 
 #: templates/journals/new_journal.html:15
 msgid "Create a new digital notebook for your thoughts"
@@ -894,7 +1842,7 @@ msgid ""
 msgstr "オプション：ジャーナル用のカスタムURL（小文字、数字、ハイフンのみ）"
 
 #: templates/journals/new_journal.html:73 templates/journals/settings.html:74
-#: templates/journals/settings.html:168
+#: templates/journals/settings.html:218 templates/journals/volumes.html:43
 msgid "Description"
 msgstr "説明"
 
@@ -906,17 +1854,73 @@ msgstr "このジャーナルが何についてのものか説明してくださ
 msgid "Optional: A brief description of your journal's purpose or theme"
 msgstr "オプション：あなたのジャーナルの目的やテーマの簡単な説明"
 
-#: templates/journals/new_journal.html:90 templates/journals/settings.html:99
+#: templates/journals/new_journal.html:86 templates/journals/settings.html:90
+msgid "Mode"
+msgstr "モード"
+
+#: templates/journals/new_journal.html:92
+msgid "Choose the type of journal. This cannot be changed later."
+msgstr "ジャーナルの種類を選べ。後から変更はできねぇ。"
+
+#: templates/journals/new_journal.html:98 templates/journals/settings.html:111
+msgid "— Select Genre —"
+msgstr "— ジャンルを選択 —"
+
+#: templates/journals/new_journal.html:106 templates/journals/settings.html:97
+msgid "Status"
+msgstr "ステータス"
+
+#: templates/journals/new_journal.html:119 templates/journals/settings.html:149
 msgid "Private Journal"
 msgstr "プライベートジャーナル"
 
-#: templates/journals/new_journal.html:93
+#: templates/journals/new_journal.html:122
 msgid "Private journals are only visible to you and people you share them with"
 msgstr "プライベートジャーナルは、あなたとあなたが共有する人にのみ表示されます"
 
-#: templates/journals/new_journal.html:100
+#: templates/journals/new_journal.html:129
 msgid "Create Journal"
 msgstr "ジャーナルを作成"
+
+#: templates/journals/poetry/entry.html:17
+msgid "poem"
+msgstr "詩"
+
+#: templates/journals/poetry/entry.html:27
+#: templates/journals/poetry/main.html:24
+msgid "poems"
+msgstr "詩"
+
+#: templates/journals/poetry/entry.html:68
+msgid "All Poems"
+msgstr "すべての詩"
+
+#: templates/journals/poetry/main.html:25
+#: templates/journals/poetry/main.html:129
+msgid "page"
+msgstr "ページ"
+
+#: templates/journals/poetry/main.html:46
+msgid "Index"
+msgstr "目次"
+
+#: templates/journals/poetry/main.html:75
+#: templates/journals/poetry/main.html:79
+msgid "all forms"
+msgstr "すべての形式"
+
+#: templates/journals/poetry/main.html:115
+msgid "focus read"
+msgstr "集中読み"
+
+#: templates/journals/poetry/main.html:119
+msgid "No poems yet."
+msgstr "まだ詩がねぇ。"
+
+#: templates/journals/poetry/main.html:125
+#: templates/journals/poetry/main.html:127
+msgid "prev"
+msgstr "前"
 
 #: templates/journals/settings.html:41
 msgid "Basic Information"
@@ -943,68 +1947,223 @@ msgid "Brief description of your journal's purpose"
 msgstr "あなたのジャーナルの目的の簡単な説明"
 
 #: templates/journals/settings.html:86
+msgid "Mode & Classification"
+msgstr "モードと分類"
+
+#: templates/journals/settings.html:92
+msgid "Mode is locked after creation"
+msgstr "モードは作成後は変更できねぇ"
+
+#: templates/journals/settings.html:103
+msgid "Current writing status"
+msgstr "現在の執筆ステータス"
+
+#: templates/journals/settings.html:116
+msgid "Primary genre of your work"
+msgstr "作品のメインジャンル"
+
+#: templates/journals/settings.html:122 templates/journals/volumes.html:47
+msgid "Cover Image"
+msgstr "カバー画像"
+
+#: templates/journals/settings.html:125
+msgid "Current cover"
+msgstr "現在のカバー"
+
+#: templates/journals/settings.html:129
+msgid "Upload a new image to replace the current cover"
+msgstr "新しい画像をアップして今のカバーを差し替えな"
+
+#: templates/journals/settings.html:136
 msgid "Privacy & Sharing"
 msgstr "プライバシーと共有"
 
-#: templates/journals/settings.html:103
+#: templates/journals/settings.html:153
 msgid ""
 "Private journals are only visible to you and users you explicitly share them "
 "with"
 msgstr ""
 "プライベートジャーナルは、あなたと明示的に共有するユーザーにのみ表示されます"
 
-#: templates/journals/settings.html:108
+#: templates/journals/settings.html:158
 msgid "Shared with Users"
 msgstr "ユーザーと共有"
 
-#: templates/journals/settings.html:114
+#: templates/journals/settings.html:164
 msgid "Enter username to share with..."
 msgstr "...と共有するユーザー名を入力してください"
 
-#: templates/journals/settings.html:115
+#: templates/journals/settings.html:165 templates/journals/tags.html:37
 msgid "Add"
 msgstr "追加"
 
-#: templates/journals/settings.html:126
+#: templates/journals/settings.html:176
 msgid "Users who can access this private journal"
 msgstr "このプライベートジャーナルにアクセスできるユーザー"
 
-#: templates/journals/settings.html:133
+#: templates/journals/settings.html:183
 msgid "Custom Styling"
 msgstr "カスタムスタイリング"
 
-#: templates/journals/settings.html:136
+#: templates/journals/settings.html:186
 msgid "Custom CSS"
 msgstr "カスタムCSS"
 
-#: templates/journals/settings.html:141
+#: templates/journals/settings.html:191
 msgid "Custom CSS to style your journal"
 msgstr "あなたのジャーナルをスタイリングするためのカスタムCSS"
 
-#: templates/journals/settings.html:146
+#: templates/journals/settings.html:196
 msgid "Translations"
 msgstr "翻訳"
 
-#: templates/journals/settings.html:153
+#: templates/journals/settings.html:203
 msgid "Select Language"
 msgstr "言語を選択"
 
-#: templates/journals/settings.html:163
-msgid "Name"
-msgstr "名前"
-
-#: templates/journals/settings.html:176
+#: templates/journals/settings.html:226
 msgid "Add Translation"
 msgstr "翻訳を追加"
 
-#: templates/journals/settings.html:184
+#: templates/journals/settings.html:234
 msgid "Delete Journal"
 msgstr "ジャーナルを削除"
 
-#: templates/journals/settings.html:195
+#: templates/journals/settings.html:245
 msgid ""
 "Are you sure you want to delete this journal? This action cannot be undone."
 msgstr "このジャーナルを削除してもよろしいですか? この操作は元に戻せません。"
+
+#: templates/journals/short_stories/entry.html:28
+msgid "story"
+msgstr "ストーリー"
+
+#: templates/journals/short_stories/entry.html:33
+#: templates/journals/short_stories/main.html:23
+msgid "stories"
+msgstr "ストーリー"
+
+#: templates/journals/short_stories/entry.html:56
+msgid "Featuring"
+msgstr "登場："
+
+#: templates/journals/short_stories/entry.html:85
+msgid "All Stories"
+msgstr "すべてのストーリー"
+
+#: templates/journals/short_stories/main.html:99
+msgid "total"
+msgstr "合計"
+
+#: templates/journals/short_stories/main.html:120
+msgid "No stories yet."
+msgstr "まだストーリーがねぇ。"
+
+#: templates/journals/tags.html:34
+msgid "New tag name..."
+msgstr "新しいタグ名…"
+
+#: templates/journals/tags.html:49
+msgid "Delete this tag?"
+msgstr "このタグを削除する？"
+
+#: templates/journals/tags.html:55
+msgid "No Tags Yet"
+msgstr "まだタグがねぇ"
+
+#: templates/journals/tags.html:56
+msgid "Create tags to categorize and organize your entries."
+msgstr "タグを作ってエントリーを整理しな。"
+
+#: templates/journals/toc.html:39
+msgid "Vol."
+msgstr "巻"
+
+#: templates/journals/toc.html:94
+msgid "Start writing and organize them into volumes."
+msgstr "書き始めて、巻にまとめな。"
+
+#: templates/journals/volumes.html:30
+msgid "New Volume"
+msgstr "新規巻"
+
+#: templates/journals/volumes.html:40
+msgid "Volume title..."
+msgstr "巻のタイトル…"
+
+#: templates/journals/volumes.html:44
+msgid "Volume description..."
+msgstr "巻の説明…"
+
+#: templates/journals/volumes.html:56
+msgid "Save Volume"
+msgstr "巻を保存"
+
+#: templates/journals/volumes.html:82
+msgid "Delete this volume?"
+msgstr "この巻を削除する？"
+
+#: templates/journals/volumes.html:99
+msgid "No Volumes Yet"
+msgstr "まだ巻がねぇ"
+
+#: templates/journals/volumes.html:100
+msgid "Create volumes to organize your chapters into arcs or books."
+msgstr "巻を作って、章をアークや本にまとめな。"
+
+#: templates/letters/_partials/letter_rows.html:7
+#: templates/letters/conversation.html:44 templates/letters/inbox.html:52
+msgid "You"
+msgstr "自分"
+
+#: templates/letters/conversation.html:35
+msgid "BACK"
+msgstr "戻る"
+
+#: templates/letters/conversation.html:46
+#: templates/letters/conversation.html:50
+msgid "Load older letters"
+msgstr "古い手紙を読み込む"
+
+#: templates/letters/conversation.html:59
+msgid "No letters yet. Write the first one!"
+msgstr "まだ手紙がねぇ。最初の一通を書きな！"
+
+#: templates/letters/conversation.html:78
+msgid "Write your letter..."
+msgstr "手紙を書きな…"
+
+#: templates/letters/inbox.html:26
+msgid "UNREAD"
+msgstr "未読"
+
+#: templates/letters/inbox.html:29
+msgid "TOTAL"
+msgstr "合計"
+
+#: templates/letters/inbox.html:56
+msgid "attachment"
+msgstr "添付"
+
+#: templates/letters/inbox.html:59
+msgid "No letters yet"
+msgstr "まだ手紙がねぇ"
+
+#: templates/letters/inbox.html:78
+msgid "PREV"
+msgstr "前"
+
+#: templates/letters/inbox.html:84
+msgid "NEXT"
+msgstr "次"
+
+#: templates/letters/inbox.html:91
+msgid "No Conversations Yet"
+msgstr "まだ会話がねぇ"
+
+#: templates/letters/inbox.html:92
+msgid "Visit a user's page and send them a letter to start a conversation."
+msgstr "誰かのページに行って手紙を送りゃ、会話が始まるぞ。"
 
 #: templates/weblog/_partials/post_comments.html:10
 msgid "Please register or log in to upvote comments."
@@ -1046,10 +2205,6 @@ msgstr "このコメントを削除してもよろしいですか? この操作�
 #: templates/weblog/_partials/weblog_list.html:18 templates/weblog/post.html:25
 msgid "posted in"
 msgstr "カテゴリー："
-
-#: templates/weblog/_partials/weblog_list.html:32
-msgid "Continue Reading"
-msgstr "続きを読む"
 
 #: templates/weblog/_partials/weblog_list.html:34
 #, python-format
@@ -1280,14 +2435,6 @@ msgstr "ウェブログを検索..."
 #: templates/weblog/weblog.html:21
 msgid "Category"
 msgstr "カテゴリー"
-
-#: templates/weblog/weblog.html:23
-msgid "All"
-msgstr "全て"
-
-#: templates/weblog/weblog.html:38 templates/weblog/weblog.html:53
-msgid "Date"
-msgstr "日付"
 
 #: templates/weblog/weblog.html:85
 msgid "Filter"

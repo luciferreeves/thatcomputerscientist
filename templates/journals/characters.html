@@ -87,7 +87,7 @@
                         {% endif %}
                     </div>
                     <div class="character-info">
-                        <span class="character-role" data-role="{{ character.role }}">{{ character.role }}</span>
+                        <span class="character-role" data-role="{{ character.role }}">{% if character.role %}{% translate character.role %}{% endif %}</span>
                         {% if character.bio %}
                         <p class="character-bio">{{ character.bio|truncatechars:120 }}</p>
                         {% endif %}

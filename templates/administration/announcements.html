@@ -100,12 +100,13 @@
             </tr>
         </thead>
         <tbody>
+            {% translate "Yes,No" as yesno_opts %}
             {% for announcement in announcements %}
                 <tr>
                     <td>{{ announcement.content|truncatechars:100 }}</td>
                     <td><a href="#">{{ announcement.author.username }}</a></td>
-                    <td>{{ announcement.is_new|yesno:"Yes,No" }}</td>
-                    <td>{{ announcement.is_public|yesno:"Yes,No" }}</td>
+                    <td>{{ announcement.is_new|yesno:yesno_opts }}</td>
+                    <td>{{ announcement.is_public|yesno:yesno_opts }}</td>
                     <td>{% localtime on %}{{ announcement.created_at|date:'DATETIME_FORMAT' }}{% endlocaltime %}</td>
                     <td>
                         <div class="table-actions">

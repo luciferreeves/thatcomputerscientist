@@ -1199,7 +1199,7 @@ def get_diary_calendar(journal: Journal, year: int, month: int, mood_filter: str
     weeks: list[list[dict[str, Any]]] = []
     week: list[dict[str, Any]] = []
     for day, weekday in days:
-        cell = {"day": day, "weekday": weekday}
+        cell: dict[str, Any] = {"day": day, "weekday": weekday}
         if day != 0 and day in entries_by_day:
             entry = entries_by_day[day]
             cell["entry"] = entry
@@ -1215,6 +1215,7 @@ def get_diary_calendar(journal: Journal, year: int, month: int, mood_filter: str
         "year": year,
         "month": month,
         "month_name": calendar.month_name[month],
+        "month_date": date_type(year, month, 1),
         "days": days,
         "weeks": weeks,
         "entries": entries_by_day,

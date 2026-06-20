@@ -42,14 +42,14 @@
 </div>
 {% else %}
 <div class="empty-state">
-    <h3>{% trans "No" %} {{ journal.entry_label_plural }} {% trans "Yet" %}</h3>
+    <h3>{% blocktranslate with label=journal.entry_label_plural %}No {{ label }} Yet{% endblocktranslate %}</h3>
     {% if service_page %}
-    <p>{% trans "Start your digital journaling journey by creating your first" %} {{ journal.entry_label|lower }}.</p>
+    <p>{% blocktranslate with label=journal.entry_label|lower %}Start your digital journaling journey by creating your first {{ label }}.{% endblocktranslate %}</p>
     <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="empty-action-btn">
-        {% trans "Create Your First" %} {{ journal.entry_label }}
+        {% blocktranslate with label=journal.entry_label %}Create Your First {{ label }}{% endblocktranslate %}
     </a>
     {% else %}
-    <p>{% trans "This journal doesn't have any" %} {{ journal.entry_label_plural|lower }} {% trans "yet. Check back later!" %}</p>
+    <p>{% blocktranslate with label=journal.entry_label_plural|lower %}This journal doesn't have any {{ label }} yet. Check back later!{% endblocktranslate %}</p>
     {% endif %}
 </div>
 {% endif %}

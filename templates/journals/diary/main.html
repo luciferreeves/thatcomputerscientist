@@ -41,7 +41,7 @@
                 <div class="dy-mini-monthbar">
                     <a href="?year={{ prev_year }}&month={{ prev_month }}{% if active_mood %}&mood={{ active_mood }}{% endif %}{% if selected_entry %}&entry={{ selected_entry.slug }}{% endif %}" class="dy-mini-nav" title="{% trans 'previous month' %}">&laquo;</a>
                     <div class="dy-mini-monthtitle">
-                        <span class="dy-mini-month">{{ calendar.month_name }}</span>
+                        <span class="dy-mini-month">{{ calendar.month_date|date:"F" }}</span>
                         <span class="dy-mini-year">{{ calendar.year }}</span>
                     </div>
                     <a href="?year={{ next_year }}&month={{ next_month }}{% if active_mood %}&mood={{ active_mood }}{% endif %}{% if selected_entry %}&entry={{ selected_entry.slug }}{% endif %}" class="dy-mini-nav" title="{% trans 'next month' %}">&raquo;</a>
@@ -50,7 +50,7 @@
                 <a href="{% url 'core:journal' journal.slug %}?{% if selected_entry %}entry={{ selected_entry.slug }}{% if active_mood %}&{% endif %}{% endif %}{% if active_mood %}mood={{ active_mood }}{% endif %}" class="dy-mini-today">&laquo; {% trans "back to entry" %}</a>
                 {% endif %}
                 <div class="dy-mini-grid-head">
-                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                    <span>{% translate "M" context "weekday_initial_mon" %}</span><span>{% translate "T" context "weekday_initial_tue" %}</span><span>{% translate "W" context "weekday_initial_wed" %}</span><span>{% translate "T" context "weekday_initial_thu" %}</span><span>{% translate "F" context "weekday_initial_fri" %}</span><span>{% translate "S" context "weekday_initial_sat" %}</span><span>{% translate "S" context "weekday_initial_sun" %}</span>
                 </div>
                 <div class="dy-mini-grid">
                     {% for week in calendar.weeks %}

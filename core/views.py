@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import random
 from typing import cast
 
 import requests
@@ -62,6 +63,7 @@ def screenshots(request: HttpRequest) -> HttpResponse:
     request.meta.title = title_map.get(request.LANGUAGE_CODE)
 
     shots = get_steam_screenshots(os.getenv("STEAM_USERNAME", ""))
+    shots = random.sample(shots, len(shots))
     return render(request, "core/screenshots.html", {"shots": shots})
 
 

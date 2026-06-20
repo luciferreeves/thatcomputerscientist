@@ -52,6 +52,18 @@
     letter-spacing: 2px;
 }
 
+.scr-arrow {
+    cursor: pointer;
+    color: #f0e6d2;
+    padding: 0 2px;
+    transition: color 0.15s, text-shadow 0.15s;
+}
+
+.scr-arrow:hover {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(240, 230, 210, 0.8);
+}
+
 .scr-zoom {
     position: fixed;
     inset: 0;

@@ -13,7 +13,16 @@
         <div class="scr-noise" id="scr-noise">{% trans "no signal" %}</div>
     </div>
 </div>
-<div class="scr-hint" id="scr-hint">{% trans "press ← or → to change picture" %}</div>
+<div class="scr-hint" id="scr-hint">
+    <span class="scr-count" id="scr-count"></span>
+    {% blocktranslate %}
+        press
+        <span class="scr-arrow" id="scr-prev" role="button" tabindex="0">←</span>
+        or
+        <span class="scr-arrow" id="scr-next" role="button" tabindex="0">→</span>
+        to change picture
+    {% endblocktranslate %}
+</div>
 
 <div class="scr-zoom" id="scr-zoom">
     <img class="scr-zoom-img" id="scr-zoom-img" alt="" />
@@ -27,6 +36,9 @@
     var img = document.getElementById('scr-img');
     var noise = document.getElementById('scr-noise');
     var hint = document.getElementById('scr-hint');
+    var count = document.getElementById('scr-count');
+    var prev = document.getElementById('scr-prev');
+    var next = document.getElementById('scr-next');
     var zoom = document.getElementById('scr-zoom');
     var zoomImg = document.getElementById('scr-zoom-img');
     var monitor = document.getElementById('scr-monitor');
@@ -39,22 +51,15 @@
     }
 
     var idx = 0;
-    var cache = {};
-    var AHEAD = 4;
-
-    function preload(i) {
-        if (i < 0 || i >= shots.length || cache[i]) return;
-        var im = new Image();
-        im.src = shots[i].url;
-        cache[i] = im;
-    }
 
     function show(i) {
         idx = (i + shots.length) % shots.length;
+        var fresh = img.cloneNode(false);
+        fresh.removeAttribute('src');
+        img.parentNode.replaceChild(fresh, img);
+        img = fresh;
         img.src = shots[idx].url;
-        for (var j = 1; j <= AHEAD; j++) preload(idx + j);
-        preload(idx - 1);
-        hint.textContent = (idx + 1) + ' / ' + shots.length + ' — {% trans "press ← or → to change picture" %}';
+        count.textContent = (idx + 1) + ' / ' + shots.length + ' — ';
     }
 
     function navigate(dir) {
@@ -75,6 +80,8 @@
 
     monitor.addEventListener('click', openZoom);
     zoom.addEventListener('click', closeZoom);
+    prev.addEventListener('click', function() { navigate(-1); });
+    next.addEventListener('click', function() { navigate(1); });
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && zoom.classList.contains('is-open')) { closeZoom(); return; }

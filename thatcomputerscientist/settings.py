@@ -253,6 +253,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "jobs.users.delete_inactive_users",
         "schedule": 3600.0,
     },
+    "refresh-steam-screenshots": {
+        "task": "jobs.screenshots.refresh_steam_screenshots",
+        "schedule": 6 * 3600.0,
+    },
 }
 
 # Storage (MINIO)

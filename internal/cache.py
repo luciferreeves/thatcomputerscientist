@@ -17,12 +17,19 @@ class Cache:
 
     def get(self, key):
         data = self.client.get(key)
-        if data is not None:
+        if isinstance(data, (bytes, bytearray, memoryview)):
             return pickle.loads(data)
         return None
 
     def delete(self, key):
         self.client.delete(key)
+
+    def ttl(self, key) -> int:
+        remaining = self.client.ttl(key)
+        return remaining if isinstance(remaining, int) else -2
+
+    def expire(self, key, seconds):
+        self.client.expire(key, seconds)
 
 
 cache = Cache()

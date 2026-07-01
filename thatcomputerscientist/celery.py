@@ -7,7 +7,7 @@ app = Celery("thatcomputerscientist")
 
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.autodiscover_tasks(["jobs.comments", "jobs.users"])
+app.autodiscover_tasks(["jobs.comments", "jobs.users", "jobs.screenshots"])
 
 
 @app.task(bind=True)

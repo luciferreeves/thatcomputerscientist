@@ -149,7 +149,7 @@ CHANNEL_LAYERS = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, os.environ.get("SQLITE_DB_NAME")),
+        "NAME": os.path.join(BASE_DIR, os.environ["DSN"]),
     }
 }
 
@@ -259,13 +259,17 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-# Storage (MINIO)
-MINIO_UPLOAD_ENDPOINT = os.getenv("MINIO_UPLOAD_ENDPOINT")
-MINIO_ACCESS_ENDPOINT = os.getenv("MINIO_ACCESS_ENDPOINT")
-MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY")
-MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY")
-MINIO_BUCKET = os.getenv("MINIO_BUCKET")
-MINIO_USE_SSL = os.getenv("MINIO_USE_SSL", "true").lower() == "true"
+# Storage (CDN)
+CDN_UPLOAD_ENDPOINT = os.getenv("CDN_UPLOAD_ENDPOINT")
+CDN_ACCESS_ENDPOINT = os.getenv("CDN_ACCESS_ENDPOINT")
+CDN_ACCESS_KEY = os.getenv("CDN_ACCESS_KEY")
+CDN_SECRET_KEY = os.getenv("CDN_SECRET_KEY")
+CDN_BUCKET = os.getenv("CDN_BUCKET")
+CDN_USE_SSL = os.getenv("CDN_USE_SSL", "true").lower() == "true"
+
+# Usernames
+OWNER_USERNAME = os.getenv("OWNER_USERNAME")
+MAL_USERNAME = os.getenv("MAL_USERNAME")
 
 # Letters
 LETTERS_MAX_LENGTH = 5000

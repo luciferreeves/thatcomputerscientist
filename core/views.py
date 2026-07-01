@@ -5,6 +5,7 @@ import random
 from typing import cast
 
 import requests
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -37,7 +38,7 @@ def home(request: HttpRequest) -> HttpResponse:
     request.meta.title = title_map.get(request.LANGUAGE_CODE)
 
     success, recent_journal = get_latest_journal_entry(
-        user=cast(AbstractUser, get_user_from_username("bobby")),
+        user=cast(AbstractUser, get_user_from_username(settings.OWNER_USERNAME)),
         slug="journal-of-random-thoughts",
         lang=request.LANGUAGE_CODE,
         count=1,
@@ -45,7 +46,7 @@ def home(request: HttpRequest) -> HttpResponse:
 
     context = {
         "announcements": get_announcements(request.LANGUAGE_CODE),
-        "recent_mal_activity": get_mal_recent_activity("crvs"),
+        "recent_mal_activity": get_mal_recent_activity(settings.MAL_USERNAME),
         "recent_weblogs": get_posts(
             weblog_slug="shifoo",
             lang=request.LANGUAGE_CODE,

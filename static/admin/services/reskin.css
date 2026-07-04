@@ -241,16 +241,12 @@ body.admin-reskin.popup {
     color: #ffffff !important;
 }
 
-/* Small inline add/change glyph links stay small, not big buttons. */
-#content .add-related,
-#content .change-related,
-#content .view-related,
-#content .delete-related,
-#content .related-lookup {
-    background: none;
-    border: 0;
-    box-shadow: none;
-    padding: 0;
+/* Index: stack the app list and recent actions instead of floating them. */
+#content #content-main,
+#content #content-related {
+    float: none;
+    width: auto;
+    margin: 0 0 16px;
 }
 
 /* ---- Tables ---- */
@@ -334,4 +330,37 @@ body.admin-reskin.popup {
     border: 1px solid #d3556a;
     color: #ffd0d8;
     border-radius: 6px;
+}
+
+/* Recent actions: the site's list reset strips Django's spacing/icons — restore them. */
+#content .actionlist {
+    list-style: none;
+    margin: 0;
+    padding: 8px 14px 12px;
+}
+
+#content .actionlist li {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0 6px 24px;
+    border-bottom: 1px solid rgba(134, 99, 229, 0.12);
+    background-repeat: no-repeat;
+    background-position: 2px 8px;
+    background-size: 15px;
+}
+
+#content .actionlist li.addlink {
+    background-image: url("../img/icon-addlink.svg");
+}
+
+#content .actionlist li.changelink {
+    background-image: url("../img/icon-changelink.svg");
+}
+
+#content .actionlist li.deletelink {
+    background-image: url("../img/icon-deletelink.svg");
+}
+
+#content .actionlist li .mini {
+    color: #9c8fc4;
 }

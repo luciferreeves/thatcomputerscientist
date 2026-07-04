@@ -3,11 +3,9 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}" data-theme="dark">
 <head>
 <title>{% block title %}{% endblock %}</title>
-<style>
-@import url("{% static 'admin/css/base.css' %}") layer(djangoadmin);
-@import url("{% static 'admin/css/dark_mode.css' %}") layer(djangoadmin);
-@import url("{% static 'admin/css/responsive.css' %}") layer(djangoadmin);
-</style>
+<link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/dark_mode.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/responsive.css' %}">
 {% block extrastyle %}{% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "admin/css/rtl.css" %}">{% endif %}
 {% block extrahead %}{% endblock %}

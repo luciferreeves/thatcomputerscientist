@@ -1,21 +1,19 @@
-/* Admin content in a readable y2k skin. Django's own CSS is loaded in the
-   `djangoadmin` cascade layer (see base.html), so this and the site CSS win —
-   nothing leaks into the chrome. Content rules are scoped to #content / .content,
-   which exist only inside the admin content (and in lookup popups), never the chrome. */
+/* Admin content skin. Django's admin CSS keeps its own layout/spacing (its
+   specific selectors beat the site's general resets); this file only recolours
+   the content and resets the site chrome so no admin styling shows there. */
 
 html,
 body.admin-reskin {
     background: transparent;
 }
 
-/* Lookup / raw-id popups have no site chrome: give them a solid readable page. */
 body.admin-reskin.popup {
-    background: #140c26;
-    color: #f0ecff;
+    background: #100c18;
+    color: #ece7f5;
     padding: 14px 18px;
 }
 
-/* ---- Contain: strip any admin styling off the site chrome ---- */
+/* ---- Chrome: undo admin's global element styling, keep the pure site look ---- */
 #left-sidebar a,
 #right-sidebar a,
 #footer a,
@@ -34,9 +32,11 @@ body.admin-reskin.popup {
     border: 0;
     box-shadow: none;
     color: inherit;
+    font-family: inherit;
+    border-radius: 0;
 }
 
-/* ---- Layout ---- */
+/* ---- Content column ---- */
 #main-content {
     flex: 1 1 0;
     min-width: 0;
@@ -45,37 +45,34 @@ body.admin-reskin.popup {
 .content {
     min-width: 0;
     overflow-x: auto;
-    color: #ece7fb;
 }
 
 #content {
-    color: #ece7fb;
+    color: #e7e2f0;
 }
 
 /* ---- Title ---- */
 #content > h1 {
-    font-size: 24px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
     color: #ffffff;
-    text-shadow: 0 0 8px rgba(223, 35, 196, 0.7);
-    margin: 2px 0 14px;
+    font-weight: 800;
+    border-bottom: 2px solid #df23c4;
+    padding-bottom: 6px;
 }
 
-/* ---- Breadcrumbs ---- */
+/* ---- Breadcrumbs: minimal path ---- */
 .content .breadcrumbs {
-    background: #241338;
-    border: 1px solid #6b3fa0;
-    border-radius: 6px;
-    padding: 8px 14px;
-    margin: 0 0 16px;
-    font-size: 12px;
-    color: #c3b4e6;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #2c2740;
+    border-radius: 0;
+    box-shadow: none;
+    color: #8f86a8;
+    padding: 6px 2px;
 }
 
 .content .breadcrumbs a {
-    color: #7fdce8;
-    font-weight: 700;
+    color: #6fd3e0;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -86,11 +83,11 @@ body.admin-reskin.popup {
 /* ---- Content links (kill the site's green) ---- */
 #content a:link,
 #content a:visited {
-    color: #b39cff;
+    color: #6fd3e0;
 }
 
 #content a:hover {
-    color: #7fdce8;
+    color: #ff5ad6;
 }
 
 /* ---- Panels ---- */
@@ -99,11 +96,10 @@ body.admin-reskin.popup {
 #content .inline-related,
 #content #changelist-filter,
 #content #changelist-search {
-    background: #1c1130;
-    border: 1px solid #6b3fa0;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 16px;
+    background: #14111e;
+    border: 1px solid #2c2740;
+    border-radius: 6px;
+    color: #e7e2f0;
 }
 
 #content .module > h2,
@@ -116,16 +112,11 @@ body.admin-reskin.popup {
 #content details.module > summary,
 #content #changelist-filter h2,
 #content #changelist-filter h3 {
-    background: linear-gradient(to bottom, #6b3fa0 0%, #3a2160 100%);
+    background: #1c1730;
     color: #ffffff;
+    border-bottom: 2px solid #df23c4;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
-    font-size: 12.5px;
-    font-weight: 700;
-    padding: 9px 14px;
-    border-bottom: 1px solid #8663e5;
-    list-style: none;
-    margin: 0;
+    letter-spacing: 0.5px;
 }
 
 #content .module > details > summary::-webkit-details-marker,
@@ -133,33 +124,19 @@ body.admin-reskin.popup {
     display: none;
 }
 
-#content .module > details > summary::after,
-#content details.module > summary::after {
-    content: " ▸";
-    color: #7fdce8;
-}
-
-#content .module > details[open] > summary::after,
-#content details.module[open] > summary::after {
-    content: " ▾";
-}
-
 #content .form-row {
-    border-bottom: 1px solid rgba(134, 99, 229, 0.18);
-    background: transparent;
-    padding: 10px 14px;
+    border-color: #241f34;
 }
 
 #content .aligned label,
-#content label {
-    color: #b39cff;
-    font-weight: 700;
+#content label,
+#content fieldset .description {
+    color: #b6acd0;
 }
 
 #content .help,
-#content .form-row .help,
 #content div.help {
-    color: #9c8fc4;
+    color: #8b81a6;
 }
 
 /* ---- Inputs ---- */
@@ -174,45 +151,40 @@ body.admin-reskin.popup {
 #content input[type="time"],
 #content textarea,
 #content select {
-    background: #0d0820;
+    background: #0c0a14;
     color: #f0ecff;
-    border: 1px solid #6b3fa0;
+    border: 1px solid #38324e;
     border-radius: 4px;
-    box-shadow: none;
-    padding: 7px 10px;
 }
 
 #content input:focus,
 #content textarea:focus,
 #content select:focus {
     outline: none;
-    border-color: #ff5ad6;
-    box-shadow: 0 0 6px rgba(255, 90, 214, 0.45);
+    border-color: #df23c4;
+    box-shadow: 0 0 0 1px #df23c4;
 }
 
 #content ::placeholder {
-    color: rgba(240, 236, 255, 0.35);
+    color: rgba(240, 236, 255, 0.32);
 }
 
-/* ---- Buttons ---- */
+/* ---- Buttons: flat, outlined, no purple slab ---- */
 #content .button,
 #content input[type="submit"],
 #content input[type="button"],
 #content .submit-row input,
 #content a.button,
 #content .object-tools a {
-    background: #6b3fa0;
-    color: #ffffff !important;
-    border: 1px solid #8663e5;
-    border-radius: 5px;
+    background: #1a1628;
+    color: #ffb3ec !important;
+    border: 1px solid #df23c4;
+    border-radius: 4px;
     box-shadow: none;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.4px;
     text-decoration: none;
-    padding: 8px 15px;
-    cursor: pointer;
-    transition: background 0.12s ease;
 }
 
 #content .button:hover,
@@ -221,49 +193,38 @@ body.admin-reskin.popup {
 #content .submit-row input:hover,
 #content a.button:hover,
 #content .object-tools a:hover {
-    background: #ff5ad6;
-    border-color: #ff5ad6;
-    color: #1a0a1a !important;
+    background: #df23c4;
+    color: #12070f !important;
 }
 
 #content .submit-row input.default {
-    background: #8663e5;
+    background: #df23c4;
+    color: #12070f !important;
+}
+
+#content .submit-row input.default:hover {
+    background: #ff5ad6;
 }
 
 #content .submit-row .deletelink,
 #content .deletelink {
-    background: #a33146;
+    background: #1a1628;
+    color: #ff9aa8 !important;
     border-color: #d3556a;
 }
 
 #content .submit-row .deletelink:hover {
-    background: #ff466e;
+    background: #d3556a;
     color: #ffffff !important;
 }
 
-/* Index: stack the app list and recent actions instead of floating them. */
-#content #content-main,
-#content #content-related {
-    float: none;
-    width: auto;
-    margin: 0 0 16px;
-}
-
 /* ---- Tables ---- */
-#content #result_list,
-#content table {
-    border-collapse: collapse;
-    background: transparent;
-    width: 100%;
-}
-
 #content #result_list thead th,
 #content table thead th,
 #content #result_list thead td {
-    background: #3a2160;
+    background: #1c1730;
     color: #ffffff;
-    border-bottom: 1px solid #8663e5;
-    padding: 8px 10px;
+    border-bottom: 2px solid #df23c4;
 }
 
 #content #result_list thead th a,
@@ -272,95 +233,51 @@ body.admin-reskin.popup {
 }
 
 #content #result_list tbody tr {
-    background: #1c1130;
+    background: #14111e;
 }
 
 #content #result_list tbody tr:nth-child(even) {
-    background: #241640;
+    background: #191423;
 }
 
 #content #result_list tbody tr:hover {
-    background: #34215a;
+    background: #241a30;
 }
 
 #content #result_list td,
 #content #result_list th,
 #content table td,
 #content table th {
-    border-bottom: 1px solid rgba(134, 99, 229, 0.16);
-    padding: 7px 10px;
-    color: #ece7fb;
+    border-color: #241f34;
+    color: #e7e2f0;
 }
 
-/* ---- Search / filters / pagination / messages ---- */
-#content #changelist-search {
-    padding: 10px 12px;
-}
-
-#content #changelist-search label {
-    color: #b39cff;
-}
-
-#content #changelist-search #searchbar {
-    min-width: 220px;
+/* ---- Filters / pagination / messages ---- */
+#content #changelist-filter li.selected a {
+    color: #6fd3e0;
 }
 
 #content .paginator {
-    color: #c3b4e6;
-    border-top: 1px solid rgba(134, 99, 229, 0.22);
-    background: transparent;
+    color: #b6acd0;
+    border-top-color: #2c2740;
 }
 
 #content .paginator .this-page {
-    color: #7fdce8;
+    color: #ff5ad6;
     font-weight: 800;
 }
 
 .content ul.messagelist li {
-    background: #2a1640;
-    border: 1px solid #8663e5;
-    border-radius: 6px;
+    background: #1c1730;
+    border: 1px solid #38324e;
+    border-radius: 4px;
     color: #f0ecff;
-    list-style: none;
 }
 
 #content .errornote,
 #content .errorlist {
-    background: #3a1622;
+    background: #2a121c;
     border: 1px solid #d3556a;
     color: #ffd0d8;
-    border-radius: 6px;
-}
-
-/* Recent actions: the site's list reset strips Django's spacing/icons — restore them. */
-#content .actionlist {
-    list-style: none;
-    margin: 0;
-    padding: 8px 14px 12px;
-}
-
-#content .actionlist li {
-    list-style: none;
-    margin: 0;
-    padding: 6px 0 6px 24px;
-    border-bottom: 1px solid rgba(134, 99, 229, 0.12);
-    background-repeat: no-repeat;
-    background-position: 2px 8px;
-    background-size: 15px;
-}
-
-#content .actionlist li.addlink {
-    background-image: url("../img/icon-addlink.svg");
-}
-
-#content .actionlist li.changelink {
-    background-image: url("../img/icon-changelink.svg");
-}
-
-#content .actionlist li.deletelink {
-    background-image: url("../img/icon-deletelink.svg");
-}
-
-#content .actionlist li .mini {
-    color: #9c8fc4;
+    border-radius: 4px;
 }

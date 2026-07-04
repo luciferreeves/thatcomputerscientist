@@ -3,27 +3,29 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy as _
 from core.translations import TranslatableMixin, Translation
 
 UPLOAD_ROOT = "images/"
 
 SPAM_STATUS_CHOICES = [
-    ("pending", "Pending Review"),
-    ("approved", "Approved"),
-    ("spam", "Marked as Spam"),
+    ("pending", _("Pending Review")),
+    ("approved", _("Approved")),
+    ("spam", _("Marked as Spam")),
 ]
 
 
 class CategoryTranslation(Translation):
     category = models.ForeignKey(
-        "Category", on_delete=models.CASCADE, related_name="translations"
+        "Category", on_delete=models.CASCADE, related_name="translations", verbose_name=_("Category")
     )
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
 
     class Meta:
         unique_together = ["category", "language"]
+        verbose_name = _("Category Translation")
+        verbose_name_plural = _("Category Translations")
 
     def __str__(self):
         return f"{self.category.name} - {self.get_language_display()}"
@@ -31,35 +33,43 @@ class CategoryTranslation(Translation):
 
 class TagTranslation(Translation):
     tag = models.ForeignKey(
-        "Tag", on_delete=models.CASCADE, related_name="translations"
+        "Tag", on_delete=models.CASCADE, related_name="translations", verbose_name=_("Tag")
     )
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
 
     class Meta:
         unique_together = ["tag", "language"]
+        verbose_name = _("Tag Translation")
+        verbose_name_plural = _("Tag Translations")
 
 
 class PostTranslation(Translation):
     post = models.ForeignKey(
-        "Post", on_delete=models.CASCADE, related_name="translations"
+        "Post", on_delete=models.CASCADE, related_name="translations", verbose_name=_("Post")
     )
-    title = models.CharField(max_length=100)
-    body = models.TextField()
+    title = models.CharField(max_length=100, verbose_name=_("Title"))
+    body = models.TextField(verbose_name=_("Body"))
 
     class Meta:
         unique_together = ["post", "language"]
+        verbose_name = _("Post Translation")
+        verbose_name_plural = _("Post Translations")
 
 
 class Weblog(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
+    slug = models.SlugField(unique=True, verbose_name=_("Slug"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="weblogs"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="weblogs", verbose_name=_("Owner")
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
+
+    class Meta:
+        verbose_name = _("Weblog")
+        verbose_name_plural = _("Weblogs")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -71,16 +81,17 @@ class Weblog(models.Model):
 
 
 class Category(TranslatableMixin, models.Model):
-    weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=50)
-    slug = models.SlugField()
-    image = models.URLField(blank=True)
-    description = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True, verbose_name=_("Weblog"))
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    slug = models.SlugField(verbose_name=_("Slug"))
+    image = models.URLField(blank=True, verbose_name=_("Image"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
 
     class Meta:
         unique_together = ["weblog", "slug"]
-        verbose_name_plural = "Categories"
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -89,23 +100,36 @@ class Category(TranslatableMixin, models.Model):
 
     def __str__(self):
         if self.weblog:
-            return f"{self.weblog.name} - {self.name}"
-        return self.name
+            return f"{self.weblog.name} - {self.translated_name}"
+        return self.translated_name
 
     def get_name(self, language_code="en"):
         return self.translate("name", language_code)
 
+    @property
+    def translated_name(self):
+        language_code = get_language()
+        try:
+            translation = self.translations.filter(language=language_code).first()
+            if translation and translation.name:
+                return translation.name
+        except Exception:
+            pass
+        return self.name
+
 
 class Tag(TranslatableMixin, models.Model):
-    weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=50)
-    slug = models.SlugField()
-    image = models.URLField(blank=True)
-    description = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True, verbose_name=_("Weblog"))
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    slug = models.SlugField(verbose_name=_("Slug"))
+    image = models.URLField(blank=True, verbose_name=_("Image"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
 
     class Meta:
         unique_together = ["weblog", "slug"]
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -114,8 +138,8 @@ class Tag(TranslatableMixin, models.Model):
 
     def __str__(self):
         if self.weblog:
-            return f"{self.weblog.name} - {self.name}"
-        return self.name
+            return f"{self.weblog.name} - {self.translated_name}"
+        return self.translated_name
 
     def get_name(self, language_code="en"):
         return self.translate("name", language_code)
@@ -133,25 +157,27 @@ class Tag(TranslatableMixin, models.Model):
 
 
 class Post(TranslatableMixin, models.Model):
-    weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100)
-    body = models.TextField(blank=True)
-    date = models.DateTimeField()
-    post_image = models.ImageField(upload_to=f"{UPLOAD_ROOT}/cover_images", blank=True)
-    image_url = models.URLField(blank=True)
+    weblog = models.ForeignKey(Weblog, on_delete=models.CASCADE, null=True, verbose_name=_("Weblog"))
+    title = models.CharField(max_length=100, verbose_name=_("Title"))
+    slug = models.SlugField(max_length=100, verbose_name=_("Slug"))
+    body = models.TextField(blank=True, verbose_name=_("Body"))
+    date = models.DateTimeField(verbose_name=_("Date"))
+    post_image = models.ImageField(upload_to=f"{UPLOAD_ROOT}/cover_images", blank=True, verbose_name=_("Post Image"))
+    image_url = models.URLField(blank=True, verbose_name=_("Image URL"))
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="weblog_posts"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="weblog_posts", verbose_name=_("Author")
     )
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    tags = models.ManyToManyField(Tag, blank=True)
-    is_public = models.BooleanField(default=False)
-    views = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, verbose_name=_("Category"))
+    tags = models.ManyToManyField(Tag, blank=True, verbose_name=_("Tags"))
+    is_public = models.BooleanField(default=False, verbose_name=_("Public"))
+    views = models.IntegerField(default=0, verbose_name=_("Views"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     class Meta:
         unique_together = ["weblog", "slug"]
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -160,7 +186,18 @@ class Post(TranslatableMixin, models.Model):
 
     def __str__(self):
         if self.weblog:
-            return f"{self.weblog.name} - {self.title}"
+            return f"{self.weblog.name} - {self.translated_title}"
+        return self.translated_title
+
+    @property
+    def translated_title(self):
+        language_code = get_language()
+        try:
+            translation = self.translations.filter(language=language_code).first()
+            if translation and translation.title:
+                return translation.title
+        except Exception:
+            pass
         return self.title
 
     def get_excerpt(self, length=1000):
@@ -219,13 +256,14 @@ class Post(TranslatableMixin, models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments", verbose_name=_("Post"))
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
         related_name="weblog_comments",
+        verbose_name=_("User"),
     )
     anonymous_user = models.ForeignKey(
         "authentication.AnonymousCommentUser",
@@ -233,21 +271,22 @@ class Comment(models.Model):
         blank=True,
         null=True,
         related_name="weblog_comments",
+        verbose_name=_("Anonymous User"),
     )
     parent = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="replies"
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="replies", verbose_name=_("Parent")
     )
-    upvotes = models.IntegerField(default=0)
-    downvotes = models.IntegerField(default=0)
-    body = models.TextField()
+    upvotes = models.IntegerField(default=0, verbose_name=_("Upvotes"))
+    downvotes = models.IntegerField(default=0, verbose_name=_("Downvotes"))
+    body = models.TextField(verbose_name=_("Body"))
     spam_status = models.CharField(
-        max_length=10, choices=SPAM_STATUS_CHOICES, default="pending", db_index=True
+        max_length=10, choices=SPAM_STATUS_CHOICES, default="pending", db_index=True, verbose_name=_("Spam Status")
     )
-    spam_checked_at = models.DateTimeField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    edited = models.BooleanField(default=False)
-    edited_at = models.DateTimeField(blank=True, null=True)
-    level = models.IntegerField(default=0)
+    spam_checked_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Spam Checked At"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    edited = models.BooleanField(default=False, verbose_name=_("Edited"))
+    edited_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Edited At"))
+    level = models.IntegerField(default=0, verbose_name=_("Level"))
 
     @property
     def vote_score(self):
@@ -308,6 +347,8 @@ class Comment(models.Model):
             models.Index(fields=["post", "created_at"]),
             models.Index(fields=["parent", "created_at"]),
         ]
+        verbose_name = _("Comment")
+        verbose_name_plural = _("Comments")
 
     def save(self, *args, **kwargs):
         if self.parent:
@@ -334,27 +375,28 @@ class Comment(models.Model):
 
 class CommentVote(models.Model):
     VOTE_CHOICES = [
-        (1, "Upvote"),
-        (-1, "Downvote"),
+        (1, _("Upvote")),
+        (-1, _("Downvote")),
     ]
 
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="votes")
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="votes", verbose_name=_("Comment"))
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="weblog_commentvotes",
+        verbose_name=_("User"),
     )
-    vote_type = models.IntegerField(choices=VOTE_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    vote_type = models.IntegerField(choices=VOTE_CHOICES, verbose_name=_("Vote Type"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     class Meta:
         unique_together = ["comment", "user"]  # One vote per user per comment
         indexes = [
             models.Index(fields=["comment", "vote_type"]),
         ]
-        verbose_name = "Comment Vote"
-        verbose_name_plural = "Comment Votes"
+        verbose_name = _("Comment Vote")
+        verbose_name_plural = _("Comment Votes")
 
     def __str__(self):
         vote_str = "upvote" if self.vote_type == 1 else "downvote"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 16:37+0000\n"
+"POT-Creation-Date: 2026-07-04 16:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,139 +95,146 @@ msgstr "中国語"
 msgid "Korean"
 msgstr "韓国語"
 
-#: services/journals/admin.py:118 services/journals/admin.py:251
+#: services/journals/admin.py:102 services/journals/admin.py:235
+#: services/weblog/admin.py:31 services/weblog/admin.py:50
+#: services/weblog/admin.py:69
 msgid "Add a translation"
 msgstr "翻訳を追加"
 
-#: services/journals/admin.py:122 services/journals/admin.py:255
+#: services/journals/admin.py:106 services/journals/admin.py:239
+#: services/weblog/admin.py:35 services/weblog/admin.py:54
+#: services/weblog/admin.py:73
 msgid "Language"
 msgstr "言語"
 
-#: services/journals/admin.py:126 services/journals/admin.py:259
+#: services/journals/admin.py:110 services/journals/admin.py:243
+#: services/weblog/admin.py:39 services/weblog/admin.py:58
+#: services/weblog/admin.py:77
 msgid "Translation"
 msgstr "翻訳"
 
-#: services/journals/admin.py:136
+#: services/journals/admin.py:120
 msgid "Add new volume"
 msgstr "巻を追加"
 
-#: services/journals/admin.py:140 services/journals/models.py:189
+#: services/journals/admin.py:124 services/journals/models.py:189
 #: services/journals/models.py:269 templates/journals/edit_entry.html:134
 #: templates/journals/new_entry.html:53
 msgid "Volume"
 msgstr "巻"
 
-#: services/journals/admin.py:145 services/journals/admin.py:213
+#: services/journals/admin.py:129 services/journals/admin.py:197
 #: services/journals/models.py:156 services/journals/models.py:157
 msgid "Chapters"
 msgstr "章"
 
-#: services/journals/admin.py:154
+#: services/journals/admin.py:138
 msgid "Add new character"
 msgstr "キャラクターを追加"
 
-#: services/journals/admin.py:158 services/journals/admin.py:236
+#: services/journals/admin.py:142 services/journals/admin.py:220
 #: services/journals/models.py:291 services/journals/models.py:300
 msgid "Character"
 msgstr "キャラクター"
 
-#: services/journals/admin.py:168
+#: services/journals/admin.py:152 services/weblog/admin.py:115
 msgid "Add new tag"
 msgstr "タグを追加"
 
-#: services/journals/admin.py:172
+#: services/journals/admin.py:156 services/weblog/admin.py:119
+#: services/weblog/models.py:36 services/weblog/models.py:131
 msgid "Tag"
 msgstr "タグ"
 
-#: services/journals/admin.py:177 services/journals/admin.py:510
+#: services/journals/admin.py:161 services/journals/admin.py:494
 msgid "Used by"
 msgstr "使用数"
 
-#: services/journals/admin.py:187
+#: services/journals/admin.py:171
 msgid "Add new entry"
 msgstr "エントリーを追加"
 
-#: services/journals/admin.py:203 services/journals/models.py:149
+#: services/journals/admin.py:187 services/journals/models.py:149
 #: services/journals/models.py:151 services/journals/models.py:303
 msgid "Entry"
 msgstr "エントリ"
 
-#: services/journals/admin.py:212 services/journals/admin.py:221
+#: services/journals/admin.py:196 services/journals/admin.py:205
 #: services/journals/models.py:145 services/journals/models.py:146
 msgid "Chapter"
 msgstr "章"
 
-#: services/journals/admin.py:216
+#: services/journals/admin.py:200
 msgid "Add new chapter"
 msgstr "章を追加"
 
-#: services/journals/admin.py:232
+#: services/journals/admin.py:216
 msgid "Add character appearance"
 msgstr "登場を追加"
 
-#: services/journals/admin.py:240
+#: services/journals/admin.py:224
 msgid "Appearance"
 msgstr "登場箇所"
 
-#: services/journals/admin.py:243
+#: services/journals/admin.py:227
 msgid "open"
 msgstr "開く"
 
-#: services/journals/admin.py:303 services/journals/admin.py:436
+#: services/journals/admin.py:287 services/journals/admin.py:420
 #: services/journals/models.py:91 templates/journals/new_journal.html:86
 #: templates/journals/settings.html:90
 msgid "Mode"
 msgstr "モード"
 
-#: services/journals/admin.py:305
+#: services/journals/admin.py:289
 msgid "Access"
 msgstr "公開設定"
 
-#: services/journals/admin.py:306
+#: services/journals/admin.py:290
 msgid "Customization"
 msgstr "カスタマイズ"
 
-#: services/journals/admin.py:309
+#: services/journals/admin.py:293
 msgid "Name (Japanese)"
 msgstr "名前（日本語）"
 
-#: services/journals/admin.py:400
+#: services/journals/admin.py:384
 msgid "Organization"
 msgstr "構成"
 
-#: services/journals/admin.py:414
+#: services/journals/admin.py:398
 msgid "Classification"
 msgstr "分類"
 
-#: services/journals/admin.py:422
+#: services/journals/admin.py:406 services/weblog/admin.py:178
 msgid "Media"
 msgstr "メディア"
 
-#: services/journals/admin.py:425
+#: services/journals/admin.py:409 services/weblog/admin.py:180
 msgid "Stats"
 msgstr "統計"
 
-#: services/journals/admin.py:429
+#: services/journals/admin.py:413
 msgid "Title (Japanese)"
 msgstr "タイトル（日本語）"
 
-#: services/journals/admin.py:456 services/journals/models.py:160
+#: services/journals/admin.py:440 services/journals/models.py:160
 #: services/journals/models.py:162
 msgid "Entries"
 msgstr "エントリ"
 
-#: services/journals/admin.py:469
+#: services/journals/admin.py:453
 msgid "Avatar"
 msgstr "アバター"
 
-#: services/journals/admin.py:483 services/journals/models.py:50
+#: services/journals/admin.py:467 services/journals/models.py:50
 #: services/journals/models.py:106 services/journals/models.py:176
 #: services/journals/models.py:257 services/journals/models.py:278
 #: services/journals/models.py:336
 msgid "Journal"
 msgstr "ジャーナル"
 
-#: services/journals/admin.py:495 services/journals/models.py:305
+#: services/journals/admin.py:479 services/journals/models.py:305
 msgid "Notes"
 msgstr "メモ"
 
@@ -557,36 +564,38 @@ msgstr "好奇心"
 
 #: services/journals/models.py:52 services/journals/models.py:81
 #: services/journals/models.py:280 services/journals/models.py:338
-#: templates/administration/emojis.html:32
+#: services/weblog/models.py:22 services/weblog/models.py:38
+#: services/weblog/models.py:61 services/weblog/models.py:85
+#: services/weblog/models.py:123 templates/administration/emojis.html:32
 #: templates/journals/characters.html:39 templates/journals/edit_entry.html:235
 #: templates/journals/new_entry.html:149 templates/journals/settings.html:213
 msgid "Name"
 msgstr "名前"
 
 #: services/journals/models.py:53 services/journals/models.py:83
-#: services/journals/models.py:261 templates/journals/new_journal.html:73
-#: templates/journals/settings.html:74 templates/journals/settings.html:218
-#: templates/journals/volumes.html:43
+#: services/journals/models.py:261 services/weblog/models.py:23
+#: services/weblog/models.py:39 services/weblog/models.py:63
+#: services/weblog/models.py:88 services/weblog/models.py:126
+#: templates/journals/new_journal.html:73 templates/journals/settings.html:74
+#: templates/journals/settings.html:218 templates/journals/volumes.html:43
 msgid "Description"
 msgstr "説明"
 
 #: services/journals/models.py:57
-#| msgid "Translation"
 msgid "Journal Translation"
 msgstr "ジャーナル翻訳"
 
 #: services/journals/models.py:58
-#| msgid "Translations"
 msgid "Journal Translations"
 msgstr "ジャーナル翻訳"
 
 #: services/journals/models.py:66 services/journals/models.py:208
-#| msgid "Journal Entries"
 msgid "Journal Entry"
 msgstr "ジャーナルエントリ"
 
 #: services/journals/models.py:68 services/journals/models.py:178
-#: services/journals/models.py:259 templates/administration/kawaiibeats.html:37
+#: services/journals/models.py:259 services/weblog/models.py:51
+#: services/weblog/models.py:161 templates/administration/kawaiibeats.html:37
 #: templates/journals/edit_entry.html:72 templates/journals/new_entry.html:35
 #: templates/journals/new_entry.html:42 templates/journals/volumes.html:39
 #: templates/weblog/weblog.html:41 templates/weblog/weblog.html:56
@@ -594,17 +603,17 @@ msgid "Title"
 msgstr "タイトル"
 
 #: services/journals/models.py:73
-#| msgid "Journal Entries"
 msgid "Journal Entry Translation"
 msgstr "ジャーナルエントリ翻訳"
 
 #: services/journals/models.py:74
-#| msgid "Journal Entries"
 msgid "Journal Entry Translations"
 msgstr "ジャーナルエントリ翻訳"
 
 #: services/journals/models.py:82 services/journals/models.py:179
-#: services/journals/models.py:339 templates/journals/edit_entry.html:111
+#: services/journals/models.py:339 services/weblog/models.py:62
+#: services/weblog/models.py:86 services/weblog/models.py:124
+#: services/weblog/models.py:162 templates/journals/edit_entry.html:111
 msgid "Slug"
 msgstr "URLスラッグ"
 
@@ -614,12 +623,11 @@ msgstr "URLスラッグ"
 msgid "Private"
 msgstr "非公開"
 
-#: services/journals/models.py:86
+#: services/journals/models.py:86 services/weblog/models.py:65
 msgid "Owner"
 msgstr "所有者"
 
 #: services/journals/models.py:89
-#| msgid "Shared with Users"
 msgid "Shared With"
 msgstr "共有先"
 
@@ -646,12 +654,16 @@ msgstr "カスタムCSS"
 
 #: services/journals/models.py:100 services/journals/models.py:202
 #: services/journals/models.py:265 services/journals/models.py:287
+#: services/weblog/models.py:67 services/weblog/models.py:89
+#: services/weblog/models.py:127 services/weblog/models.py:174
+#: services/weblog/models.py:286 services/weblog/models.py:390
 #: templates/administration/announcements.html:98
 msgid "Created At"
 msgstr "作成日時"
 
 #: services/journals/models.py:101 services/journals/models.py:203
-#| msgid "Updated"
+#: services/weblog/models.py:68 services/weblog/models.py:175
+#: services/weblog/models.py:391
 msgid "Updated At"
 msgstr "更新日時"
 
@@ -678,7 +690,6 @@ msgstr "詩"
 
 #: services/journals/models.py:181 services/journals/models.py:260
 #: services/journals/models.py:286
-#| msgid "Save Order"
 msgid "Order"
 msgstr "並び順"
 
@@ -723,11 +734,11 @@ msgid "Word Count"
 msgstr "文字数"
 
 #: services/journals/models.py:200
-#| msgid "Entry"
 msgid "Entry Date"
 msgstr "エントリ日付"
 
-#: services/journals/models.py:201 templates/_partials/left_sidebar.html:97
+#: services/journals/models.py:201 services/weblog/models.py:132
+#: services/weblog/models.py:171 templates/_partials/left_sidebar.html:97
 #: templates/journals/_partials/journal_header.html:46
 #: templates/journals/diary/main.html:85 templates/journals/edit_entry.html:268
 #: templates/journals/new_entry.html:182 templates/journals/tags.html:27
@@ -745,7 +756,8 @@ msgstr "ジャーナルエントリ"
 msgid "Volumes"
 msgstr "巻"
 
-#: services/journals/models.py:282 templates/administration/emojis.html:37
+#: services/journals/models.py:282 services/weblog/models.py:87
+#: services/weblog/models.py:125 templates/administration/emojis.html:37
 #: templates/journals/characters.html:59
 msgid "Image"
 msgstr "画像"
@@ -769,22 +781,18 @@ msgid "Characters"
 msgstr "キャラ"
 
 #: services/journals/models.py:309
-#| msgid "Add character appearance"
 msgid "Character Appearance"
 msgstr "キャラクターの登場"
 
 #: services/journals/models.py:310
-#| msgid "Add character appearance"
 msgid "Character Appearances"
 msgstr "キャラクターの登場"
 
 #: services/journals/models.py:318
-#| msgid "Character"
 msgid "From Character"
 msgstr "起点キャラクター"
 
 #: services/journals/models.py:321
-#| msgid "Character"
 msgid "To Character"
 msgstr "対象キャラクター"
 
@@ -793,24 +801,236 @@ msgid "Label"
 msgstr "ラベル"
 
 #: services/journals/models.py:327
-#| msgid "Relationship"
 msgid "Character Relationship"
 msgstr "キャラクター関係"
 
 #: services/journals/models.py:328
-#| msgid "Relationships"
 msgid "Character Relationships"
 msgstr "キャラクター関係"
 
 #: services/journals/models.py:343
-#| msgid "Entry"
 msgid "Entry Tag"
 msgstr "エントリタグ"
 
 #: services/journals/models.py:344
-#| msgid "Entry"
 msgid "Entry Tags"
 msgstr "エントリタグ"
+
+#: services/weblog/admin.py:87
+#| msgid "Add new tag"
+msgid "Add new post"
+msgstr "ポストを追加"
+
+#: services/weblog/admin.py:91 services/weblog/models.py:49
+#: services/weblog/models.py:179 services/weblog/models.py:259
+#| msgid "Posted in"
+msgid "Post"
+msgstr "ポスト"
+
+#: services/weblog/admin.py:101
+#| msgid "Add new chapter"
+msgid "Add new category"
+msgstr "カテゴリーを追加"
+
+#: services/weblog/admin.py:105 services/weblog/models.py:20
+#: services/weblog/models.py:93 services/weblog/models.py:170
+#: templates/weblog/weblog.html:21
+msgid "Category"
+msgstr "カテゴリー"
+
+#: services/weblog/admin.py:129
+#| msgid "Add new entry"
+msgid "Add new comment"
+msgstr "コメントを追加"
+
+#: services/weblog/admin.py:133 services/weblog/models.py:350
+#: services/weblog/models.py:382
+#| msgid "Comments"
+msgid "Comment"
+msgstr "コメント"
+
+#: services/weblog/admin.py:139 services/weblog/admin.py:253
+#: services/weblog/models.py:168 templates/administration/announcements.html:95
+msgid "Author"
+msgstr "著者"
+
+#: services/weblog/admin.py:159 services/weblog/models.py:180
+msgid "Posts"
+msgstr "ポスト"
+
+#: services/weblog/admin.py:177
+#| msgid "Public"
+msgid "Publishing"
+msgstr "公開情報"
+
+#: services/weblog/admin.py:179
+msgid "Taxonomy"
+msgstr "分類"
+
+#: services/weblog/models.py:12
+msgid "Pending Review"
+msgstr "レビュー待ち"
+
+#: services/weblog/models.py:13
+msgid "Approved"
+msgstr "承認済み"
+
+#: services/weblog/models.py:14
+msgid "Marked as Spam"
+msgstr "スパム指定"
+
+#: services/weblog/models.py:27
+#| msgid "Journal Translation"
+msgid "Category Translation"
+msgstr "カテゴリー翻訳"
+
+#: services/weblog/models.py:28
+#| msgid "Journal Translations"
+msgid "Category Translations"
+msgstr "カテゴリー翻訳"
+
+#: services/weblog/models.py:43
+#| msgid "Translation"
+msgid "Tag Translation"
+msgstr "タグ翻訳"
+
+#: services/weblog/models.py:44
+#| msgid "Translations"
+msgid "Tag Translations"
+msgstr "タグ翻訳"
+
+#: services/weblog/models.py:52 services/weblog/models.py:163
+#: services/weblog/models.py:281
+msgid "Body"
+msgstr "本文"
+
+#: services/weblog/models.py:56
+#| msgid "Translation"
+msgid "Post Translation"
+msgstr "ポスト翻訳"
+
+#: services/weblog/models.py:57
+#| msgid "Translations"
+msgid "Post Translations"
+msgstr "ポスト翻訳"
+
+#: services/weblog/models.py:71 services/weblog/models.py:84
+#: services/weblog/models.py:122 services/weblog/models.py:160
+#: templates/_partials/left_sidebar.html:82
+#: templates/_partials/left_sidebar.html:87
+#: templates/_partials/right_sidebar.html:173
+msgid "Weblog"
+msgstr "ウェブログ"
+
+#: services/weblog/models.py:72
+#| msgid "Weblog"
+msgid "Weblogs"
+msgstr "ウェブログ"
+
+#: services/weblog/models.py:94 templates/_partials/left_sidebar.html:92
+#: templates/weblog/categories.html:13
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: services/weblog/models.py:164 templates/journals/edit_entry.html:127
+#: templates/journals/new_entry.html:46 templates/weblog/weblog.html:38
+#: templates/weblog/weblog.html:53
+msgid "Date"
+msgstr "日付"
+
+#: services/weblog/models.py:165
+#| msgid "Cover Image"
+msgid "Post Image"
+msgstr "ポスト画像"
+
+#: services/weblog/models.py:166
+#| msgid "Image"
+msgid "Image URL"
+msgstr "画像URL"
+
+#: services/weblog/models.py:172
+#: templates/journals/_partials/journal_header.html:12
+#: templates/journals/journals.html:51
+msgid "Public"
+msgstr "公開"
+
+#: services/weblog/models.py:173 templates/weblog/post.html:32
+#: templates/weblog/weblog.html:44 templates/weblog/weblog.html:59
+msgid "Views"
+msgstr "閲覧数"
+
+#: services/weblog/models.py:266 services/weblog/models.py:387
+#| msgid "Username"
+msgid "User"
+msgstr "ユーザー"
+
+#: services/weblog/models.py:274
+#| msgid "Anonymous"
+msgid "Anonymous User"
+msgstr "匿名ユーザー"
+
+#: services/weblog/models.py:277
+msgid "Parent"
+msgstr "親コメント"
+
+#: services/weblog/models.py:279
+#| msgid "Notes"
+msgid "Upvotes"
+msgstr "アップボート数"
+
+#: services/weblog/models.py:280
+msgid "Downvotes"
+msgstr "ダウンボート数"
+
+#: services/weblog/models.py:283
+#| msgid "Status"
+msgid "Spam Status"
+msgstr "スパム状態"
+
+#: services/weblog/models.py:285
+msgid "Spam Checked At"
+msgstr "スパム確認日時"
+
+#: services/weblog/models.py:287
+#| msgid "edited"
+msgid "Edited"
+msgstr "編集済み"
+
+#: services/weblog/models.py:288
+#| msgid "Updated At"
+msgid "Edited At"
+msgstr "編集日時"
+
+#: services/weblog/models.py:289 templates/_partials/right_sidebar.html:143
+msgid "Level"
+msgstr "レベル"
+
+#: services/weblog/models.py:351 templates/weblog/post.html:55
+#: templates/weblog/weblog.html:47 templates/weblog/weblog.html:62
+msgid "Comments"
+msgstr "コメント"
+
+#: services/weblog/models.py:378
+msgid "Upvote"
+msgstr "アップボート"
+
+#: services/weblog/models.py:379
+msgid "Downvote"
+msgstr "ダウンボート"
+
+#: services/weblog/models.py:389
+msgid "Vote Type"
+msgstr "投票タイプ"
+
+#: services/weblog/models.py:398
+#| msgid "Comments"
+msgid "Comment Vote"
+msgstr "コメント投票"
+
+#: services/weblog/models.py:399
+#| msgid "Comments"
+msgid "Comment Votes"
+msgstr "コメント投票"
 
 #: templates/_partials/footer.html:22
 #, python-format
@@ -884,16 +1104,6 @@ msgstr "ホーム"
 #: templates/_partials/left_sidebar.html:78
 msgid "Journal of Random Thoughts"
 msgstr "ランダム思考のジャーナル"
-
-#: templates/_partials/left_sidebar.html:82
-#: templates/_partials/left_sidebar.html:87
-#: templates/_partials/right_sidebar.html:173
-msgid "Weblog"
-msgstr "ウェブログ"
-
-#: templates/_partials/left_sidebar.html:92 templates/weblog/categories.html:13
-msgid "Categories"
-msgstr "カテゴリー"
 
 #: templates/_partials/left_sidebar.html:102 templates/weblog/archives.html:75
 msgid "Archives"
@@ -1040,10 +1250,6 @@ msgstr "マイゲーム"
 msgid "XP"
 msgstr "XP"
 
-#: templates/_partials/right_sidebar.html:143
-msgid "Level"
-msgstr "レベル"
-
 #: templates/_partials/right_sidebar.html:147
 msgid "Balance"
 msgstr "バランス"
@@ -1106,10 +1312,6 @@ msgstr "このアナウンスメントは公開されますか？"
 #: templates/administration/announcements.html:87
 msgid "Create Announcement"
 msgstr "新しいアナウンスメント"
-
-#: templates/administration/announcements.html:95
-msgid "Author"
-msgstr "著者"
 
 #: templates/administration/announcements.html:96
 msgid "Is New"
@@ -1490,11 +1692,6 @@ msgstr "カテゴリー："
 msgid "on"
 msgstr "投稿日："
 
-#: templates/journals/_partials/journal_header.html:12
-#: templates/journals/journals.html:51
-msgid "Public"
-msgstr "公開"
-
 #: templates/journals/_partials/journal_header.html:25
 #: templates/journals/new_journal.html:20
 msgid "Back to Journals"
@@ -1843,11 +2040,6 @@ msgstr "翻訳されたコンテンツ"
 #: templates/journals/edit_entry.html:120
 msgid "entry-slug"
 msgstr "entry-slug"
-
-#: templates/journals/edit_entry.html:127 templates/journals/new_entry.html:46
-#: templates/weblog/weblog.html:38 templates/weblog/weblog.html:53
-msgid "Date"
-msgstr "日付"
 
 #: templates/journals/edit_entry.html:136 templates/journals/new_entry.html:55
 msgid "No volume"
@@ -2488,11 +2680,6 @@ msgstr[0] ""
 msgid "No categories found"
 msgstr "カテゴリーが見つかりません"
 
-#: templates/weblog/post.html:32 templates/weblog/weblog.html:44
-#: templates/weblog/weblog.html:59
-msgid "Views"
-msgstr "閲覧数"
-
 #: templates/weblog/post.html:35
 #, python-format
 msgid ""
@@ -2508,11 +2695,6 @@ msgstr[0] ""
 #: templates/weblog/post.html:49
 msgid "Tagged with"
 msgstr "タグ"
-
-#: templates/weblog/post.html:55 templates/weblog/weblog.html:47
-#: templates/weblog/weblog.html:62
-msgid "Comments"
-msgstr "コメント"
 
 #: templates/weblog/post.html:57 templates/weblog/weblog.html:32
 msgid "Sort by"
@@ -2666,10 +2848,6 @@ msgstr "キーワード"
 #: templates/weblog/weblog.html:19
 msgid "Search weblog..."
 msgstr "ウェブログを検索..."
-
-#: templates/weblog/weblog.html:21
-msgid "Category"
-msgstr "カテゴリー"
 
 #: templates/weblog/weblog.html:85
 msgid "Filter"

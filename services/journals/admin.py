@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
+from services.admin_common import ADMIN_CSS, HiddenFromIndexMixin, LinkInline
 from services.journals.models import (
     Character,
     CharacterAppearance,
@@ -91,23 +92,6 @@ MODE_SHAPES: dict[str, ModeShape] = {
 
 def shape_for(mode: str | None) -> ModeShape:
     return MODE_SHAPES.get(mode or "default", MODE_SHAPES["default"])
-
-
-class HiddenFromIndexMixin:
-    def get_model_perms(self, request: HttpRequest) -> dict[str, bool]:
-        return {}
-
-
-class LinkInline:
-    extra = 0
-    can_delete = False
-    template = "admin/journals/edit_inline/link_tabular.html"
-    add_url_name = ""
-    add_fk = ""
-    add_label = ""
-
-    def has_add_permission(self, request: HttpRequest, obj: Any = None) -> bool:
-        return False
 
 
 class JournalTranslationInline(LinkInline, admin.TabularInline[JournalTranslation, Journal]):
@@ -271,7 +255,7 @@ class JournalAdmin(admin.ModelAdmin[Journal]):
     filter_horizontal = ("shared_with",)
 
     class Media:
-        css = {"all": ("admin/journals/admin.css",)}
+        css = ADMIN_CSS
         js = ("admin/journals/private_toggle.js",)
 
     def get_inlines(self, request: HttpRequest, obj: Any = None) -> list[Any]:
@@ -329,7 +313,7 @@ class JournalEntryAdmin(HiddenFromIndexMixin, admin.ModelAdmin[JournalEntry]):
     readonly_fields = ("word_count",)
 
     class Media:
-        css = {"all": ("admin/journals/admin.css",)}
+        css = ADMIN_CSS
 
     def get_form(self, request: HttpRequest, obj: Any = None, **kwargs: Any) -> Any:
         setattr(request, "_journalentry_obj", obj)
@@ -451,7 +435,7 @@ class VolumeAdmin(HiddenFromIndexMixin, admin.ModelAdmin[Volume]):
     inlines = [VolumeEntryInline]
 
     class Media:
-        css = {"all": ("admin/journals/admin.css",)}
+        css = ADMIN_CSS
 
     @admin.display(description=_("Entries"))
     def entry_count(self, obj: Volume) -> int:

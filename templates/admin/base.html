@@ -6,7 +6,6 @@
 
 <link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
 <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
-<link rel="stylesheet" href="{% static "admin/css/nav_sidebar.css" %}">
 {% block extrastyle %}{% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
 {% block extrahead %}{% endblock %}
@@ -49,11 +48,7 @@
       {% include "_partials/left_sidebar.html" %}
     </div>
     <div id="main-content">
-      <div class="main admin-main" id="main">
-        {% if has_permission %}
-          {% block nav-sidebar %}{% include "admin/nav_sidebar.html" %}{% endblock %}
-        {% endif %}
-        <main id="content-start" class="content" tabindex="-1">
+      <main id="content-start" class="content" tabindex="-1">
           {% block nav-breadcrumbs %}
           <nav aria-label="{% translate 'Breadcrumbs' %}">
             {% block breadcrumbs %}
@@ -74,8 +69,7 @@
             {% block sidebar %}{% endblock %}
             <br class="clear">
           </div>
-        </main>
-      </div>
+      </main>
     </div>
     <div id="right-sidebar">
       {% include "_partials/right_sidebar.html" %}
@@ -90,7 +84,6 @@
 {% if not is_popup %}
 <script type="text/javascript" src="{% static 'js/libs/pamphlet.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/core/base.js' %}"></script>
-<script type="text/javascript" src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
 {% endif %}
 </body>
 </html>

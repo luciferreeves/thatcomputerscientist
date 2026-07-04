@@ -1,42 +1,8 @@
-/* The Django admin renders inside #main-content. Keep its styling contained there,
-   and keep the site's own link colours out of the admin content. */
+/* Admin content, contained to #main-content, dressed in a loud y2k skin. */
 
 html,
 body.admin-reskin {
     background: transparent;
-}
-
-/* ---- Layout: the admin (native nav sidebar + content) is the centre column ---- */
-#main-content {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-#main-content > .admin-main {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    min-width: 0;
-}
-
-#main-content .admin-main > #nav-sidebar {
-    flex: 0 0 240px;
-    width: 240px;
-    min-width: 240px;
-    margin-left: 0;
-    left: auto;
-    visibility: visible;
-}
-
-#main-content .admin-main:not(.shifted) > #nav-sidebar {
-    display: none;
-}
-
-#main-content .admin-main > .content {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: none;
-    overflow-x: auto;
 }
 
 /* ---- Contain: the site chrome keeps its own look, no admin bleed ---- */
@@ -67,17 +33,310 @@ body.admin-reskin {
     box-shadow: none;
 }
 
-/* ---- Contain: keep the site's green #main-content links out of the admin ---- */
-#main-content #content a:link,
-#main-content #content a:visited,
-#main-content .breadcrumbs a,
-#main-content #nav-sidebar a:link,
-#main-content #nav-sidebar a:visited {
-    color: var(--link-fg);
+/* ---- Content column ---- */
+#main-content {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
-#main-content #content a:hover,
-#main-content .breadcrumbs a:hover,
-#main-content #nav-sidebar a:hover {
-    color: var(--link-hover-color);
+#main-content .content {
+    min-width: 0;
+    overflow-x: auto;
+}
+
+#main-content #content,
+#main-content .content {
+    color: #e9e3fb;
+}
+
+/* ---- Headings ---- */
+#main-content #content > h1,
+#main-content .content > h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 0 6px #df23c4, 0 0 14px rgba(84, 242, 242, 0.5);
+    margin: 4px 0 14px;
+}
+
+#main-content h2,
+#main-content h3 {
+    color: #d9ccff;
+}
+
+/* ---- Breadcrumbs: a neon path bar ---- */
+#main-content .breadcrumbs {
+    background: linear-gradient(90deg, rgba(49, 27, 79, 0.85), rgba(24, 14, 46, 0.6));
+    border: 1px solid #8663e5;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(134, 99, 229, 0.4);
+    padding: 8px 14px;
+    margin: 0 0 16px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #b9a9dd;
+}
+
+#main-content .breadcrumbs a {
+    color: #9ae4f1;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+#main-content .breadcrumbs a:hover {
+    color: #df23c4;
+    text-shadow: 0 0 6px #df23c4;
+}
+
+/* ---- Kill the site's green content links ---- */
+#main-content #content a:link,
+#main-content #content a:visited {
+    color: #ad8cff;
+}
+
+#main-content #content a:hover {
+    color: #9ae4f1;
+}
+
+/* ---- Modules / panels ---- */
+#main-content .module,
+#main-content fieldset.module,
+#main-content .inline-related {
+    background: rgba(24, 14, 46, 0.88);
+    border: 1px solid #8d8dff;
+    border-radius: 8px;
+    box-shadow: 0 0 14px rgba(134, 99, 229, 0.25), inset 0 0 30px rgba(84, 242, 242, 0.04);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+#main-content .module > h2,
+#main-content .module caption,
+#main-content .module > details > summary,
+#main-content fieldset.module > h2,
+#main-content .inline-related h2,
+#main-content .inline-related h3.inline_label,
+#main-content .inline-group > h2,
+#main-content details.module > summary {
+    background: linear-gradient(to bottom, #6b3fa0 0%, #311b4f 100%);
+    color: #fff;
+    text-shadow: 0 0 6px #df23c4;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    padding: 9px 14px;
+    border-bottom: 1px solid #8d8dff;
+    list-style: none;
+}
+
+#main-content .module > details > summary::-webkit-details-marker,
+#main-content details.module > summary::-webkit-details-marker {
+    display: none;
+}
+
+#main-content .module > details > summary::after,
+#main-content details.module > summary::after {
+    content: " ▸";
+    color: #9ae4f1;
+}
+
+#main-content .module > details[open] > summary::after,
+#main-content details.module[open] > summary::after {
+    content: " ▾";
+}
+
+#main-content .form-row {
+    border-bottom: 1px solid rgba(141, 141, 255, 0.15);
+    background: transparent;
+}
+
+#main-content .aligned label,
+#main-content label {
+    color: #8d8dff;
+    font-weight: 700;
+}
+
+/* ---- Inputs ---- */
+#main-content input[type="text"],
+#main-content input[type="password"],
+#main-content input[type="email"],
+#main-content input[type="url"],
+#main-content input[type="number"],
+#main-content input[type="search"],
+#main-content input[type="tel"],
+#main-content input[type="date"],
+#main-content input[type="time"],
+#main-content textarea,
+#main-content select {
+    background: rgba(0, 0, 0, 0.45);
+    color: #e9e3fb;
+    border: 1px solid rgba(141, 141, 255, 0.55);
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(223, 35, 196, 0.18);
+    padding: 7px 10px;
+}
+
+#main-content input:focus,
+#main-content textarea:focus,
+#main-content select:focus {
+    outline: none;
+    border-color: #df23c4;
+    box-shadow: 0 0 9px rgba(223, 35, 196, 0.5);
+}
+
+#main-content ::placeholder {
+    color: rgba(233, 227, 251, 0.4);
+}
+
+/* ---- Buttons ---- */
+#main-content .button,
+#main-content input[type="submit"],
+#main-content input[type="button"],
+#main-content .submit-row input,
+#main-content a.button,
+#main-content .object-tools a,
+#main-content .addlink,
+#main-content .changelink {
+    background: linear-gradient(to bottom, #7a4fb0, #4a2e6f);
+    color: #fff !important;
+    border: 1px solid #8d8dff;
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(134, 99, 229, 0.4);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: all 0.15s ease;
+}
+
+#main-content .button:hover,
+#main-content input[type="submit"]:hover,
+#main-content .submit-row input:hover,
+#main-content .object-tools a:hover,
+#main-content a.button:hover {
+    background: #df23c4;
+    box-shadow: 0 0 16px rgba(223, 35, 196, 0.75);
+    text-shadow: 0 0 4px #000;
+    border-color: #df23c4;
+}
+
+#main-content .submit-row input.default {
+    background: linear-gradient(to bottom, #8663e5, #54266a);
+}
+
+#main-content .submit-row .deletelink,
+#main-content .deletelink {
+    background: linear-gradient(to bottom, #d34a6a, #7a1e34);
+    border-color: #ff6b8b;
+}
+
+#main-content .submit-row .deletelink:hover {
+    background: #ff466e;
+    box-shadow: 0 0 16px rgba(255, 70, 110, 0.7);
+}
+
+/* Django's add/change glyph links inside inline rows */
+#main-content .addlink,
+#main-content .changelink,
+#main-content .deletelink-box a {
+    text-transform: none;
+    padding: 4px 10px;
+    font-weight: 700;
+}
+
+/* ---- Changelist tables ---- */
+#main-content #result_list,
+#main-content table {
+    border-collapse: separate;
+    border-spacing: 0;
+    background: transparent;
+    width: 100%;
+}
+
+#main-content #result_list thead th,
+#main-content table thead th {
+    background: linear-gradient(to bottom, #6b3fa0, #311b4f);
+    color: #fff;
+    text-shadow: 0 0 5px #df23c4;
+    border-bottom: 1px solid #8d8dff;
+    padding: 8px 10px;
+}
+
+#main-content #result_list thead th a {
+    color: #fff;
+}
+
+#main-content #result_list tbody tr,
+#main-content table tbody tr {
+    background: rgba(24, 14, 46, 0.55);
+}
+
+#main-content #result_list tbody tr:nth-child(even) {
+    background: rgba(49, 27, 79, 0.4);
+}
+
+#main-content #result_list tbody tr:hover {
+    background: rgba(134, 99, 229, 0.22);
+}
+
+#main-content #result_list td,
+#main-content #result_list th,
+#main-content table td,
+#main-content table th {
+    border-bottom: 1px solid rgba(141, 141, 255, 0.14);
+    padding: 7px 10px;
+    color: #e9e3fb;
+}
+
+/* ---- Search bar (changelist) ---- */
+#main-content #changelist-search {
+    background: rgba(24, 14, 46, 0.7);
+    border: 1px solid #8663e5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(134, 99, 229, 0.3);
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+
+#main-content #changelist-search #searchbar {
+    min-width: 220px;
+}
+
+/* ---- Filters / pagination / messages ---- */
+#main-content #changelist-filter {
+    background: rgba(24, 14, 46, 0.88);
+    border: 1px solid #8d8dff;
+    border-radius: 8px;
+}
+
+#main-content #changelist-filter h2,
+#main-content #changelist-filter h3 {
+    background: linear-gradient(to bottom, #6b3fa0, #311b4f);
+    color: #fff;
+    text-shadow: 0 0 5px #df23c4;
+}
+
+#main-content .paginator {
+    color: #b9a9dd;
+    border-top: 1px solid rgba(141, 141, 255, 0.2);
+}
+
+#main-content .paginator .this-page {
+    color: #54f2f2;
+    font-weight: 800;
+}
+
+#main-content ul.messagelist li {
+    background: rgba(49, 27, 79, 0.8);
+    border: 1px solid #8663e5;
+    border-radius: 6px;
+    color: #e9e3fb;
+    box-shadow: 0 0 10px rgba(134, 99, 229, 0.3);
+}
+
+#main-content .help,
+#main-content .form-row .help {
+    color: #9a8bc4;
 }

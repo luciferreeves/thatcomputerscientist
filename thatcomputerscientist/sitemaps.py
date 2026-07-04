@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from blog.models import Category, Post, Tag
+from services.weblog.models import Category, Post, Tag
 
 
 class PostSitemap(Sitemap):

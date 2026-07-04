@@ -14,7 +14,7 @@ from django.template.loader import get_template
 
 from administration.annoucements.functions import get_announcements
 from authentication.functions import get_user_from_username
-from blog.functions import get_posts
+from services.weblog.functions import get_posts
 from internal.mal_wrapper import get_mal_recent_activity
 from internal.steam_wrapper import get_steam_screenshots
 from services.journals.functions import (

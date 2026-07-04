@@ -7,3 +7,4 @@ class ServicesConfig(AppConfig):
 
     def ready(self):
         import services.journals.signals  # noqa: F401
+        import services.weblog.models  # noqa: F401

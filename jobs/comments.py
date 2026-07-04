@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.db import transaction
-from blog.models import Comment
+from services.weblog.models import Comment
 from internal.weblog_utilities import check_comment_spam
 import logging
 
@@ -45,6 +45,13 @@ def check_comment_spam_async(self, comment_id):
             except:
                 pass
             return f"Comment {comment_id} auto-approved after failed spam check"
+
+
+def queue_spam_check(comment_id: int) -> None:
+    """Enqueue the asynchronous spam check for a comment."""
+    from thatcomputerscientist.celery import app
+
+    app.send_task("jobs.comments.check_comment_spam_async", args=[comment_id])
 
 
 @shared_task

@@ -51,7 +51,7 @@ urlpatterns = [
     path("auth", include("authentication.urls", namespace="auth")),
     path("admin", include("administration.urls", namespace="administration")),
     path("admin/administration/", admin.site.urls),
-    path("weblog", include("blog.urls", namespace="weblog")),
+    path("weblog", include("services.weblog.urls", namespace="weblog")),
     path("services", include("services.urls", namespace="services")),
     # path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path("robots.txt", robots_txt),

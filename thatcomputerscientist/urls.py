@@ -21,6 +21,11 @@ from django.contrib import admin
 # from django.contrib.sitemaps.views import sitemap
 from django.http import HttpResponse
 from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
+
+admin.site.site_header = _("Shifoo Administration")
+admin.site.site_title = _("Shifoo Administration")
+admin.site.index_title = _("Shifoo Administration")
 
 # from .sitemaps import (CategorySitemap, GithubSitemap, PostSitemap,
 #                        StaticViewSitemap, TagSitemap)

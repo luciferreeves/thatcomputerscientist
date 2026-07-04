@@ -1,0 +1,70 @@
+/* Django admin content rendered inside the Shifoo site chrome. */
+
+html,
+body.admin-reskin {
+    background: transparent;
+}
+
+/* The admin shell fills the site's main content column. */
+#main-content #admin-shell {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+/* Neutralize admin layout widths that assume a full page. */
+#main-content #content,
+#main-content .content,
+#main-content #content-main,
+#main-content #content-related {
+    width: auto;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    float: none;
+}
+
+#main-content .colM,
+#main-content .colMS {
+    margin-right: 0;
+}
+
+/* Compact utility row that replaces the removed admin top navbar. */
+#main-content #user-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    font-size: 0.8rem;
+    line-height: 1;
+    margin: 0 0 12px;
+    padding: 0;
+    text-align: right;
+}
+
+#main-content #user-tools .admin-user {
+    font-weight: 700;
+}
+
+#main-content #user-tools form {
+    margin: 0;
+    display: inline;
+}
+
+#main-content #user-tools button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    text-decoration: underline;
+}
+
+#main-content .breadcrumbs {
+    margin: 0 0 12px;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+}

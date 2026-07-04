@@ -1,6 +1,7 @@
-/* Admin content, contained to #main-content, in a readable y2k skin.
-   Django's own CSS is loaded in the `djangoadmin` cascade layer (see base.html),
-   so anything here or in the site CSS wins — nothing leaks into the chrome. */
+/* Admin content in a readable y2k skin. Django's own CSS is loaded in the
+   `djangoadmin` cascade layer (see base.html), so this and the site CSS win —
+   nothing leaks into the chrome. Content rules are scoped to #content / .content,
+   which exist only inside the admin content (and in lookup popups), never the chrome. */
 
 html,
 body.admin-reskin {
@@ -12,10 +13,6 @@ body.admin-reskin.popup {
     background: #140c26;
     color: #f0ecff;
     padding: 14px 18px;
-}
-
-body.admin-reskin.popup .content {
-    background: #140c26;
 }
 
 /* ---- Contain: strip any admin styling off the site chrome ---- */
@@ -39,24 +36,24 @@ body.admin-reskin.popup .content {
     color: inherit;
 }
 
-/* ---- Content column ---- */
+/* ---- Layout ---- */
 #main-content {
     flex: 1 1 0;
     min-width: 0;
 }
 
-#main-content .content {
+.content {
     min-width: 0;
     overflow-x: auto;
     color: #ece7fb;
 }
 
-#main-content #content {
+#content {
     color: #ece7fb;
 }
 
 /* ---- Title ---- */
-#main-content #content > h1 {
+#content > h1 {
     font-size: 24px;
     font-weight: 800;
     letter-spacing: 0.5px;
@@ -66,7 +63,7 @@ body.admin-reskin.popup .content {
 }
 
 /* ---- Breadcrumbs ---- */
-#main-content .breadcrumbs {
+.content .breadcrumbs {
     background: #241338;
     border: 1px solid #6b3fa0;
     border-radius: 6px;
@@ -76,32 +73,32 @@ body.admin-reskin.popup .content {
     color: #c3b4e6;
 }
 
-#main-content .breadcrumbs a {
+.content .breadcrumbs a {
     color: #7fdce8;
     font-weight: 700;
     text-decoration: none;
 }
 
-#main-content .breadcrumbs a:hover {
+.content .breadcrumbs a:hover {
     color: #ff5ad6;
 }
 
 /* ---- Content links (kill the site's green) ---- */
-#main-content #content a:link,
-#main-content #content a:visited {
+#content a:link,
+#content a:visited {
     color: #b39cff;
 }
 
-#main-content #content a:hover {
+#content a:hover {
     color: #7fdce8;
 }
 
 /* ---- Panels ---- */
-#main-content .module,
-#main-content fieldset.module,
-#main-content .inline-related,
-#main-content #changelist-filter,
-#main-content #changelist-search {
+#content .module,
+#content fieldset.module,
+#content .inline-related,
+#content #changelist-filter,
+#content #changelist-search {
     background: #1c1130;
     border: 1px solid #6b3fa0;
     border-radius: 8px;
@@ -109,16 +106,16 @@ body.admin-reskin.popup .content {
     margin-bottom: 16px;
 }
 
-#main-content .module > h2,
-#main-content .module caption,
-#main-content .module > details > summary,
-#main-content fieldset.module > h2,
-#main-content .inline-related h2,
-#main-content .inline-related h3.inline_label,
-#main-content .inline-group > h2,
-#main-content details.module > summary,
-#main-content #changelist-filter h2,
-#main-content #changelist-filter h3 {
+#content .module > h2,
+#content .module caption,
+#content .module > details > summary,
+#content fieldset.module > h2,
+#content .inline-related h2,
+#content .inline-related h3.inline_label,
+#content .inline-group > h2,
+#content details.module > summary,
+#content #changelist-filter h2,
+#content #changelist-filter h3 {
     background: linear-gradient(to bottom, #6b3fa0 0%, #3a2160 100%);
     color: #ffffff;
     text-transform: uppercase;
@@ -131,52 +128,52 @@ body.admin-reskin.popup .content {
     margin: 0;
 }
 
-#main-content .module > details > summary::-webkit-details-marker,
-#main-content details.module > summary::-webkit-details-marker {
+#content .module > details > summary::-webkit-details-marker,
+#content details.module > summary::-webkit-details-marker {
     display: none;
 }
 
-#main-content .module > details > summary::after,
-#main-content details.module > summary::after {
+#content .module > details > summary::after,
+#content details.module > summary::after {
     content: " ▸";
     color: #7fdce8;
 }
 
-#main-content .module > details[open] > summary::after,
-#main-content details.module[open] > summary::after {
+#content .module > details[open] > summary::after,
+#content details.module[open] > summary::after {
     content: " ▾";
 }
 
-#main-content .form-row {
+#content .form-row {
     border-bottom: 1px solid rgba(134, 99, 229, 0.18);
     background: transparent;
     padding: 10px 14px;
 }
 
-#main-content .aligned label,
-#main-content label {
+#content .aligned label,
+#content label {
     color: #b39cff;
     font-weight: 700;
 }
 
-#main-content .help,
-#main-content .form-row .help,
-#main-content div.help {
+#content .help,
+#content .form-row .help,
+#content div.help {
     color: #9c8fc4;
 }
 
 /* ---- Inputs ---- */
-#main-content input[type="text"],
-#main-content input[type="password"],
-#main-content input[type="email"],
-#main-content input[type="url"],
-#main-content input[type="number"],
-#main-content input[type="search"],
-#main-content input[type="tel"],
-#main-content input[type="date"],
-#main-content input[type="time"],
-#main-content textarea,
-#main-content select {
+#content input[type="text"],
+#content input[type="password"],
+#content input[type="email"],
+#content input[type="url"],
+#content input[type="number"],
+#content input[type="search"],
+#content input[type="tel"],
+#content input[type="date"],
+#content input[type="time"],
+#content textarea,
+#content select {
     background: #0d0820;
     color: #f0ecff;
     border: 1px solid #6b3fa0;
@@ -185,25 +182,25 @@ body.admin-reskin.popup .content {
     padding: 7px 10px;
 }
 
-#main-content input:focus,
-#main-content textarea:focus,
-#main-content select:focus {
+#content input:focus,
+#content textarea:focus,
+#content select:focus {
     outline: none;
     border-color: #ff5ad6;
     box-shadow: 0 0 6px rgba(255, 90, 214, 0.45);
 }
 
-#main-content ::placeholder {
+#content ::placeholder {
     color: rgba(240, 236, 255, 0.35);
 }
 
 /* ---- Buttons ---- */
-#main-content .button,
-#main-content input[type="submit"],
-#main-content input[type="button"],
-#main-content .submit-row input,
-#main-content a.button,
-#main-content .object-tools a {
+#content .button,
+#content input[type="submit"],
+#content input[type="button"],
+#content .submit-row input,
+#content a.button,
+#content .object-tools a {
     background: #6b3fa0;
     color: #ffffff !important;
     border: 1px solid #8663e5;
@@ -218,38 +215,38 @@ body.admin-reskin.popup .content {
     transition: background 0.12s ease;
 }
 
-#main-content .button:hover,
-#main-content input[type="submit"]:hover,
-#main-content input[type="button"]:hover,
-#main-content .submit-row input:hover,
-#main-content a.button:hover,
-#main-content .object-tools a:hover {
+#content .button:hover,
+#content input[type="submit"]:hover,
+#content input[type="button"]:hover,
+#content .submit-row input:hover,
+#content a.button:hover,
+#content .object-tools a:hover {
     background: #ff5ad6;
     border-color: #ff5ad6;
     color: #1a0a1a !important;
 }
 
-#main-content .submit-row input.default {
+#content .submit-row input.default {
     background: #8663e5;
 }
 
-#main-content .submit-row .deletelink,
-#main-content .deletelink {
+#content .submit-row .deletelink,
+#content .deletelink {
     background: #a33146;
     border-color: #d3556a;
 }
 
-#main-content .submit-row .deletelink:hover {
+#content .submit-row .deletelink:hover {
     background: #ff466e;
     color: #ffffff !important;
 }
 
 /* Small inline add/change glyph links stay small, not big buttons. */
-#main-content .add-related,
-#main-content .change-related,
-#main-content .view-related,
-#main-content .delete-related,
-#main-content .related-lookup {
+#content .add-related,
+#content .change-related,
+#content .view-related,
+#content .delete-related,
+#content .related-lookup {
     background: none;
     border: 0;
     box-shadow: none;
@@ -257,81 +254,82 @@ body.admin-reskin.popup .content {
 }
 
 /* ---- Tables ---- */
-#main-content #result_list,
-#main-content table {
+#content #result_list,
+#content table {
     border-collapse: collapse;
     background: transparent;
     width: 100%;
 }
 
-#main-content #result_list thead th,
-#main-content table thead th,
-#main-content #result_list thead td {
+#content #result_list thead th,
+#content table thead th,
+#content #result_list thead td {
     background: #3a2160;
     color: #ffffff;
     border-bottom: 1px solid #8663e5;
     padding: 8px 10px;
 }
 
-#main-content #result_list thead th a,
-#main-content table thead th a {
+#content #result_list thead th a,
+#content table thead th a {
     color: #ffffff;
 }
 
-#main-content #result_list tbody tr {
+#content #result_list tbody tr {
     background: #1c1130;
 }
 
-#main-content #result_list tbody tr:nth-child(even) {
+#content #result_list tbody tr:nth-child(even) {
     background: #241640;
 }
 
-#main-content #result_list tbody tr:hover {
+#content #result_list tbody tr:hover {
     background: #34215a;
 }
 
-#main-content #result_list td,
-#main-content #result_list th,
-#main-content table td,
-#main-content table th {
+#content #result_list td,
+#content #result_list th,
+#content table td,
+#content table th {
     border-bottom: 1px solid rgba(134, 99, 229, 0.16);
     padding: 7px 10px;
     color: #ece7fb;
 }
 
 /* ---- Search / filters / pagination / messages ---- */
-#main-content #changelist-search {
+#content #changelist-search {
     padding: 10px 12px;
 }
 
-#main-content #changelist-search label {
+#content #changelist-search label {
     color: #b39cff;
 }
 
-#main-content #changelist-search #searchbar {
+#content #changelist-search #searchbar {
     min-width: 220px;
 }
 
-#main-content .paginator {
+#content .paginator {
     color: #c3b4e6;
     border-top: 1px solid rgba(134, 99, 229, 0.22);
     background: transparent;
 }
 
-#main-content .paginator .this-page {
+#content .paginator .this-page {
     color: #7fdce8;
     font-weight: 800;
 }
 
-#main-content ul.messagelist li {
+.content ul.messagelist li {
     background: #2a1640;
     border: 1px solid #8663e5;
     border-radius: 6px;
     color: #f0ecff;
+    list-style: none;
 }
 
-#main-content .errornote,
-#main-content .errorlist {
+#content .errornote,
+#content .errorlist {
     background: #3a1622;
     border: 1px solid #d3556a;
     color: #ffd0d8;

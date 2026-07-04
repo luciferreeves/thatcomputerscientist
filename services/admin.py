@@ -4,6 +4,7 @@ from typing import Any
 
 from django.contrib import admin
 from django.http import HttpRequest
+from django.urls import reverse
 from django.utils.html import format_html
 from services.journals.models import (
     Character,
@@ -16,6 +17,16 @@ from services.journals.models import (
     JournalTranslation,
     Volume,
 )
+
+# Register the weblog service admin (weblog is a sub-package of this app).
+import services.weblog.admin  # noqa: F401
+
+
+class HiddenFromIndexMixin:
+    """Keep a model reachable via links/inlines but off the admin index."""
+
+    def get_model_perms(self, request: HttpRequest) -> dict[str, bool]:
+        return {}
 
 
 class JournalTranslationInline(admin.TabularInline[JournalTranslation, Journal]):
@@ -33,31 +44,60 @@ class JournalEntryTranslationInline(admin.StackedInline[JournalEntryTranslation,
 class JournalEntryInline(admin.TabularInline[JournalEntry, Journal]):
     model = JournalEntry
     extra = 0
-    readonly_fields = ("title", "created_at", "updated_at")
-    fields = ("title", "slug", "is_draft", "order", "created_at", "updated_at")
+    readonly_fields = ("entry_link", "created_at", "updated_at")
+    fields = ("entry_link", "slug", "is_draft", "order", "created_at", "updated_at")
     can_delete = False
 
     def has_add_permission(self, request: HttpRequest, obj: Any = None) -> bool:
         return False
 
+    @admin.display(description="Entry")
+    def entry_link(self, obj: JournalEntry) -> Any:
+        url = reverse("admin:services_journalentry_change", args=[obj.pk])
+        return format_html('<a href="{}">{}</a>', url, obj.title)
+
 
 class VolumeInline(admin.TabularInline[Volume, Journal]):
     model = Volume
     extra = 0
-    fields = ("title", "order", "description", "cover_image")
+    fields = ("title", "order", "description", "cover_image", "open_link")
+    readonly_fields = ("open_link",)
+
+    @admin.display(description="")
+    def open_link(self, obj: Volume) -> Any:
+        if not obj.pk:
+            return ""
+        url = reverse("admin:services_volume_change", args=[obj.pk])
+        return format_html('<a href="{}">open &rsaquo;</a>', url)
 
 
 class CharacterInline(admin.TabularInline[Character, Journal]):
     model = Character
     extra = 0
-    fields = ("name", "role", "order", "image")
+    fields = ("name", "role", "order", "image", "open_link")
+    readonly_fields = ("open_link",)
+
+    @admin.display(description="")
+    def open_link(self, obj: Character) -> Any:
+        if not obj.pk:
+            return ""
+        url = reverse("admin:services_character_change", args=[obj.pk])
+        return format_html('<a href="{}">open &rsaquo;</a>', url)
 
 
 class EntryTagInline(admin.TabularInline[EntryTag, Journal]):
     model = EntryTag
     extra = 0
-    fields = ("name", "slug")
+    fields = ("name", "slug", "open_link")
+    readonly_fields = ("open_link",)
     prepopulated_fields = {"slug": ("name",)}
+
+    @admin.display(description="")
+    def open_link(self, obj: EntryTag) -> Any:
+        if not obj.pk:
+            return ""
+        url = reverse("admin:services_entrytag_change", args=[obj.pk])
+        return format_html('<a href="{}">open &rsaquo;</a>', url)
 
 
 class CharacterAppearanceInline(admin.TabularInline[CharacterAppearance, JournalEntry]):
@@ -73,8 +113,20 @@ class JournalAdmin(admin.ModelAdmin[Journal]):
     list_filter = ("private", "mode", "status", "genre", "created_at", "owner")
     search_fields = ("name", "description", "owner__username")
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [JournalTranslationInline, VolumeInline, CharacterInline, EntryTagInline, JournalEntryInline]
     filter_horizontal = ("shared_with",)
+
+    def get_inlines(self, request: HttpRequest, obj: Any = None) -> list[Any]:
+        # Reflect each journal mode's structure (mirrors the per-mode logic in the journal view).
+        inlines: list[Any] = [JournalTranslationInline]
+        mode = obj.mode if obj else "default"
+        if mode in ("book", "light_novel"):
+            inlines += [VolumeInline, CharacterInline]
+        elif mode == "short_stories":
+            inlines += [CharacterInline]
+        inlines += [EntryTagInline]  # tags are per-journal (default mode included)
+        if obj is not None:
+            inlines += [JournalEntryInline]
+        return inlines
     fieldsets = (
         (None, {
             "fields": ("name", "slug", "description", "owner"),
@@ -106,7 +158,7 @@ class JournalAdmin(admin.ModelAdmin[Journal]):
 
 
 @admin.register(JournalEntry)
-class JournalEntryAdmin(admin.ModelAdmin[JournalEntry]):
+class JournalEntryAdmin(HiddenFromIndexMixin, admin.ModelAdmin[JournalEntry]):
     list_display = (
         "title", "japanese_title", "journal", "mode_display",
         "is_draft", "word_count", "order", "entry_date", "created_at",
@@ -115,27 +167,44 @@ class JournalEntryAdmin(admin.ModelAdmin[JournalEntry]):
     list_editable = ("is_draft", "order")
     search_fields = ("title", "content", "journal__name")
     prepopulated_fields = {"slug": ("title",)}
-    inlines = [JournalEntryTranslationInline, CharacterAppearanceInline]
     filter_horizontal = ("tags",)
     raw_id_fields = ("journal", "volume")
-    fieldsets = (
-        (None, {
-            "fields": ("journal", "title", "slug", "content"),
-        }),
-        ("Organization", {
-            "fields": ("volume", "order", "is_draft", "entry_date"),
-        }),
-        ("Classification", {
-            "fields": ("genre", "tone", "form", "mood", "tags"),
-        }),
-        ("Media", {
-            "fields": ("summary", "thumbnail"),
-        }),
-        ("Stats", {
-            "fields": ("word_count",),
-        }),
-    )
     readonly_fields = ("word_count",)
+
+    def get_inlines(self, request: HttpRequest, obj: Any = None) -> list[Any]:
+        inlines: list[Any] = [JournalEntryTranslationInline]
+        mode = obj.journal.mode if obj else "default"
+        if mode in ("book", "light_novel", "short_stories"):
+            inlines.append(CharacterAppearanceInline)
+        return inlines
+
+    def get_fieldsets(self, request: HttpRequest, obj: Any = None) -> Any:
+        mode = obj.journal.mode if obj else "default"
+
+        fieldsets: list[Any] = [
+            (None, {"fields": ("journal", "title", "slug", "content")}),
+        ]
+
+        organization = ["order", "is_draft", "entry_date"]
+        if mode in ("book", "light_novel"):
+            organization.insert(0, "volume")
+        fieldsets.append(("Organization", {"fields": tuple(organization)}))
+
+        classification: list[str] = []
+        if mode == "short_stories":
+            classification += ["genre", "tone"]
+        elif mode == "poetry":
+            classification += ["form", "mood"]
+        elif mode == "diary":
+            classification += ["mood"]
+        classification.append("tags")
+        fieldsets.append(("Classification", {"fields": tuple(classification)}))
+
+        if mode in ("book", "light_novel", "short_stories"):
+            fieldsets.append(("Media", {"fields": ("summary", "thumbnail")}))
+
+        fieldsets.append(("Stats", {"fields": ("word_count",)}))
+        return fieldsets
 
     @admin.display(description="Title (Japanese)")
     def japanese_title(self, obj: JournalEntry) -> str:
@@ -156,7 +225,7 @@ class JournalEntryAdmin(admin.ModelAdmin[JournalEntry]):
 
 
 @admin.register(Volume)
-class VolumeAdmin(admin.ModelAdmin[Volume]):
+class VolumeAdmin(HiddenFromIndexMixin, admin.ModelAdmin[Volume]):
     list_display = ("title", "journal", "order", "entry_count", "created_at")
     list_filter = ("journal",)
     list_editable = ("order",)
@@ -169,7 +238,7 @@ class VolumeAdmin(admin.ModelAdmin[Volume]):
 
 
 @admin.register(Character)
-class CharacterAdmin(admin.ModelAdmin[Character]):
+class CharacterAdmin(HiddenFromIndexMixin, admin.ModelAdmin[Character]):
     list_display = ("name", "journal", "role", "order", "avatar_preview")
     list_filter = ("journal", "role")
     list_editable = ("role", "order")
@@ -184,7 +253,7 @@ class CharacterAdmin(admin.ModelAdmin[Character]):
 
 
 @admin.register(CharacterRelationship)
-class CharacterRelationshipAdmin(admin.ModelAdmin[CharacterRelationship]):
+class CharacterRelationshipAdmin(HiddenFromIndexMixin, admin.ModelAdmin[CharacterRelationship]):
     list_display = ("from_character", "label", "to_character", "journal_display")
     list_filter = ("from_character__journal",)
     search_fields = ("from_character__name", "to_character__name", "label")
@@ -196,7 +265,7 @@ class CharacterRelationshipAdmin(admin.ModelAdmin[CharacterRelationship]):
 
 
 @admin.register(CharacterAppearance)
-class CharacterAppearanceAdmin(admin.ModelAdmin[CharacterAppearance]):
+class CharacterAppearanceAdmin(HiddenFromIndexMixin, admin.ModelAdmin[CharacterAppearance]):
     list_display = ("character", "entry", "notes_preview")
     list_filter = ("character__journal",)
     search_fields = ("character__name", "entry__title", "notes")
@@ -210,7 +279,7 @@ class CharacterAppearanceAdmin(admin.ModelAdmin[CharacterAppearance]):
 
 
 @admin.register(EntryTag)
-class EntryTagAdmin(admin.ModelAdmin[EntryTag]):
+class EntryTagAdmin(HiddenFromIndexMixin, admin.ModelAdmin[EntryTag]):
     list_display = ("name", "journal", "slug", "usage_count")
     list_filter = ("journal",)
     search_fields = ("name", "journal__name")

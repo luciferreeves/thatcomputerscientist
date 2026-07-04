@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 23:00+0000\n"
+"POT-Creation-Date: 2026-07-04 16:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,11 +67,11 @@ msgid "years"
 msgstr "年"
 
 #: core/translations.py:5 templates/journals/edit_entry.html:51
-#: thatcomputerscientist/settings.py:206
+#: thatcomputerscientist/settings.py:207
 msgid "English"
 msgstr "英語"
 
-#: core/translations.py:6 thatcomputerscientist/settings.py:206
+#: core/translations.py:6 thatcomputerscientist/settings.py:207
 msgid "Japanese"
 msgstr "日本語"
 
@@ -94,6 +94,154 @@ msgstr "中国語"
 #: core/translations.py:11
 msgid "Korean"
 msgstr "韓国語"
+
+#: services/journals/admin.py:118 services/journals/admin.py:249
+#| msgid "Add Translation"
+msgid "Add a translation"
+msgstr "翻訳を追加"
+
+#: services/journals/admin.py:122 services/journals/admin.py:253
+#| msgid "Add language"
+msgid "Language"
+msgstr "言語"
+
+#: services/journals/admin.py:126 services/journals/admin.py:257
+#| msgid "Translations"
+msgid "Translation"
+msgstr "翻訳"
+
+#: services/journals/admin.py:136
+#| msgid "New Volume"
+msgid "Add new volume"
+msgstr "巻を追加"
+
+#: services/journals/admin.py:140 templates/journals/edit_entry.html:134
+#: templates/journals/new_entry.html:53
+msgid "Volume"
+msgstr "巻"
+
+#: services/journals/admin.py:145 services/journals/models.py:153
+#: services/journals/models.py:154
+msgid "Chapters"
+msgstr "章"
+
+#: services/journals/admin.py:154
+#| msgid "Add Character"
+msgid "Add new character"
+msgstr "キャラクターを追加"
+
+#: services/journals/admin.py:158 services/journals/admin.py:234
+#| msgid "Characters"
+msgid "Character"
+msgstr "キャラクター"
+
+#: services/journals/admin.py:168
+#| msgid "Add Tag"
+msgid "Add new tag"
+msgstr "タグを追加"
+
+#: services/journals/admin.py:172
+#| msgid "Tags"
+msgid "Tag"
+msgstr "タグ"
+
+#: services/journals/admin.py:177 services/journals/admin.py:501
+msgid "Used by"
+msgstr "使用数"
+
+#: services/journals/admin.py:187
+msgid "Add new entry"
+msgstr "エントリーを追加"
+
+#: services/journals/admin.py:203 services/journals/models.py:146
+#: services/journals/models.py:148
+msgid "Entry"
+msgstr "エントリ"
+
+#: services/journals/admin.py:214
+#| msgid "Add Character"
+msgid "Add new chapter"
+msgstr "章を追加"
+
+#: services/journals/admin.py:219 services/journals/models.py:142
+#: services/journals/models.py:143
+msgid "Chapter"
+msgstr "章"
+
+#: services/journals/admin.py:230
+#| msgid "Add Character"
+msgid "Add character appearance"
+msgstr "登場を追加"
+
+#: services/journals/admin.py:238
+#| msgid "appears in"
+msgid "Appearance"
+msgstr "登場箇所"
+
+#: services/journals/admin.py:241
+msgid "open"
+msgstr "開く"
+
+#: services/journals/admin.py:300 services/journals/admin.py:430
+#: templates/journals/new_journal.html:86 templates/journals/settings.html:90
+msgid "Mode"
+msgstr "モード"
+
+#: services/journals/admin.py:302
+msgid "Access"
+msgstr "公開設定"
+
+#: services/journals/admin.py:303
+#| msgid "Custom Styling"
+msgid "Customization"
+msgstr "カスタマイズ"
+
+#: services/journals/admin.py:306
+#| msgid "Japanese"
+msgid "Name (Japanese)"
+msgstr "名前（日本語）"
+
+#: services/journals/admin.py:394
+#| msgid "Translations"
+msgid "Organization"
+msgstr "構成"
+
+#: services/journals/admin.py:408
+#| msgid "Mode & Classification"
+msgid "Classification"
+msgstr "分類"
+
+#: services/journals/admin.py:416
+msgid "Media"
+msgstr "メディア"
+
+#: services/journals/admin.py:419
+#| msgid "Status"
+msgid "Stats"
+msgstr "統計"
+
+#: services/journals/admin.py:423
+#| msgid "Japanese"
+msgid "Title (Japanese)"
+msgstr "タイトル（日本語）"
+
+#: services/journals/admin.py:447 services/journals/models.py:157
+#: services/journals/models.py:159
+msgid "Entries"
+msgstr "エントリ"
+
+#: services/journals/admin.py:460
+msgid "Avatar"
+msgstr "アバター"
+
+#: services/journals/admin.py:474
+#| msgid "Journals"
+msgid "Journal"
+msgstr "ジャーナル"
+
+#: services/journals/admin.py:486
+msgid "Notes"
+msgstr "メモ"
 
 #: services/journals/constants.py:4
 msgid "Default"
@@ -418,38 +566,22 @@ msgstr "無感覚"
 msgid "Curious"
 msgstr "好奇心"
 
-#: services/journals/models.py:139 services/journals/models.py:140
-msgid "Chapter"
-msgstr "章"
-
-#: services/journals/models.py:141
+#: services/journals/models.py:144
 msgid "Story"
 msgstr "ストーリー"
 
-#: services/journals/models.py:142
+#: services/journals/models.py:145
 msgid "Poem"
 msgstr "詩"
 
-#: services/journals/models.py:143 services/journals/models.py:145
-msgid "Entry"
-msgstr "エントリ"
-
-#: services/journals/models.py:150 services/journals/models.py:151
-msgid "Chapters"
-msgstr "章"
-
-#: services/journals/models.py:152
+#: services/journals/models.py:155
 #: templates/journals/short_stories/main.html:98
 msgid "Stories"
 msgstr "ストーリー"
 
-#: services/journals/models.py:153 templates/journals/poetry/main.html:18
+#: services/journals/models.py:156 templates/journals/poetry/main.html:18
 msgid "Poems"
 msgstr "詩"
-
-#: services/journals/models.py:154 services/journals/models.py:156
-msgid "Entries"
-msgstr "エントリ"
 
 #: templates/_partials/footer.html:22
 #, python-format
@@ -797,7 +929,7 @@ msgstr "はい,いいえ"
 #: templates/journals/characters.html:96 templates/journals/entries.html:74
 #: templates/journals/entries.html:112 templates/journals/volumes.html:81
 #: templates/weblog/_partials/post_comments.html:89
-#: templates/weblog/post.html:177
+#: templates/weblog/post.html:178
 msgid "Edit"
 msgstr "編集"
 
@@ -828,7 +960,7 @@ msgstr "保存"
 #: templates/journals/volumes.html:94
 #: templates/weblog/_partials/post_comments.html:79
 #: templates/weblog/_partials/post_comments.html:112
-#: templates/weblog/post.html:181 templates/weblog/post.html:194
+#: templates/weblog/post.html:182 templates/weblog/post.html:195
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -841,7 +973,7 @@ msgid "No announcements found."
 msgstr "楽曲が見つかりませんでした。"
 
 #: templates/administration/announcements.html:194
-#: templates/weblog/post.html:207
+#: templates/weblog/post.html:208
 msgid "Please enter some content before saving."
 msgstr "保存する前に何か内容を入力してください。"
 
@@ -1163,7 +1295,7 @@ msgid "Posted in"
 msgstr "カテゴリー："
 
 #: templates/journals/_partials/journal_entries.html:33
-#: templates/weblog/_partials/weblog_list.html:20 templates/weblog/post.html:27
+#: templates/weblog/_partials/weblog_list.html:20 templates/weblog/post.html:28
 msgid "on"
 msgstr "投稿日："
 
@@ -1183,7 +1315,7 @@ msgid "Back to Journals"
 msgstr "ジャーナルに戻る"
 
 #: templates/journals/_partials/journal_header.html:34
-#: templates/journals/books/entry.html:73 templates/journals/toc.html:27
+#: templates/journals/books/entry.html:69 templates/journals/toc.html:27
 msgid "Table of Contents"
 msgstr "目次"
 
@@ -1265,14 +1397,14 @@ msgstr "作："
 msgid "chapters"
 msgstr "章"
 
-#: templates/journals/books/entry.html:65
+#: templates/journals/books/entry.html:61
 #: templates/journals/diary/main.html:121
 #: templates/journals/poetry/entry.html:60
 #: templates/journals/short_stories/entry.html:77
 msgid "previous"
 msgstr "前"
 
-#: templates/journals/books/entry.html:77
+#: templates/journals/books/entry.html:73
 #: templates/journals/diary/main.html:130
 #: templates/journals/poetry/entry.html:72
 #: templates/journals/poetry/main.html:131
@@ -1570,10 +1702,6 @@ msgstr "entry-slug"
 msgid "Date"
 msgstr "日付"
 
-#: templates/journals/edit_entry.html:134 templates/journals/new_entry.html:53
-msgid "Volume"
-msgstr "巻"
-
 #: templates/journals/edit_entry.html:136 templates/journals/new_entry.html:55
 msgid "No volume"
 msgstr "巻なし"
@@ -1854,10 +1982,6 @@ msgstr "このジャーナルが何についてのものか説明してくださ
 #: templates/journals/new_journal.html:82
 msgid "Optional: A brief description of your journal's purpose or theme"
 msgstr "オプション：あなたのジャーナルの目的やテーマの簡単な説明"
-
-#: templates/journals/new_journal.html:86 templates/journals/settings.html:90
-msgid "Mode"
-msgstr "モード"
 
 #: templates/journals/new_journal.html:92
 msgid "Choose the type of journal. This cannot be changed later."
@@ -2198,7 +2322,7 @@ msgstr "匿名"
 
 #: templates/weblog/_partials/post_comments.html:86
 #: templates/weblog/_partials/post_comments.html:111
-#: templates/weblog/post.html:191
+#: templates/weblog/post.html:192
 msgid "Reply"
 msgstr "返信"
 
@@ -2207,7 +2331,7 @@ msgid ""
 "Are you sure you want to delete this comment? This action cannot be undone."
 msgstr "このコメントを削除してもよろしいですか? この操作は元に戻せません。"
 
-#: templates/weblog/_partials/weblog_list.html:18 templates/weblog/post.html:25
+#: templates/weblog/_partials/weblog_list.html:18 templates/weblog/post.html:26
 msgid "posted in"
 msgstr "カテゴリー："
 
@@ -2258,12 +2382,12 @@ msgstr[0] ""
 msgid "No categories found"
 msgstr "カテゴリーが見つかりません"
 
-#: templates/weblog/post.html:31 templates/weblog/weblog.html:44
+#: templates/weblog/post.html:32 templates/weblog/weblog.html:44
 #: templates/weblog/weblog.html:59
 msgid "Views"
 msgstr "閲覧数"
 
-#: templates/weblog/post.html:34
+#: templates/weblog/post.html:35
 #, python-format
 msgid ""
 "\n"
@@ -2275,36 +2399,36 @@ msgstr[0] ""
 "\n"
 "          %(comment_count)s コメント"
 
-#: templates/weblog/post.html:48
+#: templates/weblog/post.html:49
 msgid "Tagged with"
 msgstr "タグ"
 
-#: templates/weblog/post.html:54 templates/weblog/weblog.html:47
+#: templates/weblog/post.html:55 templates/weblog/weblog.html:47
 #: templates/weblog/weblog.html:62
 msgid "Comments"
 msgstr "コメント"
 
-#: templates/weblog/post.html:56 templates/weblog/weblog.html:32
+#: templates/weblog/post.html:57 templates/weblog/weblog.html:32
 msgid "Sort by"
 msgstr "ソート順"
 
-#: templates/weblog/post.html:59
+#: templates/weblog/post.html:60
 msgid "Best"
 msgstr "最高"
 
-#: templates/weblog/post.html:62
+#: templates/weblog/post.html:63
 msgid "Newest"
 msgstr "最新"
 
-#: templates/weblog/post.html:65
+#: templates/weblog/post.html:66
 msgid "Oldest"
 msgstr "最古"
 
-#: templates/weblog/post.html:72
+#: templates/weblog/post.html:73
 msgid "Markup Guide for Comments"
 msgstr "コメントのマークアップガイド"
 
-#: templates/weblog/post.html:75
+#: templates/weblog/post.html:76
 msgid ""
 "This website uses a custom markup syntax powered by <strong>TinyMiku</"
 "strong>, our intelligent comment editor. As you type, the editor will "
@@ -2316,43 +2440,43 @@ msgstr ""
 "ます。入力すると、エディタが利用可能なフォーマットオプションを自動的に提案"
 "し、リッチで表現力豊かなコメントの作成を支援します。"
 
-#: templates/weblog/post.html:79
+#: templates/weblog/post.html:80
 msgid "Text Formatting"
 msgstr "テキストフォーマット"
 
-#: templates/weblog/post.html:81
+#: templates/weblog/post.html:82
 msgid "bold text"
 msgstr "太字テキスト"
 
-#: templates/weblog/post.html:82
+#: templates/weblog/post.html:83
 msgid "italic text"
 msgstr "斜体テキスト"
 
-#: templates/weblog/post.html:83
+#: templates/weblog/post.html:84
 msgid "strikethrough"
 msgstr "取り消し線"
 
-#: templates/weblog/post.html:88
+#: templates/weblog/post.html:89
 msgid "Mathematical Expressions"
 msgstr "数学的表現"
 
-#: templates/weblog/post.html:89
+#: templates/weblog/post.html:90
 msgid "Support for LaTeX mathematical notation:"
 msgstr "LaTeXの数学記法をサポート："
 
-#: templates/weblog/post.html:91
+#: templates/weblog/post.html:92
 msgid "Inline math expressions"
 msgstr "インライン数式"
 
-#: templates/weblog/post.html:92
+#: templates/weblog/post.html:93
 msgid "Block math expressions"
 msgstr "ブロック数式"
 
-#: templates/weblog/post.html:97
+#: templates/weblog/post.html:98
 msgid "Code Snippets"
 msgstr "コードスニペット"
 
-#: templates/weblog/post.html:98
+#: templates/weblog/post.html:99
 msgid ""
 "Add syntax-highlighted code by wrapping it in triple backticks with a "
 "language identifier:"
@@ -2360,11 +2484,11 @@ msgstr ""
 "言語識別子を付けて三重バックティックで囲むことで、シンタックスハイライトされ"
 "たコードを追加できます："
 
-#: templates/weblog/post.html:104
+#: templates/weblog/post.html:105
 msgid "Renders as:"
 msgstr "次のように表示されます："
 
-#: templates/weblog/post.html:110
+#: templates/weblog/post.html:111
 msgid ""
 "All programming languages are supported. Use the format: lang-[language]. "
 "Examples include <span class=\"language-tag\">python</span>, <span "
@@ -2379,11 +2503,11 @@ msgstr ""
 "<span class=\"language-tag\">go</span>、<span class=\"language-tag\">rust</"
 "span>などがあります。"
 
-#: templates/weblog/post.html:114
+#: templates/weblog/post.html:115
 msgid "Links & URLs"
 msgstr "リンクとURL"
 
-#: templates/weblog/post.html:115
+#: templates/weblog/post.html:116
 msgid ""
 "URLs are automatically converted to clickable links. Just paste any valid "
 "web address and it will become interactive."
@@ -2391,23 +2515,23 @@ msgstr ""
 "URLは自動的にクリック可能なリンクに変換されます。有効なウェブアドレスを貼り付"
 "けるだけで、インタラクティブになります。"
 
-#: templates/weblog/post.html:126
+#: templates/weblog/post.html:127
 msgid "No comments yet."
 msgstr "まだコメントないよ。"
 
-#: templates/weblog/post.html:129
+#: templates/weblog/post.html:130
 msgid "Leave a Comment"
 msgstr "コメントを残す"
 
-#: templates/weblog/post.html:138
+#: templates/weblog/post.html:139
 msgid "Submit Comment"
 msgstr "コメントを送信"
 
-#: templates/weblog/post.html:142
+#: templates/weblog/post.html:143
 msgid "Please log in to comment."
 msgstr "コメントするにはログインしてください。"
 
-#: templates/weblog/post.html:164
+#: templates/weblog/post.html:165
 msgid "Write a comment..."
 msgstr "コメントを書く..."
 

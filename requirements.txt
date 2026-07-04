@@ -1,33 +1,53 @@
-django
-django-redis
-python-dotenv
-gunicorn
-whitenoise
-six
-cryptocode
-captcha
-PyGithub
-requests
-pillow
-pycryptodome
-pygments
+# v2 Updated Requirements
 bs4
-jellyfish
-fuzzywuzzy
-python-Levenshtein
-selenium
-django-haystack
+celery
 channels
 channels_redis
 daphne
-user_agents
-numpy
-scikit-learn
-akismet
-google-cloud-translate
-django-hosts
-apscheduler
-django-sslserver
-# djangorestframework
-django-cors-headers
-google-generativeai
+django
+django-celery-beat
+django-redis
+google-genai
+pygments
+pillow
+python-dotenv
+redis
+requests
+django-storages
+boto3
+django-stubs
+
+
+# Original Requirements (to be deleted later)
+# django-redis
+# python-dotenv
+# gunicorn
+# whitenoise
+# six
+# cryptocode
+# captcha
+# PyGithub
+# requests
+# pillow
+# pycryptodome
+# pygments
+# bs4
+# jellyfish
+# fuzzywuzzy
+# python-Levenshtein
+# selenium
+# django-haystack
+# channels
+# channels_redis
+# daphne
+# user_agents
+# numpy
+# scikit-learn
+# akismet
+# google-cloud-translate
+# django-hosts
+# apscheduler
+# django-sslserver
+# # djangorestframework
+# django-cors-headers
+# google-generativeai

@@ -1,0 +1,110 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
+    <div class="tab-content">
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="section-header">
+            <h2 class="section-title">{% trans "Volumes" %}</h2>
+            <button type="button" class="create-btn" id="toggle-volume-form">
+                <span class="btn-icon">+</span>
+                <span class="btn-text">{% trans "New Volume" %}</span>
+            </button>
+        </div>
+
+        <div class="inline-form hidden" id="volume-form">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="volume-title" class="form-label">{% trans "Title" %}</label>
+                        <input type="text" id="volume-title" name="title" class="form-input" placeholder="{% trans 'Volume title...' %}" required />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="volume-description" class="form-label">{% trans "Description" %}</label>
+                        <textarea id="volume-description" name="description" class="form-textarea" rows="2" placeholder="{% trans 'Volume description...' %}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="volume-cover" class="form-label">{% trans "Cover Image" %}</label>
+                        <div class="current-cover hidden" id="volume-cover-preview">
+                            <img src="" alt="" class="cover-preview" id="volume-cover-img">
+                        </div>
+                        <input type="file" id="volume-cover" name="cover_image" class="form-input" accept="image/*" />
+                        <div class="form-hint" id="volume-cover-hint"></div>
+                    </div>
+                </div>
+                <div class="inline-form-actions">
+                    <button type="submit" class="create-btn">{% trans "Save Volume" %}</button>
+                    <button type="button" class="cancel-btn" id="cancel-volume-form">{% trans "Cancel" %}</button>
+                </div>
+            </form>
+        </div>
+
+        {% if volumes %}
+        <form method="post" id="reorder-form">
+            {% csrf_token %}
+            <input type="hidden" name="sub_action" value="reorder">
+            <div class="items-list" id="volume-list">
+                {% for volume in volumes %}
+                <div class="item-card draggable-item {% if volume.cover_image %}has-cover{% endif %}" data-id="{{ volume.id }}">
+                    <input type="hidden" name="volume_order" value="{{ volume.id }}">
+                    <span class="drag-handle" title="{% trans 'Drag to reorder' %}">⠿</span>
+                    {% if volume.cover_image %}
+                    <img src="{{ volume.cover_image.url }}" alt="{{ volume.title }}" class="item-cover">
+                    {% endif %}
+                    <div class="item-card-body">
+                        <div class="item-card-header">
+                            <div class="item-card-info">
+                                <h3 class="item-title">{{ volume.title }}</h3>
+                                <span class="item-count">{{ volume.entries_count }} {% if volume.entries_count == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
+                            </div>
+                            <div class="item-card-actions">
+                                <button type="button" class="action-btn edit-volume-btn" data-id="{{ volume.id }}" data-title="{{ volume.title }}" data-description="{{ volume.description }}" data-cover="{% if volume.cover_image %}{{ volume.cover_image.url }}{% endif %}">{% trans "Edit" %}</button>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=volumes&action=delete&volume_id={{ volume.id }}" class="action-btn delete-action" onclick="return confirm('{% trans "Delete this volume?" %}')">{% trans "Delete" %}</a>
+                            </div>
+                        </div>
+                        {% if volume.description %}
+                        <p class="item-description">{{ volume.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="reorder-actions hidden" id="reorder-actions">
+                <button type="submit" class="create-btn">{% trans "Save Order" %}</button>
+                <button type="button" class="cancel-btn" id="cancel-reorder">{% trans "Cancel" %}</button>
+            </div>
+        </form>
+        {% else %}
+        <div class="empty-state">
+            <h3>{% trans "No Volumes Yet" %}</h3>
+            <p>{% trans "Create volumes to organize your chapters into arcs or books." %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/journals/volumes.js' %}"></script>
+{% endblock scripts %}

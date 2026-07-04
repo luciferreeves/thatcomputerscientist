@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<div class="page-header">
+  <div class="header-content">
+    <div class="title-section">
+      <h1 class="page-title">{{ journal.name }}</h1>
+      <p class="page-subtitle">
+        /{{ journal.slug }}
+        {% if journal.private %}
+          <span class="privacy-badge private">{% trans "Private" %}</span>
+        {% else %}
+          <span class="privacy-badge public">{% trans "Public" %}</span>
+        {% endif %}
+        {% if journal.mode != "default" %}
+          <span class="mode-badge mode-{{ journal.mode }}">{{ journal.get_mode_display }}</span>
+        {% endif %}
+        {% if journal.status %}
+          {% if journal.mode == "book" or journal.mode == "light_novel" %}
+            <span class="status-badge status-{{ journal.status }}">{{ journal.get_status_display }}</span>
+          {% endif %}
+        {% endif %}
+      </p>
+    </div>
+    <div class="card-actions">
+      <a href="{% url "services:journals:journals" %}" class="back-btn">{% trans "Back to Journals" %}</a>
+    </div>
+  </div>
+</div>
+
+<div class="journal-tabs">
+  <a href="{% url "services:journals:journal" journal.slug %}?tab=entries" class="tab-btn {% if tab == "entries" or not tab %}active{% endif %}">{{ journal.entry_label_plural }} ({{ journal.entries_count|default:0 }})</a>
+
+  {% if journal.mode == "book" or journal.mode == "light_novel" %}
+    <a href="{% url "services:journals:journal" journal.slug %}?tab=toc" class="tab-btn {% if tab == "toc" %}active{% endif %}">{% trans "Table of Contents" %}</a>
+    <a href="{% url "services:journals:journal" journal.slug %}?tab=volumes" class="tab-btn {% if tab == "volumes" %}active{% endif %}">{% trans "Volumes" %}</a>
+  {% endif %}
+
+  {% if journal.mode == "book" or journal.mode == "light_novel" or journal.mode == "short_stories" %}
+    <a href="{% url "services:journals:journal" journal.slug %}?tab=characters" class="tab-btn {% if tab == "characters" %}active{% endif %}">{% trans "Characters" %}</a>
+  {% endif %}
+
+  {% if journal.mode == "diary" %}
+    <a href="{% url "services:journals:journal" journal.slug %}?tab=calendar" class="tab-btn {% if tab == "calendar" %}active{% endif %}">{% trans "Calendar" %}</a>
+  {% endif %}
+
+  <a href="{% url "services:journals:journal" journal.slug %}?tab=tags" class="tab-btn {% if tab == "tags" %}active{% endif %}">{% trans "Tags" %}</a>
+  <a href="{% url "services:journals:journal" journal.slug %}?tab=settings" class="tab-btn {% if tab == "settings" %}active{% endif %}">{% trans "Settings" %}</a>
+  <a href="{% url 'core:journal' journal.slug %}" class="tab-btn">{% trans "View" %}</a>
+</div>

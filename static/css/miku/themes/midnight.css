@@ -1,0 +1,367 @@
+.miku-editor-container {
+    background: #000;
+    border: 1px solid #8d8dff;
+    color: #fff;
+}
+
+.miku-editor-line-numbers {
+    background: rgba(15, 10, 25, 0.9);
+    color: #AD8CFF;
+    border-right: 1px solid rgba(173, 140, 255, 0.4);
+}
+
+.miku-editor-main {
+    background: #000;
+}
+
+.miku-editor-input {
+    caret-color: #df23c4;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: rgba(15, 10, 25, 0.9);
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #df23c4;
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #AD8CFF;
+}
+
+.miku-editor-syntax-highlight {
+    color: #fff;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: rgba(30, 20, 50, 0.95);
+    border: 1px solid rgba(173, 140, 255, 0.7);
+    box-shadow: 0 3px 5px -2px rgba(136, 87, 210, 0.6);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: rgba(30, 20, 50, 0.95);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #df23c4;
+    border-radius: 3px;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid rgba(173, 140, 255, 0.2);
+    color: #fff;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: rgba(173, 140, 255, 0.18);
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: #fff;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #8d8dff;
+}
+
+.miku-editor-container:focus-within {
+    border-color: #df23c4;
+}
+
+.miku-syntax-html-tag {
+    color: #8d8dff;
+}
+
+.miku-syntax-html-attribute {
+    color: #AD8CFF;
+}
+
+.miku-syntax-html-string {
+    color: #95f695;
+}
+
+.miku-syntax-html-comment {
+    color: #9ae4f1;
+}
+
+.miku-syntax-css-selector {
+    color: #df23c4;
+}
+
+.miku-syntax-css-property {
+    color: #8d8dff;
+}
+
+.miku-syntax-css-value {
+    color: #95f695;
+}
+
+.miku-syntax-css-comment {
+    color: #9ae4f1;
+}
+
+.miku-syntax-js-keyword {
+    color: #df23c4;
+}
+
+.miku-syntax-js-string {
+    color: #95f695;
+}
+
+.miku-syntax-js-comment {
+    color: #9ae4f1;
+}
+
+.miku-syntax-js-number {
+    color: #AD8CFF;
+}
+
+.miku-syntax-js-function {
+    color: #8d8dff;
+}
+
+.miku-container {
+    background: #000;
+    border-color: #8d8dff;
+}
+
+.miku-toolbar {
+    background: rgba(15, 10, 25, 0.9);
+    border-bottom-color: rgba(173, 140, 255, 0.4);
+}
+
+.miku-btn {
+    background: rgba(68, 68, 177, 0.3);
+    border-color: rgba(141, 141, 255, 0.4);
+    color: #7ee8c7;
+}
+
+.miku-btn:hover {
+    background: rgba(223, 35, 196, 0.5);
+    border-color: #df23c4;
+    color: #ffffff;
+}
+
+.miku-content,
+.miku-source {
+    background: #000;
+    color: #fff;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #df23c4;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3 {
+    color: #7ee8c7;
+    text-shadow: 0 0 4px rgba(126, 232, 199, 0.3);
+}
+
+.miku-content strong,
+.miku-content b {
+    color: #96b5ff;
+}
+
+.miku-content em,
+.miku-content i {
+    color: #ff96c4;
+}
+
+.miku-content a {
+    color: #df23c4;
+    text-shadow: 0 0 4px rgba(223, 35, 196, 0.3);
+}
+
+.miku-link-edit {
+    background: rgba(68, 68, 177, 0.8);
+    color: #7ee8c7;
+}
+
+.miku-content img {
+    border-color: rgba(141, 141, 255, 0.3);
+    box-shadow: 0 0 8px rgba(141, 141, 255, 0.2);
+}
+
+.miku-content blockquote {
+    border-left-color: #8d8dff;
+    background: rgba(141, 141, 255, 0.1);
+    color: #96b5ff;
+}
+
+.miku-content code {
+    background: rgba(0, 0, 0, 0.4);
+    color: #54f2f2;
+    border-color: rgba(84, 242, 242, 0.3);
+}
+
+.miku-code-wrapper,
+.miku-content pre {
+    border-color: rgba(141, 141, 255, 0.3);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.miku-code-lang {
+    background: rgba(141, 141, 255, 0.3);
+    color: #7ee8c7;
+    border-color: rgba(141, 141, 255, 0.5);
+}
+
+.miku-popup {
+    background: rgba(30, 20, 50, 0.95);
+    border-color: rgba(173, 140, 255, 0.7);
+    box-shadow: 0 8px 24px rgba(136, 87, 210, 0.6);
+}
+
+.miku-popup-header {
+    background: rgba(50, 30, 80, 0.95);
+    border-bottom-color: rgba(173, 140, 255, 0.5);
+}
+
+.miku-popup-field label {
+    color: #7ee8c7;
+}
+
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(141, 141, 255, 0.4);
+    color: #fff;
+}
+
+.miku-popup-footer {
+    background: rgba(50, 30, 80, 0.95);
+    border-top-color: rgba(173, 140, 255, 0.5);
+}
+
+.miku-btn-primary {
+    background: rgba(68, 68, 177, 0.85);
+    border-color: #8d8dff;
+    color: #fff;
+}
+
+.miku-btn-primary:hover {
+    background: #df23c4;
+    border-color: #df23c4;
+}
+
+.miku-btn-secondary {
+    background: rgba(68, 68, 177, 0.3);
+    border-color: rgba(141, 141, 255, 0.4);
+    color: #96b5ff;
+}
+
+.miku-btn-secondary:hover {
+    background: rgba(150, 181, 255, 0.2);
+    color: #ffffff;
+}
+
+.markmiku-toolbar {
+    background: rgba(15, 10, 25, 0.9);
+    border-top-color: rgba(173, 140, 255, 0.4);
+}
+
+.markmiku-btn {
+    color: #8d8dff;
+}
+
+.markmiku-btn:hover {
+    color: #ffffff;
+    background: rgba(223, 35, 196, 0.5);
+}
+
+.markmiku-btn-send {
+    color: #7ee8c7;
+}
+
+.markmiku-btn-send:hover {
+    color: #ffffff;
+    background: rgba(126, 232, 199, 0.15);
+}
+
+.markmiku-emoji-picker {
+    background: rgba(30, 20, 50, 0.95);
+    border-color: rgba(173, 140, 255, 0.7);
+    box-shadow: 0 4px 16px rgba(136, 87, 210, 0.6);
+}
+
+.markmiku-emoji-search {
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom-color: rgba(173, 140, 255, 0.4);
+    color: #ffffff;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-track {
+    background: rgba(30, 20, 50, 0.95);
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-thumb {
+    background: #df23c4;
+}
+
+.markmiku-emoji-item:hover {
+    background: rgba(173, 140, 255, 0.18);
+}
+
+.markmiku-emoji-empty {
+    color: #8d8dff;
+}
+
+.markmiku-syntax-italic {
+    color: #ff96c4;
+}
+
+.markmiku-syntax-emoji {
+    color: #AD8CFF;
+}
+
+.markmiku-syntax-spoiler {
+    background: rgba(141, 141, 255, 0.1);
+}
+
+.markmiku-attach-sidebar {
+    background: rgba(0, 0, 0, 0.3);
+    border-left-color: rgba(126, 232, 199, 0.1);
+}
+
+.markmiku-attach-thumb {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(126, 232, 199, 0.15);
+}
+
+.markmiku-attach-ext {
+    color: #aaa;
+}
+
+.markmiku-attach-progress-fill {
+    background: rgba(126, 232, 199, 0.25);
+    border-top-color: #7ee8c7;
+}
+
+.markmiku-attach-remove:hover {
+    color: #7ee8c7;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-thumb {
+    background: #7ee8c7;
+}

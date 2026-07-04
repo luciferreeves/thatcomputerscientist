@@ -1,0 +1,37 @@
+/* SCANLINES CSS */
+#scanlines {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9;
+    opacity: 0.18;
+}
+
+#scanlines:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .4) 50%);
+    background-size: 100% 4px;
+    will-change: background, background-size;
+    animation: scanlines 0.2s linear infinite;
+}
+
+@keyframes scanlines {
+    from {
+        background: linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .4) 50%);
+        background-size: 100% 4px;
+    }
+
+    to {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, .4) 50%, transparent 50%);
+        background-size: 100% 4px;
+    }
+}

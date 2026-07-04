@@ -1,0 +1,15 @@
+[Unit]
+Description=Celery Beat Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+EnvironmentFile=/home/ubuntu/thatcomputerscientist/.env
+WorkingDirectory=/home/ubuntu/thatcomputerscientist
+ExecStart=/home/ubuntu/thatcomputerscientist/venv/bin/celery -A thatcomputerscientist beat
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

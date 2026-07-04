@@ -1,0 +1,340 @@
+.miku-editor-container {
+    background: #000000;
+    border: 1px solid #00FFFF;
+    color: #00FFFF;
+    border-radius: 0;
+    font-family: 'Courier New', 'Monaco', monospace;
+}
+
+.miku-editor-line-numbers {
+    background: #000000;
+    color: #004444;
+    border-right: 1px solid #00FFFF;
+    font-family: 'Courier New', monospace;
+}
+
+.miku-editor-main {
+    background: #000000;
+}
+
+.miku-editor-input {
+    caret-color: #00FFFF;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: #001111;
+    border-radius: 0;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+    border-radius: 0;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #33FFFF;
+}
+
+.miku-editor-syntax-highlight {
+    color: #00FFFF;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: #000000;
+    border: 1px solid #00FFFF;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0, 255, 255, 0.3);
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+    border-radius: 0;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid #002222;
+    color: #00FFFF;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: #001111;
+    color: #00FF00;
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: inherit;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #004444;
+}
+
+.miku-editor-container:focus-within {
+    border-color: #00FF00;
+    box-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
+}
+
+.miku-syntax-html-tag {
+    color: #00FF00;
+}
+
+.miku-syntax-html-attribute {
+    color: #00FFFF;
+}
+
+.miku-syntax-html-string {
+    color: #00FF00;
+}
+
+.miku-syntax-html-comment {
+    color: #004444;
+    font-style: italic;
+}
+
+.miku-syntax-css-selector {
+    color: #00FF00;
+}
+
+.miku-syntax-css-property {
+    color: #00FFFF;
+}
+
+.miku-syntax-css-value {
+    color: #00FF00;
+}
+
+.miku-syntax-css-comment {
+    color: #004444;
+    font-style: italic;
+}
+
+.miku-syntax-js-keyword {
+    color: #00FF00;
+}
+
+.miku-syntax-js-string {
+    color: #00FF00;
+}
+
+.miku-syntax-js-comment {
+    color: #004444;
+    font-style: italic;
+}
+
+.miku-syntax-js-number {
+    color: #00FFFF;
+}
+
+.miku-syntax-js-function {
+    color: #00FF00;
+}
+
+.miku-container {
+    background: #000000;
+    border: 1px solid #00FFFF;
+}
+
+.miku-toolbar {
+    background: #000000;
+    border-bottom: 1px solid #00FFFF;
+}
+
+.miku-btn {
+    color: #00FFFF;
+    background: transparent;
+    border: 1px solid #004444;
+}
+
+.miku-btn:hover {
+    background: #001111;
+    border-color: #00FFFF;
+}
+
+.miku-content,
+.miku-source {
+    background: #000000;
+    color: #00FFFF;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3,
+.miku-content a {
+    color: #00FFFF;
+}
+
+.miku-link-edit {
+    background: #001111;
+    color: #00FFFF;
+}
+
+.miku-content img {
+    border-color: #004444;
+}
+
+.miku-content blockquote {
+    border-left-color: #00FFFF;
+    background: #001111;
+}
+
+.miku-content code {
+    background: #001111;
+    color: #00FFFF;
+    border-color: #004444;
+}
+
+.miku-code-wrapper,
+.miku-content pre {
+    border-color: #004444;
+    background: #001111;
+}
+
+.miku-code-lang {
+    background: #000000;
+    color: #00FFFF;
+    border-color: #00FFFF;
+}
+
+.miku-popup {
+    background: #000000;
+    border: 1px solid #00FFFF;
+}
+
+.miku-popup-header,
+.miku-popup-footer {
+    background: #000000;
+    border-color: #00FFFF;
+    color: #00FFFF;
+}
+
+.miku-popup-field label,
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    color: #00FFFF;
+    background: #001111;
+    border-color: #00FFFF;
+}
+
+.miku-btn-primary {
+    background: #00FFFF;
+    color: #000000;
+}
+
+.miku-btn-secondary {
+    background: transparent;
+    color: #00FFFF;
+    border: 1px solid #00FFFF;
+}
+
+.markmiku-toolbar {
+    background: #000000;
+    border-top-color: #00FFFF;
+}
+
+.markmiku-btn {
+    color: #004444;
+}
+
+.markmiku-btn:hover {
+    color: #00FFFF;
+    background: #001111;
+}
+
+.markmiku-btn-send {
+    color: #00FFFF;
+}
+
+.markmiku-btn-send:hover {
+    color: #33FFFF;
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.markmiku-emoji-picker {
+    background: #000000;
+    border-color: #00FFFF;
+    box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3);
+}
+
+.markmiku-emoji-search {
+    background: #001111;
+    border-bottom-color: #00FFFF;
+    color: #00FFFF;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+}
+
+.markmiku-emoji-item:hover {
+    background: #001111;
+}
+
+.markmiku-emoji-empty {
+    color: #004444;
+}
+
+.markmiku-syntax-italic {
+    color: #33FFFF;
+}
+
+.markmiku-syntax-emoji {
+    color: #00FF00;
+}
+
+.markmiku-syntax-spoiler {
+    background: rgba(0, 255, 255, 0.08);
+}
+
+.markmiku-attach-sidebar {
+    background: rgba(0, 0, 0, 0.3);
+    border-left-color: rgba(0, 255, 255, 0.1);
+}
+
+.markmiku-attach-thumb {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(0, 255, 255, 0.15);
+}
+
+.markmiku-attach-ext {
+    color: #aaa;
+}
+
+.markmiku-attach-progress-fill {
+    background: rgba(0, 255, 255, 0.25);
+    border-top-color: #00FFFF;
+}
+
+.markmiku-attach-remove:hover {
+    color: #00FFFF;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-thumb {
+    background: #00FFFF;
+}

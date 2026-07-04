@@ -1,0 +1,272 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static "css/journals/journals.css" %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+{% if journal.mode == "short_stories" %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/short_stories.css' %}" />
+{% elif journal.mode == "poetry" %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/poetry.css' %}" />
+{% elif journal.mode == "diary" %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/diary.css' %}" />
+{% endif %}
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
+    <div class="journal-entries">
+        {% if messages %}
+        <div class="form-messages">
+            {% for message in messages %}
+            <div class="form-message {{ message.tags }}">
+                <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
+                <span class="message-text">{{ message }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if journal.mode == "book" or journal.mode == "light_novel" %}
+
+        <div class="section-header">
+            <h2 class="section-title">{{ journal.entry_label_plural }}</h2>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="create-btn">
+                <span class="btn-icon">+</span>
+                <span class="btn-text">{% trans "New" %} {{ journal.entry_label }}</span>
+            </a>
+        </div>
+
+        {% if volumes_with_entries or unassigned_entries %}
+        <form method="post" id="reorder-form">
+            {% csrf_token %}
+            <input type="hidden" name="sub_action" value="reorder">
+
+            {% for volume in volumes_with_entries %}
+            <div class="volume-section">
+                <div class="volume-section-header">
+                    {% if volume.cover_image %}
+                    <img src="{{ volume.cover_image.url }}" alt="{{ volume.title }}" class="item-cover">
+                    {% endif %}
+                    <h3 class="volume-section-title">{{ volume.title }}</h3>
+                    <div class="volume-section-actions">
+                        <span class="item-count">{{ volume.entries.count }} {% if volume.entries.count == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
+                        <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&volume={{ volume.id }}&from=entries" class="toc-add-btn" title="{% blocktranslate with label=journal.entry_label|lower %}Add {{ label }}{% endblocktranslate %}">+</a>
+                    </div>
+                </div>
+                <div class="items-list reorderable-list" data-volume="{{ volume.id }}">
+                    {% for entry in volume.entries.all %}
+                    <div class="item-card draggable-item" data-id="{{ entry.id }}">
+                        <input type="hidden" name="entry_order" value="{{ entry.id }}">
+                        <span class="drag-handle" title="{% trans 'Drag to reorder' %}">⠿</span>
+                        <div class="item-card-body">
+                            <div class="item-card-header">
+                                <div class="item-card-info">
+                                    <h3 class="item-title">{{ entry.title }}</h3>
+                                    {% if entry.is_draft %}<span class="draft-badge">{% trans "Draft" %}</span>{% endif %}
+                                </div>
+                                <div class="item-card-actions">
+                                    <span class="item-count">{{ entry.word_count }} {% trans "words" %}</span>
+                                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="action-btn">{% trans "Edit" %}</a>
+                                </div>
+                            </div>
+                            {% if entry.summary %}
+                            <p class="item-description">{{ entry.summary|truncatechars:120 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="empty-state">
+                        <p>{% trans "No chapters in this volume yet." %}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if unassigned_entries %}
+            <div class="volume-section">
+                <div class="volume-section-header">
+                    <h3 class="volume-section-title">{% if volumes_with_entries %}{% trans "Unassigned" %}{% else %}{% trans "All" %} {{ journal.entry_label_plural }}{% endif %}</h3>
+                    <div class="volume-section-actions">
+                        <span class="item-count">{{ unassigned_entries|length }} {% if unassigned_entries|length == 1 %}{{ journal.entry_label|lower }}{% else %}{{ journal.entry_label_plural|lower }}{% endif %}</span>
+                    </div>
+                </div>
+                <div class="items-list reorderable-list" data-volume="none">
+                    {% for entry in unassigned_entries %}
+                    <div class="item-card draggable-item" data-id="{{ entry.id }}">
+                        <input type="hidden" name="entry_order" value="{{ entry.id }}">
+                        <span class="drag-handle" title="{% trans 'Drag to reorder' %}">⠿</span>
+                        <div class="item-card-body">
+                            <div class="item-card-header">
+                                <div class="item-card-info">
+                                    <h3 class="item-title">{{ entry.title }}</h3>
+                                    {% if entry.is_draft %}<span class="draft-badge">{% trans "Draft" %}</span>{% endif %}
+                                </div>
+                                <div class="item-card-actions">
+                                    <span class="item-count">{{ entry.word_count }} {% trans "words" %}</span>
+                                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="action-btn">{% trans "Edit" %}</a>
+                                </div>
+                            </div>
+                            {% if entry.summary %}
+                            <p class="item-description">{{ entry.summary|truncatechars:120 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="reorder-actions hidden" id="reorder-actions">
+                <button type="submit" class="create-btn">{% trans "Save Order" %}</button>
+                <button type="button" class="cancel-btn" id="cancel-reorder">{% trans "Cancel" %}</button>
+            </div>
+        </form>
+        {% else %}
+        <div class="empty-state">
+            <h3>{% blocktranslate with label=journal.entry_label_plural %}No {{ label }} Yet{% endblocktranslate %}</h3>
+            <p>{% blocktranslate with label=journal.entry_label|lower %}Start your digital journaling journey by creating your first {{ label }}.{% endblocktranslate %}</p>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="empty-action-btn">
+                {% blocktranslate with label=journal.entry_label %}Create Your First {{ label }}{% endblocktranslate %}
+            </a>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="section-header">
+            <h2 class="section-title">{{ journal.entry_label_plural }}</h2>
+            <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=entries" class="create-btn">
+                <span class="btn-icon">+</span>
+                <span class="btn-text">{% trans "New" %} {{ journal.entry_label }}</span>
+            </a>
+        </div>
+        {% if journal.mode == "short_stories" %}
+        <div class="journal-entries-main">{% include "journals/_partials/short_story_entries.html" with journal=journal service_page=True %}</div>
+        {% elif journal.mode == "poetry" %}
+        <div class="journal-entries-main">{% include "journals/_partials/poetry_entries.html" with journal=journal service_page=True %}</div>
+        {% elif journal.mode == "diary" %}
+        <div class="journal-entries-main">{% include "journals/_partials/diary_entries.html" with journal=journal service_page=True %}</div>
+        {% else %}
+        <div class="journal-entries-main">{% include "journals/_partials/journal_entries.html" with journal=journal service_page=True %}</div>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/journals/common.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    initDropdowns();
+
+    var lists = document.querySelectorAll(".reorderable-list");
+    var reorderActions = document.getElementById("reorder-actions");
+    var cancelReorder = document.getElementById("cancel-reorder");
+
+    if (!lists.length) return;
+
+    var dragItem = null;
+    var dragList = null;
+    var placeholder = null;
+    var originalOrders = {};
+
+    function captureOrder() {
+        lists.forEach(function (list) {
+            var key = list.dataset.volume;
+            originalOrders[key] = [];
+            list.querySelectorAll(".draggable-item").forEach(function (item) {
+                originalOrders[key].push(item.dataset.id);
+            });
+        });
+    }
+
+    function checkOrderChanged() {
+        var changed = false;
+        lists.forEach(function (list) {
+            var key = list.dataset.volume;
+            var current = [];
+            list.querySelectorAll(".draggable-item").forEach(function (item) {
+                current.push(item.dataset.id);
+            });
+            if (!originalOrders[key] || current.length !== originalOrders[key].length) { changed = true; return; }
+            for (var i = 0; i < current.length; i++) {
+                if (current[i] !== originalOrders[key][i]) { changed = true; return; }
+            }
+        });
+        if (reorderActions) reorderActions.classList.toggle("hidden", !changed);
+    }
+
+    captureOrder();
+
+    lists.forEach(function (list) {
+        list.addEventListener("mousedown", function (e) {
+            var handle = e.target.closest(".drag-handle");
+            if (!handle) return;
+            e.preventDefault();
+            dragItem = handle.closest(".draggable-item");
+            dragList = list;
+            if (!dragItem) return;
+            var rect = dragItem.getBoundingClientRect();
+            dragItem.classList.add("dragging");
+            dragItem.style.width = rect.width + "px";
+            placeholder = document.createElement("div");
+            placeholder.className = "drag-placeholder";
+            placeholder.style.height = rect.height + "px";
+            list.insertBefore(placeholder, dragItem);
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+        });
+    });
+
+    function onMouseMove(e) {
+        if (!dragItem || !placeholder || !dragList) return;
+        var items = dragList.querySelectorAll(".draggable-item:not(.dragging)");
+        var inserted = false;
+        for (var i = 0; i < items.length; i++) {
+            var rect = items[i].getBoundingClientRect();
+            if (e.clientY < rect.top + rect.height / 2) {
+                dragList.insertBefore(placeholder, items[i]);
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) dragList.appendChild(placeholder);
+    }
+
+    function onMouseUp() {
+        if (!dragItem || !placeholder || !dragList) return;
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+        dragList.insertBefore(dragItem, placeholder);
+        placeholder.remove();
+        placeholder = null;
+        dragItem.classList.remove("dragging");
+        dragItem.style.width = "";
+        dragItem = null;
+        dragList = null;
+        checkOrderChanged();
+    }
+
+    if (cancelReorder) {
+        cancelReorder.addEventListener("click", function () {
+            lists.forEach(function (list) {
+                var key = list.dataset.volume;
+                if (!originalOrders[key]) return;
+                originalOrders[key].forEach(function (id) {
+                    var item = list.querySelector('.draggable-item[data-id="' + id + '"]');
+                    if (item) list.appendChild(item);
+                });
+            });
+            checkOrderChanged();
+        });
+    }
+});
+</script>
+{% endblock scripts %}

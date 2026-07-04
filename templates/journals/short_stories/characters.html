@@ -1,0 +1,87 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/short_stories/characters.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="ss">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="ss-char-header">
+        <a href="{% url 'core:journal' journal.slug %}" class="ss-char-book-link">{{ journal.name }}</a>
+        <span class="ss-char-header-sep">//</span>
+        <span class="ss-char-header-label">{% trans "characters" %}</span>
+    </div>
+
+    <div class="ss-char-profile">
+        {% if character.image %}
+        <img class="ss-char-img" src="{{ character.image.url }}" alt="{{ character.name }}" />
+        {% else %}
+        <div class="ss-char-initial">{{ character.name|first }}</div>
+        {% endif %}
+        <div class="ss-char-info">
+            <div class="ss-char-role">{% if character.role %}{% translate character.role %}{% endif %}</div>
+            <div class="ss-char-name">{{ character.name }}</div>
+            {% if character.bio %}<div class="ss-char-bio">{{ character.bio }}</div>{% endif %}
+        </div>
+    </div>
+
+    {% if relationships %}
+    <div class="ss-data-section">
+        <div class="ss-data-head">{% trans "relationships" %}</div>
+        {% for rel in relationships %}
+        {% if rel.from_character.id == character.id %}
+        <a href="{% url 'core:journal' journal.slug %}?character={{ rel.to_character.id }}" class="ss-rel-row">
+            {% if rel.to_character.image %}
+            <img class="ss-rel-avatar" src="{{ rel.to_character.image.url }}" alt="{{ rel.to_character.name }}" />
+            {% else %}
+            <div class="ss-rel-initial">{{ rel.to_character.name|first }}</div>
+            {% endif %}
+            <div class="ss-rel-info">
+                <span class="ss-rel-name">{{ rel.to_character.name }}</span>
+                <span class="ss-rel-label">{{ rel.label }}</span>
+            </div>
+        </a>
+        {% else %}
+        <a href="{% url 'core:journal' journal.slug %}?character={{ rel.from_character.id }}" class="ss-rel-row">
+            {% if rel.from_character.image %}
+            <img class="ss-rel-avatar" src="{{ rel.from_character.image.url }}" alt="{{ rel.from_character.name }}" />
+            {% else %}
+            <div class="ss-rel-initial">{{ rel.from_character.name|first }}</div>
+            {% endif %}
+            <div class="ss-rel-info">
+                <span class="ss-rel-name">{{ rel.from_character.name }}</span>
+                <span class="ss-rel-label">{{ rel.label }}</span>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if appearances %}
+    <div class="ss-data-section">
+        <div class="ss-data-head">{% trans "appears in" %}</div>
+        {% for appearance in appearances %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ appearance.entry.slug }}" class="ss-app-row">
+            {% if appearance.entry.thumbnail %}
+            <img class="ss-app-thumb" src="{{ appearance.entry.thumbnail.url }}" alt="" />
+            {% else %}
+            <div class="ss-app-thumb-empty"></div>
+            {% endif %}
+            <span class="ss-app-n">{{ forloop.counter|stringformat:"02d" }}</span>
+            <span class="ss-app-title">{{ appearance.entry.title }}</span>
+            {% if appearance.entry.genre %}<span class="ss-app-genre">{{ appearance.entry.get_genre_display }}</span>{% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="ss-back">
+        <a href="{% url 'core:journal' journal.slug %}">&laquo; {{ journal.name }}</a>
+    </div>
+</div>
+{% endblock content %}

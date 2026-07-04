@@ -1,0 +1,86 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load journal_filters %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/diary.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
+    <div class="tab-content">
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="calendar-nav">
+            {% with m=calendar.month y=calendar.year %}
+            {% if m == 1 %}
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=calendar&year={{ y|add:"-1" }}&month=12" class="calendar-nav-btn">‹</a>
+            {% else %}
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=calendar&year={{ y }}&month={{ m|add:"-1" }}" class="calendar-nav-btn">‹</a>
+            {% endif %}
+            <h2 class="calendar-month-title">{{ calendar.month_date|date:"F" }} {{ calendar.year }}</h2>
+            {% if m == 12 %}
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=calendar&year={{ y|add:"1" }}&month=1" class="calendar-nav-btn">›</a>
+            {% else %}
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=calendar&year={{ y }}&month={{ m|add:"1" }}" class="calendar-nav-btn">›</a>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="calendar-grid">
+            <div class="calendar-header-row">
+                <div class="calendar-day-header">{% trans "Mon" %}</div>
+                <div class="calendar-day-header">{% trans "Tue" %}</div>
+                <div class="calendar-day-header">{% trans "Wed" %}</div>
+                <div class="calendar-day-header">{% trans "Thu" %}</div>
+                <div class="calendar-day-header">{% trans "Fri" %}</div>
+                <div class="calendar-day-header">{% trans "Sat" %}</div>
+                <div class="calendar-day-header">{% trans "Sun" %}</div>
+            </div>
+            <div class="calendar-body">
+                {% for day, weekday in calendar.days %}
+                    {% if day == 0 %}
+                        <div class="calendar-cell empty"></div>
+                    {% else %}
+                        {% with day_data=calendar.entries|dictget:day %}
+                        <div class="calendar-cell {% if day_data %}has-entry{% else %}no-entry{% endif %}">
+                            <span class="calendar-day-number">{{ day }}</span>
+                            {% if day_data %}
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ day_data.slug }}" class="calendar-entry-link">
+                                    <span class="calendar-entry-title">{{ day_data.title|truncatechars:20 }}</span>
+                                    {% if day_data.mood %}
+                                    <span class="calendar-entry-mood">{{ day_data.mood }}</span>
+                                    {% endif %}
+                                </a>
+                            {% else %}
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=new&from=calendar&entry_date={{ calendar.year }}-{{ calendar.month|stringformat:"02d" }}-{{ day|stringformat:"02d" }}" class="calendar-add-link">
+                                    <span class="calendar-add-icon">+</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/journals/common.js' %}"></script>
+{% endblock scripts %}

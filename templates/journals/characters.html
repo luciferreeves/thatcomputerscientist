@@ -1,0 +1,178 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
+    <div class="tab-content">
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="section-header">
+            <h2 class="section-title">{% trans "Characters" %}</h2>
+            <button type="button" class="create-btn" id="toggle-character-form">
+                <span class="btn-icon">+</span>
+                <span class="btn-text">{% trans "New Character" %}</span>
+            </button>
+        </div>
+
+        <div class="inline-form hidden" id="character-form">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="character-name" class="form-label">{% trans "Name" %}</label>
+                        <input type="text" id="character-name" name="name" class="form-input" placeholder="{% trans 'Character name...' %}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="character-role" class="form-label">{% trans "Role" %}</label>
+                        <select id="character-role" name="role" class="form-input" required>
+                            <option value="" selected>{% trans "Select role..." %}</option>
+                            <option value="Main">{% trans "Main" %}</option>
+                            <option value="Supporting">{% trans "Supporting" %}</option>
+                            <option value="Recurring">{% trans "Recurring" %}</option>
+                            <option value="Minor">{% trans "Minor" %}</option>
+                            <option value="Cameo">{% trans "Cameo" %}</option>
+                            <option value="Narrator">{% trans "Narrator" %}</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="character-bio" class="form-label">{% trans "Bio" %}</label>
+                        <textarea id="character-bio" name="bio" class="form-textarea" rows="3" placeholder="{% trans 'Character backstory and details...' %}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="character-image" class="form-label">{% trans "Image" %}</label>
+                        <input type="file" id="character-image" name="image" class="form-input" accept="image/*" />
+                    </div>
+                </div>
+                <div class="inline-form-actions">
+                    <button type="submit" class="create-btn">{% trans "Save Character" %}</button>
+                    <button type="button" class="cancel-btn" id="cancel-character-form">{% trans "Cancel" %}</button>
+                </div>
+            </form>
+        </div>
+
+        {% if characters %}
+        <form method="post" id="reorder-form">
+            {% csrf_token %}
+            <input type="hidden" name="sub_action" value="reorder">
+            <div class="characters-grid" id="character-list">
+                {% for character in characters %}
+                <div class="character-card draggable-item" data-id="{{ character.id }}">
+                    <input type="hidden" name="character_order" value="{{ character.id }}">
+                    <div class="character-drag-bar">
+                        <span class="drag-handle" title="{% trans 'Drag to reorder' %}">⠿</span>
+                        <h3 class="character-name">{{ character.name }}</h3>
+                    </div>
+                    <div class="character-visual">
+                        {% if character.image %}
+                            <img src="{{ character.image.url }}" alt="{{ character.name }}" class="character-image" />
+                        {% else %}
+                            <div class="character-placeholder">{{ character.name|first }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="character-info">
+                        <span class="character-role" data-role="{{ character.role }}">{% if character.role %}{% translate character.role %}{% endif %}</span>
+                        {% if character.bio %}
+                        <p class="character-bio">{{ character.bio|truncatechars:120 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="character-actions">
+                        <button type="button" class="action-btn edit-character-btn" data-id="{{ character.id }}" data-name="{{ character.name }}" data-role="{{ character.role }}" data-bio="{{ character.bio }}">{% trans "Edit" %}</button>
+                        <a href="{% url 'services:journals:journal' journal.slug %}?tab=characters&action=delete&character_id={{ character.id }}" class="action-btn delete-action" onclick="return confirm('{% trans "Delete this character?" %}')">{% trans "Delete" %}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="reorder-actions hidden" id="reorder-actions">
+                <button type="submit" class="create-btn">{% trans "Save Order" %}</button>
+                <button type="button" class="cancel-btn" id="cancel-reorder">{% trans "Cancel" %}</button>
+            </div>
+        </form>
+        {% else %}
+        <div class="empty-state">
+            <h3>{% trans "No Characters Yet" %}</h3>
+            <p>{% trans "Add characters to track the cast of your story." %}</p>
+        </div>
+        {% endif %}
+
+        {% if characters %}
+        <div class="section-header section-header-spaced">
+            <h2 class="section-title">{% trans "Relationships" %}</h2>
+            <button type="button" class="create-btn" id="toggle-relationship-form">
+                <span class="btn-icon">+</span>
+                <span class="btn-text">{% trans "Add Relationship" %}</span>
+            </button>
+        </div>
+
+        <div class="inline-form hidden" id="relationship-form">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="sub_action" value="relationship" />
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="from-character" class="form-label">{% trans "From" %}</label>
+                        <select id="from-character" name="from_character" class="form-input" required>
+                            <option value="">{% trans "Select character..." %}</option>
+                            {% for character in characters %}
+                            <option value="{{ character.id }}">{{ character.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="to-character" class="form-label">{% trans "To" %}</label>
+                        <select id="to-character" name="to_character" class="form-input" required>
+                            <option value="">{% trans "Select character..." %}</option>
+                            {% for character in characters %}
+                            <option value="{{ character.id }}">{{ character.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="relationship-label" class="form-label">{% trans "Relationship" %}</label>
+                        <input type="text" id="relationship-label" name="label" class="form-input" placeholder="{% trans 'e.g. Sibling, Rival, Friend...' %}" required />
+                    </div>
+                </div>
+                <div class="inline-form-actions">
+                    <button type="submit" class="create-btn">{% trans "Save" %}</button>
+                    <button type="button" class="cancel-btn" id="cancel-relationship-form">{% trans "Cancel" %}</button>
+                </div>
+            </form>
+        </div>
+
+        {% for character in characters %}
+            {% for rel in character.relationships_from.all %}
+            <div class="relationship-item">
+                <span class="rel-from">{{ rel.from_character.name }}</span>
+                <span class="rel-arrow">→</span>
+                <span class="rel-label">{{ rel.label }}</span>
+                <span class="rel-arrow">→</span>
+                <span class="rel-to">{{ rel.to_character.name }}</span>
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=characters&action=delete&relationship_id={{ rel.id }}" class="action-btn delete-action" onclick="return confirm('{% trans "Remove this relationship?" %}')">×</a>
+            </div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/journals/characters.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,68 @@
+/* Journal View — Default header styles (inside shadow DOM) */
+.journal-view-header {
+    margin-bottom: 24px;
+}
+
+.journal-view-header-content {
+    padding: 0;
+}
+
+.journal-view-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 6px 0;
+}
+
+.journal-view-subtitle {
+    color: #b0b0b0;
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Journal Owner */
+.journal-owner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    background: rgba(150, 181, 255, 0.06);
+    border: 1px solid rgba(150, 181, 255, 0.12);
+    border-radius: 10px;
+}
+
+.journal-owner-avatar {
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(150, 181, 255, 0.25);
+}
+
+.journal-owner-info {
+    min-width: 0;
+}
+
+.journal-owner-name {
+    color: #96b5ff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.journal-owner-name:hover {
+    text-decoration: underline;
+}
+
+.journal-owner-handle {
+    color: #6a7a9b;
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.journal-owner-bio {
+    color: #b0b0b0;
+    font-size: 13px;
+    margin: 4px 0 0 0;
+    line-height: 1.5;
+}

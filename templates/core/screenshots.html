@@ -1,0 +1,95 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/core/screenshots.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="scr-room">
+    <div class="scr-monitor" id="scr-monitor">
+        <img class="scr-img" id="scr-img" alt="" />
+        <div class="scr-noise" id="scr-noise">{% trans "no signal" %}</div>
+    </div>
+</div>
+<div class="scr-hint" id="scr-hint">
+    <span class="scr-count" id="scr-count"></span>
+    {% blocktranslate %}
+        press
+        <span class="scr-arrow" id="scr-prev" role="button" tabindex="0">←</span>
+        or
+        <span class="scr-arrow" id="scr-next" role="button" tabindex="0">→</span>
+        to change picture
+    {% endblocktranslate %}
+</div>
+
+<div class="scr-zoom" id="scr-zoom">
+    <img class="scr-zoom-img" id="scr-zoom-img" alt="" />
+</div>
+
+<script id="scr-data" type="application/json">[{% for s in shots %}{"id":"{{ s.id }}","url":"{{ s.url }}"}{% if not forloop.last %},{% endif %}{% endfor %}]</script>
+
+<script>
+(function() {
+    var shots = JSON.parse(document.getElementById('scr-data').textContent || '[]');
+    var img = document.getElementById('scr-img');
+    var noise = document.getElementById('scr-noise');
+    var hint = document.getElementById('scr-hint');
+    var count = document.getElementById('scr-count');
+    var prev = document.getElementById('scr-prev');
+    var next = document.getElementById('scr-next');
+    var zoom = document.getElementById('scr-zoom');
+    var zoomImg = document.getElementById('scr-zoom-img');
+    var monitor = document.getElementById('scr-monitor');
+
+    if (!shots.length) {
+        img.style.display = 'none';
+        noise.style.display = 'flex';
+        hint.style.display = 'none';
+        return;
+    }
+
+    var idx = 0;
+
+    function show(i) {
+        idx = (i + shots.length) % shots.length;
+        var fresh = img.cloneNode(false);
+        fresh.removeAttribute('src');
+        img.parentNode.replaceChild(fresh, img);
+        img = fresh;
+        img.src = shots[idx].url;
+        count.textContent = (idx + 1) + ' / ' + shots.length + ' — ';
+    }
+
+    function navigate(dir) {
+        show(idx + dir);
+        if (zoom.classList.contains('is-open')) zoomImg.src = shots[idx].url;
+    }
+
+    function openZoom() {
+        zoomImg.src = shots[idx].url;
+        zoom.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeZoom() {
+        zoom.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+
+    monitor.addEventListener('click', openZoom);
+    zoom.addEventListener('click', closeZoom);
+    prev.addEventListener('click', function() { navigate(-1); });
+    next.addEventListener('click', function() { navigate(1); });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && zoom.classList.contains('is-open')) { closeZoom(); return; }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); navigate(1); }
+    });
+
+    show(0);
+})();
+</script>
+{% endblock content %}

@@ -1,0 +1,145 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/diary/main.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="dy">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="dy-top">
+        <h1>{{ journal.name }}</h1>
+        <div class="dy-meta">
+            {% trans "by" %} <a href="#">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+            &middot; {% trans "Diary" %}
+            {% if dy_stats.first_date %} &middot; <span>{{ dy_stats.first_date|date:"M Y" }}</span>{% endif %}
+        </div>
+    </div>
+
+    <div class="dy-stats-bar">
+        <div class="dy-stat"><b>{{ dy_stats.entry_count|default:"0" }}</b> {% trans "entries" %}</div>
+        {% if dy_stats.first_date %}<div class="dy-stat"><b>{{ dy_stats.first_date|date:"d M Y" }}</b> {% trans "first" %}</div>{% endif %}
+        {% if dy_stats.latest_date %}<div class="dy-stat"><b>{{ dy_stats.latest_date|date:"d M Y" }}</b> {% trans "latest" %}</div>{% endif %}
+    </div>
+
+    <div class="dy-body">
+        <div class="dy-sidebar">
+            {% if dy_stats.latest_entry %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ dy_stats.latest_entry.slug }}" class="dy-start">&#10022; {% trans "Latest Entry" %}</a>
+            {% endif %}
+
+            {% if journal.description %}
+            <div class="dy-desc">{{ journal.description }}</div>
+            {% endif %}
+
+            <div class="dy-sidebar-label">{% trans "Calendar" %}</div>
+            <div class="dy-mini-cal">
+                <div class="dy-mini-monthbar">
+                    <a href="?year={{ prev_year }}&month={{ prev_month }}{% if active_mood %}&mood={{ active_mood }}{% endif %}{% if selected_entry %}&entry={{ selected_entry.slug }}{% endif %}" class="dy-mini-nav" title="{% trans 'previous month' %}">&laquo;</a>
+                    <div class="dy-mini-monthtitle">
+                        <span class="dy-mini-month">{{ calendar.month_date|date:"F" }}</span>
+                        <span class="dy-mini-year">{{ calendar.year }}</span>
+                    </div>
+                    <a href="?year={{ next_year }}&month={{ next_month }}{% if active_mood %}&mood={{ active_mood }}{% endif %}{% if selected_entry %}&entry={{ selected_entry.slug }}{% endif %}" class="dy-mini-nav" title="{% trans 'next month' %}">&raquo;</a>
+                </div>
+                {% if calendar.month != anchor_date.month or calendar.year != anchor_date.year %}
+                <a href="{% url 'core:journal' journal.slug %}?{% if selected_entry %}entry={{ selected_entry.slug }}{% if active_mood %}&{% endif %}{% endif %}{% if active_mood %}mood={{ active_mood }}{% endif %}" class="dy-mini-today">&laquo; {% trans "back to entry" %}</a>
+                {% endif %}
+                <div class="dy-mini-grid-head">
+                    <span>{% translate "M" context "weekday_initial_mon" %}</span><span>{% translate "T" context "weekday_initial_tue" %}</span><span>{% translate "W" context "weekday_initial_wed" %}</span><span>{% translate "T" context "weekday_initial_thu" %}</span><span>{% translate "F" context "weekday_initial_fri" %}</span><span>{% translate "S" context "weekday_initial_sat" %}</span><span>{% translate "S" context "weekday_initial_sun" %}</span>
+                </div>
+                <div class="dy-mini-grid">
+                    {% for week in calendar.weeks %}
+                    {% for cell in week %}
+                    {% if cell.day == 0 %}
+                    <span class="dy-mini-cell dy-mini-cell-empty"></span>
+                    {% elif cell.entry %}
+                    <a href="?year={{ calendar.year }}&month={{ calendar.month }}&entry={{ cell.entry.slug }}{% if active_mood %}&mood={{ active_mood }}{% endif %}" class="dy-mini-cell dy-mini-cell-has{% if cell.dimmed %} dy-mini-cell-dim{% endif %}{% if cell.day == anchor_date.day and calendar.month == anchor_date.month and calendar.year == anchor_date.year %} dy-mini-cell-current{% endif %}" title="{{ cell.entry.title }}">{{ cell.day }}</a>
+                    {% else %}
+                    <span class="dy-mini-cell">{{ cell.day }}</span>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if available_moods %}
+            <div class="dy-sidebar-label">{% trans "Mood" %}</div>
+            <div class="dy-fdrop">
+                <button type="button" class="dy-fdrop-toggle" onclick="(function(b){var dd=document.getElementById('dy-mood-dd');document.querySelectorAll('.dy-fdrop-toggle').forEach(function(x){if(x!==b)x.classList.remove('dy-fdrop-toggle-on')});var o=dd.classList.toggle('dy-fdrop-open');b.classList.toggle('dy-fdrop-toggle-on',o);b.querySelector('.dy-fdrop-arrow').textContent=o?'▴':'▾';})(this)">
+                    {% if active_mood %}{% for m in available_moods %}{% if active_mood == m.value %}{{ m.label|lower }}{% endif %}{% endfor %}{% else %}{% trans "all moods" %}{% endif %}
+                    <span class="dy-fdrop-arrow">&#9662;</span>
+                </button>
+                <div class="dy-fdrop-menu" id="dy-mood-dd">
+                    <a href="{% url 'core:journal' journal.slug %}" class="dy-fdrop-item{% if not active_mood %} dy-fdrop-active{% endif %}">{% trans "all moods" %}</a>
+                    {% for m in available_moods %}<a href="?mood={{ m.value }}" class="dy-fdrop-item{% if active_mood == m.value %} dy-fdrop-active{% endif %}">{{ m.label|lower }} <em>{{ m.count }}</em></a>{% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if dy_tags %}
+            <div class="dy-sidebar-label">{% trans "Tags" %}</div>
+            <div class="dy-tags">{% for tag in dy_tags %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+            {% endif %}
+
+            {% if owner_profile %}
+            <div class="dy-author">
+                {% if owner_profile.avatar_url %}<img class="dy-author-pic" src="{% static 'images/avatars/' %}{{ owner_profile.avatar_url }}.gif" alt="" />{% endif %}
+                <div class="dy-author-info">
+                    <a href="#" class="dy-author-name">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+                    {% if owner_profile.bio %}<div class="dy-author-bio">{{ owner_profile.bio }}</div>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="dy-main">
+            {% with display_entry=selected_entry|default:dy_anchor_entry %}
+            {% if display_entry %}
+            <article class="dy-entry">
+                <div class="dy-entry-head">
+                    <span class="dy-entry-date">{{ display_entry.entry_date|date:"d M Y" }}</span>
+                    {% if display_entry.mood %}<span class="dy-entry-mood">{{ display_entry.get_mood_display|lower }}</span>{% endif %}
+                </div>
+                <h2 class="dy-entry-title">{{ display_entry.title }}</h2>
+                <div class="dy-entry-content">{{ display_entry.content|cleanview }}</div>
+                {% if display_entry.tags.all %}
+                <div class="dy-entry-tags">{% for tag in display_entry.tags.all %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+                {% endif %}
+                <div class="dy-entry-foot">
+                    {% if display_entry.word_count %}<span><b>{{ display_entry.word_count }}</b> {% trans "WORDS" %}</span>{% endif %}
+                </div>
+            </article>
+
+            <div class="dy-nav">
+                {% if dy_prev_entry %}
+                <a href="?entry={{ dy_prev_entry.slug }}{% if active_mood %}&mood={{ active_mood }}{% endif %}" class="dy-nav-item dy-nav-prev">
+                    <span class="dy-nav-label">&laquo; {% trans "previous" %}</span>
+                    <span class="dy-nav-date">{{ dy_prev_entry.entry_date|date:"d M Y" }}</span>
+                    <span class="dy-nav-title">{{ dy_prev_entry.title }}</span>
+                </a>
+                {% else %}
+                <div class="dy-nav-item"></div>
+                {% endif %}
+                {% if dy_next_entry %}
+                <a href="?entry={{ dy_next_entry.slug }}{% if active_mood %}&mood={{ active_mood }}{% endif %}" class="dy-nav-item dy-nav-next">
+                    <span class="dy-nav-label">{% trans "next" %} &raquo;</span>
+                    <span class="dy-nav-date">{{ dy_next_entry.entry_date|date:"d M Y" }}</span>
+                    <span class="dy-nav-title">{{ dy_next_entry.title }}</span>
+                </a>
+                {% else %}
+                <div class="dy-nav-item"></div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="dy-nil">{% trans "No entries yet." %}</div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

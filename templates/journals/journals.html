@@ -1,0 +1,152 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">{% trans "My Journals" %}</h1>
+                <p class="page-subtitle">{% trans "Digital notebooks for your thoughts and ideas" %}</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'services:journals:new' %}" class="create-btn">
+                    <span class="btn-icon">+</span>
+                    <span class="btn-text">{% trans "New Journal" %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-panel">
+        <div class="stat-card">
+            <div class="stat-value">{{ journals.paginator.count|default:0 }}</div>
+            <div class="stat-label">{% trans "Total Journals" %}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ private_journals_count|default:0 }}</div>
+            <div class="stat-label">{% trans "Private Journals" %}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ total_entries_count|default:0 }}</div>
+            <div class="stat-label">{% trans "Total Entries" %}</div>
+        </div>
+    </div>
+
+    <div class="journals-grid">
+        {% if journals and journals.object_list %}
+            {% for journal in journals.object_list %}
+            <article class="journal-card">
+                <div class="card-header">
+                    <div class="journal-meta">
+                        <span class="journal-id">#{{ forloop.counter }}</span>
+                        {% if journal.private %}
+                            <span class="privacy-badge private">{% trans "Private" %}</span>
+                        {% else %}
+                            <span class="privacy-badge public">{% trans "Public" %}</span>
+                        {% endif %}
+                        {% if journal.mode != "default" %}
+                            <span class="mode-badge mode-{{ journal.mode }}">{{ journal.get_mode_display }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-actions">
+                        <span class="entries-count">
+                            {{ journal.entries_count|default:0 }}
+                            {% if journal.entries_count == 1 %}{{ journal.entry_label }}{% else %}{{ journal.entry_label_plural }}{% endif %}
+                        </span>
+                        <div class="dropdown">
+                            <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">⋯</button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="dropdown-item">{% trans "New" %} {{ journal.entry_label }}</a>
+                                <a href="{% url 'core:journal' journal.slug %}" class="dropdown-item">{% trans "View Journal" %}</a>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings" class="dropdown-item">{% trans "Settings" %}</a>
+                                <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings#delete-journal-btn" class="dropdown-item delete">{% trans "Delete" %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-content">
+                    <a href="{% url 'services:journals:journal' journal.slug %}" class="journal-title">{{ journal.name }}</a>
+                    {% if journal.description %}
+                        <p class="journal-description">{{ journal.description|truncatechars:200 }}</p>
+                    {% else %}
+                        <p class="journal-description placeholder">{% trans "No description provided" %}</p>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer">
+                    <div class="card-footer-left">
+                        <a class="new-entry-btn" title="{% trans "New" %} {{ journal.entry_label }}" href="{% url 'services:journals:journal' journal.slug %}?tab=new">+ {% trans "New" %} {{ journal.entry_label }}</a>
+                    </div>
+                    <div class="journal-dates">
+                        <div class="date-container">
+                            <div class="date-badge created">
+                                <span class="date-icon">📅</span>
+                                <div class="date-info">
+                                    <span class="date-label">{% trans "Created" %}</span>
+                                    <span class="date-value">{{ journal.created_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                            <div class="date-separator">•</div>
+                            <div class="date-badge updated">
+                                <span class="date-icon">✨</span>
+                                <div class="date-info">
+                                    <span class="date-label">{% trans "Updated" %}</span>
+                                    <span class="date-value">{{ journal.updated_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📓</div>
+                <h3>{% trans "No Journals Yet" %}</h3>
+                <p>{% trans "Start your digital journaling journey by creating your first journal." %}</p>
+                <a href="{% url 'services:journals:new' %}" class="empty-action-btn">
+                    {% trans "Create Your First Journal" %}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if journals.has_other_pages %}
+    <div class="pagination-wrapper">
+        <nav class="pagination">
+            {% if journals.has_previous %}
+                <a href="?page={{ journals.previous_page_number }}" class="page-btn">
+                    <span class="btn-icon">‹</span>
+                    <span class="btn-text">{% trans "Previous" %}</span>
+                </a>
+            {% endif %}
+            
+            <div class="page-info">
+                <span class="page-current">{{ journals.number }}</span>
+                <span class="page-separator">/</span>
+                <span class="page-total">{{ journals.paginator.num_pages }}</span>
+            </div>
+            
+            {% if journals.has_next %}
+                <a href="?page={{ journals.next_page_number }}" class="page-btn">
+                    <span class="btn-text">{% trans "Next" %}</span>
+                    <span class="btn-icon">›</span>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/journals/journals.js' %}"></script>
+{% endblock scripts %}

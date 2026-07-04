@@ -1,0 +1,251 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/settings.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/codemirror/miku.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/codemirror/themes/vintage.css' %}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/css-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/comment/comment.min.js"></script>
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal %}
+
+    <div class="settings-main">
+
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">
+                            {% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}
+                        </span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" class="form-container">
+            {% csrf_token %}
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Basic Information" %}</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name" class="form-label">{% trans "Journal Name" %}</label>
+                        <input type="text" 
+                               id="name" 
+                               name="name" 
+                               class="form-input" 
+                               value="{{ journal.name }}"
+                               placeholder="{% trans "Enter journal name" %}"
+                               required
+                               maxlength="255">
+                        <div class="form-hint">{% trans "A descriptive name for your journal" %}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slug" class="form-label">{% trans "URL Slug" %}</label>
+                        <div class="slug-input-group">
+                            <span class="slug-prefix">/journals/</span>
+                            <input type="text" 
+                                   id="slug" 
+                                   name="slug" 
+                                   class="form-input slug-input" 
+                                   value="{{ journal.slug }}"
+                                   placeholder="{% trans "url-slug" %}"
+                                   required
+                                   maxlength="50">
+                        </div>
+                        <div class="form-hint">{% trans "URL-friendly version of the name" %}</div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="description" class="form-label">{% trans "Description" %}</label>
+                        <textarea id="description" 
+                                  name="description" 
+                                  class="form-textarea" 
+                                  rows="4"
+                                  placeholder="{% trans 'Describe what this journal is about...' %}">{{ journal.description }}</textarea>
+                        <div class="form-hint">{% trans "Brief description of your journal's purpose" %}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Mode & Classification" %}</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Mode" %}</label>
+                        <input type="text" class="form-input" value="{{ journal.get_mode_display }}" disabled>
+                        <div class="form-hint">{% trans "Mode is locked after creation" %}</div>
+                    </div>
+
+                    {% if journal.mode == "book" or journal.mode == "light_novel" %}
+                    <div class="form-group">
+                        <label for="status" class="form-label">{% trans "Status" %}</label>
+                        <select id="status" name="status" class="form-input">
+                            {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if journal.status == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-hint">{% trans "Current writing status" %}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if journal.mode == "book" or journal.mode == "light_novel" %}
+                    <div class="form-group">
+                        <label for="genre" class="form-label">{% trans "Genre" %}</label>
+                        <select id="genre" name="genre" class="form-input">
+                            <option value="">{% trans "— Select Genre —" %}</option>
+                            {% for value, label in genre_choices %}
+                            <option value="{{ value }}" {% if journal.genre == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-hint">{% trans "Primary genre of your work" %}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if journal.mode != "default" and journal.mode != "diary" %}
+                    <div class="form-group full-width">
+                        <label for="cover_image" class="form-label">{% trans "Cover Image" %}</label>
+                        {% if journal.cover_image %}
+                        <div class="current-cover">
+                            <img src="{{ journal.cover_image.url }}" alt="{% trans 'Current cover' %}" class="cover-preview">
+                        </div>
+                        {% endif %}
+                        <input type="file" id="cover_image" name="cover_image" class="form-input" accept="image/*">
+                        <div class="form-hint">{% trans "Upload a new image to replace the current cover" %}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Privacy & Sharing" %}</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" 
+                                   id="private" 
+                                   name="private" 
+                                   class="form-checkbox"
+                                   {% if journal.private %}checked{% endif %}>
+                            <label for="private" class="checkbox-label">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-text">
+                                    <strong>{% trans "Private Journal" %}</strong>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-hint">{% trans "Private journals are only visible to you and users you explicitly share them with" %}</div>
+                    </div>
+
+                    {% if journal.private %}
+                    <div class="form-group">
+                        <label for="shared_users" class="form-label">{% trans "Shared with Users" %}</label>
+                        <div class="shared-users-container">
+                            <input type="text" 
+                                   id="shared_users" 
+                                   name="shared_users" 
+                                   class="form-input" 
+                                   placeholder="{% trans "Enter username to share with..." %}">
+                            <button type="button" class="create-btn" id="add-user-btn">+ {% trans "Add" %}</button>
+                        </div>
+                        <div class="shared-users-list">
+                            {% for user in journal.shared_with.all %}
+                                <span class="user-badge">
+                                    {{ user.username }} 
+                                    <button type="button" class="remove-user-btn" data-username="{{ user.username }}">×</button>
+                                    <input type="hidden" name="add_shared_user" value="{{ user.username }}">
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-hint">{% trans "Users who can access this private journal" %}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Custom Styling" %}</h2>
+                
+                <div class="form-group full-width">
+                    <label for="custom_css" class="form-label">{% trans "Custom CSS" %}</label>
+                    <div class="editor-container">
+                        <textarea id="custom_css" name="custom_css" style="display: none;">{{ journal.custom_css }}</textarea>
+                        <div id="code-editor"></div>
+                    </div>
+                    <div class="form-hint">{% trans "Custom CSS to style your journal" %}</div>
+                </div>
+            </section>
+
+            <section class="journal-card">
+                <h2 class="card-title">{% trans "Translations" %}</h2>
+                
+                <div class="translations-container">
+                    {% for translation in journal.translations.all %}
+                        <div class="journal-card translation-row">
+                            <div class="translation-fields">
+                                <select name="translation_language_{{ translation.id }}" class="form-input">
+                                    <option value="">{% trans "Select Language" %}</option>
+                                    {% for lang_code, lang_name in languages %}
+                                        <option value="{{ lang_code }}" {% if translation.language == lang_code %}selected{% endif %}>{{ lang_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                
+                                <input type="text" 
+                                       name="translation_name_{{ translation.id }}" 
+                                       class="form-input" 
+                                       value="{{ translation.name }}"
+                                       placeholder="{% trans "Name" %}">
+                                
+                                <textarea name="translation_description_{{ translation.id }}" 
+                                          class="form-textarea" 
+                                          rows="2"
+                                          placeholder="{% trans "Description" %}">{{ translation.description }}</textarea>
+                                
+                                <button type="button" class="action-btn remove-translation-btn">×</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <button type="button" class="create-btn" id="add-translation-btn">+ {% trans "Add Translation" %}</button>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit" class="create-btn">
+                    {% trans "Save Changes" %}
+                </button>
+                <button type="button" class="cancel-btn" id="delete-journal-btn">
+                    {% trans "Delete Journal" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="application/json" id="journal-settings-config">
+{
+    "confirmDelete": "{% trans 'Are you sure you want to delete this journal? This action cannot be undone.' %}",
+    "deleteUrl": "{% url 'services:journals:journal' journal.slug %}?action=delete"
+}
+</script>
+<script src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/journals/settings.js' %}"></script>
+{% endblock scripts %}

@@ -120,7 +120,7 @@
     
     <div class="content-grid">
         {% for tag in tags %}
-            <a href="{% url 'blog:home' %}?tag={{ tag.slug }}" class="polaroid">
+            <a href="{% url 'weblog:home' %}?tag={{ tag.slug }}" class="polaroid">
                 <div class="polaroid-photo" style="background-image: url('{{ tag.image }}');"></div>
                 <div class="polaroid-label">
                     <h3 class="tag-name">{{ tag.name }}</h3>

@@ -28,7 +28,7 @@
     
     <div class="content-grid">
         {% for category in categories %}
-            <a href="{% url 'blog:home' %}?category={{ category.slug }}" class="content-card" data-category="{{ category.slug }}" style="background-image: url('{{ category.image }}');">
+            <a href="{% url 'weblog:home' %}?category={{ category.slug }}" class="content-card" data-category="{{ category.slug }}" style="background-image: url('{{ category.image }}');">
                 <div class="card-inner">
                     <div class="card-overlay"></div>
                     <div class="card-info">

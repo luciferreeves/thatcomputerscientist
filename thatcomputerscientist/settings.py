@@ -78,7 +78,6 @@ INSTALLED_APPS = [
     "administration",
     "api",
     "authentication",
-    "blog",
     "core",
     "services",
 ]

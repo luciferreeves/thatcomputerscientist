@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 18:17+0000\n"
+"POT-Creation-Date: 2026-07-04 18:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: administration/apps.py:8
+msgid "Administration"
+msgstr "運営"
+
 #: authentication/admin.py:54 authentication/models.py:33
 #: services/journals/admin.py:453
 msgid "Avatar"
 msgstr "アバター"
+
+#: authentication/apps.py:8
+msgid "Authentication"
+msgstr "認証"
 
 #: authentication/models.py:11 services/weblog/models.py:266
 #: services/weblog/models.py:387
@@ -104,6 +112,10 @@ msgstr "匿名ユーザー"
 #: authentication/models.py:50
 msgid "Anonymous Users"
 msgstr "匿名ユーザー"
+
+#: core/apps.py:8
+msgid "Core"
+msgstr "コア"
 
 #: core/letters/admin.py:19
 msgid "Add new letter"
@@ -225,6 +237,10 @@ msgstr "中国語"
 #: core/translations.py:11
 msgid "Korean"
 msgstr "韓国語"
+
+#: services/apps.py:8
+msgid "Services"
+msgstr "サービス"
 
 #: services/journals/admin.py:102 services/journals/admin.py:235
 #: services/weblog/admin.py:31 services/weblog/admin.py:50
@@ -1195,7 +1211,7 @@ msgstr "ログアウト"
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: templates/_partials/left_sidebar.html:73 templates/admin/base.html:70
+#: templates/_partials/left_sidebar.html:73 templates/admin/base.html:55
 msgid "Home"
 msgstr "ホーム"
 
@@ -1398,21 +1414,25 @@ msgstr "登録済み"
 msgid "Anonymous"
 msgstr "匿名"
 
-#: templates/admin/base.html:60
-msgid "View site"
-msgstr "サイトを表示"
+#: templates/admin/base.html:44
+msgid "Toggle navigation"
+msgstr "ナビゲーションの切り替え"
 
-#: templates/admin/base.html:61
-msgid "Change password"
-msgstr "パスワードの変更"
-
-#: templates/admin/base.html:62
-msgid "Log out"
-msgstr "ログアウト"
-
-#: templates/admin/base.html:68
+#: templates/admin/base.html:53
 msgid "Breadcrumbs"
 msgstr "パンくずリスト"
+
+#: templates/admin/base.html:77
+msgid "Sidebar"
+msgstr "サイドバー"
+
+#: templates/admin/base.html:78
+msgid "Start typing to filter…"
+msgstr "入力して絞り込み…"
+
+#: templates/admin/base.html:78
+msgid "Filter navigation items"
+msgstr "ナビゲーション項目を絞り込み"
 
 #: templates/admin/base_site.html:4 templates/admin/base_site.html:6
 #: thatcomputerscientist/urls.py:26 thatcomputerscientist/urls.py:27
@@ -2988,6 +3008,15 @@ msgstr ""
 "た%(count)s件の投稿を表示しています。完全な<a href=\"%(home)s\">ウェブログ</"
 "a>を表示するか、<a href=\"%(tags)s\">すべてのタグを表示する</a>こともできま"
 "す。"
+
+#~ msgid "View site"
+#~ msgstr "サイトを表示"
+
+#~ msgid "Change password"
+#~ msgstr "パスワードの変更"
+
+#~ msgid "Log out"
+#~ msgstr "ログアウト"
 
 #~ msgid "UNREAD"
 #~ msgstr "未読"

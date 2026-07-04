@@ -1,70 +1,83 @@
-/* Django admin content rendered inside the Shifoo site chrome. */
+/* The Django admin renders inside #main-content. Keep its styling contained there,
+   and keep the site's own link colours out of the admin content. */
 
 html,
 body.admin-reskin {
     background: transparent;
 }
 
-/* The admin shell fills the site's main content column. */
-#main-content #admin-shell {
-    width: 100%;
-    min-height: 100%;
-    box-sizing: border-box;
+/* ---- Layout: the admin (native nav sidebar + content) is the centre column ---- */
+#main-content {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
-/* Neutralize admin layout widths that assume a full page. */
-#main-content #content,
-#main-content .content,
-#main-content #content-main,
-#main-content #content-related {
-    width: auto;
-    max-width: none;
-    padding: 0;
-    margin: 0;
-    float: none;
-}
-
-#main-content .colM,
-#main-content .colMS {
-    margin-right: 0;
-}
-
-/* Compact utility row that replaces the removed admin top navbar. */
-#main-content #user-tools {
+#main-content > .admin-main {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 14px;
-    font-size: 0.8rem;
-    line-height: 1;
-    margin: 0 0 12px;
-    padding: 0;
-    text-align: right;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
 }
 
-#main-content #user-tools .admin-user {
-    font-weight: 700;
+#main-content .admin-main > #nav-sidebar {
+    flex: 0 0 240px;
+    width: 240px;
+    min-width: 240px;
+    margin-left: 0;
+    left: auto;
+    visibility: visible;
 }
 
-#main-content #user-tools form {
-    margin: 0;
-    display: inline;
+#main-content .admin-main:not(.shifted) > #nav-sidebar {
+    display: none;
 }
 
-#main-content #user-tools button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font: inherit;
-    padding: 0;
-    text-decoration: underline;
+#main-content .admin-main > .content {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    overflow-x: auto;
 }
 
-#main-content .breadcrumbs {
-    margin: 0 0 12px;
-    padding: 8px 0;
-    background: none;
-    border: none;
-    font-size: 0.85rem;
+/* ---- Contain: the site chrome keeps its own look, no admin bleed ---- */
+#left-sidebar a,
+#right-sidebar a,
+#footer a,
+.header-banner a {
+    text-decoration: none !important;
+}
+
+#left-sidebar input,
+#left-sidebar textarea,
+#left-sidebar select,
+#right-sidebar input,
+#right-sidebar textarea,
+#right-sidebar select,
+#footer input {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    border-radius: 4px;
+    color: inherit;
+}
+
+#left-sidebar button,
+#right-sidebar button,
+#footer button {
+    box-shadow: none;
+}
+
+/* ---- Contain: keep the site's green #main-content links out of the admin ---- */
+#main-content #content a:link,
+#main-content #content a:visited,
+#main-content .breadcrumbs a,
+#main-content #nav-sidebar a:link,
+#main-content #nav-sidebar a:visited {
+    color: var(--link-fg);
+}
+
+#main-content #content a:hover,
+#main-content .breadcrumbs a:hover,
+#main-content #nav-sidebar a:hover {
+    color: var(--link-hover-color);
 }

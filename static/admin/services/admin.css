@@ -2,3 +2,31 @@
 .inline-related h2 {
     text-transform: none;
 }
+
+.users-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--hairline-color);
+}
+
+.users-tabs .users-tab {
+    padding: 8px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--body-quiet-color);
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: -1px;
+}
+
+.users-tabs .users-tab.active {
+    background: var(--body-bg);
+    color: var(--link-fg);
+    border-color: var(--hairline-color);
+}
+
+.users-tabs .users-tab:hover {
+    color: var(--link-fg);
+}

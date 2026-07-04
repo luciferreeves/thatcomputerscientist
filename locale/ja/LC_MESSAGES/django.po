@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 17:33+0000\n"
+"POT-Creation-Date: 2026-07-04 17:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,99 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: authentication/admin.py:54 authentication/models.py:33
+#: services/journals/admin.py:453
+msgid "Avatar"
+msgstr "アバター"
+
+#: authentication/models.py:11 services/weblog/models.py:266
+#: services/weblog/models.py:387
+msgid "User"
+msgstr "ユーザー"
+
+#: authentication/models.py:13
+#| msgid "Action"
+msgid "Location"
+msgstr "場所"
+
+#: authentication/models.py:14 services/journals/models.py:284
+#: templates/journals/characters.html:55 templates/journals/edit_entry.html:254
+#: templates/journals/new_entry.html:168
+msgid "Bio"
+msgstr "プロフィール"
+
+#: authentication/models.py:15
+#| msgid "Avatar"
+msgid "Avatar URL"
+msgstr "アバターURL"
+
+#: authentication/models.py:16 services/weblog/models.py:172
+#: templates/journals/_partials/journal_header.html:12
+#: templates/journals/journals.html:51
+msgid "Public"
+msgstr "公開"
+
+#: authentication/models.py:17
+#| msgid "Is Public"
+msgid "Email Public"
+msgstr "メール公開"
+
+#: authentication/models.py:18
+msgid "Email Verified"
+msgstr "メール認証済み"
+
+#: authentication/models.py:19
+#| msgid "Links & URLs"
+msgid "Blinkie URL"
+msgstr "ブリンキーURL"
+
+#: authentication/models.py:25
+msgid "User Profile"
+msgstr "ユーザープロフィール"
+
+#: authentication/models.py:26
+msgid "User Profiles"
+msgstr "ユーザープロフィール"
+
+#: authentication/models.py:30 services/journals/models.py:52
+#: services/journals/models.py:81 services/journals/models.py:280
+#: services/journals/models.py:338 services/weblog/models.py:22
+#: services/weblog/models.py:38 services/weblog/models.py:61
+#: services/weblog/models.py:85 services/weblog/models.py:123
+#: templates/administration/emojis.html:32
+#: templates/journals/characters.html:39 templates/journals/edit_entry.html:235
+#: templates/journals/new_entry.html:149 templates/journals/settings.html:213
+msgid "Name"
+msgstr "名前"
+
+#: authentication/models.py:31
+msgid "Email"
+msgstr "メールアドレス"
+
+#: authentication/models.py:32
+msgid "Token"
+msgstr "トークン"
+
+#: authentication/models.py:34 core/letters/models.py:23
+#: core/letters/models.py:61 core/letters/models.py:112
+#: services/journals/models.py:100 services/journals/models.py:202
+#: services/journals/models.py:265 services/journals/models.py:287
+#: services/weblog/models.py:67 services/weblog/models.py:89
+#: services/weblog/models.py:127 services/weblog/models.py:174
+#: services/weblog/models.py:286 services/weblog/models.py:390
+#: templates/administration/announcements.html:98
+msgid "Created At"
+msgstr "作成日時"
+
+#: authentication/models.py:49 services/weblog/models.py:274
+msgid "Anonymous User"
+msgstr "匿名ユーザー"
+
+#: authentication/models.py:50
+#| msgid "Anonymous User"
+msgid "Anonymous Users"
+msgstr "匿名ユーザー"
 
 #: blog/templatetags/time_filters.py:18
 msgid "minute"
@@ -98,16 +191,6 @@ msgstr "参加者1"
 #: core/letters/models.py:21
 msgid "Participant Two"
 msgstr "参加者2"
-
-#: core/letters/models.py:23 core/letters/models.py:61
-#: core/letters/models.py:112 services/journals/models.py:100
-#: services/journals/models.py:202 services/journals/models.py:265
-#: services/journals/models.py:287 services/weblog/models.py:67
-#: services/weblog/models.py:89 services/weblog/models.py:127
-#: services/weblog/models.py:174 services/weblog/models.py:286
-#: services/weblog/models.py:390 templates/administration/announcements.html:98
-msgid "Created At"
-msgstr "作成日時"
 
 #: core/letters/models.py:24 services/journals/models.py:101
 #: services/journals/models.py:203 services/weblog/models.py:68
@@ -324,10 +407,6 @@ msgstr "タイトル（日本語）"
 #: services/journals/models.py:162
 msgid "Entries"
 msgstr "エントリ"
-
-#: services/journals/admin.py:453
-msgid "Avatar"
-msgstr "アバター"
 
 #: services/journals/admin.py:467 services/journals/models.py:50
 #: services/journals/models.py:106 services/journals/models.py:176
@@ -657,16 +736,6 @@ msgstr "無感覚"
 msgid "Curious"
 msgstr "好奇心"
 
-#: services/journals/models.py:52 services/journals/models.py:81
-#: services/journals/models.py:280 services/journals/models.py:338
-#: services/weblog/models.py:22 services/weblog/models.py:38
-#: services/weblog/models.py:61 services/weblog/models.py:85
-#: services/weblog/models.py:123 templates/administration/emojis.html:32
-#: templates/journals/characters.html:39 templates/journals/edit_entry.html:235
-#: templates/journals/new_entry.html:149 templates/journals/settings.html:213
-msgid "Name"
-msgstr "名前"
-
 #: services/journals/models.py:53 services/journals/models.py:83
 #: services/journals/models.py:261 services/weblog/models.py:23
 #: services/weblog/models.py:39 services/weblog/models.py:63
@@ -842,11 +911,6 @@ msgstr "巻"
 msgid "Image"
 msgstr "画像"
 
-#: services/journals/models.py:284 templates/journals/characters.html:55
-#: templates/journals/edit_entry.html:254 templates/journals/new_entry.html:168
-msgid "Bio"
-msgstr "プロフィール"
-
 #: services/journals/models.py:285 templates/journals/characters.html:43
 #: templates/journals/edit_entry.html:239 templates/journals/new_entry.html:153
 msgid "Role"
@@ -1013,24 +1077,10 @@ msgstr "ポスト画像"
 msgid "Image URL"
 msgstr "画像URL"
 
-#: services/weblog/models.py:172
-#: templates/journals/_partials/journal_header.html:12
-#: templates/journals/journals.html:51
-msgid "Public"
-msgstr "公開"
-
 #: services/weblog/models.py:173 templates/weblog/post.html:32
 #: templates/weblog/weblog.html:44 templates/weblog/weblog.html:59
 msgid "Views"
 msgstr "閲覧数"
-
-#: services/weblog/models.py:266 services/weblog/models.py:387
-msgid "User"
-msgstr "ユーザー"
-
-#: services/weblog/models.py:274
-msgid "Anonymous User"
-msgstr "匿名ユーザー"
 
 #: services/weblog/models.py:277
 msgid "Parent"
@@ -1342,6 +1392,16 @@ msgstr "センサス"
 #: templates/_partials/right_sidebar.html:221
 msgid "You are Visitor #"
 msgstr "あんたは訪問者ナンバー"
+
+#: templates/admin/authentication/users_change_list.html:5
+#: templates/weblog/_partials/post_comments.html:59
+msgid "Registered"
+msgstr "登録済み"
+
+#: templates/admin/authentication/users_change_list.html:6
+#: templates/weblog/_partials/post_comments.html:61
+msgid "Anonymous"
+msgstr "匿名"
 
 #: templates/administration/announcements.html:69
 msgid "Create New Announcement"
@@ -2662,14 +2722,6 @@ msgstr "前"
 #: templates/weblog/_partials/post_comments.html:56
 msgid "edited"
 msgstr "編集済み"
-
-#: templates/weblog/_partials/post_comments.html:59
-msgid "Registered"
-msgstr "登録済み"
-
-#: templates/weblog/_partials/post_comments.html:61
-msgid "Anonymous"
-msgstr "匿名"
 
 #: templates/weblog/_partials/post_comments.html:86
 #: templates/weblog/_partials/post_comments.html:111

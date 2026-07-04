@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 16:55+0000\n"
+"POT-Creation-Date: 2026-07-04 17:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,108 @@ msgstr "年"
 #: blog/templatetags/time_filters.py:29
 msgid "years"
 msgstr "年"
+
+#: core/letters/admin.py:19
+msgid "Add new letter"
+msgstr "手紙を追加"
+
+#: core/letters/admin.py:23 core/letters/models.py:65 core/letters/models.py:92
+msgid "Letter"
+msgstr "手紙"
+
+#: core/letters/admin.py:27
+msgid "(empty)"
+msgstr "（空）"
+
+#: core/letters/admin.py:35
+msgid "Add new attachment"
+msgstr "添付ファイルを追加"
+
+#: core/letters/admin.py:39
+msgid "Attachment"
+msgstr "添付ファイル"
+
+#: core/letters/admin.py:56 core/letters/models.py:66
+#: templates/_partials/left_sidebar.html:52 templates/letters/inbox.html:40
+msgid "Letters"
+msgstr "手紙"
+
+#: core/letters/models.py:15
+msgid "Participant One"
+msgstr "参加者1"
+
+#: core/letters/models.py:21
+msgid "Participant Two"
+msgstr "参加者2"
+
+#: core/letters/models.py:23 core/letters/models.py:61
+#: core/letters/models.py:112 services/journals/models.py:100
+#: services/journals/models.py:202 services/journals/models.py:265
+#: services/journals/models.py:287 services/weblog/models.py:67
+#: services/weblog/models.py:89 services/weblog/models.py:127
+#: services/weblog/models.py:174 services/weblog/models.py:286
+#: services/weblog/models.py:390 templates/administration/announcements.html:98
+msgid "Created At"
+msgstr "作成日時"
+
+#: core/letters/models.py:24 services/journals/models.py:101
+#: services/journals/models.py:203 services/weblog/models.py:68
+#: services/weblog/models.py:175 services/weblog/models.py:391
+msgid "Updated At"
+msgstr "更新日時"
+
+#: core/letters/models.py:29 core/letters/models.py:51
+#: core/letters/models.py:102
+msgid "Conversation"
+msgstr "会話"
+
+#: core/letters/models.py:30
+msgid "Conversations"
+msgstr "会話"
+
+#: core/letters/models.py:57
+msgid "Sender"
+msgstr "送信者"
+
+#: core/letters/models.py:59 services/journals/constants.py:93
+#: services/journals/models.py:69 services/journals/models.py:180
+#: templates/administration/announcements.html:94
+#: templates/journals/edit_entry.html:84 templates/journals/new_entry.html:208
+msgid "Content"
+msgstr "内容"
+
+#: core/letters/models.py:60
+msgctxt "letter status"
+msgid "Read"
+msgstr "既読"
+
+#: core/letters/models.py:97
+msgid "Uploader"
+msgstr "アップロード者"
+
+#: core/letters/models.py:107
+msgid "File"
+msgstr "ファイル"
+
+#: core/letters/models.py:109
+msgid "Original Name"
+msgstr "元のファイル名"
+
+#: core/letters/models.py:110
+msgid "File Size"
+msgstr "ファイルサイズ"
+
+#: core/letters/models.py:111
+msgid "Content Type"
+msgstr "コンテンツタイプ"
+
+#: core/letters/models.py:116
+msgid "Letter Attachment"
+msgstr "手紙の添付ファイル"
+
+#: core/letters/models.py:117
+msgid "Letter Attachments"
+msgstr "手紙の添付ファイル"
 
 #: core/translations.py:5 templates/journals/edit_entry.html:51
 #: thatcomputerscientist/settings.py:207
@@ -531,13 +633,6 @@ msgstr "希望"
 msgid "Stressed"
 msgstr "ストレス"
 
-#: services/journals/constants.py:93 services/journals/models.py:69
-#: services/journals/models.py:180
-#: templates/administration/announcements.html:94
-#: templates/journals/edit_entry.html:84 templates/journals/new_entry.html:208
-msgid "Content"
-msgstr "内容"
-
 #: services/journals/constants.py:94
 msgid "Lonely"
 msgstr "孤独"
@@ -651,21 +746,6 @@ msgstr "カバー画像"
 #: services/journals/models.py:99 templates/journals/settings.html:186
 msgid "Custom CSS"
 msgstr "カスタムCSS"
-
-#: services/journals/models.py:100 services/journals/models.py:202
-#: services/journals/models.py:265 services/journals/models.py:287
-#: services/weblog/models.py:67 services/weblog/models.py:89
-#: services/weblog/models.py:127 services/weblog/models.py:174
-#: services/weblog/models.py:286 services/weblog/models.py:390
-#: templates/administration/announcements.html:98
-msgid "Created At"
-msgstr "作成日時"
-
-#: services/journals/models.py:101 services/journals/models.py:203
-#: services/weblog/models.py:68 services/weblog/models.py:175
-#: services/weblog/models.py:391
-msgid "Updated At"
-msgstr "更新日時"
 
 #: services/journals/models.py:107 templates/_partials/left_sidebar.html:43
 msgid "Journals"
@@ -817,18 +897,15 @@ msgid "Entry Tags"
 msgstr "エントリタグ"
 
 #: services/weblog/admin.py:87
-#| msgid "Add new tag"
 msgid "Add new post"
 msgstr "ポストを追加"
 
 #: services/weblog/admin.py:91 services/weblog/models.py:49
 #: services/weblog/models.py:179 services/weblog/models.py:259
-#| msgid "Posted in"
 msgid "Post"
 msgstr "ポスト"
 
 #: services/weblog/admin.py:101
-#| msgid "Add new chapter"
 msgid "Add new category"
 msgstr "カテゴリーを追加"
 
@@ -839,13 +916,11 @@ msgid "Category"
 msgstr "カテゴリー"
 
 #: services/weblog/admin.py:129
-#| msgid "Add new entry"
 msgid "Add new comment"
 msgstr "コメントを追加"
 
 #: services/weblog/admin.py:133 services/weblog/models.py:350
 #: services/weblog/models.py:382
-#| msgid "Comments"
 msgid "Comment"
 msgstr "コメント"
 
@@ -859,7 +934,6 @@ msgid "Posts"
 msgstr "ポスト"
 
 #: services/weblog/admin.py:177
-#| msgid "Public"
 msgid "Publishing"
 msgstr "公開情報"
 
@@ -880,22 +954,18 @@ msgid "Marked as Spam"
 msgstr "スパム指定"
 
 #: services/weblog/models.py:27
-#| msgid "Journal Translation"
 msgid "Category Translation"
 msgstr "カテゴリー翻訳"
 
 #: services/weblog/models.py:28
-#| msgid "Journal Translations"
 msgid "Category Translations"
 msgstr "カテゴリー翻訳"
 
 #: services/weblog/models.py:43
-#| msgid "Translation"
 msgid "Tag Translation"
 msgstr "タグ翻訳"
 
 #: services/weblog/models.py:44
-#| msgid "Translations"
 msgid "Tag Translations"
 msgstr "タグ翻訳"
 
@@ -905,12 +975,10 @@ msgid "Body"
 msgstr "本文"
 
 #: services/weblog/models.py:56
-#| msgid "Translation"
 msgid "Post Translation"
 msgstr "ポスト翻訳"
 
 #: services/weblog/models.py:57
-#| msgid "Translations"
 msgid "Post Translations"
 msgstr "ポスト翻訳"
 
@@ -923,7 +991,6 @@ msgid "Weblog"
 msgstr "ウェブログ"
 
 #: services/weblog/models.py:72
-#| msgid "Weblog"
 msgid "Weblogs"
 msgstr "ウェブログ"
 
@@ -939,12 +1006,10 @@ msgid "Date"
 msgstr "日付"
 
 #: services/weblog/models.py:165
-#| msgid "Cover Image"
 msgid "Post Image"
 msgstr "ポスト画像"
 
 #: services/weblog/models.py:166
-#| msgid "Image"
 msgid "Image URL"
 msgstr "画像URL"
 
@@ -960,12 +1025,10 @@ msgid "Views"
 msgstr "閲覧数"
 
 #: services/weblog/models.py:266 services/weblog/models.py:387
-#| msgid "Username"
 msgid "User"
 msgstr "ユーザー"
 
 #: services/weblog/models.py:274
-#| msgid "Anonymous"
 msgid "Anonymous User"
 msgstr "匿名ユーザー"
 
@@ -974,7 +1037,6 @@ msgid "Parent"
 msgstr "親コメント"
 
 #: services/weblog/models.py:279
-#| msgid "Notes"
 msgid "Upvotes"
 msgstr "アップボート数"
 
@@ -983,7 +1045,6 @@ msgid "Downvotes"
 msgstr "ダウンボート数"
 
 #: services/weblog/models.py:283
-#| msgid "Status"
 msgid "Spam Status"
 msgstr "スパム状態"
 
@@ -992,12 +1053,10 @@ msgid "Spam Checked At"
 msgstr "スパム確認日時"
 
 #: services/weblog/models.py:287
-#| msgid "edited"
 msgid "Edited"
 msgstr "編集済み"
 
 #: services/weblog/models.py:288
-#| msgid "Updated At"
 msgid "Edited At"
 msgstr "編集日時"
 
@@ -1023,12 +1082,10 @@ msgid "Vote Type"
 msgstr "投票タイプ"
 
 #: services/weblog/models.py:398
-#| msgid "Comments"
 msgid "Comment Vote"
 msgstr "コメント投票"
 
 #: services/weblog/models.py:399
-#| msgid "Comments"
 msgid "Comment Votes"
 msgstr "コメント投票"
 
@@ -1080,10 +1137,6 @@ msgstr "こんにちは、%(username)sさん"
 #: templates/_partials/left_sidebar.html:47
 msgid "My Page"
 msgstr "マイページ"
-
-#: templates/_partials/left_sidebar.html:52 templates/letters/inbox.html:40
-msgid "Letters"
-msgstr "手紙"
 
 #: templates/_partials/left_sidebar.html:57
 msgid "Site Preferences"
@@ -2878,6 +2931,3 @@ msgstr ""
 
 #~ msgid "NEXT"
 #~ msgstr "次"
-
-#~ msgid "No Conversations Yet"
-#~ msgstr "まだ会話がねぇ"

@@ -1,0 +1,4 @@
+.inline-group h2,
+.inline-related h2 {
+    text-transform: none;
+}

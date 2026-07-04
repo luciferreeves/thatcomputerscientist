@@ -209,6 +209,8 @@ class JournalEntryInline(LinkInline, admin.TabularInline[JournalEntry, Journal])
 class VolumeEntryInline(LinkInline, admin.TabularInline[JournalEntry, Volume]):
     model = JournalEntry
     fk_name = "volume"
+    verbose_name = _("Chapter")
+    verbose_name_plural = _("Chapters")
     add_url_name = "admin:services_journalentry_add"
     add_fk = "volume"
     add_label = _("Add new chapter")
@@ -269,6 +271,7 @@ class JournalAdmin(admin.ModelAdmin[Journal]):
     filter_horizontal = ("shared_with",)
 
     class Media:
+        css = {"all": ("admin/journals/admin.css",)}
         js = ("admin/journals/private_toggle.js",)
 
     def get_inlines(self, request: HttpRequest, obj: Any = None) -> list[Any]:
@@ -324,6 +327,9 @@ class JournalEntryAdmin(HiddenFromIndexMixin, admin.ModelAdmin[JournalEntry]):
     filter_horizontal = ("tags",)
     raw_id_fields = ("journal", "volume")
     readonly_fields = ("word_count",)
+
+    class Media:
+        css = {"all": ("admin/journals/admin.css",)}
 
     def get_form(self, request: HttpRequest, obj: Any = None, **kwargs: Any) -> Any:
         setattr(request, "_journalentry_obj", obj)
@@ -443,6 +449,9 @@ class VolumeAdmin(HiddenFromIndexMixin, admin.ModelAdmin[Volume]):
     search_fields = ("title", "journal__name")
     raw_id_fields = ("journal",)
     inlines = [VolumeEntryInline]
+
+    class Media:
+        css = {"all": ("admin/journals/admin.css",)}
 
     @admin.display(description=_("Entries"))
     def entry_count(self, obj: Volume) -> int:

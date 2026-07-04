@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 16:20+0000\n"
+"POT-Creation-Date: 2026-07-04 16:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,57 +95,51 @@ msgstr "中国語"
 msgid "Korean"
 msgstr "韓国語"
 
-#: services/journals/admin.py:118 services/journals/admin.py:249
-#| msgid "Add Translation"
+#: services/journals/admin.py:118 services/journals/admin.py:251
 msgid "Add a translation"
 msgstr "翻訳を追加"
 
-#: services/journals/admin.py:122 services/journals/admin.py:253
-#| msgid "Add language"
+#: services/journals/admin.py:122 services/journals/admin.py:255
 msgid "Language"
 msgstr "言語"
 
-#: services/journals/admin.py:126 services/journals/admin.py:257
-#| msgid "Translations"
+#: services/journals/admin.py:126 services/journals/admin.py:259
 msgid "Translation"
 msgstr "翻訳"
 
 #: services/journals/admin.py:136
-#| msgid "New Volume"
 msgid "Add new volume"
 msgstr "巻を追加"
 
-#: services/journals/admin.py:140 templates/journals/edit_entry.html:134
+#: services/journals/admin.py:140 services/journals/models.py:189
+#: services/journals/models.py:269 templates/journals/edit_entry.html:134
 #: templates/journals/new_entry.html:53
 msgid "Volume"
 msgstr "巻"
 
-#: services/journals/admin.py:145 services/journals/models.py:153
-#: services/journals/models.py:154
+#: services/journals/admin.py:145 services/journals/admin.py:213
+#: services/journals/models.py:156 services/journals/models.py:157
 msgid "Chapters"
 msgstr "章"
 
 #: services/journals/admin.py:154
-#| msgid "Add Character"
 msgid "Add new character"
 msgstr "キャラクターを追加"
 
-#: services/journals/admin.py:158 services/journals/admin.py:234
-#| msgid "Characters"
+#: services/journals/admin.py:158 services/journals/admin.py:236
+#: services/journals/models.py:291 services/journals/models.py:300
 msgid "Character"
 msgstr "キャラクター"
 
 #: services/journals/admin.py:168
-#| msgid "Add Tag"
 msgid "Add new tag"
 msgstr "タグを追加"
 
 #: services/journals/admin.py:172
-#| msgid "Tags"
 msgid "Tag"
 msgstr "タグ"
 
-#: services/journals/admin.py:177 services/journals/admin.py:501
+#: services/journals/admin.py:177 services/journals/admin.py:510
 msgid "Used by"
 msgstr "使用数"
 
@@ -153,93 +147,87 @@ msgstr "使用数"
 msgid "Add new entry"
 msgstr "エントリーを追加"
 
-#: services/journals/admin.py:203 services/journals/models.py:146
-#: services/journals/models.py:148
+#: services/journals/admin.py:203 services/journals/models.py:149
+#: services/journals/models.py:151 services/journals/models.py:303
 msgid "Entry"
 msgstr "エントリ"
 
-#: services/journals/admin.py:214
-#| msgid "Add Character"
-msgid "Add new chapter"
-msgstr "章を追加"
-
-#: services/journals/admin.py:219 services/journals/models.py:142
-#: services/journals/models.py:143
+#: services/journals/admin.py:212 services/journals/admin.py:221
+#: services/journals/models.py:145 services/journals/models.py:146
 msgid "Chapter"
 msgstr "章"
 
-#: services/journals/admin.py:230
-#| msgid "Add Character"
+#: services/journals/admin.py:216
+msgid "Add new chapter"
+msgstr "章を追加"
+
+#: services/journals/admin.py:232
 msgid "Add character appearance"
 msgstr "登場を追加"
 
-#: services/journals/admin.py:238
-#| msgid "appears in"
+#: services/journals/admin.py:240
 msgid "Appearance"
 msgstr "登場箇所"
 
-#: services/journals/admin.py:241
+#: services/journals/admin.py:243
 msgid "open"
 msgstr "開く"
 
-#: services/journals/admin.py:300 services/journals/admin.py:430
-#: templates/journals/new_journal.html:86 templates/journals/settings.html:90
+#: services/journals/admin.py:303 services/journals/admin.py:436
+#: services/journals/models.py:91 templates/journals/new_journal.html:86
+#: templates/journals/settings.html:90
 msgid "Mode"
 msgstr "モード"
 
-#: services/journals/admin.py:302
+#: services/journals/admin.py:305
 msgid "Access"
 msgstr "公開設定"
 
-#: services/journals/admin.py:303
-#| msgid "Custom Styling"
+#: services/journals/admin.py:306
 msgid "Customization"
 msgstr "カスタマイズ"
 
-#: services/journals/admin.py:306
-#| msgid "Japanese"
+#: services/journals/admin.py:309
 msgid "Name (Japanese)"
 msgstr "名前（日本語）"
 
-#: services/journals/admin.py:394
-#| msgid "Translations"
+#: services/journals/admin.py:400
 msgid "Organization"
 msgstr "構成"
 
-#: services/journals/admin.py:408
-#| msgid "Mode & Classification"
+#: services/journals/admin.py:414
 msgid "Classification"
 msgstr "分類"
 
-#: services/journals/admin.py:416
+#: services/journals/admin.py:422
 msgid "Media"
 msgstr "メディア"
 
-#: services/journals/admin.py:419
-#| msgid "Status"
+#: services/journals/admin.py:425
 msgid "Stats"
 msgstr "統計"
 
-#: services/journals/admin.py:423
-#| msgid "Japanese"
+#: services/journals/admin.py:429
 msgid "Title (Japanese)"
 msgstr "タイトル（日本語）"
 
-#: services/journals/admin.py:447 services/journals/models.py:157
-#: services/journals/models.py:159
+#: services/journals/admin.py:456 services/journals/models.py:160
+#: services/journals/models.py:162
 msgid "Entries"
 msgstr "エントリ"
 
-#: services/journals/admin.py:460
+#: services/journals/admin.py:469
 msgid "Avatar"
 msgstr "アバター"
 
-#: services/journals/admin.py:474
-#| msgid "Journals"
+#: services/journals/admin.py:483 services/journals/models.py:50
+#: services/journals/models.py:106 services/journals/models.py:176
+#: services/journals/models.py:257 services/journals/models.py:278
+#: services/journals/models.py:336
 msgid "Journal"
 msgstr "ジャーナル"
 
-#: services/journals/admin.py:486
+#: services/journals/admin.py:495 services/journals/models.py:305
 msgid "Notes"
 msgstr "メモ"
 
@@ -536,7 +524,8 @@ msgstr "希望"
 msgid "Stressed"
 msgstr "ストレス"
 
-#: services/journals/constants.py:93
+#: services/journals/constants.py:93 services/journals/models.py:69
+#: services/journals/models.py:180
 #: templates/administration/announcements.html:94
 #: templates/journals/edit_entry.html:84 templates/journals/new_entry.html:208
 msgid "Content"
@@ -566,22 +555,262 @@ msgstr "無感覚"
 msgid "Curious"
 msgstr "好奇心"
 
-#: services/journals/models.py:144
+#: services/journals/models.py:52 services/journals/models.py:81
+#: services/journals/models.py:280 services/journals/models.py:338
+#: templates/administration/emojis.html:32
+#: templates/journals/characters.html:39 templates/journals/edit_entry.html:235
+#: templates/journals/new_entry.html:149 templates/journals/settings.html:213
+msgid "Name"
+msgstr "名前"
+
+#: services/journals/models.py:53 services/journals/models.py:83
+#: services/journals/models.py:261 templates/journals/new_journal.html:73
+#: templates/journals/settings.html:74 templates/journals/settings.html:218
+#: templates/journals/volumes.html:43
+msgid "Description"
+msgstr "説明"
+
+#: services/journals/models.py:57
+#| msgid "Translation"
+msgid "Journal Translation"
+msgstr "ジャーナル翻訳"
+
+#: services/journals/models.py:58
+#| msgid "Translations"
+msgid "Journal Translations"
+msgstr "ジャーナル翻訳"
+
+#: services/journals/models.py:66 services/journals/models.py:208
+#| msgid "Journal Entries"
+msgid "Journal Entry"
+msgstr "ジャーナルエントリ"
+
+#: services/journals/models.py:68 services/journals/models.py:178
+#: services/journals/models.py:259 templates/administration/kawaiibeats.html:37
+#: templates/journals/edit_entry.html:72 templates/journals/new_entry.html:35
+#: templates/journals/new_entry.html:42 templates/journals/volumes.html:39
+#: templates/weblog/weblog.html:41 templates/weblog/weblog.html:56
+msgid "Title"
+msgstr "タイトル"
+
+#: services/journals/models.py:73
+#| msgid "Journal Entries"
+msgid "Journal Entry Translation"
+msgstr "ジャーナルエントリ翻訳"
+
+#: services/journals/models.py:74
+#| msgid "Journal Entries"
+msgid "Journal Entry Translations"
+msgstr "ジャーナルエントリ翻訳"
+
+#: services/journals/models.py:82 services/journals/models.py:179
+#: services/journals/models.py:339 templates/journals/edit_entry.html:111
+msgid "Slug"
+msgstr "URLスラッグ"
+
+#: services/journals/models.py:84
+#: templates/journals/_partials/journal_header.html:10
+#: templates/journals/journals.html:49
+msgid "Private"
+msgstr "非公開"
+
+#: services/journals/models.py:86
+msgid "Owner"
+msgstr "所有者"
+
+#: services/journals/models.py:89
+#| msgid "Shared with Users"
+msgid "Shared With"
+msgstr "共有先"
+
+#: services/journals/models.py:93 templates/journals/new_journal.html:106
+#: templates/journals/settings.html:97
+msgid "Status"
+msgstr "ステータス"
+
+#: services/journals/models.py:95 services/journals/models.py:191
+#: templates/journals/edit_entry.html:158 templates/journals/new_entry.html:77
+#: templates/journals/new_journal.html:96 templates/journals/settings.html:109
+#: templates/journals/short_stories/main.html:82
+msgid "Genre"
+msgstr "ジャンル"
+
+#: services/journals/models.py:97 services/journals/models.py:263
+#: templates/journals/settings.html:122 templates/journals/volumes.html:47
+msgid "Cover Image"
+msgstr "カバー画像"
+
+#: services/journals/models.py:99 templates/journals/settings.html:186
+msgid "Custom CSS"
+msgstr "カスタムCSS"
+
+#: services/journals/models.py:100 services/journals/models.py:202
+#: services/journals/models.py:265 services/journals/models.py:287
+#: templates/administration/announcements.html:98
+msgid "Created At"
+msgstr "作成日時"
+
+#: services/journals/models.py:101 services/journals/models.py:203
+#| msgid "Updated"
+msgid "Updated At"
+msgstr "更新日時"
+
+#: services/journals/models.py:107 templates/_partials/left_sidebar.html:43
+msgid "Journals"
+msgstr "ジャーナル"
+
+#: services/journals/models.py:147
 msgid "Story"
 msgstr "ストーリー"
 
-#: services/journals/models.py:145
+#: services/journals/models.py:148
 msgid "Poem"
 msgstr "詩"
 
-#: services/journals/models.py:155
+#: services/journals/models.py:158
 #: templates/journals/short_stories/main.html:98
 msgid "Stories"
 msgstr "ストーリー"
 
-#: services/journals/models.py:156 templates/journals/poetry/main.html:18
+#: services/journals/models.py:159 templates/journals/poetry/main.html:18
 msgid "Poems"
 msgstr "詩"
+
+#: services/journals/models.py:181 services/journals/models.py:260
+#: services/journals/models.py:286
+#| msgid "Save Order"
+msgid "Order"
+msgstr "並び順"
+
+#: services/journals/models.py:182
+#: templates/journals/_partials/poetry_entries.html:11
+#: templates/journals/_partials/short_story_entries.html:28
+#: templates/journals/edit_entry.html:214 templates/journals/entries.html:70
+#: templates/journals/entries.html:108 templates/journals/new_entry.html:128
+#: templates/journals/toc.html:54 templates/journals/toc.html:80
+msgid "Draft"
+msgstr "下書き"
+
+#: services/journals/models.py:192 templates/journals/edit_entry.html:167
+#: templates/journals/new_entry.html:86
+#: templates/journals/short_stories/main.html:89
+msgid "Tone"
+msgstr "トーン"
+
+#: services/journals/models.py:193 templates/journals/edit_entry.html:146
+#: templates/journals/new_entry.html:65 templates/journals/poetry/main.html:72
+msgid "Form"
+msgstr "形式"
+
+#: services/journals/models.py:194 templates/journals/diary/main.html:71
+#: templates/journals/edit_entry.html:179 templates/journals/new_entry.html:98
+#: templates/journals/poetry/main.html:85
+msgid "Mood"
+msgstr "気分"
+
+#: services/journals/models.py:195 templates/journals/edit_entry.html:191
+#: templates/journals/new_entry.html:110
+msgid "Summary"
+msgstr "あらすじ"
+
+#: services/journals/models.py:197 templates/journals/edit_entry.html:198
+#: templates/journals/new_entry.html:117
+msgid "Thumbnail"
+msgstr "サムネイル"
+
+#: services/journals/models.py:199
+msgid "Word Count"
+msgstr "文字数"
+
+#: services/journals/models.py:200
+#| msgid "Entry"
+msgid "Entry Date"
+msgstr "エントリ日付"
+
+#: services/journals/models.py:201 templates/_partials/left_sidebar.html:97
+#: templates/journals/_partials/journal_header.html:46
+#: templates/journals/diary/main.html:85 templates/journals/edit_entry.html:268
+#: templates/journals/new_entry.html:182 templates/journals/tags.html:27
+#: templates/weblog/tags.html:108
+msgid "Tags"
+msgstr "タグ"
+
+#: services/journals/models.py:209 templates/_partials/right_sidebar.html:159
+msgid "Journal Entries"
+msgstr "ジャーナルエントリ"
+
+#: services/journals/models.py:270
+#: templates/journals/_partials/journal_header.html:35
+#: templates/journals/volumes.html:27
+msgid "Volumes"
+msgstr "巻"
+
+#: services/journals/models.py:282 templates/administration/emojis.html:37
+#: templates/journals/characters.html:59
+msgid "Image"
+msgstr "画像"
+
+#: services/journals/models.py:284 templates/journals/characters.html:55
+#: templates/journals/edit_entry.html:254 templates/journals/new_entry.html:168
+msgid "Bio"
+msgstr "プロフィール"
+
+#: services/journals/models.py:285 templates/journals/characters.html:43
+#: templates/journals/edit_entry.html:239 templates/journals/new_entry.html:153
+msgid "Role"
+msgstr "役割"
+
+#: services/journals/models.py:292
+#: templates/journals/_partials/journal_header.html:39
+#: templates/journals/books/main.html:51 templates/journals/characters.html:27
+#: templates/journals/edit_entry.html:222 templates/journals/new_entry.html:136
+#: templates/journals/short_stories/main.html:50
+msgid "Characters"
+msgstr "キャラ"
+
+#: services/journals/models.py:309
+#| msgid "Add character appearance"
+msgid "Character Appearance"
+msgstr "キャラクターの登場"
+
+#: services/journals/models.py:310
+#| msgid "Add character appearance"
+msgid "Character Appearances"
+msgstr "キャラクターの登場"
+
+#: services/journals/models.py:318
+#| msgid "Character"
+msgid "From Character"
+msgstr "起点キャラクター"
+
+#: services/journals/models.py:321
+#| msgid "Character"
+msgid "To Character"
+msgstr "対象キャラクター"
+
+#: services/journals/models.py:323
+msgid "Label"
+msgstr "ラベル"
+
+#: services/journals/models.py:327
+#| msgid "Relationship"
+msgid "Character Relationship"
+msgstr "キャラクター関係"
+
+#: services/journals/models.py:328
+#| msgid "Relationships"
+msgid "Character Relationships"
+msgstr "キャラクター関係"
+
+#: services/journals/models.py:343
+#| msgid "Entry"
+msgid "Entry Tag"
+msgstr "エントリタグ"
+
+#: services/journals/models.py:344
+#| msgid "Entry"
+msgid "Entry Tags"
+msgstr "エントリタグ"
 
 #: templates/_partials/footer.html:22
 #, python-format
@@ -628,10 +857,6 @@ msgstr "パスワード"
 msgid "Hello, %(username)s"
 msgstr "こんにちは、%(username)sさん"
 
-#: templates/_partials/left_sidebar.html:43
-msgid "Journals"
-msgstr "ジャーナル"
-
 #: templates/_partials/left_sidebar.html:47
 msgid "My Page"
 msgstr "マイページ"
@@ -669,14 +894,6 @@ msgstr "ウェブログ"
 #: templates/_partials/left_sidebar.html:92 templates/weblog/categories.html:13
 msgid "Categories"
 msgstr "カテゴリー"
-
-#: templates/_partials/left_sidebar.html:97
-#: templates/journals/_partials/journal_header.html:46
-#: templates/journals/diary/main.html:85 templates/journals/edit_entry.html:268
-#: templates/journals/new_entry.html:182 templates/journals/tags.html:27
-#: templates/weblog/tags.html:108
-msgid "Tags"
-msgstr "タグ"
 
 #: templates/_partials/left_sidebar.html:102 templates/weblog/archives.html:75
 msgid "Archives"
@@ -831,10 +1048,6 @@ msgstr "レベル"
 msgid "Balance"
 msgstr "バランス"
 
-#: templates/_partials/right_sidebar.html:159
-msgid "Journal Entries"
-msgstr "ジャーナルエントリ"
-
 #: templates/_partials/right_sidebar.html:163
 msgid "Journal Streak"
 msgstr "ジャーナルストリーク"
@@ -905,10 +1118,6 @@ msgstr "新しい"
 #: templates/administration/announcements.html:97
 msgid "Is Public"
 msgstr "公開"
-
-#: templates/administration/announcements.html:98
-msgid "Created At"
-msgstr "作成日時"
 
 #: templates/administration/announcements.html:99
 #: templates/administration/kawaiibeats.html:149
@@ -985,20 +1194,9 @@ msgstr "保存する前に何か内容を入力してください。"
 msgid "emojis"
 msgstr "絵文字"
 
-#: templates/administration/emojis.html:32
-#: templates/journals/characters.html:39 templates/journals/edit_entry.html:235
-#: templates/journals/new_entry.html:149 templates/journals/settings.html:213
-msgid "Name"
-msgstr "名前"
-
 #: templates/administration/emojis.html:34
 msgid "lowercase, numbers, underscores"
 msgstr "小文字・数字・アンダースコア"
-
-#: templates/administration/emojis.html:37
-#: templates/journals/characters.html:59
-msgid "Image"
-msgstr "画像"
 
 #: templates/administration/emojis.html:40
 msgid "Upload"
@@ -1030,13 +1228,6 @@ msgstr "楽曲のメタデータを取得"
 #: templates/administration/kawaiibeats.html:31
 msgid "Or you can add a song manually:"
 msgstr "または手動で楽曲を追加することもできます："
-
-#: templates/administration/kawaiibeats.html:37
-#: templates/journals/edit_entry.html:72 templates/journals/new_entry.html:35
-#: templates/journals/new_entry.html:42 templates/journals/volumes.html:39
-#: templates/weblog/weblog.html:41 templates/weblog/weblog.html:56
-msgid "Title"
-msgstr "タイトル"
 
 #: templates/administration/kawaiibeats.html:41
 msgid "Enter Title"
@@ -1299,11 +1490,6 @@ msgstr "カテゴリー："
 msgid "on"
 msgstr "投稿日："
 
-#: templates/journals/_partials/journal_header.html:10
-#: templates/journals/journals.html:49
-msgid "Private"
-msgstr "非公開"
-
 #: templates/journals/_partials/journal_header.html:12
 #: templates/journals/journals.html:51
 msgid "Public"
@@ -1319,18 +1505,6 @@ msgstr "ジャーナルに戻る"
 msgid "Table of Contents"
 msgstr "目次"
 
-#: templates/journals/_partials/journal_header.html:35
-#: templates/journals/volumes.html:27
-msgid "Volumes"
-msgstr "巻"
-
-#: templates/journals/_partials/journal_header.html:39
-#: templates/journals/books/main.html:51 templates/journals/characters.html:27
-#: templates/journals/edit_entry.html:222 templates/journals/new_entry.html:136
-#: templates/journals/short_stories/main.html:50
-msgid "Characters"
-msgstr "キャラ"
-
 #: templates/journals/_partials/journal_header.html:43
 #: templates/journals/diary/main.html:39
 msgid "Calendar"
@@ -1339,14 +1513,6 @@ msgstr "カレンダー"
 #: templates/journals/_partials/journal_header.html:48
 msgid "View"
 msgstr "見る"
-
-#: templates/journals/_partials/poetry_entries.html:11
-#: templates/journals/_partials/short_story_entries.html:28
-#: templates/journals/edit_entry.html:214 templates/journals/entries.html:70
-#: templates/journals/entries.html:108 templates/journals/new_entry.html:128
-#: templates/journals/toc.html:54 templates/journals/toc.html:80
-msgid "Draft"
-msgstr "下書き"
 
 #: templates/journals/_partials/poetry_entries.html:28
 #: templates/journals/poetry/entry.html:24
@@ -1470,11 +1636,6 @@ msgstr "新規キャラ"
 msgid "Character name..."
 msgstr "キャラ名…"
 
-#: templates/journals/characters.html:43 templates/journals/edit_entry.html:239
-#: templates/journals/new_entry.html:153
-msgid "Role"
-msgstr "役割"
-
 #: templates/journals/characters.html:45
 msgid "Select role..."
 msgstr "役割を選択…"
@@ -1505,11 +1666,6 @@ msgstr "カメオ"
 #: templates/journals/new_entry.html:160
 msgid "Narrator"
 msgstr "語り手"
-
-#: templates/journals/characters.html:55 templates/journals/edit_entry.html:254
-#: templates/journals/new_entry.html:168
-msgid "Bio"
-msgstr "プロフィール"
 
 #: templates/journals/characters.html:56
 msgid "Character backstory and details..."
@@ -1637,11 +1793,6 @@ msgctxt "weekday_initial_sun"
 msgid "S"
 msgstr "日"
 
-#: templates/journals/diary/main.html:71 templates/journals/edit_entry.html:179
-#: templates/journals/new_entry.html:98 templates/journals/poetry/main.html:85
-msgid "Mood"
-msgstr "気分"
-
 #: templates/journals/diary/main.html:74 templates/journals/diary/main.html:78
 #: templates/journals/poetry/main.html:88
 #: templates/journals/poetry/main.html:92
@@ -1689,10 +1840,6 @@ msgstr "翻訳されたタイトル"
 msgid "Translated Content"
 msgstr "翻訳されたコンテンツ"
 
-#: templates/journals/edit_entry.html:111
-msgid "Slug"
-msgstr "URLスラッグ"
-
 #: templates/journals/edit_entry.html:120
 msgid "entry-slug"
 msgstr "entry-slug"
@@ -1706,29 +1853,13 @@ msgstr "日付"
 msgid "No volume"
 msgstr "巻なし"
 
-#: templates/journals/edit_entry.html:146 templates/journals/new_entry.html:65
-#: templates/journals/poetry/main.html:72
-msgid "Form"
-msgstr "形式"
-
 #: templates/journals/edit_entry.html:148 templates/journals/new_entry.html:67
 msgid "Select form..."
 msgstr "形式を選択…"
 
-#: templates/journals/edit_entry.html:158 templates/journals/new_entry.html:77
-#: templates/journals/new_journal.html:96 templates/journals/settings.html:109
-#: templates/journals/short_stories/main.html:82
-msgid "Genre"
-msgstr "ジャンル"
-
 #: templates/journals/edit_entry.html:160 templates/journals/new_entry.html:79
 msgid "Select genre..."
 msgstr "ジャンルを選択…"
-
-#: templates/journals/edit_entry.html:167 templates/journals/new_entry.html:86
-#: templates/journals/short_stories/main.html:89
-msgid "Tone"
-msgstr "トーン"
 
 #: templates/journals/edit_entry.html:169 templates/journals/new_entry.html:88
 msgid "Select tone..."
@@ -1738,17 +1869,9 @@ msgstr "トーンを選択…"
 msgid "Select mood..."
 msgstr "気分を選択…"
 
-#: templates/journals/edit_entry.html:191 templates/journals/new_entry.html:110
-msgid "Summary"
-msgstr "あらすじ"
-
 #: templates/journals/edit_entry.html:192 templates/journals/new_entry.html:111
 msgid "Brief summary or blurb..."
 msgstr "短いあらすじや紹介文…"
-
-#: templates/journals/edit_entry.html:198 templates/journals/new_entry.html:117
-msgid "Thumbnail"
-msgstr "サムネイル"
 
 #: templates/journals/edit_entry.html:201
 msgid "Current thumbnail"
@@ -1970,11 +2093,6 @@ msgid ""
 "only)"
 msgstr "オプション：ジャーナル用のカスタムURL（小文字、数字、ハイフンのみ）"
 
-#: templates/journals/new_journal.html:73 templates/journals/settings.html:74
-#: templates/journals/settings.html:218 templates/journals/volumes.html:43
-msgid "Description"
-msgstr "説明"
-
 #: templates/journals/new_journal.html:79 templates/journals/settings.html:79
 msgid "Describe what this journal is about..."
 msgstr "このジャーナルが何についてのものか説明してください..."
@@ -1990,10 +2108,6 @@ msgstr "ジャーナルの種類を選べ。後から変更はできねぇ。"
 #: templates/journals/new_journal.html:98 templates/journals/settings.html:111
 msgid "— Select Genre —"
 msgstr "— ジャンルを選択 —"
-
-#: templates/journals/new_journal.html:106 templates/journals/settings.html:97
-msgid "Status"
-msgstr "ステータス"
 
 #: templates/journals/new_journal.html:119 templates/journals/settings.html:149
 msgid "Private Journal"
@@ -2087,10 +2201,6 @@ msgstr "現在の執筆ステータス"
 msgid "Primary genre of your work"
 msgstr "作品のメインジャンル"
 
-#: templates/journals/settings.html:122 templates/journals/volumes.html:47
-msgid "Cover Image"
-msgstr "カバー画像"
-
 #: templates/journals/settings.html:125
 msgid "Current cover"
 msgstr "現在のカバー"
@@ -2129,10 +2239,6 @@ msgstr "このプライベートジャーナルにアクセスできるユーザ
 #: templates/journals/settings.html:183
 msgid "Custom Styling"
 msgstr "カスタムスタイリング"
-
-#: templates/journals/settings.html:186
-msgid "Custom CSS"
-msgstr "カスタムCSS"
 
 #: templates/journals/settings.html:191
 msgid "Custom CSS to style your journal"

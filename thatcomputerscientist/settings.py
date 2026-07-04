@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     "channels",
     "storages",
     "thatcomputerscientist",

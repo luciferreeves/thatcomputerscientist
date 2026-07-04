@@ -232,6 +232,7 @@ def add_comment(post, user, body, parent=None):
                 post=post,
                 spam_status=spam_status,
             )
+        comment.toggle_vote(user, 1)
         return True, comment
     except Exception as e:
         return False, str(e)

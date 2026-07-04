@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from services.admin_common import ADMIN_CSS, HiddenFromIndexMixin, LinkInline
+from services.admin import ADMIN_CSS, HiddenFromIndexMixin, LinkInline
 from services.weblog.models import (
     Category,
     CategoryTranslation,

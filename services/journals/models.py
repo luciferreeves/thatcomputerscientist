@@ -10,6 +10,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
 from django.utils.translation import get_language, gettext_lazy as _
 from core.translations import TranslatableMixin, Translation
+from services.journals.formatting import to_title_case
 from services.journals.constants import (
     MODE_CHOICES,
     STATUS_CHOICES,
@@ -101,6 +102,8 @@ class Journal(TranslatableMixin, models.Model):
         unique_together = ("owner", "slug")
 
     def save(self, *args: Any, **kwargs: Any) -> None:
+        if self.name:
+            self.name = to_title_case(self.name)
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
@@ -211,6 +214,8 @@ class JournalEntry(TranslatableMixin, models.Model):
         return sum(1 for b in blocks if re.sub(r"<[^>]+>", "", b).strip())
 
     def save(self, *args: Any, **kwargs: Any) -> None:
+        if self.title:
+            self.title = to_title_case(self.title)
         if not self.slug:
             self.slug = slugify(self.title)
         self.word_count = self._calculate_word_count()
@@ -259,6 +264,11 @@ class Volume(models.Model):
 
     class Meta:
         ordering = ["order"]
+
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        if self.title:
+            self.title = to_title_case(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"{self.journal.name} - {self.title}"

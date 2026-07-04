@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 14:26+0000\n"
+"POT-Creation-Date: 2026-07-02 23:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -504,7 +504,7 @@ msgstr "ジャーナル"
 msgid "My Page"
 msgstr "マイページ"
 
-#: templates/_partials/left_sidebar.html:52 templates/letters/inbox.html:22
+#: templates/_partials/left_sidebar.html:52 templates/letters/inbox.html:40
 msgid "Letters"
 msgstr "手紙"
 
@@ -1746,6 +1746,7 @@ msgstr "戻る"
 
 #: templates/journals/entry_read.html:47
 #: templates/journals/journal_view.html:61 templates/journals/journals.html:139
+#: templates/letters/inbox.html:96
 msgid "Next"
 msgstr "次へ"
 
@@ -2112,7 +2113,7 @@ msgid "Create volumes to organize your chapters into arcs or books."
 msgstr "巻を作って、章をアークや本にまとめな。"
 
 #: templates/letters/_partials/letter_rows.html:7
-#: templates/letters/conversation.html:44 templates/letters/inbox.html:52
+#: templates/letters/conversation.html:44 templates/letters/inbox.html:64
 msgid "You"
 msgstr "自分"
 
@@ -2133,37 +2134,41 @@ msgstr "まだ手紙がねぇ。最初の一通を書きな！"
 msgid "Write your letter..."
 msgstr "手紙を書きな…"
 
-#: templates/letters/inbox.html:26
-msgid "UNREAD"
-msgstr "未読"
+#: templates/letters/inbox.html:16
+msgid "Secure channel online"
+msgstr "セキュア回線 オンライン"
 
-#: templates/letters/inbox.html:29
-msgid "TOTAL"
+#: templates/letters/inbox.html:42
+msgid "Total"
 msgstr "合計"
 
-#: templates/letters/inbox.html:56
+#: templates/letters/inbox.html:43
+msgid "Unread"
+msgstr "未読"
+
+#: templates/letters/inbox.html:68
 msgid "attachment"
 msgstr "添付"
 
-#: templates/letters/inbox.html:59
+#: templates/letters/inbox.html:71
 msgid "No letters yet"
 msgstr "まだ手紙がねぇ"
 
-#: templates/letters/inbox.html:78
-msgid "PREV"
-msgstr "前"
+#: templates/letters/inbox.html:90
+msgid "Prev"
+msgstr "前へ"
 
-#: templates/letters/inbox.html:84
-msgid "NEXT"
-msgstr "次"
+#: templates/letters/inbox.html:103
+msgid "No signal"
+msgstr "電波ねぇ"
 
-#: templates/letters/inbox.html:91
-msgid "No Conversations Yet"
-msgstr "まだ会話がねぇ"
+#: templates/letters/inbox.html:104
+msgid "Visit a user's page and send them a letter to open a channel."
+msgstr "誰かのページに行って手紙を送りゃ、回線が開くぜ。"
 
-#: templates/letters/inbox.html:92
-msgid "Visit a user's page and send them a letter to start a conversation."
-msgstr "誰かのページに行って手紙を送りゃ、会話が始まるぞ。"
+#: templates/letters/inbox.html:111
+msgid "Shifoo corp terminal"
+msgstr "シフー社 端末"
 
 #: templates/weblog/_partials/post_comments.html:10
 msgid "Please register or log in to upvote comments."
@@ -2453,3 +2458,18 @@ msgstr ""
 "た%(count)s件の投稿を表示しています。完全な<a href=\"%(home)s\">ウェブログ</"
 "a>を表示するか、<a href=\"%(tags)s\">すべてのタグを表示する</a>こともできま"
 "す。"
+
+#~ msgid "UNREAD"
+#~ msgstr "未読"
+
+#~ msgid "TOTAL"
+#~ msgstr "合計"
+
+#~ msgid "PREV"
+#~ msgstr "前"
+
+#~ msgid "NEXT"
+#~ msgstr "次"
+
+#~ msgid "No Conversations Yet"
+#~ msgstr "まだ会話がねぇ"

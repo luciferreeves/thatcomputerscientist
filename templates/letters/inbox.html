@@ -7,90 +7,111 @@
 {% endblock head %}
 
 {% block content %}
-<div class="signal-deck">
-    <div class="deck-frame-mid"></div>
-    {% if messages %}
-        <div class="deck-messages">
-            {% for message in messages %}
-                <div class="deck-msg {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
+<div class="signal-deck" id="letters-deck">
+    <span class="hud-corner hud-corner-tl"></span>
+    <span class="hud-corner hud-corner-tr"></span>
+    <span class="hud-corner hud-corner-bl"></span>
+    <span class="hud-corner hud-corner-br"></span>
 
-    <div class="deck-header">
-        <div class="deck-header-left">
-            <h1 class="deck-title">{% trans "Letters" %}</h1>
-        </div>
-        <div class="deck-header-right">
-            {% if unread_letter_count %}
-                <span class="deck-header-unread">{{ unread_letter_count }} {% trans "UNREAD" %}</span>
-            {% endif %}
-            {% if conversations %}
-                <span class="deck-header-count">{{ conversations.paginator.count }} {% trans "TOTAL" %}</span>
-            {% endif %}
-        </div>
+    <div class="hud-top"><span class="hud-top-bar" data-decode data-decode-delay="150">{% translate "Secure channel online" %}</span></div>
+    <div class="hud-sub">
+        <span class="hud-sub-l" data-decode data-decode-delay="320">{{ request.user.username }}</span>
+        <span class="hud-chev">&lsaquo;&lsaquo;&lsaquo;&lsaquo;&lsaquo;&nbsp;&nbsp;&rsaquo;&rsaquo;&rsaquo;&rsaquo;&rsaquo;</span>
     </div>
+    <div class="hud-rail"></div>
 
-    {% if conversations %}
-    <div class="deck-list">
-        {% for conv in conversations %}
-        <a href="{% url 'core:letters:conversation' username=conv.other_user.username %}" class="deck-channel {% if conv.unread_count > 0 %}channel-active{% endif %}">
-            <div class="channel-accent"></div>
-            <div class="channel-avatar-wrap">
-                {% with profile=conv.other_user.userprofile_set.first %}
-                    {% if profile and profile.avatar_url %}
-                        <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ conv.other_user.username }}" class="channel-avatar" width="36" height="36" />
-                    {% else %}
-                        <div class="channel-avatar-letter">{{ conv.other_user.username|first|upper }}</div>
-                    {% endif %}
-                {% endwith %}
-            </div>
-            <div class="channel-info">
-                <span class="channel-name">{{ conv.other_user.username }}</span>
-                <div class="channel-preview">
-                    {% if conv.last_letter %}
-                        <span class="channel-sender">{% if conv.last_letter.sender == request.user %}{% trans "You" %}{% else %}{{ conv.last_letter.sender.username }}{% endif %}:</span>
-                        {% if conv.last_letter.content|striptags %}
-                            {{ conv.last_letter.content|truncatechars_html:80|safe }}
-                        {% elif conv.last_letter.attachments.count %}
-                            <span class="channel-empty-msg">{{ conv.last_letter.attachments.count }} {% trans "attachment" %}{{ conv.last_letter.attachments.count|pluralize }}</span>
-                        {% endif %}
-                    {% else %}
-                        <span class="channel-empty-msg">{% trans "No letters yet" %}</span>
-                    {% endif %}
+    <div class="deck-stage">
+        <div class="deck-boot" id="deck-boot" aria-hidden="true">
+            <div class="boot-emblem"><span></span><span></span><span></span></div>
+            <div class="boot-word" data-decode data-decode-delay="500" data-decode-dur="1300">SHIFOO</div>
+            <div class="boot-kana">レター</div>
+        </div>
+
+        <div class="deck-body">
+            {% if messages %}
+                <div class="deck-messages">
+                    {% for message in messages %}
+                        <div class="deck-msg {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="deck-header">
+                <h1 class="deck-title" data-decode data-decode-delay="2700">{% translate "Letters" %}</h1>
+                <div class="deck-counts">
+                    <span class="hud-chip">{% translate "Total" %}{% if conversations %} <b>{{ conversations.paginator.count }}</b>{% endif %}</span>
+                    {% if unread_letter_count %}<span class="hud-chip hud-chip-alert">{% translate "Unread" %} <b>{{ unread_letter_count }}</b></span>{% endif %}
                 </div>
             </div>
-            <div class="channel-meta">
-                <span class="channel-time">
-                    {% if conv.last_letter %}{{ conv.last_letter.created_at|timesince }}{% endif %}
-                </span>
-                {% if conv.unread_count > 0 %}
-                    <span class="channel-badge">{{ conv.unread_count }}</span>
-                {% endif %}
+
+            {% if conversations %}
+            <div class="deck-list">
+                {% for conv in conversations %}
+                <a href="{% url 'core:letters:conversation' username=conv.other_user.username %}" class="deck-channel {% if conv.unread_count > 0 %}channel-active{% endif %}" style="--i: {{ forloop.counter0 }}">
+                    <div class="channel-avatar-wrap">
+                        {% with profile=conv.other_user.userprofile_set.first %}
+                            {% if profile and profile.avatar_url %}
+                                <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ conv.other_user.username }}" class="channel-avatar" width="36" height="36" />
+                            {% else %}
+                                <div class="channel-avatar-letter">{{ conv.other_user.username|first|upper }}</div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="channel-info">
+                        <span class="channel-name">{{ conv.other_user.username }}</span>
+                        <div class="channel-preview">
+                            {% if conv.last_letter %}
+                                <span class="channel-sender">{% if conv.last_letter.sender == request.user %}{% translate "You" %}{% else %}{{ conv.last_letter.sender.username }}{% endif %}:</span>
+                                {% if conv.last_letter.content|striptags %}
+                                    {{ conv.last_letter.content|truncatechars_html:80|safe }}
+                                {% elif conv.last_letter.attachments.count %}
+                                    <span class="channel-empty-msg">{{ conv.last_letter.attachments.count }} {% translate "attachment" %}{{ conv.last_letter.attachments.count|pluralize }}</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="channel-empty-msg">{% translate "No letters yet" %}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="channel-meta">
+                        <span class="channel-time">
+                            {% if conv.last_letter %}{{ conv.last_letter.created_at|timesince }}{% endif %}
+                        </span>
+                        {% if conv.unread_count > 0 %}
+                            <span class="channel-badge">{{ conv.unread_count }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
             </div>
-        </a>
-        {% endfor %}
+
+            {% if conversations.has_other_pages %}
+            <nav class="deck-pagination">
+                {% if conversations.has_previous %}
+                    <a href="?page={{ conversations.previous_page_number }}" class="deck-page-btn">&laquo; {% translate "Prev" %}</a>
+                {% endif %}
+                <span class="deck-page-info">
+                    <span class="deck-page-current">{{ conversations.number }}</span> / {{ conversations.paginator.num_pages }}
+                </span>
+                {% if conversations.has_next %}
+                    <a href="?page={{ conversations.next_page_number }}" class="deck-page-btn">{% translate "Next" %} &raquo;</a>
+                {% endif %}
+            </nav>
+            {% endif %}
+
+            {% else %}
+            <div class="deck-empty">
+                <h3>{% translate "No signal" %}</h3>
+                <p>{% translate "Visit a user's page and send them a letter to open a channel." %}</p>
+            </div>
+            {% endif %}
+        </div>
     </div>
 
-    {% if conversations.has_other_pages %}
-    <nav class="deck-pagination">
-        {% if conversations.has_previous %}
-            <a href="?page={{ conversations.previous_page_number }}" class="deck-page-btn">« {% trans "PREV" %}</a>
-        {% endif %}
-        <span class="deck-page-info">
-            <span class="deck-page-current">{{ conversations.number }}</span> / {{ conversations.paginator.num_pages }}
-        </span>
-        {% if conversations.has_next %}
-            <a href="?page={{ conversations.next_page_number }}" class="deck-page-btn">{% trans "NEXT" %} »</a>
-        {% endif %}
-    </nav>
-    {% endif %}
-
-    {% else %}
-    <div class="deck-empty">
-        <h3>{% trans "No Conversations Yet" %}</h3>
-        <p>{% trans "Visit a user's page and send them a letter to start a conversation." %}</p>
-    </div>
-    {% endif %}
+    <div class="hud-rail hud-rail-b"></div>
+    <div class="hud-foot"><span>{% translate "Shifoo corp terminal" %}</span><span>brainlink v2.34.3</span></div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/letters/inbox.js' %}"></script>
+{% endblock scripts %}

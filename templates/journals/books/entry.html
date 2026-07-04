@@ -55,10 +55,6 @@
         {{ entry.content|cleanview }}
     </div>
 
-    {% if entry.tags.all %}
-    <div class="bk-end-tags">{% for tag in entry.tags.all %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
-    {% endif %}
-
     <div class="bk-nav">
         {% if prev_entry %}
         <a href="{% url 'core:journal' journal.slug %}?entry={{ prev_entry.slug }}" class="bk-nav-item bk-nav-prev">

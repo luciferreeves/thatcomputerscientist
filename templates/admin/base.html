@@ -3,16 +3,15 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}" data-theme="dark">
 <head>
 <title>{% block title %}{% endblock %}</title>
-
-<link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
-<link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
+<style>
+@import url("{% static 'admin/css/base.css' %}") layer(djangoadmin);
+@import url("{% static 'admin/css/dark_mode.css' %}") layer(djangoadmin);
+@import url("{% static 'admin/css/responsive.css' %}") layer(djangoadmin);
+</style>
 {% block extrastyle %}{% endblock %}
-{% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "admin/css/rtl.css" %}">{% endif %}
 {% block extrahead %}{% endblock %}
-{% block responsive %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "admin/css/responsive.css" %}">
-{% endblock %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link type="text/css" rel="stylesheet" href="{% static 'css/shared/core.css' %}">
 <link type="text/css" rel="stylesheet" href="{% static 'css/shared/fonts.css' %}">
@@ -25,18 +24,7 @@
 </head>
 
 <body class="admin-reskin {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
-{% if is_popup %}
-<div id="container" class="admin-popup">
-  <main id="content-start" class="content" tabindex="-1">
-    {% block messages_popup %}{% endblock %}
-    <div id="content" class="{% block coltype_popup %}colM{% endblock %}">
-      {% block pretitle_popup %}{% endblock %}
-      {% block content_popup %}{% block object-tools_popup %}{% endblock %}{{ content }}{% endblock %}
-      <br class="clear">
-    </div>
-  </main>
-</div>
-{% else %}
+{% if not is_popup %}
 <video autoplay muted loop id="video-background" preload="auto">
   <source src="{% static 'videos/background_.webm' %}" type="video/webm" />
 </video>
@@ -48,28 +36,32 @@
       {% include "_partials/left_sidebar.html" %}
     </div>
     <div id="main-content">
+{% endif %}
+
       <main id="content-start" class="content" tabindex="-1">
-          {% block nav-breadcrumbs %}
-          <nav aria-label="{% translate 'Breadcrumbs' %}">
-            {% block breadcrumbs %}
-            <div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>
-            {% endblock %}
-          </nav>
+        {% if not is_popup %}
+        <nav aria-label="{% translate 'Breadcrumbs' %}">
+          {% block breadcrumbs %}
+          <div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>
           {% endblock %}
-          {% block messages %}
-            {% if messages %}
-            <ul class="messagelist">{% for message in messages %}<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>{% endfor %}</ul>
-            {% endif %}
-          {% endblock messages %}
-          <div id="content" class="{% block coltype %}colM{% endblock %}">
-            {% block pretitle %}{% endblock %}
-            {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-            {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
-            {% block content %}{% block object-tools %}{% endblock %}{{ content }}{% endblock %}
-            {% block sidebar %}{% endblock %}
-            <br class="clear">
-          </div>
+        </nav>
+        {% endif %}
+        {% block messages %}
+          {% if messages %}
+          <ul class="messagelist">{% for message in messages %}<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>{% endfor %}</ul>
+          {% endif %}
+        {% endblock messages %}
+        <div id="content" class="{% block coltype %}colM{% endblock %}">
+          {% block pretitle %}{% endblock %}
+          {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+          {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
+          {% block content %}{% block object-tools %}{% endblock %}{{ content }}{% endblock %}
+          {% block sidebar %}{% endblock %}
+          <br class="clear">
+        </div>
       </main>
+
+{% if not is_popup %}
     </div>
     <div id="right-sidebar">
       {% include "_partials/right_sidebar.html" %}
@@ -80,7 +72,6 @@
 <div id="scanlines"></div>
 {% endif %}
 {% block extrabody %}{% endblock extrabody %}
-
 {% if not is_popup %}
 <script type="text/javascript" src="{% static 'js/libs/pamphlet.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/core/base.js' %}"></script>

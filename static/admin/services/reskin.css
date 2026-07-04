@@ -1,11 +1,24 @@
-/* Admin content, contained to #main-content, dressed in a loud y2k skin. */
+/* Admin content, contained to #main-content, in a readable y2k skin.
+   Django's own CSS is loaded in the `djangoadmin` cascade layer (see base.html),
+   so anything here or in the site CSS wins — nothing leaks into the chrome. */
 
 html,
 body.admin-reskin {
     background: transparent;
 }
 
-/* ---- Contain: the site chrome keeps its own look, no admin bleed ---- */
+/* Lookup / raw-id popups have no site chrome: give them a solid readable page. */
+body.admin-reskin.popup {
+    background: #140c26;
+    color: #f0ecff;
+    padding: 14px 18px;
+}
+
+body.admin-reskin.popup .content {
+    background: #140c26;
+}
+
+/* ---- Contain: strip any admin styling off the site chrome ---- */
 #left-sidebar a,
 #right-sidebar a,
 #footer a,
@@ -23,14 +36,7 @@ body.admin-reskin {
     background: transparent;
     border: 0;
     box-shadow: none;
-    border-radius: 4px;
     color: inherit;
-}
-
-#left-sidebar button,
-#right-sidebar button,
-#footer button {
-    box-shadow: none;
 }
 
 /* ---- Content column ---- */
@@ -42,71 +48,63 @@ body.admin-reskin {
 #main-content .content {
     min-width: 0;
     overflow-x: auto;
+    color: #ece7fb;
 }
 
-#main-content #content,
-#main-content .content {
-    color: #e9e3fb;
+#main-content #content {
+    color: #ece7fb;
 }
 
-/* ---- Headings ---- */
-#main-content #content > h1,
-#main-content .content > h1 {
-    font-size: 26px;
+/* ---- Title ---- */
+#main-content #content > h1 {
+    font-size: 24px;
     font-weight: 800;
-    letter-spacing: 1px;
-    color: #fff;
-    text-shadow: 0 0 6px #df23c4, 0 0 14px rgba(84, 242, 242, 0.5);
-    margin: 4px 0 14px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(223, 35, 196, 0.7);
+    margin: 2px 0 14px;
 }
 
-#main-content h2,
-#main-content h3 {
-    color: #d9ccff;
-}
-
-/* ---- Breadcrumbs: a neon path bar ---- */
+/* ---- Breadcrumbs ---- */
 #main-content .breadcrumbs {
-    background: linear-gradient(90deg, rgba(49, 27, 79, 0.85), rgba(24, 14, 46, 0.6));
-    border: 1px solid #8663e5;
+    background: #241338;
+    border: 1px solid #6b3fa0;
     border-radius: 6px;
-    box-shadow: 0 0 10px rgba(134, 99, 229, 0.4);
     padding: 8px 14px;
     margin: 0 0 16px;
     font-size: 12px;
-    letter-spacing: 0.5px;
-    color: #b9a9dd;
+    color: #c3b4e6;
 }
 
 #main-content .breadcrumbs a {
-    color: #9ae4f1;
+    color: #7fdce8;
     font-weight: 700;
     text-decoration: none;
 }
 
 #main-content .breadcrumbs a:hover {
-    color: #df23c4;
-    text-shadow: 0 0 6px #df23c4;
+    color: #ff5ad6;
 }
 
-/* ---- Kill the site's green content links ---- */
+/* ---- Content links (kill the site's green) ---- */
 #main-content #content a:link,
 #main-content #content a:visited {
-    color: #ad8cff;
+    color: #b39cff;
 }
 
 #main-content #content a:hover {
-    color: #9ae4f1;
+    color: #7fdce8;
 }
 
-/* ---- Modules / panels ---- */
+/* ---- Panels ---- */
 #main-content .module,
 #main-content fieldset.module,
-#main-content .inline-related {
-    background: rgba(24, 14, 46, 0.88);
-    border: 1px solid #8d8dff;
+#main-content .inline-related,
+#main-content #changelist-filter,
+#main-content #changelist-search {
+    background: #1c1130;
+    border: 1px solid #6b3fa0;
     border-radius: 8px;
-    box-shadow: 0 0 14px rgba(134, 99, 229, 0.25), inset 0 0 30px rgba(84, 242, 242, 0.04);
     overflow: hidden;
     margin-bottom: 16px;
 }
@@ -118,16 +116,19 @@ body.admin-reskin {
 #main-content .inline-related h2,
 #main-content .inline-related h3.inline_label,
 #main-content .inline-group > h2,
-#main-content details.module > summary {
-    background: linear-gradient(to bottom, #6b3fa0 0%, #311b4f 100%);
-    color: #fff;
-    text-shadow: 0 0 6px #df23c4;
+#main-content details.module > summary,
+#main-content #changelist-filter h2,
+#main-content #changelist-filter h3 {
+    background: linear-gradient(to bottom, #6b3fa0 0%, #3a2160 100%);
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 13px;
+    letter-spacing: 0.6px;
+    font-size: 12.5px;
+    font-weight: 700;
     padding: 9px 14px;
-    border-bottom: 1px solid #8d8dff;
+    border-bottom: 1px solid #8663e5;
     list-style: none;
+    margin: 0;
 }
 
 #main-content .module > details > summary::-webkit-details-marker,
@@ -138,7 +139,7 @@ body.admin-reskin {
 #main-content .module > details > summary::after,
 #main-content details.module > summary::after {
     content: " ▸";
-    color: #9ae4f1;
+    color: #7fdce8;
 }
 
 #main-content .module > details[open] > summary::after,
@@ -147,14 +148,21 @@ body.admin-reskin {
 }
 
 #main-content .form-row {
-    border-bottom: 1px solid rgba(141, 141, 255, 0.15);
+    border-bottom: 1px solid rgba(134, 99, 229, 0.18);
     background: transparent;
+    padding: 10px 14px;
 }
 
 #main-content .aligned label,
 #main-content label {
-    color: #8d8dff;
+    color: #b39cff;
     font-weight: 700;
+}
+
+#main-content .help,
+#main-content .form-row .help,
+#main-content div.help {
+    color: #9c8fc4;
 }
 
 /* ---- Inputs ---- */
@@ -169,11 +177,11 @@ body.admin-reskin {
 #main-content input[type="time"],
 #main-content textarea,
 #main-content select {
-    background: rgba(0, 0, 0, 0.45);
-    color: #e9e3fb;
-    border: 1px solid rgba(141, 141, 255, 0.55);
+    background: #0d0820;
+    color: #f0ecff;
+    border: 1px solid #6b3fa0;
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(223, 35, 196, 0.18);
+    box-shadow: none;
     padding: 7px 10px;
 }
 
@@ -181,12 +189,12 @@ body.admin-reskin {
 #main-content textarea:focus,
 #main-content select:focus {
     outline: none;
-    border-color: #df23c4;
-    box-shadow: 0 0 9px rgba(223, 35, 196, 0.5);
+    border-color: #ff5ad6;
+    box-shadow: 0 0 6px rgba(255, 90, 214, 0.45);
 }
 
 #main-content ::placeholder {
-    color: rgba(233, 227, 251, 0.4);
+    color: rgba(240, 236, 255, 0.35);
 }
 
 /* ---- Buttons ---- */
@@ -195,148 +203,137 @@ body.admin-reskin {
 #main-content input[type="button"],
 #main-content .submit-row input,
 #main-content a.button,
-#main-content .object-tools a,
-#main-content .addlink,
-#main-content .changelink {
-    background: linear-gradient(to bottom, #7a4fb0, #4a2e6f);
-    color: #fff !important;
-    border: 1px solid #8d8dff;
+#main-content .object-tools a {
+    background: #6b3fa0;
+    color: #ffffff !important;
+    border: 1px solid #8663e5;
     border-radius: 5px;
-    box-shadow: 0 0 8px rgba(134, 99, 229, 0.4);
+    box-shadow: none;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     text-decoration: none;
-    padding: 8px 16px;
-    transition: all 0.15s ease;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background 0.12s ease;
 }
 
 #main-content .button:hover,
 #main-content input[type="submit"]:hover,
+#main-content input[type="button"]:hover,
 #main-content .submit-row input:hover,
-#main-content .object-tools a:hover,
-#main-content a.button:hover {
-    background: #df23c4;
-    box-shadow: 0 0 16px rgba(223, 35, 196, 0.75);
-    text-shadow: 0 0 4px #000;
-    border-color: #df23c4;
+#main-content a.button:hover,
+#main-content .object-tools a:hover {
+    background: #ff5ad6;
+    border-color: #ff5ad6;
+    color: #1a0a1a !important;
 }
 
 #main-content .submit-row input.default {
-    background: linear-gradient(to bottom, #8663e5, #54266a);
+    background: #8663e5;
 }
 
 #main-content .submit-row .deletelink,
 #main-content .deletelink {
-    background: linear-gradient(to bottom, #d34a6a, #7a1e34);
-    border-color: #ff6b8b;
+    background: #a33146;
+    border-color: #d3556a;
 }
 
 #main-content .submit-row .deletelink:hover {
     background: #ff466e;
-    box-shadow: 0 0 16px rgba(255, 70, 110, 0.7);
+    color: #ffffff !important;
 }
 
-/* Django's add/change glyph links inside inline rows */
-#main-content .addlink,
-#main-content .changelink,
-#main-content .deletelink-box a {
-    text-transform: none;
-    padding: 4px 10px;
-    font-weight: 700;
+/* Small inline add/change glyph links stay small, not big buttons. */
+#main-content .add-related,
+#main-content .change-related,
+#main-content .view-related,
+#main-content .delete-related,
+#main-content .related-lookup {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
 }
 
-/* ---- Changelist tables ---- */
+/* ---- Tables ---- */
 #main-content #result_list,
 #main-content table {
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
     background: transparent;
     width: 100%;
 }
 
 #main-content #result_list thead th,
-#main-content table thead th {
-    background: linear-gradient(to bottom, #6b3fa0, #311b4f);
-    color: #fff;
-    text-shadow: 0 0 5px #df23c4;
-    border-bottom: 1px solid #8d8dff;
+#main-content table thead th,
+#main-content #result_list thead td {
+    background: #3a2160;
+    color: #ffffff;
+    border-bottom: 1px solid #8663e5;
     padding: 8px 10px;
 }
 
-#main-content #result_list thead th a {
-    color: #fff;
+#main-content #result_list thead th a,
+#main-content table thead th a {
+    color: #ffffff;
 }
 
-#main-content #result_list tbody tr,
-#main-content table tbody tr {
-    background: rgba(24, 14, 46, 0.55);
+#main-content #result_list tbody tr {
+    background: #1c1130;
 }
 
 #main-content #result_list tbody tr:nth-child(even) {
-    background: rgba(49, 27, 79, 0.4);
+    background: #241640;
 }
 
 #main-content #result_list tbody tr:hover {
-    background: rgba(134, 99, 229, 0.22);
+    background: #34215a;
 }
 
 #main-content #result_list td,
 #main-content #result_list th,
 #main-content table td,
 #main-content table th {
-    border-bottom: 1px solid rgba(141, 141, 255, 0.14);
+    border-bottom: 1px solid rgba(134, 99, 229, 0.16);
     padding: 7px 10px;
-    color: #e9e3fb;
+    color: #ece7fb;
 }
 
-/* ---- Search bar (changelist) ---- */
+/* ---- Search / filters / pagination / messages ---- */
 #main-content #changelist-search {
-    background: rgba(24, 14, 46, 0.7);
-    border: 1px solid #8663e5;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(134, 99, 229, 0.3);
     padding: 10px 12px;
-    margin-bottom: 14px;
+}
+
+#main-content #changelist-search label {
+    color: #b39cff;
 }
 
 #main-content #changelist-search #searchbar {
     min-width: 220px;
 }
 
-/* ---- Filters / pagination / messages ---- */
-#main-content #changelist-filter {
-    background: rgba(24, 14, 46, 0.88);
-    border: 1px solid #8d8dff;
-    border-radius: 8px;
-}
-
-#main-content #changelist-filter h2,
-#main-content #changelist-filter h3 {
-    background: linear-gradient(to bottom, #6b3fa0, #311b4f);
-    color: #fff;
-    text-shadow: 0 0 5px #df23c4;
-}
-
 #main-content .paginator {
-    color: #b9a9dd;
-    border-top: 1px solid rgba(141, 141, 255, 0.2);
+    color: #c3b4e6;
+    border-top: 1px solid rgba(134, 99, 229, 0.22);
+    background: transparent;
 }
 
 #main-content .paginator .this-page {
-    color: #54f2f2;
+    color: #7fdce8;
     font-weight: 800;
 }
 
 #main-content ul.messagelist li {
-    background: rgba(49, 27, 79, 0.8);
+    background: #2a1640;
     border: 1px solid #8663e5;
     border-radius: 6px;
-    color: #e9e3fb;
-    box-shadow: 0 0 10px rgba(134, 99, 229, 0.3);
+    color: #f0ecff;
 }
 
-#main-content .help,
-#main-content .form-row .help {
-    color: #9a8bc4;
+#main-content .errornote,
+#main-content .errorlist {
+    background: #3a1622;
+    border: 1px solid #d3556a;
+    color: #ffd0d8;
+    border-radius: 6px;
 }

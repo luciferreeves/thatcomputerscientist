@@ -1,8 +1,0 @@
-{% extends "admin/base.html" %}
-{% load i18n %}
-
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Shifoo Administration') }}{% endblock %}
-
-{% block branding %}{{ site_header|default:_('Shifoo Administration') }}{% endblock %}
-
-{% block nav-global %}{% endblock %}

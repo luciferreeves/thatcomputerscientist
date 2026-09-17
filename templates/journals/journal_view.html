@@ -1,0 +1,77 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    <div class="journal-entries">
+        <div class="journal-entries-main" id="journal-entries-host">
+            <template id="journal-entries-template">
+                {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+                <div class="journal-view-header">
+                    <div class="journal-view-header-content">
+                        <h1 class="journal-view-title">{{ journal.name }}</h1>
+                        {% if journal.description %}
+                        <p class="journal-view-subtitle">{{ journal.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% with owner_profile=journal.owner.userprofile_set.first %}
+                <div class="journal-owner">
+                    {% if owner_profile.avatar_url %}
+                    <img src="{% static 'images/avatars/' %}{{ owner_profile.avatar_url }}.gif" alt="{{ journal.owner.first_name }}" class="journal-owner-avatar" width="40" height="40" />
+                    {% endif %}
+                    <div class="journal-owner-info">
+                        <a href="#" class="journal-owner-name">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+                        <span class="journal-owner-handle">@{{ journal.owner.username }}</span>
+                        {% if owner_profile.bio %}
+                        <p class="journal-owner-bio">{{ owner_profile.bio|linebreaksbr }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endwith %}
+                {% include "journals/_partials/journal_entries.html" with journal=journal %}
+            </template>
+        </div>
+    </div>
+
+    {% if entries.has_other_pages %}
+    <div class="pagination-wrapper">
+        <nav class="pagination">
+            {% if entries.has_previous %}
+                <a href="?page={{ entries.previous_page_number }}" class="page-btn">
+                    <span class="btn-icon">‹</span>
+                    <span class="btn-text">{% trans "Previous" %}</span>
+                </a>
+            {% endif %}
+
+            <div class="page-info">
+                <span class="page-current">{{ entries.number }}</span>
+                <span class="page-separator">/</span>
+                <span class="page-total">{{ entries.paginator.num_pages }}</span>
+            </div>
+
+            {% if entries.has_next %}
+                <a href="?page={{ entries.next_page_number }}" class="page-btn">
+                    <span class="btn-text">{% trans "Next" %}</span>
+                    <span class="btn-icon">›</span>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="application/json" id="journal-view-config">
+["{% static 'css/blog/post.css' %}", "{% static 'css/journals/journal_entries.css' %}", "{% static 'css/journals/journal_view.css' %}"]
+</script>
+<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/journals/journal_view.js' %}"></script>
+{% endblock scripts %}

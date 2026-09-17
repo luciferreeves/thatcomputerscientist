@@ -1,0 +1,87 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/poetry/entry.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="pe">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="pe-bar">
+        <a href="{% url 'core:journal' journal.slug %}" class="pe-bar-link">{{ journal.name }}</a>
+        <span class="pe-bar-sep">//</span>
+        <span class="pe-bar-label">{% trans "poem" %}</span>
+        <span class="pe-bar-meta">№ <b>{% if all_entries %}{% for e in all_entries %}{% if e.id == entry.id %}{{ forloop.counter|stringformat:"02d" }}{% endif %}{% endfor %}{% else %}{{ entry.order }}{% endif %}</b></span>
+    </div>
+
+    <div class="pe-stats-bar">
+        {% if entry.form %}<div class="pe-stat"><a href="{% url 'core:journal' journal.slug %}?form={{ entry.form }}"><b>{{ entry.get_form_display }}</b></a></div>{% endif %}
+        {% if entry.mood %}<div class="pe-stat"><a href="{% url 'core:journal' journal.slug %}?mood={{ entry.mood }}">{{ entry.get_mood_display|lower }}</a></div>{% endif %}
+        {% if entry.verse_count %}<div class="pe-stat"><b>{{ entry.verse_count }}</b> {% trans "verses" %}</div>{% endif %}
+        {% if entry.created_at %}<div class="pe-stat">{{ entry.created_at|date:"d M Y" }}</div>{% endif %}
+        <div class="pe-stat pe-stat-sel">
+            <button class="pe-pe-toggle" onclick="var s=document.querySelector('.pe-pe-select');var o=s.classList.toggle('pe-pe-open');this.classList.toggle('pe-pe-toggle-on',o);this.querySelector('.pe-pe-arrow').textContent=o?'▴':'▾';if(o){var a=s.querySelector('.pe-pe-active');if(a){s.scrollTop=a.offsetTop-s.offsetHeight/2+a.offsetHeight/2}}">{% trans "poems" %} <span class="pe-pe-arrow">&#9662;</span></button>
+        </div>
+    </div>
+
+    <div class="pe-pe-select">
+        {% for e in all_entries %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ e.slug }}" class="pe-pe-item{% if e.slug == entry.slug %} pe-pe-active{% endif %}">
+            <span class="pe-pe-item-n">{{ forloop.counter }}.</span>
+            <span class="pe-pe-item-name">{{ e.title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="pe-poem">
+        {% if entry.form or entry.mood %}
+        <div class="pe-poem-pills">
+            {% if entry.form %}<a href="{% url 'core:journal' journal.slug %}?form={{ entry.form }}" class="pe-poem-pill">{{ entry.get_form_display }}</a>{% endif %}
+            {% if entry.mood %}<a href="{% url 'core:journal' journal.slug %}?mood={{ entry.mood }}" class="pe-poem-pill pe-poem-mood">{{ entry.get_mood_display|lower }}</a>{% endif %}
+        </div>
+        {% endif %}
+        <h1 class="pe-poem-title">{{ entry.title }}</h1>
+        <div class="pe-poem-rule"></div>
+        <div class="pe-poem-body">{{ entry.content|cleanview }}</div>
+        <div class="pe-poem-rule-end"></div>
+    </div>
+
+    {% if entry.tags.all %}
+    <div class="pe-end-tags">{% for tag in entry.tags.all %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+    {% endif %}
+
+    <div class="pe-nav">
+        {% if prev_entry %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ prev_entry.slug }}" class="pe-nav-item pe-nav-prev">
+            <span class="pe-nav-label">&laquo; {% trans "previous" %}</span>
+            <span class="pe-nav-title">{{ prev_entry.title }}</span>
+        </a>
+        {% else %}
+        <div class="pe-nav-item"></div>
+        {% endif %}
+        <a href="{% url 'core:journal' journal.slug %}" class="pe-nav-item pe-nav-toc">
+            <span class="pe-nav-label">{{ journal.name }}</span>
+            <span class="pe-nav-title">{% trans "All Poems" %}</span>
+        </a>
+        {% if next_entry %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ next_entry.slug }}" class="pe-nav-item pe-nav-next">
+            <span class="pe-nav-label">{% trans "next" %} &raquo;</span>
+            <span class="pe-nav-title">{{ next_entry.title }}</span>
+        </a>
+        {% else %}
+        <div class="pe-nav-item"></div>
+        {% endif %}
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        localStorage.setItem("poetry_{{ journal.slug }}", "{{ entry.slug }}");
+    } catch(e) {}
+})();
+</script>
+{% endblock content %}

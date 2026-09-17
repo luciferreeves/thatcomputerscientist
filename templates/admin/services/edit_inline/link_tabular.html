@@ -1,0 +1,9 @@
+{% load i18n %}
+{% include "admin/edit_inline/tabular.html" %}
+{% with parent=inline_admin_formset.formset.instance %}
+{% if parent.pk and inline_admin_formset.opts.add_url_name %}
+<p class="journal-inline-add">
+    <a class="addlink" href="{% url inline_admin_formset.opts.add_url_name %}?{{ inline_admin_formset.opts.add_fk }}={{ parent.pk }}">{{ inline_admin_formset.opts.add_label }}</a>
+</p>
+{% endif %}
+{% endwith %}

@@ -1,0 +1,89 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="letters-page">
+    {% if messages %}
+        <div class="form-messages">
+            {% for message in messages %}
+                <div class="form-message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="console-viewport">
+        <div class="console-frame-overlay"></div>
+
+        <div class="console-portrait">
+            {% with profile=other_user.userprofile_set.first %}
+                {% if profile and profile.avatar_url %}
+                    <img src="{% static 'images/avatars/' %}{{ profile.avatar_url }}.gif" alt="{{ other_user.username }}" width="64" height="64" />
+                {% else %}
+                    <div class="portrait-letter">{{ other_user.username|first|upper }}</div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="console-nameplate">
+            <a href="{% url 'core:letters:inbox' %}" class="console-back">« {% trans "BACK" %}</a>
+            <span class="console-name">{{ other_user.username }}</span>
+        </div>
+
+<div class="console-screen" id="letters-container"
+    data-username="{{ other_user.username }}"
+    data-current-user="{{ request.user.username }}"
+    data-has-more="{{ has_more|yesno:'true,false' }}"
+    data-older-url="{% url 'core:letters:conversation_older' username=other_user.username %}"
+    data-label-you="{% trans "You" %}"
+    data-label-loading="{% trans "Loading..." %}"
+    data-label-load-older="{% trans "Load older letters" %}"
+    {% if letters %}data-oldest-id="{{ letters.0.pk }}"{% endif %}>
+            {% if has_more %}
+            <div class="load-older" id="load-older">
+                <button class="load-older-btn" id="load-older-btn">{% trans "Load older letters" %}</button>
+            </div>
+            {% endif %}
+
+            <table class="letters-list" id="letters-list">
+                {% include "letters/_partials/letter_rows.html" %}
+                {% if not letters %}
+                <tr class="empty-conversation">
+                    <td colspan="2">
+                        <p>{% trans "No letters yet. Write the first one!" %}</p>
+                    </td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <div class="console-input">
+            <div class="console-reply-form">
+                <div id="markmiku-editor"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="application/json" id="editor-config">
+{
+    "placeholder": "{% trans 'Write your letter...' %}",
+    "emojis": {{ emoji_data_json }},
+    "attachmentUploadUrl": "{% url 'api:letters:attachment_upload' username=other_user.username %}",
+    "attachmentRemoveUrl": "{% url 'api:letters:attachment_remove' attachment_id=0 %}",
+    "csrfToken": "{{ csrf_token }}",
+    "maxAttachments": {{ max_attachments }},
+    "maxAttachmentSize": {{ max_attachment_size }}
+}
+</script>
+<script type="text/javascript" src="{% static 'js/miku/markmiku.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/letters.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,217 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load tz %}
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}">
+<style>
+    .miku-editor-container {
+        height: 400px;
+    }
+    
+    .announcement-edit-row {
+        display: none;
+    }
+    
+    .crispy-forms input[type="button"] {
+        background-color: rgba(68, 68, 177, 0.8);
+        color: #ffffff;
+        border: none;
+        padding: 8px 16px;
+        font-weight: 700;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+    }
+    
+    .crispy-forms input[type="button"]:hover {
+        background-color: #df23c4;
+        box-shadow: 0 0 15px rgba(223, 35, 196, 0.7);
+        text-shadow: 0 0 3px #000;
+    }
+    
+    .crispy-forms input[type="button"]:active {
+        background-color: #8d8dff;
+        transform: scale(0.98);
+    }
+    
+    .crispy-forms a {
+        background-color: rgba(68, 68, 177, 0.8);
+        color: #ffffff;
+        border: none;
+        padding: 8px 16px;
+        font-weight: 700;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .crispy-forms a:hover {
+        background-color: #df23c4;
+        box-shadow: 0 0 15px rgba(223, 35, 196, 0.7);
+        text-shadow: 0 0 3px #000;
+        color: #ffffff;
+    }
+</style>
+{% endblock head %}
+{% block content %}
+    <h1 class="content-title">{% translate "Announcement Manager" %}</h1>
+    <hr />
+    <div class="collapsable collapsed">
+        <div class="collapsable-header">
+            <h2>{% translate "Create New Announcement" %}</h2>
+        </div>
+        <div class="collapsable-content">
+            <form method="post" action="{% url 'administration:announcements' %}" class="crispy-forms">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="miku-editor">{% translate "Announcement Content" %}</label>
+                    <input type="hidden" name="content" id="new-announcement-content">
+                    <div id="miku-editor"></div>
+                </div>
+                <div class="form-group">
+                    <label for="is_new">{% translate "Is this a new announcement?" %}</label>
+                    <input type="checkbox" id="is_new" name="is_new" checked>
+                </div>
+                <div class="form-group">
+                    <label for="is_public">{% translate "Is this announcement public?" %}</label>
+                    <input type="checkbox" id="is_public" name="is_public" checked>
+                </div>
+                <input type="submit" value="{% translate "Create Announcement" %}">
+            </form>
+        </div>
+    </div>
+    <table class="crispy-table">
+        <thead>
+            <tr>
+                <th>{% translate "Content" %}</th>
+                <th>{% translate "Author" %}</th>
+                <th>{% translate "Is New" %}</th>
+                <th>{% translate "Is Public" %}</th>
+                <th>{% translate "Created At" %}</th>
+                <th>{% translate "Actions" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% translate "Yes,No" as yesno_opts %}
+            {% for announcement in announcements %}
+                <tr>
+                    <td>{{ announcement.content|truncatechars:100 }}</td>
+                    <td><a href="#">{{ announcement.author.username }}</a></td>
+                    <td>{{ announcement.is_new|yesno:yesno_opts }}</td>
+                    <td>{{ announcement.is_public|yesno:yesno_opts }}</td>
+                    <td>{% localtime on %}{{ announcement.created_at|date:'DATETIME_FORMAT' }}{% endlocaltime %}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a onclick="editAnnouncement('{{ announcement.id }}'); return false;" class="edit-button edit-announcement-button">{% translate "Edit" %}</a>
+                            <a href="{% url 'admin:administration_announcement_delete' announcement.id %}" class="delete-button">{% translate "Delete" %}</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="announcement-edit-row" id="edit-announcement-{{ announcement.id }}">
+                    <td colspan="6">
+                        <form method="post" action="{% url 'administration:announcements' %}" class="crispy-forms" onsubmit="return submitAnnouncementForm('{{ announcement.id }}')">
+                            {% csrf_token %}
+                            <input type="hidden" name="mode" value="edit">
+                            <input type="hidden" name="announcement_id" value="{{ announcement.id }}">
+                            <input type="hidden" name="content" id="edit-content-{{ announcement.id }}">
+                            
+                            <div class="form-group">
+                                <label for="edit-miku-editor-{{ announcement.id }}">{% translate "Announcement Content" %}</label>
+                                <div class="miku-editor" id="edit-miku-editor-{{ announcement.id }}">{{ announcement.content }}</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-is_new-{{ announcement.id }}">{% translate "Is this a new announcement?" %}</label>
+                                <input type="checkbox" id="edit-is_new-{{ announcement.id }}" name="is_new" {% if announcement.is_new %}checked{% endif %}>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-is_public-{{ announcement.id }}">{% translate "Is this announcement public?" %}</label>
+                                <input type="checkbox" id="edit-is_public-{{ announcement.id }}" name="is_public" {% if announcement.is_public %}checked{% endif %}>
+                            </div>
+                            
+                            <input type="submit" value="{% translate "Save" %}">
+                            <input type="button" value="{% translate "Cancel" %}" onclick="editAnnouncement('{{ announcement.id }}'); return false;">
+                            <a href="{% url 'admin:administration_announcement_change' announcement.id %}" target="_blank">{% translate "Advanced Edit" %}</a>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">{% translate "No announcements found." %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/administration/forms.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/miku/miku.js' %}"></script>
+    <script type="text/javascript">
+        const editorInstance = new Miku('#miku-editor', {
+            placeholder: "Compose your announcement here...",
+        });
+        
+        function editAnnouncement(announcementId) {
+            const editRow = document.getElementById(`edit-announcement-${announcementId}`);
+            const editButton = document.querySelector(`.edit-announcement-button[onclick*="${announcementId}"]`);
+            
+            if (editRow.style.display === 'table-row') {
+                editRow.style.display = 'none';
+                editButton.innerText = "{% translate 'Edit' %}";
+            } else {
+                editRow.style.display = 'table-row';
+                editButton.innerText = "{% translate 'Cancel' %}";
+                
+                const editorId = `edit-miku-editor-${announcementId}`;
+                const editorElement = document.getElementById(editorId);
+                
+                if (editorElement && !editorElement.mikuInstance) {
+                    const mikuInstance = new Miku('#' + editorId, {
+                        placeholder: "Edit your announcement...",
+                    });
+                    editorElement.mikuInstance = mikuInstance;
+                }
+            }
+        }
+        
+        function submitAnnouncementForm(announcementId) {
+            const editorElement = document.getElementById(`edit-miku-editor-${announcementId}`);
+            const hiddenInput = document.getElementById(`edit-content-${announcementId}`);
+            
+            if (editorElement && editorElement.mikuInstance) {
+                const content = editorElement.mikuInstance.getContent();
+                const textContent = content.replace(/<[^>]*>/g, '').trim();
+                
+                if (!textContent) {
+                    alert("{% translate 'Please enter some content before saving.' %}");
+                    return false;
+                }
+                
+                hiddenInput.value = content;
+            }
+            
+            return true;
+        }
+        
+        document.querySelector('form[action*="announcements"]').addEventListener('submit', function(e) {
+            const content = editorInstance.getContent();
+            const textContent = content.replace(/<[^>]*>/g, '').trim();
+            
+            if (!textContent) {
+                alert("{% translate 'Please enter some content before creating the announcement.' %}");
+                e.preventDefault();
+                return false;
+            }
+            
+            document.getElementById('new-announcement-content').value = content;
+        });
+    </script>
+{% endblock scripts %}

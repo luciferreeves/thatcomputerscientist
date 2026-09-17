@@ -1,0 +1,104 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/short_stories/entry.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="ss">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="ss-top">
+        <div class="ss-st-num">{% if all_entries %}{% for e in all_entries %}{% if e.id == entry.id %}{{ forloop.counter }}{% endif %}{% endfor %}{% else %}{{ entry.order }}{% endif %}</div>
+        <div class="ss-top-info">
+            <h1>{{ entry.title }}</h1>
+            <div class="ss-meta">
+                <a href="{% url 'core:journal' journal.slug %}">{{ journal.name }}</a>
+                {% if entry.genre %} <span class="ss-meta-sep">//</span> <a href="{% url 'core:journal' journal.slug %}?genre={{ entry.genre }}">{{ entry.get_genre_display }}</a>{% endif %}
+                {% if entry.tone %} <span class="ss-meta-sep">//</span> <a href="{% url 'core:journal' journal.slug %}?tone={{ entry.tone }}">{{ entry.get_tone_display|lower }}</a>{% endif %}
+            </div>
+            {% if entry.summary %}<div class="ss-summary">{{ entry.summary }}</div>{% endif %}
+        </div>
+    </div>
+
+    <div class="ss-stats-bar">
+        <div class="ss-stat">{% trans "story" %} <b>{% if all_entries %}{% for e in all_entries %}{% if e.id == entry.id %}{{ forloop.counter }}{% endif %}{% endfor %}{% else %}{{ entry.order }}{% endif %}</b></div>
+        {% if entry.word_count %}<div class="ss-stat"><b>{{ entry.word_count }}</b> {% trans "words" %}</div>{% endif %}
+        {% if entry.created_at %}<div class="ss-stat">{{ entry.created_at|date:"d M Y" }}</div>{% endif %}
+        <div class="ss-stat">{% trans "by" %} <a href="{% url 'core:journal' journal.slug %}"><b>{% firstof journal.owner.get_full_name journal.owner.username %}</b></a></div>
+        <div class="ss-stat ss-stat-sel">
+            <button class="ss-st-toggle" onclick="var s=document.querySelector('.ss-st-select');var o=s.classList.toggle('ss-st-open');this.classList.toggle('ss-st-toggle-on',o);this.querySelector('.ss-st-arrow').textContent=o?'▴':'▾';if(o){var a=s.querySelector('.ss-st-active');if(a){s.scrollTop=a.offsetTop-s.offsetHeight/2+a.offsetHeight/2}}">{% trans "stories" %} <span class="ss-st-arrow">&#9662;</span></button>
+        </div>
+    </div>
+
+    <div class="ss-st-select">
+        {% for e in all_entries %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ e.slug }}" class="ss-st-item{% if e.slug == entry.slug %} ss-st-active{% endif %}">
+            <span class="ss-st-item-n">{{ forloop.counter }}.</span>
+            <span class="ss-st-item-name">{{ e.title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    {% if entry.thumbnail %}
+    <img class="ss-cover" src="{{ entry.thumbnail.url }}" alt="{{ entry.title }}" />
+    {% endif %}
+
+    <div class="ss-content">
+        {{ entry.content|cleanview }}
+    </div>
+
+    {% if entry_characters %}
+    <div class="ss-cast-strip">
+        <span class="ss-cast-strip-label">{% trans "Featuring" %}</span>
+        {% for character in entry_characters %}
+        <a href="{% url 'core:journal' journal.slug %}?character={{ character.id }}" class="ss-cast-pill">
+            {% if character.image %}
+            <img class="ss-cast-pill-pic" src="{{ character.image.url }}" alt="{{ character.name }}" />
+            {% else %}
+            <div class="ss-cast-pill-ini">{{ character.name|first }}</div>
+            {% endif %}
+            {{ character.name }}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if entry.tags.all %}
+    <div class="ss-end-tags">{% for tag in entry.tags.all %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+    {% endif %}
+
+    <div class="ss-nav">
+        {% if prev_entry %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ prev_entry.slug }}" class="ss-nav-item ss-nav-prev">
+            <span class="ss-nav-label">&laquo; {% trans "previous" %}</span>
+            <span class="ss-nav-title">{{ prev_entry.title }}</span>
+        </a>
+        {% else %}
+        <div class="ss-nav-item"></div>
+        {% endif %}
+        <a href="{% url 'core:journal' journal.slug %}" class="ss-nav-item ss-nav-toc">
+            <span class="ss-nav-label">{{ journal.name }}</span>
+            <span class="ss-nav-title">{% trans "All Stories" %}</span>
+        </a>
+        {% if next_entry %}
+        <a href="{% url 'core:journal' journal.slug %}?entry={{ next_entry.slug }}" class="ss-nav-item ss-nav-next">
+            <span class="ss-nav-label">{% trans "next" %} &raquo;</span>
+            <span class="ss-nav-title">{{ next_entry.title }}</span>
+        </a>
+        {% else %}
+        <div class="ss-nav-item"></div>
+        {% endif %}
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        localStorage.setItem("ss_{{ journal.slug }}", "{{ entry.slug }}");
+    } catch(e) {}
+})();
+</script>
+{% endblock content %}

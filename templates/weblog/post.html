@@ -1,0 +1,219 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load tz %}
+{% load humanize %}
+{% block head %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/comments.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/post_comments.css' %}" />
+{% endblock head %}
+{% block content %}
+    <div class="weblog-container">
+        <div class="weblog-title-area">
+            <h1 style="color: {{ post.color }}">{{ post.title }}</h1>
+            <div class="weblog-details">
+                <div class="author-info">
+                    {% with authorprofile=post.author.userprofile_set.first %}
+                        <img src="{% static 'images/avatars/' %}{{ authorprofile.avatar_url }}.gif"
+                             class="post-profile-image"
+                             alt="{{ post.author.first_name }}'s Avatar" width="16" height="16" />
+                    {% endwith %}
+                    <a href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a>
+                    <span>{% translate "posted in" %}</span>
+                    <a href="{% url 'weblog:home' %}?category={{ post.category.slug }}">{{ post.category.name }}</a>
+                    <span>{% translate "on" %}</span>
+                    <span>{% localtime on %}{{ post.date|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
+                </div>
+                <div class="post-info">
+                    <span>{% translate "Views" %}: {{ post.views|intcomma }}</span>
+                    <span>&emsp;|&emsp;</span>
+                    <span>
+                        {% blocktranslate count comment_count=post.comments.all|length %}
+              {{ comment_count }} Comment{% plural %}
+              {{ comment_count }} Comments{% endblocktranslate %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="weblog-content">{{ post.first_paragraph|safe }}</div>
+        <div class="weblog-image">
+            <img src="{{ post.image_url }}" alt="{{ post.title }}" width="780" height="512" />
+        </div>
+        <div class="weblog-content" id="weblog-body-content">{{ post.processed_body|safe }}</div>
+        <div class="post-actions">
+            <div class="post-tags">
+                <span><strong>{% translate "Tagged with" %}:</strong></span>
+                {% for tag in post.tags.all %}<a class="post-tag" href="{% url 'weblog:home' %}?tag={{ tag.slug }}">{{ tag.translated_name }}</a>{% endfor %}
+            </div>
+        </div>
+        <div class="comments-section" id="comments">
+            <div class="comment-section-header">
+                <h2>{% translate "Comments" %}</h2>
+                <form action="{% url 'weblog:post' post.slug %}#comments" method="get">
+                    <label for="comment-sort">{% translate "Sort by" %}:</label>
+                    <select id="comment-sort" name="comment_sort" onchange="this.form.submit()">
+                        <option value="best" {% if request.GET.comment_sort == 'best' %}selected{% endif %}>
+                            {% translate "Best" %}
+                        </option>
+                        <option value="newest" {% if request.GET.comment_sort == 'newest' %}selected{% endif %}>
+                            {% translate "Newest" %}
+                        </option>
+                        <option value="oldest" {% if request.GET.comment_sort == 'oldest' %}selected{% endif %}>
+                            {% translate "Oldest" %}
+                        </option>
+                    </select>
+                </form>
+            </div>
+            <blockquote>
+                <details>
+                    <summary>{% translate "Markup Guide for Comments" %}</summary>
+                    
+                    <div class="guide-intro">
+                        <p>{% translate "This website uses a custom markup syntax powered by <strong>TinyMiku</strong>, our intelligent comment editor. As you type, the editor will automatically suggest available formatting options to help you create rich, expressive comments." %}</p>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Text Formatting" %}</h4>
+                        <ul class="formatting-list">
+                            <li><code>**bold text**</code> → <strong>{% translate "bold text" %}</strong></li>
+                            <li><code>__italic text__</code> → <em>{% translate "italic text" %}</em></li>
+                            <li><code>~~strikethrough~~</code> → <del>{% translate "strikethrough" %}</del></li>
+                        </ul>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Mathematical Expressions" %}</h4>
+                        <p class="guide-description">{% translate "Support for LaTeX mathematical notation:" %}</p>
+                        <ul class="formatting-list">
+                            <li><code>$E = mc^2$</code> → {% translate "Inline math expressions" %}</li>
+                            <li><code>$$\int_0^1 x^2 dx$$</code> → {% translate "Block math expressions" %}</li>
+                        </ul>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Code Snippets" %}</h4>
+                        <p class="guide-description">{% translate "Add syntax-highlighted code by wrapping it in triple backticks with a language identifier:" %}</p>
+                        <div class="code-example">
+                            <pre class="example-code">```lang-python
+def hello_world():
+    print("Hello, world!")
+```</pre>
+                            <p class="example-label">{% translate "Renders as:" %}</p>
+                            <pre data-language="python"><div class="highlight"><pre><span></span><code><span style="color: #CDCD00">def</span><span style="color: #CCC"> hello_world():</span>
+    <span style="color: #CD00CD">print</span><span style="color: #CCC">(</span><span style="color: #CD0000">"Hello, world!"</span><span style="color: #CCC">)</span>
+</code></pre></div>
+</pre>
+                        </div>
+                        <p class="supported-languages">{% blocktranslate %}All programming languages are supported. Use the format: lang-[language]. Examples include <span class="language-tag">python</span>, <span class="language-tag">javascript</span>, <span class="language-tag">java</span>, <span class="language-tag">cpp</span>, <span class="language-tag">go</span>, <span class="language-tag">rust</span> and many others.{% endblocktranslate %}</p>
+                    </div>
+
+                    <div class="guide-section">
+                        <h4>{% translate "Links & URLs" %}</h4>
+                        <p class="guide-description">{% translate "URLs are automatically converted to clickable links. Just paste any valid web address and it will become interactive." %}</p>
+                    </div>
+
+                </details>
+            </blockquote>
+            {% for comment in post.comments.all %}
+                {% if not comment.parent %}
+                    {% include "weblog/_partials/post_comments.html" with comment=comment %}
+                {% endif %}
+            {% endfor %}
+            {% if post.comments.all|length == 0 %}
+                <p>{% translate "No comments yet." %}</p>
+            {% endif %}
+            <div class="new-comment-area">
+                <h3>{% translate "Leave a Comment" %}</h3>
+                {% if user.is_authenticated %}
+                    <div class="comment-form">
+                        <form action="{% url 'weblog:post' post.slug %}" method="post" onsubmit="return submitCommentForm('new', 'comment')">
+                            {% csrf_token %}
+                            <input type="hidden" name="mode" value="comment">
+                            <input type="hidden" name="next" value="#comments">
+                            <input type="hidden" name="body" id="comment-body-new">
+                            <div class="miku-comment-editor" id="miku-comment-editor-new"></div>
+                            <button type="submit" class="comment-submit-button">{% translate "Submit Comment" %}</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <p>{% translate "Please log in to comment." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script id="MathJax-script"
+            async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            configureMathJax();
+        });
+    </script>
+    <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/miku/tinymiku.js' %}"></script>
+    <script type="text/javascript">
+        document.querySelectorAll('.miku-comment-editor').forEach(function (editorElement) {
+            const editorId = editorElement.id;
+            const mikuInstance = new TinyMiku('#' + editorId, {
+                placeholder: "{% translate 'Write a comment...' %}",
+            });
+            editorElement.mikuInstance = mikuInstance;
+        });
+
+        function editComment(commentId) {
+            const textArea = document.getElementById(`comment-text-${commentId}`);
+            const editButton = document.querySelector(`.edit-comment-button[onclick*="${commentId}"]`);
+            const editArea = document.getElementById(`edit-comment-${commentId}`);
+            
+            if (editArea.style.display === 'block') {
+                editArea.style.display = 'none';
+                textArea.style.display = 'block';
+                editButton.innerText = "{% translate 'Edit' %}";
+            } else {
+                editArea.style.display = 'block';
+                textArea.style.display = 'none';
+                editButton.innerText = "{% translate 'Cancel' %}";
+            }
+        }
+
+        function replyToComment(commentId) {
+            const replyArea = document.getElementById(`reply-comment-${commentId}`);
+            const replyButton = document.querySelector(`.reply-comment-button[onclick*="${commentId}"]`);
+            
+            if (replyArea.style.display === 'block') {
+                replyArea.style.display = 'none';
+                replyButton.innerText = "{% translate 'Reply' %}";
+            } else {
+                replyArea.style.display = 'block';
+                replyButton.innerText = "{% translate 'Cancel' %}";
+            }
+        }
+
+        function submitCommentForm(commentId, formType) {
+            const editorElement = document.getElementById(`miku-${formType}-editor-${commentId}`);
+            const hiddenInput = document.getElementById(`${formType}-body-${commentId}`);
+            
+            if (editorElement && editorElement.mikuInstance) {
+                const content = editorElement.mikuInstance.getContent();
+                const textContent = content.replace(/<[^>]*>/g, '').trim();
+                
+                if (!textContent) {
+                    const message = "{% translate 'Please enter some content before saving.' %}";
+                    alert(message);
+                    return false;
+                }
+                
+                hiddenInput.value = content;
+            }
+            
+            return true;
+        }
+    </script>
+{% endblock scripts %}

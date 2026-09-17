@@ -1,0 +1,69 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/administration/emojis.css' %}" />
+{% endblock head %}
+{% block content %}
+<div class="emoji-manager">
+    <div class="emoji-pipe"></div>
+    <div class="emoji-header">
+        <h1 class="emoji-title">{% translate "Emoji Manager" %}</h1>
+        <div class="emoji-stat">
+            <span class="emoji-stat-num">{{ emojis|length }}</span>
+            <span class="emoji-stat-text">{% translate "emojis" %}</span>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="emoji-messages">
+        {% for message in messages %}
+            <div class="emoji-msg {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="emoji-upload-panel">
+        <div class="emoji-upload-body">
+            <form method="post" enctype="multipart/form-data" class="emoji-upload-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="create">
+                <div class="emoji-field">
+                    <label for="emoji-name">{% translate "Name" %}</label>
+                    <input type="text" id="emoji-name" name="name" placeholder="emoji_name" pattern="[a-z0-9_]+" autocomplete="off" required>
+                    <span class="emoji-hint">{% translate "lowercase, numbers, underscores" %}</span>
+                </div>
+                <div class="emoji-field">
+                    <label for="emoji-image">{% translate "Image" %}</label>
+                    <input type="file" id="emoji-image" name="image" accept="image/*" required>
+                </div>
+                <button type="submit" class="emoji-submit">{% translate "Upload" %}</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="emoji-cable"></div>
+
+    {% if emojis %}
+    <div class="emoji-grid">
+        {% for emoji in emojis %}
+        <div class="emoji-card">
+            <form method="post" class="emoji-delete-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="emoji_id" value="{{ emoji.id }}">
+                <button type="submit" class="emoji-delete-btn" onclick="return confirm('Delete :{{ emoji.name }}:?')">×</button>
+            </form>
+            <img src="{{ emoji.image.url }}" alt=":{{ emoji.name }}:" width="40" height="40">
+            <div class="emoji-name">:{{ emoji.name }}:</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="emoji-empty">
+        <span class="emoji-empty-mark">✦</span>
+        <p>{% translate "No emojis yet. Upload one above." %}</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

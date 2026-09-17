@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from haystack import indexes
 
-from blog.models import Comment, Post
+from services.weblog.models import Comment, Post
 
 
 class PostIndex(indexes.SearchIndex, indexes.Indexable):

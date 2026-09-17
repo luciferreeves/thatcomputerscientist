@@ -1,0 +1,390 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600&family=Share+Tech+Mono&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.pe {
+    max-width: 780px;
+    margin: 10px auto 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    color: #c8d4cc;
+    background: #0a0a0a;
+}
+
+.pe-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    background: linear-gradient(90deg, #0a1814 0%, #0d0d12 50%, #08141a 100%);
+    border-bottom: 1px solid #1a2820;
+}
+
+#main-content .pe-bar-link,
+#main-content .pe-bar-link:link,
+#main-content .pe-bar-link:visited {
+    color: #98c8b0;
+    text-decoration: none;
+}
+
+#main-content .pe-bar-link:hover {
+    color: #c8e0d4;
+}
+
+.pe-bar-sep {
+    color: #2a3830;
+}
+
+.pe-bar-label {
+    color: #4a6858;
+}
+
+.pe-bar-meta {
+    margin-left: auto;
+    color: #6a8878;
+}
+
+.pe-bar-meta b {
+    color: #c8e0d4;
+    font-weight: normal;
+}
+
+.pe-stats-bar {
+    display: flex;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #88a898;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #0a1814 0%, #0d0d12 50%, #08141a 100%);
+    border-bottom: 1px solid #1a2820;
+}
+
+.pe-stat {
+    flex: 1;
+    padding: 6px 8px;
+    text-align: center;
+    border-right: 1px solid #1a2820;
+}
+
+.pe-stat:last-child {
+    border-right: none;
+}
+
+.pe-stat b {
+    color: #c8e0d4;
+    font-weight: normal;
+}
+
+#main-content .pe-stat a,
+#main-content .pe-stat a:link,
+#main-content .pe-stat a:visited {
+    color: #98c8b0;
+    text-decoration: none;
+}
+
+#main-content .pe-stat a:hover {
+    color: #c8e0d4;
+}
+
+.pe-stat-sel {
+    padding: 0;
+}
+
+.pe-pe-toggle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #98c8b0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.pe-pe-toggle:hover {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.10);
+}
+
+.pe-pe-toggle:focus { outline: none; }
+.pe-pe-toggle:focus:not(:focus-visible) { background: none; color: #98c8b0; }
+.pe-pe-toggle:focus-visible {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.10);
+    outline: none;
+}
+.pe-pe-toggle:active {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.18);
+    outline: none;
+}
+
+.pe-pe-toggle-on,
+.pe-pe-toggle-on:focus:not(:focus-visible) {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.14);
+}
+
+.pe-pe-select {
+    display: none;
+    position: relative;
+    max-height: 300px;
+    overflow-y: auto;
+    border-bottom: 1px solid #1a2820;
+    background: linear-gradient(180deg, #0a1814 0%, #0a0a0a 100%);
+    scrollbar-width: thin;
+    scrollbar-color: #1a3a30 #0a0a0a;
+}
+
+.pe-pe-select::-webkit-scrollbar { width: 6px; }
+.pe-pe-select::-webkit-scrollbar-track { background: #0a0a0a; }
+.pe-pe-select::-webkit-scrollbar-thumb { background: #1a3a30; border-radius: 3px; }
+
+.pe-pe-open { display: block; }
+
+#main-content .pe-pe-select .pe-pe-item,
+#main-content .pe-pe-select .pe-pe-item:link,
+#main-content .pe-pe-select .pe-pe-item:visited {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    text-decoration: none;
+    color: #98a898;
+    font-size: 12px;
+    border-bottom: 1px solid #14201c;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .pe-pe-select .pe-pe-item:nth-child(even) {
+    background: rgba(74, 184, 150, 0.025);
+}
+
+#main-content .pe-pe-select .pe-pe-item:hover {
+    background: rgba(74, 184, 150, 0.10);
+    color: #c8e0d4;
+}
+
+.pe-pe-active {
+    background: rgba(74, 184, 150, 0.14) !important;
+    border-left: 3px solid #4ab896 !important;
+    padding-left: 11px !important;
+}
+
+.pe-pe-item-n {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #4a6858;
+    min-width: 22px;
+}
+
+.pe-pe-item-name {
+    flex: 1;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+}
+
+.pe-poem {
+    padding: 56px 32px 48px;
+    text-align: center;
+    background: linear-gradient(180deg, #0a1814 0%, #0a0a0a 30%);
+}
+
+.pe-poem-pills {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+#main-content .pe-poem-pill,
+#main-content .pe-poem-pill:link,
+#main-content .pe-poem-pill:visited {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #98c8b0;
+    background: rgba(74, 184, 150, 0.06);
+    border: 1px solid #1a2820;
+    padding: 3px 10px;
+    text-decoration: none;
+}
+
+#main-content .pe-poem-pill:hover {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.14);
+}
+
+.pe-poem-mood {
+    font-style: italic;
+    text-transform: lowercase !important;
+    letter-spacing: 1px !important;
+}
+
+.pe-poem-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-style: italic;
+    font-variation-settings: "opsz" 144;
+    font-size: 44px;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    background: linear-gradient(90deg, #fff 0%, #c8e0d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pe-poem-rule {
+    width: 60px;
+    height: 1px;
+    background: #4ab896;
+    margin: 0 auto 30px;
+}
+
+.pe-poem-body {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-variation-settings: "opsz" 24;
+    font-size: 17px;
+    line-height: 2;
+    color: #d8e4dc;
+    max-width: 540px;
+    margin: 0 auto;
+    text-align: left;
+    white-space: pre-line;
+}
+
+.pe-poem-body p {
+    margin: 0 0 1em;
+}
+
+.pe-poem-body p:last-child { margin-bottom: 0; }
+
+.pe-poem-body em, .pe-poem-body i {
+    font-style: normal;
+}
+
+#main-content .pe-poem-body a,
+#main-content .pe-poem-body a:link,
+#main-content .pe-poem-body a:visited {
+    color: #98c8b0;
+    text-decoration: underline;
+    text-decoration-color: rgba(152, 200, 176, 0.3);
+    text-underline-offset: 3px;
+}
+
+#main-content .pe-poem-body a:hover {
+    color: #c8e0d4;
+}
+
+.pe-poem-rule-end {
+    width: 24px;
+    height: 1px;
+    background: #1a2820;
+    margin: 36px auto 0;
+}
+
+.pe-end-tags {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-align: center;
+    padding: 8px 20px;
+    border-top: 1px solid #1a2820;
+}
+
+#main-content .pe-end-tags a,
+#main-content .pe-end-tags a:link,
+#main-content .pe-end-tags a:visited {
+    color: #4a6858;
+    text-decoration: none;
+}
+
+#main-content .pe-end-tags a:hover {
+    color: #c8e0d4;
+}
+
+.pe-nav {
+    display: flex;
+    border-top: 1px solid #1a2820;
+}
+
+.pe-nav-item {
+    flex: 1;
+    border-right: 1px solid #1a2820;
+}
+
+.pe-nav-item:last-child {
+    border-right: none;
+}
+
+#main-content .pe-nav-prev,
+#main-content .pe-nav-prev:link,
+#main-content .pe-nav-prev:visited,
+#main-content .pe-nav-next,
+#main-content .pe-nav-next:link,
+#main-content .pe-nav-next:visited,
+#main-content .pe-nav-toc,
+#main-content .pe-nav-toc:link,
+#main-content .pe-nav-toc:visited {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #0a1814 0%, #0a0a0a 100%);
+    transition: background 0.12s;
+}
+
+#main-content .pe-nav-prev:hover,
+#main-content .pe-nav-next:hover,
+#main-content .pe-nav-toc:hover {
+    background: rgba(74, 184, 150, 0.10);
+    color: #c8e0d4;
+}
+
+.pe-nav-next {
+    text-align: right;
+}
+
+.pe-nav-toc {
+    text-align: center;
+}
+
+.pe-nav-label {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #4a6858;
+    margin-bottom: 2px;
+}
+
+.pe-nav-title {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 13px;
+    color: #98a898;
+}
+
+#main-content .pe-nav-toc .pe-nav-label {
+    color: #6a8878;
+}
+
+#main-content .pe-nav-toc .pe-nav-title {
+    color: #98c8b0;
+}

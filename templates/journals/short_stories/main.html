@@ -1,0 +1,146 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/short_stories/main.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="ss">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="ss-top">
+        <h1>{{ journal.name }}</h1>
+        <div class="ss-meta">
+            {% trans "by" %} <a href="#">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+            &middot; {% trans "Short Stories" %}
+            {% if journal.created_at %} &middot; <span>{{ journal.created_at|date:"M Y" }}</span>{% endif %}
+        </div>
+    </div>
+
+    <div class="ss-stats-bar">
+        <div class="ss-stat"><b>{{ ss_stats.published_count|default:"0" }}</b> {% trans "stories" %}</div>
+        <div class="ss-stat"><b>{{ ss_stats.total_word_count|default:"0" }}</b> {% trans "words" %}</div>
+        {% if ss_stats.character_count %}<div class="ss-stat"><b>{{ ss_stats.character_count }}</b> {% trans "characters" %}</div>{% endif %}
+        <div class="ss-stat">{{ journal.created_at|date:"M Y" }}</div>
+    </div>
+
+    <div class="ss-body">
+        <div class="ss-sidebar">
+            {% if journal.cover_image %}
+            <img class="ss-cover" src="{{ journal.cover_image.url }}" alt="{{ journal.name }}" />
+            {% else %}
+            <div class="ss-no-cover">&#9671;</div>
+            {% endif %}
+
+            {% if ss_entries %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ ss_entries.0.slug }}" class="ss-start">&#9733; {% trans "Start Reading" %}</a>
+            {% endif %}
+
+            {% if journal.description %}
+            <div class="ss-desc">{{ journal.description }}</div>
+            {% endif %}
+
+            {% if tags %}
+            <div class="ss-tags">{% for tag in tags %}{% if not forloop.first %} {% endif %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+            {% endif %}
+
+            {% if characters %}
+            <div class="ss-sidebar-label">{% trans "Characters" %}</div>
+            <div class="ss-cast-list">
+                {% for character in characters %}
+                <a href="{% url 'core:journal' journal.slug %}?character={{ character.id }}" class="ss-cast-chip">
+                    {% if character.image %}
+                    <img class="ss-cast-avatar" src="{{ character.image.url }}" alt="{{ character.name }}" />
+                    {% else %}
+                    <div class="ss-cast-initial">{{ character.name|first }}</div>
+                    {% endif %}
+                    {{ character.name }}
+                    {% if character.role %}<span class="ss-cast-role">{% translate character.role %}</span>{% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if owner_profile %}
+            <div class="ss-author">
+                {% if owner_profile.avatar_url %}<img class="ss-author-pic" src="{% static 'images/avatars/' %}{{ owner_profile.avatar_url }}.gif" alt="" />{% endif %}
+                <div class="ss-author-info">
+                    <a href="#" class="ss-author-name">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+                    {% if owner_profile.bio %}<div class="ss-author-bio">{{ owner_profile.bio }}</div>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="ss-main">
+            {% if available_genres or available_tones %}
+            <div class="ss-filterbar">
+                {% if available_genres %}
+                <div class="ss-filter-row">
+                    <span class="ss-filter-label">{% trans "Genre" %}</span>
+                    {% for g in available_genres %}<a href="{% url 'core:journal' journal.slug %}?genre={{ g.value }}{% if active_tone %}&tone={{ active_tone }}{% endif %}" class="ss-filter {% if active_genre == g.value %}is-active{% endif %}">{{ g.label }}<em>{{ g.count }}</em></a>{% endfor %}
+                    {% if active_genre %}<a href="{% url 'core:journal' journal.slug %}{% if active_tone %}?tone={{ active_tone }}{% endif %}" class="ss-clear">[clear]</a>{% endif %}
+                </div>
+                {% endif %}
+                {% if available_tones %}
+                <div class="ss-filter-row">
+                    <span class="ss-filter-label">{% trans "Tone" %}</span>
+                    {% for t in available_tones %}<a href="{% url 'core:journal' journal.slug %}?tone={{ t.value }}{% if active_genre %}&genre={{ active_genre }}{% endif %}" class="ss-filter {% if active_tone == t.value %}is-active{% endif %}">{{ t.label|lower }}</a>{% endfor %}
+                    {% if active_tone %}<a href="{% url 'core:journal' journal.slug %}{% if active_genre %}?genre={{ active_genre }}{% endif %}" class="ss-clear">[clear]</a>{% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="ss-listhead">
+                <span>{% trans "Stories" %}</span>
+                <span class="ss-listhead-count">{{ ss_entries|length }} {% trans "total" %}</span>
+            </div>
+
+            {% for entry in ss_entries %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="ss-row" data-slug="{{ entry.slug }}">
+                {% if entry.thumbnail %}
+                <img class="ss-row-thumb" src="{{ entry.thumbnail.url }}" alt="" />
+                {% else %}
+                <div class="ss-row-thumb-empty">{{ forloop.counter }}</div>
+                {% endif %}
+                <span class="ss-row-n">{{ forloop.counter|stringformat:"02d" }}</span>
+                <div class="ss-row-info">
+                    <div class="ss-row-name">{{ entry.title }}</div>
+                    {% if entry.summary %}<div class="ss-row-sum">{{ entry.summary }}</div>{% endif %}
+                </div>
+                <div class="ss-row-meta">
+                    {% if entry.genre %}<b>{{ entry.get_genre_display|upper }}</b>{% endif %}
+                    {% if entry.word_count %}{{ entry.word_count }} {% trans "words" %}{% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <div class="ss-nil">{% trans "No stories yet." %}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        var slug = localStorage.getItem("ss_{{ journal.slug }}");
+        if (!slug) return;
+        var rows = document.querySelectorAll(".ss-row[data-slug]");
+        for (var i = 0; i < rows.length; i++) {
+            if (rows[i].dataset.slug === slug) {
+                rows[i].classList.add("ss-row-current");
+                break;
+            }
+        }
+        var btn = document.querySelector(".ss-start");
+        if (btn) {
+            var base = btn.href.split("?entry=")[0];
+            btn.href = base + "?entry=" + slug;
+            btn.innerHTML = "★ {% trans 'Continue Reading' %}";
+        }
+    } catch(e) {}
+})();
+</script>
+{% endblock content %}

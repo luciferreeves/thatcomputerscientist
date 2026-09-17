@@ -1,0 +1,18 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+Type=forking
+User=ubuntu
+Group=ubuntu
+EnvironmentFile=/home/ubuntu/thatcomputerscientist/.env
+WorkingDirectory=/home/ubuntu/thatcomputerscientist
+ExecStart=/home/ubuntu/thatcomputerscientist/venv/bin/celery -A thatcomputerscientist worker --detach
+ExecStop=/home/ubuntu/thatcomputerscientist/venv/bin/celery -A thatcomputerscientist control shutdown
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

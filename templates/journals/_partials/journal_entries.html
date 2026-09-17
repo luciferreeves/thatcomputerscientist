@@ -1,0 +1,53 @@
+{% load tz %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
+{% with entries=journal.entries.all %}
+{% if entries %}
+<div class="entries-page">
+    {% for entry in entries %}
+    <div class="entry-container">
+        <div class="header">
+            <div class="header-title">{{ entry.title }}</div>
+            {% if service_page %}
+            <div class="dropdown">
+                <button class="action-btn dropdown-trigger" title="{% trans "More options" %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=edit&entry={{ entry.slug }}" class="dropdown-item">{% trans "Edit" %}</a>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings&entry={{ entry.slug }}" class="dropdown-item">{% trans "Settings" %}</a>
+                    <a href="{% url 'services:journals:journal' journal.slug %}?tab=settings&entry={{ entry.slug }}#delete-entry-btn" class="dropdown-item delete">{% trans "Delete" %}</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="weblog-content">{{ entry.content|cleanview }}</div>
+        <div class="journal-entry-details">
+            <span>{% translate "Posted in" %}</span>
+            <a href="{% url 'core:journal' journal.slug %}">{{ journal.name }}</a>
+            <span>{% translate "on" %}</span>
+            <span>{% localtime on %}{{ entry.created_at|date:'DATE_FORMAT' }}{% endlocaltime %}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>{% blocktranslate with label=journal.entry_label_plural %}No {{ label }} Yet{% endblocktranslate %}</h3>
+    {% if service_page %}
+    <p>{% blocktranslate with label=journal.entry_label|lower %}Start your digital journaling journey by creating your first {{ label }}.{% endblocktranslate %}</p>
+    <a href="{% url 'services:journals:journal' journal.slug %}?tab=new" class="empty-action-btn">
+        {% blocktranslate with label=journal.entry_label %}Create Your First {{ label }}{% endblocktranslate %}
+    </a>
+    {% else %}
+    <p>{% blocktranslate with label=journal.entry_label_plural|lower %}This journal doesn't have any {{ label }} yet. Check back later!{% endblocktranslate %}</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endwith %}
+<script type="text/javascript" src="{% static 'js/journals/image_float.js' %}"></script>

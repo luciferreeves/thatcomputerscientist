@@ -1,0 +1,950 @@
+.miku-editor-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border: 2px solid #333;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    background: #0a0a0a;
+    color: #e8e8e8;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.miku-editor-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.miku-editor-line-numbers {
+    background: #1a1a1a;
+    color: #666;
+    padding: 10px 8px;
+    text-align: right;
+    min-width: 50px;
+    -webkit-user-select: none;
+    user-select: none;
+    border-right: 1px solid #333;
+    overflow: hidden;
+    line-height: 1.4;
+    white-space: pre-line;
+    font-weight: 500;
+}
+
+.miku-editor-main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0f0f0f;
+}
+
+.miku-editor-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 10px;
+    color: transparent;
+    caret-color: #e8e8e8;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.4;
+    overflow-y: auto;
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+    z-index: 2;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 4px;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #5fd3ca;
+}
+
+.miku-editor-syntax-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    pointer-events: none;
+    color: #e8e8e8;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.4;
+    overflow-y: auto;
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+    z-index: 1;
+}
+
+.miku-editor-autocomplete-dropdown {
+    position: fixed;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 3px;
+}
+
+.miku-editor-autocomplete-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    transition: background 0.15s ease;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: #2a2a2a;
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: #e8e8e8;
+    flex: 1;
+    font-weight: 500;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #888;
+    font-size: 11px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.miku-editor-container:focus-within {
+    border-color: #555;
+    box-shadow: 0 0 8px rgba(85, 85, 85, 0.3);
+}
+
+.miku-syntax-html-tag {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+.miku-syntax-html-attribute {
+    color: #4ecdc4;
+    font-style: italic;
+}
+
+.miku-syntax-html-string {
+    color: #45b7d1;
+}
+
+.miku-syntax-html-comment {
+    color: #888;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.miku-syntax-css-selector {
+    color: #f39c12;
+    font-weight: 600;
+}
+
+.miku-syntax-css-property {
+    color: #9b59b6;
+    font-weight: 500;
+}
+
+.miku-syntax-css-value {
+    color: #45b7d1;
+}
+
+.miku-syntax-css-comment {
+    color: #888;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.miku-syntax-js-keyword {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.miku-syntax-js-string {
+    color: #2ecc71;
+}
+
+.miku-syntax-js-comment {
+    color: #888;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.miku-syntax-js-number {
+    color: #f39c12;
+    font-weight: 500;
+}
+
+.miku-syntax-js-function {
+    color: #9b59b6;
+    font-weight: 600;
+}
+
+.miku-container {
+    position: relative;
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: 'Mali', sans-serif;
+    background: #0a0a0a;
+    border: 2px solid #333;
+}
+
+.miku-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 10px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #333;
+}
+
+.miku-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #e8e8e8;
+    cursor: pointer;
+}
+
+.miku-btn .size-6 {
+    width: 16px;
+    height: 16px;
+}
+
+.miku-btn:hover {
+    background: #3a3a3a;
+    border-color: #666;
+}
+
+.miku-btn-special {
+    background: #333;
+    border-color: #555;
+}
+
+.miku-toolbar-separator {
+    width: 1px;
+    height: 24px;
+    background: #444;
+    margin: 4px 2px;
+}
+
+.miku-content,
+.miku-source {
+    padding: 16px;
+    background: #0f0f0f;
+    color: #e8e8e8;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 300px;
+    outline: none;
+}
+
+.miku-source {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: #0a0a0a;
+    border: none;
+    resize: none;
+    width: 100%;
+    padding: 16px;
+    color: #e8e8e8;
+}
+
+.miku-content::-webkit-scrollbar,
+.miku-source::-webkit-scrollbar {
+    width: 8px;
+}
+
+.miku-content::-webkit-scrollbar-track,
+.miku-source::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 4px;
+}
+
+.miku-content:empty:before,
+.miku-content:has(p:only-child:empty):before {
+    content: attr(data-placeholder);
+    color: #666;
+    pointer-events: none;
+    position: absolute;
+}
+
+.miku-content p {
+    margin: 4px 0;
+    text-align: justify;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3 {
+    margin: 16px 0 8px 0;
+    color: #4ecdc4;
+    font-weight: 600;
+}
+
+.miku-content h1 {
+    font-size: 24px;
+}
+
+.miku-content h2 {
+    font-size: 20px;
+}
+
+.miku-content h3 {
+    font-size: 16px;
+}
+
+.miku-content strong,
+.miku-content b {
+    font-weight: 700;
+    color: #ff6b6b;
+}
+
+.miku-content em,
+.miku-content i {
+    font-style: italic;
+    color: #f39c12;
+}
+
+.miku-content u {
+    text-decoration: underline;
+}
+
+.miku-content s {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.miku-content a {
+    color: #45b7d1;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.miku-link-edit {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 2px 6px;
+    background: #333;
+    color: #4ecdc4;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.miku-content img {
+    max-width: 350px;
+    max-height: 350px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin: 6px 12px 8px 0;
+    cursor: pointer;
+}
+
+.miku-content img:nth-of-type(odd) {
+    float: left;
+    margin-right: 12px;
+}
+
+.miku-content img:nth-of-type(even) {
+    float: right;
+    margin-left: 12px;
+}
+
+.miku-content img.block {
+    float: none;
+    display: block;
+    margin: 16px auto;
+    max-width: 100%;
+    max-height: 500px;
+    width: auto;
+}
+
+.miku-content a img {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.miku-content a img:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+
+.miku-content blockquote {
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-left: 4px solid #4ecdc4;
+    background: rgba(78, 205, 196, 0.1);
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+}
+
+.miku-content ul,
+.miku-content ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.miku-content ul {
+    list-style-type: disc;
+}
+
+.miku-content ol {
+    list-style-type: decimal;
+}
+
+.miku-content li {
+    margin: 4px 0;
+    line-height: 1.5;
+}
+
+.miku-content li > ul,
+.miku-content li > ol {
+    margin: 2px 0;
+}
+
+.miku-content li > ul {
+    list-style-type: circle;
+}
+
+.miku-content li > ul > li > ul {
+    list-style-type: square;
+}
+
+.miku-content code {
+    background: #1a1a1a;
+    color: #4ecdc4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    border: 1px solid #333;
+}
+
+.miku-code-wrapper {
+    position: relative;
+    margin: 16px 0;
+    border: 1px solid #333;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.miku-code-lang {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #4ecdc4;
+    padding: 4px 8px;
+    border: 1px solid #333;
+    border-radius: 3px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.miku-content pre {
+    margin: 0;
+    padding: 40px 12px 12px 12px;
+    background: #0a0a0a;
+    overflow-x: auto;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #e8e8e8;
+}
+
+.miku-content pre code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+
+.miku-popup {
+    position: fixed;
+    width: 400px;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    font-family: 'Mali', sans-serif;
+}
+
+.miku-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #2a2a2a;
+    border-bottom: 1px solid #333;
+    color: #e8e8e8;
+    font-weight: 600;
+}
+
+.miku-popup-close {
+    background: none;
+    border: none;
+    color: #e8e8e8;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+}
+
+.miku-popup-body {
+    padding: 16px;
+}
+
+.miku-popup-field {
+    margin-bottom: 12px;
+}
+
+.miku-popup-field label {
+    display: block;
+    color: #4ecdc4;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    width: 100%;
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 8px;
+    color: #e8e8e8;
+    font-family: 'Mali', sans-serif;
+    font-size: 13px;
+}
+
+.miku-popup-field input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+.miku-popup-footer {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 12px 16px;
+    background: #2a2a2a;
+    border-top: 1px solid #333;
+}
+
+.miku-btn-primary,
+.miku-btn-secondary {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Mali', sans-serif;
+    font-size: 13px;
+}
+
+.miku-btn-primary {
+    background: #4ecdc4;
+    color: #000;
+}
+
+.miku-btn-primary:hover {
+    background: #5fd3ca;
+}
+
+.miku-btn-secondary {
+    background: #2a2a2a;
+    color: #e8e8e8;
+}
+
+.miku-btn-secondary:hover {
+    background: #3a3a3a;
+}
+
+.markmiku-container {
+    height: auto;
+    min-height: 0;
+}
+
+.markmiku-container .miku-editor-wrapper {
+    min-height: 0;
+}
+
+.markmiku-container .miku-editor-main {
+    min-height: 0;
+}
+
+.markmiku-container .miku-editor-input,
+.markmiku-container .miku-editor-syntax-highlight {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    min-height: 36px;
+    max-height: 150px;
+}
+
+.markmiku-container .miku-editor-input {
+    resize: none;
+}
+
+.markmiku-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-top: 1px solid #333;
+    background: #1a1a1a;
+}
+
+.markmiku-toolbar-spacer {
+    flex: 1;
+}
+
+.markmiku-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, background 0.15s;
+}
+
+.markmiku-btn:hover {
+    color: #e8e8e8;
+    background: #2a2a2a;
+}
+
+.markmiku-btn-attach[disabled] {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.markmiku-btn-attach[disabled]:hover {
+    color: #888;
+    background: transparent;
+}
+
+.markmiku-btn-send {
+    color: #4ecdc4;
+}
+
+.markmiku-btn-send:hover {
+    color: #5fd3ca;
+    background: rgba(78, 205, 196, 0.1);
+}
+
+.markmiku-emoji-picker {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 280px;
+    max-height: 300px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.markmiku-emoji-search {
+    width: 100%;
+    background: #0f0f0f;
+    border: none;
+    border-bottom: 1px solid #333;
+    padding: 8px 10px;
+    color: #e8e8e8;
+    font-size: 12px;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 6px 6px 0 0;
+}
+
+.markmiku-emoji-search::placeholder {
+    color: #555;
+}
+
+.markmiku-emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 6px;
+    overflow-y: auto;
+    max-height: 240px;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 3px;
+}
+
+.markmiku-emoji-item {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.1s;
+}
+
+.markmiku-emoji-item:hover {
+    background: #2a2a2a;
+}
+
+.markmiku-emoji-item img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.markmiku-emoji-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #555;
+    font-size: 11px;
+    padding: 16px 0;
+}
+
+.markmiku-autocomplete {
+    position: absolute;
+    z-index: 99;
+}
+
+.markmiku-autocomplete-emoji-preview {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.markmiku-syntax-italic {
+    font-style: italic;
+}
+
+.markmiku-syntax-emoji {
+    color: #f39c12;
+}
+
+.markmiku-syntax-spoiler {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    padding: 0 2px;
+}
+
+.markmiku-spoiler {
+    background: #333;
+    color: transparent;
+    border-radius: 3px;
+    padding: 0 4px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    user-select: none;
+}
+
+.markmiku-spoiler.revealed {
+    color: inherit;
+    background: rgba(50, 50, 50, 0.5);
+}
+
+.markmiku-emoji {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin: 0 1px;
+    object-fit: contain;
+}
+
+.markmiku-body {
+    display: flex;
+    height: 100%;
+}
+
+.markmiku-editor-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+}
+
+.markmiku-attach-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    width: 72px;
+    flex-shrink: 0;
+    border-left: 1px solid #333;
+    background: #141414;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar {
+    width: 3px;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 2px;
+}
+
+.markmiku-attach-thumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    flex-shrink: 0;
+}
+
+.markmiku-attach-thumb.uploading {
+    opacity: 0.6;
+}
+
+.markmiku-attach-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.markmiku-attach-ext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.markmiku-attach-progress-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+.markmiku-attach-progress-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(78, 205, 196, 0.25);
+    border-top: 2px solid #4ecdc4;
+    transition: height 0.15s ease;
+    box-sizing: border-box;
+}
+
+.markmiku-attach-remove {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 3px;
+    line-height: 1;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.markmiku-attach-thumb:hover .markmiku-attach-remove {
+    opacity: 1;
+}
+
+.markmiku-attach-remove:hover {
+    color: #ff6b6b;
+}

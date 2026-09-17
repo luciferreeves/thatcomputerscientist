@@ -1,0 +1,338 @@
+.miku-editor-container {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 0;
+    font-family: 'Courier New', 'Monaco', monospace;
+}
+
+.miku-editor-line-numbers {
+    background: rgba(0, 0, 0, 0.2);
+    color: #888888;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Courier New', monospace;
+}
+
+.miku-editor-main {
+    background: transparent;
+}
+
+.miku-editor-input {
+    caret-color: #8d8dff;
+}
+
+.miku-editor-input::-webkit-scrollbar,
+.miku-editor-syntax-highlight::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.miku-editor-input::-webkit-scrollbar-track,
+.miku-editor-syntax-highlight::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}
+
+.miku-editor-input::-webkit-scrollbar-thumb:hover,
+.miku-editor-syntax-highlight::-webkit-scrollbar-thumb:hover {
+    background: #aaaaaa;
+}
+
+.miku-editor-syntax-highlight {
+    color: #ffffff;
+}
+
+.miku-editor-autocomplete-dropdown {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.miku-editor-autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}
+
+.miku-editor-autocomplete-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.miku-editor-autocomplete-item:hover,
+.miku-editor-autocomplete-item.selected {
+    background: rgba(141, 141, 255, 0.2);
+}
+
+.miku-editor-autocomplete-item .suggestion-text {
+    color: inherit;
+}
+
+.miku-editor-autocomplete-item .suggestion-type {
+    color: #888888;
+}
+
+.miku-editor-container:focus-within {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.miku-syntax-html-tag {
+    color: #8d8dff;
+}
+
+.miku-syntax-html-attribute {
+    color: #ffffff;
+}
+
+.miku-syntax-html-string {
+    color: #cccccc;
+}
+
+.miku-syntax-html-comment {
+    color: #888888;
+    font-style: italic;
+}
+
+.miku-syntax-css-selector {
+    color: #8d8dff;
+}
+
+.miku-syntax-css-property {
+    color: #ffffff;
+}
+
+.miku-syntax-css-value {
+    color: #cccccc;
+}
+
+.miku-syntax-css-comment {
+    color: #888888;
+    font-style: italic;
+}
+
+.miku-syntax-js-keyword {
+    color: #8d8dff;
+}
+
+.miku-syntax-js-string {
+    color: #cccccc;
+}
+
+.miku-syntax-js-comment {
+    color: #888888;
+    font-style: italic;
+}
+
+.miku-syntax-js-number {
+    color: #ffffff;
+}
+
+.miku-syntax-js-function {
+    color: #8d8dff;
+}
+
+.miku-container {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.miku-toolbar {
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.miku-btn {
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.miku-btn:hover {
+    background: rgba(141, 141, 255, 0.2);
+    border-color: #8d8dff;
+    color: #8d8dff;
+}
+
+.miku-content,
+.miku-source {
+    background: transparent;
+    color: #ffffff;
+}
+
+.miku-content::-webkit-scrollbar-thumb,
+.miku-source::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}
+
+.miku-content h1,
+.miku-content h2,
+.miku-content h3,
+.miku-content a {
+    color: #8d8dff;
+}
+
+.miku-link-edit {
+    background: rgba(0, 0, 0, 0.4);
+    color: #8d8dff;
+}
+
+.miku-content img {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.miku-content blockquote {
+    border-left-color: #8d8dff;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.miku-content code {
+    background: rgba(0, 0, 0, 0.4);
+    color: #8d8dff;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.miku-code-wrapper,
+.miku-content pre {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.miku-code-lang {
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    border-color: rgba(141, 141, 255, 0.3);
+}
+
+.miku-popup {
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(141, 141, 255, 0.3);
+}
+
+.miku-popup-header,
+.miku-popup-footer {
+    background: rgba(0, 0, 0, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #8d8dff;
+}
+
+.miku-popup-field label {
+    color: #ffffff;
+}
+
+.miku-popup-field input[type="text"],
+.miku-popup-field select {
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(141, 141, 255, 0.3);
+    color: #ffffff;
+}
+
+.miku-btn-primary {
+    background: #8d8dff;
+    color: #000000;
+}
+
+.miku-btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.markmiku-toolbar {
+    background: rgba(0, 0, 0, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.markmiku-btn {
+    color: #888888;
+}
+
+.markmiku-btn:hover {
+    color: #8d8dff;
+    background: rgba(141, 141, 255, 0.2);
+}
+
+.markmiku-btn-send {
+    color: #8d8dff;
+}
+
+.markmiku-btn-send:hover {
+    color: #ffffff;
+    background: rgba(141, 141, 255, 0.15);
+}
+
+.markmiku-emoji-picker {
+    background: rgba(0, 0, 0, 0.95);
+    border-color: rgba(141, 141, 255, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.markmiku-emoji-search {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.markmiku-emoji-grid::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}
+
+.markmiku-emoji-item:hover {
+    background: rgba(141, 141, 255, 0.2);
+}
+
+.markmiku-emoji-empty {
+    color: #888888;
+}
+
+.markmiku-syntax-italic {
+    color: #cccccc;
+}
+
+.markmiku-syntax-emoji {
+    color: #8d8dff;
+}
+
+.markmiku-syntax-spoiler {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.markmiku-attach-sidebar {
+    background: rgba(0, 0, 0, 0.2);
+    border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+.markmiku-attach-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.markmiku-attach-ext {
+    color: #aaa;
+}
+
+.markmiku-attach-progress-fill {
+    background: rgba(141, 141, 255, 0.25);
+    border-top-color: #8d8dff;
+}
+
+.markmiku-attach-remove:hover {
+    color: #8d8dff;
+}
+
+.markmiku-attach-sidebar::-webkit-scrollbar-thumb {
+    background: #8d8dff;
+}

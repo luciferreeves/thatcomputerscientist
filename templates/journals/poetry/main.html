@@ -1,0 +1,161 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load cleanview %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/poetry/main.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="pe">
+    {% if journal.custom_css %}<style>{{ journal.custom_css|safe }}</style>{% endif %}
+
+    <div class="pe-top">
+        <h1>{{ journal.name }}</h1>
+        <div class="pe-meta">
+            {% trans "by" %} <a href="#">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+            &middot; {% trans "Poems" %}
+            {% if journal.created_at %} &middot; <span>{{ journal.created_at|date:"M Y" }}</span>{% endif %}
+        </div>
+    </div>
+
+    <div class="pe-stats-bar">
+        <div class="pe-stat"><b>{{ pe_stats.published_count|default:"0" }}</b> {% trans "poems" %}</div>
+        {% if pe_page.paginator.num_pages > 1 %}<div class="pe-stat">{% trans "page" %} <b>{{ pe_page.number }}</b> / {{ pe_page.paginator.num_pages }}</div>{% endif %}
+        <div class="pe-stat">{{ journal.created_at|date:"M Y" }}</div>
+    </div>
+
+    <div class="pe-body">
+        <div class="pe-sidebar">
+            {% if journal.cover_image %}
+            <img class="pe-cover" src="{{ journal.cover_image.url }}" alt="{{ journal.name }}" />
+            {% else %}
+            <div class="pe-no-cover">&para;</div>
+            {% endif %}
+
+            {% if pe_jump_entries %}
+            <a href="{% url 'core:journal' journal.slug %}?entry={{ pe_jump_entries.0.slug }}" class="pe-start">&para; {% trans "Start Reading" %}</a>
+            {% endif %}
+
+            {% if journal.description %}
+            <div class="pe-desc">{{ journal.description }}</div>
+            {% endif %}
+
+            {% if pe_jump_entries %}
+            <div class="pe-sidebar-label">{% trans "Index" %}</div>
+            <div class="pe-jump-list">
+                {% for entry in pe_jump_entries %}
+                <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="pe-jump" data-slug="{{ entry.slug }}">
+                    <span class="pe-jump-n">{{ forloop.counter|stringformat:"02d" }}</span>
+                    <span class="pe-jump-name">{{ entry.title }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if owner_profile %}
+            <div class="pe-author">
+                {% if owner_profile.avatar_url %}<img class="pe-author-pic" src="{% static 'images/avatars/' %}{{ owner_profile.avatar_url }}.gif" alt="" />{% endif %}
+                <div class="pe-author-info">
+                    <a href="#" class="pe-author-name">{% firstof journal.owner.get_full_name journal.owner.username %}</a>
+                    {% if owner_profile.bio %}<div class="pe-author-bio">{{ owner_profile.bio }}</div>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="pe-main">
+            {% if available_forms or available_moods %}
+            <div class="pe-filterbar">
+                {% if available_forms %}
+                <span class="pe-filter-label">{% trans "Form" %}</span>
+                <div class="pe-fdrop">
+                    <button type="button" class="pe-fdrop-toggle" data-target="pe-form-dd" onclick="(function(b){var dd=document.getElementById('pe-form-dd');var other=document.getElementById('pe-mood-dd');if(other)other.classList.remove('pe-fdrop-open');document.querySelectorAll('.pe-fdrop-toggle').forEach(function(x){if(x!==b)x.classList.remove('pe-fdrop-toggle-on')});var o=dd.classList.toggle('pe-fdrop-open');b.classList.toggle('pe-fdrop-toggle-on',o);b.querySelector('.pe-fdrop-arrow').textContent=o?'▴':'▾';})(this)">
+                        {% if active_form %}{% for f in available_forms %}{% if active_form == f.value %}{{ f.label }}{% endif %}{% endfor %}{% else %}{% trans "all forms" %}{% endif %}
+                        <span class="pe-fdrop-arrow">&#9662;</span>
+                    </button>
+                    <div class="pe-fdrop-menu" id="pe-form-dd">
+                        <a href="{% url 'core:journal' journal.slug %}{% if active_mood %}?mood={{ active_mood }}{% endif %}" class="pe-fdrop-item{% if not active_form %} pe-fdrop-active{% endif %}">{% trans "all forms" %}</a>
+                        {% for f in available_forms %}<a href="{% url 'core:journal' journal.slug %}?form={{ f.value }}{% if active_mood %}&mood={{ active_mood }}{% endif %}" class="pe-fdrop-item{% if active_form == f.value %} pe-fdrop-active{% endif %}">{{ f.label }} <em>{{ f.count }}</em></a>{% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% if available_moods %}
+                <span class="pe-filter-label">{% trans "Mood" %}</span>
+                <div class="pe-fdrop">
+                    <button type="button" class="pe-fdrop-toggle" data-target="pe-mood-dd" onclick="(function(b){var dd=document.getElementById('pe-mood-dd');var other=document.getElementById('pe-form-dd');if(other)other.classList.remove('pe-fdrop-open');document.querySelectorAll('.pe-fdrop-toggle').forEach(function(x){if(x!==b)x.classList.remove('pe-fdrop-toggle-on')});var o=dd.classList.toggle('pe-fdrop-open');b.classList.toggle('pe-fdrop-toggle-on',o);b.querySelector('.pe-fdrop-arrow').textContent=o?'▴':'▾';})(this)">
+                        {% if active_mood %}{% for m in available_moods %}{% if active_mood == m.value %}{{ m.label|lower }}{% endif %}{% endfor %}{% else %}{% trans "all moods" %}{% endif %}
+                        <span class="pe-fdrop-arrow">&#9662;</span>
+                    </button>
+                    <div class="pe-fdrop-menu" id="pe-mood-dd">
+                        <a href="{% url 'core:journal' journal.slug %}{% if active_form %}?form={{ active_form }}{% endif %}" class="pe-fdrop-item{% if not active_mood %} pe-fdrop-active{% endif %}">{% trans "all moods" %}</a>
+                        {% for m in available_moods %}<a href="{% url 'core:journal' journal.slug %}?mood={{ m.value }}{% if active_form %}&form={{ active_form }}{% endif %}" class="pe-fdrop-item{% if active_mood == m.value %} pe-fdrop-active{% endif %}">{{ m.label|lower }} <em>{{ m.count }}</em></a>{% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% if active_form or active_mood %}<a href="{% url 'core:journal' journal.slug %}" class="pe-clear">[clear all]</a>{% endif %}
+            </div>
+            {% endif %}
+
+            {% for entry in pe_entries %}
+            <article class="pe-poem" id="p-{{ entry.slug }}">
+                <div class="pe-poem-head">
+                    <span class="pe-poem-n">№ {{ forloop.counter|stringformat:"02d" }}</span>
+                    {% if entry.form %}<a href="{% url 'core:journal' journal.slug %}?form={{ entry.form }}" class="pe-poem-pill">{{ entry.get_form_display }}</a>{% endif %}
+                    {% if entry.mood %}<a href="{% url 'core:journal' journal.slug %}?mood={{ entry.mood }}" class="pe-poem-pill pe-poem-mood">{{ entry.get_mood_display|lower }}</a>{% endif %}
+                </div>
+                <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}" class="pe-poem-title">{{ entry.title }}</a>
+                <div class="pe-poem-body">{{ entry.content|cleanview }}</div>
+                {% if entry.tags.all %}
+                <div class="pe-poem-tags">{% for tag in entry.tags.all %}<a href="#">#{{ tag.name }}</a>{% endfor %}</div>
+                {% endif %}
+                <div class="pe-poem-foot">
+                    <span>{% if entry.verse_count %}{{ entry.verse_count }} {% trans "verses" %}{% endif %}</span>
+                    <a href="{% url 'core:journal' journal.slug %}?entry={{ entry.slug }}">{% trans "focus read" %} &rarr;</a>
+                </div>
+            </article>
+            {% empty %}
+            <div class="pe-nil">{% trans "No poems yet." %}</div>
+            {% endfor %}
+
+            {% if pe_page.paginator.num_pages > 1 %}
+            <div class="pe-pagination">
+                {% if pe_page.has_previous %}
+                <a href="?page={{ pe_page.previous_page_number }}{% if active_form %}&form={{ active_form }}{% endif %}{% if active_mood %}&mood={{ active_mood }}{% endif %}" class="pe-page-link">&laquo; {% trans "prev" %}</a>
+                {% else %}
+                <span class="pe-page-link pe-page-disabled">&laquo; {% trans "prev" %}</span>
+                {% endif %}
+                <span class="pe-page-info">{% trans "page" %} {{ pe_page.number }} / {{ pe_page.paginator.num_pages }}</span>
+                {% if pe_page.has_next %}
+                <a href="?page={{ pe_page.next_page_number }}{% if active_form %}&form={{ active_form }}{% endif %}{% if active_mood %}&mood={{ active_mood }}{% endif %}" class="pe-page-link">{% trans "next" %} &raquo;</a>
+                {% else %}
+                <span class="pe-page-link pe-page-disabled">{% trans "next" %} &raquo;</span>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        var slug = localStorage.getItem("poetry_{{ journal.slug }}");
+        if (!slug) return;
+        var jumps = document.querySelectorAll(".pe-jump[data-slug]");
+        for (var i = 0; i < jumps.length; i++) {
+            if (jumps[i].dataset.slug === slug) {
+                jumps[i].classList.add("pe-jump-current");
+                break;
+            }
+        }
+        var btn = document.querySelector(".pe-start");
+        if (btn) {
+            var base = btn.href.split("?entry=")[0];
+            btn.href = base + "?entry=" + slug;
+            btn.innerHTML = "¶ {% trans 'Continue Reading' %}";
+        }
+    } catch(e) {}
+})();
+</script>
+{% endblock content %}

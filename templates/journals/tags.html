@@ -1,0 +1,65 @@
+{% extends "_layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<div class="journals-page">
+    {% include "journals/_partials/journal_header.html" with journal=journal tab=tab %}
+
+    <div class="tab-content">
+        {% if messages %}
+            <div class="form-messages">
+                {% for message in messages %}
+                    <div class="form-message {{ message.tags }}">
+                        <span class="message-icon">{% if message.tags == 'error' %}⚠️{% else %}✓{% endif %}</span>
+                        <span class="message-text">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="section-header">
+            <h2 class="section-title">{% trans "Tags" %}</h2>
+        </div>
+
+        <div class="inline-form">
+            <form method="post" class="tag-create-form">
+                {% csrf_token %}
+                <div class="tag-input-row">
+                    <input type="text" name="name" class="form-input" placeholder="{% trans 'New tag name...' %}" required />
+                    <button type="submit" class="create-btn">
+                        <span class="btn-icon">+</span>
+                        <span class="btn-text">{% trans "Add" %}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if tags %}
+        <div class="tags-list">
+            {% for tag in tags %}
+            <div class="tag-item">
+                <span class="tag-name">{{ tag.name }}</span>
+                <span class="tag-slug">/{{ tag.slug }}</span>
+                <a href="{% url 'services:journals:journal' journal.slug %}?tab=tags&action=delete&tag_id={{ tag.id }}" class="action-btn delete-action" onclick="return confirm('{% trans "Delete this tag?" %}')">×</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>{% trans "No Tags Yet" %}</h3>
+            <p>{% trans "Create tags to categorize and organize your entries." %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/journals/common.js' %}"></script>
+{% endblock scripts %}

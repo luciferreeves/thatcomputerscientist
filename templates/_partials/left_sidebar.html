@@ -28,8 +28,8 @@
                        value="{% if request.GET.next %} {{ request.GET.next }} {% else %} {{ request.path }} {% endif %}" />
                 <input type="submit" value="" />
             </form>
-            <button id="register-now-button"></button>
-            <button id="forgot-password-button"></button>
+            <button type="button" id="register-now-button"></button>
+            <button type="button" id="forgot-password-button"></button>
         </div>
     {% else %}
         <div id="user-area">
@@ -141,7 +141,7 @@
             <div class="navigation-item {{ request.LANGUAGE_CODE }}">
                 <img src="{% static 'images/core/icons/changelanguage.png' %}" width="20" height="20"
                      alt="Change Language Icon" />
-                <button class="link-button"
+                <button type="button" class="link-button"
                    onclick="changeLanguage('{{ request.ALT_LANGUAGE }}')">
                     {% if request.LANGUAGE_CODE == 'ja' %}
                         English (英語)
@@ -207,24 +207,24 @@
                 {% if request.COOKIES.summonOneko == 'true' %}
                     <img src="{% static 'images/core/icons/withdraw_oneko.gif' %}" width="20" height="20"
                          alt="Withdraw Oneko Icon" />
-                    <button class="link-button"
+                    <button type="button" class="link-button"
                          onclick="document.cookie = 'summonOneko=false;path=/';location.reload();">{% translate "Withdraw Oneko" %}</button>
                 {% else %}
                     <img src="{% static 'images/core/icons/summon_oneko.gif' %}" width="20" height="20"
                          alt="Summon Oneko Icon" />
-                    <button class="link-button"
+                    <button type="button" class="link-button"
                          onclick="document.cookie = 'summonOneko=false;path=/';location.reload();">{% translate "Withdraw Oneko" %}</button>
                 {% endif %}
             </div>
             <div class="navigation-item">
                 <img src="{% static 'images/core/icons/harlemshake.gif' %}" width="20" height="20"
                      alt="Harlem Shake Icon" />
-                <button class="link-button" onclick="javascript:harlemShakeAndBake();">{% translate "Harlem Shake" %}</button>
+                <button type="button" class="link-button" onclick="javascript:harlemShakeAndBake();">{% translate "Harlem Shake" %}</button>
             </div>
             <div class="navigation-item">
                 <img src="{% static 'images/core/icons/dvd.png' %}" width="20" height="20"
                      alt="DVD Sitesaver Icon" />
-                <button class="link-button" onclick="javascript:dvdSitesaver();">{% translate "DVD Sitesaver" %}</button>
+                <button type="button" class="link-button" onclick="javascript:dvdSitesaver();">{% translate "DVD Sitesaver" %}</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,74 @@
+name: shifoo-dev
+
+x-shifoo: &shifoo
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
+  image: shifoo:dev
+  env_file:
+    - .env.dev
+  environment:
+    ENVIRONMENT: development
+  volumes:
+    - ..:/app
+  init: true
+
+services:
+  shifoo:
+    <<: *shifoo
+    command:
+      - sh
+      - -c
+      - >-
+        if [ -f docker/.compileignore.env ]; then
+          xargs django-admin compilemessages < docker/.compileignore.env;
+        else
+          django-admin compilemessages;
+        fi
+        && python manage.py migrate --noinput
+        && exec python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      shifoo-postgres:
+        condition: service_healthy
+      shifoo-redis:
+        condition: service_healthy
+
+  shifoo-postgres:
+    image: postgres:18-trixie
+    environment:
+      POSTGRES_DB: shifoo
+      POSTGRES_USER: shifoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in docker/.env.dev}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+
+  shifoo-redis:
+    image: redis:8-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  shifoo-worker:
+    <<: *shifoo
+    command: ["celery", "-A", "thatcomputerscientist", "worker", "--loglevel=INFO", "--concurrency=1"]
+    depends_on:
+      shifoo:
+        condition: service_started
+    stop_grace_period: 60s
+
+volumes:
+  postgres-data:
+  redis-data:

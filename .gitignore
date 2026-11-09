@@ -103,13 +103,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+**/*env*
 
 # Spyder project settings
 .spyderproject
@@ -132,21 +126,9 @@ dmypy.json
 # .DS_Store for macOS
 .DS_Store
 
-/images/*
-
+# Django static files
 staticfiles/
 
-siteshot.png
-
-image_downloader.ipynb
-
-dump.rdb
-
-.claude
-.vscode
-.playwright*
-
-# credentials JSON files
+# credential files
 credentials-*.json
 credentials.jsonc
-SSL

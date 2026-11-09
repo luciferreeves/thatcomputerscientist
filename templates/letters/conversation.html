@@ -3,9 +3,9 @@
 {% load i18n %}
 
 {% block head %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}" />
+<link rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
+<link rel="stylesheet" href="{% static 'css/miku/miku.css' %}" />
+<link rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}" />
 {% endblock head %}
 
 {% block content %}
@@ -84,6 +84,6 @@
     "maxAttachmentSize": {{ max_attachment_size }}
 }
 </script>
-<script type="text/javascript" src="{% static 'js/miku/markmiku.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/letters.js' %}"></script>
+<script src="{% static 'js/miku/markmiku.js' %}"></script>
+<script src="{% static 'js/letters.js' %}"></script>
 {% endblock scripts %}

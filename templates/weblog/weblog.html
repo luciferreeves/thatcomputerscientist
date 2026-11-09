@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% block head %}
-    <link type="text/css"
+    <link
           rel="stylesheet"
           href="{% static 'css/blog/weblog.css' %}" />
 {% endblock head %}
@@ -131,5 +131,5 @@
     <script id="MathJax-script"
             async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
+    <script src="{% static 'js/core/math.js' %}"></script>
 {% endblock scripts %}

@@ -2,8 +2,8 @@
 {% load static %}
 {% load i18n %}
 {% block head %}
-    <link type="text/css" rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
 {% endblock head %}
 {% block content %}
     <h1 class="content-title">{% translate "KawaiiBeats Manager" %}</h1>
@@ -201,5 +201,5 @@
     </table>
 {% endblock content %}
 {% block scripts %}
-    <script type="text/javascript" src="{% static 'js/administration/forms.js' %}"></script>
+    <script src="{% static 'js/administration/forms.js' %}"></script>
 {% endblock scripts %}

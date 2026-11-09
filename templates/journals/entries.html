@@ -3,15 +3,15 @@
 {% load i18n %}
 
 {% block head %}
-<link type="text/css" rel="stylesheet" href="{% static "css/journals/journals.css" %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+<link rel="stylesheet" href="{% static "css/journals/journals.css" %}" />
+<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
 {% if journal.mode == "short_stories" %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/short_stories.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/short_stories.css' %}" />
 {% elif journal.mode == "poetry" %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/poetry.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/poetry.css' %}" />
 {% elif journal.mode == "diary" %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/diary.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/diary.css' %}" />
 {% endif %}
 {% endblock head %}
 
@@ -160,8 +160,8 @@
 {% endblock content %}
 
 {% block scripts %}
-<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/journals/common.js' %}"></script>
+<script src="{% static 'js/blog/post.js' %}"></script>
+<script src="{% static 'js/journals/common.js' %}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     initDropdowns();

@@ -4,12 +4,12 @@
 {% load tz %}
 {% load humanize %}
 {% block head %}
-    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/comments.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/miku/miku.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/_partials/post_comments.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/blog/comments.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/_partials/weblog_list.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/miku/miku.css' %}">
+    <link rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/_partials/post_comments.css' %}" />
 {% endblock head %}
 {% block content %}
     <div class="weblog-container">
@@ -150,15 +150,15 @@ def hello_world():
     <script id="MathJax-script"
             async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/javascript" src="{% static 'js/core/math.js' %}"></script>
-    <script type="text/javascript">
+    <script src="{% static 'js/core/math.js' %}"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             configureMathJax();
         });
     </script>
-    <script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/miku/tinymiku.js' %}"></script>
-    <script type="text/javascript">
+    <script src="{% static 'js/blog/post.js' %}"></script>
+    <script src="{% static 'js/miku/tinymiku.js' %}"></script>
+    <script>
         document.querySelectorAll('.miku-comment-editor').forEach(function (editorElement) {
             const editorId = editorElement.id;
             const mikuInstance = new TinyMiku('#' + editorId, {

@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% block head %}
-    <link type="text/css" rel="stylesheet" href="{% static 'css/blog/subpage.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/blog/subpage.css' %}" />
     <style>
         .tags-page .content-grid {
             display: block;
@@ -140,5 +140,5 @@
 </div>
 {% endblock content %}
 {% block scripts %}
-<script type="text/javascript" src="{% static 'js/weblog/tags.js' %}"></script>
+<script src="{% static 'js/weblog/tags.js' %}"></script>
 {% endblock scripts %}

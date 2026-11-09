@@ -3,10 +3,10 @@
 {% load i18n %}
 
 {% block head %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/modes.css' %}" />
+<link rel="stylesheet" href="{% static 'css/miku/miku.css' %}" />
+<link rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}" />
 {% endblock head %}
 
 {% block content %}
@@ -234,5 +234,5 @@
 </script>
 <script src="{% static 'js/journals/common.js' %}"></script>
 <script src="{% static 'js/miku/fancymiku.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/journals/new_entry.js' %}"></script>
+<script src="{% static 'js/journals/new_entry.js' %}"></script>
 {% endblock scripts %}

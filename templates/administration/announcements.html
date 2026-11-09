@@ -3,10 +3,10 @@
 {% load i18n %}
 {% load tz %}
 {% block head %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku/miku.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/miku/themes/vintage.css' %}">
+<link rel="stylesheet" href="{% static 'css/administration/forms.css' %}" />
+<link rel="stylesheet" href="{% static 'css/administration/admin.css' %}" />
+<link rel="stylesheet" href="{% static 'css/miku/miku.css' %}">
+<link rel="stylesheet" href="{% static 'css/miku/themes/vintage.css' %}">
 <style>
     .miku-editor-container {
         height: 400px;
@@ -152,9 +152,9 @@
     </table>
 {% endblock content %}
 {% block scripts %}
-    <script type="text/javascript" src="{% static 'js/administration/forms.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/miku/miku.js' %}"></script>
-    <script type="text/javascript">
+    <script src="{% static 'js/administration/forms.js' %}"></script>
+    <script src="{% static 'js/miku/miku.js' %}"></script>
+    <script>
         const editorInstance = new Miku('#miku-editor', {
             placeholder: "Compose your announcement here...",
         });

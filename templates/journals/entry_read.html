@@ -4,9 +4,9 @@
 {% load cleanview %}
 
 {% block head %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/journals.css' %}" />
+<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
 {% endblock head %}
 
 {% block content %}
@@ -57,6 +57,6 @@
 <script type="application/json" id="journal-view-config">
 ["{% static 'css/blog/post.css' %}", "{% static 'css/journals/journal_entries.css' %}", "{% static 'css/journals/journal_view.css' %}"]
 </script>
-<script type="text/javascript" src="{% static 'js/blog/post.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/journals/journal_view.js' %}"></script>
+<script src="{% static 'js/blog/post.js' %}"></script>
+<script src="{% static 'js/journals/journal_view.js' %}"></script>
 {% endblock scripts %}

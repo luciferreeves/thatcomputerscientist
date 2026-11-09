@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block head %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
+<link rel="stylesheet" href="{% static 'css/letters/letters.css' %}" />
 {% endblock head %}
 
 {% block content %}
@@ -113,5 +113,5 @@
 {% endblock content %}
 
 {% block scripts %}
-<script type="text/javascript" src="{% static 'js/letters/inbox.js' %}"></script>
+<script src="{% static 'js/letters/inbox.js' %}"></script>
 {% endblock scripts %}

@@ -2,8 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% block head %}
-    <link type="text/css"
-          rel="stylesheet"
+    <link rel="stylesheet"
           href="{% static 'css/core/home.css' %}" />
 {% endblock head %}
 {% block content %}
@@ -80,6 +79,6 @@
     </div>
 {% endblock content %}
 {% block scripts %}
-    <script type="text/javascript" src="{% static 'js/libs/marquee.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/core/home.js' %}"></script>
+    <script src="{% static 'js/libs/marquee.js' %}"></script>
+    <script src="{% static 'js/core/home.js' %}"></script>
 {% endblock scripts %}

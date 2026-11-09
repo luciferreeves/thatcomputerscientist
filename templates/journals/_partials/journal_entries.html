@@ -2,8 +2,8 @@
 {% load static %}
 {% load i18n %}
 {% load cleanview %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
+<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" />
+<link rel="stylesheet" href="{% static 'css/journals/journal_entries.css' %}" />
 {% with entries=journal.entries.all %}
 {% if entries %}
 <div class="entries-page">
@@ -50,4 +50,4 @@
 </div>
 {% endif %}
 {% endwith %}
-<script type="text/javascript" src="{% static 'js/journals/image_float.js' %}"></script>
+<script src="{% static 'js/journals/image_float.js' %}"></script>

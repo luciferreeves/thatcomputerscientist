@@ -15,23 +15,12 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 from dotenv import load_dotenv
+from psycopg.conninfo import conninfo_to_dict
 
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# set n_connected_lc_users to 0 on startup
-# import redis
-
-# # r = redis.Redis(host='localhost', port=6379, db=0)
-# r = redis.Redis(
-#     host=os.getenv("REDIS_HOST"),
-#     port=os.getenv("REDIS_PORT"),
-#     password=os.getenv("REDIS_PASSWORD"),
-#     db=0,
-# )
-# r.set("n_connected_lc_users", 0)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -60,7 +49,6 @@ DEFAULT_HOST = "default"
 LOGIN_URL = "/"
 
 # Application definition
-
 INSTALLED_APPS = [
     "daphne",
     "django.contrib.admin",
@@ -122,23 +110,15 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
 ASGI_APPLICATION = "thatcomputerscientist.asgi.application"
 
-_redis_password = os.getenv("REDIS_PASSWORD", "")
-_redis_host = os.getenv("REDIS_HOST", "localhost")
-_redis_port = os.getenv("REDIS_PORT", "6379")
-_redis_url = (
-    f"redis://:{_redis_password}@{_redis_host}:{_redis_port}"
-    if _redis_password
-    else f"redis://{_redis_host}:{_redis_port}"
-)
+REDIS_URL = os.environ["REDIS_URL"]
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [_redis_url],
+            "hosts": [REDIS_URL],
         },
     },
 }
@@ -146,10 +126,16 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+_database_connection = conninfo_to_dict(os.environ["DSN"])
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, os.environ["DSN"]),
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": _database_connection.pop("dbname"),
+        "USER": _database_connection.pop("user"),
+        "PASSWORD": _database_connection.pop("password"),
+        "HOST": _database_connection.pop("host"),
+        "PORT": _database_connection.pop("port", "5432"),
+        "OPTIONS": _database_connection,
     }
 }
 
@@ -175,18 +161,9 @@ AUTH_PASSWORD_VALIDATORS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": os.getenv("REDIS_PASSWORD"),
-        },
+        "LOCATION": REDIS_URL,
     }
 }
-from django.core.cache import cache
-
-# clear the cache
-for key in cache.keys("presence_*"):
-    cache.delete(key)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
@@ -209,7 +186,6 @@ LANGUAGES = (("en", _("English")), ("ja", _("Japanese")))
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
-# STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -230,16 +206,8 @@ USERNAME_SMTP = os.getenv("ORACLE_SMTP_USER")
 PASSWORD_SMTP = os.getenv("ORACLE_SMTP_PASSWORD")
 
 # Celery Configuration
-redis_password = os.getenv("REDIS_PASSWORD")
-redis_host = os.getenv("REDIS_HOST")
-redis_port = os.getenv("REDIS_PORT")
-
-if redis_password:
-    CELERY_BROKER_URL = f"redis://:{redis_password}@{redis_host}:{redis_port}/0"
-    CELERY_RESULT_BACKEND = f"redis://:{redis_password}@{redis_host}:{redis_port}/0"
-else:
-    CELERY_BROKER_URL = f"redis://{redis_host}:{redis_port}/0"
-    CELERY_RESULT_BACKEND = f"redis://{redis_host}:{redis_port}/0"
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"

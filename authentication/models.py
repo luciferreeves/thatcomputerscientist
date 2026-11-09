@@ -28,7 +28,7 @@ class UserProfile(models.Model):
 
 class AnonymousCommentUser(models.Model):
     name = models.CharField(max_length=32, verbose_name=_("Name"))
-    email = models.CharField(max_length=32, unique=True, verbose_name=_("Email"))
+    email = models.CharField(max_length=254, unique=True, verbose_name=_("Email"))
     token = models.CharField(max_length=128, unique=True, verbose_name=_("Token"))
     avatar = models.URLField(max_length=200, blank=True, verbose_name=_("Avatar"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))

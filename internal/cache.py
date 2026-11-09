@@ -1,15 +1,12 @@
 import redis
 import pickle
-import os
 
-REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
-REDIS_PORT = os.getenv("REDIS_PORT", "6379")
-REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+from django.conf import settings
 
 
 class Cache:
-    def __init__(self, redis_url=REDIS_URL):
-        self.client = redis.Redis.from_url(redis_url)
+    def __init__(self, redis_url=None):
+        self.client = redis.Redis.from_url(redis_url or settings.REDIS_URL)
 
     def set(self, key, value, ex=None):
         pickled = pickle.dumps(value)

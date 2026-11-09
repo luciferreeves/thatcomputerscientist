@@ -5,6 +5,7 @@ channels
 channels_redis
 daphne
 django
+psycopg[binary]>=3.3.8,<4
 django-celery-beat
 django-redis
 google-genai

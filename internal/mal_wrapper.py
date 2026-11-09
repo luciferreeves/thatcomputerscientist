@@ -1,5 +1,11 @@
+import logging
+
 import requests
+
 from internal.cache import cache
+
+
+logger = logging.getLogger(__name__)
 
 
 def get_mal_recent_activity(username):
@@ -9,7 +15,15 @@ def get_mal_recent_activity(username):
         return cached
 
     url = f"https://api.jikan.moe/v4/users/{username}/userupdates"
-    response = requests.get(url)
+    try:
+        response = requests.get(url, timeout=(3.05, 5))
+    except requests.exceptions.RequestException as error:
+        logger.warning(
+            "Could not fetch MyAnimeList recent activity (%s): %s",
+            type(error).__name__,
+            error,
+        )
+        return None
     if response.status_code == 200:
         anime = []
         manga = []

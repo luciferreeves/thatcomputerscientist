@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from fuzzywuzzy import process
 
-from blog.models import Post
+from services.weblog.models import Post
 
 
 def get_similar_posts(slug):

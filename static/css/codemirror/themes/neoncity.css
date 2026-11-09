@@ -1,0 +1,196 @@
+.cm-s-neoncity .CodeMirror-gutters,
+.cm-s-neoncity.CodeMirror {
+    background: #000000 !important;
+    color: #00ff00 !important;
+    border: none;
+    border-radius: 0;
+}
+
+.cm-s-neoncity .CodeMirror-gutters {
+    background: #000000;
+    color: #666666;
+    border-right: none;
+}
+
+.cm-s-neoncity .CodeMirror-cursor {
+    border-left: solid thin #00ff00;
+}
+
+.cm-s-neoncity .CodeMirror-linenumber {
+    color: #666666;
+}
+
+.cm-s-neoncity .CodeMirror-selected {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.cm-s-neoncity .CodeMirror-line::selection,
+.cm-s-neoncity .CodeMirror-line>span::selection,
+.cm-s-neoncity .CodeMirror-line>span>span::selection {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.cm-s-neoncity .CodeMirror-line::-moz-selection,
+.cm-s-neoncity .CodeMirror-line>span::-moz-selection,
+.cm-s-neoncity .CodeMirror-line>span>span::-moz-selection {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.cm-s-neoncity .CodeMirror-activeline-background {
+    background: rgba(0, 255, 0, 0.05);
+}
+
+.cm-s-neoncity .CodeMirror-matchingbracket {
+    text-decoration: underline;
+    color: #00ff00 !important;
+}
+
+.cm-s-neoncity span.cm-comment {
+    color: #888888;
+    font-style: italic;
+}
+
+.cm-s-neoncity span.cm-keyword {
+    color: #0080ff;
+    font-weight: bold;
+}
+
+.cm-s-neoncity span.cm-string {
+    color: #ffff00;
+}
+
+.cm-s-neoncity span.cm-string-2 {
+    color: #ffff00;
+}
+
+.cm-s-neoncity span.cm-number {
+    color: #ff8000;
+}
+
+.cm-s-neoncity span.cm-variable {
+    color: #00ff00;
+}
+
+.cm-s-neoncity span.cm-variable-2 {
+    color: #00ffff;
+}
+
+.cm-s-neoncity span.cm-variable-3 {
+    color: #ffff00;
+}
+
+.cm-s-neoncity span.cm-def {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.cm-s-neoncity span.cm-operator {
+    color: #00ff00;
+}
+
+.cm-s-neoncity span.cm-atom {
+    color: #ff8000;
+}
+
+.cm-s-neoncity span.cm-meta {
+    color: #888888;
+}
+
+.cm-s-neoncity span.cm-tag {
+    color: #ff0080;
+    font-weight: bold;
+}
+
+.cm-s-neoncity span.cm-attribute {
+    color: #00ffff;
+}
+
+.cm-s-neoncity span.cm-qualifier {
+    color: #ff8000;
+}
+
+.cm-s-neoncity span.cm-property {
+    color: #0080ff;
+}
+
+.cm-s-neoncity span.cm-builtin {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.cm-s-neoncity span.cm-type {
+    color: #ff0080;
+}
+
+.cm-s-neoncity span.cm-bracket {
+    color: #00ff00;
+}
+
+.cm-s-neoncity span.cm-hr {
+    color: #888888;
+}
+
+.cm-s-neoncity span.cm-link {
+    color: #ffff00;
+}
+
+.cm-s-neoncity span.cm-error {
+    color: #FF0000;
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* Hint styling for autocomplete */
+.CodeMirror-hints {
+    background: #000011 !important;
+    border: 1px solid #ff00ff !important;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3) !important;
+}
+
+.CodeMirror-hint {
+    color: #00ffff !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 0, 255, 0.2) !important;
+}
+
+li.CodeMirror-hint-active {
+    background: rgba(255, 0, 255, 0.2) !important;
+    color: #ffffff !important;
+}
+
+.cm-s-neoncity .CodeMirror-vscrollbar::-webkit-scrollbar,
+.cm-s-neoncity .CodeMirror-hscrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.cm-s-neoncity .CodeMirror-vscrollbar::-webkit-scrollbar-track,
+.cm-s-neoncity .CodeMirror-hscrollbar::-webkit-scrollbar-track {
+    background: #000011;
+}
+
+.cm-s-neoncity .CodeMirror-vscrollbar::-webkit-scrollbar-thumb,
+.cm-s-neoncity .CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
+    background: #ff00ff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.3);
+}
+
+.cm-s-neoncity .CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover,
+.cm-s-neoncity .CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover {
+    background: #e600e6;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
+}
+
+.CodeMirror-hints::-webkit-scrollbar {
+    width: 6px;
+}
+
+.CodeMirror-hints::-webkit-scrollbar-track {
+    background: #000011;
+}
+
+.CodeMirror-hints::-webkit-scrollbar-thumb {
+    background: #ff00ff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.3);
+}

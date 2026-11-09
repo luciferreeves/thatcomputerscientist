@@ -2,17 +2,9 @@ import json
 import uuid
 
 import redis
-import os
-from dotenv import load_dotenv
+from django.conf import settings
 
-load_dotenv()
-
-redis_instance = redis.StrictRedis(
-  host=os.getenv('REDIS_HOST'),
-  port=os.getenv('REDIS_PORT'),
-  password=os.getenv('REDIS_PASSWORD'),
-  db=0
-)
+redis_instance = redis.Redis.from_url(settings.REDIS_URL)
 
 class UserUUIDMiddleware:
     # assign a uuid to the user if they don't have one
@@ -59,8 +51,10 @@ def userTrackingContextProcessor(request):
     admin_users = []
 
     for user in online_now:
-        user_data = redis_instance.get(user)
-        user_data = json.loads(user_data)
+        presence_data = redis_instance.get(user)
+        if presence_data is None:
+            continue
+        user_data = json.loads(presence_data)
         if user_data['is_authenticated'] == False and user_data['is_staff'] == False:
             anonymous_users.append(user_data)
         elif user_data['is_authenticated'] == True and user_data['is_staff'] == False:

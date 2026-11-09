@@ -1,0 +1,599 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600&family=Share+Tech+Mono&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.pe {
+    max-width: 780px;
+    margin: 10px auto 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    color: #c8d4cc;
+    background: #0a0a0a;
+}
+
+.pe-top {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #0a1814 0%, #0d0d12 50%, #08141a 100%);
+    border-bottom: 1px solid #1a2820;
+}
+
+.pe h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-style: italic;
+    font-variation-settings: "opsz" 96;
+    font-size: 30px;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #fff 0%, #c8e0d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pe-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: #6a8878;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#main-content .pe-meta a,
+#main-content .pe-meta a:link,
+#main-content .pe-meta a:visited {
+    color: #98c8b0;
+    text-decoration: none;
+}
+
+#main-content .pe-meta a:hover {
+    color: #c8e0d4;
+}
+
+.pe-stats-bar {
+    display: flex;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #88a898;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #0a1814 0%, #0d0d12 50%, #08141a 100%);
+    border-bottom: 1px solid #1a2820;
+}
+
+.pe-stat {
+    flex: 1;
+    padding: 6px 8px;
+    text-align: center;
+    border-right: 1px solid #1a2820;
+}
+
+.pe-stat:last-child {
+    border-right: none;
+}
+
+.pe-stat b {
+    color: #c8e0d4;
+    font-weight: normal;
+}
+
+.pe-body {
+    display: flex;
+    min-height: 400px;
+}
+
+.pe-sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    border-right: 1px solid #1a2820;
+    padding: 14px;
+    background: linear-gradient(180deg, #0a1814 0%, #0a0a0a 100%);
+}
+
+.pe-cover {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 16px rgba(74, 184, 150, 0.18);
+}
+
+.pe-no-cover {
+    width: 100%;
+    aspect-ratio: 3/2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 36px;
+    color: #1a2820;
+    background: linear-gradient(180deg, #0a1814 0%, #0a0a10 100%);
+    margin-bottom: 10px;
+}
+
+#main-content .pe-start,
+#main-content .pe-start:link,
+#main-content .pe-start:visited,
+#main-content .pe-start:hover {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-variation-settings: "opsz" 24;
+    font-size: 13px;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, #4ab896 0%, #2a6e58 100%);
+    padding: 8px 0;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+#main-content .pe-start:hover {
+    opacity: 0.85;
+}
+
+.pe-desc {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #98a898;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.pe-tags {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+#main-content .pe-tags a,
+#main-content .pe-tags a:link,
+#main-content .pe-tags a:visited {
+    color: #6a8878;
+    text-decoration: none;
+}
+
+#main-content .pe-tags a:hover {
+    color: #c8e0d4;
+}
+
+.pe-sidebar-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #98c8b0;
+    padding: 6px 0 4px;
+    border-top: 1px solid #1a2820;
+}
+
+.pe-jump-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #1a2820 #0a0a0a;
+}
+
+.pe-jump-list::-webkit-scrollbar { width: 4px; }
+.pe-jump-list::-webkit-scrollbar-track { background: #0a0a0a; }
+.pe-jump-list::-webkit-scrollbar-thumb { background: #1a2820; border-radius: 2px; }
+
+#main-content .pe-jump,
+#main-content .pe-jump:link,
+#main-content .pe-jump:visited {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0;
+    text-decoration: none;
+    font-size: 11px;
+    color: #98a898;
+    line-height: 1.4;
+    transition: color 0.12s;
+}
+
+#main-content .pe-jump:hover {
+    color: #c8e0d4;
+}
+
+#main-content .pe-jump-current {
+    color: #c8e0d4;
+    border-left: 2px solid #4ab896;
+    padding-left: 6px;
+    margin-left: -8px;
+}
+
+.pe-jump-n {
+    font-family: 'Share Tech Mono', monospace;
+    color: #4a6858;
+    flex-shrink: 0;
+    min-width: 18px;
+}
+
+.pe-jump-name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pe-author {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0 0;
+    border-top: 1px solid #1a2820;
+    margin-top: 8px;
+}
+
+.pe-author-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.pe-author-info {
+    flex: 1;
+    min-width: 0;
+}
+
+#main-content .pe-author-name,
+#main-content .pe-author-name:link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #98a898;
+    text-decoration: none;
+    display: block;
+}
+
+#main-content .pe-author-name:hover {
+    color: #c8e0d4;
+}
+
+.pe-author-bio {
+    font-size: 10px;
+    line-height: 1.5;
+    color: #586858;
+    margin-top: 2px;
+    white-space: pre-line;
+}
+
+.pe-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.pe-filterbar {
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #0a1814 0%, #0d0d12 100%);
+    border-bottom: 1px solid #1a2820;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #6a8878;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pe-filterbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.pe-filter-label {
+    color: #98c8b0;
+    flex-shrink: 0;
+    margin-right: 6px;
+}
+
+.pe-fdrop {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 150px;
+}
+
+.pe-fdrop-toggle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #c8e0d4;
+    background: #0a1814;
+    border: 1px solid #1a2820;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.pe-fdrop-toggle:hover,
+.pe-fdrop-toggle-on,
+.pe-fdrop-toggle:focus-visible {
+    border-color: #4ab896;
+    background: rgba(74, 184, 150, 0.10);
+    color: #c8e0d4;
+    outline: none;
+}
+
+.pe-fdrop-arrow {
+    color: #4ab896;
+    font-size: 10px;
+}
+
+.pe-fdrop-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 2px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: #0a1814;
+    border: 1px solid #1a2820;
+    z-index: 10;
+    scrollbar-width: thin;
+    scrollbar-color: #1a3a30 #0a1814;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.pe-fdrop-menu::-webkit-scrollbar { width: 4px; }
+.pe-fdrop-menu::-webkit-scrollbar-track { background: #0a1814; }
+.pe-fdrop-menu::-webkit-scrollbar-thumb { background: #1a3a30; border-radius: 2px; }
+
+.pe-fdrop-open { display: block; }
+
+#main-content .pe-fdrop-item,
+#main-content .pe-fdrop-item:link,
+#main-content .pe-fdrop-item:visited {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 5px 14px;
+    text-decoration: none;
+    color: #98a898;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #14201c;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .pe-fdrop-item:nth-child(even) {
+    background: rgba(74, 184, 150, 0.025);
+}
+
+#main-content .pe-fdrop-item:hover {
+    background: rgba(74, 184, 150, 0.10);
+    color: #c8e0d4;
+}
+
+.pe-fdrop-item em {
+    font-style: normal;
+    color: #4a6858;
+    font-size: 10px;
+}
+
+#main-content .pe-fdrop-item.pe-fdrop-active {
+    background: rgba(74, 184, 150, 0.14);
+    color: #c8e0d4;
+    border-left: 3px solid #4ab896;
+    padding-left: 9px;
+}
+
+#main-content .pe-clear,
+#main-content .pe-clear:link {
+    color: #4ab896;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+#main-content .pe-clear:hover {
+    color: #c8e0d4;
+}
+
+.pe-poem {
+    padding: 28px 24px;
+    border-bottom: 1px solid #1a2820;
+    scroll-margin-top: 16px;
+}
+
+.pe-poem:nth-child(even) {
+    background: rgba(74, 184, 150, 0.02);
+}
+
+.pe-poem-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.pe-poem-n {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #4a6858;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.pe-poem-pill {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #98c8b0;
+    background: rgba(74, 184, 150, 0.06);
+    border: 1px solid #1a2820;
+    padding: 2px 8px;
+}
+
+#main-content .pe-poem-pill,
+#main-content .pe-poem-pill:link,
+#main-content .pe-poem-pill:visited {
+    text-decoration: none;
+}
+
+#main-content .pe-poem-pill:hover {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.12);
+}
+
+.pe-poem-mood {
+    color: #98a898;
+    font-style: italic;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+}
+
+#main-content .pe-poem-title,
+#main-content .pe-poem-title:link,
+#main-content .pe-poem-title:visited {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-style: italic;
+    font-variation-settings: "opsz" 144;
+    font-size: 28px;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: #fff;
+    background: linear-gradient(90deg, #fff 0%, #c8e0d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+    display: block;
+    letter-spacing: -0.5px;
+}
+
+.pe-poem-body {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-variation-settings: "opsz" 24;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #d4ddd0;
+    margin-bottom: 14px;
+    white-space: pre-line;
+}
+
+.pe-poem-body p {
+    margin: 0 0 1em;
+}
+
+.pe-poem-body p:last-child { margin-bottom: 0; }
+
+.pe-poem-body em, .pe-poem-body i {
+    font-style: normal;
+}
+
+.pe-poem-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #4a6858;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-top: 1px dashed #1a2820;
+    padding-top: 8px;
+}
+
+#main-content .pe-poem-foot a,
+#main-content .pe-poem-foot a:link,
+#main-content .pe-poem-foot a:visited {
+    color: #6a8878;
+    text-decoration: none;
+}
+
+#main-content .pe-poem-foot a:hover {
+    color: #c8e0d4;
+}
+
+.pe-poem-tags {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+#main-content .pe-poem-tags a,
+#main-content .pe-poem-tags a:link,
+#main-content .pe-poem-tags a:visited {
+    color: #4a6858;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+#main-content .pe-poem-tags a:hover {
+    color: #98c8b0;
+}
+
+.pe-nil {
+    padding: 16px;
+    text-align: center;
+    font-style: italic;
+    font-size: 11px;
+    color: #4a6858;
+}
+
+.pe-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #0a1814 0%, #0a0a0a 100%);
+    border-top: 1px solid #1a2820;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#main-content .pe-page-link,
+#main-content .pe-page-link:link,
+#main-content .pe-page-link:visited {
+    color: #98c8b0;
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid #1a2820;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .pe-page-link:hover {
+    color: #c8e0d4;
+    background: rgba(74, 184, 150, 0.10);
+    border-color: #4ab896;
+}
+
+.pe-page-link.pe-page-disabled,
+#main-content .pe-page-link.pe-page-disabled {
+    color: #2a3830;
+    border-color: #14201c;
+    background: none;
+    cursor: default;
+}
+
+.pe-page-info {
+    color: #6a8878;
+}

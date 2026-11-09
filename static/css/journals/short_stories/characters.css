@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One&family=Share+Tech+Mono&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.ss {
+    max-width: 780px;
+    margin: 10px auto 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    color: #d4cabb;
+    background: #0a0a0a;
+}
+
+.ss-char-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    background: linear-gradient(90deg, #150810 0%, #0d0d18 50%, #120810 100%);
+    border-bottom: 1px solid #2a1018;
+}
+
+#main-content .ss-char-book-link,
+#main-content .ss-char-book-link:link,
+#main-content .ss-char-book-link:visited {
+    color: #d89888;
+    text-decoration: none;
+}
+
+#main-content .ss-char-book-link:hover {
+    color: #f0c4b8;
+}
+
+.ss-char-header-sep {
+    color: #4a3030;
+}
+
+.ss-char-header-label {
+    color: #6a5050;
+}
+
+.ss-char-profile {
+    display: flex;
+    gap: 24px;
+    padding: 28px 24px;
+    background: linear-gradient(135deg, #1f0a14 0%, #0d0d12 50%, #14080c 100%);
+    border-bottom: 1px solid #2a1018;
+}
+
+.ss-char-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border: 2px solid #2a1018;
+    flex-shrink: 0;
+    box-shadow: 0 6px 24px rgba(168, 61, 74, 0.25), 0 0 0 1px rgba(168, 61, 74, 0.1);
+}
+
+.ss-char-initial {
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 72px;
+    color: #2a1018;
+    background: linear-gradient(180deg, #1f0a14 0%, #0a0a10 100%);
+    border: 2px solid #2a1018;
+    flex-shrink: 0;
+}
+
+.ss-char-info {
+    flex: 1;
+    min-width: 0;
+    padding-top: 6px;
+}
+
+.ss-char-role {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #d89888;
+    margin-bottom: 4px;
+}
+
+.ss-char-name {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    background: linear-gradient(90deg, #fff 0%, #f0c4b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ss-char-bio {
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.8;
+    color: #a89888;
+    white-space: pre-line;
+}
+
+.ss-data-section {
+    border-bottom: 1px solid #2a1018;
+}
+
+.ss-data-head {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #d89888;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #150810 0%, #0d0d18 100%);
+    border-bottom: 1px solid #2a1018;
+}
+
+#main-content .ss-rel-row,
+#main-content .ss-rel-row:link,
+#main-content .ss-rel-row:visited {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 24px;
+    text-decoration: none;
+    border-bottom: 1px solid #1a0a14;
+    transition: background 0.12s;
+}
+
+#main-content .ss-rel-row:nth-child(even) {
+    background: rgba(168, 61, 74, 0.025);
+}
+
+#main-content .ss-rel-row:hover {
+    background: rgba(168, 61, 74, 0.10);
+}
+
+.ss-rel-avatar {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border: 1px solid #2a1018;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+}
+
+#main-content .ss-rel-row:hover .ss-rel-avatar {
+    border-color: #a83d4a;
+}
+
+.ss-rel-initial {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 20px;
+    color: #4a3030;
+    background: linear-gradient(180deg, #1f0a14 0%, #0e0a14 100%);
+    border: 1px solid #2a1018;
+    flex-shrink: 0;
+}
+
+.ss-rel-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.ss-rel-name {
+    font-size: 12px;
+    color: #c0b0a8;
+    flex: 1;
+}
+
+#main-content .ss-rel-row:hover .ss-rel-name {
+    color: #f0c4b8;
+}
+
+.ss-rel-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #886060;
+    background: rgba(168, 61, 74, 0.06);
+    border: 1px solid #2a1018;
+    padding: 2px 8px;
+    white-space: nowrap;
+}
+
+#main-content .ss-app-row,
+#main-content .ss-app-row:link,
+#main-content .ss-app-row:visited {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 24px;
+    font-size: 12px;
+    color: #a89888;
+    text-decoration: none;
+    border-bottom: 1px solid #1a0a14;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .ss-app-row:nth-child(even) {
+    background: rgba(168, 61, 74, 0.025);
+}
+
+#main-content .ss-app-row:hover {
+    color: #f0c4b8;
+    background: rgba(168, 61, 74, 0.10);
+}
+
+.ss-app-thumb {
+    width: 56px;
+    height: 36px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid #2a1018;
+}
+
+.ss-app-thumb-empty {
+    width: 56px;
+    height: 36px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #1f0a14 0%, #0a0a10 100%);
+    border: 1px solid #2a1018;
+}
+
+.ss-app-n {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #4a3030;
+    min-width: 22px;
+}
+
+.ss-app-title {
+    flex: 1;
+}
+
+.ss-app-genre {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #886060;
+}
+
+.ss-back {
+    padding: 14px 24px;
+    text-align: center;
+    background: linear-gradient(135deg, #14080c 0%, #0a0a0a 100%);
+    border-top: 1px solid #2a1018;
+}
+
+#main-content .ss-back a,
+#main-content .ss-back a:link,
+#main-content .ss-back a:visited {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #6a5050;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#main-content .ss-back a:hover {
+    color: #d89888;
+}

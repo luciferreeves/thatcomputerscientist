@@ -15,24 +15,12 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 from dotenv import load_dotenv
+from psycopg.conninfo import conninfo_to_dict
 
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# set n_connected_lc_users to 0 on startup
-
-import redis
-
-# r = redis.Redis(host='localhost', port=6379, db=0)
-r = redis.Redis(
-    host=os.getenv("REDIS_HOST"),
-    port=os.getenv("REDIS_PORT"),
-    password=os.getenv("REDIS_PASSWORD"),
-    db=0,
-)
-r.set("n_connected_lc_users", 0)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -51,57 +39,39 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
 ]
 DOMAIN_NAME = "shi.foo"
-SESSION_COOKIE_DOMAIN = (
-    os.getenv("DOMAIN") if os.getenv("ENVIRONMENT") == "development" else ".shi.foo"
-)
+SESSION_COOKIE_DOMAIN = os.getenv("DOMAIN") or None
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 ROOT_HOSTCONF = "thatcomputerscientist.hosts"
 ROOT_URLCONF = "thatcomputerscientist.urls"
 DEFAULT_HOST = "default"
+LOGIN_URL = "/"
 
 # Application definition
-
 INSTALLED_APPS = [
     "daphne",
-    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "django.contrib.sites",
+    "django.contrib.sessions",
     "django.contrib.sitemaps",
-    "sslserver",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "channels",
+    "storages",
     "thatcomputerscientist",
-    "haystack",
-    "blog.apps.BlogConfig",
-    "users",
-    "userpages",
-    "blog_admin",
-    "dev_status",
-    "announcements",
-    "ignis",
-    "chat",
+    "administration",
+    "api",
+    "authentication",
+    "core",
+    "services",
 ]
 
 SITE_ID = 1
 APPEND_SLASH = False
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "haystack.backends.simple_backend.SimpleEngine",
-    },
-}
-
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ]
-}
 
 MIDDLEWARE = [
-    "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -110,25 +80,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "middleware.oldbrowsermiddleware.OldBrowserMiddleware",
     "middleware.globalmetamiddleware.GlobalMetaMiddleware",
-    "middleware.ignismiddleware.IgnisMiddleware",
-    "middleware.uuidmiddleware.UserUUIDMiddleware",
     "middleware.i18nmiddleware.I18NMiddleware",
-    "django_hosts.middleware.HostsResponseMiddleware",
+    "middleware.userprofilemiddleware.UserProfileMiddleware",
 ]
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
-
-CONFIGURED_SUBDOMAINS = {
-    "": "thatcomputerscientist",
-    "*": "userpages",
-}
-
-ROOT_URLCONF = "thatcomputerscientist.urls"
 
 AUTHENTICATION_BACKENDS = ["thatcomputerscientist.backends.CaseInsensitiveModelBackend"]
 
@@ -143,29 +102,21 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "blog.context_processors.categories",
-                "blog.context_processors.archives",
-                "middleware.uuidmiddleware.userTrackingContextProcessor",
+                "core.letters.context_processors.unread_letter_count",
             ],
         },
     },
 ]
 
-# WSGI_APPLICATION = 'thatcomputerscientist.wsgi.application'
 ASGI_APPLICATION = "thatcomputerscientist.asgi.application"
 
+REDIS_URL = os.environ["REDIS_URL"]
+
 CHANNEL_LAYERS = {
-    # "default": {
-    #     "BACKEND": "channels.layers.InMemoryChannelLayer"
-    # }
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [
-                (
-                    f'redis://:{os.getenv("REDIS_PASSWORD")}@{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}'
-                )
-            ],
+            "hosts": [REDIS_URL],
         },
     },
 }
@@ -173,10 +124,16 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+_database_connection = conninfo_to_dict(os.environ["DSN"])
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, os.environ.get("SQLITE_DB_NAME")),
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": _database_connection.pop("dbname"),
+        "USER": _database_connection.pop("user"),
+        "PASSWORD": _database_connection.pop("password"),
+        "HOST": _database_connection.pop("host"),
+        "PORT": _database_connection.pop("port", "5432"),
+        "OPTIONS": _database_connection,
     }
 }
 
@@ -202,18 +159,9 @@ AUTH_PASSWORD_VALIDATORS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": os.getenv("REDIS_PASSWORD"),
-        },
+        "LOCATION": REDIS_URL,
     }
 }
-from django.core.cache import cache
-
-# clear the cache
-for key in cache.keys("presence_*"):
-    cache.delete(key)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
@@ -226,18 +174,16 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
-LANGUAGES = (
-    ("en", _("English")),
-    ("ja", _("Japanese"))
-)
+LANGUAGES = (("en", _("English")), ("ja", _("Japanese")))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
-# STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -249,7 +195,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_USE_TLS = True
-# EMAIL_HOST = os.getenv('MAIL_HOST')
 EMAIL_HOST = os.getenv("ORACLE_SMTP_HOST")
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv("EMAIL_USER")
@@ -257,3 +202,44 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 USERNAME_SMTP = os.getenv("ORACLE_SMTP_USER")
 PASSWORD_SMTP = os.getenv("ORACLE_SMTP_PASSWORD")
+
+# Celery Configuration
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+CELERY_BEAT_SCHEDULE = {
+    "process-pending-and-spam-comments": {
+        "task": "jobs.comments.process_pending_and_spam_comments",
+        "schedule": 3600.0,
+    },
+    "delete-inactive-users": {
+        "task": "jobs.users.delete_inactive_users",
+        "schedule": 3600.0,
+    },
+    "refresh-steam-screenshots": {
+        "task": "jobs.screenshots.refresh_steam_screenshots",
+        "schedule": 6 * 3600.0,
+    },
+}
+
+# Storage (CDN)
+CDN_UPLOAD_ENDPOINT = os.getenv("CDN_UPLOAD_ENDPOINT")
+CDN_ACCESS_ENDPOINT = os.getenv("CDN_ACCESS_ENDPOINT")
+CDN_ACCESS_KEY = os.getenv("CDN_ACCESS_KEY")
+CDN_SECRET_KEY = os.getenv("CDN_SECRET_KEY")
+CDN_BUCKET = os.getenv("CDN_BUCKET")
+CDN_USE_SSL = os.getenv("CDN_USE_SSL", "true").lower() == "true"
+
+# Usernames
+OWNER_USERNAME = os.getenv("OWNER_USERNAME")
+MAL_USERNAME = os.getenv("MAL_USERNAME")
+
+# Letters
+LETTERS_MAX_LENGTH = 5000
+LETTERS_INBOX_PER_PAGE = 20
+LETTERS_BATCH_SIZE = 30
+LETTERS_MAX_ATTACHMENTS = 8
+LETTERS_MAX_ATTACHMENT_SIZE = 32 * 1024 * 1024

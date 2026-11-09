@@ -59,6 +59,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+db.backup.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
@@ -102,13 +103,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+**/*env*
 
 # Spyder project settings
 .spyderproject
@@ -131,16 +126,9 @@ dmypy.json
 # .DS_Store for macOS
 .DS_Store
 
-/images/*
-
+# Django static files
 staticfiles/
 
-siteshot.png
-
-image_downloader.ipynb
-
-dump.rdb
-
-# credentials JSON files
+# credential files
 credentials-*.json
-SSL
+credentials.jsonc

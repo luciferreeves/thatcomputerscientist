@@ -1,0 +1,75 @@
+name: shifoo
+
+x-shifoo: &shifoo
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
+  image: shifoo:prod
+  env_file:
+    - .env.prod
+  environment:
+    ENVIRONMENT: production
+  volumes:
+    - type: bind
+      source: ../staticfiles
+      target: /app/staticfiles
+      bind:
+        create_host_path: false
+  init: true
+  restart: unless-stopped
+
+services:
+  shifoo:
+    <<: *shifoo
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && python manage.py collectstatic --noinput && exec daphne --proxy-headers -b 0.0.0.0 -p 8000 thatcomputerscientist.asgi:application
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      shifoo-postgres:
+        condition: service_healthy
+      shifoo-redis:
+        condition: service_healthy
+    stop_grace_period: 30s
+
+  shifoo-postgres:
+    image: postgres:18-trixie
+    environment:
+      POSTGRES_DB: shifoo
+      POSTGRES_USER: shifoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in docker/.env.prod}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+
+  shifoo-redis:
+    image: redis:8-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  shifoo-worker:
+    <<: *shifoo
+    command: ["celery", "-A", "thatcomputerscientist", "worker", "--loglevel=INFO", "--concurrency=1"]
+    depends_on:
+      shifoo:
+        condition: service_started
+    stop_grace_period: 60s
+
+volumes:
+  postgres-data:
+  redis-data:

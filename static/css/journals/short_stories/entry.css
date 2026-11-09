@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One&family=Share+Tech+Mono&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.ss {
+    max-width: 780px;
+    margin: 10px auto 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    color: #d4cabb;
+    background: #0a0a0a;
+}
+
+.ss-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #1f0a14 0%, #0d0d12 50%, #14080c 100%);
+    border-bottom: 1px solid #2a1018;
+}
+
+.ss-top-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ss h1 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #fff 0%, #f0c4b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ss-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: #886860;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ss-meta-sep {
+    color: #4a3030;
+    margin: 0 4px;
+}
+
+#main-content .ss-meta a,
+#main-content .ss-meta a:link,
+#main-content .ss-meta a:visited {
+    color: #d89888;
+    text-decoration: none;
+}
+
+#main-content .ss-meta a:hover {
+    color: #f0c4b8;
+}
+
+.ss-stats-bar {
+    display: flex;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #aa8878;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #150810 0%, #0d0d18 50%, #120810 100%);
+    border-bottom: 1px solid #2a1018;
+}
+
+.ss-stat {
+    flex: 1;
+    padding: 6px 8px;
+    text-align: center;
+    border-right: 1px solid #2a1018;
+}
+
+.ss-stat:last-child {
+    border-right: none;
+}
+
+.ss-stat b {
+    color: #f0c4b8;
+    font-weight: normal;
+}
+
+#main-content .ss-stat a,
+#main-content .ss-stat a:link,
+#main-content .ss-stat a:visited {
+    color: #f0c4b8;
+    text-decoration: none;
+}
+
+#main-content .ss-stat a:hover {
+    color: #fff;
+}
+
+.ss-stat-sel {
+    padding: 0;
+}
+
+.ss-st-toggle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #d89888;
+    background: none;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.ss-st-toggle:hover {
+    color: #f0c4b8;
+    background: rgba(168, 61, 74, 0.10);
+}
+
+.ss-st-toggle:focus { outline: none; }
+.ss-st-toggle:focus:not(:focus-visible) { background: none; color: #d89888; }
+.ss-st-toggle:focus-visible {
+    color: #f0c4b8;
+    background: rgba(168, 61, 74, 0.10);
+    outline: none;
+}
+.ss-st-toggle:active {
+    color: #f0c4b8;
+    background: rgba(168, 61, 74, 0.18);
+    outline: none;
+}
+
+.ss-st-toggle-on,
+.ss-st-toggle-on:focus:not(:focus-visible) {
+    color: #f0c4b8;
+    background: rgba(168, 61, 74, 0.14);
+}
+
+.ss-st-select {
+    display: none;
+    position: relative;
+    max-height: 300px;
+    overflow-y: auto;
+    border-bottom: 1px solid #2a1018;
+    background: linear-gradient(180deg, #14080c 0%, #0a0a0a 100%);
+    scrollbar-width: thin;
+    scrollbar-color: #3a181c #0a0a0a;
+}
+
+.ss-st-select::-webkit-scrollbar { width: 6px; }
+.ss-st-select::-webkit-scrollbar-track { background: #0a0a0a; }
+.ss-st-select::-webkit-scrollbar-thumb { background: #3a181c; border-radius: 3px; }
+.ss-st-select::-webkit-scrollbar-thumb:hover { background: #5a2a30; }
+
+.ss-st-open { display: block; }
+
+#main-content .ss-st-select .ss-st-item,
+#main-content .ss-st-select .ss-st-item:link,
+#main-content .ss-st-select .ss-st-item:visited {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    text-decoration: none;
+    color: #c0b0a0;
+    font-size: 12px;
+    border-bottom: 1px solid #1a0a14;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .ss-st-select .ss-st-item:nth-child(even) {
+    background: rgba(168, 61, 74, 0.025);
+}
+
+#main-content .ss-st-select .ss-st-item:hover {
+    background: rgba(168, 61, 74, 0.10);
+    color: #f4ece0;
+}
+
+.ss-st-active {
+    background: rgba(168, 61, 74, 0.14) !important;
+    border-left: 3px solid #a83d4a !important;
+    padding-left: 11px !important;
+}
+
+.ss-st-item-n {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #5a4040;
+    min-width: 22px;
+}
+
+.ss-st-item-name { flex: 1; }
+
+.ss-st-num {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 48px;
+    color: #2a1018;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 50px;
+}
+
+.ss-summary {
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.7;
+    color: #a89888;
+    margin-top: 6px;
+}
+
+.ss-cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #2a1018;
+}
+
+.ss-content {
+    padding: 20px 24px;
+    font-size: 14px;
+    line-height: 1.85;
+    color: #d0c4b4;
+}
+
+.ss-content p {
+    margin: 0 0 1em;
+}
+
+.ss-content h1, .ss-content h2, .ss-content h3,
+.ss-content h4, .ss-content h5, .ss-content h6 {
+    font-family: 'Bowlby One', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #f0e0d0;
+    margin: 1.4em 0 0.4em;
+    line-height: 1.3;
+}
+
+.ss-content h2 { font-size: 20px; }
+.ss-content h3 { font-size: 18px; }
+.ss-content h4 { font-size: 16px; }
+
+.ss-content blockquote {
+    margin: 1.2em 0;
+    padding: 10px 16px;
+    border-left: 3px solid #a83d4a;
+    color: #a89888;
+    font-style: italic;
+    background: rgba(168, 61, 74, 0.04);
+}
+
+.ss-content img {
+    max-width: 100%;
+    border: 1px solid #2a1018;
+    margin: 1.2em 0;
+}
+
+#main-content .ss-content a,
+#main-content .ss-content a:link,
+#main-content .ss-content a:visited {
+    color: #f0c4b8;
+    text-decoration: underline;
+    text-decoration-color: rgba(240, 196, 184, 0.3);
+    text-underline-offset: 2px;
+}
+
+#main-content .ss-content a:hover {
+    color: #fff;
+}
+
+.ss-content hr {
+    border: none;
+    text-align: center;
+    height: 16px;
+    line-height: 16px;
+    margin: 1.6em 0;
+}
+
+.ss-content hr::after {
+    content: '\2500\2500\2500 \2726 \2500\2500\2500';
+    font-size: 10px;
+    color: #2a1018;
+    letter-spacing: 2px;
+}
+
+.ss-content ul, .ss-content ol {
+    padding-left: 20px;
+    margin: 0.8em 0;
+}
+
+.ss-content li {
+    margin: 0.3em 0;
+}
+
+.ss-content code {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    background: rgba(168, 61, 74, 0.08);
+    padding: 2px 4px;
+    border: 1px solid #2a1018;
+    color: #a89888;
+}
+
+.ss-content pre {
+    background: rgba(168, 61, 74, 0.04);
+    border: 1px solid #2a1018;
+    padding: 10px;
+    overflow-x: auto;
+    margin: 1.2em 0;
+}
+
+.ss-content pre code {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.ss-end-tags {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-align: center;
+    padding: 8px 20px;
+    border-top: 1px solid #2a1018;
+}
+
+#main-content .ss-end-tags a,
+#main-content .ss-end-tags a:link,
+#main-content .ss-end-tags a:visited {
+    color: #886060;
+    text-decoration: none;
+}
+
+#main-content .ss-end-tags a:hover {
+    color: #f0c4b8;
+}
+
+.ss-cast-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 20px;
+    border-top: 1px solid #2a1018;
+    background: linear-gradient(135deg, #14080c 0%, #0a0a0a 100%);
+}
+
+.ss-cast-strip-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #d89888;
+    margin-right: 6px;
+    align-self: center;
+}
+
+#main-content .ss-cast-pill,
+#main-content .ss-cast-pill:link,
+#main-content .ss-cast-pill:visited {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px 3px 4px;
+    font-size: 11px;
+    color: #c4b8aa;
+    text-decoration: none;
+    background: rgba(168, 61, 74, 0.08);
+    border: 1px solid #2a1018;
+    border-radius: 2px;
+    transition: background 0.12s, color 0.12s;
+}
+
+#main-content .ss-cast-pill:hover {
+    background: rgba(168, 61, 74, 0.18);
+    color: #f0c4b8;
+}
+
+.ss-cast-pill-pic {
+    width: 18px;
+    height: 18px;
+    object-fit: cover;
+    border-radius: 1px;
+}
+
+.ss-cast-pill-ini {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    color: #d89888;
+    background: #1f0a14;
+    border-radius: 1px;
+}
+
+.ss-nav {
+    display: flex;
+    border-top: 1px solid #2a1018;
+}
+
+.ss-nav-item {
+    flex: 1;
+    border-right: 1px solid #2a1018;
+}
+
+.ss-nav-item:last-child {
+    border-right: none;
+}
+
+#main-content .ss-nav-prev,
+#main-content .ss-nav-prev:link,
+#main-content .ss-nav-prev:visited,
+#main-content .ss-nav-next,
+#main-content .ss-nav-next:link,
+#main-content .ss-nav-next:visited,
+#main-content .ss-nav-toc,
+#main-content .ss-nav-toc:link,
+#main-content .ss-nav-toc:visited {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #14080c 0%, #0a0a0a 100%);
+    transition: background 0.12s;
+}
+
+#main-content .ss-nav-prev:hover,
+#main-content .ss-nav-next:hover,
+#main-content .ss-nav-toc:hover {
+    background: rgba(168, 61, 74, 0.10);
+    color: #f0c4b8;
+}
+
+.ss-nav-next {
+    text-align: right;
+}
+
+.ss-nav-toc {
+    text-align: center;
+}
+
+.ss-nav-label {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #6a5050;
+    margin-bottom: 2px;
+}
+
+.ss-nav-title {
+    display: block;
+    font-size: 12px;
+    color: #a89888;
+}
+
+#main-content .ss-nav-toc .ss-nav-label {
+    color: #886060;
+}
+
+#main-content .ss-nav-toc .ss-nav-title {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    color: #d89888;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
